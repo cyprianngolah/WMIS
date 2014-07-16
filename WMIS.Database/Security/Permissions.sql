@@ -1,0 +1,1 @@
+﻿GRANT CONNECT TO [WMISUser] AS [dbo];
