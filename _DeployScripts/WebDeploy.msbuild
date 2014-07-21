@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" >
+	<PropertyGroup>
+		<!-- Tooling Locations-->
+		<MsDeployExe>"C:\Program Files (x86)\IIS\Microsoft Web Deploy V3\msdeploy.exe"</MsDeployExe>
+		<PackageFile Condition="'$(PackageFile)' == ''">Package.zip</PackageFile>
+		
+		<!-- If DoNotDelete is not specified or has a value of 1 then Do Not Delete files that are on the destination but not in the package -->
+		<DoNotDeleteRule Condition="'$(DoNotDelete)' == '' OR '$(DoNotDelete)' == '1'">-enableRule:DoNotDeleteRule</DoNotDeleteRule>
+		<!-- Otherwise Delete any files that are at the Destination but not in the package -->
+		<DoNotDeleteRule Condition="'$(DoNotDelete)' == '0'"></DoNotDeleteRule>
+	</PropertyGroup>
+
+	<Target Name="BuildPackage">
+		<Exec Command="$(MsDeployExe) -verb:sync -source:contentPath='$(MSBuildProjectDirectory)\Deploy\' -dest:package=$(PackageFile) -disableLink:AppPoolExtension -disableLink:CertificateExtension -disableLink:ContentExtension"
+		 ContinueOnError="false" />
+	</Target>
+	
+  <Target Name="Deploy">
+    <Message Text="Deploying Package to Site: $(DestinationSite)" />      
+    <Exec Command="$(MsDeployExe) -verb:sync -source:package='$(PackageFile)',includeAcls=false -dest:contentpath='$(DestinationSite)',computerName=$(DestinationComputer),username='$(DestinationUsername)',password='$(DestinationPassword)',authtype='basic',includeAcls='False' -allowUntrusted $(DoNotDeleteRule) -skip:skipAction=Delete,absolutePath=\\aspnet_client$ -skip:skipAction=Delete,absolutePath=\\App_Data$" />
+  </Target>
+
+</Project>

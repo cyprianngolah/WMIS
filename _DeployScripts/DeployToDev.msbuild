@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="Build; BuildPackage; Deploy">
+	<PropertyGroup>
+		<!-- Tooling Locations-->
+		<IDETools>$(VS100COMNTOOLS)..\IDE\</IDETools>
+		<MsTestExe>$(IDETools)MSTest.exe</MsTestExe>
+
+		<!-- The default Compile configuration (i.e. Debug/Release) the build will use if none specified-->
+		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+		
+		<!--Test Artifact Locations -->
+		<TestArtifactDestinationFolder>$(MSBuildProjectDirectory)\Artifact\Test\</TestArtifactDestinationFolder>
+		
+		<!-- If DoNotDelete is not specified or has a value of 1 then Do Not Delete files that are on the destination but not in the package -->
+		<DoNotDeleteRule Condition="'$(DoNotDelete)' == '' OR '$(DoNotDelete)' == '1'">-enableRule:DoNotDeleteRule</DoNotDeleteRule>
+		<!-- Otherwise Delete any files that are at the Destination but not in the package -->
+		<DoNotDeleteRule Condition="'$(DoNotDelete)' == '0'"></DoNotDeleteRule>
+
+		<PackageFile>Workspace.zip</PackageFile>
+	</PropertyGroup>
+
+	<!-- Environment Configurations -->
+	<!-- Dev Website-->
+	<PropertyGroup Condition="!EXISTS($(Destination)) Or $(Destination) == 'dev.wmis.enr.gov.nt.ca'">
+		<DestinationSite>WMIS-Dev</DestinationSite>
+		<DestinationComputer>https://216.108.155.150:8172/msdeploy.axd?site=$(DestinationSite)</DestinationComputer>
+		<DestinationUserName>iismanager_autodeploy</DestinationUserName>
+		<DestinationPassword>4u70d3p!0y</DestinationPassword>
+	</PropertyGroup>
+
+	<!-- Test Website-->
+	<PropertyGroup Condition="$(Destination) == 'stage.wmis.enr.gov.nt.ca'">
+		<DestinationSite>WMIS-Test</DestinationSite>
+		<DestinationComputer>https://216.108.155.79:8172/msdeploy.axd?site=$(DestinationSite)</DestinationComputer>
+		<DestinationUserName>iismanager_autodeploy</DestinationUserName>
+		<DestinationPassword>4u70d3p!0y</DestinationPassword>
+	</PropertyGroup>
+
+	<!-- Prod Website-->
+	<PropertyGroup Condition="$(Destination) == 'wmis.enr.gov.nt.ca'">
+		<DestinationSite>WMIS-Prod</DestinationSite>
+		<DestinationComputer>https://216.108.155.78:8172/msdeploy.axd?site=$(DestinationSite)</DestinationComputer>
+		<DestinationUserName>iismanager_autodeploy</DestinationUserName>
+		<DestinationPassword>4u70d3p!0y</DestinationPassword>
+	</PropertyGroup>
+	<!-- End Environment Configurations-->
+	
+	<!-- Solutions that are included in the Deployment Package -->
+	<ItemGroup>
+		<!-- Solutions to compile (the DLLs will be included in the package)-->
+		<SolutionToCompile Include="..\WMIS.sln" />
+
+		<!-- WebProjects are projects that will have "Content" that needs to be deployed -->
+		<!-- Examples of Content include images, aspx files, etc (files that are not compiled and not embedded in the assembly)-->
+		<WebProject Include="..\WMIS\WMIS.csproj.csproj" />
+	</ItemGroup>
+
+	<!--Build the Solution for the specified Configuration -->
+	<Target Name="Build">
+		<!-- This step builds all but the .vdproj (setup) projects (as .vdprof files are not compatible with msbuild) -->
+		<MSBuild Projects="@(SolutionToCompile)"
+				 Properties="Configuration=$(Configuration);IgnoreProjectExtensions=.vdproj;"
+				 ContinueOnError="true">
+			<Output
+				TaskParameter="TargetOutputs"
+				ItemName="CompiledAsemblies" />
+		</MSBuild>
+		
+		<ItemGroup>
+			<UnitTestAssemblies Include="%(CompiledAsemblies.FullPath)"
+													Condition="'@(CompiledAsemblies->Contains('Test'))'=='True'"/>
+		</ItemGroup>
+		<Message Text="@(UnitTestAssemblies->'/testcontainer:&quot;%(FullPath)&quot;', ' ')" />
+	</Target>
+	
+	<!--Run Unit Tests (if there are any) -->
+	<Target Name="UnitTest"
+			DependsOnTargets="Build">
+		<!-- Create the Test artifact folder and remove old content-->
+		<MakeDir Directories="$(TestArtifactDestinationFolder)"  />
+		<Delete Files="$(TestArtifactDestinationFolder)testResult.trx" ContinueOnError="true" />
+
+		<!-- 
+				Run the unit tests. 
+				Ignoring Exit code because MsTest returns an error code when tests fail which will cause the
+				reporting in the next command to not work properly. 
+		-->
+		<Exec Command="&quot;$(MsTestExe)&quot; @(UnitTestAssemblies->'/testcontainer:&quot;%(FullPath)&quot;', ' ') &quot;/resultsfile:$(TestArtifactDestinationFolder)testResult.trx&quot;"
+				Condition="@(UnitTestAssemblies) != ''"
+				IgnoreExitCode="true"/>
+
+		<Error Text="Unit Tests failed to properly run, $(TestArtifactDestinationFolder)testResult.trx is missing." 
+				Condition="@(UnitTestAssemblies) != '' AND !Exists('$(TestArtifactDestinationFolder)testResult.trx')"/>
+
+		<!-- Tell TeamCity about test results (so it can report whether any tests failed) -->
+		<Message Text="##teamcity[importData id='mstest' file='$(TestArtifactDestinationFolder)testResult.trx']"
+				 Condition="@(UnitTestAssemblies) != ''"/>
+	</Target>
+	
+	<!-- Package up the Artifacts -->
+	<Target Name="BuildPackage">
+		<!-- Ensure no remnants from previous builds-->
+		<RemoveDir Directories="Deploy\" ContinueOnError="true" />
+		<Delete Files="$(PackageFile)" />
+
+		<!-- 
+			ForEach WebProject, open up the .csproj file and get the "Content" items
+			This is done recursively on each .csproj file because when Import is called, all Items are imported with Relative paths.
+		-->
+		<MSBuild Projects="$(MSBuildProjectFile)"
+						Targets="GetContentFiles"
+						Properties="ProjectToGetFiles=%(WebProject.Identity);ProjectDir=%(WebProject.RelativeDir)">
+			<Output ItemName="projContent" TaskParameter="TargetOutputs"/>
+		</MSBuild>
+
+		<!-- Add all the DLLs in the Webroot's bin folder -->
+		<ItemGroup>
+			<Environments Include="..\WMIS\Environments\environment.*.config" />
+			<!-- Add the compiled content (ItemGroup in this Target because it didn't exist until after the Build Target was run) -->
+			<projContent Include="..\WMIS\bin\**\*" />
+		</ItemGroup>
+
+		<!-- Copy all the Content into a temporary folder used for packaging -->
+		<Copy SourceFiles="@(projContent)"
+					DestinationFiles="@(projContent->'Deploy\$([System.String]::Copy('%(RelativeDir)').Replace('..\WMIS\',''))%(Filename)%(Extension)')" />
+
+		<!-- Copy the files to the Deploy folder -->
+		<ItemGroup>
+			<ProjectFiles Include="WMIS\**\*.*" />
+		</ItemGroup>
+		<!-- 		
+				<Copy SourceFiles="@(ProjectFiles)"
+				DestinationFiles="@(ProjectFiles->'Deploy\%(RelativeDir)%(Filename)%(Extension)')" />	-->
+		
+		<!-- Copy all the Environments files to the bin/Environments/folder -->
+		<Copy SourceFiles="@(Environments)"
+					DestinationFolder="Deploy\bin\Environments\"/>
+
+		<!-- Create Deployment Package -->
+		<MSBuild Projects="webDeploy.msbuild"
+						BuildInParallel="true"
+						Targets="BuildPackage"
+						Properties="DestinationSite=%(DeploymentTarget.DestinationSite);DestinationComputer=%(DeploymentTarget.DestinationComputer);DestinationUsername=%(DeploymentTarget.DestinationUserName);DestinationPassword=%(DeploymentTarget.DestinationPassword);DoNotDelete=0" />
+
+		<!-- Make Package available to TeamCity as an artifact -->
+		<Message Importance="High"
+						 Text="##teamcity[publishArtifacts '$(MSBuildProjectDirectory)\$(PackageFile)']" />
+	</Target>
+
+	<!-- Deploy the Artifacts -->
+	<Target Name="Deploy">
+		<!-- Synchronize the contents of the Deployment folder to the specified website on teh specified machine -->
+		<Exec Command="$(MsDeployExe) -verb:sync -source:package=$(PackageFile),includeAcls=false -dest:contentpath='$(DestinationSite)',computerName=$(DestinationComputer),username='$(DestinationUsername)',password='$(DestinationPassword)',authtype='basic',includeAcls='False' –allowUntrusted $(DoNotDeleteRule) -skip:skipAction=Delete,absolutePath=\\aspnet_client$" />
+
+		<MSBuild Projects="webDeploy.msbuild"
+						BuildInParallel="true"
+						Targets="Deploy"
+						Properties="DestinationSite=%(DeploymentTarget.DestinationSite);DestinationComputer=%(DeploymentTarget.DestinationComputer);DestinationUsername=%(DeploymentTarget.DestinationUserName);DestinationPassword=%(DeploymentTarget.DestinationPassword);DoNotDelete=0" />
+	</Target>
+
+	<!-- 
+		Target used to convert relative imported ItemGroup paths to  relative paths prefixed with whatever $(ProjectDir) property is passed in.
+		Necessary because relative ItemGroup paths are relative to the location of the file but don't get transformed when imported
+		So in a file structure like:
+		->[Dir1]
+			->build1.csproj
+			->[Dir2]
+				->build2.csproj
+				->file1
+				->file2
+				
+		If build1.csproj imports Dir2\build2.csproj (which contains an ItemGroup containing file1 and file2) and tries to reference the ItemGroup from build2.csproj it will fail because the relative paths will point at Dir1 instead of Dir2
+	-->
+	<Import Project="$(ProjectToGetFiles)" Condition="'$(ProjectToGetFiles)' != '' AND Exists($(ProjectToGetFiles))" />
+	<Target Name="GetContentFiles" 
+					Condition="'$(ProjectToGetFiles)' != ''" 
+					Outputs="@(Content -> '$(ProjectDir)%(RelativeDir)%(Filename)%(Extension)')">
+	</Target>
+</Project>

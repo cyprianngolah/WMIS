@@ -5,6 +5,15 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMIS", "WMIS\WMIS.csproj", "{1E36421F-1E5B-4EF7-9076-EFF237C49FDE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy Scripts", "Deploy Scripts", "{0E72B27A-B8C0-45C5-A627-9CACDF866E45}"
+	ProjectSection(SolutionItems) = preProject
+		_DeployScripts\DeployToDev.bat = _DeployScripts\DeployToDev.bat
+		_DeployScripts\DeployToDev.msbuild = _DeployScripts\DeployToDev.msbuild
+		_DeployScripts\PowerShellCheatSheet.txt = _DeployScripts\PowerShellCheatSheet.txt
+		_DeployScripts\provision-webserver.ps1 = _DeployScripts\provision-webserver.ps1
+		_DeployScripts\WebDeploy.msbuild = _DeployScripts\WebDeploy.msbuild
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
