@@ -147,9 +147,6 @@
 
 	<!-- Deploy the Artifacts -->
 	<Target Name="Deploy">
-		<!-- Synchronize the contents of the Deployment folder to the specified website on teh specified machine -->
-		<Exec Command="$(MsDeployExe) -verb:sync -source:package=$(PackageFile),includeAcls=false -dest:contentpath='$(DestinationSite)',computerName=$(DestinationComputer),username='$(DestinationUsername)',password='$(DestinationPassword)',authtype='basic',includeAcls='False' –allowUntrusted $(DoNotDeleteRule) -skip:skipAction=Delete,absolutePath=\\aspnet_client$" />
-
 		<MSBuild Projects="webDeploy.msbuild"
 						BuildInParallel="true"
 						Targets="Deploy"
