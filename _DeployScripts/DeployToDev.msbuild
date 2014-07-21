@@ -51,7 +51,7 @@
 
 		<!-- WebProjects are projects that will have "Content" that needs to be deployed -->
 		<!-- Examples of Content include images, aspx files, etc (files that are not compiled and not embedded in the assembly)-->
-		<WebProject Include="..\WMIS\WMIS.csproj.csproj" />
+		<WebProject Include="..\WMIS\WMIS.csproj" />
 	</ItemGroup>
 
 	<!--Build the Solution for the specified Configuration -->
