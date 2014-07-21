@@ -13,6 +13,8 @@
 	</PropertyGroup>
 
 	<Target Name="BuildPackage">
+		<Delete Files="$(PackageFile)" />
+
 		<Exec Command="$(MsDeployExe) -verb:sync -source:contentPath='$(MSBuildProjectDirectory)\Deploy\' -dest:package=$(PackageFile) -disableLink:AppPoolExtension -disableLink:CertificateExtension -disableLink:ContentExtension"
 		 ContinueOnError="false" />
 	</Target>

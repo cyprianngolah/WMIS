@@ -16,8 +16,6 @@
 		<DoNotDeleteRule Condition="'$(DoNotDelete)' == '' OR '$(DoNotDelete)' == '1'">-enableRule:DoNotDeleteRule</DoNotDeleteRule>
 		<!-- Otherwise Delete any files that are at the Destination but not in the package -->
 		<DoNotDeleteRule Condition="'$(DoNotDelete)' == '0'"></DoNotDeleteRule>
-
-		<PackageFile>Workspace.zip</PackageFile>
 	</PropertyGroup>
 
 	<!-- Environment Configurations -->
@@ -102,7 +100,6 @@
 	<Target Name="BuildPackage">
 		<!-- Ensure no remnants from previous builds-->
 		<RemoveDir Directories="Deploy\" ContinueOnError="true" />
-		<Delete Files="$(PackageFile)" />
 
 		<!-- 
 			ForEach WebProject, open up the .csproj file and get the "Content" items
