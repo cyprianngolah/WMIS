@@ -150,7 +150,7 @@
 		<MSBuild Projects="webDeploy.msbuild"
 						BuildInParallel="true"
 						Targets="Deploy"
-						Properties="DestinationSite=%(DeploymentTarget.DestinationSite);DestinationComputer=%(DeploymentTarget.DestinationComputer);DestinationUsername=%(DeploymentTarget.DestinationUserName);DestinationPassword=%(DeploymentTarget.DestinationPassword);DoNotDelete=0" />
+						Properties="DestinationSite=$(DestinationSite);DestinationComputer=$(DestinationComputer);DestinationUsername=$(DestinationUserName);DestinationPassword=$(DestinationPassword);DoNotDelete=0" />
 	</Target>
 
 	<!-- 
