@@ -124,7 +124,7 @@
 
 		<!-- Copy the files to the Deploy folder -->
 		<ItemGroup>
-			<ProjectFiles Include="WMIS\**\*.*" />
+			<ProjectFiles Include="..\WMIS\**\*.*" />
 		</ItemGroup>
 		<!-- 		
 				<Copy SourceFiles="@(ProjectFiles)"
