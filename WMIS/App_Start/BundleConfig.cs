@@ -1,11 +1,16 @@
-﻿using System.Web;
-using System.Web.Optimization;
-
-namespace WMIS
+﻿namespace Wmis
 {
+	using System.Web.Optimization;
+
+	/// <summary>
+	/// The CSS and JS Bundle Configuration
+	/// </summary>
 	public class BundleConfig
 	{
-		// For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
+		/// <summary>
+		/// Registration of bundles
+		/// </summary>
+		/// <param name="bundles">Collection of bundles</param>
 		public static void RegisterBundles(BundleCollection bundles)
 		{
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

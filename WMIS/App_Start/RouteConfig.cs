@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace WMIS
+﻿namespace Wmis
 {
+	using System.Web.Mvc;
+	using System.Web.Routing;
+
+	/// <summary>
+	/// The Route Configuration for the MVC Application
+	/// </summary>
 	public class RouteConfig
 	{
+		/// <summary>
+		/// Registers the Routes
+		/// </summary>
+		/// <param name="routes">The Collection of Routes</param>
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -16,8 +19,7 @@ namespace WMIS
 			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
-				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-			);
+				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
 		}
 	}
 }

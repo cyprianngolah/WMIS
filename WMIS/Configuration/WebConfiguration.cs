@@ -1,5 +1,6 @@
 ﻿[assembly: System.CLSCompliant(true)]
-namespace WMIS.Configuration
+
+namespace Wmis.Configuration
 {
 	using System;
 	using System.Collections.Generic;
@@ -10,17 +11,26 @@ namespace WMIS.Configuration
 	using System.Runtime.Serialization;
 	using System.Web.Hosting;
 
+	/// <summary>
+	/// Provides runtime app settings and connection strings based on current environment (rather than at compile time)
+	/// </summary>
 	public class WebConfiguration
 	{
 		#region Fields
-		// Static Config File Settings Keys
+		/// <summary>
+		/// web.config app setting for Environment Map
+		/// </summary>
 		protected const string EnvironmentMapSettingKey = "HostEnvironmentMap";
+
+		/// <summary>
+		/// web.config app setting for Fallback Environment
+		/// </summary>
 		protected const string FallbackEnvironmentSettingKey = "FallbackEnvironment";
 		#endregion
 
 		#region Properties
 		/// <summary>
-		/// All of the AppSettings in the web.config merged with the AppSettings from the environment.*.config for the CurrentEnvironment
+		/// Gets or sets all of the AppSettings in the web.config merged with the AppSettings from the environment.*.config for the CurrentEnvironment
 		/// </summary>
 		public Dictionary<string, string> AppSettings
 		{
@@ -29,7 +39,7 @@ namespace WMIS.Configuration
 		}
 
 		/// <summary>
-		/// All of the ConnectionStrings in the web.config merged with the ConnectionStrings from the environment.*.config for the CurrentEnvironment
+		/// Gets or sets all of the ConnectionStrings in the web.config merged with the ConnectionStrings from the environment.*.config for the CurrentEnvironment
 		/// </summary>
 		[IgnoreDataMember]
 		public Dictionary<string, string> ConnectionStrings
@@ -40,7 +50,7 @@ namespace WMIS.Configuration
 
 		#region Environment Overrides
 		/// <summary>
-		/// The folder, relative to the executing DLL, in which the environment.*.config files can be found
+		/// Gets the folder, relative to the executing DLL, in which the environment.*.config files can be found
 		/// </summary>
 		public string EnvironmentFileFolder 
 		{
@@ -49,7 +59,7 @@ namespace WMIS.Configuration
 		}
 
 		/// <summary>
-		/// Name of the machine used to compare against the set of Hosts in the HostEnvironmentMap
+		/// Gets the Name of the machine used to compare against the set of Hosts in the HostEnvironmentMap
 		/// </summary>
 		public string MachineName
 		{
@@ -58,7 +68,7 @@ namespace WMIS.Configuration
 		}
 
 		/// <summary>
-		/// Name of the Machine in Conjunction with the name of the IIS Website this site is being hosted on
+		/// Gets the Name of the Machine in Conjunction with the name of the IIS Website this site is being hosted on
 		/// </summary>
 		public string SiteName
 		{
@@ -67,7 +77,7 @@ namespace WMIS.Configuration
 		}
 
 		/// <summary>
-		/// Whether or not a value in the HostEnvironmentMap exists for the current MachineName
+		/// Gets a value indicating whether or not a value in the HostEnvironmentMap exists for the current MachineName
 		/// </summary>
 		public bool IsUsingFallback
 		{
@@ -76,7 +86,7 @@ namespace WMIS.Configuration
 		}
 
 		/// <summary>
-		/// The Environment used to load the environment.*.config file
+		/// Gets The Environment used to load the environment.*.config file
 		/// </summary>
 		public string CurrentEnvironment
 		{
@@ -85,7 +95,7 @@ namespace WMIS.Configuration
 		}
 
 		/// <summary>
-		/// Path to the environment.*.config file that was loaded for the CurrentEnvironment
+		/// Gets the Path to the environment.*.config file that was loaded for the CurrentEnvironment
 		/// </summary>
 		public string CurrentEnvironmentConfigFilePath
 		{
@@ -94,7 +104,7 @@ namespace WMIS.Configuration
 		}
 
 		/// <summary>
-		/// The maps specified in the web.config between Host/Site and Environment
+		/// Gets The maps specified in the web.config between Host/Site and Environment
 		/// </summary>
 		public Dictionary<string, string> HostEnvironmentMap
 		{
@@ -104,6 +114,9 @@ namespace WMIS.Configuration
 		#endregion
 
 		#region Properties
+		/// <summary>
+		/// Gets a value indicating whether or not an exception should be generated if the mapped environment file is missing
+		/// </summary>
 		public bool ErrorOnMissingFile
 		{
 			get;
@@ -112,7 +125,7 @@ namespace WMIS.Configuration
 		#endregion
 
 		/// <summary>
-		/// Returns the set of ConnectionStrings contained in the config file
+		/// Gets the set of ConnectionStrings contained in the config file
 		/// </summary>
 		[IgnoreDataMember]
 		public IEnumerable<KeyValuePair<string, string>> SqlConnectionStrings
@@ -125,6 +138,11 @@ namespace WMIS.Configuration
 		#endregion
 
 		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the <see cref="WebConfiguration" /> class.
+		/// </summary>
+		/// <param name="relativeEnvironmentFolder">Path to Environments folder (relative to working directory)</param>
+		/// <param name="errorOnMissingFile">Whether an exception should be generated if environment.config file cannot be found</param>
 		public WebConfiguration(string relativeEnvironmentFolder = "\\Environments", bool errorOnMissingFile = true)
 		{
 			EnvironmentFileFolder = relativeEnvironmentFolder;
@@ -134,8 +152,8 @@ namespace WMIS.Configuration
 			MachineName = Environment.MachineName.ToLower();
 
 			// Get MachineName + the Site Name - This is the value that should be used for Web Services/Sites
-			var siteName = string.IsNullOrEmpty(HostingEnvironment.SiteName) ? "" : HostingEnvironment.SiteName;
-			SiteName = MachineName + "-" + siteName.Replace(" ", "").ToLower();
+			var siteName = string.IsNullOrEmpty(HostingEnvironment.SiteName) ? string.Empty : HostingEnvironment.SiteName;
+			SiteName = MachineName + "-" + siteName.Replace(" ", string.Empty).ToLower();
 
 			// Get the Settings out of the config file
 			var environmentSetting = ConfigurationManager.AppSettings[EnvironmentMapSettingKey];
@@ -165,6 +183,12 @@ namespace WMIS.Configuration
 		#endregion
 
 		#region Private Methods
+		/// <summary>
+		/// Merges the AppSettings from the web/app.config file with the settings from the environment.*.config file
+		/// </summary>
+		/// <param name="originalSettings">App Settings from the web/app.config file</param>
+		/// <param name="overrideSettings">Settings from the environment.*.config file</param>
+		/// <returns>The Merged collection</returns>
 		protected Dictionary<string, string> MergeAppSettings(NameValueCollection originalSettings, KeyValueConfigurationCollection overrideSettings)
 		{
 			// Add all the override settings first
@@ -175,9 +199,16 @@ namespace WMIS.Configuration
 			{
 				settings.Add(key, originalSettings[key]);
 			}
+
 			return settings;
 		}
 
+		/// <summary>
+		/// Merges the Connection Strings from the web/app.config file with the settings from the environment.*.config file
+		/// </summary>
+		/// <param name="originalConnectionStrings">Connection Strings from the web/app.config file</param>
+		/// <param name="overrideConnectionStrings">Connection Strings from the environment.*.config file</param>
+		/// <returns>The Merged collection</returns>
 		protected Dictionary<string, string> MergeConnectionStrings(ConnectionStringSettingsCollection originalConnectionStrings, ConnectionStringSettingsCollection overrideConnectionStrings)
 		{
 			var connectionStrings = new Dictionary<string, string>();
@@ -207,8 +238,8 @@ namespace WMIS.Configuration
 		/// <summary>
 		/// Parse the Dictionary of Host/Site => Environment mappings out of a string
 		/// </summary>
-		/// <param name="settingsToParse"></param>
-		/// <returns></returns>
+		/// <param name="settingsToParse">The string of mappings to be parsed</param>
+		/// <returns>The Dictionary of host to environment mappings.</returns>
 		private Dictionary<string, string> GetHostEnvironmentMap(string settingsToParse)
 		{
 			// String looks like "host1/environment1; host2/environment2;"
@@ -238,13 +269,13 @@ namespace WMIS.Configuration
 		/// <summary>
 		/// Reads the settings out of the environment.*.config file
 		/// </summary>
-		/// <param name="currentEnvironment"></param>
+		/// <param name="currentEnvironment">The Current Environment's name</param>
 		private void RetrieveSettingsFromEnvironmentConfig(string currentEnvironment)
 		{
 			// Get the path to the environment.*.config file
 			var configurationFileName = string.Format("environment.{0}.config", currentEnvironment);
 			var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-			directory = directory.Replace(@"file:\", "");
+			directory = directory.Replace(@"file:\", string.Empty);
 			CurrentEnvironmentConfigFilePath = directory + EnvironmentFileFolder + "\\" + configurationFileName;
 			if (!File.Exists(CurrentEnvironmentConfigFilePath))
 			{
@@ -252,6 +283,7 @@ namespace WMIS.Configuration
 				{
 					throw new ConfigurationErrorsException("Could not open environment configuration file: " + CurrentEnvironmentConfigFilePath);
 				}
+
 				return;
 			}
 
@@ -262,11 +294,6 @@ namespace WMIS.Configuration
 			};
 			var config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-			MergeSettings(config);
-		}
-
-		public virtual void MergeSettings(Configuration config)
-		{
 			// Merge the environment.*.config appSettings and connectionStrings with the web.config settings
 			AppSettings = MergeAppSettings(ConfigurationManager.AppSettings, config.AppSettings.Settings);
 			ConnectionStrings = MergeConnectionStrings(ConfigurationManager.ConnectionStrings, config.ConnectionStrings.ConnectionStrings);
