@@ -108,6 +108,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Stored Procedures" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\WMISUser.sql" />
@@ -116,5 +117,8 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="WMIS.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PublishProfiles\WMIS.local.xml" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0" DefaultTargets="Build; GenerateScript;">
+	<PropertyGroup>
+		<!-- Tooling Locations-->
+		<IDETools>$(VS100COMNTOOLS)..\IDE\</IDETools>
+		<MsTestExe>$(IDETools)MSTest.exe</MsTestExe>
+		<SqlPackageExe>C:\Program Files (x86)\Microsoft SQL Server\110\DAC\bin\sqlpackage.exe</SqlPackageExe>
+
+		<!-- The default Compile configuration (i.e. Debug/Release) the build will use if none specified-->
+		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+
+		<DacPackFilename>WMIS.Database.dacpac</DacPackFilename>
+		<DacPacLocation>$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\$(DacPackFilename)</DacPacLocation>
+		<DeltaScriptLocation>DeltaScript.sql</DeltaScriptLocation>
+	</PropertyGroup>
+
+	<!-- Environment Configurations -->
+	<!-- Local Dev Database-->
+	<PropertyGroup Condition="!EXISTS($(DatabaseTarget)) Or $(DatabaseTarget) == 'local'">
+		<TargetServer>.</TargetServer>
+		<TargetDatabaseName>Wmis</TargetDatabaseName>
+		<TargetUserName>WMISUser</TargetUserName>
+		<TargetPassword>9868235Ma399vZrCgMJ3</TargetPassword>
+	</PropertyGroup>
+
+	<!-- Dev Database -->
+	<PropertyGroup Condition="$(DatabaseTarget) == 'dev'">
+		<TargetServer>.</TargetServer>
+		<TargetDatabaseName>Wmis</TargetDatabaseName>
+		<TargetUserName>WMISUser</TargetUserName>
+		<TargetPassword>9868235Ma399vZrCgMJ3</TargetPassword>
+	</PropertyGroup>
+
+	<!-- Test Database -->
+	<PropertyGroup Condition="$(DatabaseTarget) == 'test'">
+		<TargetServer>.</TargetServer>
+		<TargetDatabaseName>Wmis</TargetDatabaseName>
+		<TargetUserName>WMISUser</TargetUserName>
+		<TargetPassword>9868235Ma399vZrCgMJ3</TargetPassword>
+	</PropertyGroup>
+
+	<!-- Prod Database -->
+	<PropertyGroup Condition="$(DatabaseTarget) == 'prod'">
+		<TargetServer>.</TargetServer>
+		<TargetDatabaseName>Wmis</TargetDatabaseName>
+		<TargetUserName>WMISUser</TargetUserName>
+		<TargetPassword>9868235Ma399vZrCgMJ3</TargetPassword>
+	</PropertyGroup>
+	<!-- End Environment Configurations-->
+	
+	<!-- Solutions that are included in the Deployment Package -->
+	<ItemGroup>
+		<!-- Solutions to compile (the DLLs will be included in the package)-->
+		<SolutionToCompile Include="..\WMIS.sln" />
+	</ItemGroup>
+
+	<!--Build the Solution for the specified Configuration -->
+	<Target Name="Build">
+		<!-- This step builds all but the .vdproj (setup) projects (as .vdprof files are not compatible with msbuild) -->
+		<MSBuild Projects="@(SolutionToCompile)"
+				 Properties="Configuration=$(Configuration);IgnoreProjectExtensions=.vdproj;"
+				 ContinueOnError="true">
+			<Output
+				TaskParameter="TargetOutputs"
+				ItemName="CompiledAsemblies" />
+		</MSBuild>
+
+		<!-- Publish DacPac file -->
+		<Message Importance="High"
+						 Text="##teamcity[publishArtifacts '$(DacPacLocation)']" />
+	</Target>
+	
+	<!-- Build the Diff Script between the .dacpac file and the target database-->
+	<Target Name="GenerateScript"
+			DependsOnTargets="Build">
+
+		<Exec 
+			WorkingDirectory="$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\"
+			Command="&quot;$(SqlPackageExe)&quot; /Action:Script /SourceFile:&quot;$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\$(DacPackFilename)&quot; /TargetServerName:&quot;$(TargetServer)&quot; /TargetDatabaseName:&quot;$(TargetDatabaseName)&quot; /TargetUser:&quot;$(TargetUserName)&quot; /TargetPassword:&quot;$(TargetPassword)&quot; /OutputPath:&quot;$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\$(DeltaScriptLocation)&quot;" />
+
+		<!-- Publish Delta Script -->
+		<Message Importance="High"
+						 Text="##teamcity[publishArtifacts '$(DeltaScriptLocation)']" />
+	</Target>
+	
+	<!-- Update the Database  -->
+	<Target Name="UpdateDatabase">
+		<Exec 
+			WorkingDirectory="$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\"
+			Command="&quot;$(SqlPackageExe)&quot; /Action:Publish /SourceFile:&quot;$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\$(DacPackFilename)&quot; /TargetServerName:&quot;$(TargetServer)&quot; /TargetDatabaseName:&quot;$(TargetDatabaseName)&quot; /TargetUser:&quot;$(TargetUserName)&quot; /TargetPassword:&quot;$(TargetPassword)&quot;" />
+
+		<!-- Publish Delta Script -->
+		<Message Importance="High"
+						 Text="##teamcity[publishArtifacts '$(DeltaScriptLocation)']" />
+	</Target>
+</Project>
