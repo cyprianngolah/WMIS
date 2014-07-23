@@ -21,31 +21,31 @@
 		<TargetServer>.</TargetServer>
 		<TargetDatabaseName>Wmis</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
-		<TargetPassword>9868235Ma399vZrCgMJ3</TargetPassword>
+		<TargetPassword>0rangeWMIS$!</TargetPassword>
 	</PropertyGroup>
 
 	<!-- Dev Database -->
 	<PropertyGroup Condition="$(DatabaseTarget) == 'dev'">
-		<TargetServer>.</TargetServer>
-		<TargetDatabaseName>Wmis</TargetDatabaseName>
+		<TargetServer>YKVSQL04T\SQL1</TargetServer>
+		<TargetDatabaseName>Wmis-Dev</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
-		<TargetPassword>9868235Ma399vZrCgMJ3</TargetPassword>
+		<TargetPassword>0rangeWMIS$!</TargetPassword>
 	</PropertyGroup>
 
 	<!-- Test Database -->
 	<PropertyGroup Condition="$(DatabaseTarget) == 'test'">
-		<TargetServer>.</TargetServer>
-		<TargetDatabaseName>Wmis</TargetDatabaseName>
+		<TargetServer>YKVSQL04T\SQL1</TargetServer>
+		<TargetDatabaseName>Wmis-Test</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
-		<TargetPassword>9868235Ma399vZrCgMJ3</TargetPassword>
+		<TargetPassword>0rangeWMIS$!</TargetPassword>
 	</PropertyGroup>
 
 	<!-- Prod Database -->
 	<PropertyGroup Condition="$(DatabaseTarget) == 'prod'">
-		<TargetServer>.</TargetServer>
-		<TargetDatabaseName>Wmis</TargetDatabaseName>
+		<TargetServer>YKVSQL53P\sql1</TargetServer>
+		<TargetDatabaseName>Wmis-Prod</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
-		<TargetPassword>9868235Ma399vZrCgMJ3</TargetPassword>
+		<TargetPassword>0rangeWMIS$!</TargetPassword>
 	</PropertyGroup>
 	<!-- End Environment Configurations-->
 	

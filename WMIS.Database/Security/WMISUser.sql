@@ -1,4 +1,4 @@
-﻿CREATE LOGIN [WMISUser] WITH PASSWORD = N'|{z|olgBznrgJbrGmuiebrltmsFT7_&#$!~<||dxwc$yq|~P';
+﻿CREATE LOGIN [WMISUser] WITH PASSWORD = N'0rangeWMIS$!';
 
 GO
 

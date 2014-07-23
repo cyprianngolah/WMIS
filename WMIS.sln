@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wmis", "WMIS\Wmis.csproj", "{1E36421F-1E5B-4EF7-9076-EFF237C49FDE}"
 EndProject
@@ -9,8 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy Scripts", "Deploy Sc
 	ProjectSection(SolutionItems) = preProject
 		_DeployScripts\DeployDatabase.bat = _DeployScripts\DeployDatabase.bat
 		_DeployScripts\DeployDatabase.msbuild = _DeployScripts\DeployDatabase.msbuild
-		_DeployScripts\DeployToDev.bat = _DeployScripts\DeployToDev.bat
-		_DeployScripts\DeployToDev.msbuild = _DeployScripts\DeployToDev.msbuild
+		_DeployScripts\DeployWebsite.bat = _DeployScripts\DeployWebsite.bat
+		_DeployScripts\DeployWebsite.msbuild = _DeployScripts\DeployWebsite.msbuild
 		_DeployScripts\PowerShellCheatSheet.txt = _DeployScripts\PowerShellCheatSheet.txt
 		_DeployScripts\provision-webserver.ps1 = _DeployScripts\provision-webserver.ps1
 		_DeployScripts\WebDeploy.msbuild = _DeployScripts\WebDeploy.msbuild
