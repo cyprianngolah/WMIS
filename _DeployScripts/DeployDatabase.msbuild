@@ -26,7 +26,7 @@
 
 	<!-- Dev Database -->
 	<PropertyGroup Condition="$(DatabaseTarget) == 'dev'">
-		<TargetServer>YKVSQL04T\SQL1</TargetServer>
+		<TargetServer>YK53-VSQL01T\SQL1</TargetServer>
 		<TargetDatabaseName>Wmis-Dev</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
 		<TargetPassword>0rangeWMIS$!</TargetPassword>
@@ -34,7 +34,7 @@
 
 	<!-- Test Database -->
 	<PropertyGroup Condition="$(DatabaseTarget) == 'test'">
-		<TargetServer>YKVSQL04T\SQL1</TargetServer>
+		<TargetServer>YK53-VSQL01T\SQL1</TargetServer>
 		<TargetDatabaseName>Wmis-Test</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
 		<TargetPassword>0rangeWMIS$!</TargetPassword>
