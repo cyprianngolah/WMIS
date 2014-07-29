@@ -113,6 +113,20 @@
     <Build Include="Security\WMISUser.sql" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Security\Permissions.sql" />
+    <Build Include="dbo\Tables\Taxonomy.sql" />
+    <Build Include="dbo\Tables\TaxonomyGroups.sql" />
+    <Build Include="dbo\Tables\TaxonomySynonyms.sql" />
+    <Build Include="dbo\Tables\Species.sql" />
+    <Build Include="dbo\Tables\SpeciesEcozones.sql" />
+    <Build Include="dbo\Tables\Ecozones.sql" />
+    <Build Include="dbo\Tables\Ecoregions.sql" />
+    <Build Include="dbo\Tables\SpeciesEcoregions.sql" />
+    <Build Include="dbo\Tables\ProtectedAreas.sql" />
+    <Build Include="dbo\Tables\SpeciesProtectedAreas.sql" />
+    <Build Include="dbo\Tables\StatusRanks.sql" />
+    <Build Include="dbo\Tables\References.sql" />
+    <Build Include="dbo\Tables\ReferenceCategories.sql" />
+    <Build Include="dbo\Tables\SpeciesReferences.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="WMIS.PostDeployment.sql" />
