@@ -1,0 +1,189 @@
+﻿@{
+	ViewBag.Title = "Bio-Diversity";
+}
+
+@section Styles {
+	@Html.Raw(Styles.Render("~/Content/datatables"))
+}
+
+@section Scripts {
+	@Html.Raw(Scripts.Render("~/bundles/datatables"))
+	<script type="text/javascript">
+		var bioDiversityTable;
+		$(function() {
+			initDataTable();
+
+			$("#searchButton").click(function() {
+				bioDiversityTable.fnFilter();
+			});
+		});
+
+		function initDataTable() {
+			var parameters;
+			bioDiversityTable = $('#biodiversity').dataTable({
+				"iDisplayLength": 25,
+				"bJQueryUI": true,
+				"bProcessing": true,
+				"serverSide": true,
+				"ajaxSource": "/api/biodiversity/",
+				"pagingType": "bootstrap",
+				"dom": '<"top">rt<"bottom"ip><"clear">',
+				"columns": [
+					{ "data": "name" },
+					{ "data": "name" },
+					{ "data": "name" },
+					{ "data": "commonName" },
+					{ "data": "name" },
+					{ "data": "subSpeciesName" },
+					{ "data": "name" },
+					{ "data": "name" },
+					{ "data": "lastUpdated" }
+				],
+				// Add extra search parameters to data request here
+				//"fnServerParams": function(aoData) {
+				//	// Like:
+				//	aoData.push({ "name": "more_data", "value": "my_value" });
+				//},
+				"fnServerData": function(source, data, callback, settings) {
+					var sortDirection = null;
+					var sortedColumnName = null;
+					if (settings.aaSorting.length > 0) {
+						sortDirection = settings.aaSorting[0][1];
+						var sortedColumnIndex = settings.aaSorting[0][0];
+						sortedColumnName = settings.aoColumns[sortedColumnIndex].mData;
+					}
+
+					// Parameters that are passed during the request to the webservice
+					// We're doing some transforms here because I don't want to have to write
+					// DataTable specific logic into the Web Api
+					parameters = {
+						// Data Tables parameter transforms
+						startRow: settings.oAjaxData.iDisplayStart,
+						rowCount: settings.oAjaxData.iDisplayLength,
+						sortBy: sortedColumnName,
+						sortDirection: sortDirection,
+						i: settings.oAjaxData.sEcho,
+						
+						// Custom search data
+						group: $("#group").val(),
+						order: $("#order").val(),
+						family: $("#family").val(),
+						keywords: $("#keywords").val()
+					};
+
+					$.getJSON(source, parameters, function(json) {
+						// On Success of the call, transform some of the data and call the specified callback
+						// Transforms are to transform returned data into DataTable expected format so paging
+						// will work properly.
+						json.draw = parameters.i;
+						json.recordsTotal = json.resultCount;
+						json.recordsFiltered = json.resultCount;
+						callback(json);
+					});
+				},
+				"fnDrawCallback": function () {
+					bioDiversityTable.$('tr.success').removeClass('success');
+					$("#editButton").addClass('disabled');
+					
+					$("#biodiversity tbody tr").click(function() {
+						// Highlight selected row
+						if ($(this).hasClass('success')) {
+							$(this).removeClass('success');
+							$("#editButton").addClass('disabled');
+						} else {
+							bioDiversityTable.$('tr.success').removeClass('success');
+							$(this).addClass('success');
+							if (bioDiversityTable.$('tr.success').length) {
+								// Get Data
+								var position = bioDiversityTable.fnGetPosition(this);
+								var data = bioDiversityTable.fnGetData(position);
+						
+								if (data.key) {
+									$("#editButton").removeClass('disabled');
+									$("#editButton").prop("href", "/BioDiversity/Edit/" + data.key);
+								} 
+							}
+						}
+					});
+				}
+			});
+		}
+	</script>
+}
+	<div class="row">
+		<div class="col-md-12 text-right">
+			<a href="/BioDiversity/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+			<a href="/BioDiversity/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+		</div>
+	</div>
+
+	<div class="well" style="margin-bottom: 0px;">
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal center" role="form">
+					@*<div class="row">*@
+					<div class="col-md-2">
+						<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+							<label class="sr-only" for="group">Group</label>
+							<select class="form-control" id="group" name="group">
+								<option value="">Group</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+							<label class="sr-only" for="order">Order</label>
+							<select class="form-control" id="order" name="order">
+								<option value="">Order</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+							<label class="sr-only" for="family">Family</label>
+							<select class="form-control" id="family" name="family">
+								<option value="">Family</option>
+							</select>
+						</div>
+					</div>
+
+					<label class="sr-only" for="keywords">Keywords</label>
+					<div class="col-md-6">
+						<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+							<div class="input-group">
+								<input type="text" id="keywords" class="form-control" placeholder="Keywords" />
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button" id="searchButton">Search</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					@*</div>*@
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<table id="biodiversity" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Group</th>
+						<th>Order</th>
+						<th>Family</th>
+						<th>Common Name</th>
+						<th>Species</th>
+						<th>Sub Species</th>
+						<th>Eco Type</th>
+						<th>Population</th>
+						<th>Last Updated</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>,
