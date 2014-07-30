@@ -67,6 +67,7 @@
 	[SRank]                                        NVARCHAR (50)     NULL,
 	[DecisionProcessDescription]                   NVARCHAR (MAX)    NULL,
 	[EconomicStatusDescription]                    NVARCHAR (MAX)    NULL,
+	[COSEWICStatusId]                              INT               NULL,
 	[COSEWICStatusDescription]                     NVARCHAR (MAX)    NULL,
 	[NRank]                                        NVARCHAR (50)     NULL,
 	[SARAStatus]                                   NVARCHAR (50)     NULL,
@@ -92,5 +93,6 @@
 	CONSTRAINT [FK_Species_Taxonomy_Family] FOREIGN KEY ([FamilyTaxonomyId]) REFERENCES [dbo].[Taxonomy] ([TaxonomyId]),
 	CONSTRAINT [FK_Species_Taxonomy_SubFamily] FOREIGN KEY ([SubFamilyTaxonomyId]) REFERENCES [dbo].[Taxonomy] ([TaxonomyId]),
 	CONSTRAINT [FK_Species_Taxonomy_Group] FOREIGN KEY ([GroupTaxonomyId]) REFERENCES [dbo].[Taxonomy] ([TaxonomyId]),
-	CONSTRAINT [FK_Species_StatusRanks] FOREIGN KEY ([StatusRankId]) REFERENCES [dbo].[StatusRanks] ([StatusRankId])
+	CONSTRAINT [FK_Species_StatusRanks] FOREIGN KEY ([StatusRankId]) REFERENCES [dbo].[StatusRanks] ([StatusRankId]),
+	CONSTRAINT [FK_Species_COSEWICStatus] FOREIGN KEY ([COSEWICStatusId]) REFERENCES [dbo].[COSEWICStatus] ([COSEWICStatusId])
 )
