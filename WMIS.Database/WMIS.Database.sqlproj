@@ -127,6 +127,7 @@
     <Build Include="dbo\Tables\References.sql" />
     <Build Include="dbo\Tables\ReferenceCategories.sql" />
     <Build Include="dbo\Tables\SpeciesReferences.sql" />
+    <Build Include="dbo\Tables\COSEWICStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="WMIS.PostDeployment.sql" />

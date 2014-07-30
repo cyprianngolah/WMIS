@@ -70,7 +70,7 @@ USING (VALUES
 	(9, N'HostFish'),
 	(10, N'OtherReproduction'),
 	(11, N'Ecozone'),
-	(12, N'EcozoneRegion'),
+	(12, N'Ecoregion'),
 	(13, N'ProtectedArea'),
 	(14, N'DistributionInNWT'),
 	(15, N'HistoricalDistribution'),
@@ -98,3 +98,18 @@ WHEN MATCHED THEN UPDATE SET [Name] = [source].[Name]
 WHEN NOT MATCHED BY TARGET THEN INSERT ([ReferenceCategoryId], [Name]) VALUES ([ReferenceCategoryId], [Name]) 
 WHEN NOT MATCHED BY SOURCE THEN DELETE;
 SET IDENTITY_INSERT [dbo].[ReferenceCategories] OFF;
+
+-- [dbo].[COSEWICStatus] Reference Data
+SET IDENTITY_INSERT [dbo].[COSEWICStatus] ON;
+MERGE INTO [dbo].[COSEWICStatus] AS [target]
+USING (VALUES 
+	(1, N'Endangered'), 
+	(2, N'Threatened'),
+	(3, N'Special Concern')
+) 
+AS [source] ([COSEWICStatusId], [Name]) 
+ON [target].[COSEWICStatusId] = [source].[COSEWICStatusId]
+WHEN MATCHED THEN UPDATE SET [Name] = [source].[Name]
+WHEN NOT MATCHED BY TARGET THEN INSERT ([COSEWICStatusId], [Name]) VALUES ([COSEWICStatusId], [Name]) 
+WHEN NOT MATCHED BY SOURCE THEN DELETE;
+SET IDENTITY_INSERT [dbo].[COSEWICStatus] OFF;
