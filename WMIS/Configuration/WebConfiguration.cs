@@ -138,12 +138,17 @@ namespace Wmis.Configuration
 		#endregion
 
 		#region Constructors
+		public WebConfiguration() : this("\\Environments", true)
+		{
+			
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WebConfiguration" /> class.
 		/// </summary>
 		/// <param name="relativeEnvironmentFolder">Path to Environments folder (relative to working directory)</param>
 		/// <param name="errorOnMissingFile">Whether an exception should be generated if environment.config file cannot be found</param>
-		public WebConfiguration(string relativeEnvironmentFolder = "\\Environments", bool errorOnMissingFile = true)
+		protected WebConfiguration(string relativeEnvironmentFolder, bool errorOnMissingFile)
 		{
 			EnvironmentFileFolder = relativeEnvironmentFolder;
 			ErrorOnMissingFile = errorOnMissingFile;

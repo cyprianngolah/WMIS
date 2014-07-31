@@ -3,20 +3,51 @@
 }
 
 @section Styles {
-	@Html.Raw(Styles.Render("~/Content/datatables"))
+	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
+	@Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
 @section Scripts {
 	@Html.Raw(Scripts.Render("~/bundles/datatables"))
+	@Html.Raw(Scripts.Render("~/bundles/select2"))
+
 	<script type="text/javascript">
 		var bioDiversityTable;
 		$(function() {
 			initDataTable();
+			initSelect2($("#group"), "/api/taxonomy/group/", "Group");
+			initSelect2($("#order"), "/api/taxonomy/order/", "Order");
+			initSelect2($("#family"), "/api/taxonomy/family/", "Family");
 
 			$("#searchButton").click(function() {
 				bioDiversityTable.fnFilter();
 			});
 		});
+		
+		function initSelect2($select, ajaxUrl, placeHolder) {
+			$.ajax({
+				url: ajaxUrl,
+				dataType: "json",
+				type: "GET",
+				xhrFields: {
+					withCredentials: true
+				}
+			}).done(function(data) {
+				appendDataToSelect(data, $select);
+			});
+
+			$select.select2({
+				placeholder: placeHolder
+			});
+		}
+
+		function appendDataToSelect(data, $select) {
+			$select.empty();
+			$select.append("<option value=''>All</option>");
+			$.each(data, function (index, value) {
+				$select.append($("<option></option>").attr("value", value.key).text(value.name));
+			});
+		}
 
 		function initDataTable() {
 			var parameters;
@@ -39,11 +70,6 @@
 					{ "data": "name" },
 					{ "data": "lastUpdated" }
 				],
-				// Add extra search parameters to data request here
-				//"fnServerParams": function(aoData) {
-				//	// Like:
-				//	aoData.push({ "name": "more_data", "value": "my_value" });
-				//},
 				"fnServerData": function(source, data, callback, settings) {
 					var sortDirection = null;
 					var sortedColumnName = null;
@@ -82,18 +108,18 @@
 					});
 				},
 				"fnDrawCallback": function () {
-					bioDiversityTable.$('tr.success').removeClass('success');
+					bioDiversityTable.$('tr.info').removeClass('info');
 					$("#editButton").addClass('disabled');
 					
 					$("#biodiversity tbody tr").click(function() {
 						// Highlight selected row
-						if ($(this).hasClass('success')) {
-							$(this).removeClass('success');
+						if ($(this).hasClass('info')) {
+							$(this).removeClass('info');
 							$("#editButton").addClass('disabled');
 						} else {
-							bioDiversityTable.$('tr.success').removeClass('success');
-							$(this).addClass('success');
-							if (bioDiversityTable.$('tr.success').length) {
+							bioDiversityTable.$('tr.info').removeClass('info');
+							$(this).addClass('info');
+							if (bioDiversityTable.$('tr.info').length) {
 								// Get Data
 								var position = bioDiversityTable.fnGetPosition(this);
 								var data = bioDiversityTable.fnGetData(position);
