@@ -8,15 +8,13 @@
   
 #### Getting Started ####
 
-1. **Setup a local database**
-
+##### Setup a local database #####
   - From within Visual Studio, right click the WMIS.Database project and click 'Publish'.
   - Click 'Edit' to specify a connection string to your local SQL Server 2012 instance.
   - In the 'Connect to database' section, provide a database name such as 'WMIS' and click 'OK'
   - Click 'Publish'
 
-2. **Configure IIS**
-
+##### Configure IIS #####
   - From within IIS Manager, right click the Sites folder and click 'Add Website'
   - Site name: WMIS
   - Application pool: WMIS
@@ -24,8 +22,7 @@
   - Binding: http, All unassigned, port 80 
   - Host name: wmis.local
 
-3. **Edit hosts file**
-
+##### Edit hosts file #####
   - Navigate to the hosts file (C:\Windows\System32\drivers\etc)
   - Open the 'hosts' file and add the following mapping to the bottom of the file: **127.0.0.1 wmis.local**
 
