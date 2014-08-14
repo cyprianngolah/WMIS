@@ -10,7 +10,6 @@
     [Publisher]                       NVARCHAR (255)   NULL,
     [City]                            NVARCHAR (255)   NULL,
     [Location]                        NVARCHAR (255)   NULL,
-    [Group]                           NVARCHAR (255)   NULL,
     CONSTRAINT [PK_References] PRIMARY KEY CLUSTERED ([ReferenceId]),	
     CONSTRAINT [UK_References_Code] UNIQUE ([Code])
 )
