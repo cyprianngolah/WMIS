@@ -3,3 +3,47 @@
     ViewBag.Title = "Biodiversity";
 	ViewBag.SubTitle = "Edit " + ViewBag.Key;
 }
+
+<div class="row">
+	<div class="col-md-8">
+		<h2>Status Risk: <small>May Be At Risk</small></h2>
+		<p>Last Updated: @DateTime.Today.ToShortDateString()</p>
+	</div>
+
+	<div class="col-md-4 text-right">
+		<button type="button" class="btn btn-default" style="margin-bottom: 10px;">Cancel</button>
+		<button type="button" class="btn btn-primary" style="margin-bottom: 10px;">Save</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="active"><a href="#decision" role="tab" data-toggle="tab">Decision</a></li>
+			<li><a href="#general" role="tab" data-toggle="tab">General</a></li>
+			<li><a href="#reproduction" role="tab" data-toggle="tab">Reproduction</a></li>
+			<li><a href="#distribution" role="tab" data-toggle="tab">Distribution</a></li>
+			<li><a href="#abundance" role="tab" data-toggle="tab">Abundance</a></li>
+			<li><a href="#threats" role="tab" data-toggle="tab">Threats</a></li>
+			<li><a href="#trends" role="tab" data-toggle="tab">Trends</a></li>
+			<li><a href="#status" role="tab" data-toggle="tab">Status</a></li>
+
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div class="tab-pane active" id="decision">
+				...
+			</div>
+			<div class="tab-pane" id="profile">
+				...
+			</div>
+			<div class="tab-pane" id="messages">
+				...
+			</div>
+			<div class="tab-pane" id="settings">
+				...
+			</div>
+		</div>
+	</div>
+</div>
