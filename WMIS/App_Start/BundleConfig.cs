@@ -13,8 +13,9 @@
 		/// <param name="bundles">Collection of bundles</param>
 		public static void RegisterBundles(BundleCollection bundles)
 		{
+#if !DEBUG
 			BundleTable.EnableOptimizations = true;
-
+#endif
 			//////////////////////////////////////////////////////////////////////
 			// Scripts
 			//////////////////////////////////////////////////////////////////////
@@ -36,6 +37,9 @@
 			bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
 				"~/Scripts/DataTables-1.10.0/jquery.dataTables.js",
 				"~/Scripts/DataTables-1.10.0/dataTables.bootstrap.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/wmis").Include("~/js/Wmis.js"));
+            bundles.Add(new ScriptBundle("~/bundles/synonym").Include("~/js/Wmis.SynonymModule.js"));
 
 			//////////////////////////////////////////////////////////////////////
 			// Styles

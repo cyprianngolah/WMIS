@@ -156,6 +156,8 @@
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
     <Compile Include="Dto\PagedResultset.cs" />
     <Compile Include="Dto\PagedDataRequest.cs" />
+    <Compile Include="Dto\TaxonomySynonymRequest.cs" />
+    <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Extensions\StructureMapDependencyResolver.cs" />
     <Compile Include="Global.asax.cs">
@@ -164,6 +166,7 @@
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\Taxonomy.cs" />
+    <Compile Include="Models\TaxonomySynonym.cs" />
     <Compile Include="Models\WmisRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -246,6 +249,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Environments\environment.fallback.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Environments\environment.prod.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -255,11 +259,18 @@
     </Content>
     <Content Include="Environments\environment.test.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="JSLintNet.json" />
     <Content Include="Content\DataTables-1.10.0\css\dataTables.jqueryui.scss" />
+    <Content Include="Environments\environment.greg.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="js\Wmis.SynonymModule.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\default.js" />
+    <Content Include="js\Wmis.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables-1.10.0\dataTables.autoFill.js" />
@@ -355,6 +366,7 @@
     <Content Include="Views\BioDiversity\Index.cshtml" />
     <Content Include="Views\BioDiversity\New.cshtml" />
     <Content Include="Views\BioDiversity\Edit.cshtml" />
+    <Content Include="Views\BioDiversity\Synonyms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

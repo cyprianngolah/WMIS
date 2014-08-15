@@ -1,12 +1,16 @@
 ﻿namespace Wmis.ApiControllers
 {
 	using System.Collections.Generic;
-	using System.Web.Http;
+    using System.Linq;
+    using System.Web.Http;
+    using Configuration;
+    using Dto;
+    using Models;
 
-	[RoutePrefix("api/taxonomy")]
+    [RoutePrefix("api/taxonomy")]
 	public class TaxonomyApiController : BaseApiController
     {
-		public TaxonomyApiController(Configuration.WebConfiguration configuration)
+		public TaxonomyApiController(WebConfiguration configuration)
 			: base(configuration)
 		{
 		}
@@ -18,7 +22,7 @@
 		/// <returns>The list of matching Kingdoms</returns>
 		[HttpGet]
 		[Route("kingdom/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetKingdom(int? key = null)
+		public IEnumerable<Taxonomy> GetKingdom(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 1);
 		}
@@ -30,7 +34,7 @@
 		/// <returns>The list of matching Phylum</returns>
 		[HttpGet]
 		[Route("phylum/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetPhylum(int? key = null)
+		public IEnumerable<Taxonomy> GetPhylum(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 2);
 		}
@@ -42,7 +46,7 @@
 		/// <returns>The list of matching SubPhylum</returns>
 		[HttpGet]
 		[Route("subphylum/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetSubPhlym(int? key = null)
+		public IEnumerable<Taxonomy> GetSubPhlym(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 3);
 		}
@@ -54,7 +58,7 @@
 		/// <returns>The list of matching Class</returns>
 		[HttpGet]
 		[Route("class/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetClass(int? key = null)
+		public IEnumerable<Taxonomy> GetClass(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 4);
 		}
@@ -66,7 +70,7 @@
 		/// <returns>The list of matching SubClasses</returns>
 		[HttpGet]
 		[Route("subclass/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetSubClass(int? key = null)
+		public IEnumerable<Taxonomy> GetSubClass(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 5);
 		}
@@ -78,7 +82,7 @@
 		/// <returns>The list of matching Orders</returns>
 		[HttpGet]
 		[Route("order/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetOrder(int? key = null)
+		public IEnumerable<Taxonomy> GetOrder(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 6);
 		}
@@ -90,7 +94,7 @@
 		/// <returns>The list of matching SubOrders</returns>
 		[HttpGet]
 		[Route("suborder/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetSubOrder(int? key = null)
+		public IEnumerable<Taxonomy> GetSubOrder(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 7);
 		}
@@ -102,7 +106,7 @@
 		/// <returns>The list of matching InfraOrders</returns>
 		[HttpGet]
 		[Route("infraorder/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetInfraOrder(int? key = null)
+		public IEnumerable<Taxonomy> GetInfraOrder(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 8);
 		}
@@ -114,7 +118,7 @@
 		/// <returns>The list of matching SuperFamilys</returns>
 		[HttpGet]
 		[Route("superfamily/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetSuperFamily(int? key = null)
+		public IEnumerable<Taxonomy> GetSuperFamily(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 9);
 		}
@@ -126,7 +130,7 @@
 		/// <returns>The list of matching Familys</returns>
 		[HttpGet]
 		[Route("family/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetFamily(int? key = null)
+		public IEnumerable<Taxonomy> GetFamily(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 10);
 		}
@@ -138,7 +142,7 @@
 		/// <returns>The list of matching SubFamily</returns>
 		[HttpGet]
 		[Route("subfamily/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetSubFamily(int? key = null)
+		public IEnumerable<Taxonomy> GetSubFamily(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 11);
 		}
@@ -150,9 +154,41 @@
 		/// <returns>The list of matching Groups</returns>
 		[HttpGet]
 		[Route("group/{key:int?}")]
-		public IEnumerable<Models.Taxonomy> GetGroups(int? key = null)
+		public IEnumerable<Taxonomy> GetGroups(int? key = null)
 		{
 			return Repository.TaxonomyGet(key, 12);
 		}
+
+        /// <summary>
+        /// Gets the TaxonomySynonyms for the given Taxonomy's
+        /// </summary>
+        /// <param name="taxonomyIds">Taxonomy's to filter by</param>
+        /// <returns>The list of matching TaxonomySynonyms</returns>
+        [HttpPost]
+        [Route("synonym")]
+        public IEnumerable<TaxonomySynonymRequest> GetSynonyms(IEnumerable<int> taxonomyIds)
+        {
+            return taxonomyIds
+                .Select(taxonomyId => new TaxonomySynonymRequest
+                    {
+                        TaxonomyId = taxonomyId,
+                        Synonyms = Repository.TaxonomySynonymGet(taxonomyId).Select(i => i.Name),
+                    })
+                .ToList();
+        }
+
+        /// <summary>
+        /// Saves the TaxonomySynonyms
+        /// </summary>
+        /// <param name="synonyms">TaxonomySynonyms to save</param>
+        [HttpPost]
+        [Route("synonym/savemany")]
+        public void SaveManySynonyms(IEnumerable<TaxonomySynonymRequest> synonyms)
+        {
+            foreach (var request in synonyms)
+            {
+                Repository.TaxonomySynonymSaveMany(request.TaxonomyId, request.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
+            }
+        }
     }
 }
