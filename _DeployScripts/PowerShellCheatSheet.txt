@@ -1,0 +1,15 @@
+Cheat Sheet for Provisioning a Server
+
+One time setup on local machine
+	Set-Item WSMan:\localhost\Client\TrustedHosts -Value "*" -Force
+	
+One time setup on target machine to allow remoting(may not be necessary if on same domain and/or can use hostnames...need to test)
+	runas /user:Administrator cmd
+	winrm quickconfig
+
+One time setup on target machine to allow running powershell scripts (run from Powershell as Admin)
+	Set-ExecutionPolicy "Unrestricted" -Force
+	
+Invoke Scripts Command
+	Invoke-Command -ComputerName 192.168.1.106 -credential jonah -FilePath .\provision-webserver.ps1
+	Invoke-Command -ComputerName 192.168.1.106 -credential jonah -FilePath .\configure-website.ps1

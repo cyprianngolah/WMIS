@@ -1,0 +1,8 @@
+﻿{
+  "ignore": [
+    "Scripts/"
+  ],
+  "options": {
+    "predef": {}
+  }
+}

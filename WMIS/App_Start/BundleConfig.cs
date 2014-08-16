@@ -1,20 +1,29 @@
-﻿using System.Web;
-using System.Web.Optimization;
-
-namespace WMIS
+﻿namespace Wmis
 {
+	using System.Web.Optimization;
+
+	/// <summary>
+	/// The CSS and JS Bundle Configuration
+	/// </summary>
 	public class BundleConfig
 	{
-		// For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
+		/// <summary>
+		/// Registration of bundles
+		/// </summary>
+		/// <param name="bundles">Collection of bundles</param>
 		public static void RegisterBundles(BundleCollection bundles)
 		{
+#if !DEBUG
+			BundleTable.EnableOptimizations = true;
+#endif
+			//////////////////////////////////////////////////////////////////////
+			// Scripts
+			//////////////////////////////////////////////////////////////////////
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
 						"~/Scripts/jquery-{version}.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/knockout").Include("~/Scripts/knockout-*"));
 
-			// Use the development version of Modernizr to develop with and learn from. Then, when you're
-			// ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
 			bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
 						"~/Scripts/modernizr-*"));
 
@@ -22,9 +31,31 @@ namespace WMIS
 					  "~/Scripts/bootstrap.js",
 					  "~/Scripts/respond.js"));
 
-			bundles.Add(new StyleBundle("~/Content/css").Include(
+			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
+					  "~/Scripts/select2.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+				"~/Scripts/DataTables-1.10.0/jquery.dataTables.js",
+				"~/Scripts/DataTables-1.10.0/dataTables.bootstrap.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/wmis").Include("~/js/Wmis.js"));
+            bundles.Add(new ScriptBundle("~/bundles/synonym").Include("~/js/Wmis.SynonymModule.js"));
+
+			//////////////////////////////////////////////////////////////////////
+			// Styles
+			//////////////////////////////////////////////////////////////////////
+			bundles.Add(new StyleBundle("~/bundles/css").Include(
 					  "~/Content/bootstrap.css",
+					  "~/Content/bootstrap-theme.css",
 					  "~/Content/site.css"));
+
+			bundles.Add(new StyleBundle("~/bundles/content/datatables").Include(
+					  "~/content/datatables-1.10.0/css/jquery.dataTables.css",
+					  "~/content/datatables-1.10.0/css/dataTables.bootstrap.css"));
+
+			bundles.Add(new StyleBundle("~/bundles/select2css").Include(
+					  "~/content/css/select2.css",
+					  "~/content/select2-bootstrap.css"));
 		}
 	}
 }
