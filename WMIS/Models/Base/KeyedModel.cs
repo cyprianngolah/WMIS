@@ -11,10 +11,5 @@
 		/// Gets or sets the Model's Key
 		/// </summary>
 		public int Key { get; set; }
-
-		/// <summary>
-		/// Gets or sets the Last Updated timestamp
-		/// </summary>
-		public DateTime LastUpdated { get; set; }
 	}
 }

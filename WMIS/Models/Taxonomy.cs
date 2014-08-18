@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Represents a Taxonomy
 	/// </summary>
-	public class Taxonomy : Base.KeyedModel
+	public class Taxonomy : Base.AuditedKeyedModel
 	{
 		/// <summary>
 		/// Gets or sets the Taxonomy Group Id

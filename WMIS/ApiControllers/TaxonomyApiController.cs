@@ -15,6 +15,21 @@
 		{
 		}
 
+		#region Taxonomy CRUD
+		/// <summary>
+		/// Gets all Taxonomies of the specified Taxonomy Group Id
+		/// </summary>
+		/// <param name="groupKey">The Taxonomy Group Id to filter by</param>
+		/// <returns>The list of matching Taxonimies</returns>
+		[HttpGet]
+		[Route("{groupKey:int?}")]
+		public IEnumerable<Taxonomy> GetTaxonomies(int? groupKey = null)
+		{
+			return Repository.TaxonomyGet(null, groupKey);
+		}
+		#endregion
+
+		#region Typed Taxonomy Gets
 		/// <summary>
 		/// Gets the Kingdom Taxonomy
 		/// </summary>
@@ -158,8 +173,10 @@
 		{
 			return Repository.TaxonomyGet(key, 12);
 		}
+		#endregion
 
-        /// <summary>
+		#region Synonym Various
+		/// <summary>
         /// Gets the TaxonomySynonyms for the given Taxonomy's
         /// </summary>
         /// <param name="taxonomyIds">Taxonomy's to filter by</param>
@@ -189,6 +206,7 @@
             {
                 Repository.TaxonomySynonymSaveMany(request.TaxonomyId, request.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
             }
-        }
-    }
+		}
+		#endregion
+	}
 }

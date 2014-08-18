@@ -1,11 +1,9 @@
-﻿using Wmis.Models.Base;
-
-namespace Wmis.Models
+﻿namespace Wmis.Models
 {
-    /// <summary>
+	/// <summary>
     /// Represents a Taxonomy
     /// </summary>
-    public class TaxonomySynonym : KeyedModel
+	public class TaxonomySynonym : Base.AuditedKeyedModel
     {
         /// <summary>
         /// Gets or sets the Taxonomy Id

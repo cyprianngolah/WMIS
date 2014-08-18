@@ -151,8 +151,11 @@
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
+    <Compile Include="Controllers\EcoregionController.cs" />
+    <Compile Include="Controllers\EcozoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TestApiController.cs" />
+    <Compile Include="Controllers\ProtectedAreaController.cs" />
+    <Compile Include="Controllers\TaxonomyController.cs" />
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
     <Compile Include="Dto\PagedResultset.cs" />
     <Compile Include="Dto\PagedDataRequest.cs" />
@@ -163,6 +166,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Base\AuditedKeyedModel.cs" />
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\Taxonomy.cs" />
@@ -366,9 +370,14 @@
     <Content Include="Views\BioDiversity\New.cshtml" />
     <Content Include="Views\BioDiversity\Edit.cshtml" />
     <Content Include="Views\BioDiversity\Synonyms.cshtml" />
+    <Content Include="Views\Shared\_NotYetImplemented.cshtml" />
+    <Content Include="Views\Taxonomy\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Ecoregion\" />
+    <Folder Include="Views\Ecozone\" />
+    <Folder Include="Views\ProtectedArea\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

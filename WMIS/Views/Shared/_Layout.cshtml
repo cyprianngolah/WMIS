@@ -24,8 +24,16 @@
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
 							<li>@Html.MenuLink("Biodiversity", "Index", "BioDiversity")</li>
-							@*<li>@Html.ActionLink("About", "About", "Home")</li>
-							<li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li>@Html.MenuLink("Taxonomies", "Index", "Taxonomy")</li>
+									<li>@Html.MenuLink("Ecozones", "Index", "Ecozone")</li>
+									<li>@Html.MenuLink("Ecoregions", "Index", "Ecoregion")</li>
+									<li>@Html.MenuLink("Protected Areas", "Index", "ProtectedArea")</li>
+									@*<li class="divider"></li>*@
+								</ul>
+							</li>
 						</ul>
 					</div>
 				</div>

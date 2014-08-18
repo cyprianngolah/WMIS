@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Model object for BioDiversity
 	/// </summary>
-	public class BioDiversity : Base.KeyedModel
+	public class BioDiversity : Base.AuditedKeyedModel
 	{
 		/// <summary>
 		/// Gets or sets the Name value
