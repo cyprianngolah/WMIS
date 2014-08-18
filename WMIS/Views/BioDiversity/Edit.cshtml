@@ -1,49 +1,997 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Biodiversity";
-	ViewBag.SubTitle = "Edit " + ViewBag.Key;
+	ViewBag.SubTitle = @ViewBag.SpeciesCommonName;
 }
 
-<div class="row">
-	<div class="col-md-8">
-		<h2>Status Risk: <small>May Be At Risk</small></h2>
-		<p>Last Updated: @DateTime.Today.ToShortDateString()</p>
+<style>
+	.control-label {
+		font-weight: normal;
+	}
+
+	/* When the page width is wider than 1024, get rid of padding on labels to save space. */
+	@@media all and (min-width: 1024px) {
+		.control-label {
+		padding-left: 0;
+		padding-right: 0;
+		}
+	}
+</style>
+
+ @section TopRight{
+	<div class="h4 pull-right" style="text-align: right; margin:0;">
+		Status Risk: <strong>May Be At Risk</strong><br />
+		<span class="h5">Last Updated: @DateTime.Now.ToShortDateString()</span>
+	</div>
+ }
+
+<form role="form">
+	<div class="row">
+		<div class="col-md-12 text-right">
+			<button type="button" class="btn btn-default" style="margin-bottom: 10px;">Cancel</button>
+			<button type="button" class="btn btn-primary" style="margin-bottom: 10px;">Save</button>
+		</div>
 	</div>
 
-	<div class="col-md-4 text-right">
-		<button type="button" class="btn btn-default" style="margin-bottom: 10px;">Cancel</button>
-		<button type="button" class="btn btn-primary" style="margin-bottom: 10px;">Save</button>
-	</div>
-</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="active"><a href="#decision" role="tab" data-toggle="tab">Decision</a></li>
+				<li><a href="#general" role="tab" data-toggle="tab">General</a></li>
+				<li><a href="#reproduction" role="tab" data-toggle="tab">Reproduction</a></li>
+				<li><a href="#distribution" role="tab" data-toggle="tab">Distribution</a></li>
+				<li><a href="#abundance" role="tab" data-toggle="tab">Abundance</a></li>
+				<li><a href="#threats" role="tab" data-toggle="tab">Threats</a></li>
+				<li><a href="#trends" role="tab" data-toggle="tab">Trends</a></li>
+				<li><a href="#status" role="tab" data-toggle="tab">Status</a></li>
+			</ul>
 
-<div class="row">
-	<div class="col-md-12">
-		<ul class="nav nav-tabs" role="tablist">
-			<li class="active"><a href="#decision" role="tab" data-toggle="tab">Decision</a></li>
-			<li><a href="#general" role="tab" data-toggle="tab">General</a></li>
-			<li><a href="#reproduction" role="tab" data-toggle="tab">Reproduction</a></li>
-			<li><a href="#distribution" role="tab" data-toggle="tab">Distribution</a></li>
-			<li><a href="#abundance" role="tab" data-toggle="tab">Abundance</a></li>
-			<li><a href="#threats" role="tab" data-toggle="tab">Threats</a></li>
-			<li><a href="#trends" role="tab" data-toggle="tab">Trends</a></li>
-			<li><a href="#status" role="tab" data-toggle="tab">Status</a></li>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div class="tab-pane form-horizontal active" id="decision">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Rarity
+							</h4>
+							<hr />
+						</div>
+					</div>
 
-		</ul>
+					<div class="form-group">
+						<div class="col-md-6"><label for="rangeExtent">Range Extent</label></div>
+						<div class="col-md-6 text-right">
+							<label for="rangeExtentScore">Score</label>
+							<input name="rangeExtentScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="rangeExtent"></textarea>
+						</div>
+					</div>
 
-		<!-- Tab panes -->
-		<div class="tab-content">
-			<div class="tab-pane active" id="decision">
-				...
-			</div>
-			<div class="tab-pane" id="profile">
-				...
-			</div>
-			<div class="tab-pane" id="messages">
-				...
-			</div>
-			<div class="tab-pane" id="settings">
-				...
+
+					<div class="form-group">
+						<div class="col-md-6"><label for="areaOfOccupancy">Area of Occupancy</label></div>
+						<div class="col-md-6 text-right">
+							<label for="areaOfOccupancyScore">Score</label>
+							<input name="areaOfOccupancyScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="areaOfOccupancy"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-6"><label for="populationSize">Population Size</label></div>
+						<div class="col-md-6 text-right">
+							<label for="populationSizeScore">Score</label>
+							<input name="populationSizeScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="populationSize"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-6"><label for="numberOfOccurrences">Number of Occurences</label></div>
+						<div class="col-md-6 text-right">
+							<label for="numberOfOccurrencesScore">Score</label>
+							<input name="numberOfOccurrencesScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="numberOfOccurrences"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-6"><label for="environmentalSpecificity">Environmental Specificity</label></div>
+						<div class="col-md-6 text-right">
+							<label for="environmentalSpecificityScore">Score</label>
+							<input name="environmentalSpecificityScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="environmentalSpecificity"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Trends
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-6"><label for="rangeExtent">Long-term Trends</label></div>
+						<div class="col-md-6 text-right">
+							<label for="longTermTrendsScore">Score</label>
+							<input name="longTermTrendsScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="longTermTrends"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-6"><label for="rangeExtent">Short-term Trends</label></div>
+						<div class="col-md-6 text-right">
+							<label for="shortTermTrendsScore">Score</label>
+							<input name="shortTermTrendsScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="shortTermTrends"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Threats
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-6"><label for="rangeExtent">Threats</label></div>
+						<div class="col-md-6 text-right">
+							<label for="threatsScore">Score</label>
+							<input name="threatsScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="threats"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-6"><label for="rangeExtent">Intrinsic Vulnerability</label></div>
+						<div class="col-md-6 text-right">
+							<label for="intrinsicVulnerabilityScore">Score</label>
+							<input name="intrinsicVulnerabilityScore" type="text" />
+						</div>
+						<div class="col-md-12">
+							<textarea rows="4" class="form-control" name="intrinsicVulnerability"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane form-horizontal" id="general">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Naming
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="species" class="col-md-1 control-label">Species</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="species">
+						</div>
+						
+						<label for="subSpecies" class="col-md-1 control-label">Sub Species</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="subSpecies">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="commonName" class="col-md-1 control-label">Common Name</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="commonName">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="species" class="col-md-1 control-label">Eco Type</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="species">
+						</div>
+
+						<label for="species" class="col-md-1 control-label">Population</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="species">
+						</div>
+						
+						<label for="species" class="col-md-1 control-label">NS Global ID</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="species">
+						</div>
+						
+						<label for="species" class="col-md-1 control-label">NS NWT ID</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="species">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="species" class="col-md-1 control-label">ELCODE</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="species">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Taxonomy
+							</h4>
+							<hr />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="commonName" class="col-md-1 control-label">Kingdom</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="kingdom">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="commonName" class="col-md-1 control-label">Phylum</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="phlum">
+						</div>
+						
+						<label for="commonName" class="col-md-1 control-label">Sub Phylum</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="subPhlum">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="class" class="col-md-1 control-label">Class</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="class">
+						</div>
+
+						<label for="subClass" class="col-md-1 control-label">Sub Class</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="subClass">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="order" class="col-md-1 control-label">Order</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="order">
+						</div>
+
+						<label for="subOrder" class="col-md-1 control-label">Sub Order</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="subOrder">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="phylum" class="col-md-1 control-label">Phylum</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="phylum">
+						</div>
+
+						<label for="subPhylum" class="col-md-1 control-label">Sub Phylum</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="subPhylum">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="infraOrder" class="col-md-1 control-label">Infa Order</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="infraOrder">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="superFamily" class="col-md-1 control-label">Super Family</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="superFamily">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="family" class="col-md-1 control-label">Family</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="family">
+						</div>
+
+						<label for="subFamily" class="col-md-1 control-label">Sub Family</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="subFamily">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="group" class="col-md-1 control-label">Group</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="group">
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Known Sub-Species (CAN)
+							</h4>
+							<hr />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="group" class="col-md-3 control-label">Number of Known Sub-Species CND</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="group">
+						</div>
+						
+						<div class="offset6 col-md-2 checkbox">
+							<label for="group">
+								<input type="checkbox" id="group">
+								Non-NT Species
+							</label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="family" class="col-md-1 control-label">Description</label>
+						<div class="col-md-11">
+							<textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Known Sub-Species (NWT)
+							</h4>
+							<hr />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="group" class="col-md-3 control-label">Number of Known Sub-Species NWT</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="group">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="family" class="col-md-1 control-label">Description</label>
+						<div class="col-md-11">
+							<textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane form-horizontal" id="reproduction">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Age of Maturity (Female)
+							</h4>
+							<hr />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="ageOfMaturity" class="col-md-2 control-label">Age of Maturity</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="ageOfMaturity">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="ageOfMaturityDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="ageOfMaturityDescription" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Reproduction
+							</h4>
+							<hr />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="ageOfMaturity" class="col-md-2 control-label">Frequency Per Year</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="frequencyPerYear">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="frequencyPerYearDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="frequencyPerYearDescription" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Longevity
+							</h4>
+							<hr />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="longevity" class="col-md-2 control-label">Longevity</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="longevity">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="longevityDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="longevityDescription" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Vegetation Reproduction
+							</h4>
+							<hr />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="vegetationDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="vegetationDescription" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Host Fish (Mussels)
+							</h4>
+							<hr />
+						</div>
+					</div>
+				
+					<div class="form-group">
+						<label for="hostFishMusselsDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="hostFishMusselsDescription" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Other Reproduction
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="otherReproductionDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="otherReproductionDescription" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane form-horizontal" id="distribution">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Ecozone
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="ecozone" class="col-md-2 control-label">Ecozone</label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id="ecozone">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="ecozoneDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="ecozoneDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Ecoregion
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="ecoregion" class="col-md-2 control-label">Ecoregion</label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id="ecoregion">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="ecoregionDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="ecoregionDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Protected Area
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="protectedArea" class="col-md-2 control-label">Protected Area</label>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id="protectedArea">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="protectedAreaDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="protectedAreaDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Historical Distribution
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="historicalDistributionDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="historicalDistributionDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Marine Distribution
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="marineDistributionDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="marineDistributionDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Winter Distribution
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="winterDistributionDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="winterDistributionDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Habitat
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="habitatDescription" class="col-md-2 control-label">Habitat Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="habitatDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="distributionEnvironmentalSpecificity" class="col-md-2 control-label">Environmental Specificity</label>
+						<div class="col-md-4">
+							<input type="text" class="form-control" id="distributionEnvironmentalSpecificity">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="habitadistributionEnvironmentalSpecificityDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="habitadistributionEnvironmentalSpecificityDescription" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane form-horizontal" id="abundance">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Population
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="abundancePopulationSize" class="col-md-2 control-label">Population Size</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="abundancePopulationSize">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="abundancePopulationDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="abundancePopulationDescription" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Occurences
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="abundanceNumberOfOccurences" class="col-md-2 control-label">Number of Occurences</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="abundanceNumberOfOccurences">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="abundanceNumberOfOccurencesDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="abundanceNumberOfOccurencesDescription" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Density
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="densityDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="densityDescription" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+				 
+				<div class="tab-pane form-horizontal" id="threats">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Threats
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="threatsThreats" class="col-md-2 control-label">Threats</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="threatsThreats">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="threatsThreatsDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="threatsThreatsDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="threatsIntrinsiceVulnerability" class="col-md-2 control-label">Intrinsic Vulnerability</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="threatsIntrinsiceVulnerability">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="threatsIntrinsiceVulnerabilityDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="threatsIntrinsiceVulnerabilityDescription" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane form-horizontal" id="trends">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Short-Term Trends
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="trendsShortTermTrends" class="col-md-2 control-label">Short-Term Trend</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="trendsShortTermTrends">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="trendsShortTermTrendsDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="trendsShortTermTrendsDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Long-Term Trends
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="trendsLongTermTrends" class="col-md-2 control-label">Long-Term Trend</label>
+						<div class="col-md-1">
+							<input type="text" class="form-control" id="trendsLongTermTrends">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="trendsLongTermTrendsDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="trendsLongTermTrendsDescription" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane form-horizontal" id="status">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Status
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="statusRank" class="col-md-2 control-label">Rank</label>
+						<div class="col-md-4">
+							<select class="form-control" id="statusRank"></select>
+						</div>
+
+						<label for="sRank" class="col-md-1 control-label">S Rank</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="sRank">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="rankDescription" class="col-md-2 control-label">Rank Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="rankDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="descisionProcess" class="col-md-2 control-label">Descision Process</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="descisionProcess" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Economic Status
+							</h4>
+							<hr />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="economicStatusDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="economicStatusDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								COSEWIC Status
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="cosewicStatus" class="col-md-2 control-label">COSEWIC Status</label>
+						<div class="col-md-4">
+							<select class="form-control" id="cosewicStatus"></select>
+						</div>
+
+						<label for="nRank" class="col-md-1 control-label">N Rank</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="nRank">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="cosewicStatusDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Federal Species at Risk Status
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="saraStatus" class="col-md-2 control-label">SARA Status</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="saraStatus">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="cosewicStatusDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								NWT SARC Assessment
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="nwtSarcAssessmentDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="nwtSarcAssessmentDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								NWT Species at Risk Status
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="nwtStatusRank" class="col-md-2 control-label">NWT Status Rank</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="nwtStatusRank">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="nwtStatusRankDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="nwtStatusRankDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								Canadian Conservation Significance (Plants)
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="canadianConservationSignificanceDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="canadianConservationSignificanceDescription" class="form-control"></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<h4>
+								IUCN Status
+							</h4>
+							<hr />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="iucnStatus" class="col-md-2 control-label">IUCN Status</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="iucnStatus">
+						</div>
+
+						<label for="gRank" class="col-md-1 control-label">G Rank</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" id="gRank">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="iucnStatusDescription" class="col-md-2 control-label">Description</label>
+						<div class="col-md-10">
+							<textarea rows="4" name="iucnStatusDescription" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</form>
