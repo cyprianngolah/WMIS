@@ -17,12 +17,80 @@
 	}
 </style>
 
- @section TopRight{
+@section TopRight{
 	<div class="h4 pull-right" style="text-align: right; margin:0;">
 		Status Risk: <strong>May Be At Risk</strong><br />
 		<span class="h5">Last Updated: @DateTime.Now.ToShortDateString()</span>
 	</div>
- }
+}
+
+@section Styles {
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
+}
+
+@section Scripts{
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/wmis"))
+    @Html.Raw(Scripts.Render("~/bundles/synonym"))
+
+    <script>
+        $(function () {
+            Wmis.SynonymModule.Initialize({
+                modalSelector: "#viewSynonymsModal",
+                saveButtonSelector: "#saveSynonymsButton",
+                synonymUrl: "/api/taxonomy/synonym",
+                synonymSaveManyUrl: "/api/taxonomy/synonym/savemany",
+            });
+
+            $("#viewSynonymsButton").click(function () {
+                Wmis.SynonymModule.Show([
+                    { taxonomyId: 1, name: "Mammal", groupName: "Kingdom" },
+                    { taxonomyId: 2, name: "Artiodactyla", groupName: "Order" },
+                    { taxonomyId: 3, name: "Bovidae", groupName: "Family" }
+                ]);
+            });
+        });
+    </script>
+}
+
+@section Templates {
+    <script type="text/html" id="synonymTemplate">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group" style="padding-bottom: 5px; padding-top: 6px; margin-bottom: 0;">
+                    <span data-bind="text: groupName"></span>:
+                    <span data-bind="text: name"></span>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group" style="padding-bottom: 5px; margin-bottom: 0;">
+                    <input class="form-control" data-bind="value: synonymsValue, select2: { tags: synonyms, tokenSeparators: [',', ' '], formatNoMatches: function() { return ''; } }" />
+                </div>
+            </div>
+        </div>
+    </script>
+}
+
+@section Dialogs {
+    <div id="viewSynonymsModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Synonyms</h4>
+                </div>
+                <div class="modal-body">
+                    <div data-bind="template: { name: 'synonymTemplate', foreach: taxonomy }"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="saveSynonymsButton" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 <form role="form">
 	<div class="row">
@@ -57,17 +125,16 @@
 						</div>
 					</div>
 
-					<div class="form-group">
-						<div class="col-md-6"><label for="rangeExtent">Range Extent</label></div>
-						<div class="col-md-6 text-right">
-							<label for="rangeExtentScore">Score</label>
-							<input name="rangeExtentScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="rangeExtent"></textarea>
-						</div>
-					</div>
-
+				    <div class="form-group">
+				        <div class="col-md-6"><label for="rangeExtent">Range Extent</label></div>
+				        <div class="col-md-6 text-right">
+				            <label for="rangeExtentScore">Score</label>
+				            <input name="rangeExtentScore" type="text" />
+				        </div>
+				        <div class="col-md-12">
+				            <textarea rows="4" class="form-control" name="rangeExtent"></textarea>
+				        </div>
+				    </div>
 
 					<div class="form-group">
 						<div class="col-md-6"><label for="areaOfOccupancy">Area of Occupancy</label></div>
@@ -324,14 +391,20 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
-						<label for="group" class="col-md-1 control-label">Group</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="group">
-						</div>
-					</div>
-					
-					<div class="row">
+				    <div class="form-group">
+				        <label for="group" class="col-md-1 control-label">Group</label>
+				        <div class="col-md-5">
+				            <input type="text" class="form-control" id="group">
+				        </div>
+				    </div>
+                    
+                    <div class="form-group pull-right">
+                        <div class="col-md-12">
+                            <button id="viewSynonymsButton" type="button" class="btn btn-default">View Synonyms</button>
+                        </div>
+                    </div>
+ 
+				    <div class="row">
 						<div class="col-md-12">
 							<h4>
 								Known Sub-Species (CAN)

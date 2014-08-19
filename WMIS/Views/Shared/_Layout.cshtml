@@ -7,7 +7,7 @@
 		<title>WMIS</title>
 		@Styles.Render("~/bundles/css")
 		@Scripts.Render("~/bundles/modernizr")
-		@RenderSection("Styles", required: false)
+		@RenderSection("Styles", false)
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -58,11 +58,13 @@
 				}
 			</div>
 
-			<div class="row clearfix">
-				<div class="col-md-12">
-					@RenderBody()
-				</div>
-			</div>
+		    <div class="row clearfix">
+		        <div class="col-md-12">
+		            @RenderBody()
+		        </div>
+		    </div>
+            
+            @RenderSection("Dialogs", false)
 		</div>
 
 		<div class="container-fluid">
@@ -71,8 +73,10 @@
 				<p style="margin:10px;">&copy; @DateTime.Now.Year - WMIS</p>
 			</nav>
 		</div>
-		@Scripts.Render("~/bundles/jquery")
+	    
+	@RenderSection("Templates", false)    
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", false)
 </body>
 </html>
