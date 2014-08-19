@@ -8,7 +8,7 @@
   
 #### Getting Started ####
 
-##### Setup a local database #####
+##### Setup/update a local database #####
   - From within Visual Studio, right click the WMIS.Database project and click 'Publish'.
   - Click 'Edit' to specify a connection string to your local SQL Server 2012 instance.
   - In the 'Connect to database' section, provide a database name such as 'WMIS' and click 'OK'
