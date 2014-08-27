@@ -133,6 +133,7 @@
     <Build Include="dbo\Stored Procedures\TaxonomySynonym_Get.sql" />
     <Build Include="dbo\User Defined Types\TaxonomySynonymType.sql" />
     <Build Include="dbo\Stored Procedures\TaxonomySynonym_SaveMany.sql" />
+    <Build Include="dbo\Stored Procedures\TaxonomyGroups_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="WMIS.PostDeployment.sql" />

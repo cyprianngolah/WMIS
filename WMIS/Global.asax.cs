@@ -4,6 +4,7 @@
 	using System.Web.Mvc;
 	using System.Web.Optimization;
 	using System.Web.Routing;
+	using App_Start;
 	using Extensions;
 	using StructureMap;
 
@@ -21,7 +22,6 @@
 			{
 				x.ForConcreteType<Configuration.WebConfiguration>();
 				x.ForConcreteType<Models.WmisRepository>();
-				//x.For<Configuration.IConfiguration>().Singleton().Use<Configuration.WebConfiguration>();
 			});
 			GlobalConfiguration.Configuration.DependencyResolver = new StructureMapDependencyResolver();
 

@@ -139,8 +139,7 @@ namespace Wmis.Configuration
 
 		#region Constructors
 		public WebConfiguration() : this("\\Environments", true)
-		{
-			
+		{			
 		}
 
 		/// <summary>

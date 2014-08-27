@@ -42,6 +42,13 @@
 		/// <summary>
 		/// Gets or sets the direction the Column of data was sorted by
 		/// </summary>
-		public SortDirection SortDirection { get; set; } 
+		public SortDirection SortDirection { get; set; }
+
+		public PagedDataRequest()
+		{
+			StartRow = 0;
+			RowCount = 25;
+			SortDirection = SortDirection.Desc;
+		}
 	}
 }

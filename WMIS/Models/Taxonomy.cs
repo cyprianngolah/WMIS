@@ -8,7 +8,7 @@
 		/// <summary>
 		/// Gets or sets the Taxonomy Group Id
 		/// </summary>
-		public int TaxonomyGroupId { get; set; }
+		public TaxonomyGroup TaxonomyGroup { get; set; }
 
 		/// <summary>
 		/// Gets or sets the Name

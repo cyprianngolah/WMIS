@@ -4,12 +4,20 @@
 
 	public class TaxonomyController : Controller
 	{
-        //
-        // GET: /Taxonomy/
         public ActionResult Index()
         {
-	        ViewBag.Title = "Taxonomies";
             return View();
         }
+
+		public ActionResult New()
+		{
+			return View("Edit");
+		}
+
+		public ActionResult Edit(int key)
+		{
+			ViewBag.Key = key;
+			return View();
+		}
 	}
 }

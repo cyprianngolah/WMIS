@@ -31,12 +31,11 @@
 @section Scripts{
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
-    @Html.Raw(Scripts.Render("~/bundles/wmis"))
-    @Html.Raw(Scripts.Render("~/bundles/synonym"))
+    @Html.Raw(Scripts.Render("~/bundles/dialog/synonym"))
 
     <script>
         $(function () {
-            Wmis.SynonymModule.Initialize({
+            wmis.dialog.synonym.initialize({
                 modalSelector: "#viewSynonymsModal",
                 saveButtonSelector: "#saveSynonymsButton",
                 synonymUrl: "/api/taxonomy/synonym",
@@ -44,7 +43,7 @@
             });
 
             $("#viewSynonymsButton").click(function () {
-                Wmis.SynonymModule.Show([
+                wmis.dialog.synonym.show([
                     { taxonomyId: 1, name: "Mammal", groupName: "Kingdom" },
                     { taxonomyId: 2, name: "Artiodactyla", groupName: "Order" },
                     { taxonomyId: 3, name: "Bovidae", groupName: "Family" }

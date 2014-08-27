@@ -159,6 +159,7 @@
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
     <Compile Include="Dto\PagedResultset.cs" />
     <Compile Include="Dto\PagedDataRequest.cs" />
+    <Compile Include="Dto\TaxonomyRequest.cs" />
     <Compile Include="Dto\TaxonomySynonymRequest.cs" />
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\Taxonomy.cs" />
+    <Compile Include="Models\TaxonomyGroup.cs" />
     <Compile Include="Models\TaxonomySynonym.cs" />
     <Compile Include="Models\WmisRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -270,10 +272,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="js\Wmis.SynonymModule.js" />
+    <Content Include="js\Modules\wmis.taxonomy.edit.js" />
+    <Content Include="js\wmis.js" />
+    <Content Include="js\Modules\wmis.dialog.synonym.js" />
+    <Content Include="js\Modules\wmis.biodiversity.index.js" />
+    <Content Include="js\Modules\wmis.taxonomy.index.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="js\default.js" />
-    <Content Include="js\Wmis.js" />
+    <Content Include="js\wmis.knockout.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables-1.10.0\dataTables.autoFill.js" />
@@ -371,6 +376,8 @@
     <Content Include="Views\BioDiversity\Edit.cshtml" />
     <Content Include="Views\Shared\_NotYetImplemented.cshtml" />
     <Content Include="Views\Taxonomy\Index.cshtml" />
+    <Content Include="Views\Taxonomy\New.cshtml" />
+    <Content Include="Views\Taxonomy\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

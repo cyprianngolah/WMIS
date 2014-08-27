@@ -1,4 +1,5 @@
-﻿Wmis.SynonymModule = (function ($) {
+﻿wmis.dialog = wmis.dialog || {};
+wmis.dialog.synonym = (function ($) {
 
     var options = {
         modalSelector: "",
@@ -92,7 +93,7 @@
     };
 
     return {
-        Initialize: initialize,
-        Show: show,
+        initialize: initialize,
+        show: show,
     };
 }(jQuery));

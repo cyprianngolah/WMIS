@@ -4,8 +4,10 @@
 
 	public class EcoregionController : Controller
     {
-        //
-        // GET: /Ecoregion/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
 			ViewBag.Title = "Ecoregions";

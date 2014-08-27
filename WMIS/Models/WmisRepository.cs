@@ -28,6 +28,11 @@
         /// The Taxonomy Synonym Get stored procedure
         /// </summary>
         private const string TAXONOMYSYNONYM_SAVEMANY = "dbo.TaxonomySynonym_SaveMany";
+
+		/// <summary>
+		/// The Taxonomy Groups Get stored procedure
+		/// </summary>
+		private const string TAXONOMYGROUP_GET = "dbo.TaxonomyGroups_Get";
         
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -62,7 +67,70 @@
 					p_taxonomyId = taxonomyId,
 					p_taxonomyGroupId = taxonomyGroupId
 				};
-				return c.Query<Taxonomy>(TAXONOMY_GET, param, commandType: CommandType.StoredProcedure);
+				return c.Query<dynamic, Taxonomy, TaxonomyGroup, Taxonomy>(TAXONOMY_GET,
+					(d, t, tg) =>
+					{
+						t.TaxonomyGroup = tg;
+						return t;
+					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+			}
+		}
+
+		/// <summary>
+		/// Gets a list of Taxonomies
+		/// </summary>
+		/// <param name="tr">The information about the Taxonomy Request</param>
+		/// <returns>A list of matching Taxonomies</returns>
+		public Dto.PagedResultset<Taxonomy> TaxonomyGet(Dto.TaxonomyRequest tr)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = tr.StartRow,
+					p_to = tr.StartRow + tr.RowCount - 1,
+					p_sortBy = tr.SortBy,
+					p_sortDirection = tr.SortDirection,
+					p_keywords = tr.Keywords,
+					p_taxonomyId = tr.TaxonomyKey,
+					p_taxonomyGroupId = tr.TaxonomyGroupKey
+				};
+
+				var pagedResults = new Dto.PagedResultset<Taxonomy>
+				{
+					DataRequest = tr,
+					ResultCount = 0,
+					Data = new List<Taxonomy>()
+				};
+
+				var results = c.Query<dynamic, Taxonomy, TaxonomyGroup, Taxonomy>(TAXONOMY_GET,
+					(d, t, tg) =>
+					{
+						pagedResults.ResultCount = d.TotalRowCount;
+						t.TaxonomyGroup = tg;
+						return t;
+					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+				pagedResults.Data = results.ToList();
+				return pagedResults;
+			}
+		}
+
+		/// <summary>
+		/// Gets a list of Taxonomy Groups
+		/// </summary>
+		/// <param name="taxonomyGroupKey"></param>
+		/// <returns>A list of matching Taxonomy Groups</returns>
+		public IEnumerable<TaxonomyGroup> TaxonomyGroupGet(int? taxonomyGroupKey = null)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_taxonomyGroupId = taxonomyGroupKey
+				};
+
+				return c.Query<TaxonomyGroup>(TAXONOMYGROUP_GET, param, commandType: CommandType.StoredProcedure);
 			}
 		}
 

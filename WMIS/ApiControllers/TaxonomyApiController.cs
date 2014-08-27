@@ -16,16 +16,46 @@
 		}
 
 		#region Taxonomy CRUD
+		///// <summary>
+		///// Gets all Taxonomies of the specified Taxonomy Group Id
+		///// </summary>
+		///// <param name="groupKey">The Taxonomy Group Id to filter by</param>
+		///// <returns>The list of matching Taxonomy objects</returns>
+		//[HttpGet]
+		//[Route("{groupKey:int?}")]
+		//public IEnumerable<Taxonomy> GetTaxonomies(int? groupKey = null)
+		//{
+		//	return Repository.TaxonomyGet(null, groupKey);
+		//}
+
 		/// <summary>
 		/// Gets all Taxonomies of the specified Taxonomy Group Id
 		/// </summary>
-		/// <param name="groupKey">The Taxonomy Group Id to filter by</param>
-		/// <returns>The list of matching Taxonimies</returns>
+		/// <param name="tr">The Taxonomy Request details to filter by</param>
+		/// <returns>The list of matching Taxonomy objects</returns>
 		[HttpGet]
-		[Route("{groupKey:int?}")]
-		public IEnumerable<Taxonomy> GetTaxonomies(int? groupKey = null)
+		[Route]
+		public PagedResultset<Taxonomy> GetTaxonomies([FromUri]Dto.TaxonomyRequest tr)
 		{
-			return Repository.TaxonomyGet(null, groupKey);
+			if (tr == null)
+			{
+				tr = new TaxonomyRequest();
+			}
+			return Repository.TaxonomyGet(tr);
+		}
+		#endregion
+
+		#region Taxonomy Group CRUD
+		/// <summary>
+		/// Gets all Taxonomy Groups
+		/// </summary>
+		/// <param name="groupKey">The Taxonomy Group Id to filter by</param>
+		/// <returns>The list of matching Taxonomy Group objects</returns>
+		[HttpGet]
+		[Route("taxonomygroup/{groupKey:int?}")]
+		public IEnumerable<TaxonomyGroup> GetTaxonomyGroups(int? groupKey = null)
+		{
+			return Repository.TaxonomyGroupGet(groupKey);
 		}
 		#endregion
 
@@ -130,7 +160,7 @@
 		/// Gets the SuperFamily Taxonomy
 		/// </summary>
 		/// <param name="key">Key to filter by</param>
-		/// <returns>The list of matching SuperFamilys</returns>
+		/// <returns>The list of matching SuperFamily objects</returns>
 		[HttpGet]
 		[Route("superfamily/{key:int?}")]
 		public IEnumerable<Taxonomy> GetSuperFamily(int? key = null)
@@ -142,7 +172,7 @@
 		/// Gets the Family Taxonomy
 		/// </summary>
 		/// <param name="key">Key to filter by</param>
-		/// <returns>The list of matching Familys</returns>
+		/// <returns>The list of matching Family objects</returns>
 		[HttpGet]
 		[Route("family/{key:int?}")]
 		public IEnumerable<Taxonomy> GetFamily(int? key = null)

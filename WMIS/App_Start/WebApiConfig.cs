@@ -1,4 +1,4 @@
-﻿namespace Wmis
+﻿namespace Wmis.App_Start
 {
 	using System.Web.Http;
 	using Newtonsoft.Json.Converters;

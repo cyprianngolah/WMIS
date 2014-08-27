@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Web.Http.Dependencies;
 	using StructureMap;
 
@@ -28,16 +29,13 @@
 		public IEnumerable<object> GetServices(Type serviceType)
 		{
 			var instances = ObjectFactory.GetAllInstances(serviceType);
-			var services = new List<object>();
-			foreach (var i in instances)
-			{
-				services.Add(i);
-			}
-			return services;
+
+			return instances.Cast<object>().ToList();
 		}
 
 		public IDependencyScope BeginScope()
 		{
 			return this;
 		}
-}}
+	}
+}
