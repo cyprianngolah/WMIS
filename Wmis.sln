@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy Scripts", "Deploy Sc
 		_DeployScripts\WebDeploy.msbuild = _DeployScripts\WebDeploy.msbuild
 	EndProjectSection
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WMIS.Database", "WMIS.Database\WMIS.Database.sqlproj", "{BE692EBF-2C1D-43EB-86EB-4A130DBAEA62}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Wmis.Database", "WMIS.Database\Wmis.Database.sqlproj", "{BE692EBF-2C1D-43EB-86EB-4A130DBAEA62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
