@@ -13,7 +13,7 @@
     <RootPath>
     </RootPath>
     <RootNamespace>Wmis.Database</RootNamespace>
-    <AssemblyName>WMIS.Database</AssemblyName>
+    <AssemblyName>Wmis.Database</AssemblyName>
     <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
