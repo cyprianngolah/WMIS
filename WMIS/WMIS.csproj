@@ -156,10 +156,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProtectedAreaController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
+    <Compile Include="Dto\BioDiversityDecisionUpdateRequest.cs" />
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
-    <Compile Include="Dto\PagedResultset.cs" />
-    <Compile Include="Dto\PagedDataRequest.cs" />
+    <Compile Include="Dto\BioDiversityUpdateRequest.cs" />
+    <Compile Include="Dto\Base\PagedResultset.cs" />
+    <Compile Include="Dto\Base\PagedDataRequest.cs" />
     <Compile Include="Dto\TaxonomyRequest.cs" />
+    <Compile Include="Dto\TaxonomySaveRequest.cs" />
     <Compile Include="Dto\TaxonomySynonymRequest.cs" />
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
@@ -170,6 +173,7 @@
     <Compile Include="Models\Base\AuditedKeyedModel.cs" />
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
+    <Compile Include="Models\BioDiversityDecision.cs" />
     <Compile Include="Models\Taxonomy.cs" />
     <Compile Include="Models\TaxonomyGroup.cs" />
     <Compile Include="Models\TaxonomySynonym.cs" />
@@ -272,6 +276,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
+    <Content Include="js\Modules\wmis.biodiversity.edit.js" />
+    <Content Include="js\Modules\wmis.biodiversity.new.js" />
     <Content Include="js\Modules\wmis.taxonomy.edit.js" />
     <Content Include="js\wmis.js" />
     <Content Include="js\Modules\wmis.dialog.synonym.js" />
@@ -378,6 +385,8 @@
     <Content Include="Views\Taxonomy\Index.cshtml" />
     <Content Include="Views\Taxonomy\New.cshtml" />
     <Content Include="Views\Taxonomy\Edit.cshtml" />
+    <Content Include="Views\BioDiversity\Decision.cshtml" />
+    <Content Include="Views\Taxonomy\EditForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

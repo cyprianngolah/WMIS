@@ -2,7 +2,9 @@
 {
 	using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Http;
+	using System.Net;
+	using System.Net.Http;
+	using System.Web.Http;
     using Configuration;
     using Dto;
     using Models;
@@ -42,6 +44,18 @@
 				tr = new TaxonomyRequest();
 			}
 			return Repository.TaxonomyGet(tr);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="tr"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[Route]
+		public void SaveTaxonomy([FromBody]Dto.TaxonomySaveRequest tr)
+		{
+			Repository.TaxonomySave(tr);
 		}
 		#endregion
 

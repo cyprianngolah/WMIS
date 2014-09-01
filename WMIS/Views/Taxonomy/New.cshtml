@@ -1,4 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Taxonomy";
-	ViewBag.SubTitle = "Edit";
+	ViewBag.Title = "Taxonomy";
+	ViewBag.SubTitle = "New";
 }
+
+@section Scripts {
+	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/taxonomy/edit"))
+
+	<script type="text/javascript">
+		$(function() {
+			wmis.taxonomy.edit.initialize();
+		});
+	</script>
+}
+
+@{ Html.RenderPartial("EditForm"); }

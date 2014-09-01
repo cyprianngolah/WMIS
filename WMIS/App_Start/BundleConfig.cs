@@ -63,6 +63,15 @@
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/index").Include(
 						"~/js/modules/wmis.biodiversity.index.js"));
 
+			bundles.Add(new ScriptBundle("~/bundles/biodiversity/new").Include(
+						"~/js/modules/wmis.biodiversity.new.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/biodiversity/edit").Include(
+						"~/js/modules/wmis.biodiversity.edit.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/biodiversity/decision/edit").Include(
+						"~/js/modules/wmis.biodiversity.decision.edit.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/taxonomy/index").Include(
 						"~/js/modules/wmis.taxonomy.index.js"));
 

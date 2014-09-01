@@ -1,5 +1,6 @@
 ﻿namespace Wmis.Models
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Data;
 	using System.Data.SqlClient;
@@ -18,6 +19,41 @@
 		/// The Taxonomy Get stored procedure
 		/// </summary>
 		private const string TAXONOMY_GET = "dbo.Taxonomy_Get";
+
+		/// <summary>
+		/// The Taxonomy Update stored procedure
+		/// </summary>
+		private const string TAXONOMY_SAVE = "dbo.Taxonomy_Save";
+
+		/// <summary>
+		/// The Taxonomy Create stored procedure
+		/// </summary>
+		private const string BIODIVERSITY_CREATE = "dbo.BioDiversity_Create";
+
+		/// <summary>
+		/// The BioDiversity Get stored procedure
+		/// </summary>
+		private const string BIODIVERSITY_GET = "dbo.BioDiversity_Get";
+
+		/// <summary>
+		/// The BioDiversity Search stored procedure
+		/// </summary>
+		private const string BIODIVERSITY_SEARCH = "dbo.BioDiversity_Search";
+
+		/// <summary>
+		/// The BioDiversity Update
+		/// </summary>
+		private const string BIODIVERSITY_UPDATE = "dbo.BioDiversity_Update";
+
+		/// <summary>
+		/// The BioDiversity Get Decision stored procedure
+		/// </summary>
+		private const string BIODIVERSITY_DECISION_GET = "dbo.BioDiversity_Get_Decision";
+
+		/// <summary>
+		/// The BioDiversity Decision Update stored procedure
+		/// </summary>
+		private const string BIODIVERSITY_DECISION_UPDATE = "dbo.BioDiversity_Update_Decision";
 
         /// <summary>
         /// The Taxonomy Synonym Get stored procedure
@@ -52,6 +88,82 @@
 		#endregion
 
 		#region Methods
+		#region BioDiversity
+		public Dto.PagedResultset<BioDiversity> BioDiversityGet(Dto.BioDiversitySearchRequest sr)
+		{
+			var results = new Dto.PagedResultset<BioDiversity>
+			{
+				DataRequest = sr,
+				ResultCount = 1
+			};
+
+			results.Data.Add(new BioDiversity
+			{
+				Key = 1,
+				Name = "Bison bison athabascae",
+				CommonName = "Woods Bison",
+				SubSpeciesName = "Bovinae",
+				LastUpdated = DateTime.UtcNow.AddMinutes(-5012)
+			});
+
+			return results;
+		}
+
+		public BioDiversity BioDiversityGet(int bioDiversityKey)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_bioDiversityKey = bioDiversityKey
+				};
+				return c.Query<BioDiversity>(BIODIVERSITY_GET, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+			}
+		}
+
+		public void BioDiversityCreate(string name)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_name = name
+				};
+				c.Execute(BIODIVERSITY_CREATE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
+
+		public void BioDiversityUpdate(Dto.BioDiversityUpdateRequest br)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					
+				};
+				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
+
+		public BioDiversityDecision BioDiversityDecisionGet(int bioDiversityKey)
+		{
+			return new BioDiversityDecision();
+		}
+
+		public void BioDiversityDecisionUpdate(Dto.BioDiversityDecisionUpdateRequest ur)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					
+				};
+				c.Execute(BIODIVERSITY_DECISION_UPDATE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
+		#endregion
+
+		#region Taxonomy
 		/// <summary>
 		/// Gets a list of Taxonomies
 		/// </summary>
@@ -151,6 +263,21 @@
             }
         }
 
+		public void TaxonomySave(Dto.TaxonomySaveRequest sr)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_taxonomyId = sr.TaxonomyKey,
+					p_taxonomyGroupId = sr.TaxonomyGroupKey,
+					p_name = sr.Name
+				};
+
+				c.Execute(TAXONOMY_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
+
 	    /// <summary>
 	    /// Gets a list of Taxonomy Synonyms
 	    /// </summary>
@@ -168,6 +295,7 @@
                 c.Execute(TAXONOMYSYNONYM_SAVEMANY, param, commandType: CommandType.StoredProcedure);
             }
         }
+		#endregion
 		#endregion
 
 		#region Helpers

@@ -35,5 +35,16 @@
 			ViewBag.SpeciesCommonName = "Wood Bison";
 		    return View();
 	    }
+
+		/// <summary>
+		/// Gets the BioDiversity Decision Page
+		/// </summary>
+		/// <param name="key">The key for the BioDiversity Model to edit</param>
+		/// <returns>The BioDiversity Decision Page</returns>
+		public ActionResult Decision(int key)
+		{
+			ViewBag.SpeciesCommonName = "Wood Bison";
+			return View();
+		}
     }
 }

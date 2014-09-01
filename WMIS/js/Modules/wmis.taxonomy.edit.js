@@ -1,15 +1,18 @@
 ﻿wmis.taxonomy = wmis.taxonomy || {};
 wmis.taxonomy.edit = (function ($) {
 	var options = {
-		
+		taxonomyKey: null,
 	};
 
-	function editTaxonomyViewModel() {
+	function editTaxonomyViewModel(key) {
 		var self = this;
-		this.key = ko.observable(-1);
+		this.taxonomyKey = ko.observable(key);
 		this.taxonomyGroupKey = ko.observable(-1);
-		this.taxonomy = ko.observable("");
 		this.taxonomyGroups = ko.observableArray("");
+		this.name = ko.observable("");
+		this.canSave = ko.computed(function() {
+			return ($.trim(self.name()) != "" && self.taxonomyGroupKey() > 0) 
+		});
 
 		this.getTaxonomyGroups = function() {
 			$.getJSON("/api/Taxonomy/TaxonomyGroup", {}, function (json) {
@@ -18,30 +21,40 @@ wmis.taxonomy.edit = (function ($) {
 		};
 
 		this.getTaxonomy = function() {
-			var url = "/api/Taxonomy/" + "?TaxonomyKey=" + self.key();
+			var url = "/api/Taxonomy/" + "?TaxonomyKey=" + self.taxonomyKey();
 			$.getJSON(url, {}, function (json) {
 				if (json.data.length > 0) {
 					var d = json.data[0];
 					self.taxonomyGroupKey(d.taxonomyGroup.key);
-					self.taxonomy(d.name);
+					self.name(d.name);
 				}
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
 		this.saveTaxonomy = function() {
-			alert('save that shiz! ' + self.taxonomy());
+			var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
+			$.ajax({
+				url: "/api/taxonomy/",
+				type: "POST",
+				contentType: "application/json",
+				dataType: "json",
+				data: JSON.stringify(ko.toJS(self))
+			}).success(function () {
+				window.location.href = "/taxonomy/";
+			}).always(function () {
+				wmis.global.hideWaitingScreen(waitingScreenId);
+			}).fail(wmis.global.ajaxErrorHandler);
 		};
 	}
 
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
 
-		var viewModel = new editTaxonomyViewModel();
+		var viewModel = new editTaxonomyViewModel(options.taxonomyKey);
 		ko.applyBindings(viewModel);
 
-		viewModel.key($("#taxonomyKey").val());
 		viewModel.getTaxonomyGroups();
-		if (viewModel.key() > 0) {
+		if (viewModel.taxonomyKey() > 0) {
 			viewModel.getTaxonomy();
 		}
 	}

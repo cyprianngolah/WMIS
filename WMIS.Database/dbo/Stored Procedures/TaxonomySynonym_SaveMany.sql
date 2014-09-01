@@ -11,9 +11,7 @@ WHEN NOT MATCHED BY TARGET
 WHEN NOT MATCHED BY SOURCE 
 	AND [target].[TaxonomyId] = @p_taxonomyId 
 	THEN DELETE;
-
 GO
 
 GRANT EXECUTE ON [dbo].[TaxonomySynonym_SaveMany] TO [WMISUser]
-
 GO

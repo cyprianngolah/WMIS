@@ -15,5 +15,4 @@ ORDER BY
 GO
 
 GRANT EXECUTE ON [dbo].[TaxonomySynonym_Get] TO [WMISUser]
-
 GO

@@ -12,3 +12,6 @@ AS
 		Name
 
 RETURN 0
+
+GRANT EXECUTE ON [dbo].[TaxonomyGroups_Get] TO [WMISUser]
+GO

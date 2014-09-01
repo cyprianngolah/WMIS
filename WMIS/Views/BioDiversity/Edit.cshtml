@@ -102,8 +102,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<ul class="nav nav-tabs" role="tablist">
-				<li class="active"><a href="#decision" role="tab" data-toggle="tab">Decision</a></li>
-				<li><a href="#general" role="tab" data-toggle="tab">General</a></li>
+				<li class="active"><a href="#general" role="tab" data-toggle="tab">General</a></li>
 				<li><a href="#reproduction" role="tab" data-toggle="tab">Reproduction</a></li>
 				<li><a href="#distribution" role="tab" data-toggle="tab">Distribution</a></li>
 				<li><a href="#abundance" role="tab" data-toggle="tab">Abundance</a></li>
@@ -114,135 +113,7 @@
 
 			<!-- Tab panes -->
 			<div class="tab-content">
-				<div class="tab-pane form-horizontal active" id="decision">
-					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Rarity
-							</h4>
-							<hr />
-						</div>
-					</div>
-
-				    <div class="form-group">
-				        <div class="col-md-6"><label for="rangeExtent">Range Extent</label></div>
-				        <div class="col-md-6 text-right">
-				            <label for="rangeExtentScore">Score</label>
-				            <input name="rangeExtentScore" type="text" />
-				        </div>
-				        <div class="col-md-12">
-				            <textarea rows="4" class="form-control" name="rangeExtent"></textarea>
-				        </div>
-				    </div>
-
-					<div class="form-group">
-						<div class="col-md-6"><label for="areaOfOccupancy">Area of Occupancy</label></div>
-						<div class="col-md-6 text-right">
-							<label for="areaOfOccupancyScore">Score</label>
-							<input name="areaOfOccupancyScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="areaOfOccupancy"></textarea>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-6"><label for="populationSize">Population Size</label></div>
-						<div class="col-md-6 text-right">
-							<label for="populationSizeScore">Score</label>
-							<input name="populationSizeScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="populationSize"></textarea>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-6"><label for="numberOfOccurrences">Number of Occurences</label></div>
-						<div class="col-md-6 text-right">
-							<label for="numberOfOccurrencesScore">Score</label>
-							<input name="numberOfOccurrencesScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="numberOfOccurrences"></textarea>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-6"><label for="environmentalSpecificity">Environmental Specificity</label></div>
-						<div class="col-md-6 text-right">
-							<label for="environmentalSpecificityScore">Score</label>
-							<input name="environmentalSpecificityScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="environmentalSpecificity"></textarea>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Trends
-							</h4>
-							<hr />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-6"><label for="rangeExtent">Long-term Trends</label></div>
-						<div class="col-md-6 text-right">
-							<label for="longTermTrendsScore">Score</label>
-							<input name="longTermTrendsScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="longTermTrends"></textarea>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-6"><label for="rangeExtent">Short-term Trends</label></div>
-						<div class="col-md-6 text-right">
-							<label for="shortTermTrendsScore">Score</label>
-							<input name="shortTermTrendsScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="shortTermTrends"></textarea>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Threats
-							</h4>
-							<hr />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-6"><label for="rangeExtent">Threats</label></div>
-						<div class="col-md-6 text-right">
-							<label for="threatsScore">Score</label>
-							<input name="threatsScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="threats"></textarea>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-6"><label for="rangeExtent">Intrinsic Vulnerability</label></div>
-						<div class="col-md-6 text-right">
-							<label for="intrinsicVulnerabilityScore">Score</label>
-							<input name="intrinsicVulnerabilityScore" type="text" />
-						</div>
-						<div class="col-md-12">
-							<textarea rows="4" class="form-control" name="intrinsicVulnerability"></textarea>
-						</div>
-					</div>
-				</div>
-
-				<div class="tab-pane form-horizontal" id="general">
+				<div class="tab-pane form-horizontal active" id="general">
 					<div class="row">
 						<div class="col-md-12">
 							<h4>
@@ -257,20 +128,20 @@
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="species">
 						</div>
-						
+
 						<label for="subSpecies" class="col-md-1 control-label">Sub Species</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="subSpecies">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="commonName" class="col-md-1 control-label">Common Name</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="commonName">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="species" class="col-md-1 control-label">Eco Type</label>
 						<div class="col-md-2">
@@ -281,18 +152,18 @@
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="species">
 						</div>
-						
+
 						<label for="species" class="col-md-1 control-label">NS Global ID</label>
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="species">
 						</div>
-						
+
 						<label for="species" class="col-md-1 control-label">NS NWT ID</label>
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="species">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="species" class="col-md-1 control-label">ELCODE</label>
 						<div class="col-md-2">
@@ -308,26 +179,26 @@
 							<hr />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="commonName" class="col-md-1 control-label">Kingdom</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="kingdom">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="commonName" class="col-md-1 control-label">Phylum</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="phlum">
 						</div>
-						
+
 						<label for="commonName" class="col-md-1 control-label">Sub Phylum</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="subPhlum">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="class" class="col-md-1 control-label">Class</label>
 						<div class="col-md-5">
@@ -339,7 +210,7 @@
 							<input type="text" class="form-control" id="subClass">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="order" class="col-md-1 control-label">Order</label>
 						<div class="col-md-5">
@@ -351,7 +222,7 @@
 							<input type="text" class="form-control" id="subOrder">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="phylum" class="col-md-1 control-label">Phylum</label>
 						<div class="col-md-5">
@@ -363,21 +234,21 @@
 							<input type="text" class="form-control" id="subPhylum">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="infraOrder" class="col-md-1 control-label">Infa Order</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="infraOrder">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="superFamily" class="col-md-1 control-label">Super Family</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" id="superFamily">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="family" class="col-md-1 control-label">Family</label>
 						<div class="col-md-5">
@@ -389,21 +260,21 @@
 							<input type="text" class="form-control" id="subFamily">
 						</div>
 					</div>
-					
-				    <div class="form-group">
-				        <label for="group" class="col-md-1 control-label">Group</label>
-				        <div class="col-md-5">
-				            <input type="text" class="form-control" id="group">
-				        </div>
-				    </div>
-                    
-                    <div class="form-group pull-right">
-                        <div class="col-md-12">
-                            <button id="viewSynonymsButton" type="button" class="btn btn-default">View Synonyms</button>
-                        </div>
-                    </div>
- 
-				    <div class="row">
+
+					<div class="form-group">
+						<label for="group" class="col-md-1 control-label">Group</label>
+						<div class="col-md-5">
+							<input type="text" class="form-control" id="group">
+						</div>
+					</div>
+
+					<div class="form-group pull-right">
+						<div class="col-md-12">
+							<button id="viewSynonymsButton" type="button" class="btn btn-default">View Synonyms</button>
+						</div>
+					</div>
+
+					<div class="row">
 						<div class="col-md-12">
 							<h4>
 								Known Sub-Species (CAN)
@@ -411,13 +282,13 @@
 							<hr />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="group" class="col-md-3 control-label">Number of Known Sub-Species CND</label>
 						<div class="col-md-2">
 							<input type="text" class="form-control" id="group">
 						</div>
-						
+
 						<div class="offset6 col-md-2 checkbox">
 							<label for="group">
 								<input type="checkbox" id="group">
@@ -425,7 +296,7 @@
 							</label>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="family" class="col-md-1 control-label">Description</label>
 						<div class="col-md-11">
@@ -441,7 +312,7 @@
 							<hr />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="group" class="col-md-3 control-label">Number of Known Sub-Species NWT</label>
 						<div class="col-md-2">

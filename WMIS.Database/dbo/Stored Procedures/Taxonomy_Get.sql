@@ -29,3 +29,6 @@ AS
 
 RETURN 0
 GO
+
+GRANT EXECUTE ON [dbo].[Taxonomy_Get] TO [WMISUser]
+GO

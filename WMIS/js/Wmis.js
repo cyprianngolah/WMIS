@@ -5,6 +5,14 @@ var wmis = {
 };
 
 wmis.global = (function ($) {
+	function showWaitingScreen(message, $root) {
+		
+	}
+	
+	function hideWaitingScreen(id) {
+		
+	}
+
 	// Loads a select box with data via an AJAX get call and then initializes it as a 
 	// single select select2
 	// Note - This may be replaced by more knockout oriented logic
@@ -44,6 +52,8 @@ wmis.global = (function ($) {
 	return {
 		appendDataToSelect: appendDataToSelect,
 		ajaxErrorHandler: ajaxErrorHandler,
-		loadAndInitializeSelect2: loadAndInitializeSelect2
+		loadAndInitializeSelect2: loadAndInitializeSelect2,
+		showWaitingScreen: showWaitingScreen,
+		hideWaitingScreen: hideWaitingScreen
 	};
 }(jQuery));

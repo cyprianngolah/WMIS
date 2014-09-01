@@ -11,7 +11,7 @@
 
 		public ActionResult New()
 		{
-			return View("Edit");
+			return View();
 		}
 
 		public ActionResult Edit(int key)

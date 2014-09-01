@@ -1,0 +1,150 @@
+﻿@{
+	ViewBag.Title = "Biodiversity";
+	ViewBag.SubTitle = "Decision";
+}
+
+@section TopRight{
+	<div class="h4 pull-right" style="text-align: right; margin:0;">
+		Status Risk: <strong>May Be At Risk</strong><br />
+		<span class="h5">Last Updated: @DateTime.Now.ToShortDateString()</span>
+	</div>
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<form role="form">
+			<div class="row">
+				<div class="col-md-12 text-right">
+					<button type="button" class="btn btn-default" style="margin-bottom: 10px;">Cancel</button>
+					<button type="button" class="btn btn-primary" style="margin-bottom: 10px;">Save</button>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<h4>
+						Rarity
+					</h4>
+					<hr />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="rangeExtent">Range Extent</label></div>
+				<div class="col-md-6 text-right">
+					<label for="rangeExtentScore">Score</label>
+					<input name="rangeExtentScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="rangeExtent"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="areaOfOccupancy">Area of Occupancy</label></div>
+				<div class="col-md-6 text-right">
+					<label for="areaOfOccupancyScore">Score</label>
+					<input name="areaOfOccupancyScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="areaOfOccupancy"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="populationSize">Population Size</label></div>
+				<div class="col-md-6 text-right">
+					<label for="populationSizeScore">Score</label>
+					<input name="populationSizeScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="populationSize"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="numberOfOccurrences">Number of Occurences</label></div>
+				<div class="col-md-6 text-right">
+					<label for="numberOfOccurrencesScore">Score</label>
+					<input name="numberOfOccurrencesScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="numberOfOccurrences"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="environmentalSpecificity">Environmental Specificity</label></div>
+				<div class="col-md-6 text-right">
+					<label for="environmentalSpecificityScore">Score</label>
+					<input name="environmentalSpecificityScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="environmentalSpecificity"></textarea>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<h4>
+						Trends
+					</h4>
+					<hr />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="rangeExtent">Long-term Trends</label></div>
+				<div class="col-md-6 text-right">
+					<label for="longTermTrendsScore">Score</label>
+					<input name="longTermTrendsScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="longTermTrends"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="rangeExtent">Short-term Trends</label></div>
+				<div class="col-md-6 text-right">
+					<label for="shortTermTrendsScore">Score</label>
+					<input name="shortTermTrendsScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="shortTermTrends"></textarea>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<h4>
+						Threats
+					</h4>
+					<hr />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="rangeExtent">Threats</label></div>
+				<div class="col-md-6 text-right">
+					<label for="threatsScore">Score</label>
+					<input name="threatsScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="threats"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-6"><label for="rangeExtent">Intrinsic Vulnerability</label></div>
+				<div class="col-md-6 text-right">
+					<label for="intrinsicVulnerabilityScore">Score</label>
+					<input name="intrinsicVulnerabilityScore" type="text" />
+				</div>
+				<div class="col-md-12">
+					<textarea rows="4" class="form-control" name="intrinsicVulnerability"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
