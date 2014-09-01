@@ -10,6 +10,7 @@ AS
 	VALUES (@p_name)
 
 RETURN 0
+GO
 
 GRANT EXECUTE ON [dbo].[BioDiversity_Create] TO [WMISUser]
 GO
