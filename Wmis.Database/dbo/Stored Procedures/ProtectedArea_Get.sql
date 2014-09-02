@@ -3,6 +3,7 @@
 	@p_to INT = 500,
 	@p_sortBy NVARCHAR(25) = NULL,
 	@p_sortDirection INT = NULL,
+	@p_protectedAreaId INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	SELECT
@@ -12,7 +13,8 @@ AS
 	FROM
 		dbo.ProtectedAreas t
 	WHERE
-		(@p_keywords IS NULL OR t.Name LIKE '%' + @p_keywords + '%')
+		t.ProtectedAreaId = ISNULL(@p_protectedAreaId, t.ProtectedAreaId)
+		AND (@p_keywords IS NULL OR t.Name LIKE '%' + @p_keywords + '%')
 	ORDER BY
 		t.Name
 	OFFSET 

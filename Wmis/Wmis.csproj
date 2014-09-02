@@ -165,6 +165,7 @@
     <Compile Include="Dto\Base\PagedResultset.cs" />
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
     <Compile Include="Dto\EcoregionRequest.cs" />
+    <Compile Include="Dto\EcoregionSaveRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
     <Compile Include="Dto\ProtectedAreaRequest.cs" />
     <Compile Include="Dto\TaxonomyRequest.cs" />
@@ -291,6 +292,7 @@
     <Content Include="js\Modules\wmis.protectedarea.index.js" />
     <Content Include="js\Modules\wmis.ecozone.index.js" />
     <Content Include="js\Modules\wmis.ecoregion.index.js" />
+    <Content Include="js\Modules\wmis.ecoregion.edit.js" />
     <Content Include="js\Modules\wmis.taxonomy.edit.js" />
     <Content Include="js\wmis.js" />
     <Content Include="js\Modules\wmis.dialog.synonym.js" />
@@ -402,6 +404,9 @@
     <Content Include="Views\Ecoregion\Index.cshtml" />
     <Content Include="Views\Ecozone\Index.cshtml" />
     <Content Include="Views\ProtectedArea\Index.cshtml" />
+    <Content Include="Views\Ecoregion\Edit.cshtml" />
+    <Content Include="Views\Ecoregion\New.cshtml" />
+    <Content Include="Views\Ecoregion\EditForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

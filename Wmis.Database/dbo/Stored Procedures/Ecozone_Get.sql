@@ -3,6 +3,7 @@
 	@p_to INT = 500,
 	@p_sortBy NVARCHAR(25) = NULL,
 	@p_sortDirection INT = NULL,
+	@p_ecozoneId INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	SELECT
@@ -12,7 +13,8 @@ AS
 	FROM
 		dbo.Ecozones t
 	WHERE
-		(@p_keywords IS NULL OR t.Name LIKE '%' + @p_keywords + '%')
+		t.EcozoneId = ISNULL(@p_ecozoneId, t.EcozoneId)
+		AND (@p_keywords IS NULL OR t.Name LIKE '%' + @p_keywords + '%')
 	ORDER BY
 		t.Name
 	OFFSET 

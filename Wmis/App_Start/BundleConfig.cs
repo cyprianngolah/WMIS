@@ -81,6 +81,9 @@
 			bundles.Add(new ScriptBundle("~/bundles/ecoregion/index").Include(
 						"~/js/modules/wmis.ecoregion.index.js"));
 
+			bundles.Add(new ScriptBundle("~/bundles/ecoregion/edit").Include(
+						"~/js/modules/wmis.ecoregion.edit.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/ecozone/index").Include(
 						"~/js/modules/wmis.ecozone.index.js"));
 

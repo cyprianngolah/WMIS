@@ -77,6 +77,11 @@
 		private const string ECOREGION_GET = "dbo.Ecoregion_Get";
         
 		/// <summary>
+		/// The Ecoregion Save stored procedure
+		/// </summary>
+		private const string ECOREGION_SAVE = "dbo.Ecoregion_Save";
+        
+		/// <summary>
 		/// The Ecozone Get stored procedure
 		/// </summary>
 		private const string ECOZONE_GET = "dbo.Ecozone_Get";
@@ -329,6 +334,7 @@
 					p_to = request.StartRow + request.RowCount - 1,
 					p_sortBy = request.SortBy,
 					p_sortDirection = request.SortDirection,
+					p_ecoregionId = request.Key,
 					p_keywords = request.Keywords,
 				};
 
@@ -350,6 +356,24 @@
 				return pagedResults;
 			}
 		}
+
+		/// <summary>
+		/// Saves the Ecoregion
+		/// </summary>
+		/// <param name="request">The information about the Ecoregion Request</param>
+		public void EcoregionSave(EcoregionSaveRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_ecoregionId = request.Key,
+					p_name = request.Name
+				};
+
+				c.Execute(ECOREGION_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
 		#endregion
 
 		#region Ecozone
@@ -368,6 +392,7 @@
 					p_to = request.StartRow + request.RowCount - 1,
 					p_sortBy = request.SortBy,
 					p_sortDirection = request.SortDirection,
+					p_ecozoneId = request.Key,
 					p_keywords = request.Keywords,
 				};
 
@@ -407,6 +432,7 @@
 					p_to = request.StartRow + request.RowCount - 1,
 					p_sortBy = request.SortBy,
 					p_sortDirection = request.SortDirection,
+					p_protectedAreaId = request.Key,
 					p_keywords = request.Keywords,
 				};
 

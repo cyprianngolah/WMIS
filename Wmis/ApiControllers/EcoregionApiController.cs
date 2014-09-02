@@ -10,12 +10,12 @@
 	/// </summary>
 	[RoutePrefix("api/ecoregion")]
 	public class EcoregionApiController : BaseApiController
-    {
+	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="EcoregionApiController"/> class
 		/// </summary>
 		/// <param name="config">The config</param>
-		public EcoregionApiController(WebConfiguration config) 
+		public EcoregionApiController(WebConfiguration config)
 			: base(config)
 		{
 		}
@@ -31,5 +31,16 @@
 		{
 			return Repository.EcoregionGet(request ?? new EcoregionRequest());
 		}
-    }
+
+		/// <summary>
+		/// Create or update an Ecoregion
+		/// </summary>
+		/// <param name="request">The Ecoregion details</param>
+		[HttpPost]
+		[Route]
+		public void SaveEcoregion([FromBody]EcoregionSaveRequest request)
+		{
+			Repository.EcoregionSave(request);
+		}
+	}
 }
