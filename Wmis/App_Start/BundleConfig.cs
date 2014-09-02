@@ -77,6 +77,15 @@
 
 			bundles.Add(new ScriptBundle("~/bundles/taxonomy/edit").Include(
 						"~/js/modules/wmis.taxonomy.edit.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/ecoregion/index").Include(
+						"~/js/modules/wmis.ecoregion.index.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/ecozone/index").Include(
+						"~/js/modules/wmis.ecozone.index.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/protectedarea/index").Include(
+						"~/js/modules/wmis.protectedarea.index.js"));
 		}
 	}
 }

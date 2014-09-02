@@ -137,6 +137,9 @@
     <Build Include="dbo\Stored Procedures\TaxonomyGroups_Get.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_Create.sql" />
     <Build Include="dbo\Stored Procedures\Taxonomy_Save.sql" />
+    <Build Include="dbo\Stored Procedures\Ecoregion_Get.sql" />
+    <Build Include="dbo\Stored Procedures\Ecozone_Get.sql" />
+    <Build Include="dbo\Stored Procedures\ProtectedArea_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

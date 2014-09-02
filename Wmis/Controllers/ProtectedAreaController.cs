@@ -4,12 +4,9 @@
 
 	public class ProtectedAreaController : Controller
     {
-        //
-        // GET: /ProtectedArea/
-        public ActionResult Index()
-        {
-			ViewBag.Title = "Protected Areas";
-            return View("_NotYetImplemented");
-        }
+		public ActionResult Index()
+		{
+			return View();
+		}
 	}
 }

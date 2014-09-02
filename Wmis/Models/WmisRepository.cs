@@ -4,10 +4,11 @@
 	using System.Collections.Generic;
 	using System.Data;
 	using System.Data.SqlClient;
-    using System.Linq;
-    using Configuration;
+	using System.Linq;
 	using Dapper;
-    using Extensions;
+	using Configuration;
+	using Dto;
+	using Extensions;
 
 	/// <summary>
 	/// WMIS Repository for SQL
@@ -69,6 +70,21 @@
 		/// The Taxonomy Groups Get stored procedure
 		/// </summary>
 		private const string TAXONOMYGROUP_GET = "dbo.TaxonomyGroups_Get";
+
+		/// <summary>
+		/// The Ecoregion Get stored procedure
+		/// </summary>
+		private const string ECOREGION_GET = "dbo.Ecoregion_Get";
+        
+		/// <summary>
+		/// The Ecozone Get stored procedure
+		/// </summary>
+		private const string ECOZONE_GET = "dbo.Ecozone_Get";
+
+		/// <summary>
+		/// The Protected Area Get stored procedure
+		/// </summary>
+		private const string PROTECTEDAREA_GET = "dbo.ProtectedArea_Get";
         
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -295,6 +311,123 @@
                 c.Execute(TAXONOMYSYNONYM_SAVEMANY, param, commandType: CommandType.StoredProcedure);
             }
         }
+		#endregion
+
+		#region Ecoregion
+		/// <summary>
+		/// Gets a list of Ecoregions
+		/// </summary>
+		/// <param name="request">The information about the Ecoregion Request</param>
+		/// <returns>A list of matching Ecoregions</returns>
+		public PagedResultset<Ecoregion> EcoregionGet(EcoregionRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = request.StartRow,
+					p_to = request.StartRow + request.RowCount - 1,
+					p_sortBy = request.SortBy,
+					p_sortDirection = request.SortDirection,
+					p_keywords = request.Keywords,
+				};
+
+				var pagedResults = new PagedResultset<Ecoregion>
+				{
+					DataRequest = request,
+					ResultCount = 0,
+					Data = new List<Ecoregion>()
+				};
+
+				var results = c.Query<dynamic, Ecoregion, Ecoregion>(ECOREGION_GET,
+					(d, t) =>
+					{
+						pagedResults.ResultCount = d.TotalRowCount;
+						return t;
+					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+				pagedResults.Data = results.ToList();
+				return pagedResults;
+			}
+		}
+		#endregion
+
+		#region Ecozone
+		/// <summary>
+		/// Gets a list of Ecozones
+		/// </summary>
+		/// <param name="request">The information about the Ecozone Request</param>
+		/// <returns>A list of matching Ecozones</returns>
+		public PagedResultset<Ecozone> EcozoneGet(EcozoneRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = request.StartRow,
+					p_to = request.StartRow + request.RowCount - 1,
+					p_sortBy = request.SortBy,
+					p_sortDirection = request.SortDirection,
+					p_keywords = request.Keywords,
+				};
+
+				var pagedResults = new PagedResultset<Ecozone>
+				{
+					DataRequest = request,
+					ResultCount = 0,
+					Data = new List<Ecozone>()
+				};
+
+				var results = c.Query<dynamic, Ecozone, Ecozone>(ECOZONE_GET,
+					(d, t) =>
+					{
+						pagedResults.ResultCount = d.TotalRowCount;
+						return t;
+					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+				pagedResults.Data = results.ToList();
+				return pagedResults;
+			}
+		}
+		#endregion
+		
+		#region ProtectedArea
+		/// <summary>
+		/// Gets a list of Protected Areas
+		/// </summary>
+		/// <param name="request">The information about the Protected Area Request</param>
+		/// <returns>A list of matching Protected Areas</returns>
+		public PagedResultset<ProtectedArea> ProtectedAreaGet(ProtectedAreaRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = request.StartRow,
+					p_to = request.StartRow + request.RowCount - 1,
+					p_sortBy = request.SortBy,
+					p_sortDirection = request.SortDirection,
+					p_keywords = request.Keywords,
+				};
+
+				var pagedResults = new PagedResultset<ProtectedArea>
+				{
+					DataRequest = request,
+					ResultCount = 0,
+					Data = new List<ProtectedArea>()
+				};
+
+				var results = c.Query<dynamic, ProtectedArea, ProtectedArea>(PROTECTEDAREA_GET,
+					(d, t) =>
+					{
+						pagedResults.ResultCount = d.TotalRowCount;
+						return t;
+					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+				pagedResults.Data = results.ToList();
+				return pagedResults;
+			}
+		}
 		#endregion
 		#endregion
 
