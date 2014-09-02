@@ -50,8 +50,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ApiControllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\Ecoregions.sql" />
+    <Content Include="Data\Ecozones.sql" />
+    <Content Include="Data\ProtectedAreas.sql" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
