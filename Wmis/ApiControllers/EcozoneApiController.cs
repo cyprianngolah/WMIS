@@ -31,5 +31,16 @@
 		{
 			return Repository.EcozoneGet(request ?? new EcozoneRequest());
 		}
+
+		/// <summary>
+		/// Create or update an Ecozone
+		/// </summary>
+		/// <param name="request">The Ecozone details</param>
+		[HttpPost]
+		[Route]
+		public void SaveEcozone([FromBody]EcozoneSaveRequest request)
+		{
+			Repository.EcozoneSave(request);
+		}
     }
 }

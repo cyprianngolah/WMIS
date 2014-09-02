@@ -87,10 +87,20 @@
 		private const string ECOZONE_GET = "dbo.Ecozone_Get";
 
 		/// <summary>
+		/// The Ecozone Save stored procedure
+		/// </summary>
+		private const string ECOZONE_SAVE = "dbo.Ecozone_Save";
+
+		/// <summary>
 		/// The Protected Area Get stored procedure
 		/// </summary>
 		private const string PROTECTEDAREA_GET = "dbo.ProtectedArea_Get";
-        
+
+		/// <summary>
+		/// The Protected Area Save stored procedure
+		/// </summary>
+		private const string PROTECTEDAREA_SAVE = "dbo.ProtectedArea_Save";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -414,6 +424,24 @@
 				return pagedResults;
 			}
 		}
+
+		/// <summary>
+		/// Saves the Ecozone
+		/// </summary>
+		/// <param name="request">The information about the Ecozone Request</param>
+		public void EcozoneSave(EcozoneSaveRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_ecozoneId = request.Key,
+					p_name = request.Name
+				};
+
+				c.Execute(ECOZONE_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
 		#endregion
 		
 		#region ProtectedArea
@@ -452,6 +480,24 @@
 
 				pagedResults.Data = results.ToList();
 				return pagedResults;
+			}
+		}
+
+		/// <summary>
+		/// Saves the Protected Area
+		/// </summary>
+		/// <param name="request">The information about the Protected Area Request</param>
+		public void ProtectedAreaSave(ProtectedAreaSaveRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_protectedAreaId = request.Key,
+					p_name = request.Name
+				};
+
+				c.Execute(PROTECTEDAREA_SAVE, param, commandType: CommandType.StoredProcedure);
 			}
 		}
 		#endregion

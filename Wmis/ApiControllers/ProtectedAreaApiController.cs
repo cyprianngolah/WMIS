@@ -24,5 +24,16 @@
 		{
 			return Repository.ProtectedAreaGet(request ?? new ProtectedAreaRequest());
 		}
+
+		/// <summary>
+		/// Create or update a Protected Area
+		/// </summary>
+		/// <param name="request">The Protected Area details</param>
+		[HttpPost]
+		[Route]
+		public void SaveProtectedArea([FromBody]ProtectedAreaSaveRequest request)
+		{
+			Repository.ProtectedAreaSave(request);
+		}
     }
 }

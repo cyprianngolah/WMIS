@@ -141,6 +141,8 @@
     <Build Include="dbo\Stored Procedures\Ecozone_Get.sql" />
     <Build Include="dbo\Stored Procedures\ProtectedArea_Get.sql" />
     <Build Include="dbo\Stored Procedures\Ecoregion_Save.sql" />
+    <Build Include="dbo\Stored Procedures\Ecozone_Save.sql" />
+    <Build Include="dbo\Stored Procedures\ProtectedArea_Save.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

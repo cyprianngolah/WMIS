@@ -87,8 +87,14 @@
 			bundles.Add(new ScriptBundle("~/bundles/ecozone/index").Include(
 						"~/js/modules/wmis.ecozone.index.js"));
 
+			bundles.Add(new ScriptBundle("~/bundles/ecozone/edit").Include(
+						"~/js/modules/wmis.ecozone.edit.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/protectedarea/index").Include(
 						"~/js/modules/wmis.protectedarea.index.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/protectedarea/edit").Include(
+						"~/js/modules/wmis.protectedarea.edit.js"));
 		}
 	}
 }

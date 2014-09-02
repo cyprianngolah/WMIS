@@ -1,15 +1,15 @@
 ﻿@{
-    ViewBag.Title = "Ecoregion";
+    ViewBag.Title = "Ecozone";
     ViewBag.SubTitle = "New";
 }
 
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
-    @Html.Raw(Scripts.Render("~/bundles/ecoregion/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/ecozone/edit"))
 
     <script type="text/javascript">
         $(function() {
-            wmis.ecoregion.edit.initialize();
+            wmis.ecozone.edit.initialize();
         });
     </script>
 }

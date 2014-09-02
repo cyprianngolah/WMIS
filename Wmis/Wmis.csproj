@@ -167,7 +167,9 @@
     <Compile Include="Dto\EcoregionRequest.cs" />
     <Compile Include="Dto\EcoregionSaveRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
+    <Compile Include="Dto\EcozoneSaveRequest.cs" />
     <Compile Include="Dto\ProtectedAreaRequest.cs" />
+    <Compile Include="Dto\ProtectedAreaSaveRequest.cs" />
     <Compile Include="Dto\TaxonomyRequest.cs" />
     <Compile Include="Dto\TaxonomySaveRequest.cs" />
     <Compile Include="Dto\TaxonomySynonymRequest.cs" />
@@ -289,6 +291,8 @@
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
+    <Content Include="js\Modules\wmis.protectedarea.edit.js" />
+    <Content Include="js\Modules\wmis.ecozone.edit.js" />
     <Content Include="js\Modules\wmis.protectedarea.index.js" />
     <Content Include="js\Modules\wmis.ecozone.index.js" />
     <Content Include="js\Modules\wmis.ecoregion.index.js" />
@@ -407,6 +411,12 @@
     <Content Include="Views\Ecoregion\Edit.cshtml" />
     <Content Include="Views\Ecoregion\New.cshtml" />
     <Content Include="Views\Ecoregion\EditForm.cshtml" />
+    <Content Include="Views\Ecozone\Edit.cshtml" />
+    <Content Include="Views\Ecozone\EditForm.cshtml" />
+    <Content Include="Views\Ecozone\New.cshtml" />
+    <Content Include="Views\ProtectedArea\Edit.cshtml" />
+    <Content Include="Views\ProtectedArea\EditForm.cshtml" />
+    <Content Include="Views\ProtectedArea\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
