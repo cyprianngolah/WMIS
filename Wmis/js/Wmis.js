@@ -28,9 +28,9 @@ wmis.global = (function ($) {
 			appendDataToSelect(data, $select, showAll);
 		}).fail(wmis.global.ajaxErrorHandler);
 
-		//$select.select2({
-		//	placeholder: placeHolder
-		//});
+		$select.select2({
+			placeholder: placeHolder
+		});
 	}
 
 	// Shortcut for appending data to a select
