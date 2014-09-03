@@ -114,16 +114,16 @@ AS
 			LEFT OUTER JOIN dbo.COSEWICStatus cosewic on s.COSEWICStatusId = cosewic.COSEWICStatusId
 			LEFT OUTER JOIN dbo.Taxonomy kingdom on s.KingdomTaxonomyId = kingdom.TaxonomyId AND kingdom.taxonomyGroupId = 1
 			LEFT OUTER JOIN dbo.Taxonomy phylum on s.PhylumTaxonomyId = phylum.TaxonomyId AND phylum.taxonomyGroupId = 2
-			LEFT OUTER JOIN dbo.Taxonomy subphylum on s.KingdomTaxonomyId = subphylum.TaxonomyId AND subphylum.taxonomyGroupId = 3
-			LEFT OUTER JOIN dbo.Taxonomy class on s.KingdomTaxonomyId = class.TaxonomyId AND class.taxonomyGroupId = 4
-			LEFT OUTER JOIN dbo.Taxonomy subClass on s.KingdomTaxonomyId = subClass.TaxonomyId AND subClass.taxonomyGroupId = 5
-			LEFT OUTER JOIN dbo.Taxonomy [order] on s.KingdomTaxonomyId = [order].TaxonomyId AND [order].taxonomyGroupId = 6
-			LEFT OUTER JOIN dbo.Taxonomy subOrder on s.KingdomTaxonomyId = subOrder.TaxonomyId AND subOrder.taxonomyGroupId = 7
-			LEFT OUTER JOIN dbo.Taxonomy infraOrder on s.KingdomTaxonomyId = infraOrder.TaxonomyId AND infraOrder.taxonomyGroupId = 8
-			LEFT OUTER JOIN dbo.Taxonomy superFamily on s.KingdomTaxonomyId = superFamily.TaxonomyId AND superFamily.taxonomyGroupId = 9
-			LEFT OUTER JOIN dbo.Taxonomy family on s.KingdomTaxonomyId = family.TaxonomyId AND family.taxonomyGroupId = 10	
-			LEFT OUTER JOIN dbo.Taxonomy subFamily on s.KingdomTaxonomyId = subFamily.TaxonomyId AND subFamily.taxonomyGroupId = 11
-			LEFT OUTER JOIN dbo.Taxonomy [group] on s.KingdomTaxonomyId = [group].TaxonomyId AND [group].taxonomyGroupId = 12
+			LEFT OUTER JOIN dbo.Taxonomy subphylum on s.SubPhylumTaxonomyId = subphylum.TaxonomyId AND subphylum.taxonomyGroupId = 3
+			LEFT OUTER JOIN dbo.Taxonomy class on s.ClassTaxonomyId = class.TaxonomyId AND class.taxonomyGroupId = 4
+			LEFT OUTER JOIN dbo.Taxonomy subClass on s.SubClassTaxonomyId = subClass.TaxonomyId AND subClass.taxonomyGroupId = 5
+			LEFT OUTER JOIN dbo.Taxonomy [order] on s.OrderTaxonomyId = [order].TaxonomyId AND [order].taxonomyGroupId = 6
+			LEFT OUTER JOIN dbo.Taxonomy subOrder on s.SubOrderTaxonomyId = subOrder.TaxonomyId AND subOrder.taxonomyGroupId = 7
+			LEFT OUTER JOIN dbo.Taxonomy infraOrder on s.InfraOrderTaxonomyId = infraOrder.TaxonomyId AND infraOrder.taxonomyGroupId = 8
+			LEFT OUTER JOIN dbo.Taxonomy superFamily on s.SuperFamilyTaxonomyId = superFamily.TaxonomyId AND superFamily.taxonomyGroupId = 9
+			LEFT OUTER JOIN dbo.Taxonomy family on s.FamilyTaxonomyId = family.TaxonomyId AND family.taxonomyGroupId = 10	
+			LEFT OUTER JOIN dbo.Taxonomy subFamily on s.SubFamilyTaxonomyId = subFamily.TaxonomyId AND subFamily.taxonomyGroupId = 11
+			LEFT OUTER JOIN dbo.Taxonomy [group] on s.GroupTaxonomyId = [group].TaxonomyId AND [group].taxonomyGroupId = 12
 	WHERE
 		(@p_groupKey IS NULL OR s.GroupTaxonomyId = @p_groupKey) 
 		AND (@p_orderKey IS NULL OR s.OrderTaxonomyId = @p_orderKey) 
