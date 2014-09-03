@@ -136,6 +136,9 @@
     <Build Include="dbo\Stored Procedures\TaxonomyGroups_Get.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_Create.sql" />
     <Build Include="dbo\Stored Procedures\Taxonomy_Save.sql" />
+    <Build Include="dbo\Stored Procedures\BioDiversity_Search.sql" />
+    <Build Include="dbo\Stored Procedures\BioDiversity_Get.sql" />
+    <Build Include="dbo\Stored Procedures\BioDiversity_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="WMIS.PostDeployment.sql" />

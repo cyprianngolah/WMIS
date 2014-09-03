@@ -33,6 +33,7 @@
 	    public ActionResult Edit(int key)
 		{
 			ViewBag.SpeciesCommonName = "Wood Bison";
+			ViewBag.Key = key;
 		    return View();
 	    }
 
@@ -44,6 +45,7 @@
 		public ActionResult Decision(int key)
 		{
 			ViewBag.SpeciesCommonName = "Wood Bison";
+			ViewBag.Key = key;
 			return View();
 		}
     }

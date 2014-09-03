@@ -32,29 +32,34 @@
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
     @Html.Raw(Scripts.Render("~/bundles/dialog/synonym"))
+	@Html.Raw(Scripts.Render("~/bundles/biodiversity/edit"))
 
     <script>
         $(function () {
-            wmis.dialog.synonym.initialize({
-                modalSelector: "#viewSynonymsModal",
-                saveButtonSelector: "#saveSynonymsButton",
-                synonymUrl: "/api/taxonomy/synonym",
-                synonymSaveManyUrl: "/api/taxonomy/synonym/savemany",
-            });
+            //wmis.dialog.synonym.initialize({
+            //    modalSelector: "#viewSynonymsModal",
+            //    saveButtonSelector: "#saveSynonymsButton",
+            //    synonymUrl: "/api/taxonomy/synonym",
+            //    synonymSaveManyUrl: "/api/taxonomy/synonym/savemany",
+            //});
 
-            $("#viewSynonymsButton").click(function () {
-                wmis.dialog.synonym.show([
-                    { taxonomyId: 1, name: "Mammal", groupName: "Kingdom" },
-                    { taxonomyId: 2, name: "Artiodactyla", groupName: "Order" },
-                    { taxonomyId: 3, name: "Bovidae", groupName: "Family" }
-                ]);
+            //$("#viewSynonymsButton").click(function () {
+            //    wmis.dialog.synonym.show([
+            //        { taxonomyId: 1, name: "Mammal", groupName: "Kingdom" },
+            //        { taxonomyId: 2, name: "Artiodactyla", groupName: "Order" },
+            //        { taxonomyId: 3, name: "Bovidae", groupName: "Family" }
+            //    ]);
+            //});
+
+            wmis.biodiversity.edit.initialize({
+            	bioDiversityKey: @ViewBag.Key
             });
         });
     </script>
 }
 
 @section Templates {
-    <script type="text/html" id="synonymTemplate">
+    @*<script type="text/html" id="synonymTemplate">
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group" style="padding-bottom: 5px; padding-top: 6px; margin-bottom: 0;">
@@ -68,11 +73,11 @@
                 </div>
             </div>
         </div>
-    </script>
+    </script>*@
 }
 
 @section Dialogs {
-    <div id="viewSynonymsModal" class="modal fade">
+    @*<div id="viewSynonymsModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -88,14 +93,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 }
 
 <form role="form">
 	<div class="row">
 		<div class="col-md-12 text-right">
-			<button type="button" class="btn btn-default" style="margin-bottom: 10px;">Cancel</button>
-			<button type="button" class="btn btn-primary" style="margin-bottom: 10px;">Save</button>
+			<a href="/BioDiversity/" class="btn btn-default">Cancel</a>
+			<button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: canSave">Save</button>
 		</div>
 	</div>
 
@@ -112,7 +117,7 @@
 			</ul>
 
 			<!-- Tab panes -->
-			<div class="tab-content">
+			<div class="tab-content" data-bind="with: bd">
 				<div class="tab-pane form-horizontal active" id="general">
 					<div class="row">
 						<div class="col-md-12">
@@ -124,50 +129,50 @@
 					</div>
 
 					<div class="form-group">
-						<label for="species" class="col-md-1 control-label">Species</label>
+						<label for="name" class="col-md-1 control-label">Species</label>
 						<div class="col-md-5">
-							<input type="text" class="form-control" id="species">
+							<input type="text" class="form-control" id="name" data-bind="value: name">
 						</div>
 
 						<label for="subSpecies" class="col-md-1 control-label">Sub Species</label>
 						<div class="col-md-5">
-							<input type="text" class="form-control" id="subSpecies">
+							<input type="text" class="form-control" id="subSpecies" data-bind="value: subSpeciesName">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="commonName" class="col-md-1 control-label">Common Name</label>
 						<div class="col-md-5">
-							<input type="text" class="form-control" id="commonName">
+							<input type="text" class="form-control" id="commonName" data-bind="value: commonName">
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="species" class="col-md-1 control-label">Eco Type</label>
+						<label for="ecoType" class="col-md-1 control-label">Eco Type</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="species">
+							<input type="text" class="form-control" id="ecoType" data-bind="value: ecoType">
 						</div>
 
-						<label for="species" class="col-md-1 control-label">Population</label>
+						<label for="population" class="col-md-1 control-label">Population</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="species">
+							<input type="text" class="form-control" id="population" data-bind="value: population">
 						</div>
 
-						<label for="species" class="col-md-1 control-label">NS Global ID</label>
+						<label for="nsGlobalId" class="col-md-1 control-label">NS Global ID</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="species">
+							<input type="text" class="form-control" id="nsGlobalId" data-bind="value: nsGlobalId">
 						</div>
 
-						<label for="species" class="col-md-1 control-label">NS NWT ID</label>
+						<label for="nsNWtId" class="col-md-1 control-label">NS NWT ID</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="species">
+							<input type="text" class="form-control" id="nsNWtId" data-bind="value: nsNwtId">
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="species" class="col-md-1 control-label">ELCODE</label>
+						<label for="elcode" class="col-md-1 control-label">ELCODE</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="species">
+							<input type="text" class="form-control" id="elcode" data-bind="value: elcode">
 						</div>
 					</div>
 
@@ -181,90 +186,78 @@
 					</div>
 
 					<div class="form-group">
-						<label for="commonName" class="col-md-1 control-label">Kingdom</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="kingdom">
+						<label for="kingdom" class="col-md-1 control-label">Kingdom</label>
+						<div class="col-md-5" data-bind="with: kingdom">
+							<select class="form-control" id="kingdom" name="kingdom" data-bind="options: $root.kingdom, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="commonName" class="col-md-1 control-label">Phylum</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="phlum">
+						<div class="col-md-5" data-bind="with: phylum">
+							<select class="form-control" id="phylum" data-bind="options: $root.phylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 
 						<label for="commonName" class="col-md-1 control-label">Sub Phylum</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="subPhlum">
+						<div class="col-md-5" data-bind="with: subPhylum">
+							<select class="form-control" id="subPhylum" data-bind="options: $root.subPhylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="class" class="col-md-1 control-label">Class</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="class">
+						<div class="col-md-5" data-bind="with: 'class'">
+							<select class="form-control" id="class" data-bind="options: $root.class, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key'"></select>
 						</div>
 
 						<label for="subClass" class="col-md-1 control-label">Sub Class</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="subClass">
+						<div class="col-md-5" data-bind="with: subClass">
+							<select class="form-control" id="subClass" data-bind="options: $root.subClass, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="order" class="col-md-1 control-label">Order</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="order">
+						<div class="col-md-5" data-bind="with: order">
+							<select class="form-control" id="order" data-bind="options: $root.order, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 
 						<label for="subOrder" class="col-md-1 control-label">Sub Order</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="subOrder">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="phylum" class="col-md-1 control-label">Phylum</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="phylum">
-						</div>
-
-						<label for="subPhylum" class="col-md-1 control-label">Sub Phylum</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="subPhylum">
+						<div class="col-md-5" data-bind="with: subOrder">
+							<select class="form-control" id="subOrder" data-bind="options: $root.subOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="infraOrder" class="col-md-1 control-label">Infa Order</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="infraOrder">
+						<div class="col-md-5" data-bind="with: infraOrder">
+							<select class="form-control" id="infraOrder" data-bind="options: $root.infraOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="superFamily" class="col-md-1 control-label">Super Family</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="superFamily">
+						<div class="col-md-5" data-bind="with: superFamily">
+							<select class="form-control" id="superFamily" data-bind="options: $root.superFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="family" class="col-md-1 control-label">Family</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="family">
+						<div class="col-md-5" data-bind="with: family">
+							<select class="form-control" id="family" data-bind="options: $root.family, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 
 						<label for="subFamily" class="col-md-1 control-label">Sub Family</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="subFamily">
+						<div class="col-md-5" data-bind="with: subFamily">
+							<select class="form-control" id="subFamily" data-bind="options: $root.subFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="group" class="col-md-1 control-label">Group</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" id="group">
+						<div class="col-md-5" data-bind="with: group">
+							<select class="form-control" id="group" data-bind="options: $root.group, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 					</div>
 
@@ -286,12 +279,12 @@
 					<div class="form-group">
 						<label for="group" class="col-md-3 control-label">Number of Known Sub-Species CND</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="group">
+							<input type="text" class="form-control" id="group" data-bind="value: canadaKnownSubSpeciesCount">
 						</div>
 
 						<div class="offset6 col-md-2 checkbox">
 							<label for="group">
-								<input type="checkbox" id="group">
+								<input type="checkbox" id="group" data-bind="checked: nonNtSpecies">
 								Non-NT Species
 							</label>
 						</div>
@@ -300,7 +293,7 @@
 					<div class="form-group">
 						<label for="family" class="col-md-1 control-label">Description</label>
 						<div class="col-md-11">
-							<textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control"></textarea>
+							<textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control" data-bind="value: canadaKnownSubSpeciesDescription"></textarea>
 						</div>
 					</div>
 
@@ -316,14 +309,14 @@
 					<div class="form-group">
 						<label for="group" class="col-md-3 control-label">Number of Known Sub-Species NWT</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="group">
+							<input type="text" class="form-control" id="group" data-bind="value: nwtKnownSubSpeciesCount">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="family" class="col-md-1 control-label">Description</label>
 						<div class="col-md-11">
-							<textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control"></textarea>
+							<textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control" data-bind="value: nwtKnownSubSpeciesDescription"></textarea>
 						</div>
 					</div>
 				</div>
@@ -341,14 +334,14 @@
 					<div class="form-group">
 						<label for="ageOfMaturity" class="col-md-2 control-label">Age of Maturity</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="ageOfMaturity">
+							<input type="text" class="form-control" id="ageOfMaturity" data-bind="value: ageOfMaturity">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="ageOfMaturityDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="ageOfMaturityDescription" class="form-control"></textarea>
+							<textarea rows="4" name="ageOfMaturityDescription" class="form-control" data-bind="value: ageOfMaturityDescription"></textarea>
 						</div>
 					</div>
 
@@ -364,14 +357,14 @@
 					<div class="form-group">
 						<label for="ageOfMaturity" class="col-md-2 control-label">Frequency Per Year</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="frequencyPerYear">
+							<input type="text" class="form-control" id="frequencyPerYear" data-bind="value: reproductionFrequencyPerYear">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="frequencyPerYearDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="frequencyPerYearDescription" class="form-control"></textarea>
+							<textarea rows="4" name="frequencyPerYearDescription" class="form-control" data-bind="value: reproductionFrequencyPerYearDescription"></textarea>
 						</div>
 					</div>
 
@@ -387,14 +380,14 @@
 					<div class="form-group">
 						<label for="longevity" class="col-md-2 control-label">Longevity</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="longevity">
+							<input type="text" class="form-control" id="longevity" data-bind="value: longevity">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="longevityDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="longevityDescription" class="form-control"></textarea>
+							<textarea rows="4" name="longevityDescription" class="form-control" data-bind="value: longevityDescription"></textarea>
 						</div>
 					</div>
 
@@ -410,7 +403,7 @@
 					<div class="form-group">
 						<label for="vegetationDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="vegetationDescription" class="form-control"></textarea>
+							<textarea rows="4" name="vegetationDescription" class="form-control" data-bind="value: vegetationReproductionDescription"></textarea>
 						</div>
 					</div>
 
@@ -426,7 +419,7 @@
 					<div class="form-group">
 						<label for="hostFishMusselsDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="hostFishMusselsDescription" class="form-control"></textarea>
+							<textarea rows="4" name="hostFishMusselsDescription" class="form-control" data-bind="value: hostFishDescription"></textarea>
 						</div>
 					</div>
 
@@ -442,7 +435,7 @@
 					<div class="form-group">
 						<label for="otherReproductionDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="otherReproductionDescription" class="form-control"></textarea>
+							<textarea rows="4" name="otherReproductionDescription" class="form-control" data-bind="value: otherReproductionDescription"></textarea>
 						</div>
 					</div>
 				</div>
@@ -460,14 +453,14 @@
 					<div class="form-group">
 						<label for="ecozone" class="col-md-2 control-label">Ecozone</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="ecozone">
+							<input type="text" class="form-control" id="ecozone" value="Not Yet Implemented">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="ecozoneDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="ecozoneDescription" class="form-control"></textarea>
+							<textarea rows="4" name="ecozoneDescription" class="form-control" data-bind="value: ecozoneDescription"></textarea>
 						</div>
 					</div>
 					
@@ -483,14 +476,14 @@
 					<div class="form-group">
 						<label for="ecoregion" class="col-md-2 control-label">Ecoregion</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="ecoregion">
+							<input type="text" class="form-control" id="ecoregion" value="Not Yet Implemented">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="ecoregionDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="ecoregionDescription" class="form-control"></textarea>
+							<textarea rows="4" name="ecoregionDescription" class="form-control" data-bind="value: ecoregionDescription"></textarea>
 						</div>
 					</div>
 					
@@ -506,14 +499,14 @@
 					<div class="form-group">
 						<label for="protectedArea" class="col-md-2 control-label">Protected Area</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="protectedArea">
+							<input type="text" class="form-control" id="protectedArea" value="Not Yet Implemented">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="protectedAreaDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="protectedAreaDescription" class="form-control"></textarea>
+							<textarea rows="4" name="protectedAreaDescription" class="form-control" data-bind="value: protectedAreaDescription"></textarea>
 						</div>
 					</div>
 					
@@ -529,7 +522,7 @@
 					<div class="form-group">
 						<label for="historicalDistributionDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="historicalDistributionDescription" class="form-control"></textarea>
+							<textarea rows="4" name="historicalDistributionDescription" class="form-control" data-bind="value: historicalDistributionDescription"></textarea>
 						</div>
 					</div>
 					
@@ -545,7 +538,7 @@
 					<div class="form-group">
 						<label for="marineDistributionDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="marineDistributionDescription" class="form-control"></textarea>
+							<textarea rows="4" name="marineDistributionDescription" class="form-control" data-bind="value: marineDistributionDescription"></textarea>
 						</div>
 					</div>
 					
@@ -561,7 +554,7 @@
 					<div class="form-group">
 						<label for="winterDistributionDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="winterDistributionDescription" class="form-control"></textarea>
+							<textarea rows="4" name="winterDistributionDescription" class="form-control" data-bind="value: winterDistributionDescription"></textarea>
 						</div>
 					</div>
 					
@@ -577,21 +570,21 @@
 					<div class="form-group">
 						<label for="habitatDescription" class="col-md-2 control-label">Habitat Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="habitatDescription" class="form-control"></textarea>
+							<textarea rows="4" name="habitatDescription" class="form-control" data-bind="value: habitatDescription"></textarea>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="distributionEnvironmentalSpecificity" class="col-md-2 control-label">Environmental Specificity</label>
 						<div class="col-md-4">
-							<input type="text" class="form-control" id="distributionEnvironmentalSpecificity">
+							<input type="text" class="form-control" id="distributionEnvironmentalSpecificity" data-bind="value: environmentalSpecificityScore">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="habitadistributionEnvironmentalSpecificityDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="habitadistributionEnvironmentalSpecificityDescription" class="form-control"></textarea>
+							<textarea rows="4" name="habitadistributionEnvironmentalSpecificityDescription" class="form-control" data-bind="value: environmentalSpecificityDescription"></textarea>
 						</div>
 					</div>
 				</div>
@@ -609,14 +602,14 @@
 					<div class="form-group">
 						<label for="abundancePopulationSize" class="col-md-2 control-label">Population Size</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="abundancePopulationSize">
+							<input type="text" class="form-control" id="abundancePopulationSize" data-bind="value: populationSizeScore">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="abundancePopulationDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="abundancePopulationDescription" class="form-control"></textarea>
+							<textarea rows="4" name="abundancePopulationDescription" class="form-control" data-bind="value: populationSizeDescription"></textarea>
 						</div>
 					</div>
 
@@ -632,14 +625,14 @@
 					<div class="form-group">
 						<label for="abundanceNumberOfOccurences" class="col-md-2 control-label">Number of Occurences</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="abundanceNumberOfOccurences">
+							<input type="text" class="form-control" id="abundanceNumberOfOccurences" data-bind="value: numberOfOccurencesScore">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="abundanceNumberOfOccurencesDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="abundanceNumberOfOccurencesDescription" class="form-control"></textarea>
+							<textarea rows="4" name="abundanceNumberOfOccurencesDescription" class="form-control" data-bind="value: numberOfOccurencesDescription"></textarea>
 						</div>
 					</div>
 
@@ -655,7 +648,7 @@
 					<div class="form-group">
 						<label for="densityDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="densityDescription" class="form-control"></textarea>
+							<textarea rows="4" name="densityDescription" class="form-control" data-bind="value: densityDescription"></textarea>
 						</div>
 					</div>
 				</div>
@@ -673,28 +666,28 @@
 					<div class="form-group">
 						<label for="threatsThreats" class="col-md-2 control-label">Threats</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="threatsThreats">
+							<input type="text" class="form-control" id="threatsThreats" data-bind="value: threatsScore">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="threatsThreatsDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="threatsThreatsDescription" class="form-control"></textarea>
+							<textarea rows="4" name="threatsThreatsDescription" class="form-control" data-bind="value: threatsDescription"></textarea>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="threatsIntrinsiceVulnerability" class="col-md-2 control-label">Intrinsic Vulnerability</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="threatsIntrinsiceVulnerability">
+							<input type="text" class="form-control" id="threatsIntrinsiceVulnerability" data-bind="value: intrinsicVulnerabilityScore">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="threatsIntrinsiceVulnerabilityDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="threatsIntrinsiceVulnerabilityDescription" class="form-control"></textarea>
+							<textarea rows="4" name="threatsIntrinsiceVulnerabilityDescription" class="form-control" data-bind="value: intrinsicVulnerabilityDescription"></textarea>
 						</div>
 					</div>
 				</div>
@@ -712,14 +705,14 @@
 					<div class="form-group">
 						<label for="trendsShortTermTrends" class="col-md-2 control-label">Short-Term Trend</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="trendsShortTermTrends">
+							<input type="text" class="form-control" id="trendsShortTermTrends" data-bind="value: shortTermTrendsScore">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="trendsShortTermTrendsDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="trendsShortTermTrendsDescription" class="form-control"></textarea>
+							<textarea rows="4" name="trendsShortTermTrendsDescription" class="form-control" data-bind="value: shortTermTrendsDescription"></textarea>
 						</div>
 					</div>
 					
@@ -735,14 +728,14 @@
 					<div class="form-group">
 						<label for="trendsLongTermTrends" class="col-md-2 control-label">Long-Term Trend</label>
 						<div class="col-md-1">
-							<input type="text" class="form-control" id="trendsLongTermTrends">
+							<input type="text" class="form-control" id="trendsLongTermTrends" data-bind="value: longTermTrendsScore">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="trendsLongTermTrendsDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="trendsLongTermTrendsDescription" class="form-control"></textarea>
+							<textarea rows="4" name="trendsLongTermTrendsDescription" class="form-control" data-bind="value: longTermTrendsDescription"></textarea>
 						</div>
 					</div>
 				</div>
@@ -765,21 +758,21 @@
 
 						<label for="sRank" class="col-md-1 control-label">S Rank</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="sRank">
+							<input type="text" class="form-control" id="sRank" data-bind="value: sRank">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="rankDescription" class="col-md-2 control-label">Rank Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="rankDescription" class="form-control"></textarea>
+							<textarea rows="4" name="rankDescription" class="form-control" data-bind="value: statusRankDescription"></textarea>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="descisionProcess" class="col-md-2 control-label">Descision Process</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="descisionProcess" class="form-control"></textarea>
+							<textarea rows="4" name="descisionProcess" class="form-control" data-bind="value: decisionProcessDescription"></textarea>
 						</div>
 					</div>
 					
@@ -795,7 +788,7 @@
 					<div class="form-group">
 						<label for="economicStatusDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="economicStatusDescription" class="form-control"></textarea>
+							<textarea rows="4" name="economicStatusDescription" class="form-control" data-bind="value: economicStatusDescription"></textarea>
 						</div>
 					</div>
 					
@@ -816,14 +809,14 @@
 
 						<label for="nRank" class="col-md-1 control-label">N Rank</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="nRank">
+							<input type="text" class="form-control" id="nRank" data-bind="value: nRank">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="cosewicStatusDescription" class="form-control"></textarea>
+							<textarea rows="4" name="cosewicStatusDescription" class="form-control" data-bind="value: cosewicStatusDescription"></textarea>
 						</div>
 					</div>
 					
@@ -839,14 +832,14 @@
 					<div class="form-group">
 						<label for="saraStatus" class="col-md-2 control-label">SARA Status</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="saraStatus">
+							<input type="text" class="form-control" id="saraStatus" data-bind="value: saraStatus">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="cosewicStatusDescription" class="form-control"></textarea>
+							<textarea rows="4" name="cosewicStatusDescription" class="form-control" data-bind="value: federalSpeciesAtRiskStatusDescription"></textarea>
 						</div>
 					</div>
 					
@@ -862,7 +855,7 @@
 					<div class="form-group">
 						<label for="nwtSarcAssessmentDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="nwtSarcAssessmentDescription" class="form-control"></textarea>
+							<textarea rows="4" name="nwtSarcAssessmentDescription" class="form-control" data-bind="value: nwtsarcAssessmentDescription"></textarea>
 						</div>
 					</div>
 					
@@ -879,14 +872,14 @@
 					<div class="form-group">
 						<label for="nwtStatusRank" class="col-md-2 control-label">NWT Status Rank</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="nwtStatusRank">
+							<input type="text" class="form-control" id="nwtStatusRank" data-bind="value: nwtStatusRank">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="nwtStatusRankDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="nwtStatusRankDescription" class="form-control"></textarea>
+							<textarea rows="4" name="nwtStatusRankDescription" class="form-control" data-bind="value: nwtSpeciesAtRiskStatusDescription"></textarea>
 						</div>
 					</div>
 					
@@ -902,7 +895,7 @@
 					<div class="form-group">
 						<label for="canadianConservationSignificanceDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="canadianConservationSignificanceDescription" class="form-control"></textarea>
+							<textarea rows="4" name="canadianConservationSignificanceDescription" class="form-control" data-bind="value: canadianConservationSignificanceDescription"></textarea>
 						</div>
 					</div>
 					
@@ -918,19 +911,19 @@
 					<div class="form-group">
 						<label for="iucnStatus" class="col-md-2 control-label">IUCN Status</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="iucnStatus">
+							<input type="text" class="form-control" id="iucnStatus" data-bind="value: iucnStatus">
 						</div>
 
 						<label for="gRank" class="col-md-1 control-label">G Rank</label>
 						<div class="col-md-2">
-							<input type="text" class="form-control" id="gRank">
+							<input type="text" class="form-control" id="gRank" data-bind="value: gRank">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="iucnStatusDescription" class="col-md-2 control-label">Description</label>
 						<div class="col-md-10">
-							<textarea rows="4" name="iucnStatusDescription" class="form-control"></textarea>
+							<textarea rows="4" name="iucnStatusDescription" class="form-control" data-bind="value: iucnDescription"></textarea>
 						</div>
 					</div>
 				</div>

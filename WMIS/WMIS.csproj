@@ -174,6 +174,8 @@
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\BioDiversityDecision.cs" />
+    <Compile Include="Models\CosewicStatus.cs" />
+    <Compile Include="Models\StatusRank.cs" />
     <Compile Include="Models\Taxonomy.cs" />
     <Compile Include="Models\TaxonomyGroup.cs" />
     <Compile Include="Models\TaxonomySynonym.cs" />
@@ -313,6 +315,7 @@
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\knockout-3.1.0.debug.js" />
     <Content Include="Scripts\knockout-3.1.0.js" />
+    <Content Include="Scripts\knockout.mapper.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_ar.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_az.js" />

@@ -31,14 +31,14 @@ wmis.biodiversity.index = (function($) {
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
-				{ "data": "name" },
-				{ "data": "name" },
-				{ "data": "name" },
+				{ "data": "group.name" },
+				{ "data": "order.name" },
+				{ "data": "family.name" },
 				{ "data": "commonName" },
 				{ "data": "name" },
 				{ "data": "subSpeciesName" },
-				{ "data": "name" },
-				{ "data": "name" },
+				{ "data": "ecoType" },
+				{ "data": "populationSizeDescription" },
 				{ "data": "lastUpdated" }
 			],
 			"fnServerData": function (source, data, callback, settings) {

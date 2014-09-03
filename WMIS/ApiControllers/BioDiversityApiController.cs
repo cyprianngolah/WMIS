@@ -37,18 +37,16 @@
 
 		[HttpPost]
 		[Route]
-		public HttpResponseMessage Create([FromBody]string name)
+		public void Create([FromBody]string name)
 		{
 			Repository.BioDiversityCreate(name);
-			return Request.CreateResponse(HttpStatusCode.OK);
 		}
 
 		[HttpPut]
 		[Route]
-		public HttpResponseMessage Update([FromBody]Dto.BioDiversityUpdateRequest up)
+		public void Update([FromBody]Models.BioDiversity bd)
 		{
-			Repository.BioDiversityUpdate(up);
-			return Request.CreateResponse(HttpStatusCode.OK);
+			Repository.BioDiversityUpdate(bd);
 		}
 
 

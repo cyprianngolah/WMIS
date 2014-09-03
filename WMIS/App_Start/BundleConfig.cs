@@ -29,7 +29,9 @@
 
 			bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
 						"~/Scripts/knockout-*",
+						"~/Scripts/knockout.mapper.js",
 						"~/js/wmis.knockout.js"));
+
 
 			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
 						"~/Scripts/select2.js"));
