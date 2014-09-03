@@ -47,7 +47,7 @@
 
 						<div class="h1 pull-left" style="margin:0;">
 							@ViewBag.Title @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
-							{<small>@ViewBag.SubTitle</small>}
+							{<small>@Html.Raw(ViewBag.SubTitle)</small>}
 						</div>
 
 						@RenderSection("TopRight", false)

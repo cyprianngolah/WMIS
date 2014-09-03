@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Biodiversity";
-	ViewBag.SubTitle = @ViewBag.SpeciesCommonName;
+	ViewBag.SubTitle = "<span data-bind='with: bd'><span data-bind='text: name'></span></span>";
 }
 
 <style>
@@ -18,9 +18,9 @@
 </style>
 
 @section TopRight{
-	<div class="h4 pull-right" style="text-align: right; margin:0;">
-		Status Risk: <strong>May Be At Risk</strong><br />
-		<span class="h5">Last Updated: @DateTime.Now.ToShortDateString()</span>
+	<div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: bd">
+		<span data-bind="with: statusRank">Status Risk: <strong><span data-bind="text: name"></span></strong><br /></span>
+		<span class="h5">Last Updated: <span data-bind="text: lastUpdated"></span></span>
 	</div>
 }
 
