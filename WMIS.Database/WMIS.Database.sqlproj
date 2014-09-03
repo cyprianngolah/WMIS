@@ -146,6 +146,8 @@
     <Build Include="dbo\Stored Procedures\BioDiversity_Search.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_Get.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_Update.sql" />
+    <Build Include="dbo\Stored Procedures\CosewicStatus_Get.sql" />
+    <Build Include="dbo\Stored Procedures\StatusRank_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

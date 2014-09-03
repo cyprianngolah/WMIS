@@ -752,8 +752,8 @@
 
 					<div class="form-group">
 						<label for="statusRank" class="col-md-2 control-label">Rank</label>
-						<div class="col-md-4">
-							<select class="form-control" id="statusRank"></select>
+						<div class="col-md-4" data-bind="with: statusRank">
+							<select class="form-control" id="statusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 
 						<label for="sRank" class="col-md-1 control-label">S Rank</label>
@@ -803,8 +803,8 @@
 
 					<div class="form-group">
 						<label for="cosewicStatus" class="col-md-2 control-label">COSEWIC Status</label>
-						<div class="col-md-4">
-							<select class="form-control" id="cosewicStatus"></select>
+						<div class="col-md-4" data-bind="with: cosewicStatus">
+							<select class="form-control" id="cosewicStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
 						</div>
 
 						<label for="nRank" class="col-md-1 control-label">N Rank</label>

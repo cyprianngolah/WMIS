@@ -19,6 +19,9 @@ wmis.biodiversity.edit = (function ($) {
 		this.family = ko.observableArray();
 		this.subFamily = ko.observableArray();
 		this.group = ko.observableArray();
+
+		this.statusRank = ko.observableArray();
+		this.cosewicStatus = ko.observableArray();
 		
 		this.dataLoaded = ko.observable(false);
 
@@ -34,7 +37,7 @@ wmis.biodiversity.edit = (function ($) {
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
-		this.getDropDowns = function() {
+		this.getDropDowns = function () {
 			self.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
 			self.getDropDownData(self.phylum, "/api/taxonomy/phylum");
 			self.getDropDownData(self.subPhylum, "/api/taxonomy/subphylum");
@@ -47,6 +50,10 @@ wmis.biodiversity.edit = (function ($) {
 			self.getDropDownData(self.family, "/api/taxonomy/family");
 			self.getDropDownData(self.subFamily, "/api/taxonomy/subfamily");
 			self.getDropDownData(self.group, "/api/taxonomy/group");
+			self.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
+			
+			self.getDropDownData(self.statusRank, "/api/statusrank");
+			self.getDropDownData(self.cosewicStatus, "/api/cosewicstatus");
 		};
 
 		this.getDropDownData = function(observableArray, url) {

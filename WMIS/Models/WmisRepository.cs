@@ -101,6 +101,16 @@
 		/// </summary>
 		private const string PROTECTEDAREA_SAVE = "dbo.ProtectedArea_Save";
 
+		/// <summary>
+		/// The COSEWIC Status Get stored procedure
+		/// </summary>
+		private const string COSEWICSTATUS_GET = "dbo.CosewicStatus_Get";
+
+		/// <summary>
+		/// The Status RAnk Get stored procedure
+		/// </summary>
+		private const string STATUSRANK_GET = "dbo.StatusRank_Get";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -146,8 +156,8 @@
 					(tc, bd, status, cs, kingdom, phylum, dyn) =>
 					{
 						pagedResultset.ResultCount = tc;
-						bd.StatusRank = status;
-						bd.CosewicStatus = cs;
+						bd.StatusRank = status ?? new StatusRank();
+						bd.CosewicStatus = cs ?? new CosewicStatus();
 						bd.Kingdom = kingdom ?? new Taxonomy();
 						bd.Phylum = phylum ?? new Taxonomy();
 						bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
@@ -183,8 +193,8 @@
 				return c.Query<BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(BIODIVERSITY_GET,
 					(bd, status, cs, kingdom, phylum, dyn) =>
 					{
-						bd.StatusRank = status;
-						bd.CosewicStatus = cs;
+						bd.StatusRank = status ?? new StatusRank();
+						bd.CosewicStatus = cs ?? new CosewicStatus();
 						bd.Kingdom = kingdom ?? new Taxonomy();
 						bd.Phylum = phylum ?? new Taxonomy();
 						bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
@@ -631,6 +641,26 @@
 				};
 
 				c.Execute(PROTECTEDAREA_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
+		#endregion
+
+		#region CosewicStatus
+		public IEnumerable<CosewicStatus> CosewicStatusGet()
+		{
+			using (var c = NewWmisConnection)
+			{
+				return c.Query<CosewicStatus>(COSEWICSTATUS_GET, commandType: CommandType.StoredProcedure);
+			}
+		}
+		#endregion
+
+		#region StatusRank
+		public IEnumerable<StatusRank> StatusRankGet()
+		{
+			using (var c = NewWmisConnection)
+			{
+				return c.Query<StatusRank>(STATUSRANK_GET, commandType: CommandType.StoredProcedure);
 			}
 		}
 		#endregion
