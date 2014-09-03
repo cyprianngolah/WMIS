@@ -404,7 +404,6 @@
     <Content Include="Views\BioDiversity\Index.cshtml" />
     <Content Include="Views\BioDiversity\New.cshtml" />
     <Content Include="Views\BioDiversity\Edit.cshtml" />
-    <Content Include="Views\Shared\_NotYetImplemented.cshtml" />
     <Content Include="Views\Taxonomy\Index.cshtml" />
     <Content Include="Views\Taxonomy\New.cshtml" />
     <Content Include="Views\Taxonomy\Edit.cshtml" />
