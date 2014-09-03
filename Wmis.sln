@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wmis", "WMIS\Wmis.csproj", "{1E36421F-1E5B-4EF7-9076-EFF237C49FDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wmis", "Wmis\Wmis.csproj", "{1E36421F-1E5B-4EF7-9076-EFF237C49FDE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy Scripts", "Deploy Scripts", "{0E72B27A-B8C0-45C5-A627-9CACDF866E45}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy Scripts", "Deploy Sc
 		_DeployScripts\WebDeploy.msbuild = _DeployScripts\WebDeploy.msbuild
 	EndProjectSection
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Wmis.Database", "WMIS.Database\Wmis.Database.sqlproj", "{BE692EBF-2C1D-43EB-86EB-4A130DBAEA62}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Wmis.Database", "Wmis.Database\Wmis.Database.sqlproj", "{BE692EBF-2C1D-43EB-86EB-4A130DBAEA62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wmis.Test", "Wmis.Test\Wmis.Test.csproj", "{2A27EFF5-23C1-4962-A252-5AC246E0AF64}"
 EndProject
