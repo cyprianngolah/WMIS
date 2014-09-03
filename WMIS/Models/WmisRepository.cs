@@ -5,8 +5,9 @@
 	using System.Data;
 	using System.Data.SqlClient;
     using System.Linq;
-    using Configuration;
 	using Dapper;
+	using Configuration;
+	using Dto;
     using Extensions;
 
 	/// <summary>
@@ -70,6 +71,36 @@
 		/// </summary>
 		private const string TAXONOMYGROUP_GET = "dbo.TaxonomyGroups_Get";
         
+        /// <summary>
+		/// The Ecoregion Get stored procedure
+		/// </summary>
+		private const string ECOREGION_GET = "dbo.Ecoregion_Get";
+        
+		/// <summary>
+		/// The Ecoregion Save stored procedure
+		/// </summary>
+		private const string ECOREGION_SAVE = "dbo.Ecoregion_Save";
+        
+		/// <summary>
+		/// The Ecozone Get stored procedure
+		/// </summary>
+		private const string ECOZONE_GET = "dbo.Ecozone_Get";
+
+		/// <summary>
+		/// The Ecozone Save stored procedure
+		/// </summary>
+		private const string ECOZONE_SAVE = "dbo.Ecozone_Save";
+
+		/// <summary>
+		/// The Protected Area Get stored procedure
+		/// </summary>
+		private const string PROTECTEDAREA_GET = "dbo.ProtectedArea_Get";
+
+		/// <summary>
+		/// The Protected Area Save stored procedure
+		/// </summary>
+		private const string PROTECTEDAREA_SAVE = "dbo.ProtectedArea_Save";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -136,7 +167,7 @@
 					}, param, splitOn: "Key", commandType: CommandType.StoredProcedure);
 
 				pagedResultset.Data = new List<BioDiversity>(results);
-			}
+		}
 
 			return pagedResultset;
 		}
@@ -272,7 +303,7 @@
 					@p_IUCNStatus = bd.IucnStatus,
 					@p_GRank = bd.GRank,
 					@p_IUCNDescription = bd.IucnDescription
-	
+					
 				};
 				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);
 			}
@@ -430,6 +461,179 @@
         }
 		#endregion
 
+		#region Ecoregion
+		/// <summary>
+		/// Gets a list of Ecoregions
+		/// </summary>
+		/// <param name="request">The information about the Ecoregion Request</param>
+		/// <returns>A list of matching Ecoregions</returns>
+		public PagedResultset<Ecoregion> EcoregionGet(EcoregionRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = request.StartRow,
+					p_to = request.StartRow + request.RowCount - 1,
+					p_sortBy = request.SortBy,
+					p_sortDirection = request.SortDirection,
+					p_ecoregionId = request.Key,
+					p_keywords = request.Keywords,
+				};
+
+				var pagedResults = new PagedResultset<Ecoregion>
+				{
+					DataRequest = request,
+					ResultCount = 0,
+					Data = new List<Ecoregion>()
+				};
+
+				var results = c.Query<dynamic, Ecoregion, Ecoregion>(ECOREGION_GET,
+					(d, t) =>
+					{
+						pagedResults.ResultCount = d.TotalRowCount;
+						return t;
+					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+				pagedResults.Data = results.ToList();
+				return pagedResults;
+			}
+		}
+
+		/// <summary>
+		/// Saves the Ecoregion
+		/// </summary>
+		/// <param name="request">The information about the Ecoregion Request</param>
+		public void EcoregionSave(EcoregionSaveRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_ecoregionId = request.Key,
+					p_name = request.Name
+				};
+
+				c.Execute(ECOREGION_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
+		#endregion
+
+		#region Ecozone
+		/// <summary>
+		/// Gets a list of Ecozones
+		/// </summary>
+		/// <param name="request">The information about the Ecozone Request</param>
+		/// <returns>A list of matching Ecozones</returns>
+		public PagedResultset<Ecozone> EcozoneGet(EcozoneRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = request.StartRow,
+					p_to = request.StartRow + request.RowCount - 1,
+					p_sortBy = request.SortBy,
+					p_sortDirection = request.SortDirection,
+					p_ecozoneId = request.Key,
+					p_keywords = request.Keywords,
+				};
+
+				var pagedResults = new PagedResultset<Ecozone>
+				{
+					DataRequest = request,
+					ResultCount = 0,
+					Data = new List<Ecozone>()
+				};
+
+				var results = c.Query<dynamic, Ecozone, Ecozone>(ECOZONE_GET,
+					(d, t) =>
+					{
+						pagedResults.ResultCount = d.TotalRowCount;
+						return t;
+					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+				pagedResults.Data = results.ToList();
+				return pagedResults;
+			}
+		}
+
+		/// <summary>
+		/// Saves the Ecozone
+		/// </summary>
+		/// <param name="request">The information about the Ecozone Request</param>
+		public void EcozoneSave(EcozoneSaveRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_ecozoneId = request.Key,
+					p_name = request.Name
+				};
+
+				c.Execute(ECOZONE_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
+		#endregion
+		
+		#region ProtectedArea
+		/// <summary>
+		/// Gets a list of Protected Areas
+		/// </summary>
+		/// <param name="request">The information about the Protected Area Request</param>
+		/// <returns>A list of matching Protected Areas</returns>
+		public PagedResultset<ProtectedArea> ProtectedAreaGet(ProtectedAreaRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = request.StartRow,
+					p_to = request.StartRow + request.RowCount - 1,
+					p_sortBy = request.SortBy,
+					p_sortDirection = request.SortDirection,
+					p_protectedAreaId = request.Key,
+					p_keywords = request.Keywords,
+				};
+
+				var pagedResults = new PagedResultset<ProtectedArea>
+				{
+					DataRequest = request,
+					ResultCount = 0,
+					Data = new List<ProtectedArea>()
+				};
+
+				var results = c.Query<dynamic, ProtectedArea, ProtectedArea>(PROTECTEDAREA_GET,
+					(d, t) =>
+					{
+						pagedResults.ResultCount = d.TotalRowCount;
+						return t;
+					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+				pagedResults.Data = results.ToList();
+				return pagedResults;
+			}
+		}
+
+		/// <summary>
+		/// Saves the Protected Area
+		/// </summary>
+		/// <param name="request">The information about the Protected Area Request</param>
+		public void ProtectedAreaSave(ProtectedAreaSaveRequest request)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_protectedAreaId = request.Key,
+					p_name = request.Name
+				};
+
+				c.Execute(PROTECTEDAREA_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
+		#endregion
 		#endregion
 
 		#region Helpers

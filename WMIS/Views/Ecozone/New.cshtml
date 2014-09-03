@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Ecozone";
+    ViewBag.SubTitle = "New";
+}
+
+@section Scripts {
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/ecozone/edit"))
+
+    <script type="text/javascript">
+        $(function() {
+            wmis.ecozone.edit.initialize();
+        });
+    </script>
+}
+
+@{ Html.RenderPartial("EditForm"); }

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>WMIS.Database</Name>
+    <Name>Wmis.Database</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{be692ebf-2c1d-43eb-86eb-4a130dbaea62}</ProjectGuid>
@@ -12,8 +12,8 @@
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>WMIS.Database</RootNamespace>
-    <AssemblyName>WMIS.Database</AssemblyName>
+    <RootNamespace>Wmis.Database</RootNamespace>
+    <AssemblyName>Wmis.Database</AssemblyName>
     <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -70,6 +70,7 @@
     <Recovery>SIMPLE</Recovery>
     <EnableFullTextSearch>True</EnableFullTextSearch>
     <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+    <TargetDatabase>Wmis.Database</TargetDatabase>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -136,11 +137,17 @@
     <Build Include="dbo\Stored Procedures\TaxonomyGroups_Get.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_Create.sql" />
     <Build Include="dbo\Stored Procedures\Taxonomy_Save.sql" />
+    <Build Include="dbo\Stored Procedures\Ecoregion_Get.sql" />
+    <Build Include="dbo\Stored Procedures\Ecozone_Get.sql" />
+    <Build Include="dbo\Stored Procedures\ProtectedArea_Get.sql" />
+    <Build Include="dbo\Stored Procedures\Ecoregion_Save.sql" />
+    <Build Include="dbo\Stored Procedures\Ecozone_Save.sql" />
+    <Build Include="dbo\Stored Procedures\ProtectedArea_Save.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_Search.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_Get.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_Update.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="WMIS.PostDeployment.sql" />
+    <PostDeploy Include="Wmis.PostDeployment.sql" />
   </ItemGroup>
 </Project>
