@@ -58,6 +58,11 @@
   <ItemGroup>
     <Content Include="Data\Ecoregions.sql" />
     <Content Include="Data\Ecozones.sql" />
+    <Content Include="Data\StatusRanks.sql" />
+    <Content Include="Data\ReferenceCategories.sql" />
+    <Content Include="Data\COSEWICStatus.sql" />
+    <Content Include="Data\Taxonomy.sql" />
+    <Content Include="Data\TaxonomyGroup.sql" />
     <Content Include="Data\ProtectedAreas.sql" />
   </ItemGroup>
   <Choose>
