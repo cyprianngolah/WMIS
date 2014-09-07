@@ -6,7 +6,7 @@ wmis.biodiversity.edit = (function ($) {
 
 	function editBioDiversityViewModel() {
 		var self = this;
-		this.bd = ko.observable(null);
+		this.bd = ko.observable();
 		this.kingdom = ko.observableArray();
 		this.phylum = ko.observableArray();
 		this.subPhylum = ko.observableArray();
@@ -20,6 +20,13 @@ wmis.biodiversity.edit = (function ($) {
 		this.subFamily = ko.observableArray();
 		this.group = ko.observableArray();
 
+		this.ecozones = ko.observableArray();
+		this.selectedEcozoneKeys = ko.observableArray();
+		this.ecoregions = ko.observableArray();
+		this.selectedEcoregionKeys = ko.observableArray();
+		this.protectedAreas = ko.observableArray();
+		this.selectedProtectedAreaKeys = ko.observableArray();
+
 		this.statusRank = ko.observableArray();
 		this.cosewicStatus = ko.observableArray();
 		
@@ -31,10 +38,37 @@ wmis.biodiversity.edit = (function ($) {
 
 			$.getJSON(url, {}, function (json) {
 				ko.mapper.fromJS(json, "auto", self.bd);
+
+				self.convertToArrayOfKeys(self.bd().ecozones, self.selectedEcozoneKeys);
+				self.convertToArrayOfKeys(self.bd().ecoregions, self.selectedEcoregionKeys);
+				self.convertToArrayOfKeys(self.bd().protectedAreas, self.selectedProtectedAreaKeys);
+
 				self.dataLoaded(true);
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
+		};
+
+		this.convertToArrayOfKeys = function(source, destination) {
+			var destinationKeys = ko.utils.arrayMap(source(), function(item) {
+				return item.key();
+			});
+			destination(destinationKeys);
+		};
+
+		this.getObjectsFromKeys = function(objects, keys, destination) {
+			var selectedObjects = [];
+			for (var i = 0; i < keys().length; i++) {
+				var k = keys()[i];
+				for (var j = 0; j < objects().length; j++) {
+					var o = objects()[j];
+					if (k == o.key) {
+						selectedObjects.push(o);
+						break;
+					}
+				}
+			}
+			destination(selectedObjects);
 		};
 
 		this.getDropDowns = function () {
@@ -51,14 +85,29 @@ wmis.biodiversity.edit = (function ($) {
 			self.getDropDownData(self.subFamily, "/api/taxonomy/subfamily");
 			self.getDropDownData(self.group, "/api/taxonomy/group");
 			self.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
+
+			self.getDropDownData(self.ecoregions, "/api/ecoregion?startRow=0&rowCount=500", function(result) {
+				return result.data;
+			});
+			self.getDropDownData(self.ecozones, "/api/ecozone?startRow=0&rowCount=500", function (result) {
+				return result.data;
+			});
+			self.getDropDownData(self.protectedAreas, "/api/protectedArea?startRow=0&rowCount=500", function (result) {
+				return result.data;
+			});
 			
 			self.getDropDownData(self.statusRank, "/api/statusrank");
 			self.getDropDownData(self.cosewicStatus, "/api/cosewicstatus");
 		};
 
-		this.getDropDownData = function(observableArray, url) {
-			$.getJSON(url, {}, function(json) {
-				observableArray(json);
+
+		this.getDropDownData = function(observableArray, url, parsingFunction) {
+			$.getJSON(url, {}, function (json) {
+				if (parsingFunction) {
+					observableArray(parsingFunction(json));
+				} else {
+					observableArray(json);
+				}
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
@@ -68,6 +117,10 @@ wmis.biodiversity.edit = (function ($) {
 
 		this.saveBioDiversity = function() {
 			wmis.global.showWaitingScreen("Saving...");
+
+			self.getObjectsFromKeys(self.ecozones, self.selectedEcozoneKeys, self.bd().ecozones);
+			self.getObjectsFromKeys(self.ecoregions, self.selectedEcoregionKeys, self.bd().ecoregions);
+			self.getObjectsFromKeys(self.protectedAreas, self.selectedProtectedAreaKeys, self.bd().protectedAreas);
 			
 			$.ajax({
 				url: "/api/BioDiversity/",

@@ -1,5 +1,8 @@
 ﻿namespace Wmis.Models
 {
+	using System.Collections;
+	using System.Collections.Generic;
+
 	/// <summary>
 	/// Model object for BioDiversity
 	/// </summary>
@@ -76,21 +79,27 @@
 
 		public string LongevityDescription { get; set; }
 
-		public string VegetationReproductionDescription { get;set; }
+		public string VegetationReproductionDescription { get; set; }
 
 		public string HostFishDescription { get; set; }
-		
+
 		public string OtherReproductionDescription { get; set; }
 
-		public string EcozoneDescription  { get; set; }
+		public List<Ecozone> Ecozones { get; set; }
+
+		public string EcozoneDescription { get; set; }
+
+		public List<Ecoregion> Ecoregions { get; set; }
 
 		public string EcoregionDescription { get; set; }
+
+		public List<ProtectedArea> ProtectedAreas { get; set; }
 
 		public string ProtectedAreaDescription { get; set; }
 
 		public string RangeExtentScore { get; set; }
 
-		public string RangeExtentDescription  { get; set; }
+		public string RangeExtentDescription { get; set; }
 
 		public string DistributionPercentage { get; set; }
 
@@ -108,7 +117,7 @@
 
 		public string EnvironmentalSpecificityScore { get; set; }
 
-		public string EnvironmentalSpecificityDescription  { get; set; }
+		public string EnvironmentalSpecificityDescription { get; set; }
 
 		public string PopulationSizeScore { get; set; }
 
@@ -169,5 +178,12 @@
 		public string GRank { get; set; }
 
 		public string IucnDescription { get; set; }
+
+		public BioDiversity()
+		{
+			Ecoregions = new List<Ecoregion>();
+			Ecozones = new List<Ecozone>();
+			ProtectedAreas = new List<ProtectedArea>();
+		}
 	}
 }

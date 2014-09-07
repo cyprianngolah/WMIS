@@ -20,7 +20,7 @@
 @section TopRight{
 	<div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: bd">
 		<span data-bind="with: statusRank">Status Risk: <strong><span data-bind="text: name"></span></strong><br /></span>
-		<span class="h5">Last Updated: <span data-bind="text: lastUpdated"></span></span>
+		<span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment(lastUpdated(), moment.ISO_8601).format('L') : ''"></span></span>
 	</div>
 }
 
@@ -188,64 +188,64 @@
 					<div class="form-group">
 						<label for="kingdom" class="col-md-1 control-label">Kingdom</label>
 						<div class="col-md-5" data-bind="with: kingdom">
-							<select class="form-control" id="kingdom" name="kingdom" data-bind="options: $root.kingdom, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="kingdom" name="kingdom" data-bind="options: $root.kingdom, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="commonName" class="col-md-1 control-label">Phylum</label>
 						<div class="col-md-5" data-bind="with: phylum">
-							<select class="form-control" id="phylum" data-bind="options: $root.phylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="phylum" data-bind="options: $root.phylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 
 						<label for="commonName" class="col-md-1 control-label">Sub Phylum</label>
 						<div class="col-md-5" data-bind="with: subPhylum">
-							<select class="form-control" id="subPhylum" data-bind="options: $root.subPhylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="subPhylum" data-bind="options: $root.subPhylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="class" class="col-md-1 control-label">Class</label>
 						<div class="col-md-5" data-bind="with: 'class'">
-							<select class="form-control" id="class" data-bind="options: $root.class, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key'"></select>
+							<select class="form-control" id="class" data-bind="options: $root.class, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key', select2: { }"></select>
 						</div>
 
 						<label for="subClass" class="col-md-1 control-label">Sub Class</label>
 						<div class="col-md-5" data-bind="with: subClass">
-							<select class="form-control" id="subClass" data-bind="options: $root.subClass, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="subClass" data-bind="options: $root.subClass, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="order" class="col-md-1 control-label">Order</label>
 						<div class="col-md-5" data-bind="with: order">
-							<select class="form-control" id="order" data-bind="options: $root.order, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="order" data-bind="options: $root.order, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 
 						<label for="subOrder" class="col-md-1 control-label">Sub Order</label>
 						<div class="col-md-5" data-bind="with: subOrder">
-							<select class="form-control" id="subOrder" data-bind="options: $root.subOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="subOrder" data-bind="options: $root.subOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="infraOrder" class="col-md-1 control-label">Infa Order</label>
 						<div class="col-md-5" data-bind="with: infraOrder">
-							<select class="form-control" id="infraOrder" data-bind="options: $root.infraOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="infraOrder" data-bind="options: $root.infraOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="superFamily" class="col-md-1 control-label">Super Family</label>
 						<div class="col-md-5" data-bind="with: superFamily">
-							<select class="form-control" id="superFamily" data-bind="options: $root.superFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="superFamily" data-bind="options: $root.superFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="family" class="col-md-1 control-label">Family</label>
 						<div class="col-md-5" data-bind="with: family">
-							<select class="form-control" id="family" data-bind="options: $root.family, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="family" data-bind="options: $root.family, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 
 						<label for="subFamily" class="col-md-1 control-label">Sub Family</label>
@@ -257,7 +257,7 @@
 					<div class="form-group">
 						<label for="group" class="col-md-1 control-label">Group</label>
 						<div class="col-md-5" data-bind="with: group">
-							<select class="form-control" id="group" data-bind="options: $root.group, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="group" data-bind="options: $root.group, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 
@@ -453,7 +453,12 @@
 					<div class="form-group">
 						<label for="ecozone" class="col-md-2 control-label">Ecozone</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="ecozone" value="Not Yet Implemented">
+							<select id="ecozone"
+									name="ecozone"
+									multiple="true"
+									class="form-control"
+									data-bind="options: $root.ecozones, selectedOptions: $root.selectedEcozoneKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
+							@*<input type="text" class="form-control" id="ecozone" value="Not Yet Implemented">*@
 						</div>
 					</div>
 
@@ -476,7 +481,11 @@
 					<div class="form-group">
 						<label for="ecoregion" class="col-md-2 control-label">Ecoregion</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="ecoregion" value="Not Yet Implemented">
+							<select id="ecoregion"
+									name="ecoregion"
+									multiple="true"
+									class="form-control"
+									data-bind="options: $root.ecoregions, selectedOptions: $root.selectedEcoregionKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
 						</div>
 					</div>
 
@@ -499,7 +508,11 @@
 					<div class="form-group">
 						<label for="protectedArea" class="col-md-2 control-label">Protected Area</label>
 						<div class="col-md-6">
-							<input type="text" class="form-control" id="protectedArea" value="Not Yet Implemented">
+							<select id="protectedArea"
+									name="protectedArea"
+									multiple="true"
+									class="form-control"
+									data-bind="options: $root.protectedAreas, selectedOptions: $root.selectedProtectedAreaKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
 						</div>
 					</div>
 
@@ -753,7 +766,7 @@
 					<div class="form-group">
 						<label for="statusRank" class="col-md-2 control-label">Rank</label>
 						<div class="col-md-4" data-bind="with: statusRank">
-							<select class="form-control" id="statusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="statusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 
 						<label for="sRank" class="col-md-1 control-label">S Rank</label>
@@ -804,7 +817,7 @@
 					<div class="form-group">
 						<label for="cosewicStatus" class="col-md-2 control-label">COSEWIC Status</label>
 						<div class="col-md-4" data-bind="with: cosewicStatus">
-							<select class="form-control" id="cosewicStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+							<select class="form-control" id="cosewicStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 
 						<label for="nRank" class="col-md-1 control-label">N Rank</label>

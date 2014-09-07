@@ -9,6 +9,7 @@
 	using Configuration;
 	using Dto;
     using Extensions;
+	using Microsoft.Ajax.Utilities;
 
 	/// <summary>
 	/// WMIS Repository for SQL
@@ -190,29 +191,40 @@
 				{
 					p_bioDiversityKey = bioDiversityKey
 				};
-				return c.Query<BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(BIODIVERSITY_GET,
-					(bd, status, cs, kingdom, phylum, dyn) =>
+				
+				using (var q = c.QueryMultiple(BIODIVERSITY_GET, param, commandType: CommandType.StoredProcedure))
+				{
+					var biodiversity = q.Read<BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(
+						(bd, status, cs, kingdom, phylum, dyn) =>
+						{
+							bd.StatusRank = status ?? new StatusRank();
+							bd.CosewicStatus = cs ?? new CosewicStatus();
+							bd.Kingdom = kingdom ?? new Taxonomy();
+							bd.Phylum = phylum ?? new Taxonomy();
+							bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
+							bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
+							bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
+							bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
+							bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
+							bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
+							bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
+							bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
+							bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
+							bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
+
+							bd.LastUpdated = DateTime.UtcNow.AddSeconds(-5);
+							return bd;
+						}, "Key").SingleOrDefault();
+
+					if (biodiversity != null)
 					{
-						bd.StatusRank = status ?? new StatusRank();
-						bd.CosewicStatus = cs ?? new CosewicStatus();
-						bd.Kingdom = kingdom ?? new Taxonomy();
-						bd.Phylum = phylum ?? new Taxonomy();
-						bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
-						bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
-						bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
-						bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
-						bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
-						bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
-						bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
-						bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
-						bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
-						bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
+						biodiversity.Ecozones = q.Read<Ecozone>().ToList();
+						biodiversity.Ecoregions = q.Read<Ecoregion>().ToList();
+						biodiversity.ProtectedAreas = q.Read<ProtectedArea>().ToList();
+					}
 
-						bd.LastUpdated = DateTime.UtcNow.AddSeconds(-5);
-
-						return bd;
-					}, param, splitOn: "Key", 
-					commandType: CommandType.StoredProcedure).FirstOrDefault();
+					return biodiversity;
+				}
 			}
 		}
 
@@ -260,59 +272,62 @@
 					p_CanadaKnownSubSpeciesDescription = bd.CanadaKnownSubSpeciesDescription,
 					p_NWTKnownSubSpeciesCount = bd.NwtKnownSubSpeciesCount,
 					p_NWTKnownSubSpeciesDescription = bd.NwtKnownSubSpeciesDescription,
-					@p_AgeOfMaturity = bd.AgeOfMaturity,
-					@p_AgeOfMaturityDescription = bd.AgeOfMaturityDescription,
-					@p_ReproductionFrequencyPerYear = bd.ReproductionFrequencyPerYear,
-					@p_ReproductionFrequencyPerYearDescription = bd.ReproductionFrequencyPerYearDescription,
-					@p_Longevity = bd.Longevity,
-					@p_LongevityDescription = bd.LongevityDescription,
-					@p_VegetationReproductionDescription = bd.VegetationReproductionDescription,
-					@p_HostFishDescription = bd.HostFishDescription,
-					@p_OtherReproductionDescription = bd.OtherReproductionDescription,
-					@p_EcozoneDescription = bd.EcozoneDescription,
-					@p_EcoregionDescription = bd.EcoregionDescription,
-					@p_ProtectedAreaDescription = bd.ProtectedAreaDescription,
-					@p_RangeExtentScore = bd.RangeExtentScore,
-					@p_RangeExtentDescription = bd.RangeExtentDescription,
-					@p_DistributionPercentage = bd.DistributionPercentage,
-					@p_AreaOfOccupancyScore = bd.AreaOfOccupancyScore,
-					@p_AreaOfOccupancyDescription = bd.AreaOfOccupancyDescription,
-					@p_HistoricalDistributionDescription = bd.HistoricalDistributionDescription,
-					@p_MarineDistributionDescription = bd.MarineDistributionDescription,
-					@p_WinterDistributionDescription = bd.WinterDistributionDescription,
-					@p_HabitatDescription = bd.HabitatDescription,
-					@p_EnvironmentalSpecificityScore = bd.EnvironmentalSpecificityScore,
-					@p_EnvironmentalSpecificityDescription = bd.EnvironmentalSpecificityDescription,
-					@p_PopulationSizeScore = bd.PopulationSizeScore,
-					@p_PopulationSizeDescription = bd.PopulationSizeDescription,
-					@p_NumberOfOccurencesScore = bd.NumberOfOccurencesScore,
-					@p_NumberOfOccurencesDescription = bd.NumberOfOccurencesDescription,
-					@p_DensityDescription = bd.DensityDescription,
-					@p_ThreatsScore = bd.ThreatsScore,
-					@p_ThreatsDescription = bd.ThreatsDescription,
-					@p_IntrinsicVulnerabilityScore = bd.IntrinsicVulnerabilityScore,
-					@p_IntrinsicVulnerabilityDescription = bd.IntrinsicVulnerabilityDescription,
-					@p_ShortTermTrendsScore = bd.ShortTermTrendsScore,
-					@p_ShortTermTrendsDescription = bd.ShortTermTrendsDescription,
-					@p_LongTermTrendsScore = bd.LongTermTrendsScore,
-					@p_LongTermTrendsDescription = bd.LongTermTrendsDescription,
-					@p_StatusRankId = bd.StatusRank == null || bd.StatusRank.Key == 0 ? null : (int?)bd.StatusRank.Key,
-					@p_StatusRankDescription = bd.StatusRankDescription,
-					@p_SRank = bd.SRank,
-					@p_DecisionProcessDescription = bd.DecisionProcessDescription,
-					@p_EconomicStatusDescription = bd.EconomicStatusDescription,
-					@p_COSEWICStatusId = bd.CosewicStatus == null || bd.CosewicStatus.Key == 0 ? null : (int?)bd.CosewicStatus.Key,
-					@p_COSEWICStatusDescription = bd.CosewicStatusDescription,
-					@p_NRank = bd.NRank,
-					@p_SARAStatus = bd.SaraStatus,
-					@p_FederalSpeciesAtRiskStatusDescription = bd.FederalSpeciesAtRiskStatusDescription,
-					@p_NWTSARCAssessmentDescription = bd.NwtsarcAssessmentDescription,
-					@p_NWTStatusRank = bd.NwtStatusRank,
-					@p_NWTSpeciesAtRiskStatusDescription = bd.NwtSpeciesAtRiskStatusDescription,
-					@p_CanadianConservationSignificanceDescription = bd.CanadianConservationSignificanceDescription,
-					@p_IUCNStatus = bd.IucnStatus,
-					@p_GRank = bd.GRank,
-					@p_IUCNDescription = bd.IucnDescription
+					p_AgeOfMaturity = bd.AgeOfMaturity,
+					p_AgeOfMaturityDescription = bd.AgeOfMaturityDescription,
+					p_ReproductionFrequencyPerYear = bd.ReproductionFrequencyPerYear,
+					p_ReproductionFrequencyPerYearDescription = bd.ReproductionFrequencyPerYearDescription,
+					p_Longevity = bd.Longevity,
+					p_LongevityDescription = bd.LongevityDescription,
+					p_VegetationReproductionDescription = bd.VegetationReproductionDescription,
+					p_HostFishDescription = bd.HostFishDescription,
+					p_OtherReproductionDescription = bd.OtherReproductionDescription,
+					p_EcozoneDescription = bd.EcozoneDescription,
+					p_EcoregionDescription = bd.EcoregionDescription,
+					p_ProtectedAreaDescription = bd.ProtectedAreaDescription,
+					p_RangeExtentScore = bd.RangeExtentScore,
+					p_RangeExtentDescription = bd.RangeExtentDescription,
+					p_DistributionPercentage = bd.DistributionPercentage,
+					p_AreaOfOccupancyScore = bd.AreaOfOccupancyScore,
+					p_AreaOfOccupancyDescription = bd.AreaOfOccupancyDescription,
+					p_HistoricalDistributionDescription = bd.HistoricalDistributionDescription,
+					p_MarineDistributionDescription = bd.MarineDistributionDescription,
+					p_WinterDistributionDescription = bd.WinterDistributionDescription,
+					p_HabitatDescription = bd.HabitatDescription,
+					p_EnvironmentalSpecificityScore = bd.EnvironmentalSpecificityScore,
+					p_EnvironmentalSpecificityDescription = bd.EnvironmentalSpecificityDescription,
+					p_PopulationSizeScore = bd.PopulationSizeScore,
+					p_PopulationSizeDescription = bd.PopulationSizeDescription,
+					p_NumberOfOccurencesScore = bd.NumberOfOccurencesScore,
+					p_NumberOfOccurencesDescription = bd.NumberOfOccurencesDescription,
+					p_DensityDescription = bd.DensityDescription,
+					p_ThreatsScore = bd.ThreatsScore,
+					p_ThreatsDescription = bd.ThreatsDescription,
+					p_IntrinsicVulnerabilityScore = bd.IntrinsicVulnerabilityScore,
+					p_IntrinsicVulnerabilityDescription = bd.IntrinsicVulnerabilityDescription,
+					p_ShortTermTrendsScore = bd.ShortTermTrendsScore,
+					p_ShortTermTrendsDescription = bd.ShortTermTrendsDescription,
+					p_LongTermTrendsScore = bd.LongTermTrendsScore,
+					p_LongTermTrendsDescription = bd.LongTermTrendsDescription,
+					p_StatusRankId = bd.StatusRank == null || bd.StatusRank.Key == 0 ? null : (int?)bd.StatusRank.Key,
+					p_StatusRankDescription = bd.StatusRankDescription,
+					p_SRank = bd.SRank,
+					p_DecisionProcessDescription = bd.DecisionProcessDescription,
+					p_EconomicStatusDescription = bd.EconomicStatusDescription,
+					p_COSEWICStatusId = bd.CosewicStatus == null || bd.CosewicStatus.Key == 0 ? null : (int?)bd.CosewicStatus.Key,
+					p_COSEWICStatusDescription = bd.CosewicStatusDescription,
+					p_NRank = bd.NRank,
+					p_SARAStatus = bd.SaraStatus,
+					p_FederalSpeciesAtRiskStatusDescription = bd.FederalSpeciesAtRiskStatusDescription,
+					p_NWTSARCAssessmentDescription = bd.NwtsarcAssessmentDescription,
+					p_NWTStatusRank = bd.NwtStatusRank,
+					p_NWTSpeciesAtRiskStatusDescription = bd.NwtSpeciesAtRiskStatusDescription,
+					p_CanadianConservationSignificanceDescription = bd.CanadianConservationSignificanceDescription,
+					p_IUCNStatus = bd.IucnStatus,
+					p_GRank = bd.GRank,
+					p_IUCNDescription = bd.IucnDescription,
+					p_ecozones = bd.Ecozones.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
+					p_ecoregions = bd.Ecoregions.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
+					p_protectedAreas = bd.ProtectedAreas.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType")
 					
 				};
 				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);

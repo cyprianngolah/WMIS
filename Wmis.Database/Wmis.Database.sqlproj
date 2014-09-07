@@ -148,6 +148,7 @@
     <Build Include="dbo\Stored Procedures\BioDiversity_Update.sql" />
     <Build Include="dbo\Stored Procedures\CosewicStatus_Get.sql" />
     <Build Include="dbo\Stored Procedures\StatusRank_Get.sql" />
+    <Build Include="dbo\User Defined Types\IntTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

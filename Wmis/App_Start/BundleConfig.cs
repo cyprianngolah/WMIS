@@ -19,12 +19,13 @@
 			//////////////////////////////////////////////////////////////////////
 			// Library Script Bundles
 			//////////////////////////////////////////////////////////////////////
-			// Basic Bundle includes jQuery, Twitter Bootstrap, Modernizer and some Global JavaScript helpers
+			// Basic Bundle includes jQuery, Twitter Bootstrap, Modernizer, Moment and some Global JavaScript helpers
 			bundles.Add(new ScriptBundle("~/bundles/base").Include(
 						"~/Scripts/jquery-{version}.js",
 						"~/Scripts/bootstrap.js",
 						"~/Scripts/respond.js",
 						"~/Scripts/modernizr-*",
+						"~/Scripts/moment.js",
 						"~/js/wmis.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/knockout").Include(

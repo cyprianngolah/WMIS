@@ -77,7 +77,10 @@
 	@p_CanadianConservationSignificanceDescription NVARCHAR(MAX) = NULL,
 	@p_IUCNStatus NVARCHAR(50) = NULL,
 	@p_GRank NVARCHAR(50) = NULL,
-	@p_IUCNDescription NVARCHAR(50) = NULL
+	@p_IUCNDescription NVARCHAR(50) = NULL,
+	@p_ecozones [IntTableType] READONLY,
+	@p_ecoregions [IntTableType] READONLY,
+	@p_protectedAreas [IntTableType] READONLY
 AS
 	UPDATE
 		dbo.Species
@@ -162,5 +165,32 @@ AS
 		IUCNDescription = @p_IUCNDescription
 	WHERE
 		SpeciesId = @p_speciesId
+
+	-- Ecozones
+	MERGE SpeciesEcozones AS T
+	USING @p_ecozones AS S
+	ON (T.EcozoneId = S.n AND T.SpeciesId = @p_SpeciesId) 
+	WHEN NOT MATCHED BY TARGET 
+		THEN INSERT(SpeciesId, EcozoneId) VALUES(@p_SpeciesId, s.n)
+	WHEN NOT MATCHED BY SOURCE
+		THEN DELETE; 
+
+	-- Ecoregions
+	MERGE SpeciesEcoregions AS T
+	USING @p_ecoregions AS S
+	ON (T.EcoregionId = S.n AND T.SpeciesId = @p_SpeciesId) 
+	WHEN NOT MATCHED BY TARGET 
+		THEN INSERT(SpeciesId, EcoregionId) VALUES(@p_SpeciesId, s.n)
+	WHEN NOT MATCHED BY SOURCE
+		THEN DELETE; 
+
+	-- Protected Areas
+	MERGE SpeciesProtectedAreas AS T
+	USING @p_protectedAreas AS S
+	ON (T.ProtectedAreaId = S.n AND T.SpeciesId = @p_SpeciesId) 
+	WHEN NOT MATCHED BY TARGET 
+		THEN INSERT(SpeciesId, ProtectedAreaId) VALUES(@p_SpeciesId, s.n)
+	WHEN NOT MATCHED BY SOURCE
+		THEN DELETE; 
 
 RETURN 0

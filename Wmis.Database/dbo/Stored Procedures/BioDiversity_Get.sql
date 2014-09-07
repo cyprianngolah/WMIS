@@ -120,7 +120,33 @@ AS
 			LEFT OUTER JOIN dbo.Taxonomy [group] on s.GroupTaxonomyId = [group].TaxonomyId AND [group].taxonomyGroupId = 12
 	WHERE
 		s.SpeciesId = @p_bioDiversityKey
-	
+
+	SELECT
+		se.EcozoneId as [Key],
+		e.Name
+	FROM
+		dbo.SpeciesEcozones se 
+			INNER JOIN dbo.Ecozones e on se.EcozoneId = e.EcozoneId
+	WHERE
+		se.SpeciesId = @p_bioDiversityKey
+
+	SELECT
+		se.EcoregionId  as [Key],
+		e.Name
+	FROM
+		dbo.SpeciesEcoregions se 
+			INNER JOIN dbo.Ecoregions e on se.EcoregionId = e.EcoregionId 
+	WHERE
+		se.SpeciesId = @p_bioDiversityKey
+
+	SELECT
+		spa.ProtectedAreaId as [Key],
+		e.Name
+	FROM
+		dbo.SpeciesProtectedAreas spa 
+			INNER JOIN dbo.ProtectedAreas e on spa.ProtectedAreaId = e.ProtectedAreaId
+	WHERE
+		spa.SpeciesId = @p_bioDiversityKey
 
 RETURN 0
 
