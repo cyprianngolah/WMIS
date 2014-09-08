@@ -292,6 +292,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Environments\environment.barrett.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
