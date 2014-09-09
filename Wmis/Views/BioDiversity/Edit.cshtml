@@ -15,6 +15,49 @@
 		padding-right: 0;
 		}
 	}
+
+    .nav-tabs > li > a.colouredTab {
+        border: 1px solid #ddd;
+        color: black;
+    }
+
+    .nav-tabs > li > a.colouredTab:hover {
+        background-color: white;
+        color: black;
+    }
+
+    .nav-tabs > li.active > a.colouredTab {
+        background-color: white;
+        border-bottom: 1px solid white;
+    }
+
+    .nav-tabs > li > a.generalTab {
+        background-color: #FFFFA0;
+    }
+
+    .nav-tabs > li > a.reproductionTab {
+        background-color: #9CBB8E;
+    }
+
+    .nav-tabs > li > a.distributionTab {
+        background-color: #E79593;
+    }
+
+    .nav-tabs > li > a.abundanceTab {
+        background-color: #B3A7D3;
+    }
+
+    .nav-tabs > li > a.threatsTab {
+        background-color: #80FFFF;
+    }
+
+    .nav-tabs > li > a.trendsTab {
+        background-color: #FFC83F;
+    }
+
+    .nav-tabs > li > a.statusTab {
+        background-color: #FF80FF;
+    }
 </style>
 
 @section TopRight{
@@ -107,13 +150,13 @@
 	<div class="row">
 		<div class="col-md-12">
 			<ul class="nav nav-tabs" role="tablist">
-				<li class="active"><a href="#general" role="tab" data-toggle="tab">General</a></li>
-				<li><a href="#reproduction" role="tab" data-toggle="tab">Reproduction</a></li>
-				<li><a href="#distribution" role="tab" data-toggle="tab">Distribution</a></li>
-				<li><a href="#abundance" role="tab" data-toggle="tab">Abundance</a></li>
-				<li><a href="#threats" role="tab" data-toggle="tab">Threats</a></li>
-				<li><a href="#trends" role="tab" data-toggle="tab">Trends</a></li>
-				<li><a href="#status" role="tab" data-toggle="tab">Status</a></li>
+				<li class="active"><a href="#general" role="tab" data-toggle="tab" class="colouredTab generalTab">General</a></li>
+				<li><a href="#reproduction" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Reproduction</a></li>
+				<li><a href="#distribution" role="tab" data-toggle="tab" class="colouredTab distributionTab">Distribution</a></li>
+				<li><a href="#abundance" role="tab" data-toggle="tab" class="colouredTab abundanceTab">Abundance</a></li>
+				<li><a href="#threats" role="tab" data-toggle="tab" class="colouredTab threatsTab">Threats</a></li>
+				<li><a href="#trends" role="tab" data-toggle="tab" class="colouredTab trendsTab">Trends</a></li>
+				<li><a href="#status" role="tab" data-toggle="tab" class="colouredTab statusTab">Status</a></li>
 			</ul>
 
 			<!-- Tab panes -->
