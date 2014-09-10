@@ -149,6 +149,7 @@ AS
 		spa.SpeciesId = @p_bioDiversityKey
 
 RETURN 0
+GO
 
 GRANT EXECUTE ON [dbo].[BioDiversity_Get] TO [WMISUser]
 GO

@@ -9,6 +9,7 @@ AS
 		sr.StatusRankId 
 
 RETURN 0
+GO
 
 GRANT EXECUTE ON [dbo].[StatusRank_Get] TO [WMISUser]
 GO

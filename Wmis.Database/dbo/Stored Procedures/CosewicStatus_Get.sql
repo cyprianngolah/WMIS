@@ -9,6 +9,7 @@ AS
 		cs.[COSEWICStatusId]
 
 RETURN 0
+GO
 
 GRANT EXECUTE ON [dbo].[CosewicStatus_Get] TO [WMISUser]
 GO

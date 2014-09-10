@@ -194,3 +194,7 @@ AS
 		THEN DELETE; 
 
 RETURN 0
+GO
+
+GRANT EXECUTE ON [dbo].[TaxonomySynonym_Get] TO [WMISUser]
+GO

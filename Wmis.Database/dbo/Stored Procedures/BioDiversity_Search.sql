@@ -137,6 +137,7 @@ AS
 		@p_rowCount ROWS ONLY
 
 RETURN 0
+GO
 
 GRANT EXECUTE ON [dbo].[BioDiversity_Search] TO [WMISUser]
 GO
