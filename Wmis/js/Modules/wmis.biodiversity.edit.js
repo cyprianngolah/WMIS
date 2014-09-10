@@ -96,7 +96,10 @@ wmis.biodiversity.edit = (function ($) {
 				return result.data;
 			});
 			
-			self.getDropDownData(self.statusRank, "/api/statusrank");
+			self.getDropDownData(self.statusRank, "/api/statusrank?startRow=0&rowCount=500", function (result) {
+			    return result.data;
+			});
+
 			self.getDropDownData(self.cosewicStatus, "/api/cosewicstatus");
 		};
 

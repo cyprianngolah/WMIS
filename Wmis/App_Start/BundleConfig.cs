@@ -98,6 +98,13 @@
 
 			bundles.Add(new ScriptBundle("~/bundles/protectedarea/edit").Include(
 						"~/js/modules/wmis.protectedarea.edit.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/statusrank/index").Include(
+                        "~/js/modules/wmis.statusrank.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/statusrank/edit").Include(
+                        "~/js/modules/wmis.statusrank.edit.js"));
+
 		}
 	}
 }

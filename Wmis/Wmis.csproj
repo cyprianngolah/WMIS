@@ -147,7 +147,7 @@
     <Compile Include="ApiControllers\EcozoneApiController.cs" />
     <Compile Include="ApiControllers\ProtectedAreaApiController.cs" />
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
-    <Compile Include="ApiControllers\StatusRankController.cs" />
+    <Compile Include="ApiControllers\StatusRankApiController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -157,6 +157,7 @@
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
     <Compile Include="Controllers\EcoregionController.cs" />
+    <Compile Include="Controllers\StatusRankController.cs" />
     <Compile Include="Controllers\EcozoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProtectedAreaController.cs" />
@@ -169,8 +170,10 @@
     <Compile Include="Dto\EcoregionRequest.cs" />
     <Compile Include="Dto\EcoregionSaveRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
-    <Compile Include="Dto\EcozoneSaveRequest.cs" />
     <Compile Include="Dto\ProtectedAreaRequest.cs" />
+    <Compile Include="Dto\StatusRankSaveRequest.cs" />
+    <Compile Include="Dto\EcozoneSaveRequest.cs" />
+    <Compile Include="Dto\StatusRankRequest.cs" />
     <Compile Include="Dto\ProtectedAreaSaveRequest.cs" />
     <Compile Include="Dto\TaxonomyRequest.cs" />
     <Compile Include="Dto\TaxonomySaveRequest.cs" />
@@ -299,6 +302,8 @@
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
+    <Content Include="js\Modules\wmis.statusrank.edit.js" />
+    <Content Include="js\Modules\wmis.statusrank.index.js" />
     <Content Include="js\Modules\wmis.protectedarea.edit.js" />
     <Content Include="js\Modules\wmis.ecozone.edit.js" />
     <Content Include="js\Modules\wmis.protectedarea.index.js" />
@@ -429,6 +434,10 @@
     <Content Include="Views\ProtectedArea\Edit.cshtml" />
     <Content Include="Views\ProtectedArea\EditForm.cshtml" />
     <Content Include="Views\ProtectedArea\New.cshtml" />
+    <Content Include="Views\StatusRank\Edit.cshtml" />
+    <Content Include="Views\StatusRank\EditForm.cshtml" />
+    <Content Include="Views\StatusRank\Index.cshtml" />
+    <Content Include="Views\StatusRank\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
