@@ -143,7 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\BaseApiController.cs" />
-    <Compile Include="ApiControllers\CosewicStatusController.cs" />
+    <Compile Include="ApiControllers\CosewicStatusApiController.cs" />
     <Compile Include="ApiControllers\EcozoneApiController.cs" />
     <Compile Include="ApiControllers\ProtectedAreaApiController.cs" />
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
@@ -157,6 +157,7 @@
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
     <Compile Include="Controllers\EcoregionController.cs" />
+    <Compile Include="Controllers\CosewicStatusController.cs" />
     <Compile Include="Controllers\StatusRankController.cs" />
     <Compile Include="Controllers\EcozoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -171,6 +172,8 @@
     <Compile Include="Dto\EcoregionSaveRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
     <Compile Include="Dto\ProtectedAreaRequest.cs" />
+    <Compile Include="Dto\CosewicStatusRequest.cs" />
+    <Compile Include="Dto\CosewicStatusSaveRequest.cs" />
     <Compile Include="Dto\StatusRankSaveRequest.cs" />
     <Compile Include="Dto\EcozoneSaveRequest.cs" />
     <Compile Include="Dto\StatusRankRequest.cs" />
@@ -302,7 +305,9 @@
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
+    <Content Include="js\Modules\wmis.cosewicstatus.edit.js" />
     <Content Include="js\Modules\wmis.statusrank.edit.js" />
+    <Content Include="js\Modules\wmis.cosewicstatus.index.js" />
     <Content Include="js\Modules\wmis.statusrank.index.js" />
     <Content Include="js\Modules\wmis.protectedarea.edit.js" />
     <Content Include="js\Modules\wmis.ecozone.edit.js" />
@@ -438,6 +443,10 @@
     <Content Include="Views\StatusRank\EditForm.cshtml" />
     <Content Include="Views\StatusRank\Index.cshtml" />
     <Content Include="Views\StatusRank\New.cshtml" />
+    <Content Include="Views\CosewicStatus\Edit.cshtml" />
+    <Content Include="Views\CosewicStatus\EditForm.cshtml" />
+    <Content Include="Views\CosewicStatus\Index.cshtml" />
+    <Content Include="Views\CosewicStatus\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

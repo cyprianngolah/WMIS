@@ -107,6 +107,11 @@
 		/// </summary>
 		private const string COSEWICSTATUS_GET = "dbo.CosewicStatus_Get";
 
+        /// <summary>
+        /// The COSEWIC Status Save stored procedure
+        /// </summary>
+        private const string COSEWICSTATUS_SAVE = "dbo.CosewicStatus_Save";
+
 		/// <summary>
 		/// The Status Rank Get stored procedure
 		/// </summary>
@@ -667,13 +672,61 @@
 		#endregion
 
 		#region CosewicStatus
-		public IEnumerable<CosewicStatus> CosewicStatusGet()
-		{
-			using (var c = NewWmisConnection)
-			{
-				return c.Query<CosewicStatus>(COSEWICSTATUS_GET, commandType: CommandType.StoredProcedure);
-			}
-		}
+        /// <summary>
+        /// Gets a list of Cosewic Status
+        /// </summary>
+        /// <param name="request">The information about the Cosewic Status Request</param>
+        /// <returns>A list of matching Cosewic Status</returns>
+        public PagedResultset<CosewicStatus> CosewicStatusGet(CosewicStatusRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_cosewicStatusId = request.Key,
+                    p_keywords = request.Keywords,
+                };
+
+                var pagedResults = new PagedResultset<CosewicStatus>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<CosewicStatus>()
+                };
+
+                var results = c.Query<dynamic, CosewicStatus, CosewicStatus>(COSEWICSTATUS_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return t;
+                    }, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        /// <summary>
+        /// Saves the Cosewic Status
+        /// </summary>
+        /// <param name="request">The information about the Cosewic Status Request</param>
+        public void CosewicStatusSave(CosewicStatusSaveRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_cosewicStatusId = request.Key,
+                    p_name = request.Name
+                };
+
+                c.Execute(COSEWICSTATUS_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 		#endregion
 
 		#region StatusRank

@@ -105,6 +105,12 @@
             bundles.Add(new ScriptBundle("~/bundles/statusrank/edit").Include(
                         "~/js/modules/wmis.statusrank.edit.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/cosewicstatus/index").Include(
+                        "~/js/modules/wmis.cosewicstatus.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/cosewicstatus/edit").Include(
+                        "~/js/modules/wmis.cosewicstatus.edit.js"));
+
 		}
 	}
 }
