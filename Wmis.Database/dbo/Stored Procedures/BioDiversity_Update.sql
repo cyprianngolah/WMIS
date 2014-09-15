@@ -204,3 +204,7 @@ AS
 		THEN DELETE; 
 
 RETURN 0
+GO
+
+GRANT EXECUTE ON [dbo].[BioDiversity_Update] TO [WMISUser]
+GO

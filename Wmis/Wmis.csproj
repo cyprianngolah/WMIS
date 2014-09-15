@@ -143,12 +143,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\BaseApiController.cs" />
-    <Compile Include="ApiControllers\CosewicStatusController.cs" />
+    <Compile Include="ApiControllers\CosewicStatusApiController.cs" />
     <Compile Include="ApiControllers\EcozoneApiController.cs" />
     <Compile Include="ApiControllers\ProtectedAreaApiController.cs" />
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
     <Compile Include="ApiControllers\ReferenceController.cs" />
     <Compile Include="ApiControllers\StatusRankController.cs" />
+    <Compile Include="ApiControllers\StatusRankApiController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -158,12 +159,14 @@
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
     <Compile Include="Controllers\EcoregionController.cs" />
+    <Compile Include="Controllers\CosewicStatusController.cs" />
+    <Compile Include="Controllers\StatusRankController.cs" />
     <Compile Include="Controllers\EcozoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProtectedAreaController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
-    <Compile Include="Dto\BioDiversityDecisionUpdateRequest.cs" />
+    <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
     <Compile Include="Dto\BioDiversityUpdateRequest.cs" />
     <Compile Include="Dto\Base\PagedResultset.cs" />
@@ -171,8 +174,12 @@
     <Compile Include="Dto\EcoregionRequest.cs" />
     <Compile Include="Dto\EcoregionSaveRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
-    <Compile Include="Dto\EcozoneSaveRequest.cs" />
     <Compile Include="Dto\ProtectedAreaRequest.cs" />
+    <Compile Include="Dto\CosewicStatusRequest.cs" />
+    <Compile Include="Dto\CosewicStatusSaveRequest.cs" />
+    <Compile Include="Dto\StatusRankSaveRequest.cs" />
+    <Compile Include="Dto\EcozoneSaveRequest.cs" />
+    <Compile Include="Dto\StatusRankRequest.cs" />
     <Compile Include="Dto\ProtectedAreaSaveRequest.cs" />
     <Compile Include="Dto\ReferenceRequest.cs" />
     <Compile Include="Dto\TaxonomyRequest.cs" />
@@ -187,7 +194,6 @@
     <Compile Include="Models\Base\AuditedKeyedModel.cs" />
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
-    <Compile Include="Models\BioDiversityDecision.cs" />
     <Compile Include="Models\Ecoregion.cs" />
     <Compile Include="Models\Ecozone.cs" />
     <Compile Include="Models\ProtectedArea.cs" />
@@ -310,6 +316,10 @@
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
+    <Content Include="js\Modules\wmis.cosewicstatus.edit.js" />
+    <Content Include="js\Modules\wmis.statusrank.edit.js" />
+    <Content Include="js\Modules\wmis.cosewicstatus.index.js" />
+    <Content Include="js\Modules\wmis.statusrank.index.js" />
     <Content Include="js\Modules\wmis.protectedarea.edit.js" />
     <Content Include="js\Modules\wmis.ecozone.edit.js" />
     <Content Include="js\Modules\wmis.protectedarea.index.js" />
@@ -449,6 +459,14 @@
     <Content Include="Views\Reference\New.cshtml" />
     <Content Include="Views\Reference\Edit.cshtml" />
     <Content Include="Views\Reference\EditForm.cshtml" />
+    <Content Include="Views\StatusRank\Edit.cshtml" />
+    <Content Include="Views\StatusRank\EditForm.cshtml" />
+    <Content Include="Views\StatusRank\Index.cshtml" />
+    <Content Include="Views\StatusRank\New.cshtml" />
+    <Content Include="Views\CosewicStatus\Edit.cshtml" />
+    <Content Include="Views\CosewicStatus\EditForm.cshtml" />
+    <Content Include="Views\CosewicStatus\Index.cshtml" />
+    <Content Include="Views\CosewicStatus\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

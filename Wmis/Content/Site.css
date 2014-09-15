@@ -31,3 +31,58 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.control-label {
+    font-weight: normal;
+}
+
+/* When the page width is wider than 1024, get rid of padding on labels to save space. */
+@media all and (min-width: 1024px) {
+	.control-label {
+	padding-left: 0;
+	padding-right: 0;
+	}
+}
+
+.nav-tabs > li > a.colouredTab {
+    border: 1px solid #ddd;
+    color: black;
+}
+
+.nav-tabs > li > a.colouredTab:hover {
+    background-color: white;
+    color: black;
+}
+
+.nav-tabs > li.active > a.colouredTab {
+    background-color: white;
+    border-bottom: 1px solid white;
+}
+
+.nav-tabs > li > a.generalTab {
+    background-color: #4D708A;
+}
+
+.nav-tabs > li > a.reproductionTab {
+    background-color: #7BA98F;
+}
+
+.nav-tabs > li > a.distributionTab {
+    background-color: #27814E;
+}
+
+.nav-tabs > li > a.abundanceTab {
+    background-color: #996014;
+}
+
+.nav-tabs > li > a.threatsTab {
+    background-color: #D7AB72;
+}
+
+.nav-tabs > li > a.trendsTab {
+    background-color: #D78772;
+}
+
+.nav-tabs > li > a.statusTab {
+    background-color: #B65137;
+}

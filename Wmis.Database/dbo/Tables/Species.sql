@@ -80,7 +80,6 @@
 	[GRank]                                        NVARCHAR (50)     NULL,
 	[IUCNDescription]                              NVARCHAR (50)     NULL,
 	CONSTRAINT [PK_Species] PRIMARY KEY CLUSTERED ([SpeciesId]),
-	CONSTRAINT [UK_Species_Name] UNIQUE ([Name]),
 	CONSTRAINT [FK_Species_Taxonomy_Kingdom] FOREIGN KEY ([KingdomTaxonomyId]) REFERENCES [dbo].[Taxonomy] ([TaxonomyId]),
 	CONSTRAINT [FK_Species_Taxonomy_Phylum] FOREIGN KEY ([PhylumTaxonomyId]) REFERENCES [dbo].[Taxonomy] ([TaxonomyId]),
 	CONSTRAINT [FK_Species_Taxonomy_SubPhylum] FOREIGN KEY ([SubPhylumTaxonomyId]) REFERENCES [dbo].[Taxonomy] ([TaxonomyId]),

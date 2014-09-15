@@ -50,11 +50,22 @@ wmis.global = (function ($) {
 		alert("There was an error during the request.\n" + errorThrown +": " + jqXhr.responseText);
 	};
 
+	function getDropDownData(observableArray, url, parsingFunction) {
+		$.getJSON(url, {}, function (json) {
+			if (parsingFunction) {
+				observableArray(parsingFunction(json));
+			} else {
+				observableArray(json);
+			}
+		}).fail(wmis.global.ajaxErrorHandler);
+	};
+
 	return {
 		appendDataToSelect: appendDataToSelect,
 		ajaxErrorHandler: ajaxErrorHandler,
 		loadAndInitializeSelect2: loadAndInitializeSelect2,
 		showWaitingScreen: showWaitingScreen,
-		hideWaitingScreen: hideWaitingScreen
+		hideWaitingScreen: hideWaitingScreen,
+		getDropDownData: getDropDownData,
 	};
 }(jQuery));

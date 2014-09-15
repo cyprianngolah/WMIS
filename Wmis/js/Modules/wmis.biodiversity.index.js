@@ -2,7 +2,14 @@
 wmis.biodiversity.index = (function($) {
 	var bioDiversityTable;
 	var options = {
-		
+		searchButtonSelector: "#searchButton",
+		editButtonSelector: "#editButton",
+		decisionButtonSelector: "#decisionButton",
+		groupSelector: "#group",
+		orderSelector: "#order",
+		familySelector: "#family",
+		keywordsSelector: "#keywords",
+		biodiversitySelector: "#biodiversity",
 	};
 
 	function initialize(initOptions) {
@@ -10,18 +17,18 @@ wmis.biodiversity.index = (function($) {
 
 		initDataTable();
 		
-		wmis.global.loadAndInitializeSelect2($("#group"), "/api/taxonomy/group/", "Group");
-		wmis.global.loadAndInitializeSelect2($("#order"), "/api/taxonomy/order/", "Order");
-		wmis.global.loadAndInitializeSelect2($("#family"), "/api/taxonomy/family/", "Family");
+		wmis.global.loadAndInitializeSelect2($(options.groupSelector), "/api/taxonomy/group/", "Group");
+		wmis.global.loadAndInitializeSelect2($(options.orderSelector), "/api/taxonomy/order/", "Order");
+		wmis.global.loadAndInitializeSelect2($(options.familySelector), "/api/taxonomy/family/", "Family");
 
-		$("#searchButton").click(function () {
+		$(options.searchButtonSelector).click(function () {
 			bioDiversityTable.fnFilter();
 		});
 	}
 	
 	function initDataTable() {
 		var parameters;
-		bioDiversityTable = $('#biodiversity').dataTable({
+		bioDiversityTable = $(options.biodiversitySelector).dataTable({
 			"iDisplayLength": 25,
 			"scrollX": true,
 			"bJQueryUI": true,
@@ -67,10 +74,10 @@ wmis.biodiversity.index = (function($) {
 					i: settings.oAjaxData.sEcho,
 
 					// Custom search data
-					group: $("#group").val(),
-					order: $("#order").val(),
-					family: $("#family").val(),
-					keywords: $("#keywords").val()
+					group: $(options.groupSelector).val(),
+					order: $(options.orderSelector).val(),
+					family: $(options.familySelector).val(),
+					keywords: $(options.keywordsSelector).val()
 				};
 
 				$.getJSON(source, parameters, function (json) {
@@ -85,13 +92,15 @@ wmis.biodiversity.index = (function($) {
 			},
 			"fnDrawCallback": function () {
 				bioDiversityTable.$('tr.info').removeClass('info');
-				$("#editButton").addClass('disabled');
+				$(options.editButtonSelector).addClass('disabled');
+				$(options.decisionButtonSelector).addClass('disabled');
 
-				$("#biodiversity tbody tr").click(function () {
+				$(options.biodiversitySelector + " tbody tr").click(function () {
 					// Highlight selected row
 					if ($(this).hasClass('info')) {
 						$(this).removeClass('info');
-						$("#editButton").addClass('disabled');
+						$(options.editButtonSelector).addClass('disabled');
+						$(options.decisionButtonSelector).addClass('disabled');
 					} else {
 						bioDiversityTable.$('tr.info').removeClass('info');
 						$(this).addClass('info');
@@ -101,8 +110,10 @@ wmis.biodiversity.index = (function($) {
 							var data = bioDiversityTable.fnGetData(position);
 
 							if (data.key) {
-								$("#editButton").removeClass('disabled');
-								$("#editButton").prop("href", "/BioDiversity/Edit/" + data.key);
+								$(options.editButtonSelector).removeClass('disabled');
+								$(options.editButtonSelector).prop("href", "/BioDiversity/Edit/" + data.key);
+								$(options.decisionButtonSelector).removeClass('disabled');
+								$(options.decisionButtonSelector).prop("href", "/BioDiversity/Decision/" + data.key);
 							}
 						}
 					}

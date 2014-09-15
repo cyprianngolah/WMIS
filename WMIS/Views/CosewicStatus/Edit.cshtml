@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "COSEWIC Status";
+	ViewBag.SubTitle = "Edit";
+}
+
+@section Scripts {
+	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/cosewicstatus/edit"))
+
+	<script type="text/javascript">
+		$(function() {
+			wmis.cosewicstatus.edit.initialize({
+				key: @ViewBag.Key
+			});
+		});
+	</script>
+}
+
+@{ Html.RenderPartial("EditForm"); }

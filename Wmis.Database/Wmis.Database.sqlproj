@@ -152,6 +152,8 @@
     <Build Include="dbo\User Defined Types\TwoIntTableType.sql" />
     <Build Include="dbo\Stored Procedures\Reference_Get.sql" />
     <Build Include="dbo\Stored Procedures\Reference_Save.sql" />
+    <Build Include="dbo\Stored Procedures\StatusRank_Save.sql" />
+    <Build Include="dbo\Stored Procedures\CosewicStatus_Save.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Rank";
+	ViewBag.SubTitle = "Edit";
+}
+
+@section Scripts {
+	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/statusrank/edit"))
+
+	<script type="text/javascript">
+		$(function() {
+			wmis.statusrank.edit.initialize({
+				key: @ViewBag.Key
+			});
+		});
+	</script>
+}
+
+@{ Html.RenderPartial("EditForm"); }

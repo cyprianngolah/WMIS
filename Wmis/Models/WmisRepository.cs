@@ -47,16 +47,6 @@
 		/// </summary>
 		private const string BIODIVERSITY_UPDATE = "dbo.BioDiversity_Update";
 
-		/// <summary>
-		/// The BioDiversity Get Decision stored procedure
-		/// </summary>
-		private const string BIODIVERSITY_DECISION_GET = "dbo.BioDiversity_Get_Decision";
-
-		/// <summary>
-		/// The BioDiversity Decision Update stored procedure
-		/// </summary>
-		private const string BIODIVERSITY_DECISION_UPDATE = "dbo.BioDiversity_Update_Decision";
-
         /// <summary>
         /// The Taxonomy Synonym Get stored procedure
         /// </summary>
@@ -107,6 +97,11 @@
 		/// </summary>
 		private const string COSEWICSTATUS_GET = "dbo.CosewicStatus_Get";
 
+        /// <summary>
+        /// The COSEWIC Status Save stored procedure
+        /// </summary>
+        private const string COSEWICSTATUS_SAVE = "dbo.CosewicStatus_Save";
+
 		/// <summary>
 		/// The Status Rank Get stored procedure
 		/// </summary>
@@ -121,6 +116,12 @@
 		/// Create/Update References stored proc
 		/// </summary>
 		private const string REFERENCE_SAVE = "dbo.Reference_Save";
+
+        /// <summary>
+        /// The Status Rank Save stored procedure
+        /// </summary>
+        private const string STATUSRANK_SAVE = "dbo.StatusRank_Save";
+
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -346,23 +347,6 @@
 					p_references = bd.References.Select(i => new { n = i.CategoryKey, p = i.Reference.Key }).AsTableValuedParameter("dbo.TwoIntTableType")
 				};
 				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
-
-		public BioDiversityDecision BioDiversityDecisionGet(int bioDiversityKey)
-		{
-			return new BioDiversityDecision();
-		}
-
-		public void BioDiversityDecisionUpdate(Dto.BioDiversityDecisionUpdateRequest ur)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					
-				};
-				c.Execute(BIODIVERSITY_DECISION_UPDATE, param, commandType: CommandType.StoredProcedure);
 			}
 		}
 		#endregion
@@ -676,23 +660,119 @@
 		#endregion
 
 		#region CosewicStatus
-		public IEnumerable<CosewicStatus> CosewicStatusGet()
-		{
-			using (var c = NewWmisConnection)
-			{
-				return c.Query<CosewicStatus>(COSEWICSTATUS_GET, commandType: CommandType.StoredProcedure);
-			}
-		}
+        /// <summary>
+        /// Gets a list of Cosewic Status
+        /// </summary>
+        /// <param name="request">The information about the Cosewic Status Request</param>
+        /// <returns>A list of matching Cosewic Status</returns>
+        public PagedResultset<CosewicStatus> CosewicStatusGet(CosewicStatusRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_cosewicStatusId = request.Key,
+                    p_keywords = request.Keywords,
+                };
+
+                var pagedResults = new PagedResultset<CosewicStatus>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<CosewicStatus>()
+                };
+
+                var results = c.Query<dynamic, CosewicStatus, CosewicStatus>(COSEWICSTATUS_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return t;
+                    }, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        /// <summary>
+        /// Saves the Cosewic Status
+        /// </summary>
+        /// <param name="request">The information about the Cosewic Status Request</param>
+        public void CosewicStatusSave(CosewicStatusSaveRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_cosewicStatusId = request.Key,
+                    p_name = request.Name
+                };
+
+                c.Execute(COSEWICSTATUS_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 		#endregion
 
 		#region StatusRank
-		public IEnumerable<StatusRank> StatusRankGet()
-		{
-			using (var c = NewWmisConnection)
-			{
-				return c.Query<StatusRank>(STATUSRANK_GET, commandType: CommandType.StoredProcedure);
-			}
-		}
+        /// <summary>
+        /// Gets a list of Status Ranks
+        /// </summary>
+        /// <param name="request">The information about the Status Rank Request</param>
+        /// <returns>A list of matching Status Ranks</returns>
+        public PagedResultset<StatusRank> StatusRankGet(StatusRankRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_statusRankId = request.Key,
+                    p_keywords = request.Keywords,
+                };
+
+                var pagedResults = new PagedResultset<StatusRank>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<StatusRank>()
+                };
+
+                var results = c.Query<dynamic, StatusRank, StatusRank>(STATUSRANK_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return t;
+                    }, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        /// <summary>
+        /// Saves the StatusRank
+        /// </summary>
+        /// <param name="request">The information about the StatusRank Request</param>
+        public void StatusRankSave(StatusRankSaveRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_statusRankId = request.Key,
+                    p_name = request.Name
+                };
+
+                c.Execute(STATUSRANK_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 		#endregion
 
 		#region References
