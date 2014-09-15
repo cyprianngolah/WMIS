@@ -148,7 +148,6 @@
     <Compile Include="ApiControllers\ProtectedAreaApiController.cs" />
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
     <Compile Include="ApiControllers\ReferenceController.cs" />
-    <Compile Include="ApiControllers\StatusRankController.cs" />
     <Compile Include="ApiControllers\StatusRankApiController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
