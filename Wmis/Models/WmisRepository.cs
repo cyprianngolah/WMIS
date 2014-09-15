@@ -9,7 +9,6 @@
 	using Configuration;
 	using Dto;
     using Extensions;
-	using Microsoft.Ajax.Utilities;
 
 	/// <summary>
 	/// WMIS Repository for SQL

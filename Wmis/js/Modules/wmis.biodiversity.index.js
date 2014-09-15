@@ -21,6 +21,12 @@ wmis.biodiversity.index = (function($) {
 		wmis.global.loadAndInitializeSelect2($(options.orderSelector), "/api/taxonomy/order/", "Order");
 		wmis.global.loadAndInitializeSelect2($(options.familySelector), "/api/taxonomy/family/", "Family");
 
+		$(options.keywordsSelector).keyup(function (e) {
+			if (e.keyCode == 13) {
+				bioDiversityTable.fnFilter();
+			}
+		});
+
 		$(options.searchButtonSelector).click(function () {
 			bioDiversityTable.fnFilter();
 		});
@@ -74,9 +80,9 @@ wmis.biodiversity.index = (function($) {
 					i: settings.oAjaxData.sEcho,
 
 					// Custom search data
-					group: $(options.groupSelector).val(),
-					order: $(options.orderSelector).val(),
-					family: $(options.familySelector).val(),
+					groupKey: $(options.groupSelector).val(),
+					orderKey: $(options.orderSelector).val(),
+					familyKey: $(options.familySelector).val(),
 					keywords: $(options.keywordsSelector).val()
 				};
 
