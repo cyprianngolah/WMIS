@@ -58,6 +58,10 @@
     .nav-tabs > li > a.statusTab {
         background-color: #FF80FF;
     }
+
+	hr {
+		margin-top: 10px;
+	}
 </style>
 
 @section TopRight{
@@ -120,7 +124,29 @@
 }
 
 @section Dialogs {
-    @*<div id="viewSynonymsModal" class="modal fade">
+	<div class="modal" id="referenceModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					@*<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>*@
+					<h4 class="modal-title">References - <span data-bind="text: selectedReferenceCategoryName"></span></h4>
+				</div>
+				<div class="modal-body form-horizontal">					
+					<div class="form-group">
+						<div class="col-md-12">
+							<input type="hidden" name="selectedReferences" id="selectedReferences" class="form-control" data-bind="select2: referenceOptions" />
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancelReferenceChanges">Cancel</button>
+					<button type="button" class="btn btn-primary" data-bind="click: saveReferenceChanges">Apply Changes</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	@*<div id="viewSynonymsModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -160,13 +186,16 @@
 			</ul>
 
 			<!-- Tab panes -->
-			<div class="tab-content" data-bind="with: bd">
+			<div class="tab-content" data-bind="with: bd" style="margin-top:10px;">
 				<div class="tab-pane form-horizontal active" id="general">
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Naming
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Naming</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Naming', categoryId: 1"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -220,10 +249,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Taxonomy
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Taxonomy</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Taxonomy', categoryId: 2"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -309,12 +341,16 @@
 							<button id="viewSynonymsButton" type="button" class="btn btn-default">View Synonyms</button>
 						</div>
 					</div>
-
+					
+					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Known Sub-Species (CAN)
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Known Sub-Species (CAN)</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Known Sub-Species (CAN)', categoryId: 3"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -341,10 +377,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Known Sub-Species (NWT)
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Known Sub Species (NWT)</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Known Sub Species (NWT)', categoryId: 4"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -366,10 +405,13 @@
 				
 				<div class="tab-pane form-horizontal" id="reproduction">
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Age of Maturity (Female)
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Age of Maturity (Female)</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Age of Maturity (Female)', categoryId: 5"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -389,10 +431,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Reproduction
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Reproduction</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Reproduction', categoryId: 6"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -410,12 +455,14 @@
 							<textarea rows="4" name="frequencyPerYearDescription" class="form-control" data-bind="value: reproductionFrequencyPerYearDescription"></textarea>
 						</div>
 					</div>
-
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Longevity
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Longevity</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Longevity', categoryId: 7"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -435,10 +482,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Vegetation Reproduction
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Vegetation Reproduction</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Vegetation Reproduction', categoryId: 8"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -451,10 +501,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Host Fish (Mussels)
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Host Fish (Mussels)</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Host Fish (Mussels)', categoryId: 9"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -467,10 +520,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Other Reproduction
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Other Reproduction</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryId: 10"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -482,13 +538,16 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="tab-pane form-horizontal" id="distribution">
+				
+				<div id="distribution" class="tab-pane form-horizontal">
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Ecozone
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Ecozone</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Ecozone', categoryId: 11"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -497,10 +556,10 @@
 						<label for="ecozone" class="col-md-2 control-label">Ecozone</label>
 						<div class="col-md-6">
 							<select id="ecozone"
-									name="ecozone"
-									multiple="true"
-									class="form-control"
-									data-bind="options: $root.ecozones, selectedOptions: $root.selectedEcozoneKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
+							        name="ecozone"
+							        multiple="true"
+							        class="form-control"
+							        data-bind="options: $root.ecozones, selectedOptions: $root.selectedEcozoneKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
 							@*<input type="text" class="form-control" id="ecozone" value="Not Yet Implemented">*@
 						</div>
 					</div>
@@ -513,10 +572,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Ecoregion
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Ecoregion</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Ecoregion', categoryId: 12"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -525,10 +587,10 @@
 						<label for="ecoregion" class="col-md-2 control-label">Ecoregion</label>
 						<div class="col-md-6">
 							<select id="ecoregion"
-									name="ecoregion"
-									multiple="true"
-									class="form-control"
-									data-bind="options: $root.ecoregions, selectedOptions: $root.selectedEcoregionKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
+							        name="ecoregion"
+							        multiple="true"
+							        class="form-control"
+							        data-bind="options: $root.ecoregions, selectedOptions: $root.selectedEcoregionKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
 						</div>
 					</div>
 
@@ -540,10 +602,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Protected Area
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Protected Area</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Protected Area', categoryId: 13"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -552,10 +617,10 @@
 						<label for="protectedArea" class="col-md-2 control-label">Protected Area</label>
 						<div class="col-md-6">
 							<select id="protectedArea"
-									name="protectedArea"
-									multiple="true"
-									class="form-control"
-									data-bind="options: $root.protectedAreas, selectedOptions: $root.selectedProtectedAreaKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
+							        name="protectedArea"
+							        multiple="true"
+							        class="form-control"
+							        data-bind="options: $root.protectedAreas, selectedOptions: $root.selectedProtectedAreaKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
 						</div>
 					</div>
 
@@ -567,10 +632,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Historical Distribution
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Historical Distribution</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Historical Distribution', categoryId: 15"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -583,10 +651,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Marine Distribution
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Marine Distribution</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Marine Distribution', categoryId: 16"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -599,10 +670,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Winter Distribution
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Winter Distribution</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Winter Distribution', categoryId: 17"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -615,10 +689,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Habitat
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Habitat</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Habitat', categoryId: 18"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -647,10 +724,13 @@
 				
 				<div class="tab-pane form-horizontal" id="abundance">
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Population
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Population</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Population', categoryId: 19"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -670,10 +750,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Occurences
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Occurrences</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Occurrences', categoryId: 20"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -693,10 +776,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Density
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Density</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Density', categoryId: 21"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -711,10 +797,13 @@
 				 
 				<div class="tab-pane form-horizontal" id="threats">
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Threats
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Threats</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Threats', categoryId: 22"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -750,10 +839,13 @@
 				
 				<div class="tab-pane form-horizontal" id="trends">
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Short-Term Trends
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Short-Term Trends</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Short-Term Trends', categoryId: 23"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -773,10 +865,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Long-Term Trends
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Long-Term Trends</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Long-Term Trends', categoryId: 24"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -798,10 +893,13 @@
 				
 				<div class="tab-pane form-horizontal" id="status">
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Status
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Status</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Status', categoryId: 25"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -833,10 +931,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Economic Status
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Economic Status</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Economic Status', categoryId: 26"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -849,10 +950,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								COSEWIC Status
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">COSEWIC Status</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'COSEWIC Status', categoryId: 27"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -877,10 +981,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Federal Species at Risk Status
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Federal Species At Risk</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Federal Species At Risk', categoryId: 28"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -900,10 +1007,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								NWT SARC Assessment
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">NWT SARC Assessment</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'NWT SARC Assessment', categoryId: 29"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -917,10 +1027,13 @@
 					
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								NWT Species at Risk Status
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">NWT Species at Risk Status</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'NWT Species at Risk Status', categoryId: 30"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -940,10 +1053,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								Canadian Conservation Significance (Plants)
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">Canadian Conservation Significance (Plants)</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Canadian Conservation Significance (Plants)', categoryId: 31"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>
@@ -956,10 +1072,13 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<h4>
-								IUCN Status
-							</h4>
+						<div class="col-md-12 h4">
+							<div class="row">
+								<div class="col-md-4">IUCN Status</div>
+								<div class="col-md-8 text-right">
+									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'IUCN Status', categoryId: 32"></reference-widget>
+								</div>
+							</div>
 							<hr />
 						</div>
 					</div>

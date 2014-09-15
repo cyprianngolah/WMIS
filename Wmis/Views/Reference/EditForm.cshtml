@@ -1,0 +1,61 @@
+﻿
+<div class="col-md-6">
+	<form role="form">
+		<div class="form-group">
+			<label for="code">Code</label>
+			<input type="text" class="form-control" id="code" name="code" data-bind="value: code, valueUpdate: 'keyup'">
+		</div>
+
+		<div class="form-group">
+			<label for="author">Author</label>
+			<textarea class="form-control" id="author" name="author" data-bind="value: author, valueUpdate: 'keyup'"></textarea>
+		</div>
+		
+
+		<div class="form-group">
+			<label for="year">Year</label>
+			<input type="text" class="form-control" id="year" name="year" data-bind="value: year, valueUpdate: 'keyup'">
+		</div>
+		
+
+		<div class="form-group">
+			<label for="title">Title</label>
+			<textarea class="form-control" id="title" name="title" data-bind="value: title, valueUpdate: 'keyup'"></textarea>
+		</div>
+		
+
+		<div class="form-group">
+			<label for="editionPublicationOrganization">Edition Publication Organization</label>
+			<textarea class="form-control" id="editionPublicationOrganization" name="editionPublicationOrganization" data-bind="value: editionPublicationOrganization, valueUpdate: 'keyup'"></textarea>
+		</div>
+		
+
+		<div class="form-group">
+			<label for="volumePage">Volume Page</label>
+			<input type="text" class="form-control" id="volumePage" name="volumePage" data-bind="value: volumePage, valueUpdate: 'keyup'">
+		</div>
+		
+
+		<div class="form-group">
+			<label for="publisher">Publisher</label>
+			<input type="text" class="form-control" id="publisher" name="publisher" data-bind="value: publisher, valueUpdate: 'keyup'">
+		</div>
+		
+
+		<div class="form-group">
+			<label for="city">City</label>
+			<input type="text" class="form-control" id="city" name="city" data-bind="value: city, valueUpdate: 'keyup'">
+		</div>
+		
+
+		<div class="form-group">
+			<label for="location">Location</label>
+			<input type="text" class="form-control" id="location" name="location" data-bind="value: location, valueUpdate: 'keyup'">
+		</div>
+		
+		<div class="text-right">
+			<button type="submit" class="btn btn-primary" data-bind="click: saveReference, enabled: canSave">Save</button>
+			<a href="/Reference" class="btn btn-default">Cancel</a>
+		</div>
+	</form>
+</div>

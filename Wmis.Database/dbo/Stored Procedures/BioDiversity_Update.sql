@@ -80,7 +80,8 @@
 	@p_IUCNDescription NVARCHAR(50) = NULL,
 	@p_ecozones [IntTableType] READONLY,
 	@p_ecoregions [IntTableType] READONLY,
-	@p_protectedAreas [IntTableType] READONLY
+	@p_protectedAreas [IntTableType] READONLY,
+	@p_references [TwoIntTableType] READONLY
 AS
 	UPDATE
 		dbo.Species
@@ -190,6 +191,15 @@ AS
 	ON (T.ProtectedAreaId = S.n AND T.SpeciesId = @p_SpeciesId) 
 	WHEN NOT MATCHED BY TARGET 
 		THEN INSERT(SpeciesId, ProtectedAreaId) VALUES(@p_SpeciesId, s.n)
+	WHEN NOT MATCHED BY SOURCE
+		THEN DELETE; 
+
+	-- References
+	MERGE SpeciesReferences AS T
+	USING @p_references AS S
+	ON (T.ReferenceCategoryId = S.n AND T.ReferenceId = S.p AND T.SpeciesId = @p_SpeciesId) 
+	WHEN NOT MATCHED BY TARGET 
+		THEN INSERT(SpeciesId, ReferenceId, ReferenceCategoryId) VALUES(@p_SpeciesId, s.p, s.n)
 	WHEN NOT MATCHED BY SOURCE
 		THEN DELETE; 
 

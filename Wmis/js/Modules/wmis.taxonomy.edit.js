@@ -11,7 +11,7 @@ wmis.taxonomy.edit = (function ($) {
 		this.taxonomyGroups = ko.observableArray("");
 		this.name = ko.observable("");
 		this.canSave = ko.computed(function() {
-			return ($.trim(self.name()) != "" && self.taxonomyGroupKey() > 0) 
+			return ($.trim(self.name()) != "" && self.taxonomyGroupKey() > 0);
 		});
 
 		this.getTaxonomyGroups = function() {

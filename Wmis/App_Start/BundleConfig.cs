@@ -26,6 +26,7 @@
 						"~/Scripts/respond.js",
 						"~/Scripts/modernizr-*",
 						"~/Scripts/moment.js",
+						"~/Scripts/underscore.js",
 						"~/js/wmis.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
@@ -98,6 +99,12 @@
 
 			bundles.Add(new ScriptBundle("~/bundles/protectedarea/edit").Include(
 						"~/js/modules/wmis.protectedarea.edit.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/reference/index").Include(
+						"~/js/modules/wmis.reference.index.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/reference/edit").Include(
+						"~/js/modules/wmis.reference.edit.js"));
 		}
 	}
 }

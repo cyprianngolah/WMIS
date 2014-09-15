@@ -108,9 +108,19 @@
 		private const string COSEWICSTATUS_GET = "dbo.CosewicStatus_Get";
 
 		/// <summary>
-		/// The Status RAnk Get stored procedure
+		/// The Status Rank Get stored procedure
 		/// </summary>
 		private const string STATUSRANK_GET = "dbo.StatusRank_Get";
+
+		/// <summary>
+		/// The Reference Get stored procedure
+		/// </summary>
+		private const string REFERENCE_GET = "dbo.Reference_Get";
+
+		/// <summary>
+		/// Create/Update References stored proc
+		/// </summary>
+		private const string REFERENCE_SAVE = "dbo.Reference_Save";
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -221,6 +231,11 @@
 						biodiversity.Ecozones = q.Read<Ecozone>().ToList();
 						biodiversity.Ecoregions = q.Read<Ecoregion>().ToList();
 						biodiversity.ProtectedAreas = q.Read<ProtectedArea>().ToList();
+						biodiversity.References = q.Read<BioDiversityReference, Reference, BioDiversityReference>((br, r) =>
+						{
+							br.Reference = r;
+							return br;
+						}, splitOn: "Key").ToList();
 					}
 
 					return biodiversity;
@@ -327,8 +342,8 @@
 					p_IUCNDescription = bd.IucnDescription,
 					p_ecozones = bd.Ecozones.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
 					p_ecoregions = bd.Ecoregions.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
-					p_protectedAreas = bd.ProtectedAreas.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType")
-					
+					p_protectedAreas = bd.ProtectedAreas.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
+					p_references = bd.References.Select(i => new { n = i.CategoryKey, p = i.Reference.Key }).AsTableValuedParameter("dbo.TwoIntTableType")
 				};
 				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);
 			}
@@ -676,6 +691,53 @@
 			using (var c = NewWmisConnection)
 			{
 				return c.Query<StatusRank>(STATUSRANK_GET, commandType: CommandType.StoredProcedure);
+			}
+		}
+		#endregion
+
+		#region References
+		public Dto.PagedResultset<Reference> ReferencesGet(Dto.ReferenceRequest rr) 
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_referenceId = rr.ReferenceKey,
+					p_startRow = rr.StartRow,
+					p_rowCount = rr.RowCount,
+					p_searchString = rr.SearchString
+				};
+
+				var pagedResults = new Dto.PagedResultset<Reference> { DataRequest = rr };
+				pagedResults.Data = c.Query<int, Reference, Reference>(REFERENCE_GET, (count, r) =>
+				{
+					pagedResults.ResultCount = count;
+					return r;
+				},  param, commandType: CommandType.StoredProcedure, splitOn: "Key").ToList();
+
+				return pagedResults;
+			}
+		}
+
+		public void ReferenceSave(Models.Reference r)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_referenceId = r.Key == 0 ? null : (int?)r.Key,
+					p_code = r.Code, 
+					p_author = r.Author,
+					p_year = r.Year,
+					p_title = r.Title,
+					p_editionPublicationOrganization = r.EditionPublicationOrganization,
+					p_volumePage = r.VolumePage,
+					p_publisher = r.Publisher,
+					p_city = r.City,
+					p_location = r.Location
+				};
+				
+				c.Execute(REFERENCE_SAVE, param, commandType: CommandType.StoredProcedure);
 			}
 		}
 		#endregion

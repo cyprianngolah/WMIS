@@ -148,6 +148,26 @@ AS
 	WHERE
 		spa.SpeciesId = @p_bioDiversityKey
 
+	
+	SELECT	
+		rc.ReferenceCategoryId as CategoryKey,
+		r.ReferenceId as [Key],
+		r.Code,
+		r.Author,
+		r.Year, 
+		r.Title, 
+		r.EditionPublicationOrganization, 
+		r.VolumePage, 
+		r.Publisher, 
+		r.City, 
+		r.Location
+	FROM
+		dbo.[References] r
+			INNER JOIN dbo.SpeciesReferences sr	ON sr.ReferenceId = r.ReferenceId
+			INNER JOIN dbo.ReferenceCategories rc ON rc.ReferenceCategoryId = sr.ReferenceCategoryId
+	WHERE
+		sr.SpeciesId = @p_bioDiversityKey 
+		
 RETURN 0
 
 GRANT EXECUTE ON [dbo].[BioDiversity_Get] TO [WMISUser]

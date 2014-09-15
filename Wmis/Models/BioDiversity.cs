@@ -1,6 +1,5 @@
 ﻿namespace Wmis.Models
 {
-	using System.Collections;
 	using System.Collections.Generic;
 
 	/// <summary>
@@ -32,6 +31,8 @@
 		public string NsNwtId { get; set; }
 
 		public string Elcode { get; set; }
+
+		public List<BioDiversityReference> References { get; set; }
 
 		public Taxonomy Kingdom { get; set; }
 
@@ -184,6 +185,7 @@
 			Ecoregions = new List<Ecoregion>();
 			Ecozones = new List<Ecozone>();
 			ProtectedAreas = new List<ProtectedArea>();
+			References = new List<BioDiversityReference>();
 		}
 	}
 }
