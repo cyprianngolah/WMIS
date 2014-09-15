@@ -128,7 +128,13 @@ AS
 		(@p_groupKey IS NULL OR s.GroupTaxonomyId = @p_groupKey) 
 		AND (@p_orderKey IS NULL OR s.OrderTaxonomyId = @p_orderKey) 
 		AND (@p_familyKey IS NULL OR s.FamilyTaxonomyId = @p_familyKey) 
-		AND (@p_keywords IS NULL OR s.Name LIKE '%' + @p_keywords + '%' OR s.CommonName LIKE '%' + @p_keywords + '%'  OR s.SubSpeciesName LIKE '%' + @p_keywords + '%') 
+		AND (
+			@p_keywords IS NULL 
+			OR s.Name LIKE '%' + @p_keywords + '%' 
+			OR s.CommonName LIKE '%' + @p_keywords + '%'  
+			OR s.SubSpeciesName LIKE '%' + @p_keywords + '%'
+			OR s.ELCODE LIKE '%' + @p_keywords + '%'
+		) 
 	ORDER BY
 		s.SpeciesId
 	OFFSET 
