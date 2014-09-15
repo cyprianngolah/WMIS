@@ -227,8 +227,7 @@
         <div class="form-group">
             <label for="cosewicStatus" class="col-md-1 control-label">COSEWIC Status</label>
             <div class="col-md-2" data-bind="with: cosewicStatus">
-                <select id="cosewicStatus" class="form-control" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }, debug: $root.cosewicStatus"></select>
-                @*<input id="cosewicStatus" type="text" class="form-control" data-bind="value: key" />*@
+                <select id="cosewicStatus" class="form-control" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
             </div>
 
             <label for="nRank" class="col-md-1 control-label">N Rank</label>
@@ -253,6 +252,5 @@
                 <input id="iucnStatus" type="text" class="form-control" data-bind="value: iucnStatus">
             </div>
         </div>
-
     </div>
 </form>
