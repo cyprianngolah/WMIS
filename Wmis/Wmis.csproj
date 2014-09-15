@@ -163,7 +163,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProtectedAreaController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
-    <Compile Include="Dto\BioDiversityDecisionUpdateRequest.cs" />
+    <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
     <Compile Include="Dto\BioDiversityUpdateRequest.cs" />
     <Compile Include="Dto\Base\PagedResultset.cs" />
@@ -190,7 +190,6 @@
     <Compile Include="Models\Base\AuditedKeyedModel.cs" />
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
-    <Compile Include="Models\BioDiversityDecision.cs" />
     <Compile Include="Models\Ecoregion.cs" />
     <Compile Include="Models\Ecozone.cs" />
     <Compile Include="Models\ProtectedArea.cs" />

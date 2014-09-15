@@ -3,148 +3,256 @@
 	ViewBag.SubTitle = "Decision";
 }
 
-@section TopRight{
-	<div class="h4 pull-right" style="text-align: right; margin:0;">
-		Status Risk: <strong>May Be At Risk</strong><br />
-		<span class="h5">Last Updated: @DateTime.Now.ToShortDateString()</span>
-	</div>
+@section Scripts{
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/biodiversity/decision/edit"))
+
+    <script>
+        $(function () {
+            wmis.biodiversity.decision.edit.initialize({
+                bioDiversityKey: @ViewBag.Key
+                });
+        });
+    </script>
 }
 
-<div class="row">
-	<div class="col-md-12">
-		<form role="form">
-			<div class="row">
-				<div class="col-md-12 text-right">
-					<button type="button" class="btn btn-default" style="margin-bottom: 10px;">Cancel</button>
-					<button type="button" class="btn btn-primary" style="margin-bottom: 10px;">Save</button>
-				</div>
-			</div>
+@section Styles {
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
+}
 
-			<div class="row">
-				<div class="col-md-12">
-					<h4>
-						Rarity
-					</h4>
-					<hr />
-				</div>
-			</div>
+@section TopRight{
+    <div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: model">
+        <span data-bind="with: statusRank">Status Rank: <strong><span data-bind="text: name"></span></strong><br /></span>
+        <span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment(lastUpdated(), moment.ISO_8601).format('L') : ''"></span></span>
+    </div>
+}
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="rangeExtent">Range Extent</label></div>
-				<div class="col-md-6 text-right">
-					<label for="rangeExtentScore">Score</label>
-					<input name="rangeExtentScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="rangeExtent"></textarea>
-				</div>
-			</div>
+<form role="form">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a href="/BioDiversity" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-primary" data-bind="click: save, enable: canSave">Save</button>
+        </div>
+    </div>
+    
+    <div class="form-horizontal " data-bind="with: model">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>
+                    Rarity
+                </h4>
+                <hr />
+            </div>
+        </div>
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="areaOfOccupancy">Area of Occupancy</label></div>
-				<div class="col-md-6 text-right">
-					<label for="areaOfOccupancyScore">Score</label>
-					<input name="areaOfOccupancyScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="areaOfOccupancy"></textarea>
-				</div>
-			</div>
+        <div class="form-group">
+            <label for="rangeExtentScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2">
+                <input id="rangeExtentScore" type="text" class="form-control" data-bind="value: rangeExtentScore" />
+            </div>
+        </div>
+            
+        <div class="form-group">
+            <label for="rangeExtent" class="col-md-1 control-label">Range Extent</label>
+            <div class="col-md-11">
+                <textarea id="rangeExtent" rows="4" class="form-control" data-bind="value: rangeExtentDescription"></textarea>
+            </div>
+        </div>
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="populationSize">Population Size</label></div>
-				<div class="col-md-6 text-right">
-					<label for="populationSizeScore">Score</label>
-					<input name="populationSizeScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="populationSize"></textarea>
-				</div>
-			</div>
+        <div class="form-group">
+            <label for="areaOfOccupancyScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2">
+                <input id="areaOfOccupancyScore" type="text" class="form-control" data-bind="value: areaOfOccupancyScore" />
+            </div>
+        </div>
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="numberOfOccurrences">Number of Occurences</label></div>
-				<div class="col-md-6 text-right">
-					<label for="numberOfOccurrencesScore">Score</label>
-					<input name="numberOfOccurrencesScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="numberOfOccurrences"></textarea>
-				</div>
-			</div>
+        <div class="form-group">
+            <label for="areaOfOccupancy" class="col-md-1 control-label">Area of Occupancy</label>
+            <div class="col-md-11">
+                <textarea id="areaOfOccupancy" rows="4" class="form-control" data-bind="value: areaOfOccupancyDescription"></textarea>
+            </div>
+        </div>
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="environmentalSpecificity">Environmental Specificity</label></div>
-				<div class="col-md-6 text-right">
-					<label for="environmentalSpecificityScore">Score</label>
-					<input name="environmentalSpecificityScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="environmentalSpecificity"></textarea>
-				</div>
-			</div>
+        <div class="form-group">
+            <label for="populationSizeScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2">
+                <input id="populationSizeScore" type="text" class="form-control" data-bind="value: populationSizeScore" />
+            </div>
+        </div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<h4>
-						Trends
-					</h4>
-					<hr />
-				</div>
-			</div>
+        <div class="form-group">
+            <label for="populationSize" class="col-md-1 control-label">Population Size</label>
+            <div class="col-md-11">
+                <textarea id="populationSize" rows="4" class="form-control" data-bind="value: populationSizeDescription"></textarea>
+            </div>
+        </div>
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="rangeExtent">Long-term Trends</label></div>
-				<div class="col-md-6 text-right">
-					<label for="longTermTrendsScore">Score</label>
-					<input name="longTermTrendsScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="longTermTrends"></textarea>
-				</div>
-			</div>
+        <div class="form-group">
+            <label for="numberOfOccurencesScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2">
+                <input id="numberOfOccurencesScore" type="text" class="form-control" data-bind="value: numberOfOccurencesScore" />
+            </div>
+        </div>
+            
+        <div class="form-group">
+            <label for="numberOfOccurences" class="col-md-1 control-label">Number of Occurences</label>
+            <div class="col-md-11">
+                <textarea id="numberOfOccurences" rows="4" class="form-control" data-bind="value: numberOfOccurencesDescription"></textarea>
+            </div>
+        </div>
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="rangeExtent">Short-term Trends</label></div>
-				<div class="col-md-6 text-right">
-					<label for="shortTermTrendsScore">Score</label>
-					<input name="shortTermTrendsScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="shortTermTrends"></textarea>
-				</div>
-			</div>
+        <div class="form-group">
+            <label for="environmentalSpecificityScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2 text-right">
+                <input id="environmentalSpecificityScore" type="text" class="form-control" data-bind="value: environmentalSpecificityScore" />
+            </div>
+        </div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<h4>
-						Threats
-					</h4>
-					<hr />
-				</div>
-			</div>
+        <div class="form-group">
+            <label for="environmentalSpecificity" class="col-md-1 control-label">Environmental Specificity</label>
+            <div class="col-md-11">
+                <textarea id="environmentalSpecificity" rows="4" class="form-control" data-bind="value: environmentalSpecificityDescription"></textarea>
+            </div>
+        </div>
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="rangeExtent">Threats</label></div>
-				<div class="col-md-6 text-right">
-					<label for="threatsScore">Score</label>
-					<input name="threatsScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="threats"></textarea>
-				</div>
-			</div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>
+                    Trends
+                </h4>
+                <hr />
+            </div>
+        </div>
 
-			<div class="form-group">
-				<div class="col-md-6"><label for="rangeExtent">Intrinsic Vulnerability</label></div>
-				<div class="col-md-6 text-right">
-					<label for="intrinsicVulnerabilityScore">Score</label>
-					<input name="intrinsicVulnerabilityScore" type="text" />
-				</div>
-				<div class="col-md-12">
-					<textarea rows="4" class="form-control" name="intrinsicVulnerability"></textarea>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
+        <div class="form-group">
+            <label for="longTermTrendsScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2">
+                <input id="longTermTrendsScore" type="text" class="form-control" data-bind="value: longTermTrendsScore" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="longTermTrends" class="col-md-1 control-label">Long-term Trends</label>
+            <div class="col-md-11">
+                <textarea id="longTermTrends" rows="4" class="form-control" data-bind="value: longTermTrendsDescription"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="shortTermTrendsScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2">
+                <input id="shortTermTrendsScore" type="text" class="form-control" data-bind="value: shortTermTrendsScore" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="shortTermTrends" class="col-md-1 control-label">Short-term Trends</label>
+            <div class="col-md-11">
+                <textarea id="shortTermTrends" rows="4" class="form-control" data-bind="value: shortTermTrendsDescription"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>
+                    Threats
+                </h4>
+                <hr />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="threatsScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2 text-right">
+                <input id="threatsScore" type="text" class="form-control" data-bind="value: threatsScore" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="threats" class="col-md-1 control-label">Threats</label>
+            <div class="col-md-11">
+                <textarea id="threats" rows="4" class="form-control" data-bind="value: threatsDescription"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="intrinsicVulnerabilityScore" class="col-md-10 control-label">Score</label>
+            <div class="col-md-2">
+                <input id="intrinsicVulnerabilityScore" type="text" class="form-control" data-bind="value: intrinsicVulnerabilityScore" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="intrinsicVulnerability" class="col-md-1 control-label">Intrinsic Vulnerability</label>
+            <div class="col-md-11">
+                <textarea id="intrinsicVulnerability" rows="4" class="form-control" data-bind="value: intrinsicVulnerabilityDescription"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>
+                    Ranks
+                </h4>
+                <hr />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="nwtStatusRank" class="col-md-1 control-label">NWT Status Rank</label>
+            <div class="col-md-2">
+                <input id="nwtStatusRank" type="text" class="form-control" data-bind="value: nwtStatusRank" />
+            </div>
+            <label for="sRank" class="col-md-1 control-label">S Rank</label>
+            <div class="col-md-2">
+                <input id="sRank" type="text" class="form-control" data-bind="value: sRank" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="statusRankDescription" class="col-md-1 control-label">Rank Description</label>
+            <div class="col-md-11">
+                <textarea id="statusRankDescription" rows="4" class="form-control" data-bind="value: statusRankDescription"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="decisionProcessDescription" class="col-md-1 control-label">Decision Process</label>
+            <div class="col-md-11">
+                <textarea id="decisionProcessDescription" rows="4" class="form-control" data-bind="value: decisionProcessDescription"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cosewicStatus" class="col-md-1 control-label">COSEWIC Status</label>
+            <div class="col-md-2" data-bind="with: cosewicStatus">
+                <select id="cosewicStatus" class="form-control" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }, debug: $root.cosewicStatus"></select>
+                @*<input id="cosewicStatus" type="text" class="form-control" data-bind="value: key" />*@
+            </div>
+
+            <label for="nRank" class="col-md-1 control-label">N Rank</label>
+            <div class="col-md-2">
+                <input id="nRank" type="text" class="form-control" data-bind="value: nRank">
+            </div>
+
+            <label for="saraStatus" class="col-md-1 control-label">Sara Status</label>
+            <div class="col-md-2">
+                <input id="saraStatus" type="text" class="form-control" data-bind="value: saraStatus">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="gRank" class="col-md-1 control-label">G Rank</label>
+            <div class="col-md-2">
+                <input id="gRank" type="text" class="form-control" data-bind="value: gRank">
+            </div>
+
+            <label for="iucnStatus" class="col-md-1 control-label">IUCN Status</label>
+            <div class="col-md-5">
+                <input id="iucnStatus" type="text" class="form-control" data-bind="value: iucnStatus">
+            </div>
+        </div>
+
+    </div>
+</form>

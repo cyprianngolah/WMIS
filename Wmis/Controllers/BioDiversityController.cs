@@ -32,7 +32,6 @@
 		/// <returns>The Edit BioDiversity Page</returns>
 	    public ActionResult Edit(int key)
 		{
-			ViewBag.SpeciesCommonName = "Wood Bison";
 			ViewBag.Key = key;
 		    return View();
 	    }
@@ -44,7 +43,6 @@
 		/// <returns>The BioDiversity Decision Page</returns>
 		public ActionResult Decision(int key)
 		{
-			ViewBag.SpeciesCommonName = "Wood Bison";
 			ViewBag.Key = key;
 			return View();
 		}

@@ -1,9 +1,9 @@
 ﻿namespace Wmis.ApiControllers
 {
-	using System.Net;
-	using System.Net.Http;
 	using System.Web.Http;
 	using Configuration;
+	using Dto;
+	using Models;
 
 	/// <summary>
 	/// Bio Diversity API Controller
@@ -23,14 +23,14 @@
 		/// <returns>The paged data for BioDiversity</returns>
 		[HttpGet]
 		[Route]
-		public Dto.PagedResultset<Models.BioDiversity> Get([FromUri]Dto.BioDiversitySearchRequest searchRequestParameters)
+		public PagedResultset<BioDiversity> Get([FromUri]BioDiversitySearchRequest searchRequestParameters)
 		{
 			return Repository.BioDiversityGet(searchRequestParameters);
 		}
 
 		[HttpGet]
 		[Route("{bioDiversityKey:int?}")]
-		public Models.BioDiversity Get(int bioDiversityKey)
+		public BioDiversity Get(int bioDiversityKey)
 		{
 			return Repository.BioDiversityGet(bioDiversityKey);
 		}
@@ -44,25 +44,84 @@
 
 		[HttpPut]
 		[Route]
-		public void Update([FromBody]Models.BioDiversity bd)
+		public void Update([FromBody]BioDiversity bd)
 		{
 			Repository.BioDiversityUpdate(bd);
 		}
 
-
 		[HttpGet]
 		[Route("decision/{bioDiversityKey:int?}")]
-		public Models.BioDiversityDecision BiodDiversityDecisionGet(int bioDiversityKey)
+		public BioDiversityDecisionRequest BioDiversityDecisionGet(int bioDiversityKey)
 		{
-			return Repository.BioDiversityDecisionGet(bioDiversityKey);
+			var bioDiversity = Repository.BioDiversityGet(bioDiversityKey);
+			return new BioDiversityDecisionRequest
+			{
+				Key = bioDiversity.Key,
+				LastUpdated = bioDiversity.LastUpdated,
+				RangeExtentScore = bioDiversity.RangeExtentScore,
+				RangeExtentDescription = bioDiversity.RangeExtentDescription,
+				AreaOfOccupancyScore = bioDiversity.AreaOfOccupancyScore,
+				AreaOfOccupancyDescription = bioDiversity.AreaOfOccupancyDescription,
+				PopulationSizeScore = bioDiversity.PopulationSizeScore,
+				PopulationSizeDescription = bioDiversity.PopulationSizeDescription,
+				NumberOfOccurencesScore = bioDiversity.NumberOfOccurencesScore,
+				NumberOfOccurencesDescription = bioDiversity.NumberOfOccurencesDescription,
+				EnvironmentalSpecificityScore = bioDiversity.EnvironmentalSpecificityScore,
+				EnvironmentalSpecificityDescription = bioDiversity.EnvironmentalSpecificityDescription,
+				ShortTermTrendsScore = bioDiversity.ShortTermTrendsScore,
+				ShortTermTrendsDescription = bioDiversity.ShortTermTrendsDescription,
+				LongTermTrendsScore = bioDiversity.LongTermTrendsScore,
+				LongTermTrendsDescription = bioDiversity.LongTermTrendsDescription,
+				ThreatsScore = bioDiversity.ThreatsScore,
+				ThreatsDescription = bioDiversity.ThreatsDescription,
+				IntrinsicVulnerabilityScore = bioDiversity.IntrinsicVulnerabilityScore,
+				IntrinsicVulnerabilityDescription = bioDiversity.IntrinsicVulnerabilityDescription,
+				NwtStatusRank = bioDiversity.NwtStatusRank,
+				SRank = bioDiversity.SRank,
+				StatusRank = bioDiversity.StatusRank,
+				StatusRankDescription = bioDiversity.StatusRankDescription,
+				DecisionProcessDescription = bioDiversity.DecisionProcessDescription,
+				CosewicStatus = bioDiversity.CosewicStatus,
+				NRank = bioDiversity.NRank,
+				SaraStatus = bioDiversity.SaraStatus,
+				IucnStatus = bioDiversity.IucnStatus,
+				GRank = bioDiversity.GRank,
+			};
 		}
 
 		[HttpPut]
 		[Route("decision")]
-		public HttpResponseMessage BioDiversityDecisionUpdate([FromBody]Dto.BioDiversityDecisionUpdateRequest ur)
+		public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request)
 		{
-			Repository.BioDiversityDecisionUpdate(ur);
-			return Request.CreateResponse(HttpStatusCode.OK);
+			var bioDiversity = Repository.BioDiversityGet(request.Key);
+			bioDiversity.RangeExtentScore = request.RangeExtentScore;
+			bioDiversity.RangeExtentDescription = request.RangeExtentDescription;
+			bioDiversity.AreaOfOccupancyScore = request.AreaOfOccupancyScore;
+			bioDiversity.AreaOfOccupancyDescription = request.AreaOfOccupancyDescription;
+			bioDiversity.PopulationSizeScore = request.PopulationSizeScore;
+			bioDiversity.PopulationSizeDescription = request.PopulationSizeDescription;
+			bioDiversity.NumberOfOccurencesScore = request.NumberOfOccurencesScore;
+			bioDiversity.NumberOfOccurencesDescription = request.NumberOfOccurencesDescription;
+			bioDiversity.EnvironmentalSpecificityScore = request.EnvironmentalSpecificityScore;
+			bioDiversity.EnvironmentalSpecificityDescription = request.EnvironmentalSpecificityDescription;
+			bioDiversity.ShortTermTrendsScore = request.ShortTermTrendsScore;
+			bioDiversity.ShortTermTrendsDescription = request.ShortTermTrendsDescription;
+			bioDiversity.LongTermTrendsScore = request.LongTermTrendsScore;
+			bioDiversity.LongTermTrendsDescription = request.LongTermTrendsDescription;
+			bioDiversity.ThreatsScore = request.ThreatsScore;
+			bioDiversity.ThreatsDescription = request.ThreatsDescription;
+			bioDiversity.IntrinsicVulnerabilityScore = request.IntrinsicVulnerabilityScore;
+			bioDiversity.IntrinsicVulnerabilityDescription = request.IntrinsicVulnerabilityDescription;
+			bioDiversity.NwtStatusRank = request.NwtStatusRank;
+			bioDiversity.SRank = request.SRank;
+			bioDiversity.StatusRankDescription = request.StatusRankDescription;
+			bioDiversity.DecisionProcessDescription = request.DecisionProcessDescription;
+			bioDiversity.CosewicStatus = request.CosewicStatus;
+			bioDiversity.NRank = request.NRank;
+			bioDiversity.SaraStatus = request.SaraStatus;
+			bioDiversity.IucnStatus = request.IucnStatus;
+			bioDiversity.GRank = request.GRank;
+			Repository.BioDiversityUpdate(bioDiversity);
 		}
     }
 }

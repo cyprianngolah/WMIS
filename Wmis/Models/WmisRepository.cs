@@ -47,16 +47,6 @@
 		/// </summary>
 		private const string BIODIVERSITY_UPDATE = "dbo.BioDiversity_Update";
 
-		/// <summary>
-		/// The BioDiversity Get Decision stored procedure
-		/// </summary>
-		private const string BIODIVERSITY_DECISION_GET = "dbo.BioDiversity_Get_Decision";
-
-		/// <summary>
-		/// The BioDiversity Decision Update stored procedure
-		/// </summary>
-		private const string BIODIVERSITY_DECISION_UPDATE = "dbo.BioDiversity_Update_Decision";
-
         /// <summary>
         /// The Taxonomy Synonym Get stored procedure
         /// </summary>
@@ -342,23 +332,6 @@
 					
 				};
 				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
-
-		public BioDiversityDecision BioDiversityDecisionGet(int bioDiversityKey)
-		{
-			return new BioDiversityDecision();
-		}
-
-		public void BioDiversityDecisionUpdate(Dto.BioDiversityDecisionUpdateRequest ur)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					
-				};
-				c.Execute(BIODIVERSITY_DECISION_UPDATE, param, commandType: CommandType.StoredProcedure);
 			}
 		}
 		#endregion

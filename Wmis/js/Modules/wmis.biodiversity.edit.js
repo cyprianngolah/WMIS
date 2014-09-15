@@ -19,17 +19,14 @@ wmis.biodiversity.edit = (function ($) {
 		this.family = ko.observableArray();
 		this.subFamily = ko.observableArray();
 		this.group = ko.observableArray();
-
 		this.ecozones = ko.observableArray();
 		this.selectedEcozoneKeys = ko.observableArray();
 		this.ecoregions = ko.observableArray();
 		this.selectedEcoregionKeys = ko.observableArray();
 		this.protectedAreas = ko.observableArray();
 		this.selectedProtectedAreaKeys = ko.observableArray();
-
 		this.statusRank = ko.observableArray();
 		this.cosewicStatus = ko.observableArray();
-		
 		this.dataLoaded = ko.observable(false);
 
 		this.getBioDiversity = function (key) {
@@ -72,48 +69,24 @@ wmis.biodiversity.edit = (function ($) {
 		};
 
 		this.getDropDowns = function () {
-			self.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
-			self.getDropDownData(self.phylum, "/api/taxonomy/phylum");
-			self.getDropDownData(self.subPhylum, "/api/taxonomy/subphylum");
-			self.getDropDownData(self.class, "/api/taxonomy/class");
-			self.getDropDownData(self.subClass, "/api/taxonomy/subclass");
-			self.getDropDownData(self.order, "/api/taxonomy/order");
-			self.getDropDownData(self.subOrder, "/api/taxonomy/suborder");
-			self.getDropDownData(self.infraOrder, "/api/taxonomy/infraorder");
-			self.getDropDownData(self.superFamily, "/api/taxonomy/superfamily");
-			self.getDropDownData(self.family, "/api/taxonomy/family");
-			self.getDropDownData(self.subFamily, "/api/taxonomy/subfamily");
-			self.getDropDownData(self.group, "/api/taxonomy/group");
-			self.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
-
-			self.getDropDownData(self.ecoregions, "/api/ecoregion?startRow=0&rowCount=500", function(result) {
-				return result.data;
-			});
-			self.getDropDownData(self.ecozones, "/api/ecozone?startRow=0&rowCount=500", function (result) {
-				return result.data;
-			});
-			self.getDropDownData(self.protectedAreas, "/api/protectedArea?startRow=0&rowCount=500", function (result) {
-				return result.data;
-			});
-			
-			self.getDropDownData(self.statusRank, "/api/statusrank?startRow=0&rowCount=500", function (result) {
-			    return result.data;
-			});
-
-			self.getDropDownData(self.cosewicStatus, "/api/cosewicstatus?startRow=0&rowCount=500", function (result) {
-			    return result.data;
-			});
-		};
-
-
-		this.getDropDownData = function(observableArray, url, parsingFunction) {
-			$.getJSON(url, {}, function (json) {
-				if (parsingFunction) {
-					observableArray(parsingFunction(json));
-				} else {
-					observableArray(json);
-				}
-			}).fail(wmis.global.ajaxErrorHandler);
+			wmis.global.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
+			wmis.global.getDropDownData(self.phylum, "/api/taxonomy/phylum");
+			wmis.global.getDropDownData(self.subPhylum, "/api/taxonomy/subphylum");
+			wmis.global.getDropDownData(self.class, "/api/taxonomy/class");
+			wmis.global.getDropDownData(self.subClass, "/api/taxonomy/subclass");
+			wmis.global.getDropDownData(self.order, "/api/taxonomy/order");
+			wmis.global.getDropDownData(self.subOrder, "/api/taxonomy/suborder");
+			wmis.global.getDropDownData(self.infraOrder, "/api/taxonomy/infraorder");
+			wmis.global.getDropDownData(self.superFamily, "/api/taxonomy/superfamily");
+			wmis.global.getDropDownData(self.family, "/api/taxonomy/family");
+			wmis.global.getDropDownData(self.subFamily, "/api/taxonomy/subfamily");
+			wmis.global.getDropDownData(self.group, "/api/taxonomy/group");
+			wmis.global.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
+			wmis.global.getDropDownData(self.ecoregions, "/api/ecoregion?startRow=0&rowCount=500", function (result) { return result.data; });
+			wmis.global.getDropDownData(self.ecozones, "/api/ecozone?startRow=0&rowCount=500", function (result) { return result.data; });
+			wmis.global.getDropDownData(self.protectedAreas, "/api/protectedArea?startRow=0&rowCount=500", function (result) { return result.data; });
+			wmis.global.getDropDownData(self.statusRank, "/api/statusrank?startRow=0&rowCount=500", function (result) { return result.data; });
+			wmis.global.getDropDownData(self.cosewicStatus, "/api/cosewicstatus?startRow=0&rowCount=500", function (result) { return result.data; });
 		};
 
 		this.canSave = ko.computed(function() {
@@ -151,8 +124,6 @@ wmis.biodiversity.edit = (function ($) {
 		ko.applyBindings(viewModel);
 	}
 	
-	
-
 	return {
 		initialize: initialize
 	};
