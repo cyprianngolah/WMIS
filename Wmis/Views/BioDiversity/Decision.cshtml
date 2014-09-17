@@ -225,17 +225,17 @@
         </div>
 
         <div class="form-group">
+            <label for="nRank" class="col-md-1 control-label">N Rank</label>
+            <div class="col-md-2">
+                <input id="nRank" type="text" class="form-control" data-bind="value: nRank">
+            </div>
+            
             <label for="cosewicStatus" class="col-md-1 control-label">COSEWIC Status</label>
             <div class="col-md-2" data-bind="with: cosewicStatus">
                 <select id="cosewicStatus" class="form-control" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
             </div>
 
-            <label for="nRank" class="col-md-1 control-label">N Rank</label>
-            <div class="col-md-2">
-                <input id="nRank" type="text" class="form-control" data-bind="value: nRank">
-            </div>
-
-            <label for="saraStatus" class="col-md-1 control-label">Sara Status</label>
+            <label for="saraStatus" class="col-md-1 control-label">SARA Status</label>
             <div class="col-md-2">
                 <input id="saraStatus" type="text" class="form-control" data-bind="value: saraStatus">
             </div>
