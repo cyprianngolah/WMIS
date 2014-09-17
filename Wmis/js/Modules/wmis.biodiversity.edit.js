@@ -74,6 +74,7 @@ wmis.biodiversity.edit = (function ($) {
 		this.selectedProtectedAreaKeys = ko.observableArray();
 		this.statusRank = ko.observableArray();
 		this.cosewicStatus = ko.observableArray();
+		this.nwtSarcAssessment = ko.observableArray();
 		this.dataLoaded = ko.observable(false);
 
 		this.selectedReferenceCategoryName = ko.observable();
@@ -211,7 +212,7 @@ wmis.biodiversity.edit = (function ($) {
 			wmis.global.getDropDownData(self.ecozones, "/api/ecozone?startRow=0&rowCount=500", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.protectedAreas, "/api/protectedArea?startRow=0&rowCount=500", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.statusRank, "/api/statusrank?startRow=0&rowCount=500", function (result) { return result.data; });
-			wmis.global.getDropDownData(self.cosewicStatus, "/api/cosewicstatus?startRow=0&rowCount=500", function (result) { return result.data; });
+			wmis.global.getDropDownData(self.nwtSarcAssessment, "/api/nwtsarcassessment?startRow=0&rowCount=500", function (result) { return result.data; });
 		};
 
 		this.canSave = ko.computed(function() {

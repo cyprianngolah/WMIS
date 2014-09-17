@@ -118,6 +118,12 @@
             bundles.Add(new ScriptBundle("~/bundles/cosewicstatus/edit").Include(
                         "~/js/modules/wmis.cosewicstatus.edit.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/nwtsarcassessment/index").Include(
+                        "~/js/modules/wmis.nwtsarcassessment.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/nwtsarcassessment/edit").Include(
+                        "~/js/modules/wmis.nwtsarcassessment.edit.js"));
+
 		}
 	}
 }

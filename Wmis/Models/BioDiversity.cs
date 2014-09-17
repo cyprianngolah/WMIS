@@ -166,7 +166,9 @@
 
 		public string FederalSpeciesAtRiskStatusDescription { get; set; }
 
-		public string NwtsarcAssessmentDescription { get; set; }
+        public NwtSarcAssessment NwtSarcAssessment { get; set; }
+
+        public string NwtsarcAssessmentDescription { get; set; }
 
 		public string NwtStatusRank { get; set; }
 

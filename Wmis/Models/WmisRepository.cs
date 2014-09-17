@@ -81,6 +81,16 @@
 		/// </summary>
 		private const string ECOZONE_SAVE = "dbo.Ecozone_Save";
 
+        /// <summary>
+        /// The NWT SARC Assessment Get stored procedure
+        /// </summary>
+        private const string NWTSARCASSESSMENT_GET = "dbo.NwtSarcAssessment_Get";
+
+        /// <summary>
+        /// The NWT SARC Assessment Save stored procedure
+        /// </summary>
+        private const string NWTSARCASSESSMENT_SAVE = "dbo.NwtSarcAssessment_Save";
+
 		/// <summary>
 		/// The Protected Area Get stored procedure
 		/// </summary>
@@ -204,11 +214,12 @@
 				
 				using (var q = c.QueryMultiple(BIODIVERSITY_GET, param, commandType: CommandType.StoredProcedure))
 				{
-					var biodiversity = q.Read<BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(
-						(bd, status, cs, kingdom, phylum, dyn) =>
+					var biodiversity = q.Read<BioDiversity, StatusRank, CosewicStatus, NwtSarcAssessment, Taxonomy, Taxonomy, dynamic, BioDiversity>(
+						(bd, status, cs, nsa, kingdom, phylum, dyn) =>
 						{
 							bd.StatusRank = status ?? new StatusRank();
-							bd.CosewicStatus = cs ?? new CosewicStatus();
+                            bd.CosewicStatus = cs ?? new CosewicStatus();
+                            bd.NwtSarcAssessment = nsa ?? new NwtSarcAssessment();
 							bd.Kingdom = kingdom ?? new Taxonomy();
 							bd.Phylum = phylum ?? new Taxonomy();
 							bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
@@ -333,6 +344,7 @@
 					p_NRank = bd.NRank,
 					p_SARAStatus = bd.SaraStatus,
 					p_FederalSpeciesAtRiskStatusDescription = bd.FederalSpeciesAtRiskStatusDescription,
+                    p_NwtSarcAssessmentId = bd.NwtSarcAssessment == null || bd.NwtSarcAssessment.Key == 0 ? null : (int?)bd.NwtSarcAssessment.Key,
 					p_NWTSARCAssessmentDescription = bd.NwtsarcAssessmentDescription,
 					p_NWTStatusRank = bd.NwtStatusRank,
 					p_NWTSpeciesAtRiskStatusDescription = bd.NwtSpeciesAtRiskStatusDescription,
@@ -598,7 +610,65 @@
 			}
 		}
 		#endregion
-		
+
+        #region NwtSarcAssessment
+        /// <summary>
+        /// Gets a list of NWT SARC Assessments
+        /// </summary>
+        /// <param name="request">The information about the NWT SARC Assessment Request</param>
+        /// <returns>A list of matching NWT SARC Assessments</returns>
+        public PagedResultset<NwtSarcAssessment> NwtSarcAssessmentGet(NwtSarcAssessmentRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_nwtSarcAssessmentId = request.Key,
+                    p_keywords = request.Keywords,
+                };
+
+                var pagedResults = new PagedResultset<NwtSarcAssessment>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<NwtSarcAssessment>()
+                };
+
+                var results = c.Query<dynamic, NwtSarcAssessment, NwtSarcAssessment>(NWTSARCASSESSMENT_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return t;
+                    }, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        /// <summary>
+        /// Saves the Ecozone
+        /// </summary>
+        /// <param name="request">The information about the NWT SARC Assessment Request</param>
+        public void NwtSarcAssessmentSave(NwtSarcAssessmentSaveRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_nwtSarcAssessmentId = request.Key,
+                    p_name = request.Name
+                };
+
+                c.Execute(NWTSARCASSESSMENT_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion
+
 		#region ProtectedArea
 		/// <summary>
 		/// Gets a list of Protected Areas

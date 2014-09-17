@@ -76,6 +76,8 @@ AS
 		s.COSEWICStatusId AS [Key],
 		s.COSEWICStatusDescription,
 		cosewic.Name,
+		s.NwtSarcAssessmentId AS [Key],
+		nwtSarcAssessment.Name,
 		s.KingdomTaxonomyId as [Key],
 		kingdom.Name, 
 		s.PhylumTaxonomyId as [Key],
@@ -105,6 +107,7 @@ AS
 		dbo.Species s
 			LEFT OUTER JOIN dbo.StatusRanks statusRank on s.StatusRankId = statusRank.statusRankId
 			LEFT OUTER JOIN dbo.COSEWICStatus cosewic on s.COSEWICStatusId = cosewic.COSEWICStatusId
+			LEFT OUTER JOIN dbo.NwtSarcAssessments nwtSarcAssessment on s.NwtSarcAssessmentId = nwtSarcAssessment.NwtSarcAssessmentId
 			LEFT OUTER JOIN dbo.Taxonomy kingdom on s.KingdomTaxonomyId = kingdom.TaxonomyId AND kingdom.taxonomyGroupId = 1
 			LEFT OUTER JOIN dbo.Taxonomy phylum on s.PhylumTaxonomyId = phylum.TaxonomyId AND phylum.taxonomyGroupId = 2
 			LEFT OUTER JOIN dbo.Taxonomy subphylum on s.SubPhylumTaxonomyId = subphylum.TaxonomyId AND subphylum.taxonomyGroupId = 3

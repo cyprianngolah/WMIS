@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Ecoregions.sql" />
+    <Content Include="Data\NwtSarcAssessments.sql" />
     <Content Include="Data\Ecozones.sql" />
     <Content Include="Data\StatusRanks.sql" />
     <Content Include="Data\ReferenceCategories.sql" />

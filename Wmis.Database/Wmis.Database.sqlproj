@@ -154,6 +154,9 @@
     <Build Include="dbo\Stored Procedures\Reference_Save.sql" />
     <Build Include="dbo\Stored Procedures\StatusRank_Save.sql" />
     <Build Include="dbo\Stored Procedures\CosewicStatus_Save.sql" />
+    <Build Include="dbo\Tables\NwtSarcAssessment.sql" />
+    <Build Include="dbo\Stored Procedures\NwtSarcAssessment_Get.sql" />
+    <Build Include="dbo\Stored Procedures\NwtSarcAssessment_Save.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

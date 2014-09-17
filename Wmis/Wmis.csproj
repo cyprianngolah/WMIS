@@ -144,6 +144,7 @@
   <ItemGroup>
     <Compile Include="ApiControllers\BaseApiController.cs" />
     <Compile Include="ApiControllers\CosewicStatusApiController.cs" />
+    <Compile Include="ApiControllers\NwtSarcAssessmentApiController.cs" />
     <Compile Include="ApiControllers\EcozoneApiController.cs" />
     <Compile Include="ApiControllers\ProtectedAreaApiController.cs" />
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Controllers\BioDiversityController.cs" />
     <Compile Include="Controllers\EcoregionController.cs" />
     <Compile Include="Controllers\CosewicStatusController.cs" />
+    <Compile Include="Controllers\NwtSarcAssessmentController.cs" />
     <Compile Include="Controllers\StatusRankController.cs" />
     <Compile Include="Controllers\EcozoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -172,7 +174,9 @@
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
     <Compile Include="Dto\EcoregionRequest.cs" />
     <Compile Include="Dto\EcoregionSaveRequest.cs" />
+    <Compile Include="Dto\NwtSarcAssessmentRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
+    <Compile Include="Dto\NwtSarcAssessmentSaveRequest.cs" />
     <Compile Include="Dto\ProtectedAreaRequest.cs" />
     <Compile Include="Dto\CosewicStatusRequest.cs" />
     <Compile Include="Dto\CosewicStatusSaveRequest.cs" />
@@ -194,6 +198,7 @@
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\Ecoregion.cs" />
+    <Compile Include="Models\NwtSarcAssessment.cs" />
     <Compile Include="Models\Ecozone.cs" />
     <Compile Include="Models\ProtectedArea.cs" />
     <Compile Include="Models\CosewicStatus.cs" />
@@ -316,6 +321,8 @@
     <Content Include="js\Modules\wmis.biodiversity.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
     <Content Include="js\Modules\wmis.cosewicstatus.edit.js" />
+    <Content Include="js\Modules\wmis.nwtsarcassessment.edit.js" />
+    <Content Include="js\Modules\wmis.nwtsarcassessment.index.js" />
     <Content Include="js\Modules\wmis.statusrank.edit.js" />
     <Content Include="js\Modules\wmis.cosewicstatus.index.js" />
     <Content Include="js\Modules\wmis.statusrank.index.js" />
@@ -466,6 +473,10 @@
     <Content Include="Views\CosewicStatus\EditForm.cshtml" />
     <Content Include="Views\CosewicStatus\Index.cshtml" />
     <Content Include="Views\CosewicStatus\New.cshtml" />
+    <Content Include="Views\NwtSarcAssessment\Edit.cshtml" />
+    <Content Include="Views\NwtSarcAssessment\EditForm.cshtml" />
+    <Content Include="Views\NwtSarcAssessment\Index.cshtml" />
+    <Content Include="Views\NwtSarcAssessment\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
