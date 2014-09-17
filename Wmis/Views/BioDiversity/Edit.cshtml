@@ -939,9 +939,9 @@
 					<div class="row">
 						<div class="col-md-12 h4">
 							<div class="row">
-								<div class="col-md-4">Status</div>
+								<div class="col-md-4">Rank</div>
 								<div class="col-md-8 text-right">
-									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Status', categoryId: 25"></reference-widget>
+                                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Rank', categoryId: 25"></reference-widget>
 								</div>
 							</div>
 							<hr />
@@ -953,6 +953,11 @@
 						<div class="col-md-4" data-bind="with: statusRank">
 							<select class="form-control" id="statusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
+
+                        <label for="nRank" class="col-md-1 control-label">N Rank</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="nRank" data-bind="value: nRank">
+                        </div>
 
 						<label for="sRank" class="col-md-1 control-label">S Rank</label>
 						<div class="col-md-2">
@@ -977,25 +982,6 @@
 					<div class="row">
 						<div class="col-md-12 h4">
 							<div class="row">
-								<div class="col-md-4">Economic Status</div>
-								<div class="col-md-8 text-right">
-									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Economic Status', categoryId: 26"></reference-widget>
-								</div>
-							</div>
-							<hr />
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label for="economicStatusDescription" class="col-md-2 control-label">Description</label>
-						<div class="col-md-10">
-							<textarea rows="4" name="economicStatusDescription" class="form-control" data-bind="value: economicStatusDescription"></textarea>
-						</div>
-					</div>
-					
-					<div class="row">
-						<div class="col-md-12 h4">
-							<div class="row">
 								<div class="col-md-4">COSEWIC Status</div>
 								<div class="col-md-8 text-right">
 									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'COSEWIC Status', categoryId: 27"></reference-widget>
@@ -1009,11 +995,6 @@
 						<label for="cosewicStatus" class="col-md-2 control-label">COSEWIC Status</label>
 						<div class="col-md-4" data-bind="with: cosewicStatus">
 							<select class="form-control" id="cosewicStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-						</div>
-
-						<label for="nRank" class="col-md-1 control-label">N Rank</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" id="nRank" data-bind="value: nRank">
 						</div>
 					</div>
 					
@@ -1099,25 +1080,6 @@
 					<div class="row">
 						<div class="col-md-12 h4">
 							<div class="row">
-								<div class="col-md-4">Canadian Conservation Significance (Plants)</div>
-								<div class="col-md-8 text-right">
-									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Canadian Conservation Significance (Plants)', categoryId: 31"></reference-widget>
-								</div>
-							</div>
-							<hr />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="canadianConservationSignificanceDescription" class="col-md-2 control-label">Description</label>
-						<div class="col-md-10">
-							<textarea rows="4" name="canadianConservationSignificanceDescription" class="form-control" data-bind="value: canadianConservationSignificanceDescription"></textarea>
-						</div>
-					</div>
-					
-					<div class="row">
-						<div class="col-md-12 h4">
-							<div class="row">
 								<div class="col-md-4">IUCN Status</div>
 								<div class="col-md-8 text-right">
 									<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'IUCN Status', categoryId: 32"></reference-widget>
@@ -1145,6 +1107,25 @@
 							<textarea rows="4" name="iucnStatusDescription" class="form-control" data-bind="value: iucnDescription"></textarea>
 						</div>
 					</div>
+
+                    <div class="row">
+                        <div class="col-md-12 h4">
+                            <div class="row">
+                                <div class="col-md-4">Economic Status</div>
+                                <div class="col-md-8 text-right">
+                                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Economic Status', categoryId: 26"></reference-widget>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="economicStatusDescription" class="col-md-2 control-label">Description</label>
+                        <div class="col-md-10">
+                            <textarea rows="4" name="economicStatusDescription" class="form-control" data-bind="value: economicStatusDescription"></textarea>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>

@@ -32,7 +32,6 @@ USING (VALUES
 	(28, N'FederalSpeciesAtRiskStatus'),
 	(29, N'NWTSARCAssessment'),
 	(30, N'NWTSpeciesAtRiskStatus'),
-	(31, N'CanadianConservationSignificance'),
 	(32, N'IUCNStatus')
 )
 AS [source] ([ReferenceCategoryId], [Name]) 

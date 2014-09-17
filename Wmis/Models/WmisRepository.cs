@@ -336,7 +336,6 @@
 					p_NWTSARCAssessmentDescription = bd.NwtsarcAssessmentDescription,
 					p_NWTStatusRank = bd.NwtStatusRank,
 					p_NWTSpeciesAtRiskStatusDescription = bd.NwtSpeciesAtRiskStatusDescription,
-					p_CanadianConservationSignificanceDescription = bd.CanadianConservationSignificanceDescription,
 					p_IUCNStatus = bd.IucnStatus,
 					p_GRank = bd.GRank,
 					p_IUCNDescription = bd.IucnDescription,

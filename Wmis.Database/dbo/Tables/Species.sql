@@ -75,7 +75,6 @@
 	[NWTSARCAssessmentDescription]                 NVARCHAR (MAX)    NULL,
 	[NWTStatusRank]                                NVARCHAR (50)     NULL,
 	[NWTSpeciesAtRiskStatusDescription]            NVARCHAR (MAX)    NULL,
-	[CanadianConservationSignificanceDescription]  NVARCHAR (MAX)    NULL,
 	[IUCNStatus]                                   NVARCHAR (50)     NULL,
 	[GRank]                                        NVARCHAR (50)     NULL,
 	[IUCNDescription]                              NVARCHAR (50)     NULL,

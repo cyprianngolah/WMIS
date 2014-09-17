@@ -172,8 +172,6 @@
 
 		public string NwtSpeciesAtRiskStatusDescription { get; set; }
 
-		public string CanadianConservationSignificanceDescription { get; set; }
-
 		public string IucnStatus { get; set; }
 
 		public string GRank { get; set; }

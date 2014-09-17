@@ -67,7 +67,6 @@ AS
 		s.NWTSARCAssessmentDescription,
 		s.NWTStatusRank,
 		s.NWTSpeciesAtRiskStatusDescription,
-		s.CanadianConservationSignificanceDescription,
 		s.IUCNStatus,
 		s.GRank,
 		s.IUCNDescription,

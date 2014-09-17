@@ -74,7 +74,6 @@
 	@p_NWTSARCAssessmentDescription NVARCHAR(MAX) = NULL,
 	@p_NWTStatusRank NVARCHAR(50) = NULL,
 	@p_NWTSpeciesAtRiskStatusDescription NVARCHAR(MAX) = NULL,
-	@p_CanadianConservationSignificanceDescription NVARCHAR(MAX) = NULL,
 	@p_IUCNStatus NVARCHAR(50) = NULL,
 	@p_GRank NVARCHAR(50) = NULL,
 	@p_IUCNDescription NVARCHAR(50) = NULL,
@@ -160,7 +159,6 @@ AS
 		NWTSARCAssessmentDescription = @p_NWTSARCAssessmentDescription,
 		NWTStatusRank = @p_NWTStatusRank,
 		NWTSpeciesAtRiskStatusDescription = @p_NWTSpeciesAtRiskStatusDescription,
-		CanadianConservationSignificanceDescription = @p_CanadianConservationSignificanceDescription,
 		IUCNStatus = @p_IUCNStatus,
 		GRank = @p_GRank,
 		IUCNDescription = @p_IUCNDescription
