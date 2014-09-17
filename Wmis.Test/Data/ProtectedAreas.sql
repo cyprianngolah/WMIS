@@ -14,4 +14,4 @@ ON [target].[ProtectedAreaId] = [source].[ProtectedAreaId]
 WHEN MATCHED THEN UPDATE SET [Name] = [source].[Name]
 WHEN NOT MATCHED BY TARGET THEN INSERT ([ProtectedAreaId], [Name]) VALUES ([ProtectedAreaId], [Name]) 
 WHEN NOT MATCHED BY SOURCE THEN DELETE;
-SET IDENTITY_INSERT [dbo].[Ecozones] OFF;
+SET IDENTITY_INSERT [dbo].[ProtectedAreas] OFF;
