@@ -1,7 +1,19 @@
 ﻿@{
-	ViewBag.Title = "Biodiversity";
-	ViewBag.SubTitle = "Decision";
+    ViewBag.Title = "Biodiversity Decision";
+    ViewBag.SubTitle =
+        @"<span data-bind='with: model'>
+            <span class='speciesNameText' data-bind='text: name'></span>
+            <span class='speciesNameText' data-bind='text: subSpeciesName'></span>
+            <span data-bind='text: ecoType'></span>
+            <span data-bind='text: population'></span>
+        </span>";
 }
+
+<style>
+    .speciesNameText {
+        font-style: italic;
+    }
+</style>
 
 @section Scripts{
     @Html.Raw(Scripts.Render("~/bundles/select2"))

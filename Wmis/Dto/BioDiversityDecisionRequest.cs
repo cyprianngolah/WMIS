@@ -7,6 +7,14 @@
 	{
 		public int Key { get; set; }
 
+        public string Name { get; set; }
+
+        public string SubSpeciesName { get; set; }
+
+        public string EcoType { get; set; }
+
+        public string Population { get; set; }
+
 		public DateTime LastUpdated { get; set; }
 
 		public string RangeExtentScore { get; set; }

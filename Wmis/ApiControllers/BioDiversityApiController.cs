@@ -57,6 +57,10 @@
 			return new BioDiversityDecisionRequest
 			{
 				Key = bioDiversity.Key,
+                Name = bioDiversity.Name,
+                SubSpeciesName = bioDiversity.SubSpeciesName,
+                EcoType = bioDiversity.EcoType,
+                Population = bioDiversity.Population,
 				LastUpdated = bioDiversity.LastUpdated,
 				RangeExtentScore = bioDiversity.RangeExtentScore,
 				RangeExtentDescription = bioDiversity.RangeExtentDescription,
