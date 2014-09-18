@@ -13,6 +13,42 @@
     .speciesNameText {
         font-style: italic;
     }
+
+    div.generalGroup input {
+        background-color: #4D708A;
+        color: black;
+    }
+
+    div.reproductionGroup input {
+        background-color: #7BA98F;
+        color: black;
+    }
+
+    div.distributionGroup input {
+        background-color: #27814E;
+        color: black;
+    }
+
+    div.abundanceGroup input {
+        background-color: #996014;
+        color: black;
+    }
+
+    div.threatsGroup input {
+        background-color: #D7AB72;
+        color: black;
+    }
+
+    div.trendsGroup input {
+        background-color: #D78772;
+        color: black;
+    }
+
+    div.statusGroup input {
+        background-color: #B65137;
+        color: black;
+    }
+
 </style>
 
 @section Scripts{
@@ -58,70 +94,70 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group generalGroup">
             <label for="rangeExtentScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2">
                 <input id="rangeExtentScore" type="text" class="form-control" data-bind="value: rangeExtentScore" />
             </div>
         </div>
             
-        <div class="form-group">
+        <div class="form-group generalGroup">
             <label for="rangeExtent" class="col-md-1 control-label">Range Extent</label>
             <div class="col-md-11">
                 <textarea id="rangeExtent" rows="4" class="form-control" data-bind="value: rangeExtentDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group generalGroup">
             <label for="areaOfOccupancyScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2">
                 <input id="areaOfOccupancyScore" type="text" class="form-control" data-bind="value: areaOfOccupancyScore" />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group generalGroup">
             <label for="areaOfOccupancy" class="col-md-1 control-label">Area of Occupancy</label>
             <div class="col-md-11">
                 <textarea id="areaOfOccupancy" rows="4" class="form-control" data-bind="value: areaOfOccupancyDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group abundanceGroup">
             <label for="populationSizeScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2">
                 <input id="populationSizeScore" type="text" class="form-control" data-bind="value: populationSizeScore" />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group abundanceGroup">
             <label for="populationSize" class="col-md-1 control-label">Population Size</label>
             <div class="col-md-11">
                 <textarea id="populationSize" rows="4" class="form-control" data-bind="value: populationSizeDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group abundanceGroup">
             <label for="numberOfOccurencesScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2">
                 <input id="numberOfOccurencesScore" type="text" class="form-control" data-bind="value: numberOfOccurencesScore" />
             </div>
         </div>
             
-        <div class="form-group">
+        <div class="form-group abundanceGroup">
             <label for="numberOfOccurences" class="col-md-1 control-label">Number of Occurences</label>
             <div class="col-md-11">
                 <textarea id="numberOfOccurences" rows="4" class="form-control" data-bind="value: numberOfOccurencesDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group distributionGroup">
             <label for="environmentalSpecificityScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2 text-right">
                 <input id="environmentalSpecificityScore" type="text" class="form-control" data-bind="value: environmentalSpecificityScore" />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group distributionGroup">
             <label for="environmentalSpecificity" class="col-md-1 control-label">Environmental Specificity</label>
             <div class="col-md-11">
                 <textarea id="environmentalSpecificity" rows="4" class="form-control" data-bind="value: environmentalSpecificityDescription"></textarea>
@@ -137,28 +173,28 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group trendsGroup">
             <label for="longTermTrendsScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2">
                 <input id="longTermTrendsScore" type="text" class="form-control" data-bind="value: longTermTrendsScore" />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group trendsGroup">
             <label for="longTermTrends" class="col-md-1 control-label">Long-term Trends</label>
             <div class="col-md-11">
                 <textarea id="longTermTrends" rows="4" class="form-control" data-bind="value: longTermTrendsDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group trendsGroup">
             <label for="shortTermTrendsScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2">
                 <input id="shortTermTrendsScore" type="text" class="form-control" data-bind="value: shortTermTrendsScore" />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group trendsGroup">
             <label for="shortTermTrends" class="col-md-1 control-label">Short-term Trends</label>
             <div class="col-md-11">
                 <textarea id="shortTermTrends" rows="4" class="form-control" data-bind="value: shortTermTrendsDescription"></textarea>
@@ -174,28 +210,28 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group threatsGroup">
             <label for="threatsScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2 text-right">
                 <input id="threatsScore" type="text" class="form-control" data-bind="value: threatsScore" />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group threatsGroup">
             <label for="threats" class="col-md-1 control-label">Threats</label>
             <div class="col-md-11">
                 <textarea id="threats" rows="4" class="form-control" data-bind="value: threatsDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group threatsGroup">
             <label for="intrinsicVulnerabilityScore" class="col-md-10 control-label">Score</label>
             <div class="col-md-2">
                 <input id="intrinsicVulnerabilityScore" type="text" class="form-control" data-bind="value: intrinsicVulnerabilityScore" />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group threatsGroup">
             <label for="intrinsicVulnerability" class="col-md-1 control-label">Intrinsic Vulnerability</label>
             <div class="col-md-11">
                 <textarea id="intrinsicVulnerability" rows="4" class="form-control" data-bind="value: intrinsicVulnerabilityDescription"></textarea>
@@ -211,7 +247,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group statusGroup">
             <label for="nwtStatusRank" class="col-md-1 control-label">NWT Status Rank</label>
             <div class="col-md-2">
                 <input id="nwtStatusRank" type="text" class="form-control" data-bind="value: nwtStatusRank" />
