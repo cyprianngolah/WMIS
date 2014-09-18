@@ -63,6 +63,8 @@
 
 		public string DecisionProcessDescription { get; set; }
 
+        public NwtSarcAssessment NwtSarcAssessment { get; set; }
+
 		public CosewicStatus CosewicStatus { get; set; }
 
 		public string NRank { get; set; }

@@ -237,6 +237,11 @@
         </div>
 
         <div class="form-group">
+            <label for="nwtSarcAssessment" class="col-md-1 control-label">NWT SARC Assessment</label>
+            <div class="col-md-2" data-bind="with: nwtSarcAssessment">
+                <select class="form-control" id="nwtSarcAssessment" data-bind="options: $root.nwtSarcAssessment, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            </div>
+
             <label for="nRank" class="col-md-1 control-label">N Rank</label>
             <div class="col-md-2">
                 <input id="nRank" type="text" class="form-control" data-bind="value: nRank">

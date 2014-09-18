@@ -10,13 +10,15 @@ wmis.biodiversity.decision.edit = (function ($) {
 		this.model = ko.observable();
 		this.statusRank = ko.observableArray();
 		this.cosewicStatus = ko.observableArray();
+		this.nwtSarcAssessment = ko.observableArray();
 		this.dataLoaded = ko.observable(false);
 
 		this.load = function (key) {
 			wmis.global.showWaitingScreen("Loading...");
 
 			wmis.global.getDropDownData(self.statusRank, "/api/statusrank?startRow=0&rowCount=500", function(json) { return json.data; });
-			wmis.global.getDropDownData(self.cosewicStatus, "/api/cosewicstatus?startRow=0&rowCount=500", function(json) { return json.data; });
+			wmis.global.getDropDownData(self.cosewicStatus, "/api/cosewicstatus?startRow=0&rowCount=500", function (json) { return json.data; });
+			wmis.global.getDropDownData(self.nwtSarcAssessment, "/api/nwtsarcassessment?startRow=0&rowCount=500", function (result) { return result.data; });
 
 			$.getJSON("/api/BioDiversity/Decision/" + key, {}, function (json) {
 				ko.mapper.fromJS(json, "auto", self.model);

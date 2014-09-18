@@ -85,6 +85,7 @@
 				StatusRank = bioDiversity.StatusRank,
 				StatusRankDescription = bioDiversity.StatusRankDescription,
 				DecisionProcessDescription = bioDiversity.DecisionProcessDescription,
+                NwtSarcAssessment = bioDiversity.NwtSarcAssessment,
 				CosewicStatus = bioDiversity.CosewicStatus,
 				NRank = bioDiversity.NRank,
 				SaraStatus = bioDiversity.SaraStatus,
@@ -120,6 +121,7 @@
 			bioDiversity.SRank = request.SRank;
 			bioDiversity.StatusRankDescription = request.StatusRankDescription;
 			bioDiversity.DecisionProcessDescription = request.DecisionProcessDescription;
+            bioDiversity.NwtSarcAssessment = request.NwtSarcAssessment;
 			bioDiversity.CosewicStatus = request.CosewicStatus;
 			bioDiversity.NRank = request.NRank;
 			bioDiversity.SaraStatus = request.SaraStatus;
