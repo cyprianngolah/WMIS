@@ -86,3 +86,7 @@ input[type="checkbox"].input-validation-error {
 .nav-tabs > li > a.statusTab {
     background-color: #B65137;
 }
+
+hr {
+	margin-top: 10px;
+}

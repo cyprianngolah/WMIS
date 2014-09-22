@@ -61,9 +61,12 @@
 			//////////////////////////////////////////////////////////////////////
 			// Module Script Bundles
 			//////////////////////////////////////////////////////////////////////
+			#region Dialogs
 			bundles.Add(new ScriptBundle("~/bundles/dialog/synonym").Include(
 						"~/js/modules/wmis.dialog.synonym.js"));
+			#endregion
 
+			#region Biodiversity
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/index").Include(
 						"~/js/modules/wmis.biodiversity.index.js"));
 
@@ -74,8 +77,24 @@
 						"~/js/modules/wmis.biodiversity.edit.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/decision/edit").Include(
-						"~/js/modules/wmis.biodiversity.decision.edit.js"));
+			"~/js/modules/wmis.biodiversity.decision.edit.js"));
+			#endregion
 
+			#region Projects
+			bundles.Add(new ScriptBundle("~/bundles/project/index").Include(
+						"~/js/modules/wmis.project.index.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/project/new").Include(
+						"~/js/modules/wmis.project.new.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/project/edit").Include(
+						"~/js/modules/wmis.project.edit.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/project/survey/edit").Include(
+						"~/js/modules/wmis.project.survey.edit.js"));
+			#endregion
+
+			#region Admin Pages
 			bundles.Add(new ScriptBundle("~/bundles/taxonomy/index").Include(
 						"~/js/modules/wmis.taxonomy.index.js"));
 
@@ -123,7 +142,7 @@
 
             bundles.Add(new ScriptBundle("~/bundles/nwtsarcassessment/edit").Include(
                         "~/js/modules/wmis.nwtsarcassessment.edit.js"));
-
+			#endregion
 		}
 	}
 }

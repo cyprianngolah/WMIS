@@ -16,7 +16,7 @@ wmis.global = (function ($) {
 	// Loads a select box with data via an AJAX get call and then initializes it as a 
 	// single select select2
 	// Note - This may be replaced by more knockout oriented logic
-	function loadAndInitializeSelect2($select, ajaxUrl, placeHolder, showAll) {
+	function loadAndInitializeSelect2($select, ajaxUrl, placeHolder, showAll, dataPropertyName) {
 		$.ajax({
 			url: ajaxUrl,
 			dataType: "json",
@@ -25,7 +25,7 @@ wmis.global = (function ($) {
 				withCredentials: true
 			}
 		}).done(function(data) {
-			appendDataToSelect(data, $select, showAll);
+			appendDataToSelect(data, $select, showAll, dataPropertyName);
 		}).fail(wmis.global.ajaxErrorHandler);
 
 		$select.select2({
@@ -35,11 +35,12 @@ wmis.global = (function ($) {
 
 	// Shortcut for appending data to a select
 	// Expects data to have a key and a value property
-	function appendDataToSelect (data, $select, showAll) {
+	function appendDataToSelect (data, $select, showAll, dataPropertyName) {
 		$select.empty();
 		if(typeof(showAll) == 'undefined' || showAll)
 			$select.append("<option value=''>All</option>");
-		$.each(data, function (index, value) {
+		var dataCollection = typeof(dataPropertyName) == 'undefined' ? data : data[dataPropertyName];
+		$.each(dataCollection, function (index, value) {
 			$select.append($("<option></option>").attr("value", value.key).text(value.name));
 		});
 	};

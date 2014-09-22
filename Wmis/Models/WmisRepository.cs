@@ -889,6 +889,67 @@
 			}
 		}
 		#endregion
+
+		#region Project
+		public int ProjectCreate(string name)
+		{
+			return 1;
+		}
+
+		public Project ProjectGet(int projectKey)
+		{
+			return new Project
+			{
+				Name = "Unuvik - Pearky Caribou and Musko Survey, Bonka Island 2005",
+				Status = new ProjectStatus {  Key = 1, Name = "Gathering Data" },
+				LastUpdated = DateTime.UtcNow.AddMinutes(-500)
+			};
+		}
+		#endregion
+
+		#region Project Survey
+		public Dto.PagedResultset<ProjectSurvey> ProjectSurveyGet(Dto.ProjectSurveyRequest psr)
+		{
+			var pr = new Dto.PagedResultset<ProjectSurvey>
+			{
+				DataRequest = psr,
+				ResultCount = 0,
+				Data = new List<ProjectSurvey>()
+			};
+
+			return pr;
+		}
+
+		public ProjectSurvey ProjectSurveyGet(int surveyKey)
+		{
+			return new ProjectSurvey();
+		}
+
+		public void ProjectSurveySave(Models.ProjectSurvey ps)
+		{
+			
+		}
+
+		public int ProjectSurveySave(Dto.ProjectSurveySaveRequest pssr)
+		{
+			return 1;
+		}
+		#endregion
+
+		#region Project Collar
+		public Dto.PagedResultset<Collar> ProjectCollarGet(Dto.ProjectCollarRequest psr)
+		{
+			var pr = new Dto.PagedResultset<Collar>
+			{
+				DataRequest = psr,
+				ResultCount = 0,
+				Data = new List<Collar>()
+			};
+
+			return pr;
+		}
+		
+		#endregion
 		#endregion
 
 		#region Helpers

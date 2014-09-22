@@ -1,0 +1,206 @@
+﻿@{
+	ViewBag.Title = "Project";
+	ViewBag.SubTitle = "<span data-bind='with: project'><span data-bind='text: name'></span></span>";
+}
+
+@section TopRight{
+	<div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: project">
+		<span data-bind="with: status">Status: <span data-bind="text: name"></span><br /></span>
+		<span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment(lastUpdated(), moment.ISO_8601).format('L') : ''"></span></span>
+	</div>
+}
+
+@section Styles {
+	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
+	@Html.Raw(Styles.Render("~/bundles/select2css"))
+}
+
+@section Scripts{
+	@Html.Raw(Scripts.Render("~/bundles/datatables"))
+	@Html.Raw(Scripts.Render("~/bundles/select2"))
+	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/dialog/synonym"))
+	@Html.Raw(Scripts.Render("~/bundles/project/edit"))
+
+	<script>
+        $(function () {
+            wmis.project.edit.initialize({
+            	projectKey: @ViewBag.Key,
+            	
+            	$newSurveyButton: $("#newSurveyButton"),
+            	$editSurveyButton: $("#editSurveyButton"),
+            	$searchSurveysButton: $("#searchSurveysButton"),
+            	$surveyTable: $("#surveys"),
+            	$collarTable: $("#collars")
+            });
+        });
+	</script>
+}
+
+<form role="form">
+	<div class="row">
+		<div class="col-md-12 text-right">
+			<a href="~/Project/" class="btn btn-default">Cancel</a>
+			<button type="submit" class="btn btn-primary" data-bind="click: saveProject, enable: canSave">Save</button>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="active"><a href="#generalTab" role="tab" data-toggle="tab">General</a></li>
+				<li><a href="#surveysTab" role="tab" data-toggle="tab">Surveys</a></li>
+				<li><a href="#collarsTab" role="tab" data-toggle="tab">Collars</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<!-- General -->
+			<div class="tab-content" style="margin-top:10px;">
+				<div class="tab-pane form-horizontal active" data-bind="with: project" id="generalTab">
+					<div class="form-group">
+						<label for="name" class="col-md-1 control-label">Name</label>
+						<div class="col-md-7">
+							<input type="text" class="form-control" id="name" data-bind="value: name">
+						</div>
+
+						<label for="leadRegion" class="col-md-1 control-label">Lead Region</label>
+						<div class="col-md-3" data-bind="with: 'leadRegion'">
+							<select class="form-control" id="leadRegion" data-bind="options: $root.regions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key', select2: { }"></select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="name" class="col-md-1 control-label">Status</label>
+						<div class="col-md-3" data-bind="with: 'status'">
+							<select class="form-control" id="status" data-bind="options: $root.statuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key', select2: { }"></select>
+						</div>
+
+						<label for="name" class="col-md-1 control-label">Status Date</label>
+						<div class="col-md-3">
+							<input type="text" class="form-control" id="statusDate" data-bind="value: statusDate">
+						</div>
+
+						<label for="projectLead" class="col-md-1 control-label">Project Lead</label>
+						<div class="col-md-3" data-bind="with: 'projectLead'">
+							<select class="form-control" id="projectLead" data-bind="options: $root.projectLeads, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key', select2: { }"></select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="name" class="col-md-1 control-label">Start Date</label>
+						<div class="col-md-3">
+							<input type="text" class="form-control" id="startDate" data-bind="value: startDate">
+						</div>
+
+						<label for="name" class="col-md-1 control-label">End Date</label>
+						<div class="col-md-3">
+							<input type="text" class="form-control" id="endDate" data-bind="value: endDate">
+						</div>
+
+						<label for="name" class="col-md-1 control-label"></label>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value="1" data-bind="checked: sensitiveData">
+								Sensitive Data
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="description" class="col-md-1 control-label">Description</label>
+						<div class="col-md-11">
+							<textarea rows="4" name="description" class="form-control" data-bind="value: description"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="objectives" class="col-md-1 control-label">Objectives</label>
+						<div class="col-md-11">
+							<textarea rows="4" name="objectives" class="form-control" data-bind="value: objectives"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="studyArea" class="col-md-1 control-label">Study Area</label>
+						<div class="col-md-11">
+							<textarea rows="4" name="studyArea" class="form-control" data-bind="value: studyArea"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="methods" class="col-md-1 control-label">Methods</label>
+						<div class="col-md-11">
+							<textarea rows="4" name="methods" class="form-control" data-bind="value: methods"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="comments" class="col-md-1 control-label">Comments</label>
+						<div class="col-md-11">
+							<textarea rows="4" name="comments" class="form-control" data-bind="value: comments"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="results" class="col-md-1 control-label">Results</label>
+						<div class="col-md-11">
+							<textarea rows="4" name="results" class="form-control" data-bind="value: results"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane form-horizontal" id="surveysTab">
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+							<a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<table id="surveys" class="table">
+								<thead>
+									<tr>
+										<th>Survey Type</th>
+										<th>Survey Template</th>
+										<th>Target Species</th>
+										<th>Common Name</th>
+										<th>Start Date</th>
+										<th># of Observations</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane form-horizontal" id="collarsTab">
+					@*<div class="row">
+						<div class="col-md-12 text-right">
+							<a href="~/Project/NewCollar" id="newCollarButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+							<a href="~/Project/EditCollar" id="editCollarButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+						</div>
+					</div>*@
+
+					<div class="row">
+						<div class="col-md-12">
+							<table id="collars" class="table">
+								<thead>
+									<tr>
+										<th>Admin Region</th>
+										<th>Collar Status</th>
+										<th>Species</th>
+										<th>Common Name</th>
+										<th>Sub Species</th>
+										<th>Animal Status</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
