@@ -9,7 +9,7 @@
     public static class DapperExtensions
     {
         /// <summary>
-        /// Helper method to simplify creation of table vauled parameters.
+        /// Helper method to simplify creation of table valued parameters.
         /// </summary>
         /// <typeparam name="T">The object type mirroring the table type.</typeparam>
         /// <param name="data">The data.</param>

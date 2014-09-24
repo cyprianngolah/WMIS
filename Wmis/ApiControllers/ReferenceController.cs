@@ -14,14 +14,14 @@
 		}
 
 		[HttpGet]
-		[Route()]
+		[Route]
 		public Dto.PagedResultset<Reference> GetReferences([FromUri]Dto.ReferenceRequest rr)
 		{
 			return Repository.ReferencesGet(rr);
 		}
 
 		[HttpPost]
-		[Route()]
+		[Route]
 		public void SaveReference(Models.Reference r)
 		{
 			Repository.ReferenceSave(r);

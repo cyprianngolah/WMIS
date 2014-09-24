@@ -18,18 +18,6 @@
 		}
 
 		#region Taxonomy CRUD
-		///// <summary>
-		///// Gets all Taxonomies of the specified Taxonomy Group Id
-		///// </summary>
-		///// <param name="groupKey">The Taxonomy Group Id to filter by</param>
-		///// <returns>The list of matching Taxonomy objects</returns>
-		//[HttpGet]
-		//[Route("{groupKey:int?}")]
-		//public IEnumerable<Taxonomy> GetTaxonomies(int? groupKey = null)
-		//{
-		//	return Repository.TaxonomyGet(null, groupKey);
-		//}
-
 		/// <summary>
 		/// Gets all Taxonomies of the specified Taxonomy Group Id
 		/// </summary>
@@ -43,14 +31,10 @@
 			{
 				tr = new TaxonomyRequest();
 			}
+
 			return Repository.TaxonomyGet(tr);
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="tr"></param>
-		/// <returns></returns>
 		[HttpPost]
 		[Route]
 		public void SaveTaxonomy([FromBody]Dto.TaxonomySaveRequest tr)

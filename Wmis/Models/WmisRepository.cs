@@ -5,8 +5,8 @@
 	using System.Data;
 	using System.Data.SqlClient;
     using System.Linq;
-	using Dapper;
 	using Configuration;
+	using Dapper;
 	using Dto;
     using Extensions;
 
@@ -122,7 +122,7 @@
 		private const string REFERENCE_GET = "dbo.Reference_Get";
 
 		/// <summary>
-		/// Create/Update References stored proc
+		/// Create/Update References stored procedure
 		/// </summary>
 		private const string REFERENCE_SAVE = "dbo.Reference_Save";
 
@@ -130,7 +130,6 @@
         /// The Status Rank Save stored procedure
         /// </summary>
         private const string STATUSRANK_SAVE = "dbo.StatusRank_Save";
-
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -193,7 +192,10 @@
 						bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
 
 						return bd;
-					}, param, splitOn: "Key", commandType: CommandType.StoredProcedure);
+					}, 
+					param, 
+					splitOn: "Key", 
+					commandType: CommandType.StoredProcedure);
 
 				pagedResultset.Data = new List<BioDiversity>(results);
 		}
@@ -232,7 +234,8 @@
 							bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
 
 							return bd;
-						}, "Key").SingleOrDefault();
+						}, 
+						"Key").SingleOrDefault();
 
 					if (biodiversity != null)
 					{
@@ -243,7 +246,8 @@
 						{
 							br.Reference = r;
 							return br;
-						}, splitOn: "Key").ToList();
+						}, 
+						"Key").ToList();
 					}
 
 					return biodiversity;
@@ -379,7 +383,10 @@
 					{
 						t.TaxonomyGroup = tg;
 						return t;
-					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+					}, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
 			}
 		}
 
@@ -416,7 +423,10 @@
 						pagedResults.ResultCount = d.TotalRowCount;
 						t.TaxonomyGroup = tg;
 						return t;
-					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+					}, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
 
 				pagedResults.Data = results.ToList();
 				return pagedResults;
@@ -426,7 +436,7 @@
 		/// <summary>
 		/// Gets a list of Taxonomy Groups
 		/// </summary>
-		/// <param name="taxonomyGroupKey"></param>
+		/// <param name="taxonomyGroupKey">The Taxonomy Group Key</param>
 		/// <returns>A list of matching Taxonomy Groups</returns>
 		public IEnumerable<TaxonomyGroup> TaxonomyGroupGet(int? taxonomyGroupKey = null)
 		{
@@ -494,10 +504,10 @@
 
 		#region Ecoregion
 		/// <summary>
-		/// Gets a list of Ecoregions
+		/// Gets a list of Eco-regions
 		/// </summary>
-		/// <param name="request">The information about the Ecoregion Request</param>
-		/// <returns>A list of matching Ecoregions</returns>
+		/// <param name="request">The information about the Eco-region Request</param>
+		/// <returns>A list of matching Eco-regions</returns>
 		public PagedResultset<Ecoregion> EcoregionGet(EcoregionRequest request)
 		{
 			using (var c = NewWmisConnection)
@@ -524,7 +534,10 @@
 					{
 						pagedResults.ResultCount = d.TotalRowCount;
 						return t;
-					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+					}, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
 
 				pagedResults.Data = results.ToList();
 				return pagedResults;
@@ -552,10 +565,10 @@
 
 		#region Ecozone
 		/// <summary>
-		/// Gets a list of Ecozones
+		/// Gets a list of Eco-zones
 		/// </summary>
-		/// <param name="request">The information about the Ecozone Request</param>
-		/// <returns>A list of matching Ecozones</returns>
+		/// <param name="request">The information about the Eco-zone Request</param>
+		/// <returns>A list of matching Eco-zones</returns>
 		public PagedResultset<Ecozone> EcozoneGet(EcozoneRequest request)
 		{
 			using (var c = NewWmisConnection)
@@ -582,7 +595,10 @@
 					{
 						pagedResults.ResultCount = d.TotalRowCount;
 						return t;
-					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+					}, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
 
 				pagedResults.Data = results.ToList();
 				return pagedResults;
@@ -640,7 +656,10 @@
                     {
                         pagedResults.ResultCount = d.TotalRowCount;
                         return t;
-                    }, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+                    }, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
 
                 pagedResults.Data = results.ToList();
                 return pagedResults;
@@ -698,7 +717,10 @@
 					{
 						pagedResults.ResultCount = d.TotalRowCount;
 						return t;
-					}, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+					}, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
 
 				pagedResults.Data = results.ToList();
 				return pagedResults;
@@ -756,7 +778,10 @@
                     {
                         pagedResults.ResultCount = d.TotalRowCount;
                         return t;
-                    }, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+                    }, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
 
                 pagedResults.Data = results.ToList();
                 return pagedResults;
@@ -814,7 +839,10 @@
                     {
                         pagedResults.ResultCount = d.TotalRowCount;
                         return t;
-                    }, param, commandType: CommandType.StoredProcedure, splitOn: "Key");
+                    }, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
 
                 pagedResults.Data = results.ToList();
                 return pagedResults;
@@ -854,11 +882,16 @@
 				};
 
 				var pagedResults = new Dto.PagedResultset<Reference> { DataRequest = rr };
-				pagedResults.Data = c.Query<int, Reference, Reference>(REFERENCE_GET, (count, r) =>
-				{
-					pagedResults.ResultCount = count;
-					return r;
-				},  param, commandType: CommandType.StoredProcedure, splitOn: "Key").ToList();
+				pagedResults.Data = c.Query<int, Reference, Reference>(REFERENCE_GET, 
+					(count, r) =>
+						{
+							pagedResults.ResultCount = count;
+							return r;
+						},  
+					param, 
+					commandType: 
+					CommandType.StoredProcedure, 
+					splitOn: "Key").ToList();
 
 				return pagedResults;
 			}
@@ -898,7 +931,10 @@
 			return new Project
 			{
 				Name = "Unuvik - Pearky Caribou and Musko Survey, Bonka Island 2005",
-				Status = new ProjectStatus {  Key = 1, Name = "Gathering Data" },
+				Status = new ProjectStatus
+					         {
+						         Key = 1, Name = "Gathering Data"
+					         },
 				LastUpdated = DateTime.UtcNow.AddMinutes(-500)
 			};
 		}
@@ -923,8 +959,7 @@
 		}
 
 		public void ProjectSurveySave(Models.ProjectSurvey ps)
-		{
-			
+		{			
 		}
 
 		public int ProjectSurveySave(Dto.ProjectSurveySaveRequest pssr)

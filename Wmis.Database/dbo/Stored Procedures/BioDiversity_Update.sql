@@ -86,7 +86,7 @@ AS
 	UPDATE
 		dbo.Species
 	SET
-		Name = @p_name,
+		Name = @p_Name,
 		CommonName = @p_CommonName,
 		SubSpeciesName = @p_SubSpeciesName,
 		EcoType = @p_EcoType,
@@ -164,9 +164,9 @@ AS
 		IUCNStatus = @p_IUCNStatus,
 		GRank = @p_GRank,
 		IUCNDescription = @p_IUCNDescription,
-		LastUpdateD = GETUTCDATE()
+		LastUpdated = GETUTCDATE()
 	WHERE
-		SpeciesId = @p_speciesId
+		SpeciesId = @p_SpeciesId
 
 	-- Ecozones
 	MERGE SpeciesEcozones AS T

@@ -7,7 +7,7 @@
 	using StructureMap;
 
 	/// <summary>
-	/// Web Api Dependency Resolver for Structure Map
+	/// Web API Dependency Resolver for Structure Map
 	/// Taken from solution at http://stackoverflow.com/questions/11889275/structuremap-and-asp-net-web-api-and-net-framework-4-5
 	/// </summary>
 	public class StructureMapDependencyResolver : IDependencyResolver

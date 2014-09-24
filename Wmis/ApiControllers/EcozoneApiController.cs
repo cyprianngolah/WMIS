@@ -21,7 +21,7 @@
 		}
 
 		/// <summary>
-		/// Gets all Ecozones
+		/// Gets all Eco-zones
 		/// </summary>
 		/// <param name="request">The Ecozone Request details to filter by</param>
 		/// <returns>The list of matching Ecozone objects</returns>

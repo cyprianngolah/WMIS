@@ -1,6 +1,6 @@
 ﻿namespace Wmis.Models
 {
-	public class Reference :Base.KeyedModel
+	public class Reference : Base.KeyedModel
 	{
 		public string Code { get; set; }
 

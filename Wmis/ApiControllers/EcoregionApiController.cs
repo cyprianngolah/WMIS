@@ -21,7 +21,7 @@
 		}
 
 		/// <summary>
-		/// Gets all Ecoregions
+		/// Gets all Eco-regions
 		/// </summary>
 		/// <param name="request">The Ecoregion Request details to filter by</param>
 		/// <returns>The list of matching Ecoregion objects</returns>
