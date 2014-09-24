@@ -57,6 +57,11 @@ input[type="checkbox"].input-validation-error {
 	}
 }
 
+ .speciesNameText {
+    font-style: italic;
+}
+
+/* Styles for biodiversity tabs */
 .nav-tabs > li > a.colouredTab {
     border: 1px solid #ddd;
     color: black;
@@ -98,6 +103,43 @@ input[type="checkbox"].input-validation-error {
 
 .nav-tabs > li > a.statusTab {
     background-color: #B65137;
+}
+
+ /* Styles for the decision screen*/
+
+div.generalGroup input {
+    background-color: #4D708A;
+    color: black;
+}
+
+div.reproductionGroup input {
+    background-color: #7BA98F;
+    color: black;
+}
+
+div.distributionGroup input {
+    background-color: #27814E;
+    color: black;
+}
+
+div.abundanceGroup input {
+    background-color: #996014;
+    color: black;
+}
+
+div.threatsGroup input {
+    background-color: #D7AB72;
+    color: black;
+}
+
+div.trendsGroup input {
+    background-color: #D78772;
+    color: black;
+}
+
+div.statusGroup input {
+    background-color: #B65137;
+    color: black;
 }
 
 hr {
