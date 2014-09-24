@@ -5,6 +5,9 @@
 - Visual Studio 2013 (Update 2)
 - SQL Server 2012 (optional, but recommended for local development)
   - If you do not have a full version of SQL Server 2012, 'SQL Server 2012 Express With Advanced Services' (ENU\x64\SQLEXPRADV\_x64\_ENU.exe) can be downloaded free of charge [here](http://www.microsoft.com/en-ca/download/details.aspx?id=29062).
+- ReSharper 8
+- StyleCop (https://stylecop.codeplex.com)
+    - It is important that StyleCop be installed **AFTER** ReSharper as the StyleCop installation adds a plugin to ReSharper that provides visual feedback of StyleCop violations.
   
 #### Getting Started ####
 
@@ -39,7 +42,7 @@ For simple changes it's often easiest to use the Visual Studio IDE to apply chan
   
 #### Coding Standards ####
 
-- C# standards as defined by StyleCop
+- C# standards as defined by StyleCop/ReSharper
 - JavaScript standards as defined by JSLint
 	
 #### Database Standards ####
