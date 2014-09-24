@@ -70,6 +70,7 @@ AS
 		s.IUCNStatus,
 		s.GRank,
 		s.IUCNDescription,
+		s.LastUpdated,
 		s.StatusRankId as [Key],
 		s.StatusRankDescription,
 		statusRank.Name,
@@ -150,7 +151,6 @@ AS
 	WHERE
 		spa.SpeciesId = @p_bioDiversityKey
 
-	
 	SELECT	
 		rc.ReferenceCategoryId as CategoryKey,
 		r.ReferenceId as [Key],

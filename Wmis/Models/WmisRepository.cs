@@ -192,8 +192,6 @@
 						bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
 						bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
 
-						bd.LastUpdated = DateTime.UtcNow.AddSeconds(0 - tc);
-
 						return bd;
 					}, param, splitOn: "Key", commandType: CommandType.StoredProcedure);
 
@@ -233,7 +231,6 @@
 							bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
 							bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
 
-							bd.LastUpdated = DateTime.UtcNow.AddSeconds(-5);
 							return bd;
 						}, "Key").SingleOrDefault();
 
@@ -254,7 +251,7 @@
 			}
 		}
 
-		public void BioDiversityCreate(string name)
+		public int BioDiversityCreate(string name)
 		{
 			using (var c = NewWmisConnection)
 			{
@@ -262,7 +259,7 @@
 				{
 					p_name = name
 				};
-				c.Execute(BIODIVERSITY_CREATE, param, commandType: CommandType.StoredProcedure);
+				return c.Query<int>(BIODIVERSITY_CREATE, param, commandType: CommandType.StoredProcedure).Single();
 			}
 		}
 

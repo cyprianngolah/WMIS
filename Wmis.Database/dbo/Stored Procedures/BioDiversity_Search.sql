@@ -78,6 +78,7 @@ AS
 		s.IUCNStatus,
 		s.GRank,
 		s.IUCNDescription,
+		s.LastUpdated,
 		s.StatusRankId as [Key],
 		statusRank.Name,
 		s.COSEWICStatusId AS [Key],

@@ -2,9 +2,22 @@
 	height: 100%;
 }
 
-body {
+/*body {
     padding-top: 50px;
     padding-bottom: 20px;
+}*/
+
+.wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -120px;
+  /* Pad bottom by footer height */
+  padding: 50px 0 130px;
+}
+
+.footer {
+  height: 120px;
 }
 
 /* styles for validation helpers */

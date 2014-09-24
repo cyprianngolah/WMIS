@@ -163,7 +163,8 @@ AS
 		NWTSpeciesAtRiskStatusDescription = @p_NWTSpeciesAtRiskStatusDescription,
 		IUCNStatus = @p_IUCNStatus,
 		GRank = @p_GRank,
-		IUCNDescription = @p_IUCNDescription
+		IUCNDescription = @p_IUCNDescription,
+		LastUpdateD = GETUTCDATE()
 	WHERE
 		SpeciesId = @p_speciesId
 

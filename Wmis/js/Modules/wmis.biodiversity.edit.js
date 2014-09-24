@@ -8,7 +8,7 @@
 			self.categoryId = params.categoryId;
 			self.showDialogFunction = params.showDialogFunction;
 			self.references = [];
-			
+		
 			self.referencesString = ko.computed(function() {
 				var string = "References";
 				if (typeof(self.widgetReferences()) == 'undefined')
@@ -34,7 +34,7 @@
 				return string;
 			}, this);
 			
-			self.showDialog = function() {
+			self.showDialog = function () {
 				if(typeof(self.showDialogFunction) == 'function')
 					self.showDialogFunction(params.categoryName, self.categoryId, ko.toJS(self.references));
 			};
@@ -103,19 +103,7 @@ wmis.biodiversity.edit = (function ($) {
 					return {
 						results: result.data
 					};
-				},
-				//initSelection: function (item, callback) {
-				//	item.id = item.key;
-				//	item.text = item.code + ' - ' + item.title;
-
-				//	callback(item);
-				//},
-				//formatResult: function(item) {
-				//	 return ('<div>' + item.text + '</div>');
-				//},
-				//formatSelection: function(item) {
-				//	 return (item.text);
-				//}
+				}
 			}
 		};
 
@@ -144,10 +132,9 @@ wmis.biodiversity.edit = (function ($) {
 				references[i].text = references[i].code + ' - ' + references[i].title;
 			}
 
-			$("#selectedReferences").select2("data", references);
-
-			//self.selectedReferences(references);
+			$("#selectedReferences").select2("data", references);	
 			$('#referenceModal').modal('show');
+			$('#selectedReferences').select2('open');
 		};
 
 		this.cancelReferenceChanges = function () {

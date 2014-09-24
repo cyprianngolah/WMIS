@@ -37,9 +37,9 @@
 
 		[HttpPost]
 		[Route]
-		public void Create([FromBody]string name)
+		public int Create([FromBody]string name)
 		{
-			Repository.BioDiversityCreate(name);
+			return Repository.BioDiversityCreate(name);
 		}
 
 		[HttpPut]

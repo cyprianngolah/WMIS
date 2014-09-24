@@ -22,8 +22,8 @@ wmis.biodiversity.new = (function ($) {
 				type: "POST",
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				data: '=' + encodeURIComponent(name),
-			}).success(function() {
-				window.location.href = "/biodiversity/";
+			}).success(function(biodiversityKey) {
+				window.location.href = "/Biodiversity/Edit/" + biodiversityKey;
 			}).always(function () {
 				wmis.global.hideWaitingScreen(waitingScreenId);
 			}).fail(wmis.global.ajaxErrorHandler);

@@ -44,7 +44,7 @@
 			</div>
 		</div>
 
-		<div class="container" style="padding-bottom:30px;">
+		<div class="container wrap">
 			<div class="row clearfix">
 				@if (!string.IsNullOrEmpty(ViewBag.Title))
 				{
@@ -71,11 +71,14 @@
             @RenderSection("Dialogs", false)
 		</div>
 
-		<div class="container-fluid">
-			<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" style="min-height: 0;">
-				@*<hr style="margin-top: 5px; margin-bottom: 5px;" />*@
+		<div class="container-fluid footer">
+			<hr style="margin-top: 5px; margin-bottom: 5px;" />
+			<img src="~/Content/images/GNWT–ENR2C.jpg" style="height: 100px; padding-left: 10px;" />
+			@*<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" style="min-height: 0;">
+				<img src="~/Content/images/GNWT–ENR2C.jpg" style="height: 100px; padding-top: 10px; border-bottom-width: 0px; padding-bottom: 10px; padding-left: 10px;" />
+				<hr style="margin-top: 5px; margin-bottom: 5px;" />
 				<p style="margin:10px;">&copy; @DateTime.Now.Year - WMIS</p>
-			</nav>
+			</nav>*@
 		</div>
 		
 		<div class="modal" id="waitingModal" tabindex="-1" role="dialog" aria-hidden="true">
