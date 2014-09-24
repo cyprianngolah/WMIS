@@ -98,7 +98,12 @@ wmis.biodiversity.edit = (function ($) {
 				results: function (result, page, query) {
 					for (var i = 0; i < result.data.length; i++) {
 						result.data[i].id = result.data[i].key;
-						result.data[i].text = result.data[i].code + ' - ' + result.data[i].title;
+						var text = result.data[i].code;
+						if (result.data[i].author != null)
+							text += ' - ' + result.data[i].author;
+						if (result.data[i].title != null)
+							text += ' - ' + result.data[i].title;
+						result.data[i].text = text;
 					}
 					return {
 						results: result.data
@@ -129,7 +134,12 @@ wmis.biodiversity.edit = (function ($) {
 			self.selectedReferencesCategoryId(categoryId);
 			for (var i = 0; i < references.length; i++) {
 				references[i].id = references[i].key;
-				references[i].text = references[i].code + ' - ' + references[i].title;
+				var text = references[i].code;
+				if (references[i].author != null)
+					text += ' - ' + references[i].author;
+				if (references[i].title != null)
+					text += ' - ' + references[i].title;		
+				references[i].text = text;
 			}
 
 			$("#selectedReferences").select2("data", references);	
