@@ -51,7 +51,7 @@ wmis.biodiversity.index = (function($) {
 				{ "data": "name" },
 				{ "data": "subSpeciesName" },
 				{ "data": "ecoType" },
-				{ "data": "populationSizeDescription" },
+				{ "data": "population" },
 				{
 				    "data": "lastUpdated",
 				    "render": function (data, type, row) {
