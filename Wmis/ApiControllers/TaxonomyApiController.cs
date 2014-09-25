@@ -225,15 +225,12 @@
         /// <summary>
         /// Saves the TaxonomySynonyms
         /// </summary>
-        /// <param name="synonyms">TaxonomySynonyms to save</param>
+        /// <param name="tsr">Taxonomy Synonym Request to save</param>
         [HttpPost]
         [Route("synonym/savemany")]
-        public void SaveManySynonyms(IEnumerable<TaxonomySynonymRequest> synonyms)
+        public void SaveSynonyms([FromBody]Dto.TaxonomySynonymRequest tsr)
         {
-            foreach (var request in synonyms)
-            {
-                Repository.TaxonomySynonymSaveMany(request.TaxonomyId, request.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
-            }
+            Repository.TaxonomySynonymSaveMany(tsr.TaxonomyId, tsr.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
 		}
 		#endregion
 	}

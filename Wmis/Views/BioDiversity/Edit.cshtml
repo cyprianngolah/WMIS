@@ -203,14 +203,16 @@
 						<label for="kingdom" class="col-md-1 control-label">Kingdom</label>
 						<div class="col-md-5" data-bind="with: kingdom">
 							<select class="form-control" id="kingdom" name="kingdom" data-bind="options: $root.kingdom, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>
-
 					<div class="form-group">
 						<label for="commonName" class="col-md-1 control-label">Phylum</label>
 						<div class="col-md-5" data-bind="with: phylum">
 							<select class="form-control" id="phylum" data-bind="options: $root.phylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
+                            
 
 						<label for="commonName" class="col-md-1 control-label">Sub Phylum</label>
 						<div class="col-md-5" data-bind="with: subPhylum">
@@ -234,6 +236,7 @@
 						<label for="order" class="col-md-1 control-label">Order</label>
 						<div class="col-md-5" data-bind="with: order">
 							<select class="form-control" id="order" data-bind="options: $root.order, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 
 						<label for="subOrder" class="col-md-1 control-label">Sub Order</label>

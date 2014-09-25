@@ -45,6 +45,84 @@
 	});
 });
 
+$(function() {
+    function getSynonyms(taxonomyId) {
+        return $.ajax({
+            url: "/api/taxonomy/synonym",
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            async: true,
+            dataType: 'json',
+            data: JSON.stringify([taxonomyId])
+        }).then(function (response) {
+            return response[0].synonyms;
+        });
+    }
+
+    function saveSynonyms(taxonomyId, synonyms) {
+        var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
+        return $.ajax({
+            url: "/api/taxonomy/synonym/savemany",
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                taxonomyId: taxonomyId,
+                synonyms: synonyms
+            })
+        }).always(function () {
+            wmis.global.hideWaitingScreen(waitingScreenId);
+        }).fail(wmis.global.ajaxErrorHandler);
+    }
+
+    function formatSynonymsText(synonyms) {
+        if (synonyms.length == 0) {
+            return "Synonyms: None";
+        } else if (synonyms.length == 1) {
+            return "Synonym: " + synonyms[0];
+        } else {
+            return "Synonyms: " + synonyms.join(", ");
+        }
+    }
+
+    ko.components.register('taxonomy-synonym-editor', {
+        viewModel: function (params) {
+            var self = this;
+            self.taxonomyId = params.taxonomyId;
+            self.isEditing = ko.observable(false);
+            ko.computed(function () {
+                // If the selected taxonomyId changes, close eidting
+                self.taxonomyId();
+                self.isEditing(false);
+            });
+            self.synonymsArray = ko.computed(function () {
+                var taxonomyId = self.taxonomyId();
+                return (taxonomyId && getSynonyms(taxonomyId)) || [];
+            }).extend({ async: [] });
+            self.synonymsText = ko.computed(function () {
+                return formatSynonymsText(self.synonymsArray());
+            });
+            self.startEditing = function () {
+                self.isEditing(true);
+            }
+            self.stopEditing = function () {
+                saveSynonyms(self.taxonomyId(), self.synonymsArray())
+                    .always(function () {
+                        self.isEditing(false);
+                    });
+            }
+        },
+        template:
+            '<span data-bind="visible: !isEditing() && taxonomyId()">\
+            <span class="glyphicon glyphicon-edit" data-bind="visible: taxonomyId, click: startEditing"></span> <span data-bind="text: synonymsText"></span>\
+            </span>\
+            <span data-bind="visible: isEditing">\
+            <input class="form-control" id="tagger2" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray}" />\
+            <button class="btn btn-primary center-block" data-bind="click: stopEditing">Save</button>\
+            </span>'
+    });
+});
+
 wmis.biodiversity = wmis.biodiversity || {};
 wmis.biodiversity.edit = (function ($) {
 	var options = {
