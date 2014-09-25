@@ -10,6 +10,11 @@
 			<label for="name">Name</label>
 			<input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
 		</div>
+        
+	    <div class="form-group">
+            <label for="synonyms">Synonyms</label>
+	        <input class="form-control" id="synonyms" type="hidden" data-bind="select2Tags: {tags: [], val: synonyms}" />
+	    </div>
 
 		<div class="text-right">
 			<button type="submit" class="btn btn-primary" data-bind="click: saveTaxonomy, enabled: canSave">Save</button>

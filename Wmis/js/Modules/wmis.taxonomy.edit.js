@@ -10,6 +10,7 @@ wmis.taxonomy.edit = (function ($) {
 		this.taxonomyGroupKey = ko.observable(-1);
 		this.taxonomyGroups = ko.observableArray("");
 		this.name = ko.observable("");
+	    this.synonyms = ko.observableArray([]);
 		this.canSave = ko.computed(function() {
 			return ($.trim(self.name()) != "" && self.taxonomyGroupKey() > 0);
 		});
@@ -31,6 +32,19 @@ wmis.taxonomy.edit = (function ($) {
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
+		this.getSynonyms = function() {
+		    return $.ajax({
+		        url: "/api/taxonomy/synonym",
+		        type: 'POST',
+		        contentType: 'application/json; charset=utf-8',
+		        async: true,
+		        dataType: 'json',
+		        data: JSON.stringify([self.taxonomyKey()])
+		    }).then(function (response) {
+		        self.synonyms(response[0].synonyms);
+		    });
+		}
+
 		this.saveTaxonomy = function() {
 			var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
 			$.ajax({
@@ -47,6 +61,7 @@ wmis.taxonomy.edit = (function ($) {
 		};
 	}
 
+
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
 
@@ -55,7 +70,8 @@ wmis.taxonomy.edit = (function ($) {
 
 		viewModel.getTaxonomyGroups();
 		if (viewModel.taxonomyKey() > 0) {
-			viewModel.getTaxonomy();
+		    viewModel.getTaxonomy();
+		    viewModel.getSynonyms();
 		}
 	}
 	

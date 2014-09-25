@@ -40,6 +40,11 @@
 		public void SaveTaxonomy([FromBody]Dto.TaxonomySaveRequest tr)
 		{
 			Repository.TaxonomySave(tr);
+
+            if (tr.TaxonomyKey.HasValue)
+            {
+                Repository.TaxonomySynonymSaveMany(tr.TaxonomyKey.Value, tr.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
+            }
 		}
 		#endregion
 
