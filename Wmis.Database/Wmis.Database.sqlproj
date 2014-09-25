@@ -157,6 +157,11 @@
     <Build Include="dbo\Tables\NwtSarcAssessment.sql" />
     <Build Include="dbo\Stored Procedures\NwtSarcAssessment_Get.sql" />
     <Build Include="dbo\Stored Procedures\NwtSarcAssessment_Save.sql" />
+    <Build Include="dbo\Tables\SpeciesSynonyms.sql" />
+    <Build Include="dbo\Tables\SpeciesSynonymTypes.sql" />
+    <Build Include="dbo\Stored Procedures\SpeciesSynonym_Get.sql" />
+    <Build Include="dbo\Stored Procedures\SpeciesSynonym_SaveMany.sql" />
+    <Build Include="dbo\User Defined Types\SpeciesSynonymType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

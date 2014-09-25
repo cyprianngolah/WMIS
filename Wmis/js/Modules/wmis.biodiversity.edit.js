@@ -59,8 +59,7 @@ $(function() {
         });
     }
 
-    function saveSynonyms(taxonomyId, synonyms) {
-        var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
+    function saveTaxonomySynonyms(taxonomyId, synonyms) {
         return $.ajax({
             url: "/api/taxonomy/synonym/savemany",
             type: "POST",
@@ -68,6 +67,21 @@ $(function() {
             dataType: "json",
             data: JSON.stringify({
                 taxonomyId: taxonomyId,
+                synonyms: synonyms
+            })
+        }).fail(wmis.global.ajaxErrorHandler);
+    }
+
+    function saveSpeciesSynonyms(speciesId, speciesSynonymTypeId, synonyms) {
+        var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
+        return $.ajax({
+            url: "/api/biodiversity/synonym/save",
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                speciesId: speciesId,
+                speciesSynonymTypeId: speciesSynonymTypeId,
                 synonyms: synonyms
             })
         }).always(function () {
@@ -90,6 +104,7 @@ $(function() {
             var self = this;
             self.taxonomyId = params.taxonomyId;
             self.isEditing = ko.observable(false);
+            self.isSubmitting = ko.observable(false);
             ko.computed(function () {
                 // If the selected taxonomyId changes, close eidting
                 self.taxonomyId();
@@ -106,10 +121,12 @@ $(function() {
                 self.isEditing(true);
             }
             self.stopEditing = function () {
-                saveSynonyms(self.taxonomyId(), self.synonymsArray())
-                    .always(function () {
-                        self.isEditing(false);
-                    });
+                self.isSubmitting(true);
+                saveTaxonomySynonyms(self.taxonomyId(), self.synonymsArray())
+                .always(function () {
+                    self.isEditing(false);
+                    self.isSubmitting(false);
+                });
             }
         },
         template:
@@ -117,7 +134,38 @@ $(function() {
             <span class="glyphicon glyphicon-edit" data-bind="visible: taxonomyId, click: startEditing"></span> <span data-bind="text: synonymsText"></span>\
             </span>\
             <span data-bind="visible: isEditing">\
-            <input class="form-control" id="tagger2" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray}" />\
+            <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray}" />\
+            <button class="btn btn-primary center-block" data-bind="click: stopEditing, enabled: !isSubmitting()">Save</button>\
+            </span>'
+    });
+
+    ko.components.register('species-synonym-editor', {
+        viewModel: function (params) {
+            var self = this;
+            self.speciesId = params.speciesId();
+            self.speciesSynonymTypeId = params.speciesSynonymTypeId;
+            self.synonymsArray = params.synonymsArray;
+            self.isEditing = ko.observable(false);
+            
+            self.synonymsText = ko.computed(function () {
+                return formatSynonymsText(self.synonymsArray());
+            });
+            self.startEditing = function () {
+                self.isEditing(true);
+            }
+            self.stopEditing = function () {
+                saveSpeciesSynonyms(self.speciesId, self.speciesSynonymTypeId, self.synonymsArray())
+                    .always(function () {
+                        self.isEditing(false);
+                    });
+            }
+        },
+        template:
+            '<span data-bind="visible: !isEditing()">\
+            <span class="glyphicon glyphicon-edit" data-bind="click: startEditing"></span> <span data-bind="text: synonymsText"></span>\
+            </span>\
+            <span data-bind="visible: isEditing">\
+            <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray}" />\
             <button class="btn btn-primary center-block" data-bind="click: stopEditing">Save</button>\
             </span>'
     });
@@ -128,6 +176,14 @@ wmis.biodiversity.edit = (function ($) {
 	var options = {
 		bioDiversityKey: null
 	};
+
+    var speciesSynonymsMapping = {
+        1: 'speciesSynonyms',
+        2: 'subSpeciesSynonyms',
+        3: 'commonNameSynonyms',
+        4: 'ecoTypeSynonyms',
+        5: 'populationSynonyms'
+    };
 
 	function editBioDiversityViewModel() {
 		var self = this;
@@ -158,6 +214,10 @@ wmis.biodiversity.edit = (function ($) {
 		this.selectedReferenceCategoryName = ko.observable();
 		this.selectedReferencesCategoryId = ko.observable();
 		this.selectedReferences = ko.observableArray();
+
+	    _.each(speciesSynonymsMapping, function(synonymType) {
+	        self[synonymType] = ko.observableArray();
+	    });
 
 		this.referenceOptions = {			
 			minimumInputLength: 1,
@@ -204,6 +264,17 @@ wmis.biodiversity.edit = (function ($) {
 				self.dataLoaded(true);
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
+			}).fail(wmis.global.ajaxErrorHandler);
+		};
+
+		this.getSpeciesSynonyms = function (key) {
+			wmis.global.showWaitingScreen("Loading...");
+			var url = "/api/biodiversity/synonym/" + key;
+
+		    $.getJSON(url, {}, function (json) {
+		        _.each(speciesSynonymsMapping, function(synonymType, id) {
+		            self[synonymType](json.synonymsDictionary[id] || []);
+		        });
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 		
@@ -321,7 +392,8 @@ wmis.biodiversity.edit = (function ($) {
 		var viewModel = new editBioDiversityViewModel();
 		viewModel.getDropDowns();
 		viewModel.getBioDiversity(initOptions.bioDiversityKey);
-		
+		viewModel.getSpeciesSynonyms(initOptions.bioDiversityKey);
+
 		ko.applyBindings(viewModel);
 	}
 	

@@ -60,7 +60,17 @@
 		/// The Taxonomy Groups Get stored procedure
 		/// </summary>
 		private const string TAXONOMYGROUP_GET = "dbo.TaxonomyGroups_Get";
-        
+
+        /// <summary>
+        /// The Species Synonym Get stored procedure
+        /// </summary>
+        private const string SPECIESSYNONYM_GET = "dbo.SpeciesSynonym_Get";
+
+        /// <summary>
+        /// The Species Synonym Get stored procedure
+        /// </summary>
+        private const string SPECIESSYNONYM_SAVEMANY = "dbo.SpeciesSynonym_SaveMany";
+
         /// <summary>
 		/// The Ecoregion Get stored procedure
 		/// </summary>
@@ -360,6 +370,47 @@
 				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);
 			}
 		}
+
+
+        /// <summary>
+        /// Gets a list of Species Synonyms
+        /// </summary>
+        /// <param name="speciesId">The id of the Species to retrieve synonyms for</param>
+        /// <param name="speciesSynonymTypeId">The id of the Species Synonym Type to retrieve synonyms for, optional</param>
+        /// <returns>A list of matching Species Synonyms</returns>
+        public IEnumerable<SpeciesSynonym> SpeciesSynonymGet(int speciesId, int? speciesSynonymTypeId = null)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_speciesId = speciesId,
+                    p_speciesSynonymTypeId = speciesSynonymTypeId
+                };
+                return c.Query<SpeciesSynonym>(SPECIESSYNONYM_GET, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        /// <summary>
+        /// Gets save a list of Species Synonyms
+        /// </summary>
+        /// <param name="speciesId">The id of the Species to save synonyms for</param>
+        /// <param name="speciesSynonymTypeId">The id of the Species Synonym Type to save synonyms for</param>
+        /// <param name="synonyms">The complete list of synonyms for the specified Sepcies/Species Synonym Type</param>
+        public void SpeciesSynonymSaveMany(int speciesId, int speciesSynonymTypeId, IEnumerable<string> synonyms)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_speciesId = speciesId,
+                    p_speciesSynonymTypeId = speciesSynonymTypeId,
+                    p_speciesSynonyms = synonyms.Select(i => new { Name = i }).AsTableValuedParameter("dbo.SpeciesSynonymType")
+                };
+                c.Execute(SPECIESSYNONYM_SAVEMANY, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
 		#endregion
 
 		#region Taxonomy

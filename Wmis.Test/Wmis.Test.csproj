@@ -62,6 +62,7 @@
     <Content Include="Data\StatusRanks.sql" />
     <Content Include="Data\ReferenceCategories.sql" />
     <Content Include="Data\COSEWICStatus.sql" />
+    <Content Include="Data\SpeciesSynonymTypes.sql" />
     <Content Include="Data\Taxonomy.sql" />
     <Content Include="Data\TaxonomyGroup.sql" />
     <Content Include="Data\ProtectedAreas.sql" />

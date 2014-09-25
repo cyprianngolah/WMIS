@@ -1,6 +1,7 @@
 ﻿namespace Wmis.ApiControllers
 {
-	using System.Web.Http;
+    using System.Linq;
+    using System.Web.Http;
 	using Configuration;
 	using Dto;
 	using Models;
@@ -129,5 +130,34 @@
 			bioDiversity.GRank = request.GRank;
 			Repository.BioDiversityUpdate(bioDiversity);
 		}
+
+        #region Synonym Various
+
+	    /// <summary>
+	    /// Gets the SpeciesSynonyms for the given Species
+	    /// </summary>
+	    /// <param name="speciesKey">Species to retreive</param>
+	    /// <returns>The list of matching TaxonomySynonyms</returns>
+	    [HttpGet]
+	    [Route("synonym/{speciesKey:int}")]
+	    public SpeciesSynonymRequest GetSynonyms(int speciesKey)
+	    {
+	        var speciesSynonyms = Repository.SpeciesSynonymGet(speciesKey);
+	        var synonymsDictionary = speciesSynonyms.GroupBy(s => s.SpeciesSynonymTypeId)
+	            .ToDictionary(g => g.Key, g => g.ToList().Select(s => s.Name));
+	        return new SpeciesSynonymRequest { SpeciesId = speciesKey, SynonymsDictionary = synonymsDictionary };
+	    }
+
+        /// <summary>
+        /// Save synonyms for a Species / Species Synonym Type
+        /// </summary>
+        /// <param name="sssr">Synonyms to save</param>
+        [HttpPost]
+        [Route("synonym/save")]
+        public void SaveSynonyms([FromBody]Dto.SpeciesSynonymSaveRequest sssr)
+        {
+            Repository.SpeciesSynonymSaveMany(sssr.SpeciesId, sssr.SpeciesSynonymTypeId, sssr.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
+        }
+        #endregion
     }
 }

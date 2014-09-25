@@ -194,6 +194,8 @@
     <Compile Include="Dto\ReferenceRequest.cs" />
     <Compile Include="Dto\TaxonomyRequest.cs" />
     <Compile Include="Dto\TaxonomySaveRequest.cs" />
+    <Compile Include="Dto\SpeciesSynonymRequest.cs" />
+    <Compile Include="Dto\SpeciesSynonymSaveRequest.cs" />
     <Compile Include="Dto\TaxonomySynonymRequest.cs" />
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Models\SurveyTemplate.cs" />
     <Compile Include="Models\Taxonomy.cs" />
     <Compile Include="Models\TaxonomyGroup.cs" />
+    <Compile Include="Models\SpeciesSynonym.cs" />
     <Compile Include="Models\TaxonomySynonym.cs" />
     <Compile Include="Models\WmisRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
