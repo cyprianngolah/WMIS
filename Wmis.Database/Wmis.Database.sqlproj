@@ -179,6 +179,7 @@
     <Build Include="dbo\Stored Procedures\Project_Update.sql" />
     <Build Include="dbo\Stored Procedures\Project_Get.sql" />
     <Build Include="dbo\Stored Procedures\Project_Search.sql" />
+    <None Include="dbo\Fill\SpeciesSynonymTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

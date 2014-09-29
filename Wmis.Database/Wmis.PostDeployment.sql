@@ -15,3 +15,4 @@ Post-Deployment Script Template
 :r .\dbo\Fill\Person.sql
 :r .\dbo\Fill\Role.sql
 :r .\dbo\Fill\PersonRole.sql
+:r .\dbo\Fill\SpeciesSynonymTypes.sql
