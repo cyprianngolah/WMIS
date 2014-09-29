@@ -65,8 +65,9 @@ $(function () {
 
 			// Handle Change events
     		$(element).on("changeDate", function (ev) {
-    			valueAccessor(ev.date);
-    		});
+    			var date = moment(ev.date);
+			    valueAccessor()(date.toDate());
+		    });
 
     		//handle removing an element from the dom
     		ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
@@ -75,7 +76,7 @@ $(function () {
     	},
     	update: function (element, valueAccessor) {
     		var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
-    		var date = moment.utc(valueUnwrapped, moment.ISO_8601).local().format('L');
+    		var date = moment.utc(valueUnwrapped).local().format('L');
     		$(element).datepicker('update', date);
     	}
 	};
