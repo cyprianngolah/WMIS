@@ -65,29 +65,28 @@
 						</div>
 
 						<label for="leadRegion" class="col-md-1 control-label">Lead Region</label>
-						<div class="col-md-3" data-bind="with: 'leadRegion'">
-							<select class="form-control" id="leadRegion" data-bind="options: $root.regions, value: 'key', optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
+						<div class="col-md-3" data-bind="with: leadRegion">
+							<select class="form-control" id="leadRegion" data-bind="options: $root.regions, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="name" class="col-md-1 control-label">Status</label>
-						<div class="col-md-3" data-bind="with: 'status'">
-							<select class="form-control" id="status" data-bind="options: $root.statuses, value: 'key', optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
+						<div class="col-md-3" data-bind="with: status">
+							<select class="form-control" id="status" data-bind="options: $root.statuses, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
 						</div>
 
 						<label for="name" class="col-md-1 control-label">Status Date</label>
 						<div class="col-md-3">
-							@*<input type="text" class="form-control" id="statusDate" >*@
 							<div class="input-group date" data-bind="datePicker: statusDate">
-								<input type="text" id="statusDate" class="form-control" readonly="readonly">
+								<input type="text" class="form-control" readonly="readonly">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 							</div>
 						</div>
 
 						<label for="projectLead" class="col-md-1 control-label">Project Lead</label>
-						<div class="col-md-3" data-bind="with: 'projectLead'">
-							<select class="form-control" id="status" data-bind="options: $root.projectLeads, value: 'key', optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
+						<div class="col-md-3" data-bind="with: projectLead">
+							<select class="form-control" id="status" data-bind="options: $root.projectLeads, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
 						</div>
 					</div>
 
@@ -95,7 +94,7 @@
 						<label for="name" class="col-md-1 control-label">Start Date</label>
 						<div class="col-md-3">
 							<div class="input-group date" data-bind="datePicker: startDate">
-								<input type="text" id="startDate" class="form-control" readonly="readonly">
+								<input type="text" class="form-control" readonly="readonly">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 							</div>
 						</div>
@@ -103,7 +102,7 @@
 						<label for="name" class="col-md-1 control-label">End Date</label>
 						<div class="col-md-3">
 							<div class="input-group date" data-bind="datePicker: endDate">
-								<input type="text" id="endDate" class="form-control" readonly="readonly">
+								<input type="text" class="form-control" readonly="readonly">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 							</div>
 						</div>
