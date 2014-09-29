@@ -17,7 +17,6 @@
 @section Scripts{
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
-    @Html.Raw(Scripts.Render("~/bundles/dialog/synonym"))
 	@Html.Raw(Scripts.Render("~/bundles/biodiversity/edit"))
 
     <script>
@@ -201,7 +200,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="infraOrder" class="col-md-1 control-label">Infa Order</label>
+						<label for="infraOrder" class="col-md-1 control-label">Infra Order</label>
 						<div class="col-md-5" data-bind="with: infraOrder">
 							<select class="form-control" id="infraOrder" data-bind="options: $root.infraOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
