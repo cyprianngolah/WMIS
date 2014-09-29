@@ -114,10 +114,12 @@ $(function() {
                 var taxonomyId = self.taxonomyId();
                 return (taxonomyId && getSynonyms(taxonomyId)) || [];
             }).extend({ async: [] });
+            self.oldSynonymsArray = null;
             self.synonymsText = ko.computed(function () {
                 return formatSynonymsText(self.synonymsArray());
             });
             self.startEditing = function () {
+                self.oldSynonymsArray = self.synonymsArray();
                 self.isEditing(true);
             }
             self.stopEditing = function () {
@@ -128,14 +130,21 @@ $(function() {
                     self.isSubmitting(false);
                 });
             }
+            self.cancelEditing = function () {
+                self.isEditing(false);
+                self.synonymsArray(self.oldSynonymsArray);
+            }
         },
         template:
             '<span data-bind="visible: !isEditing() && taxonomyId()">\
             <span class="glyphicon glyphicon-edit" data-bind="visible: taxonomyId, click: startEditing"></span> <span data-bind="text: synonymsText"></span>\
             </span>\
             <span data-bind="visible: isEditing">\
-            <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray}" />\
-            <button class="btn btn-primary center-block" data-bind="click: stopEditing, enabled: !isSubmitting()">Save</button>\
+            <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray, placeholder: \'Enter Synonyms\'}" />\
+             <div class="text-center">\
+                <a class="btn btn-default" data-bind="click: cancelEditing, enabled: !isSubmitting()">Cancel</a>\
+                <a class="btn btn-primary" data-bind="click: stopEditing">Save</a>\
+            </div>\
             </span>'
     });
 
@@ -146,12 +155,14 @@ $(function() {
             self.speciesSynonymTypeId = params.speciesSynonymTypeId;
             self.synonymsArray = params.synonymsArray;
             self.isEditing = ko.observable(false);
+            self.oldSynonymsArray = null;
             
             self.synonymsText = ko.computed(function () {
                 return formatSynonymsText(self.synonymsArray());
             });
             self.startEditing = function () {
                 self.isEditing(true);
+                self.oldSynonymsArray = self.synonymsArray();
             }
             self.stopEditing = function () {
                 saveSpeciesSynonyms(self.speciesId, self.speciesSynonymTypeId, self.synonymsArray())
@@ -159,14 +170,21 @@ $(function() {
                         self.isEditing(false);
                     });
             }
+            self.cancelEditing = function() {
+                self.isEditing(false);
+                self.synonymsArray(self.oldSynonymsArray);
+            }
         },
         template:
             '<span data-bind="visible: !isEditing()">\
             <span class="glyphicon glyphicon-edit" data-bind="click: startEditing"></span> <span data-bind="text: synonymsText"></span>\
             </span>\
             <span data-bind="visible: isEditing">\
-            <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray}" />\
-            <button class="btn btn-primary center-block" data-bind="click: stopEditing">Save</button>\
+            <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray, placeholder: \'Enter Synonyms\'}" />\
+            <div class="text-center">\
+                <a class="btn btn-default" data-bind="click: cancelEditing, enabled: !isSubmitting()">Cancel</a>\
+                <a class="btn btn-primary" data-bind="click: stopEditing">Save</a>\
+            </div>\
             </span>'
     });
 });

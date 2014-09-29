@@ -30,6 +30,7 @@ $(function () {
             });
 
             var options = ko.toJS(value) || {};
+            options.dropdownCssClass = 'hideSearch';
             elementDom.select2(options);
 
             elementDom.on("change", function () {

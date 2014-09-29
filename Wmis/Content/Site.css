@@ -145,3 +145,7 @@ div.statusGroup input {
 hr {
 	margin-top: 10px;
 }
+
+.hideSearch.select2-drop {
+    display: none !important;
+}
