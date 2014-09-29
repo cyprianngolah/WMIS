@@ -35,10 +35,10 @@
 						"~/js/wmis.knockout.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/datePicker").Include(
-						"~/Scripts/select2.js"));
+						"~/Scripts/datepicker/bootstrap-datepicker.js"));		
 
 			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
-						"~/Scripts/datepicker/bootstrap-datepicker.js"));
+						"~/Scripts/select2.js"));		
 
 			bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
 						"~/Scripts/DataTables-1.10.0/jquery.dataTables.js",
