@@ -170,7 +170,8 @@
 
 						<label for="commonName" class="col-md-1 control-label">Sub Phylum</label>
 						<div class="col-md-5" data-bind="with: subPhylum">
-							<select class="form-control" id="subPhylum" data-bind="options: $root.subPhylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+						    <select class="form-control" id="subPhylum" data-bind="options: $root.subPhylum, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>
 
@@ -182,7 +183,8 @@
 
 						<label for="subClass" class="col-md-1 control-label">Sub Class</label>
 						<div class="col-md-5" data-bind="with: subClass">
-							<select class="form-control" id="subClass" data-bind="options: $root.subClass, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+						    <select class="form-control" id="subClass" data-bind="options: $root.subClass, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>
 
@@ -195,40 +197,46 @@
 
 						<label for="subOrder" class="col-md-1 control-label">Sub Order</label>
 						<div class="col-md-5" data-bind="with: subOrder">
-							<select class="form-control" id="subOrder" data-bind="options: $root.subOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+						    <select class="form-control" id="subOrder" data-bind="options: $root.subOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="infraOrder" class="col-md-1 control-label">Infra Order</label>
 						<div class="col-md-5" data-bind="with: infraOrder">
-							<select class="form-control" id="infraOrder" data-bind="options: $root.infraOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+						    <select class="form-control" id="infraOrder" data-bind="options: $root.infraOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="superFamily" class="col-md-1 control-label">Super Family</label>
 						<div class="col-md-5" data-bind="with: superFamily">
-							<select class="form-control" id="superFamily" data-bind="options: $root.superFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+						    <select class="form-control" id="superFamily" data-bind="options: $root.superFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="family" class="col-md-1 control-label">Family</label>
 						<div class="col-md-5" data-bind="with: family">
-							<select class="form-control" id="family" data-bind="options: $root.family, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+						    <select class="form-control" id="family" data-bind="options: $root.family, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 
 						<label for="subFamily" class="col-md-1 control-label">Sub Family</label>
 						<div class="col-md-5" data-bind="with: subFamily">
-							<select class="form-control" id="subFamily" data-bind="options: $root.subFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+						    <select class="form-control" id="subFamily" data-bind="options: $root.subFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="group" class="col-md-1 control-label">Group</label>
 						<div class="col-md-5" data-bind="with: group">
-							<select class="form-control" id="group" data-bind="options: $root.group, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+						    <select class="form-control" id="group" data-bind="options: $root.group, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>
 
