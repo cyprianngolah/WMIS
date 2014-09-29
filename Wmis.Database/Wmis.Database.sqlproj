@@ -184,9 +184,6 @@
     <PostDeploy Include="Wmis.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <RefactorLog Include="Wmis.Database.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="dbo\Fill\ProjectStatus.sql" />
   </ItemGroup>
   <ItemGroup>
