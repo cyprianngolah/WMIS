@@ -1053,8 +1053,8 @@
 			{
 				var param = new
 				{
-					p_from = sr.StartRow,
-					p_to = sr.RowCount,
+					p_startRow = sr.StartRow,
+					p_rowCount = sr.RowCount,
 					p_sortBy = sr.SortBy,
 					p_sortDirection = sr.SortDirection,
 					p_projectLeadId = sr.ProjectLead,
