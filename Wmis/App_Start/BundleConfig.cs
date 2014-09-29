@@ -34,8 +34,11 @@
 						"~/Scripts/knockout.mapper.js",
 						"~/js/wmis.knockout.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
+			bundles.Add(new ScriptBundle("~/bundles/datePicker").Include(
 						"~/Scripts/select2.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
+						"~/Scripts/datepicker/bootstrap-datepicker.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
 						"~/Scripts/DataTables-1.10.0/jquery.dataTables.js",
@@ -49,13 +52,16 @@
 						"~/Content/bootstrap-theme.css",
 						"~/Content/site.css"));
 
-			bundles.Add(new StyleBundle("~/bundles/content/datatables").Include(
-						"~/content/datatables-1.10.0/css/jquery.dataTables.css",
-						"~/content/datatables-1.10.0/css/dataTables.bootstrap.css"));
+			bundles.Add(new StyleBundle("~/bundles/datePickerCss").Include(
+						"~/content/datepicker3.css"));
 
 			bundles.Add(new StyleBundle("~/bundles/select2css").Include(
 						"~/content/css/select2.css",
 						"~/content/select2-bootstrap.css"));
+
+			bundles.Add(new StyleBundle("~/bundles/content/datatables").Include(
+						"~/content/datatables-1.10.0/css/jquery.dataTables.css",
+						"~/content/datatables-1.10.0/css/dataTables.bootstrap.css"));
 
 			//////////////////////////////////////////////////////////////////////
 			// Module Script Bundles

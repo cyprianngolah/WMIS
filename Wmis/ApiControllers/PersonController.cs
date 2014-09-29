@@ -3,14 +3,22 @@
 	using System.Collections.Generic;
 	using System.Web.Http;
 
+	using Wmis.Configuration;
+	using Wmis.Dto;
+
 	[RoutePrefix("api/person")]
-	public class PersonController : ApiController
+	public class PersonController : BaseApiController
     {
+		public PersonController(WebConfiguration config) 
+			: base(config)
+		{
+		}
+
 		[HttpGet]
 		[Route("projectLeads")]
-		public IEnumerable<Models.Person> Get()
+		public PagedResultset<Models.Person> GetProjectLeads()
 		{
-			return new List<Models.Person>();
+			return Repository.PersonSearch(new PersonRequest { Role = "Project Lead" });
 		}
     }
 }

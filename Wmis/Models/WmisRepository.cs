@@ -10,6 +10,8 @@
 	using Dto;
     using Extensions;
 
+	using StructureMap.Query;
+
 	/// <summary>
 	/// WMIS Repository for SQL
 	/// </summary>
@@ -140,6 +142,20 @@
         /// The Status Rank Save stored procedure
         /// </summary>
         private const string STATUSRANK_SAVE = "dbo.StatusRank_Save";
+
+		private const string PROJECTSTATUS_SEARCH = "dbo.ProjectStatus_Search";
+
+		private const string LEADREGION_SEARCH = "dbo.LeadRegion_Search";
+
+		private const string PERSON_SEARCH = "dbo.Person_Search";
+
+		private const string PROJECT_CREATE = "dbo.Project_Create";
+
+		private const string PROJECT_UPDATE = "dbo.Project_Update";
+
+		private const string PROJECT_GET = "dbo.Project_Get";
+
+		private const string PROJECT_SEARCH = "dbo.Project_Search";
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -371,7 +387,6 @@
 			}
 		}
 
-
         /// <summary>
         /// Gets a list of Species Synonyms
         /// </summary>
@@ -396,7 +411,7 @@
         /// </summary>
         /// <param name="speciesId">The id of the Species to save synonyms for</param>
         /// <param name="speciesSynonymTypeId">The id of the Species Synonym Type to save synonyms for</param>
-        /// <param name="synonyms">The complete list of synonyms for the specified Sepcies/Species Synonym Type</param>
+        /// <param name="synonyms">The complete list of synonyms for the specified Species/Species Synonym Type</param>
         public void SpeciesSynonymSaveMany(int speciesId, int speciesSynonymTypeId, IEnumerable<string> synonyms)
         {
             using (var c = NewWmisConnection)
@@ -974,20 +989,199 @@
 		#region Project
 		public int ProjectCreate(string name)
 		{
-			return 1;
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_name = name
+				};
+				return c.Query<int>(PROJECT_CREATE, param, commandType: CommandType.StoredProcedure).Single();
+			}
+		}
+
+		public void ProjectUpdate(Models.Project project)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_projectId = project.Key,
+					p_name = project.Name,
+					p_leadRegionId = project.LeadRegion.Key == 0 ? null : (int?)project.LeadRegion.Key,
+					p_projectStatusId = project.Status.Key == 0 ? null : (int?)project.Status.Key,
+					p_statusDate = project.StatusDate,
+					p_projectLeadId = project.ProjectLead.Key == 0 ? null : (int?)project.ProjectLead.Key,
+					p_startDate = project.StartDate,
+					p_endDate = project.EndDate,
+					p_isSensitiveData = project.IsSensitiveData,
+					p_description = project.Description,
+					p_objectives = project.Objectives,
+					p_studyArea = project.StudyArea,
+					p_methods = project.Methods,
+					p_comments = project.Comments,
+					p_results = project.Results
+				};
+				c.Execute(PROJECT_UPDATE, param, commandType: CommandType.StoredProcedure);
+			}
 		}
 
 		public Project ProjectGet(int projectKey)
 		{
-			return new Project
+			using (var c = NewWmisConnection)
 			{
-				Name = "Unuvik - Pearky Caribou and Musko Survey, Bonka Island 2005",
-				Status = new ProjectStatus
-					         {
-						         Key = 1, Name = "Gathering Data"
-					         },
-				LastUpdated = DateTime.UtcNow.AddMinutes(-500)
-			};
+				var param = new
+				{
+					p_projectId = projectKey
+				};
+				return c.Query<Project, LeadRegion, Person, ProjectStatus, Project>(PROJECT_GET,
+					(p, lr, lead, status) =>
+						{
+							p.LeadRegion = lr ?? new LeadRegion();
+							p.ProjectLead = lead ?? new Person();
+							p.Status = status ?? new ProjectStatus();
+							return p;
+						}, 
+						param, 
+						commandType: CommandType.StoredProcedure, 
+						splitOn: "Key").Single();
+			}
+		}
+
+		public Dto.PagedResultset<Project> ProjectSearch(Dto.ProjectRequest sr)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = sr.StartRow,
+					p_to = sr.RowCount,
+					p_sortBy = sr.SortBy,
+					p_sortDirection = sr.SortDirection,
+					p_projectLeadId = sr.ProjectLead,
+					p_projectStatusId = sr.ProjectStatus,
+					p_leadRegionId = sr.Region,
+					p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
+				};
+
+				var pr = new Dto.PagedResultset<Project> { DataRequest = sr };
+
+				var results = c.Query<int, Project, LeadRegion, Person, ProjectStatus, Project>(
+					PROJECT_SEARCH,
+					(count, p, lr, lead, status) =>
+						{
+							pr.ResultCount = count;
+							p.LeadRegion = lr;
+							p.ProjectLead = lead;
+							p.Status = status;
+							return p;
+						},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key");
+
+				pr.Data = new List<Project>(results);
+
+				return pr;
+			}
+		}
+		#endregion
+
+		#region Project Status
+		public Dto.PagedResultset<ProjectStatus> ProjectStatusSearch(Dto.ProjectStatusRequest sr)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = sr.StartRow,
+					p_to = sr.RowCount,
+					p_sortBy = sr.SortBy,
+					p_sortDirection = sr.SortDirection,
+				};
+
+				var pr = new Dto.PagedResultset<ProjectStatus> { DataRequest = sr };
+
+				var results = c.Query<int, ProjectStatus, ProjectStatus>(
+					PROJECTSTATUS_SEARCH,
+					(count, ps) =>
+					{
+						pr.ResultCount = count;
+						return ps;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key");
+
+				pr.Data = new List<ProjectStatus>(results);
+
+				return pr;
+			}
+		}
+		#endregion
+
+		#region Person
+		public Dto.PagedResultset<Person> PersonSearch(Dto.PersonRequest sr)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = sr.StartRow,
+					p_to = sr.RowCount,
+					p_sortBy = sr.SortBy,
+					p_sortDirection = sr.SortDirection,
+				};
+
+				var pr = new Dto.PagedResultset<Person> { DataRequest = sr };
+
+				var results = c.Query<int, Person, Person>(
+					PERSON_SEARCH,
+					(count, p) =>
+					{
+						pr.ResultCount = count;
+						return p;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key");
+
+				pr.Data = new List<Person>(results);
+
+				return pr;
+			}
+		}
+		#endregion
+
+		#region Lead Region 
+		public Dto.PagedResultset<LeadRegion> LeadRegionSearch(Dto.LeadRegionRequest sr)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = sr.StartRow,
+					p_to = sr.RowCount,
+					p_sortBy = sr.SortBy,
+					p_sortDirection = sr.SortDirection,
+				};
+
+				var pr = new Dto.PagedResultset<LeadRegion> { DataRequest = sr };
+
+				var results = c.Query<int, LeadRegion, LeadRegion>(
+					LEADREGION_SEARCH,
+					(count, lr) =>
+					{
+						pr.ResultCount = count;
+						return lr;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key");
+
+				pr.Data = new List<LeadRegion>(results);
+
+				return pr;
+			}
 		}
 		#endregion
 

@@ -52,13 +52,16 @@ wmis.global = (function ($) {
 	};
 
 	function getDropDownData(observableArray, url, parsingFunction) {
-		$.getJSON(url, {}, function (json) {
+		var promise = $.getJSON(url, {}, function (json) {
 			if (parsingFunction) {
 				observableArray(parsingFunction(json));
+				console.log("Finished binding to: " + url);
 			} else {
 				observableArray(json);
 			}
 		}).fail(wmis.global.ajaxErrorHandler);
+
+		return promise;
 	};
 
 	return {

@@ -24,19 +24,13 @@ wmis.project.edit = (function ($) {
 			wmis.global.showWaitingScreen("Loading...");
 			var url = "/api/Project/" + key;
 
-			$.getJSON(url, {}, function(json) {
+			return $.getJSON(url, {}, function(json) {
 				ko.mapper.fromJS(json, "auto", self.project);
 
 				self.dataLoaded(true);
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
-		};
-
-		this.getDropDowns = function() {
-			wmis.global.getDropDownData(self.statuses, "/api/project/statuses/");
-			wmis.global.getDropDownData(self.projectLeads, "/api/person/projectLeads/");
-			wmis.global.getDropDownData(self.regions, "/api/ecoregion?startRow=0&rowCount=500");
 		};
 
 		this.canSave = ko.computed(function() {
@@ -202,14 +196,22 @@ wmis.project.edit = (function ($) {
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
 
-		var viewModel = new editProjectViewModel();
-		viewModel.getDropDowns();
-		viewModel.getProject(initOptions.projectKey);
-
-		ko.applyBindings(viewModel);
+		var vm = new editProjectViewModel();
+		var ddp1 = wmis.global.getDropDownData(vm.statuses, "/api/project/statuses/?startRow=0&rowCount=500", function (json) {
+			return json.data;
+		});
+		var ddp2 = wmis.global.getDropDownData(vm.projectLeads, "/api/person/projectLeads?startRow=0&rowCount=500", function (json) {
+			return json.data;
+		});
+		var ddp3 = wmis.global.getDropDownData(vm.regions, "/api/leadregion?startRow=0&rowCount=500", function (json) {
+			return json.data;
+		});
+		vm.getProject(initOptions.projectKey);
 		
-		initSurveyDataTable(initOptions.projectKey);
-		initCollarDataTable(initOptions.projectKey);
+		//initSurveyDataTable(initOptions.projectKey);
+		//initCollarDataTable(initOptions.projectKey);
+
+		ko.applyBindings(vm);
 	}
 
 	return {

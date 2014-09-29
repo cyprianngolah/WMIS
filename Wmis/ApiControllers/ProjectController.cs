@@ -4,6 +4,8 @@
 	using System.Web.Http;
 	using Configuration;
 
+	using Wmis.Dto;
+
 	[RoutePrefix("api/project")]
 	public class ProjectController : BaseApiController
     {
@@ -15,16 +17,9 @@
 		#region Projects
 		[HttpGet]
 		[Route]
-		public Dto.PagedResultset<Models.Project> GetProjects([FromUri]Dto.ProjectRequest pr)
+		public Dto.PagedResultset<Models.Project> SearchProjects([FromUri]Dto.ProjectRequest pr)
 		{
-			var r = new Dto.PagedResultset<Models.Project>
-			{
-				DataRequest = pr, 
-				ResultCount = 0, 
-				Data = new List<Models.Project>()
-			};
-
-			return r;
+			return Repository.ProjectSearch(pr);
 		}
 
 		[HttpGet]
@@ -39,6 +34,13 @@
 		public int Create([FromBody]string name)
 		{
 			return Repository.ProjectCreate(name);
+		}
+
+		[HttpPut]
+		[Route]
+		public void Update(Models.Project p)
+		{
+			Repository.ProjectUpdate(p);
 		}
 		#endregion
 
@@ -84,9 +86,9 @@
 		#region Project Statuses
 		[HttpGet]
 		[Route("statuses")]
-		public IEnumerable<Models.ProjectStatus> GetProjectStatuses()
+		public Dto.PagedResultset<Models.ProjectStatus> GetProjectStatuses(Dto.ProjectStatusRequest psr)
 		{
-			return new List<Models.ProjectStatus>();
+			return Repository.ProjectStatusSearch(psr ?? new ProjectStatusRequest());
 		}
 		#endregion
 	}

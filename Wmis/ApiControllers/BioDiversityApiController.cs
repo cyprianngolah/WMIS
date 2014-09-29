@@ -136,7 +136,7 @@
 	    /// <summary>
 	    /// Gets the SpeciesSynonyms for the given Species
 	    /// </summary>
-	    /// <param name="speciesKey">Species to retreive</param>
+	    /// <param name="speciesKey">Species to retrieve</param>
 	    /// <returns>The list of matching TaxonomySynonyms</returns>
 	    [HttpGet]
 	    [Route("synonym/{speciesKey:int}")]

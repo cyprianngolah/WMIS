@@ -10,3 +10,8 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+:r .\dbo\Fill\LeadRegion.sql
+:r .\dbo\Fill\ProjectStatus.sql
+:r .\dbo\Fill\Person.sql
+:r .\dbo\Fill\Role.sql
+:r .\dbo\Fill\PersonRole.sql

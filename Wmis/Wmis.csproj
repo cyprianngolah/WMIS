@@ -144,6 +144,7 @@
   <ItemGroup>
     <Compile Include="ApiControllers\BaseApiController.cs" />
     <Compile Include="ApiControllers\CosewicStatusApiController.cs" />
+    <Compile Include="ApiControllers\LeadRegionController.cs" />
     <Compile Include="ApiControllers\NwtSarcAssessmentApiController.cs" />
     <Compile Include="ApiControllers\EcozoneApiController.cs" />
     <Compile Include="ApiControllers\PersonController.cs" />
@@ -177,11 +178,14 @@
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
     <Compile Include="Dto\EcoregionRequest.cs" />
     <Compile Include="Dto\EcoregionSaveRequest.cs" />
+    <Compile Include="Dto\LeadRegionRequest.cs" />
     <Compile Include="Dto\NwtSarcAssessmentRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
     <Compile Include="Dto\NwtSarcAssessmentSaveRequest.cs" />
+    <Compile Include="Dto\PersonRequest.cs" />
     <Compile Include="Dto\ProjectCollarRequest.cs" />
     <Compile Include="Dto\ProjectRequest.cs" />
+    <Compile Include="Dto\ProjectStatusRequest.cs" />
     <Compile Include="Dto\ProjectSurveyRequest.cs" />
     <Compile Include="Dto\ProjectSurveySaveRequest.cs" />
     <Compile Include="Dto\ProtectedAreaRequest.cs" />
@@ -208,6 +212,7 @@
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\Collar.cs" />
     <Compile Include="Models\Ecoregion.cs" />
+    <Compile Include="Models\LeadRegion.cs" />
     <Compile Include="Models\NwtSarcAssessment.cs" />
     <Compile Include="Models\Ecozone.cs" />
     <Compile Include="Models\Person.cs" />
@@ -218,6 +223,7 @@
     <Compile Include="Models\CosewicStatus.cs" />
     <Compile Include="Models\Reference.cs" />
     <Compile Include="Models\BioDiversityReference.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\StatusRank.cs" />
     <Compile Include="Models\SurveyType.cs" />
     <Compile Include="Models\SurveyTemplate.cs" />
@@ -292,6 +298,8 @@
     <Content Include="Content\DataTables-1.10.0\images\xls_hover.png" />
     <Content Include="Content\DataTables-1.10.0\swf\copy_csv_xls.swf" />
     <Content Include="Content\DataTables-1.10.0\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Content\datepicker.css" />
+    <Content Include="Content\datepicker3.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\GNWT–ENR2C.jpg" />
@@ -386,6 +394,58 @@
     <Content Include="Scripts\DataTables-1.10.0\dataTables.tableTools.min.js" />
     <Content Include="Scripts\DataTables-1.10.0\jquery.dataTables.js" />
     <Content Include="Scripts\DataTables-1.10.0\jquery.dataTables.min.js" />
+    <Content Include="Scripts\datepicker\bootstrap-datepicker.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.ar.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.az.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.bg.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.ca.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.cs.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.cy.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.da.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.de.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.el.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.es.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.et.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.fa.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.fi.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.fr.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.gl.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.he.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.hr.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.hu.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.id.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.is.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.it.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.ja.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.ka.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.kk.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.kr.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.lt.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.lv.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.mk.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.ms.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.nb.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.nl-BE.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.nl.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.no.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.pl.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.pt-BR.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.pt.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.ro.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.rs-latin.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.rs.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.ru.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.sk.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.sl.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.sq.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.sv.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.sw.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.th.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.tr.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.ua.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.vi.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.zh-CN.js" />
+    <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
@@ -507,6 +567,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\LeadRegion\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

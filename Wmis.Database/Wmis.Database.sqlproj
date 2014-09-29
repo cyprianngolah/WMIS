@@ -110,6 +110,7 @@
     <Folder Include="dbo\Stored Procedures" />
     <Folder Include="dbo\Tables" />
     <Folder Include="dbo\User Defined Types" />
+    <Folder Include="dbo\Fill" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\WMISUser.sql" />
@@ -162,8 +163,33 @@
     <Build Include="dbo\Stored Procedures\SpeciesSynonym_Get.sql" />
     <Build Include="dbo\Stored Procedures\SpeciesSynonym_SaveMany.sql" />
     <Build Include="dbo\User Defined Types\SpeciesSynonymType.sql" />
+    <Build Include="dbo\Tables\Project.sql" />
+    <Build Include="dbo\Tables\Person.sql" />
+    <Build Include="dbo\Tables\ProjectStatus.sql" />
+    <Build Include="dbo\Tables\PersonRole.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\Tables\LeadRegion.sql" />
+    <None Include="dbo\Fill\Person.sql" />
+    <None Include="dbo\Fill\Role.sql" />
+    <None Include="dbo\Fill\LeadRegion.sql" />
+    <None Include="dbo\Fill\PersonRole.sql" />
+    <Build Include="dbo\Stored Procedures\Person_Search.sql" />
+    <Build Include="dbo\Stored Procedures\LeadRegion_Search.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectStatus_Search.sql" />
+    <Build Include="dbo\Stored Procedures\Project_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Project_Get.sql" />
+    <Build Include="dbo\Stored Procedures\Project_Search.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Wmis.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Fill\ProjectStatus.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Stored Procedures\Project_Create.sql" />
   </ItemGroup>
 </Project>
