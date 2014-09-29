@@ -550,7 +550,7 @@
 		}
 
 	    /// <summary>
-	    /// Gets a list of Taxonomy Synonyms
+	    /// Save a list of Taxonomy Synonyms
 	    /// </summary>
 	    /// <param name="taxonomyId">The id of the Taxonomy to save synonyms for</param>
 	    /// <param name="synonyms">The complete list of synonyms for the specified Taxonomy</param>

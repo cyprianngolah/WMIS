@@ -17,49 +17,15 @@
 @section Scripts{
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
-    @Html.Raw(Scripts.Render("~/bundles/dialog/synonym"))
 	@Html.Raw(Scripts.Render("~/bundles/biodiversity/edit"))
 
     <script>
         $(function () {
-            //wmis.dialog.synonym.initialize({
-            //    modalSelector: "#viewSynonymsModal",
-            //    saveButtonSelector: "#saveSynonymsButton",
-            //    synonymUrl: "/api/taxonomy/synonym",
-            //    synonymSaveManyUrl: "/api/taxonomy/synonym/savemany",
-            //});
-
-            //$("#viewSynonymsButton").click(function () {
-            //    wmis.dialog.synonym.show([
-            //        { taxonomyId: 1, name: "Mammal", groupName: "Kingdom" },
-            //        { taxonomyId: 2, name: "Artiodactyla", groupName: "Order" },
-            //        { taxonomyId: 3, name: "Bovidae", groupName: "Family" }
-            //    ]);
-            //});
-
             wmis.biodiversity.edit.initialize({
             	bioDiversityKey: @ViewBag.Key
             });
         });
     </script>
-}
-
-@section Templates {
-    @*<script type="text/html" id="synonymTemplate">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group" style="padding-bottom: 5px; padding-top: 6px; margin-bottom: 0;">
-                    <span data-bind="text: groupName"></span>:
-                    <span data-bind="text: name"></span>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="form-group" style="padding-bottom: 5px; margin-bottom: 0;">
-                    <input class="form-control" data-bind="value: synonymsValue, select2: { tags: synonyms, tokenSeparators: [',', ' '], formatNoMatches: function() { return ''; } }" />
-                </div>
-            </div>
-        </div>
-    </script>*@
 }
 
 @section Dialogs {
@@ -85,23 +51,6 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-	@*<div id="viewSynonymsModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Synonyms</h4>
-                </div>
-                <div class="modal-body">
-                    <div data-bind="template: { name: 'synonymTemplate', foreach: taxonomy }"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="saveSynonymsButton" type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>*@
 }
 
 <form role="form">
@@ -251,7 +200,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="infraOrder" class="col-md-1 control-label">Infa Order</label>
+						<label for="infraOrder" class="col-md-1 control-label">Infra Order</label>
 						<div class="col-md-5" data-bind="with: infraOrder">
 							<select class="form-control" id="infraOrder" data-bind="options: $root.infraOrder, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
@@ -283,13 +232,6 @@
 						</div>
 					</div>
 
-					<div class="form-group pull-right">
-						<div class="col-md-12">
-							<button id="viewSynonymsButton" type="button" class="btn btn-default">View Synonyms</button>
-						</div>
-					</div>
-					
-					
 					<div class="row">
 						<div class="col-md-12 h4">
 							<div class="row">

@@ -66,11 +66,6 @@
 			//////////////////////////////////////////////////////////////////////
 			// Module Script Bundles
 			//////////////////////////////////////////////////////////////////////
-			#region Dialogs
-			bundles.Add(new ScriptBundle("~/bundles/dialog/synonym").Include(
-						"~/js/modules/wmis.dialog.synonym.js"));
-			#endregion
-
 			#region Biodiversity
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/index").Include(
 						"~/js/modules/wmis.biodiversity.index.js"));
