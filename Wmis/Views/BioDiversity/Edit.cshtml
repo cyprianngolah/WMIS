@@ -177,9 +177,10 @@
 
 					<div class="form-group">
 						<label for="class" class="col-md-1 control-label">Class</label>
-						<div class="col-md-5" data-bind="with: 'class'">
-							<select class="form-control" id="class" data-bind="options: $root.class, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key', select2: { }"></select>
-						</div>
+                        <div class="col-md-5" data-bind="with: $root.className">
+                            <select class="form-control" id="class" data-bind="options: $root.class, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
+                        </div>
 
 						<label for="subClass" class="col-md-1 control-label">Sub Class</label>
 						<div class="col-md-5" data-bind="with: subClass">

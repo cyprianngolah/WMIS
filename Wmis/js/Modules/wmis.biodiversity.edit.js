@@ -211,6 +211,9 @@ wmis.biodiversity.edit = (function ($) {
 		this.nwtSarcAssessment = ko.observableArray();
 		this.dataLoaded = ko.observable(false);
 
+        // This className observable is used because binding to bd.class doesn't work properly due to it being a reserved keyword
+	    this.className = ko.observable();
+
 		this.selectedReferenceCategoryName = ko.observable();
 		this.selectedReferencesCategoryId = ko.observable();
 		this.selectedReferences = ko.observableArray();
@@ -260,6 +263,10 @@ wmis.biodiversity.edit = (function ($) {
 				self.convertToArrayOfKeys(self.bd().ecozones, self.selectedEcozoneKeys);
 				self.convertToArrayOfKeys(self.bd().ecoregions, self.selectedEcoregionKeys);
 				self.convertToArrayOfKeys(self.bd().protectedAreas, self.selectedProtectedAreaKeys);
+				self.className(self.bd().class());
+			    self.bd().class = ko.computed(function() {
+			        return self.className();
+			    });
 
 				self.dataLoaded(true);
 			}).always(function () {
