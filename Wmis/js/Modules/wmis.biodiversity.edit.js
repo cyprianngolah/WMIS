@@ -156,6 +156,9 @@ $(function() {
             self.synonymsArray = params.synonymsArray;
             self.isEditing = ko.observable(false);
             self.oldSynonymsArray = null;
+            self.normalNameIsPopulated = ko.computed(function () {
+                return params.normalName() && params.normalName().length > 0;;
+            });
             
             self.synonymsText = ko.computed(function () {
                 return formatSynonymsText(self.synonymsArray());
@@ -176,10 +179,10 @@ $(function() {
             }
         },
         template:
-            '<span data-bind="visible: !isEditing()">\
+            '<span data-bind="visible: !isEditing() && normalNameIsPopulated()">\
             <span class="glyphicon glyphicon-edit" data-bind="click: startEditing"></span> <span data-bind="text: synonymsText"></span>\
             </span>\
-            <span data-bind="visible: isEditing">\
+            <span data-bind="visible: isEditing() && normalNameIsPopulated()">\
             <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray, placeholder: \'Enter Synonyms\'}" />\
             <div class="text-center">\
                 <a class="btn btn-default" data-bind="click: cancelEditing, enabled: !isSubmitting()">Cancel</a>\

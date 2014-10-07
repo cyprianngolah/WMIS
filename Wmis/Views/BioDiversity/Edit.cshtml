@@ -92,13 +92,13 @@
 						<label for="name" class="col-md-1 control-label">Species</label>
 						<div class="col-md-5">
 						    <input type="text" class="form-control" id="name" data-bind="value: name">
-                            <species-synonym-editor params="speciesId: key, speciesSynonymTypeId: 1, synonymsArray: $root.speciesSynonyms"></species-synonym-editor>
+                            <species-synonym-editor params="speciesId: key, normalName: name, speciesSynonymTypeId: 1, synonymsArray: $root.speciesSynonyms"></species-synonym-editor>
 						</div>
 
 						<label for="subSpecies" class="col-md-1 control-label">Sub Species</label>
 						<div class="col-md-5">
 						    <input type="text" class="form-control" id="subSpecies" data-bind="value: subSpeciesName">
-                            <species-synonym-editor params="speciesId: key, speciesSynonymTypeId: 2, synonymsArray: $root.subSpeciesSynonyms"></species-synonym-editor>
+                            <species-synonym-editor params="speciesId: key, normalName: subSpeciesName, speciesSynonymTypeId: 2, synonymsArray: $root.subSpeciesSynonyms"></species-synonym-editor>
 						</div>
 					</div>
 
@@ -106,7 +106,7 @@
 						<label for="commonName" class="col-md-1 control-label">Common Name</label>
 						<div class="col-md-5">
 						    <input type="text" class="form-control" id="commonName" data-bind="value: commonName">
-                            <species-synonym-editor params="speciesId: key, speciesSynonymTypeId: 3, synonymsArray: $root.commonNameSynonyms"></species-synonym-editor>
+                            <species-synonym-editor params="speciesId: key, normalName: commonName, speciesSynonymTypeId: 3, synonymsArray: $root.commonNameSynonyms"></species-synonym-editor>
 						</div>
 					</div>
 
@@ -114,7 +114,7 @@
 				        <label for="ecoType" class="col-md-1 control-label">Eco Type</label>
 				        <div class="col-md-2">
 				            <input type="text" class="form-control" id="ecoType" data-bind="value: ecoType">
-				            <species-synonym-editor params="speciesId: key, speciesSynonymTypeId: 4, synonymsArray: $root.ecoTypeSynonyms"></species-synonym-editor>
+                            <species-synonym-editor params="speciesId: key, normalName: ecoType, speciesSynonymTypeId: 4, synonymsArray: $root.ecoTypeSynonyms"></species-synonym-editor>
 				        </div>
 
 				        <label for="nsGlobalId" class="col-md-1 control-label">NS Global ID</label>
