@@ -11,7 +11,6 @@ AS
 		s.CommonName,
 		s.SubSpeciesName,
 		s.EcoType,
-		s.[Population],
 		s.NSGlobalId,
 		s.NSNWTId,
 		s.ELCODE,
@@ -150,6 +149,13 @@ AS
 			INNER JOIN dbo.ProtectedAreas e on spa.ProtectedAreaId = e.ProtectedAreaId
 	WHERE
 		spa.SpeciesId = @p_bioDiversityKey
+
+	SELECT
+		sp.Name as [Key]
+	FROM
+		dbo.SpeciesPopulations sp
+	WHERE
+		sp.SpeciesId = @p_bioDiversityKey
 
 	SELECT	
 		rc.ReferenceCategoryId as CategoryKey,

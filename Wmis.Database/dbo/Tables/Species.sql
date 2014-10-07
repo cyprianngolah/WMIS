@@ -5,7 +5,6 @@
 	[CommonName]                                   NVARCHAR (50)     NULL,
 	[SubSpeciesName]                               NVARCHAR (50)     NULL,
 	[EcoType]                                      NVARCHAR (50)     NULL,
-	[Population]                                   NVARCHAR (50)     NULL,
 	[NSGlobalId]                                   NVARCHAR (50)     NULL,
 	[NSNWTId]                                      NVARCHAR (50)     NULL,
 	[ELCODE]                                       NVARCHAR (50)     NULL,

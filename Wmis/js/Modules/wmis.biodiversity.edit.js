@@ -199,8 +199,7 @@ wmis.biodiversity.edit = (function ($) {
         1: 'speciesSynonyms',
         2: 'subSpeciesSynonyms',
         3: 'commonNameSynonyms',
-        4: 'ecoTypeSynonyms',
-        5: 'populationSynonyms'
+        4: 'ecoTypeSynonyms'
     };
 
 	function editBioDiversityViewModel() {

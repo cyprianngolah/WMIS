@@ -110,37 +110,38 @@
 						</div>
 					</div>
 
-					<div class="form-group">
-						<label for="ecoType" class="col-md-1 control-label">Eco Type</label>
-						<div class="col-md-2">
-						    <input type="text" class="form-control" id="ecoType" data-bind="value: ecoType">
-                            <species-synonym-editor params="speciesId: key, speciesSynonymTypeId: 4, synonymsArray: $root.ecoTypeSynonyms"></species-synonym-editor>
-						</div>
+				    <div class="form-group">
+				        <label for="ecoType" class="col-md-1 control-label">Eco Type</label>
+				        <div class="col-md-2">
+				            <input type="text" class="form-control" id="ecoType" data-bind="value: ecoType">
+				            <species-synonym-editor params="speciesId: key, speciesSynonymTypeId: 4, synonymsArray: $root.ecoTypeSynonyms"></species-synonym-editor>
+				        </div>
 
-						<label for="population" class="col-md-1 control-label">Population</label>
-						<div class="col-md-2">
-						    <input type="text" class="form-control" id="population" data-bind="value: population">
-                            <species-synonym-editor params="speciesId: key, speciesSynonymTypeId: 5, synonymsArray: $root.populationSynonyms"></species-synonym-editor>
-						</div>
+				        <label for="nsGlobalId" class="col-md-1 control-label">NS Global ID</label>
+				        <div class="col-md-2">
+				            <input type="text" class="form-control" id="nsGlobalId" data-bind="value: nsGlobalId">
+				        </div>
 
-						<label for="nsGlobalId" class="col-md-1 control-label">NS Global ID</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" id="nsGlobalId" data-bind="value: nsGlobalId">
-						</div>
+				        <label for="nsNWtId" class="col-md-1 control-label">NS NWT ID</label>
+				        <div class="col-md-2">
+				            <input type="text" class="form-control" id="nsNWtId" data-bind="value: nsNwtId">
+				        </div>
+                        
+                        
+				        <label for="elcode" class="col-md-1 control-label">ELCODE</label>
+				        <div class="col-md-2">
+				            <input type="text" class="form-control" id="elcode" data-bind="value: elcode">
+				        </div>
+                        
+				    </div>
 
-						<label for="nsNWtId" class="col-md-1 control-label">NS NWT ID</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" id="nsNWtId" data-bind="value: nsNwtId">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="elcode" class="col-md-1 control-label">ELCODE</label>
-						<div class="col-md-2">
-							<input type="text" class="form-control" id="elcode" data-bind="value: elcode">
-						</div>
-					</div>
-
+				    <div class="form-group">
+                        <label for="populations" class="col-md-1 control-label">Populations</label>
+                        <div class="col-md-5">
+                            <input class="form-control" id="populations" type="hidden" data-bind="select2Tags: {tags: [], val: populations, placeholder: 'Enter Populations'}" />
+                        </div>
+				    </div>
+					
 					<div class="row">
 						<div class="col-md-12 h4">
 							<div class="row">

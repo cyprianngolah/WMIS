@@ -180,6 +180,8 @@
     <Build Include="dbo\Stored Procedures\Project_Get.sql" />
     <Build Include="dbo\Stored Procedures\Project_Search.sql" />
     <None Include="dbo\Fill\SpeciesSynonymTypes.sql" />
+    <Build Include="dbo\Tables\SpeciesPopulations.sql" />
+    <Build Include="dbo\User Defined Types\NameTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

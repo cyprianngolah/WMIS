@@ -61,7 +61,6 @@
                 Name = bioDiversity.Name,
                 SubSpeciesName = bioDiversity.SubSpeciesName,
                 EcoType = bioDiversity.EcoType,
-                Population = bioDiversity.Population,
 				LastUpdated = bioDiversity.LastUpdated,
 				RangeExtentScore = bioDiversity.RangeExtentScore,
 				RangeExtentDescription = bioDiversity.RangeExtentDescription,
@@ -92,6 +91,7 @@
 				SaraStatus = bioDiversity.SaraStatus,
 				IucnStatus = bioDiversity.IucnStatus,
 				GRank = bioDiversity.GRank,
+                Populations = bioDiversity.Populations
 			};
 		}
 

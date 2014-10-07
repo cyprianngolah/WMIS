@@ -1,6 +1,8 @@
 ﻿namespace Wmis.Dto
 {
 	using System;
+	using System.Collections.Generic;
+
 	using Models;
 
 	public class BioDiversityDecisionRequest
@@ -13,7 +15,7 @@
 
         public string EcoType { get; set; }
 
-        public string Population { get; set; }
+        public List<string> Populations { get; set; }
 
 		public DateTime LastUpdated { get; set; }
 

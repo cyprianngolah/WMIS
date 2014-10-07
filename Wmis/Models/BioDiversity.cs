@@ -1,6 +1,6 @@
 ﻿namespace Wmis.Models
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
 	/// <summary>
 	/// Model object for BioDiversity
@@ -23,8 +23,6 @@
 		public string SubSpeciesName { get; set; }
 
 		public string EcoType { get; set; }
-
-		public string Population { get; set; }
 
 		public string NsGlobalId { get; set; }
 
@@ -95,6 +93,8 @@
 		public string EcoregionDescription { get; set; }
 
 		public List<ProtectedArea> ProtectedAreas { get; set; }
+		
+        public List<string> Populations { get; set; }
 
 		public string ProtectedAreaDescription { get; set; }
 

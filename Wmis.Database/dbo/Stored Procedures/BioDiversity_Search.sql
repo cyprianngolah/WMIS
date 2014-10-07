@@ -12,6 +12,29 @@ AS
 	EXEC [dbo].[BioDiversity_Search]
 	*/
 
+	CREATE TABLE #SpeciesTemp (SpeciesId INT);
+
+	INSERT INTO #SpeciesTemp (SpeciesId)
+	SELECT s.SpeciesId as [Key]
+	FROM dbo.Species s	
+	WHERE
+		(@p_groupKey IS NULL OR s.GroupTaxonomyId = @p_groupKey) 
+		AND (@p_orderKey IS NULL OR s.OrderTaxonomyId = @p_orderKey) 
+		AND (@p_familyKey IS NULL OR s.FamilyTaxonomyId = @p_familyKey) 
+		AND (
+			@p_keywords IS NULL 
+			OR s.Name LIKE '%' + @p_keywords + '%' 
+			OR s.CommonName LIKE '%' + @p_keywords + '%'  
+			OR s.SubSpeciesName LIKE '%' + @p_keywords + '%'
+			OR s.ELCODE LIKE '%' + @p_keywords + '%'
+		) 
+	ORDER BY
+		s.SpeciesId
+	OFFSET 
+		@p_startRow ROWS
+	FETCH NEXT 
+		@p_rowCount ROWS ONLY
+
 	SELECT 
 		COUNT(*) OVER() AS ResultCount,
 		s.SpeciesId as [Key],
@@ -19,7 +42,6 @@ AS
 		s.CommonName,
 		s.SubSpeciesName,
 		s.EcoType,
-		s.[Population],
 		s.NSGlobalId,
 		s.NSNWTId,
 		s.ELCODE,
@@ -109,7 +131,8 @@ AS
 		s.GroupTaxonomyId as [GroupKey],
 		[group].Name as [GroupName]
 	FROM
-		dbo.Species s
+		#SpeciesTemp st
+			LEFT OUTER JOIN dbo.Species s on st.SpeciesId = s.SpeciesId
 			LEFT OUTER JOIN dbo.StatusRanks statusRank on s.StatusRankId = statusRank.StatusRankId
 			LEFT OUTER JOIN dbo.COSEWICStatus cosewic on s.COSEWICStatusId = cosewic.COSEWICStatusId
 			LEFT OUTER JOIN dbo.Taxonomy kingdom on s.KingdomTaxonomyId = kingdom.TaxonomyId AND kingdom.TaxonomyGroupId = 1
@@ -124,23 +147,19 @@ AS
 			LEFT OUTER JOIN dbo.Taxonomy family on s.FamilyTaxonomyId = family.TaxonomyId AND family.TaxonomyGroupId = 10	
 			LEFT OUTER JOIN dbo.Taxonomy subFamily on s.SubFamilyTaxonomyId = subFamily.TaxonomyId AND subFamily.TaxonomyGroupId = 11
 			LEFT OUTER JOIN dbo.Taxonomy [group] on s.GroupTaxonomyId = [group].TaxonomyId AND [group].TaxonomyGroupId = 12
-	WHERE
-		(@p_groupKey IS NULL OR s.GroupTaxonomyId = @p_groupKey) 
-		AND (@p_orderKey IS NULL OR s.OrderTaxonomyId = @p_orderKey) 
-		AND (@p_familyKey IS NULL OR s.FamilyTaxonomyId = @p_familyKey) 
-		AND (
-			@p_keywords IS NULL 
-			OR s.Name LIKE '%' + @p_keywords + '%' 
-			OR s.CommonName LIKE '%' + @p_keywords + '%'  
-			OR s.SubSpeciesName LIKE '%' + @p_keywords + '%'
-			OR s.ELCODE LIKE '%' + @p_keywords + '%'
-		) 
 	ORDER BY
 		s.SpeciesId
-	OFFSET 
-		@p_startRow ROWS
-	FETCH NEXT 
-		@p_rowCount ROWS ONLY
+	
+	SELECT
+		sp.SpeciesId as [Key],
+		sp.Name
+	FROM
+		#SpeciesTemp st
+			LEFT OUTER JOIN dbo.SpeciesPopulations sp on st.SpeciesId = sp.SpeciesId
+	ORDER BY
+		sp.SpeciesId
+
+	DROP TABLE #SpeciesTemp;
 
 RETURN 0
 GO

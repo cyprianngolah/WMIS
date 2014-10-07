@@ -12,6 +12,9 @@ wmis.biodiversity.decision.edit = (function ($) {
 		this.cosewicStatus = ko.observableArray();
 		this.nwtSarcAssessment = ko.observableArray();
 		this.dataLoaded = ko.observable(false);
+	    this.populationText = ko.computed(function() {
+	        return self.model() && self.model().populations().join(", ");
+	    });
 
 		this.load = function (key) {
 			wmis.global.showWaitingScreen("Loading...");
@@ -21,7 +24,7 @@ wmis.biodiversity.decision.edit = (function ($) {
 			wmis.global.getDropDownData(self.nwtSarcAssessment, "/api/nwtsarcassessment?startRow=0&rowCount=500", function (result) { return result.data; });
 
 			$.getJSON("/api/BioDiversity/Decision/" + key, {}, function (json) {
-				ko.mapper.fromJS(json, "auto", self.model);
+			    ko.mapper.fromJS(json, "auto", self.model);
 				self.dataLoaded(true);
 			}).always(function () {
 				wmis.global.hideWaitingScreen();

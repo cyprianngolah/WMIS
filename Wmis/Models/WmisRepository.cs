@@ -1,6 +1,5 @@
 ﻿namespace Wmis.Models
 {
-	using System;
 	using System.Collections.Generic;
 	using System.Data;
 	using System.Data.SqlClient;
@@ -9,8 +8,6 @@
 	using Dapper;
 	using Dto;
     using Extensions;
-
-	using StructureMap.Query;
 
 	/// <summary>
 	/// WMIS Repository for SQL
@@ -198,36 +195,43 @@
 					p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim()
 				};
 
-				var results = c.Query<int, BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(BIODIVERSITY_SEARCH,
-					(tc, bd, status, cs, kingdom, phylum, dyn) =>
-					{
-						pagedResultset.ResultCount = tc;
-						bd.StatusRank = status ?? new StatusRank();
-						bd.CosewicStatus = cs ?? new CosewicStatus();
-						bd.Kingdom = kingdom ?? new Taxonomy();
-						bd.Phylum = phylum ?? new Taxonomy();
-						bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
-						bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
-						bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
-						bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
-						bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
-						bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
-						bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
-						bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
-						bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
-						bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
+                using (var q = c.QueryMultiple(BIODIVERSITY_SEARCH, param, commandType: CommandType.StoredProcedure))
+                {
+                    var bioDiversityRecords = q.Read<int, BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(
+                    (tc, bd, status, cs, kingdom, phylum, dyn) =>
+                        {
+                            pagedResultset.ResultCount = tc;
+                            bd.StatusRank = status ?? new StatusRank();
+                            bd.CosewicStatus = cs ?? new CosewicStatus();
+                            bd.Kingdom = kingdom ?? new Taxonomy();
+                            bd.Phylum = phylum ?? new Taxonomy();
+                            bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
+                            bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
+                            bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
+                            bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
+                            bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
+                            bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
+                            bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
+                            bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
+                            bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
+                            bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
 
-						return bd;
-					}, 
-					param, 
-					splitOn: "Key", 
-					commandType: CommandType.StoredProcedure);
+                            return bd;
+                        }, 
+                        "Key");
 
-				pagedResultset.Data = new List<BioDiversity>(results);
-		}
+                    var bioDiversityList = new List<BioDiversity>(bioDiversityRecords);
+                    
+                    var populations = q.Read<Population>().ToLookup(p => p.Key, p => p.Name);
+                    bioDiversityList.ForEach(bd => bd.Populations = new List<string>(populations[bd.Key]));
 
-			return pagedResultset;
-		}
+                    pagedResultset.Data = bioDiversityList;
+                }
+
+            }
+
+            return pagedResultset;
+        }
 
 		public BioDiversity BioDiversityGet(int bioDiversityKey)
 		{
@@ -268,6 +272,7 @@
 						biodiversity.Ecozones = q.Read<Ecozone>().ToList();
 						biodiversity.Ecoregions = q.Read<Ecoregion>().ToList();
 						biodiversity.ProtectedAreas = q.Read<ProtectedArea>().ToList();
+						biodiversity.Populations = q.Read<string>().ToList();
 						biodiversity.References = q.Read<BioDiversityReference, Reference, BioDiversityReference>((br, r) =>
 						{
 							br.Reference = r;
@@ -304,7 +309,6 @@
 					p_CommonName = bd.CommonName,
 					p_SubSpeciesName = bd.SubSpeciesName,
 					p_EcoType = bd.EcoType,
-					p_Population = bd.Population,
 					p_NSGlobalId = bd.NsGlobalId,
 					p_NSNWTId = bd.NsNwtId,
 					p_ELCODE = bd.Elcode,
@@ -381,6 +385,7 @@
 					p_ecozones = bd.Ecozones.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
 					p_ecoregions = bd.Ecoregions.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
 					p_protectedAreas = bd.ProtectedAreas.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
+					p_populations = bd.Populations.Select(i => new { Name = i}).AsTableValuedParameter("dbo.NameTableType"),
 					p_references = bd.References.Select(i => new { n = i.CategoryKey, p = i.Reference.Key }).AsTableValuedParameter("dbo.TwoIntTableType")
 				};
 				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);

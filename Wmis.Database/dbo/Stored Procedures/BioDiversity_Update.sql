@@ -4,7 +4,6 @@
 	@p_CommonName NVARCHAR(50) = NULL,
 	@p_SubSpeciesName NVARCHAR(50) = NULL,
 	@p_EcoType NVARCHAR(50) = NULL,
-	@p_Population NVARCHAR(50) = NULL,
 	@p_NSGlobalId NVARCHAR(50) = NULL,
 	@p_NSNWTId NVARCHAR(50) = NULL,
 	@p_ELCODE NVARCHAR(50) = NULL,
@@ -81,6 +80,7 @@
 	@p_ecozones [IntTableType] READONLY,
 	@p_ecoregions [IntTableType] READONLY,
 	@p_protectedAreas [IntTableType] READONLY,
+	@p_populations [NameTableType] READONLY,
 	@p_references [TwoIntTableType] READONLY
 AS
 	UPDATE
@@ -90,7 +90,6 @@ AS
 		CommonName = @p_CommonName,
 		SubSpeciesName = @p_SubSpeciesName,
 		EcoType = @p_EcoType,
-		Population = @p_Population,
 		NSGlobalId = @p_NSGlobalId,
 		NSNWTId = @p_NSNWTId,
 		ELCODE = @p_ELCODE,
@@ -192,6 +191,15 @@ AS
 	ON (T.ProtectedAreaId = S.n AND T.SpeciesId = @p_SpeciesId) 
 	WHEN NOT MATCHED BY TARGET 
 		THEN INSERT(SpeciesId, ProtectedAreaId) VALUES(@p_SpeciesId, s.n)
+	WHEN NOT MATCHED BY SOURCE
+		THEN DELETE; 
+
+	-- Populations
+	MERGE SpeciesPopulations AS T
+	USING @p_populations AS S
+	ON (T.Name = S.Name AND T.SpeciesId = @p_SpeciesId) 
+	WHEN NOT MATCHED BY TARGET 
+		THEN INSERT(SpeciesId, Name) VALUES (@p_SpeciesId, s.Name)
 	WHEN NOT MATCHED BY SOURCE
 		THEN DELETE; 
 
