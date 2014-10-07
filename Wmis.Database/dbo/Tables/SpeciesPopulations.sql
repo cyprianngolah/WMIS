@@ -6,4 +6,4 @@
 	CONSTRAINT [PK_SpeciesPopulations] PRIMARY KEY NONCLUSTERED ([SpeciesPopulationId]),
 	CONSTRAINT [UK_SpeciesPopulations_SpeciesId_Name] UNIQUE ([SpeciesId], [Name]),
     CONSTRAINT [FK_SpeciesPopulations_Species] FOREIGN KEY ([SpeciesId]) REFERENCES [dbo].[Species] ([SpeciesId])
-)
+) 
