@@ -181,6 +181,8 @@
 				ResultCount = 0
 			};
 
+			ILookup<int, Population> populationRecords;
+
 			using (var c = NewWmisConnection)
 			{
 				var param = new
@@ -197,7 +199,7 @@
 
                 using (var q = c.QueryMultiple(BIODIVERSITY_SEARCH, param, commandType: CommandType.StoredProcedure))
                 {
-                    var bioDiversityRecords = q.Read<int, BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(
+					pagedResultset.Data = q.Read<int, BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(
                     (tc, bd, status, cs, kingdom, phylum, dyn) =>
                         {
                             pagedResultset.ResultCount = tc;
@@ -218,18 +220,13 @@
 
                             return bd;
                         }, 
-                        "Key");
+                        "Key").ToList();
 
-                    var bioDiversityList = new List<BioDiversity>(bioDiversityRecords);
-                    
-                    var populations = q.Read<Population>().ToLookup(p => p.Key, p => p.Name);
-                    bioDiversityList.ForEach(bd => bd.Populations = new List<string>(populations[bd.Key]));
-
-                    pagedResultset.Data = bioDiversityList;
+					populationRecords = q.Read<Population>().ToLookup<Population, int, Population>(p => p.Key, p => p);
                 }
-
             }
-
+			pagedResultset.Data.ForEach(bd => bd.Populations = new List<string>(populationRecords[bd.Key].Select(x=>x.Name)));
+			
             return pagedResultset;
         }
 
