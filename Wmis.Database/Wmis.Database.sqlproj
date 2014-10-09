@@ -198,7 +198,4 @@
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\Project_Create.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="Wmis.Database.refactorlog" />
-  </ItemGroup>
 </Project>
