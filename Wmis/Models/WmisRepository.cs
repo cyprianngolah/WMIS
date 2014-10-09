@@ -154,6 +154,12 @@
 
 		private const string PROJECT_SEARCH = "dbo.Project_Search";
 
+		private const string SURVEY_SAVE = "dbo.Survey_Save";
+
+		private const string SURVEY_GET = "dbo.Survey_Get";
+
+		private const string SURVEY_SEARCH = "dbo.Survey_Search";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -1066,8 +1072,7 @@
 				};
 
 				var pr = new Dto.PagedResultset<Project> { DataRequest = sr };
-
-				var results = c.Query<int, Project, LeadRegion, Person, ProjectStatus, Project>(
+				pr.Data = c.Query<int, Project, LeadRegion, Person, ProjectStatus, Project>(
 					PROJECT_SEARCH,
 					(count, p, lr, lead, status) =>
 						{
@@ -1079,9 +1084,7 @@
 						},
 					param,
 					commandType: CommandType.StoredProcedure,
-					splitOn: "Key");
-
-				pr.Data = new List<Project>(results);
+					splitOn: "Key").ToList();
 
 				return pr;
 			}
@@ -1190,28 +1193,96 @@
 		#region Project Survey
 		public Dto.PagedResultset<ProjectSurvey> ProjectSurveyGet(Dto.ProjectSurveyRequest psr)
 		{
-			var pr = new Dto.PagedResultset<ProjectSurvey>
+			using (var c = NewWmisConnection)
 			{
-				DataRequest = psr,
-				ResultCount = 0,
-				Data = new List<ProjectSurvey>()
-			};
+				var param = new
+				{
+					p_startRow = psr.StartRow,
+					p_rowCount = psr.RowCount,
+					p_sortBy = psr.SortBy,
+					p_sortDirection = psr.SortDirection,
+					p_projectId = psr.ProjectKey,
+					p_keywords = string.IsNullOrWhiteSpace(psr.Keywords) ? null : psr.Keywords
+				};
 
-			return pr;
+				var pr = new Dto.PagedResultset<ProjectSurvey> { DataRequest = psr };
+				pr.Data = c.Query<int, ProjectSurvey, BioDiversity, SurveyType, SurveyTemplate, ProjectSurvey>(
+					SURVEY_SEARCH,
+					(count, ps, s, st, t) =>
+					{
+						pr.ResultCount = count;
+						ps.TargetSpecies = s;
+						ps.SurveyType = st;
+						ps.Template = t;
+						return ps;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key").ToList();
+
+				return pr;
+			}
 		}
 
 		public ProjectSurvey ProjectSurveyGet(int surveyKey)
 		{
-			return new ProjectSurvey();
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_surveyId = surveyKey
+				};
+
+				var survey = c.Query<ProjectSurvey, BioDiversity, SurveyType, SurveyTemplate, ProjectSurvey>(
+					SURVEY_GET,
+					(ps, s, st, t) =>
+					{
+						ps.TargetSpecies = s;
+						ps.SurveyType = st;
+						ps.Template = t;
+						return ps;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key").SingleOrDefault();
+
+				return survey ?? new ProjectSurvey();
+			}
 		}
 
-		public void ProjectSurveySave(Models.ProjectSurvey ps)
-		{			
-		}
-
-		public int ProjectSurveySave(Dto.ProjectSurveySaveRequest pssr)
+		public int ProjectSurveySave(Models.ProjectSurvey ps)
 		{
-			return 1;
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_surveyId = ps.Key,
+					p_projectId = ps.ProjectKey,
+					p_targetSpeciesId = ps.TargetSpecies == null ? null : (int?)ps.TargetSpecies.Key,
+					p_surveyTypeId = ps.SurveyType == null ? null : (int?)ps.SurveyType.Key,
+					p_surveyTemplateId = ps.Template == null ? null : (int?)ps.Template.Key,
+					p_description = ps.Description,
+					p_method = ps.Method,
+					p_results = ps.Results,
+					p_aircraftType = ps.AircraftType,
+					p_aircraftCallsign = ps.AircraftCallsign,
+					p_pilot = ps.Pilot,
+					p_leadSurveyor = ps.LeadSurveyor,
+					p_surveyCrew = ps.SurveyCrew,
+					p_observerExpertise = ps.ObserverExpertise,
+					p_aircraftCrewResults = ps.AircraftCrewResults,
+					p_cloudCover = ps.CloudCover,
+					p_lightConditions = ps.LightConditions,
+					p_snowCover = ps.SnowCover,
+					p_temperature = ps.Temperature,
+					p_precipitation = ps.Precipitation,
+					p_windSpeed = ps.WindSpeed,
+					p_windDirection = ps.WindDirection,
+					p_weatherComments = ps.WeatherComments
+				};
+
+				return c.Query<int>(SURVEY_SAVE, param, commandType: CommandType.StoredProcedure).Single();
+			}
 		}
 		#endregion
 

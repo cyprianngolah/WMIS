@@ -1,10 +1,14 @@
 ﻿namespace Wmis.Models
 {
+	using System;
+
 	using Base;
 
-	public class ProjectSurvey : KeyedModel
+	public class ProjectSurvey : NullableKeyedModel
 	{
-		public Taxonomy TargetSpecies { get; set; }
+		public int ProjectKey { get; set; }
+
+		public BioDiversity TargetSpecies { get; set; }
 
 		public SurveyType SurveyType { get; set; }
 
@@ -29,7 +33,7 @@
 
 		public string ObserverExpertise { get; set; }
 
-		public string AircraftCrewComments { get; set; }
+		public string AircraftCrewResults { get; set; }
 		#endregion
 
 		#region Weather
@@ -49,5 +53,9 @@
 
 		public string WeatherComments { get; set; }
 		#endregion
+
+		public int ObservationCount { get; set; }
+
+		public DateTime LastUpdated { get; set; }
 	}
 }

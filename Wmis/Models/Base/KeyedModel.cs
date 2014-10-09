@@ -12,4 +12,9 @@
 		/// </summary>
 		public int Key { get; set; }
 	}
+
+	public class NullableKeyedModel
+	{
+		public int? Key { get; set; }
+	}
 }

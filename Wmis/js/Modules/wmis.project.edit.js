@@ -1,13 +1,16 @@
 ﻿wmis.project = wmis.project || {};
 wmis.project.edit = (function ($) {
-	var surveysTable, collarsTable;
+	var surveysTable = null, collarsTable = null;
+	
 	var options = {
 		projectKey: null,
 		
 		$newSurveyButton: $("#newSurveyButton"),
 		$editSurveyButton: $("#editSurveyButton"),
 		$searchSurveysButton: $("#searchSurveysButton"),
+		$surveyTab: $('a[href="#surveysTab"]'),
 		$surveyTable: $("#surveys"),
+		$collarTab: $('a[href="#collarsTab"]'),
 		$collarTable: $("#collars"),
 	};
 
@@ -65,10 +68,46 @@ wmis.project.edit = (function ($) {
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
-				{ "data": "surveyType.name" },
-				{ "data": "surveyTemplate.name" },
-				{ "data": "targetSpecies" },
-				{ "data": "commonName" },
+				{
+					"data": "surveyType",
+					"render": function(data, type, row) {
+						if (typeof(data) != 'undefined' && data != null) {
+							return data.name;
+						} else {
+							return "";
+						}
+					}
+				},
+				{
+					"data": "template",
+					"render": function (data, type, row) {
+						if (typeof (data) != 'undefined' && data != null) {
+							return data.name;
+						} else {
+							return "";
+						}
+					}
+				},
+				{
+					"data": "targetSpecies",
+					"render": function (data, type, row) {
+						if (typeof (data) != 'undefined' && data != null) {
+							return data.name;
+						} else {
+							return "";
+						}
+					}
+				},
+				{
+					"data": "targetSpecies",
+					"render": function (data, type, row) {
+						if (typeof (data) != 'undefined' && data != null) {
+							return data.commonName;
+						} else {
+							return "";
+						}
+					}
+				},
 				{
 					"data": "startDate",
 					"render": function (data, type, row) {
@@ -131,7 +170,7 @@ wmis.project.edit = (function ($) {
 
 							if (data.key) {
 								options.$editSurveyButton.removeClass('disabled');
-								options.$editSurveyButton.prop("href", "/Project/Edit/" + data.key);
+								options.$editSurveyButton.prop("href", "/Project/EditSurvey/" + data.key);
 							}
 						}
 					}
@@ -208,10 +247,30 @@ wmis.project.edit = (function ($) {
 		});
 		vm.getProject(initOptions.projectKey);
 		
-		//initSurveyDataTable(initOptions.projectKey);
-		//initCollarDataTable(initOptions.projectKey);
-
 		ko.applyBindings(vm);
+
+		options.$surveyTab.on('shown.bs.tab', function (e) {
+			if (surveysTable == null) {
+				initSurveyDataTable(initOptions.projectKey);
+			}
+		});
+		
+		options.$collarTab.on('shown.bs.tab', function (e) {
+			if (collarsTable == null) {
+				//initCollarDataTable(initOptions.projectKey);
+			}
+		});
+		
+		// Javascript to enable link to tab
+		var url = document.location.toString();
+		if (url.match('#')) {
+			$('.nav-tabs a[href=#' + url.split('#')[1] + ']').tab('show');
+		}
+
+		// Change hash for page-reload
+		$('.nav-tabs a').on('shown.bs.tab', function(e) {
+			window.location.hash = e.target.hash;
+		});
 	}
 
 	return {

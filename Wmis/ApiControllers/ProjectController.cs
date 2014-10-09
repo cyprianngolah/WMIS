@@ -61,7 +61,7 @@
 
 		[HttpPost]
 		[Route("survey")]
-		public int CreateSurvey(Dto.ProjectSurveySaveRequest pssr)
+		public int CreateSurvey(Models.ProjectSurvey pssr)
 		{
 			return Repository.ProjectSurveySave(pssr);
 		}

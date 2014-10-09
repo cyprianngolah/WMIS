@@ -92,6 +92,9 @@
 
 			bundles.Add(new ScriptBundle("~/bundles/project/survey/edit").Include(
 						"~/js/modules/wmis.project.survey.edit.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/project/survey/new").Include(
+						"~/js/modules/wmis.project.survey.new.js"));
 			#endregion
 
 			#region Admin Pages
