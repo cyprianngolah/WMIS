@@ -367,7 +367,7 @@ wmis.biodiversity.edit = (function ($) {
 			destination(selectedObjects);
 		};
 
-		this.getDropDowns = function () {
+		this.getDropDowns = function() {
 			wmis.global.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
 			wmis.global.getDropDownData(self.phylum, "/api/taxonomy/phylum");
 			wmis.global.getDropDownData(self.subPhylum, "/api/taxonomy/subphylum");
@@ -381,11 +381,12 @@ wmis.biodiversity.edit = (function ($) {
 			wmis.global.getDropDownData(self.subFamily, "/api/taxonomy/subfamily");
 			wmis.global.getDropDownData(self.group, "/api/taxonomy/group");
 			wmis.global.getDropDownData(self.kingdom, "/api/taxonomy/kingdom");
-			wmis.global.getDropDownData(self.ecoregions, "/api/ecoregion?startRow=0&rowCount=500", function (result) { return result.data; });
-			wmis.global.getDropDownData(self.ecozones, "/api/ecozone?startRow=0&rowCount=500", function (result) { return result.data; });
-			wmis.global.getDropDownData(self.protectedAreas, "/api/protectedArea?startRow=0&rowCount=500", function (result) { return result.data; });
-			wmis.global.getDropDownData(self.statusRank, "/api/statusrank?startRow=0&rowCount=500", function (result) { return result.data; });
-			wmis.global.getDropDownData(self.nwtSarcAssessment, "/api/nwtsarcassessment?startRow=0&rowCount=500", function (result) { return result.data; });
+			wmis.global.getDropDownData(self.ecoregions, "/api/ecoregion?startRow=0&rowCount=500", function(result) { return result.data; });
+			wmis.global.getDropDownData(self.ecozones, "/api/ecozone?startRow=0&rowCount=500", function(result) { return result.data; });
+			wmis.global.getDropDownData(self.protectedAreas, "/api/protectedArea?startRow=0&rowCount=500", function(result) { return result.data; });
+			wmis.global.getDropDownData(self.statusRank, "/api/statusrank?startRow=0&rowCount=500", function(result) { return result.data; });
+			wmis.global.getDropDownData(self.nwtSarcAssessment, "/api/nwtsarcassessment?startRow=0&rowCount=500", function(result) { return result.data; });
+			wmis.global.getDropDownData(self.cosewicStatus, "/api/cosewicstatus?startRow=0&rowCount=500", function(result) { return result.data; });
 		};
 
 		this.canSave = ko.computed(function() {
