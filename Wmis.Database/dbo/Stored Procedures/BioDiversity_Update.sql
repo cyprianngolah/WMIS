@@ -237,6 +237,12 @@ AS
 	WHEN NOT MATCHED BY SOURCE
 		THEN DELETE; 
 
+	SELECT 
+		LastUpdated 
+	FROM
+		dbo.Species
+	WHERE
+		SpeciesId = @p_SpeciesId
 RETURN 0
 GO
 

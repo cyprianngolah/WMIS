@@ -1,6 +1,7 @@
 ﻿namespace Wmis.ApiControllers
 {
-    using System.Linq;
+	using System;
+	using System.Linq;
     using System.Web.Http;
 	using Configuration;
 	using Dto;
@@ -45,9 +46,9 @@
 
 		[HttpPut]
 		[Route]
-		public void Update([FromBody]BioDiversity bd)
+		public DateTime Update([FromBody]BioDiversity bd)
 		{
-			Repository.BioDiversityUpdate(bd);
+			return Repository.BioDiversityUpdate(bd);
 		}
 
 		[HttpGet]

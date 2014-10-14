@@ -1,5 +1,6 @@
 ﻿namespace Wmis.Models
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Data;
 	using System.Data.SqlClient;
@@ -301,7 +302,7 @@
 			}
 		}
 
-		public void BioDiversityUpdate(BioDiversity bd)
+		public DateTime BioDiversityUpdate(BioDiversity bd)
 		{
 			using (var c = NewWmisConnection)
 			{
@@ -391,7 +392,7 @@
 					p_populations = bd.Populations.Select(i => new { Name = i}).AsTableValuedParameter("dbo.NameTableType"),
 					p_references = bd.References.Select(i => new { n = i.CategoryKey, p = i.Reference.Key }).AsTableValuedParameter("dbo.TwoIntTableType")
 				};
-				c.Execute(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure);
+				return c.Query<DateTime>(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
 			}
 		}
 

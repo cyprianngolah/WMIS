@@ -118,22 +118,22 @@ $(function() {
             self.synonymsText = ko.computed(function () {
                 return formatSynonymsText(self.synonymsArray());
             });
-            self.startEditing = function () {
-                self.oldSynonymsArray = self.synonymsArray();
-                self.isEditing(true);
-            }
-            self.stopEditing = function () {
-                self.isSubmitting(true);
-                saveTaxonomySynonyms(self.taxonomyId(), self.synonymsArray())
-                .always(function () {
-                    self.isEditing(false);
-                    self.isSubmitting(false);
-                });
-            }
-            self.cancelEditing = function () {
-                self.isEditing(false);
-                self.synonymsArray(self.oldSynonymsArray);
-            }
+	        self.startEditing = function() {
+		        self.oldSynonymsArray = self.synonymsArray();
+		        self.isEditing(true);
+	        };
+	        self.stopEditing = function() {
+		        self.isSubmitting(true);
+		        saveTaxonomySynonyms(self.taxonomyId(), self.synonymsArray())
+			        .always(function() {
+				        self.isEditing(false);
+				        self.isSubmitting(false);
+			        });
+	        };
+	        self.cancelEditing = function() {
+		        self.isEditing(false);
+		        self.synonymsArray(self.oldSynonymsArray);
+	        };
         },
         template:
             '<span data-bind="visible: !isEditing() && taxonomyId()">\
@@ -163,20 +163,20 @@ $(function() {
             self.synonymsText = ko.computed(function () {
                 return formatSynonymsText(self.synonymsArray());
             });
-            self.startEditing = function () {
-                self.isEditing(true);
-                self.oldSynonymsArray = self.synonymsArray();
-            }
-            self.stopEditing = function () {
-                saveSpeciesSynonyms(self.speciesId, self.speciesSynonymTypeId, self.synonymsArray())
-                    .always(function () {
-                        self.isEditing(false);
-                    });
-            }
-            self.cancelEditing = function() {
-                self.isEditing(false);
-                self.synonymsArray(self.oldSynonymsArray);
-            }
+	        self.startEditing = function() {
+		        self.isEditing(true);
+		        self.oldSynonymsArray = self.synonymsArray();
+	        };
+	        self.stopEditing = function() {
+		        saveSpeciesSynonyms(self.speciesId, self.speciesSynonymTypeId, self.synonymsArray())
+			        .always(function() {
+				        self.isEditing(false);
+			        });
+	        };
+            self.cancelEditing = function () {
+            	self.isEditing(false);
+            	self.synonymsArray(self.oldSynonymsArray);
+            };
         },
         template:
             '<span data-bind="visible: !isEditing() && normalNameIsPopulated()">\
@@ -283,10 +283,12 @@ wmis.biodiversity.edit = (function ($) {
 				self.convertToArrayOfKeys(self.bd().ecozones, self.selectedEcozoneKeys);
 				self.convertToArrayOfKeys(self.bd().ecoregions, self.selectedEcoregionKeys);
 				self.convertToArrayOfKeys(self.bd().protectedAreas, self.selectedProtectedAreaKeys);
+				if (typeof(self.bd().class) == 'undefined') {
+					self.bd().class = ko.computed(function() {
+						return self.className();
+					});
+				}
 				self.className(self.bd().class());
-			    self.bd().class = ko.computed(function() {
-			        return self.className();
-			    });
 
 				self.dataLoaded(true);
 			}).always(function () {
@@ -406,9 +408,10 @@ wmis.biodiversity.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.bd()))
-			}).success(function() {
+			}).success(function(lastUpdated) {
 				//window.location.href = "/biodiversity/";
-			}).always(function() {
+				self.bd().lastUpdated(lastUpdated);
+			}).always(function () {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
