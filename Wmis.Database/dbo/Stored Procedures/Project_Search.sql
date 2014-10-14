@@ -36,9 +36,9 @@ AS
 		ps.Name
 	FROM
 		dbo.Project p
-			INNER JOIN dbo.LeadRegion lr on p.LeadRegionId = lr.LeadRegionId
-			INNER JOIN dbo.Person pr on p.ProjectLeadId = pr.PersonId
-			INNER JOIN dbo.ProjectStatus ps on p.ProjectStatusId = ps.ProjectStatusId
+			LEFT OUTER JOIN dbo.LeadRegion lr on p.LeadRegionId = lr.LeadRegionId
+			LEFT OUTER JOIN dbo.Person pr on p.ProjectLeadId = pr.PersonId
+			LEFT OUTER JOIN dbo.ProjectStatus ps on p.ProjectStatusId = ps.ProjectStatusId
 	WHERE
 		(@p_projectLeadId IS NULL OR p.[ProjectLeadId] = @p_projectLeadId)
 		AND (@p_projectStatusId IS NULL OR p.[ProjectStatusId] = @p_projectStatusId)
