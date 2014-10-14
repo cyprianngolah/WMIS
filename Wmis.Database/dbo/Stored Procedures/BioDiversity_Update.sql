@@ -87,23 +87,26 @@ AS
 	-- Only Update LastUpdated timestamp if a value in the "Status" tab changed
 	DECLARE @v_lastUpdated DATETIME = NULL;
 	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
-		StatusRankId != @p_StatusRankId
-		OR StatusRankDescription != @p_StatusRankDescription
-		OR SRank != @p_SRank
-		OR DecisionProcessDescription != @p_DecisionProcessDescription
-		OR EconomicStatusDescription != @p_EconomicStatusDescription
-		OR COSEWICStatusId != @p_COSEWICStatusId
-		OR COSEWICStatusDescription != @p_COSEWICStatusDescription
-		OR NRank != @p_NRank
-		OR SARAStatus != @p_SARAStatus
-		OR FederalSpeciesAtRiskStatusDescription != @p_FederalSpeciesAtRiskStatusDescription
-		OR NwtSarcAssessmentId != @p_NwtSarcAssessmentId
-		OR NWTSARCAssessmentDescription != @p_NWTSARCAssessmentDescription
-		OR NWTStatusRank != @p_NWTStatusRank
-		OR NWTSpeciesAtRiskStatusDescription != @p_NWTSpeciesAtRiskStatusDescription
-		OR IUCNStatus != @p_IUCNStatus
-		OR GRank != @p_GRank
-		OR IUCNDescription != @p_IUCNDescription)
+		SpeciesId = @p_SpeciesId
+		AND (
+			StatusRankId != @p_StatusRankId
+			OR StatusRankDescription != @p_StatusRankDescription
+			OR SRank != @p_SRank
+			OR DecisionProcessDescription != @p_DecisionProcessDescription
+			OR EconomicStatusDescription != @p_EconomicStatusDescription
+			OR COSEWICStatusId != @p_COSEWICStatusId
+			OR COSEWICStatusDescription != @p_COSEWICStatusDescription
+			OR NRank != @p_NRank
+			OR SARAStatus != @p_SARAStatus
+			OR FederalSpeciesAtRiskStatusDescription != @p_FederalSpeciesAtRiskStatusDescription
+			OR NwtSarcAssessmentId != @p_NwtSarcAssessmentId
+			OR NWTSARCAssessmentDescription != @p_NWTSARCAssessmentDescription
+			OR NWTStatusRank != @p_NWTStatusRank
+			OR NWTSpeciesAtRiskStatusDescription != @p_NWTSpeciesAtRiskStatusDescription
+			OR IUCNStatus != @p_IUCNStatus
+			OR GRank != @p_GRank
+			OR IUCNDescription != @p_IUCNDescription)
+		)
 	BEGIN
 		SET @v_lastUpdated = GETUTCDATE()
 	END
