@@ -31,6 +31,7 @@ $(function () {
 
             var options = ko.toJS(value) || {};
             options.dropdownCssClass = 'hideSearch';
+            options.selectOnBlur = true;
             elementDom.select2(options);
 
             elementDom.on("change", function () {
