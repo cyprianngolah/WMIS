@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Project_Update]
 	@p_projectId INT,
+	@p_wildlifeResearchPermitId INT,
 	@p_name NVARCHAR(50) = NULL,
 	@p_leadRegionId INT = NULL,
 	@p_projectStatusId INT = NULL,
@@ -20,6 +21,7 @@ AS
 		dbo.Project
 	SET
 		Name = @p_name,
+		WildlifeResearchPermitId = @p_wildlifeResearchPermitId,
 		LeadRegionId = @p_leadRegionId,
 		ProjectStatusId = @p_projectStatusId,
 		StatusDate = @p_statusDate,

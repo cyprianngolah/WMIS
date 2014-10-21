@@ -1015,6 +1015,7 @@
 				var param = new
 				{
 					p_projectId = project.Key,
+					p_wildlifeResearchPermitId = project.WildlifeResearchPermitId,
 					p_name = project.Name,
 					p_leadRegionId = project.LeadRegion.Key == 0 ? null : (int?)project.LeadRegion.Key,
 					p_projectStatusId = project.Status.Key == 0 ? null : (int?)project.Status.Key,

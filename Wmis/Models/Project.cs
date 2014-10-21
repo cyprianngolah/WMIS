@@ -7,6 +7,8 @@
 	{
 		public string Name { get; set; }
 
+		public int? WildlifeResearchPermitId { get; set; }
+
 		public LeadRegion LeadRegion { get; set; }
 
 		public ProjectStatus Status { get; set; }
