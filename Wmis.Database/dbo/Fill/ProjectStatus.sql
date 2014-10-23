@@ -1,17 +1,18 @@
 ﻿/*
-	Initial Seeding, this will probably need to get deleted later
+	Initial Seeding, this will probably need to get updated later
 */
 
-IF NOT EXISTS (SELECT * FROM dbo.ProjectStatus WHERE Name = 'Gathering Data')
-BEGIN
-	INSERT INTO dbo.ProjectStatus (Name)
-	VALUES ('Gathering Data')
-END
-GO
+SET IDENTITY_INSERT [dbo].[ProjectStatus] ON;
 
+MERGE INTO dbo.[ProjectStatus] as [Target]
+USING (VALUES
+	(1, 'Gathering Data'),
+	(2, 'Planning')
+)
+AS [Source] ([ProjectStatusId], [Name]) 
+ON [Target].[ProjectStatusId] = [source].[ProjectStatusId]
+WHEN MATCHED THEN UPDATE SET [Name] = [source].[Name]
+WHEN NOT MATCHED BY TARGET THEN INSERT ([ProjectStatusId], [Name]) VALUES ([ProjectStatusId], [Name]) 
+WHEN NOT MATCHED BY SOURCE THEN DELETE;
 
-IF NOT EXISTS (SELECT * FROM dbo.ProjectStatus WHERE Name = 'Planning')
-BEGIN
-	INSERT INTO dbo.ProjectStatus (Name)
-	VALUES ('Planning')
-END
+SET IDENTITY_INSERT [dbo].[ProjectStatus] OFF;

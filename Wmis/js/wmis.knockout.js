@@ -16,7 +16,7 @@ $(function () {
             }, 0);
         },
         update: function (element) {
-            $(element).trigger('change');
+        	$(element).trigger('change');
         }
     };
 

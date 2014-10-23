@@ -153,6 +153,7 @@
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
     <Compile Include="ApiControllers\ReferenceController.cs" />
     <Compile Include="ApiControllers\StatusRankApiController.cs" />
+    <Compile Include="ApiControllers\SurveyTemplateController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -196,6 +197,8 @@
     <Compile Include="Dto\StatusRankRequest.cs" />
     <Compile Include="Dto\ProtectedAreaSaveRequest.cs" />
     <Compile Include="Dto\ReferenceRequest.cs" />
+    <Compile Include="Dto\SurveyTemplateRequest.cs" />
+    <Compile Include="Dto\SurveyTypeRequest.cs" />
     <Compile Include="Dto\TaxonomyRequest.cs" />
     <Compile Include="Dto\TaxonomySaveRequest.cs" />
     <Compile Include="Dto\SpeciesSynonymRequest.cs" />

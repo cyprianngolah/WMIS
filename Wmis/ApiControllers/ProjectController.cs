@@ -74,6 +74,15 @@
 		}
 		#endregion
 
+		#region Project Survey Types
+		[HttpGet]
+		[Route("surveytype")]
+		public Dto.PagedResultset<Models.SurveyType> GetProjectSurveyTypes(Dto.SurveyTypeRequest str)
+		{
+			return Repository.SurveyTypeSearch(str ?? new SurveyTypeRequest());
+		}
+		#endregion
+
 		#region Project Collars
 		[HttpGet]
 		[Route("{projectKey:int}/collars")]

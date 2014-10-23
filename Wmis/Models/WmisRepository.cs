@@ -161,6 +161,10 @@
 
 		private const string SURVEY_SEARCH = "dbo.Survey_Search";
 
+		private const string SURVEYTYPE_SEARCH = "dbo.SurveyType_Search";
+
+		private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -1239,9 +1243,9 @@
 					SURVEY_GET,
 					(ps, s, st, t) =>
 					{
-						ps.TargetSpecies = s;
-						ps.SurveyType = st;
-						ps.Template = t;
+						ps.TargetSpecies = s ?? new BioDiversity();
+						ps.SurveyType = st ?? new SurveyType();
+						ps.Template = t ?? new SurveyTemplate();
 						return ps;
 					},
 					param,
@@ -1260,9 +1264,9 @@
 				{
 					p_surveyId = ps.Key,
 					p_projectId = ps.ProjectKey,
-					p_targetSpeciesId = ps.TargetSpecies == null ? null : (int?)ps.TargetSpecies.Key,
-					p_surveyTypeId = ps.SurveyType == null ? null : (int?)ps.SurveyType.Key,
-					p_surveyTemplateId = ps.Template == null ? null : (int?)ps.Template.Key,
+					p_targetSpeciesId = ps.TargetSpecies.Key ==  0 ? null : (int?)ps.TargetSpecies.Key,
+					p_surveyTypeId = ps.SurveyType.Key == 0 ? null : (int?)ps.SurveyType.Key,
+					p_surveyTemplateId = ps.Template.Key == 0 ? null : (int?)ps.Template.Key,
 					p_description = ps.Description,
 					p_method = ps.Method,
 					p_results = ps.Results,
@@ -1288,6 +1292,37 @@
 		}
 		#endregion
 
+		#region Project Survey Type
+		public Dto.PagedResultset<Models.SurveyType> SurveyTypeSearch(Dto.SurveyTypeRequest str)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = str.StartRow,
+					p_to = str.RowCount,
+					p_sortBy = str.SortBy,
+					p_sortDirection = str.SortDirection,
+				};
+
+				var pr = new Dto.PagedResultset<SurveyType> { DataRequest = str };
+
+				pr.Data = c.Query<int, SurveyType, SurveyType>(
+					SURVEYTYPE_SEARCH,
+					(count, ps) =>
+					{
+						pr.ResultCount = count;
+						return ps;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key").ToList();
+
+				return pr;
+			}
+		}
+		#endregion
+
 		#region Project Collar
 		public Dto.PagedResultset<Collar> ProjectCollarGet(Dto.ProjectCollarRequest psr)
 		{
@@ -1301,6 +1336,37 @@
 			return pr;
 		}
 		
+		#endregion
+
+		#region Templates
+		public Dto.PagedResultset<Models.SurveyTemplate> SurveyTemplateSearch(Dto.SurveyTemplateRequest str)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_from = str.StartRow,
+					p_to = str.RowCount,
+					p_sortBy = str.SortBy,
+					p_sortDirection = str.SortDirection,
+				};
+
+				var pr = new Dto.PagedResultset<SurveyTemplate> { DataRequest = str };
+
+				pr.Data = c.Query<int, SurveyTemplate, SurveyTemplate>(
+					SURVEYTEMPLATE_SEARCH,
+					(count, ps) =>
+					{
+						pr.ResultCount = count;
+						return ps;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key").ToList();
+
+				return pr;
+			}
+		}
 		#endregion
 		#endregion
 

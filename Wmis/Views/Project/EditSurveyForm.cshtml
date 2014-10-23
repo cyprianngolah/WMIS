@@ -19,20 +19,20 @@
 				<div class="tab-pane form-horizontal active" data-bind="with: survey" id="surveyTab">
 					<div class="form-group">
 						<label for="targetSpecies" class="col-md-1 control-label">Target Species</label>
-						<div class="col-md-3" data-bind="with: 'targetSpecies'">
-							<select class="form-control" id="targetSpecies" data-bind="options: $root.species, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key', select2: { }"></select>
+						<div class="col-md-5" data-bind="with: targetSpecies">
+							<select class="form-control" id="targetSpecies" data-bind="options: $root.species, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="surveyType" class="col-md-1 control-label">Survey Type</label>
-						<div class="col-md-3" data-bind="with: 'surveyType'">
-							<select class="form-control" id="surveyType" data-bind="options: $root.surveyTypes, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key', select2: { }"></select>
+						<div class="col-md-5" data-bind="with: surveyType">
+							<select class="form-control" id="surveyType" data-bind="options: $root.surveyTypes, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 
 						<label for="template" class="col-md-1 control-label">Template</label>
-						<div class="col-md-3" data-bind="with: 'template'">
-							<select class="form-control" id="template" data-bind="options: $root.templates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: 'key', select2: { }"></select>
+						<div class="col-md-5" data-bind="with: template">
+							<select class="form-control" id="template" data-bind="options: $root.templates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
 						</div>
 					</div>
 

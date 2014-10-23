@@ -27,6 +27,6 @@
     CONSTRAINT [PK_Survey] PRIMARY KEY ([SurveyId]), 
 	CONSTRAINT [FK_Survey_Project] FOREIGN KEY ([ProjectId]) REFERENCES [Project]([ProjectId]), 
     CONSTRAINT [FK_Survey_Species] FOREIGN KEY ([TargetSpeciesId]) REFERENCES [Species]([SpeciesId]), 
-    CONSTRAINT [FK_Survey_ToTable_1] FOREIGN KEY ([SurveyTypeId]) REFERENCES [SurveyType]([SurveyTypeId]), 
-    CONSTRAINT [FK_Survey_ToTable_2] FOREIGN KEY ([SurveyTemplateId]) REFERENCES [SurveyTemplate]([SurveyTemplateId]) 
+    CONSTRAINT [FK_Survey_SurveyType] FOREIGN KEY ([SurveyTypeId]) REFERENCES [SurveyType]([SurveyTypeId]), 
+    CONSTRAINT [FK_Survey_SurveyTemplate] FOREIGN KEY ([SurveyTemplateId]) REFERENCES [SurveyTemplate]([SurveyTemplateId]) 
 )

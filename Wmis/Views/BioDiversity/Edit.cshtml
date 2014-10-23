@@ -229,7 +229,7 @@
 
 						<label for="subFamily" class="col-md-1 control-label">Sub Family</label>
 						<div class="col-md-5" data-bind="with: subFamily">
-						    <select class="form-control" id="subFamily" data-bind="options: $root.subFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key"></select>
+						    <select class="form-control" id="subFamily" data-bind="options: $root.subFamily, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
                             <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>    
 						</div>
 					</div>

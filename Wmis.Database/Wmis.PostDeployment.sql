@@ -16,3 +16,5 @@ Post-Deployment Script Template
 :r .\dbo\Fill\Role.sql
 :r .\dbo\Fill\PersonRole.sql
 :r .\dbo\Fill\SpeciesSynonymTypes.sql
+:r .\dbo\Fill\SurveyType.sql
+:r .\dbo\Fill\SurveyTemplate.sql

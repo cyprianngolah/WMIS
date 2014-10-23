@@ -29,9 +29,9 @@ wmis.project.survey.edit = (function ($) {
 		};
 
 		this.getDropDowns = function() {
-			//wmis.global.getDropDownData(self.statuses, "/api/project/statuses/");
-			//wmis.global.getDropDownData(self.projectLeads, "/api/person/projectLeads/");
-			//wmis.global.getDropDownData(self.regions, "/api/ecoregion?startRow=0&rowCount=500");
+			wmis.global.getDropDownData(self.species, "/api/biodiversity?startRow=0&rowCount=500", function (result) { return result.data; });
+			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500", function (result) { return result.data; });
+			wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
 		};
 
 		this.canSave = ko.computed(function() {
