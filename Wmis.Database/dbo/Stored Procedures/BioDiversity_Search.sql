@@ -16,7 +16,11 @@ AS
 
 	INSERT INTO #SpeciesTemp (SpeciesId)
 	SELECT s.SpeciesId as [Key]
-	FROM dbo.Species s	
+	FROM 
+		dbo.Species s
+			LEFT OUTER JOIN dbo.Taxonomy [order] on s.OrderTaxonomyId = [order].TaxonomyId AND [order].TaxonomyGroupId = 6
+			LEFT OUTER JOIN dbo.Taxonomy family on s.FamilyTaxonomyId = family.TaxonomyId AND family.TaxonomyGroupId = 10	
+			LEFT OUTER JOIN dbo.Taxonomy [group] on s.GroupTaxonomyId = [group].TaxonomyId AND [group].TaxonomyGroupId = 12	
 	WHERE
 		(@p_groupKey IS NULL OR s.GroupTaxonomyId = @p_groupKey) 
 		AND (@p_orderKey IS NULL OR s.OrderTaxonomyId = @p_orderKey) 
@@ -29,7 +33,38 @@ AS
 			OR s.ELCODE LIKE '%' + @p_keywords + '%'
 		) 
 	ORDER BY
-		s.SpeciesId
+		CASE WHEN @p_sortBy = 'group.name' AND @p_sortDirection = '0'
+			THEN [group].Name END ASC,
+		CASE WHEN @p_sortBy = 'group.name' AND @p_sortDirection = '1'
+			THEN [group].Name END DESC,
+		CASE WHEN @p_sortBy = 'order.name' AND @p_sortDirection = '0'
+			THEN [order].Name END ASC,
+		CASE WHEN @p_sortBy = 'order.name' AND @p_sortDirection = '1'
+			THEN [order].Name END DESC,
+		CASE WHEN @p_sortBy = 'family.name' AND @p_sortDirection = '0'
+			THEN [family].Name END ASC,
+		CASE WHEN @p_sortBy = 'family.name' AND @p_sortDirection = '1'
+			THEN [family].Name END DESC,
+		CASE WHEN @p_sortBy = 'commonName' AND @p_sortDirection = '0'
+			THEN s.CommonName END ASC,
+		CASE WHEN @p_sortBy = 'commonName' AND @p_sortDirection = '1'
+			THEN s.CommonName END DESC,
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '0'
+			THEN s.Name END ASC,
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '1'
+			THEN s.Name END DESC,
+		CASE WHEN @p_sortBy = 'subSpeciesName' AND @p_sortDirection = '0'
+			THEN s.SubSpeciesName END ASC,
+		CASE WHEN @p_sortBy = 'subSpeciesName' AND @p_sortDirection = '1'
+			THEN s.SubSpeciesName END DESC,
+		CASE WHEN @p_sortBy = 'ecoType' AND @p_sortDirection = '0'
+			THEN s.EcoType END ASC,
+		CASE WHEN @p_sortBy = 'ecoType' AND @p_sortDirection = '1'
+			THEN s.EcoType END DESC,
+		CASE WHEN @p_sortBy = 'lastUpdated' AND @p_sortDirection = '0'
+			THEN s.LastUpdated END ASC,
+		CASE WHEN @p_sortBy = 'lastUpdated' AND @p_sortDirection = '1'
+			THEN s.LastUpdated END DESC
 	OFFSET 
 		@p_startRow ROWS
 	FETCH NEXT 
@@ -148,8 +183,39 @@ AS
 			LEFT OUTER JOIN dbo.Taxonomy subFamily on s.SubFamilyTaxonomyId = subFamily.TaxonomyId AND subFamily.TaxonomyGroupId = 11
 			LEFT OUTER JOIN dbo.Taxonomy [group] on s.GroupTaxonomyId = [group].TaxonomyId AND [group].TaxonomyGroupId = 12
 	ORDER BY
-		s.SpeciesId
-	
+		CASE WHEN @p_sortBy = 'group.name' AND @p_sortDirection = '0'
+			THEN [group].Name END ASC,
+		CASE WHEN @p_sortBy = 'group.name' AND @p_sortDirection = '1'
+			THEN [group].Name END DESC,
+		CASE WHEN @p_sortBy = 'order.name' AND @p_sortDirection = '0'
+			THEN [order].Name END ASC,
+		CASE WHEN @p_sortBy = 'order.name' AND @p_sortDirection = '1'
+			THEN [order].Name END DESC,
+		CASE WHEN @p_sortBy = 'family.name' AND @p_sortDirection = '0'
+			THEN [family].Name END ASC,
+		CASE WHEN @p_sortBy = 'family.name' AND @p_sortDirection = '1'
+			THEN [family].Name END DESC,
+		CASE WHEN @p_sortBy = 'commonName' AND @p_sortDirection = '0'
+			THEN s.CommonName END ASC,
+		CASE WHEN @p_sortBy = 'commonName' AND @p_sortDirection = '1'
+			THEN s.CommonName END DESC,
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '0'
+			THEN s.Name END ASC,
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '1'
+			THEN s.Name END DESC,
+		CASE WHEN @p_sortBy = 'subSpeciesName' AND @p_sortDirection = '0'
+			THEN s.SubSpeciesName END ASC,
+		CASE WHEN @p_sortBy = 'subSpeciesName' AND @p_sortDirection = '1'
+			THEN s.SubSpeciesName END DESC,
+		CASE WHEN @p_sortBy = 'ecoType' AND @p_sortDirection = '0'
+			THEN s.EcoType END ASC,
+		CASE WHEN @p_sortBy = 'ecoType' AND @p_sortDirection = '1'
+			THEN s.EcoType END DESC,
+		CASE WHEN @p_sortBy = 'lastUpdated' AND @p_sortDirection = '0'
+			THEN s.LastUpdated END ASC,
+		CASE WHEN @p_sortBy = 'lastUpdated' AND @p_sortDirection = '1'
+			THEN s.LastUpdated END DESC
+
 	SELECT
 		sp.SpeciesId as [Key],
 		sp.Name
