@@ -192,6 +192,37 @@
     <None Include="dbo\Fill\SurveyTemplate.sql" />
     <Build Include="dbo\Stored Procedures\SurveyType_Search.sql" />
     <Build Include="dbo\Stored Procedures\SurveyTemplate_Search.sql" />
+    <Build Include="dbo\Tables\AnimalMortalities.sql" />
+    <Build Include="dbo\Tables\AnimalStatuses.sql" />
+    <Build Include="dbo\Tables\CollarMalfunctions.sql" />
+    <Build Include="dbo\Tables\CollarStates.sql" />
+    <None Include="dbo\Fill\AnimalMortalities.sql" />
+    <None Include="dbo\Fill\AnimalStatuses.sql" />
+    <None Include="dbo\Fill\CollarMalfunctions.sql" />
+    <None Include="dbo\Fill\CollarStates.sql" />
+    <Build Include="dbo\Tables\CollarStatuses.sql" />
+    <None Include="dbo\Fill\CollarStatuses.sql" />
+    <Build Include="dbo\Stored Procedures\CollarStatus_Get.sql" />
+    <Build Include="dbo\Stored Procedures\CollarState_Get.sql" />
+    <Build Include="dbo\Stored Procedures\CollarMalfunction_Get.sql" />
+    <Build Include="dbo\Stored Procedures\AnimalMortality_Get.sql" />
+    <Build Include="dbo\Stored Procedures\AnimalStatus_Get.sql" />
+    <Build Include="dbo\Tables\Collars.sql" />
+    <Build Include="dbo\Stored Procedures\Collar_Create.sql" />
+    <Build Include="dbo\Stored Procedures\Collar_Get.sql" />
+    <Build Include="dbo\Stored Procedures\Collar_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Collar_Search.sql" />
+    <Build Include="dbo\Tables\CollarTypes.sql" />
+    <None Include="dbo\Fill\CollarTypes.sql" />
+    <Build Include="dbo\Stored Procedures\CollarType_Get.sql" />
+    <Build Include="dbo\Tables\CollarRegion.sql" />
+    <None Include="dbo\Fill\CollarRegions.sql">
+      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </None>
+    <Build Include="dbo\Stored Procedures\CollarRegion_Get.sql" />
+    <Build Include="dbo\Tables\CollarHistory.sql" />
+    <Build Include="dbo\Stored Procedures\CollarHistory_Search.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

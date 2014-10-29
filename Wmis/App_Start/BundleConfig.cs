@@ -80,6 +80,17 @@
 			"~/js/modules/wmis.biodiversity.decision.edit.js"));
 			#endregion
 
+            #region Collar
+            bundles.Add(new ScriptBundle("~/bundles/collar/index").Include(
+                        "~/js/modules/wmis.collar.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/collar/new").Include(
+                        "~/js/modules/wmis.collar.new.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/collar/edit").Include(
+                        "~/js/modules/wmis.collar.edit.js"));
+            #endregion
+
 			#region Projects
 			bundles.Add(new ScriptBundle("~/bundles/project/index").Include(
 						"~/js/modules/wmis.project.index.js"));

@@ -1,0 +1,80 @@
+﻿@{
+	ViewBag.Title = "Collar";
+}
+
+@section Styles {
+	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
+	@Html.Raw(Styles.Render("~/bundles/select2css"))
+}
+
+@section Scripts {
+	@Html.Raw(Scripts.Render("~/bundles/datatables"))
+	@Html.Raw(Scripts.Render("~/bundles/select2"))
+	@Html.Raw(Scripts.Render("~/bundles/collar/index"))
+
+	<script type="text/javascript">
+		$(function () {
+			wmis.collar.index.initialize();
+		});
+	</script>
+}
+
+    <div class="row">
+		<div class="col-md-12 text-right">
+			<a href="/Collar/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+			<a href="/Collar/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+		</div>
+	</div>
+
+	<div class="well" style="margin-bottom: 0;">
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal center" role="form">
+					<label class="sr-only" for="keywords">Keywords</label>
+				    <div class="col-md-6">
+				        <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+				            <div class="input-group">
+				                <input type="text" id="keywords" class="form-control" placeholder="Keywords" />
+				                <span class="input-group-btn">
+				                    <button class="btn btn-default" type="button" id="searchButton">Search</button>
+				                </span>
+				            </div>
+				        </div>
+				    </div>
+
+				    <div class="col-md-3">
+				    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                            <label class="sr-only" for="group">Region</label>
+                            <select class="form-control" id="region" name="region">
+                                <option value="">All Regions</option>
+                            </select>
+                        </div>
+                    </div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<table id="collar" class="table">
+				<thead>
+					<tr>
+						<th>Region</th>
+						<th>Project Id</th>
+						<th>Project Name</th>
+						<th>Collar Type</th>
+						<th>Collar State</th>
+						<th>Collar Status</th>
+						<th>VHF Frequency</th>
+						<th>Inactive Date</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+

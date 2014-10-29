@@ -81,7 +81,28 @@ $(function () {
     		var date = moment.utc(valueUnwrapped).local().format('L');
     		$(element).datepicker('update', date);
     	}
-	};
+    };
+
+    ko.bindingHandlers.dateText = {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            var value = valueAccessor();
+            var allBindings = allBindingsAccessor();
+            var valueUnwrapped = ko.utils.unwrapObservable(value);
+
+            var pattern = allBindings.format || 'LL';
+
+            var output = "";
+            if (valueUnwrapped !== null && valueUnwrapped !== undefined && valueUnwrapped.length > 0) {
+                output = moment(valueUnwrapped).format(pattern);
+            }
+
+            if ($(element).is("input") === true) {
+                $(element).val(output);
+            } else {
+                $(element).text(output);
+            }
+        }
+    };
 
     ko.extenders.async = function (computedDeferred, initialValue) {
 

@@ -166,6 +166,56 @@
 		private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
 
         /// <summary>
+        /// The Collar Update stored procedure
+        /// </summary>
+	    private const string COLLAR_UPDATE = "dbo.Collar_Update";
+
+        /// <summary>
+        /// The Collar Create stored procedure
+        /// </summary>
+        private const string COLLAR_CREATE = "dbo.Collar_Create";
+
+        /// <summary>
+        /// The Collar Get stored procedure
+        /// </summary>
+        private const string COLLAR_GET = "dbo.Collar_Get";
+        
+        /// <summary>
+        /// The Collar Search stored procedure
+        /// </summary>
+        private const string COLLAR_SEARCH = "dbo.Collar_Search";
+
+        /// <summary>
+        /// The Collar Type Get stored procedure
+        /// </summary>
+        private const string COLLARTYPE_GET = "dbo.CollarType_Get";
+
+        /// <summary>
+        /// The Collar Region Get stored procedure
+        /// </summary>
+        private const string COLLARREGION_GET = "dbo.CollarRegion_Get";
+
+        /// <summary>
+        /// The Collar Status Get stored procedure
+        /// </summary>
+        private const string COLLARSTATUS_GET = "dbo.CollarStatus_Get";
+
+        /// <summary>
+        /// The Collar State Get stored procedure
+        /// </summary>
+        private const string COLLARSTATE_GET = "dbo.CollarState_Get";
+
+        /// <summary>
+        /// The Collar Malfunction Get stored procedure
+        /// </summary>
+        private const string COLLARMALFUNCTION_GET = "dbo.CollarMalfunction_Get";
+
+        /// <summary>
+        /// The Collar Malfunction Get stored procedure
+        /// </summary>
+        private const string COLLARHISTORY_SEARCH = "dbo.CollarHistory_Search";
+
+        /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
 		private readonly string _connectionString;
@@ -1368,10 +1418,327 @@
 			}
 		}
 		#endregion
-		#endregion
 
-		#region Helpers
-		/// <summary>
+        #region Collars
+        public int CollarCreate(string name)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_name = name
+                };
+                return c.Query<int>(COLLAR_CREATE, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+
+        public Dto.PagedResultset<Collar> CollarGet(Dto.CollarSearchRequest sr)
+        {
+            var pagedResultset = new Dto.PagedResultset<Collar>
+            {
+                DataRequest = sr,
+                ResultCount = 0
+            };
+
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = sr.StartRow,
+                    p_rowCount = sr.RowCount,
+                    p_sortBy = sr.SortBy,
+                    p_sortDirection = sr.SortDirection,
+                    p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim(),
+                    p_regionKey = sr.regionKey
+                };
+
+                using (var q = c.QueryMultiple(COLLAR_SEARCH, param, commandType: CommandType.StoredProcedure))
+                {
+                    pagedResultset.Data = q.Read<int, Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(
+                    (tc, collar, project, type, region, status, dyn) =>
+                    {
+                        pagedResultset.ResultCount = tc;
+                        collar.Project = project ?? new SimpleProject();
+                        collar.CollarType = type ?? new CollarType();
+                        collar.CollarRegion = region ?? new CollarRegion();
+                        collar.CollarStatus = status ?? new CollarStatus();
+                        collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
+                        collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
+                        return collar;
+                    },
+                        "Key").ToList();
+
+                }
+            }
+
+            return pagedResultset;
+        }
+
+        public Collar CollarGet(int collarKey)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_collarKey = collarKey
+                };
+                return c.Query<Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAR_GET,
+                    (collar, project, type, region, status, dyn) =>
+                        {
+                            collar.Project = project ?? new SimpleProject();
+                            collar.CollarType = type ?? new CollarType();
+                            collar.CollarRegion = region ?? new CollarRegion();
+                            collar.CollarStatus = status ?? new CollarStatus();
+                            collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
+                            collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
+                            return collar;
+                        },
+                        param,
+                        commandType: CommandType.StoredProcedure,
+                        splitOn: "Key").Single();
+            }
+        }
+
+        public void CollarUpdate(Models.Collar collar)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_CollarId = collar.Key,
+                    p_Name = collar.Name,
+                    p_SubscriptionId = collar.SubscriptionId,
+                    p_VhfFrequency = collar.VhfFrequency,
+                    p_JobNumber = collar.JobNumber,
+                    p_Model = collar.Model,
+                    p_InactiveDate = collar.InactiveDate,
+                    p_Size = collar.Size,
+                    p_BeltingColour = collar.BeltingColour,
+                    p_FirmwareVersion = collar.FirmwareVersion,
+                    p_DropOffDate = collar.DropOffDate,
+                    p_EstimatedDropOff = collar.EstimatedDropOff,
+                    p_EstimatedGpsFailure = collar.EstimatedGpsFailure,
+                    p_EstimatedGpsBatteryEnd = collar.EstimatedGpsBatteryEnd,
+                    p_EstimatedVhfFailure = collar.EstimatedVhfFailure,
+                    p_EstimatedVhfBatteryEnd = collar.EstimatedVhfBatteryEnd,
+                    p_CollarTypeId = collar.CollarType.Key == 0 ? null : (int?)collar.CollarType.Key,
+                    p_CollarRegionId = collar.CollarRegion.Key == 0 ? null : (int?)collar.CollarRegion.Key,
+                    p_CollarStatusId = collar.CollarStatus.Key == 0 ? null : (int?)collar.CollarStatus.Key,
+                    p_CollarMalfunctionId = collar.CollarMalfunction.Key == 0 ? null : (int?)collar.CollarMalfunction.Key,
+                    p_CollarStateId = collar.CollarState.Key == 0 ? null : (int?)collar.CollarState.Key,
+                    p_ProjectId = collar.Project.Key == 0 ? null : (int?)collar.Project.Key,
+                };
+                c.Execute(COLLAR_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public PagedResultset<CollarType> CollarTypeGet(CollarTypeRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                };
+
+                var pagedResults = new PagedResultset<CollarType>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<CollarType>()
+                };
+
+                var results = c.Query<dynamic, CollarType, CollarType>(COLLARTYPE_GET,
+                    (d, collar) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return collar;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+ 
+        public PagedResultset<CollarRegion> CollarRegionGet(CollarRegionRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                };
+
+                var pagedResults = new PagedResultset<CollarRegion>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<CollarRegion>()
+                };
+
+                var results = c.Query<dynamic, CollarRegion, CollarRegion>(COLLARREGION_GET,
+                    (d, collar) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return collar;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        
+        public PagedResultset<CollarStatus> CollarStatusGet(CollarStatusRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                };
+
+                var pagedResults = new PagedResultset<CollarStatus>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<CollarStatus>()
+                };
+
+                var results = c.Query<dynamic, CollarStatus, CollarStatus>(COLLARSTATUS_GET,
+                    (d, collar) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return collar;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        public PagedResultset<CollarState> CollarStateGet(CollarStateRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                };
+
+                var pagedResults = new PagedResultset<CollarState>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<CollarState>()
+                };
+
+                var results = c.Query<dynamic, CollarState, CollarState>(COLLARSTATE_GET,
+                    (d, collar) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return collar;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        public PagedResultset<CollarMalfunction> CollarMalfunctionGet(CollarMalfunctionRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                };
+
+                var pagedResults = new PagedResultset<CollarMalfunction>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<CollarMalfunction>()
+                };
+
+                var results = c.Query<dynamic, CollarMalfunction, CollarMalfunction>(COLLARMALFUNCTION_GET,
+                    (d, collar) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return collar;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        public PagedResultset<CollarHistory> CollarHistorySearch(CollarHistoryRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = request.StartRow,
+                    p_rowCount = request.StartRow + request.RowCount - 1,
+                    p_collarKey = request.CollarKey
+                };
+
+                var pagedResults = new PagedResultset<CollarHistory>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<CollarHistory>()
+                };
+
+                var results = c.Query<dynamic, CollarHistory, CollarHistory>(COLLARHISTORY_SEARCH,
+                    (d, collarHistory) =>
+                    {
+                        pagedResults.ResultCount = d.ResultCount;
+                        return collarHistory;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        #endregion
+        #endregion
+
+        #region Helpers
+        /// <summary>
 		/// Gets a new SQLConnection to the WMIS Database for the current environment
 		/// </summary>
 		private SqlConnection NewWmisConnection

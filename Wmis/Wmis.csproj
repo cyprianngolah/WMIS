@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\BaseApiController.cs" />
+    <Compile Include="ApiControllers\CollarApiController.cs" />
     <Compile Include="ApiControllers\CosewicStatusApiController.cs" />
     <Compile Include="ApiControllers\LeadRegionController.cs" />
     <Compile Include="ApiControllers\NwtSarcAssessmentApiController.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
+    <Compile Include="Controllers\CollarController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
     <Compile Include="Controllers\EcoregionController.cs" />
     <Compile Include="Controllers\CosewicStatusController.cs" />
@@ -173,12 +175,19 @@
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
+    <Compile Include="Dto\CollarSearchRequest.cs" />
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
     <Compile Include="Dto\BioDiversityUpdateRequest.cs" />
     <Compile Include="Dto\Base\PagedResultset.cs" />
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
+    <Compile Include="Dto\CollarStateRequest.cs" />
+    <Compile Include="Dto\CollarMalfunctionRequest.cs" />
+    <Compile Include="Dto\CollarHistoryRequest.cs" />
+    <Compile Include="Dto\CollarTypeRequest.cs" />
+    <Compile Include="Dto\CollarRegionRequest.cs" />
     <Compile Include="Dto\EcoregionRequest.cs" />
     <Compile Include="Dto\EcoregionSaveRequest.cs" />
+    <Compile Include="Dto\CollarStatusRequest.cs" />
     <Compile Include="Dto\LeadRegionRequest.cs" />
     <Compile Include="Dto\NwtSarcAssessmentRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
@@ -214,11 +223,18 @@
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\Collar.cs" />
+    <Compile Include="Models\CollarHistory.cs" />
+    <Compile Include="Models\CollarRegion.cs" />
+    <Compile Include="Models\CollarType.cs" />
+    <Compile Include="Models\CollarStatus.cs" />
+    <Compile Include="Models\CollarState.cs" />
+    <Compile Include="Models\CollarMalfunction.cs" />
     <Compile Include="Models\Ecoregion.cs" />
     <Compile Include="Models\LeadRegion.cs" />
     <Compile Include="Models\NwtSarcAssessment.cs" />
     <Compile Include="Models\Ecozone.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\SimpleProject.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectStatus.cs" />
     <Compile Include="Models\ProjectSurvey.cs" />
@@ -348,7 +364,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
+    <Content Include="js\Modules\wmis.collar.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.js" />
+    <Content Include="js\Modules\wmis.collar.index.js" />
+    <Content Include="js\Modules\wmis.collar.new.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
     <Content Include="js\Modules\wmis.cosewicstatus.edit.js" />
     <Content Include="js\Modules\wmis.nwtsarcassessment.edit.js" />
@@ -569,6 +588,9 @@
     <Content Include="Views\Project\EditSurvey.cshtml" />
     <Content Include="Views\Project\EditSurveyForm.cshtml" />
     <Content Include="Views\Project\NewSurvey.cshtml" />
+    <Content Include="Views\Collar\Edit.cshtml" />
+    <Content Include="Views\Collar\Index.cshtml" />
+    <Content Include="Views\Collar\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
