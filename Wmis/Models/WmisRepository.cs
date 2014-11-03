@@ -1083,9 +1083,9 @@
 					(count, p, lr, lead, status) =>
 						{
 							pr.ResultCount = count;
-							p.LeadRegion = lr;
-							p.ProjectLead = lead;
-							p.Status = status;
+							p.LeadRegion = lr ?? new LeadRegion();
+							p.ProjectLead = lead ?? new Person();
+							p.Status = status ?? new ProjectStatus();
 							return p;
 						},
 					param,
