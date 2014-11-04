@@ -289,7 +289,12 @@ wmis.biodiversity.edit = (function ($) {
 					});
 				}
 				self.className(self.bd().class());
-
+				self.dirtyFlag = wmis.global.dirtyFlagFor(ko, self.bd);
+			    $(window).bind('beforeunload', function() {
+			        if (self.dirtyFlag.isDirty()) {
+			            return "You have unsaved changes, are you sure you want to continue without saving?";
+			        }
+			    });
 				self.dataLoaded(true);
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
@@ -410,7 +415,8 @@ wmis.biodiversity.edit = (function ($) {
 				data: JSON.stringify(ko.toJS(self.bd()))
 			}).success(function(lastUpdated) {
 				//window.location.href = "/biodiversity/";
-				self.bd().lastUpdated(lastUpdated);
+			    self.bd().lastUpdated(lastUpdated);
+			    self.dirtyFlag.reset();
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);

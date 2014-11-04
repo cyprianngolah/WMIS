@@ -64,6 +64,36 @@ wmis.global = (function ($) {
 		return promise;
 	};
 
+    function dirtyFlagFor(ko, observable) {
+        // Toggle is used to force reevaluation of the computed observable. 
+        var toggle = ko.observable(Math.random());
+
+        var _isDirty = false;
+
+        return {
+            isDirty: ko.computed(function() {
+                if (!_isDirty) {
+                    //just for subscriptions
+                    ko.toJS(observable);
+
+                    //next time return true and avoid ko.toJS
+                    _isDirty = true;
+
+                    //on initialization this flag is not dirty
+                    return false;
+                } else {
+                    // Watch the toggle
+                    toggle();
+                    return true;
+                }
+            }),
+            reset: function() {
+                _isDirty = false;
+                toggle(Math.random());
+            }
+        }
+    }
+
 	return {
 		appendDataToSelect: appendDataToSelect,
 		ajaxErrorHandler: ajaxErrorHandler,
@@ -71,5 +101,6 @@ wmis.global = (function ($) {
 		showWaitingScreen: showWaitingScreen,
 		hideWaitingScreen: hideWaitingScreen,
 		getDropDownData: getDropDownData,
+		dirtyFlagFor: dirtyFlagFor
 	};
 }(jQuery));
