@@ -260,14 +260,16 @@
 
                 using (var q = c.QueryMultiple(BIODIVERSITY_SEARCH, param, commandType: CommandType.StoredProcedure))
                 {
-					pagedResultset.Data = q.Read<int, BioDiversity, StatusRank, CosewicStatus, Taxonomy, Taxonomy, dynamic, BioDiversity>(
-                    (tc, bd, status, cs, kingdom, phylum, dyn) =>
+                    pagedResultset.Data = q.Read<int, BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, dynamic, BioDiversity>(
+                    (tc, bd, saraStatus, nwtStatusRank, status, cs, dyn) =>
                         {
                             pagedResultset.ResultCount = tc;
+                            bd.SaraStatus = saraStatus ?? new SaraStatus();
+                            bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
                             bd.StatusRank = status ?? new StatusRank();
                             bd.CosewicStatus = cs ?? new CosewicStatus();
-                            bd.Kingdom = kingdom ?? new Taxonomy();
-                            bd.Phylum = phylum ?? new Taxonomy();
+                            bd.Kingdom = dyn.KingdomKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.KingdomKey, Name = dyn.KingdomName };
+                            bd.Phylum = dyn.PhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.PhylumKey, Name = dyn.PhylumName };
                             bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
                             bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
                             bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
@@ -302,14 +304,16 @@
 				
 				using (var q = c.QueryMultiple(BIODIVERSITY_GET, param, commandType: CommandType.StoredProcedure))
 				{
-					var biodiversity = q.Read<BioDiversity, StatusRank, CosewicStatus, NwtSarcAssessment, Taxonomy, Taxonomy, dynamic, BioDiversity>(
-						(bd, status, cs, nsa, kingdom, phylum, dyn) =>
-						{
+					var biodiversity = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, NwtSarcAssessment, dynamic, BioDiversity>(
+						(bd, saraStatus, nwtStatusRank, status, cs, nsa, dyn) =>
+						    {
+						    bd.SaraStatus = saraStatus ?? new SaraStatus();
+						    bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
 							bd.StatusRank = status ?? new StatusRank();
                             bd.CosewicStatus = cs ?? new CosewicStatus();
                             bd.NwtSarcAssessment = nsa ?? new NwtSarcAssessment();
-							bd.Kingdom = kingdom ?? new Taxonomy();
-							bd.Phylum = phylum ?? new Taxonomy();
+                            bd.Kingdom = dyn.KingdomKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.KingdomKey, Name = dyn.KingdomName };
+                            bd.Phylum = dyn.PhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.PhylumKey, Name = dyn.PhylumName };
 							bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
 							bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
 							bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
@@ -431,11 +435,11 @@
 					p_COSEWICStatusId = bd.CosewicStatus == null || bd.CosewicStatus.Key == 0 ? null : (int?)bd.CosewicStatus.Key,
 					p_COSEWICStatusDescription = bd.CosewicStatusDescription,
 					p_NRank = bd.NRank,
-					p_SARAStatus = bd.SaraStatus,
+                    p_SARAStatusId = bd.SaraStatus == null || bd.SaraStatus.Key == 0 ? null : (int?)bd.SaraStatus.Key,
 					p_FederalSpeciesAtRiskStatusDescription = bd.FederalSpeciesAtRiskStatusDescription,
                     p_NwtSarcAssessmentId = bd.NwtSarcAssessment == null || bd.NwtSarcAssessment.Key == 0 ? null : (int?)bd.NwtSarcAssessment.Key,
 					p_NWTSARCAssessmentDescription = bd.NwtsarcAssessmentDescription,
-					p_NWTStatusRank = bd.NwtStatusRank,
+					p_NWTStatusRankId = bd.NwtStatusRank == null || bd.NwtStatusRank.Key == 0 ? null : (int?)bd.NwtStatusRank.Key,
 					p_NWTSpeciesAtRiskStatusDescription = bd.NwtSpeciesAtRiskStatusDescription,
 					p_IUCNStatus = bd.IucnStatus,
 					p_GRank = bd.GRank,

@@ -229,6 +229,8 @@
     <Compile Include="Models\CollarStatus.cs" />
     <Compile Include="Models\CollarState.cs" />
     <Compile Include="Models\CollarMalfunction.cs" />
+    <Compile Include="Models\NwtStatusRank.cs" />
+    <Compile Include="Models\SaraStatus.cs" />
     <Compile Include="Models\Ecoregion.cs" />
     <Compile Include="Models\LeadRegion.cs" />
     <Compile Include="Models\NwtSarcAssessment.cs" />

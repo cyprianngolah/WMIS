@@ -61,15 +61,17 @@ AS
 		s.EconomicStatusDescription,
 		s.COSEWICStatusDescription,
 		s.NRank,
-		s.SARAStatus,
 		s.FederalSpeciesAtRiskStatusDescription,
 		s.NWTSARCAssessmentDescription,
-		s.NWTStatusRank,
 		s.NWTSpeciesAtRiskStatusDescription,
 		s.IUCNStatus,
 		s.GRank,
 		s.IUCNDescription,
 		s.LastUpdated,
+		s.SARAStatusId as [Key],
+		saraStatus.Name,
+		s.NWTStatusRankId as [Key],
+		nwtStatusRank.Name,
 		s.StatusRankId as [Key],
 		s.StatusRankDescription,
 		statusRank.Name,
@@ -78,11 +80,11 @@ AS
 		cosewic.Name,
 		s.NwtSarcAssessmentId AS [Key],
 		nwtSarcAssessment.Name,
-		s.KingdomTaxonomyId as [Key],
-		kingdom.Name, 
-		s.PhylumTaxonomyId as [Key],
-		phylum.Name,
 		1 as [Key],		-- Done to ensure the dynamic always maps back to an actual object and not null
+		s.KingdomTaxonomyId as [KingdomKey],
+		kingdom.Name as [KingdomName], 
+		s.PhylumTaxonomyId as [PhylumKey],
+		phylum.Name as [PhylumName],
 		s.SubPhylumTaxonomyId as [SubPhylumKey],
 		subPhylum.Name as [SubPhylumName],
 		s.ClassTaxonomyId as [ClassKey],
@@ -107,6 +109,8 @@ AS
 		dbo.Species s
 			LEFT OUTER JOIN dbo.StatusRanks statusRank on s.StatusRankId = statusRank.StatusRankId
 			LEFT OUTER JOIN dbo.COSEWICStatus cosewic on s.COSEWICStatusId = cosewic.COSEWICStatusId
+			LEFT OUTER JOIN dbo.COSEWICStatus saraStatus on s.SARAStatusId = cosewic.COSEWICStatusId
+			LEFT OUTER JOIN dbo.COSEWICStatus nwtStatusRank on s.NWTStatusRankId = cosewic.COSEWICStatusId
 			LEFT OUTER JOIN dbo.NwtSarcAssessments nwtSarcAssessment on s.NwtSarcAssessmentId = nwtSarcAssessment.NwtSarcAssessmentId
 			LEFT OUTER JOIN dbo.Taxonomy kingdom on s.KingdomTaxonomyId = kingdom.TaxonomyId AND kingdom.TaxonomyGroupId = 1
 			LEFT OUTER JOIN dbo.Taxonomy phylum on s.PhylumTaxonomyId = phylum.TaxonomyId AND phylum.TaxonomyGroupId = 2

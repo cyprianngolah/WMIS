@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[BioDiversity_Search]
+﻿
+CREATE PROCEDURE [dbo].[BioDiversity_Search]
 	@p_startRow int = 0,
 	@p_rowCount int = 25,
 	@p_sortBy NVARCHAR(25) = NULL,
@@ -127,24 +128,26 @@ AS
 		s.EconomicStatusDescription,
 		s.COSEWICStatusDescription,
 		s.NRank,
-		s.SARAStatus,
 		s.FederalSpeciesAtRiskStatusDescription,
 		s.NWTSARCAssessmentDescription,
-		s.NWTStatusRank,
 		s.NWTSpeciesAtRiskStatusDescription,
 		s.IUCNStatus,
 		s.GRank,
 		s.IUCNDescription,
 		s.LastUpdated,
+		s.SARAStatusId as [Key],
+		saraStatus.Name,
+		s.NWTStatusRankId as [Key],
+		nwtStatusRank.Name,
 		s.StatusRankId as [Key],
 		statusRank.Name,
 		s.COSEWICStatusId AS [Key],
 		cosewic.Name,
-		s.KingdomTaxonomyId as [Key],
-		kingdom.Name, 
-		s.PhylumTaxonomyId as [Key],
-		phylum.Name,
 		1 as [Key],		-- Done to ensure the dynamic always maps back to an actual object and not null
+		s.KingdomTaxonomyId as [KingdomTaxonomyKey],
+		kingdom.Name as [KingdomTaxonomyName], 
+		s.PhylumTaxonomyId as [PhylumTaxonomyKey],
+		phylum.Name as [PhylumTaxonomyName],
 		s.SubPhylumTaxonomyId as [SubPhylumKey],
 		subPhylum.Name as [SubPhylumName],
 		s.ClassTaxonomyId as [ClassKey],
@@ -170,6 +173,8 @@ AS
 			LEFT OUTER JOIN dbo.Species s on st.SpeciesId = s.SpeciesId
 			LEFT OUTER JOIN dbo.StatusRanks statusRank on s.StatusRankId = statusRank.StatusRankId
 			LEFT OUTER JOIN dbo.COSEWICStatus cosewic on s.COSEWICStatusId = cosewic.COSEWICStatusId
+			LEFT OUTER JOIN dbo.COSEWICStatus saraStatus on s.SARAStatusId = cosewic.COSEWICStatusId
+			LEFT OUTER JOIN dbo.COSEWICStatus nwtStatusRank on s.NWTStatusRankId = cosewic.COSEWICStatusId
 			LEFT OUTER JOIN dbo.Taxonomy kingdom on s.KingdomTaxonomyId = kingdom.TaxonomyId AND kingdom.TaxonomyGroupId = 1
 			LEFT OUTER JOIN dbo.Taxonomy phylum on s.PhylumTaxonomyId = phylum.TaxonomyId AND phylum.TaxonomyGroupId = 2
 			LEFT OUTER JOIN dbo.Taxonomy subphylum on s.SubPhylumTaxonomyId = subphylum.TaxonomyId AND subphylum.TaxonomyGroupId = 3

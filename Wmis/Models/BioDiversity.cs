@@ -162,7 +162,7 @@
 
 		public string NRank { get; set; }
 
-		public string SaraStatus { get; set; }
+		public SaraStatus SaraStatus { get; set; }
 
 		public string FederalSpeciesAtRiskStatusDescription { get; set; }
 
@@ -170,7 +170,7 @@
 
         public string NwtsarcAssessmentDescription { get; set; }
 
-		public string NwtStatusRank { get; set; }
+		public NwtStatusRank NwtStatusRank { get; set; }
 
 		public string NwtSpeciesAtRiskStatusDescription { get; set; }
 

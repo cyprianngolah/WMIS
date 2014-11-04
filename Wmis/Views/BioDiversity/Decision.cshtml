@@ -207,8 +207,8 @@
 
         <div class="form-group statusGroup">
             <label for="nwtStatusRank" class="col-md-1 control-label">NWT Status Rank</label>
-            <div class="col-md-2">
-                <input id="nwtStatusRank" type="text" class="form-control" data-bind="value: nwtStatusRank" />
+            <div class="col-md-2" data-bind="with: nwtStatusRank">
+                <select class="form-control" id="nwtStatusRank" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
             </div>
             <label for="sRank" class="col-md-1 control-label">S Rank</label>
             <div class="col-md-2">
@@ -247,8 +247,8 @@
             </div>
 
             <label for="saraStatus" class="col-md-1 control-label">SARA Status</label>
-            <div class="col-md-2">
-                <input id="saraStatus" type="text" class="form-control" data-bind="value: saraStatus">
+            <div class="col-md-2" data-bind="with: saraStatus">
+                <select class="form-control" id="saraStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
             </div>
         </div>
 

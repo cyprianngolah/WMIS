@@ -69,11 +69,11 @@
 	[COSEWICStatusId]                              INT               NULL,
 	[COSEWICStatusDescription]                     NVARCHAR (MAX)    NULL,
 	[NRank]                                        NVARCHAR (50)     NULL,
-	[SARAStatus]                                   NVARCHAR (50)     NULL,
+	[SARAStatusId]                                 INT               NULL,
 	[FederalSpeciesAtRiskStatusDescription]        NVARCHAR (MAX)    NULL,
 	[NwtSarcAssessmentId]			               INT			     NULL,
 	[NWTSARCAssessmentDescription]                 NVARCHAR (MAX)    NULL,
-	[NWTStatusRank]                                NVARCHAR (50)     NULL,
+	[NWTStatusRankId]                              INT               NULL,
 	[NWTSpeciesAtRiskStatusDescription]            NVARCHAR (MAX)    NULL,
 	[IUCNStatus]                                   NVARCHAR (50)     NULL,
 	[GRank]                                        NVARCHAR (50)     NULL,
@@ -95,5 +95,7 @@
 	CONSTRAINT [FK_Species_Taxonomy_Group] FOREIGN KEY ([GroupTaxonomyId]) REFERENCES [dbo].[Taxonomy] ([TaxonomyId]),
 	CONSTRAINT [FK_Species_StatusRanks] FOREIGN KEY ([StatusRankId]) REFERENCES [dbo].[StatusRanks] ([StatusRankId]),
 	CONSTRAINT [FK_Species_COSEWICStatus] FOREIGN KEY ([COSEWICStatusId]) REFERENCES [dbo].[COSEWICStatus] ([COSEWICStatusId]),
+	CONSTRAINT [FK_Species_SARAStatus] FOREIGN KEY ([SARAStatusId]) REFERENCES [dbo].[COSEWICStatus] ([COSEWICStatusId]),
+	CONSTRAINT [FK_Species_NWTStatusRank] FOREIGN KEY ([NWTStatusRankId]) REFERENCES [dbo].[COSEWICStatus] ([COSEWICStatusId]),
 	CONSTRAINT [FK_Species_NwtSarcAssessments] FOREIGN KEY ([NwtSarcAssessmentId]) REFERENCES [dbo].[NwtSarcAssessments] ([NwtSarcAssessmentId])
 )
