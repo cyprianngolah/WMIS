@@ -25,6 +25,12 @@ wmis.biodiversity.decision.edit = (function ($) {
 
 			$.getJSON("/api/BioDiversity/Decision/" + key, {}, function (json) {
 			    ko.mapper.fromJS(json, "auto", self.model);
+			    self.dirtyFlag = wmis.global.dirtyFlagFor(ko, self.model);
+			    $(window).bind('beforeunload', function() {
+			        if (self.dirtyFlag.isDirty()) {
+			            return "You have unsaved changes, are you sure you want to continue without saving?";
+			        }
+			    });
 				self.dataLoaded(true);
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
@@ -45,6 +51,7 @@ wmis.biodiversity.decision.edit = (function ($) {
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.model()))
 			}).success(function () {
+			    self.dirtyFlag.reset();
 				window.location.href = "/biodiversity/";
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
