@@ -23,6 +23,23 @@
 	@p_ProjectId INT = NULL
 AS
 
+	IF EXISTS (SELECT 1 FROM dbo.Collars WHERE
+		CollarId = @p_CollarId
+		AND ProjectId != @p_ProjectId
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollarId, ActionTaken) VALUES (@p_CollarId, "Assigned Project ID = " + CAST(@p_ProjectId AS VARCHAR(13)))
+	END
+
+	IF EXISTS (SELECT 1 FROM dbo.Collars WHERE
+		CollarId = @p_CollarId
+		AND CollarRegionId != @p_CollarRegionId
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollarId, ActionTaken) VALUES (@p_CollarId, "Assigned Region = " + (SELECT Name from CollarRegions where CollarRegionId = @p_CollarRegionId))
+	END
+
+
 	UPDATE
 		dbo.Collars
 	SET

@@ -131,7 +131,7 @@ wmis.collar.edit = (function ($) {
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.collar()))
 			}).success(function() {
-				
+			    $("#collarHistory").DataTable().ajax.reload();
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
