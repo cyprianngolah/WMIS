@@ -25,10 +25,20 @@ AS
 
 	IF EXISTS (SELECT 1 FROM dbo.Collars WHERE
 		CollarId = @p_CollarId
+		AND @p_ProjectId IS NOT NULL
 		AND ProjectId != @p_ProjectId
 	)
 	BEGIN
 		INSERT INTO CollarHistory (CollarId, ActionTaken) VALUES (@p_CollarId, "Assigned Project ID = " + CAST(@p_ProjectId AS VARCHAR(13)))
+	END
+
+	IF EXISTS (SELECT 1 FROM dbo.Collars WHERE
+		CollarId = @p_CollarId
+		AND @p_ProjectId IS NULL
+		AND ProjectId IS NOT NULL
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollarId, ActionTaken) VALUES (@p_CollarId, "Unassigned Project")
 	END
 
 	IF EXISTS (SELECT 1 FROM dbo.Collars WHERE

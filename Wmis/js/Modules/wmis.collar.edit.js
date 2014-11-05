@@ -60,6 +60,11 @@ wmis.collar.edit = (function ($) {
 	        $('#assignProjectModal').modal('show');
 	    };
 
+	    this.unassignProject = function () {
+	        self.collar().project().key(0);
+	        self.collar().project().name(null);
+	    };
+
 	    this.assignAnimal = function() {
 	        //TODO
 	        console.log("Clicked assign animal");
@@ -74,7 +79,11 @@ wmis.collar.edit = (function ($) {
 				self.dataLoaded(true);
 			    self.projectData = ko.computed(function() {
 			        var projectKey = self.collar().project().key();
-			        if(projectKey != 0) self.loadProject(projectKey);
+			        if (projectKey != 0) {
+			            self.loadProject(projectKey);
+			        } else {
+			            self.project(null);
+			        }
 			    });
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
