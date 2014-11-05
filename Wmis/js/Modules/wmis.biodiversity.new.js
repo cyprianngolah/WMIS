@@ -1,27 +1,35 @@
 ﻿wmis.biodiversity = wmis.biodiversity || {};
-wmis.biodiversity.new = (function ($) {
-	var options = {
+wmis.biodiversity.new = (function($) {
+    var options = {
 
-	};
+    };
 
-	function editBioDiversityViewModel() {
-		var self = this;
-		this.name = ko.observable("");
-		this.name.subscribe(function (oldValue) {
-			$.trim(self.name()) == "" ? self.saveEnabled(false) : self.saveEnabled(true);
-		});
-
-		this.saveEnabled = ko.observable(false);
-
+    function editBioDiversityViewModel() {
+        var self = this;
+        this.bd = new ko.observable({
+            name: ko.observable(""),
+            subSpeciesName: ko.observable(""),
+            ecoType: ko.observable("")
+        });
+        this.saveEnabled = ko.computed(function () {
+            var bd = self.bd();
+	        var fields = [
+	            bd.name,
+	            bd.subSpeciesName,
+	            bd.ecoType
+	        ];
+	        return _.every(fields, function(field) {
+	            return $.trim(field()) != "";
+	        });
+	    });
+		
 		this.saveBioDiversity = function () {
-			var name = $.trim(self.name());
-
 			var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
 			$.ajax({
 				url: "/api/biodiversity/",
 				type: "POST",
-				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-				data: '=' + encodeURIComponent(name),
+				contentType: "application/json",
+				data: JSON.stringify(ko.toJS(self.bd())),
 			}).success(function(biodiversityKey) {
 				window.location.href = "/Biodiversity/Edit/" + biodiversityKey;
 			}).always(function () {

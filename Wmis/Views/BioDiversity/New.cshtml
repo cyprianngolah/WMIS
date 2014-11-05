@@ -15,15 +15,26 @@
 }
 
 <div class="col-md-6">
-	<form role="form">
-		<div class="form-group">
-			<label for="name">Name</label>
-			<input type="text" class="form-control" id="name" data-bind="value: name, valueUpdate: 'keyup'" />
-		</div>
+    <form role="form">
+        <div data-bind="with: bd">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+            </div>
 
-		<div class="text-right">
-			<button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: saveEnabled">Save</button>
-			<a href="/BioDiversity/Index" class="btn btn-default">Cancel</a>
-		</div>
-	</form>
+
+            <div class="form-group">
+                <label for="subSpecies">Sub Species</label>
+                <input type="text" class="form-control" id="subSpecies" data-bind="value: subSpeciesName, valueUpdate: 'keyup'">
+            </div>
+            <div class="form-group">
+                <label for="ecoType">Eco Type</label>
+                <input type="text" class="form-control" id="ecoType" data-bind="value: ecoType, valueUpdate: 'keyup'">
+            </div>
+        </div>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: saveEnabled">Save</button>
+            <a href="/BioDiversity/Index" class="btn btn-default">Cancel</a>
+        </div>
+    </form>
 </div>

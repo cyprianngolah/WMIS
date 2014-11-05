@@ -348,13 +348,15 @@
 			}
 		}
 
-		public int BioDiversityCreate(string name)
+        public int BioDiversityCreate(BioDiversityNew bdn)
 		{
 			using (var c = NewWmisConnection)
 			{
 				var param = new
 				{
-					p_name = name
+					p_name = bdn.Name,
+					p_subSpeciesName = bdn.SubSpeciesName,
+                    p_ecoType = bdn.EcoType
 				};
 				return c.Query<int>(BIODIVERSITY_CREATE, param, commandType: CommandType.StoredProcedure).Single();
 			}

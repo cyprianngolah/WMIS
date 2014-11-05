@@ -221,6 +221,7 @@
     </Compile>
     <Compile Include="Models\Base\AuditedKeyedModel.cs" />
     <Compile Include="Models\Base\KeyedModel.cs" />
+    <Compile Include="Models\BioDiversityNew.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\Collar.cs" />
     <Compile Include="Models\CollarHistory.cs" />
