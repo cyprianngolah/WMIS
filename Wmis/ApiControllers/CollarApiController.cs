@@ -123,5 +123,12 @@
             return Repository.CollarHistorySearch(chr);
         }
 
+        [HttpPut]
+        [Route("history")]
+        public void Update([FromBody]CollarHistory collarHistory)
+        {
+            Repository.CollarHistorySave(collarHistory);
+        }
+
     }
 }

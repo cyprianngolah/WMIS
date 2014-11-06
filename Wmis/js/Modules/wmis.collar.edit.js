@@ -15,6 +15,8 @@ wmis.collar.edit = (function ($) {
 		this.dataLoaded = ko.observable(false);
 		this.project = ko.observable();
 
+	    this.selectedCollarHistory = ko.observable();
+
 	    this.projectOptions = {
 	        minimumInputLength: 1,
 	        ajax: {
@@ -64,6 +66,27 @@ wmis.collar.edit = (function ($) {
 	        self.collar().project().key(0);
 	        self.collar().project().name(null);
 	    };
+
+	    this.cancelHistoryEdit = function () {
+	        $('#editHistoryCommentModal').modal('hide');
+	    }
+
+	    this.saveHistoryEdit = function () {
+	        wmis.global.showWaitingScreen("Saving...");
+
+	        $.ajax({
+	            url: "/api/collar/history",
+	            type: "PUT",
+	            contentType: "application/json",
+	            dataType: "json",
+	            data: JSON.stringify(ko.toJS(self.selectedCollarHistory()))
+	        }).success(function () {
+	            $("#collarHistory").DataTable().ajax.reload();
+	            $('#editHistoryCommentModal').modal('hide');
+	        }).always(function () {
+	            wmis.global.hideWaitingScreen();
+	        }).fail(wmis.global.ajaxErrorHandler);
+	    }
 
 	    this.assignAnimal = function() {
 	        //TODO
@@ -147,7 +170,7 @@ wmis.collar.edit = (function ($) {
 		};
 	}
 
-	function initializeHistoryDataTable(collarKey) {
+	function initializeHistoryDataTable(collarKey, viewModel) {
 	    var collarTable = $("#collarHistory").DataTable({
 	        "iDisplayLength": 25,
 	        "ordering": false,
@@ -165,7 +188,15 @@ wmis.collar.edit = (function ($) {
                     }
                 },
 				{ "data": "actionTaken" },
-				{ "data": "comment" }
+				{ "data": "comment" },
+	            {
+	                "data": null,
+                    "width": "40px",
+                    "className": "editHistory",
+                    "render": function (data, type, row, meta) {
+	                    return '<span class="glyphicon glyphicon-edit" data-row-index="' + meta.row+ '"/>';
+	                }
+	            }
 	        ],
             searching: false,
             "ajax": function (data, callback, settings) {
@@ -185,8 +216,13 @@ wmis.collar.edit = (function ($) {
                     callback(result);
                 });
             },
-            
-
+	    });
+	    $("#collarHistory").on('click', 'td.editHistory span', function (event) {
+	        var rowIndex = $(event.target).data().rowIndex;
+	        var rowData = $("#collarHistory").DataTable().row(rowIndex).data();
+	        ko.mapper.fromJS(rowData, {}, viewModel.selectedCollarHistory);
+	        $('#editHistoryCommentModal').modal('show');
+	        console.log(event);
 	    });
 	}
 
@@ -198,7 +234,7 @@ wmis.collar.edit = (function ($) {
 		viewModel.getDropDowns();
 		viewModel.getcollar(initOptions.collarKey);
 
-	    initializeHistoryDataTable(initOptions.collarKey);
+		initializeHistoryDataTable(initOptions.collarKey, viewModel);
 
 		ko.applyBindings(viewModel);
 	}

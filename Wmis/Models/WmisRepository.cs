@@ -211,9 +211,14 @@
         private const string COLLARMALFUNCTION_GET = "dbo.CollarMalfunction_Get";
 
         /// <summary>
-        /// The Collar Malfunction Get stored procedure
+        /// The Collar History Search stored procedure
         /// </summary>
         private const string COLLARHISTORY_SEARCH = "dbo.CollarHistory_Search";
+
+        /// <summary>
+        /// The Collar Save stored procedure
+        /// </summary>
+        private const string COLLARHISTORY_SAVE = "dbo.CollarHistory_Save";
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -1738,6 +1743,19 @@
 
                 pagedResults.Data = results.ToList();
                 return pagedResults;
+            }
+        }
+
+        public void CollarHistorySave(Models.CollarHistory collarHistory)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_CollarHistoryId = collarHistory.Key,
+                    p_Comment = collarHistory.Comment,
+                };
+                c.Execute(COLLARHISTORY_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
         #endregion
