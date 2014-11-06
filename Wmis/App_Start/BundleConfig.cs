@@ -41,8 +41,8 @@
 						"~/Scripts/select2.js"));		
 
 			bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
-						"~/Scripts/DataTables-1.10.0/jquery.dataTables.js",
-						"~/Scripts/DataTables-1.10.0/dataTables.bootstrap.js"));
+						"~/Scripts/DataTables-1.10.3/jquery.dataTables.js",
+						"~/Scripts/DataTables-1.10.3/dataTables.bootstrap.js"));
 
 			//////////////////////////////////////////////////////////////////////
 			// Library/App Styles
@@ -60,8 +60,8 @@
 						"~/content/select2-bootstrap.css"));
 
 			bundles.Add(new StyleBundle("~/bundles/content/datatables").Include(
-						"~/content/datatables-1.10.0/css/jquery.dataTables.css",
-						"~/content/datatables-1.10.0/css/dataTables.bootstrap.css"));
+						"~/content/datatables-1.10.3/css/jquery.dataTables.css",
+						"~/content/datatables-1.10.3/css/dataTables.bootstrap.css"));
 
 			//////////////////////////////////////////////////////////////////////
 			// Module Script Bundles
