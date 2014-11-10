@@ -89,6 +89,9 @@
 
             bundles.Add(new ScriptBundle("~/bundles/collar/edit").Include(
                         "~/js/modules/wmis.collar.edit.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/collar/mapping").Include(
+                        "~/js/modules/wmis.collar.mapping.js"));
             #endregion
 
 			#region Projects

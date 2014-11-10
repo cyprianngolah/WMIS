@@ -14,12 +14,23 @@
 @section Styles {
     @Html.Raw(Styles.Render("~/bundles/content/datatables"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
+
+<style>
+    #map-canvas {
+        height: 500px;
+        width: 100%;
+    }
+</style>
+
 }
 
 @section Scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/collar/mapping"))
 	@Html.Raw(Scripts.Render("~/bundles/collar/edit"))
 
     <script>
@@ -41,13 +52,13 @@
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="hidden" name="selectedProject" id="selectedProject" class="form-control" data-bind="select2: projectOptions" />
+                            <input type="hidden" name="selectedProject" id="selectedProject" class="form-control" data-bind="select2: projectActions.projectOptions" />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancelProjectSelection">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: saveProjectSelection">Apply Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: projectActions.cancelProjectSelection">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: projectActions.saveProjectSelection">Apply Changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -55,7 +66,7 @@
     
     <div class="modal" id="editHistoryCommentModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" data-bind="with: history">
                 <div class="modal-header">
                     <h4 class="modal-title">Modify Comment</h4>
                 </div>
@@ -93,7 +104,8 @@
 	<div class="row">
 		<div class="col-md-12 text-right">
 			<a href="/Collar/" class="btn btn-default">Cancel</a>
-			<button type="submit" class="btn btn-primary" data-bind="click: saveCollar, enable: canSave">Save</button>
+		    <button type="submit" class="btn btn-default" data-bind="click: argosData.getArgosCollarData">Argos</button>
+		    <button type="submit" class="btn btn-primary" data-bind="click: saveCollar, enable: canSave">Save</button>
 		</div>
 	</div>
 
@@ -101,7 +113,7 @@
 		<div class="col-md-12">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="active"><a href="#general" role="tab" data-toggle="tab" class="colouredTab generalTab">General</a></li>
-				<li><a href="#locations" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Locations</a></li>
+                <li data-bind="click: argosData.loadMap"><a href="#locations" role="tab" data-toggle="tab" id="map-tab" class="colouredTab reproductionTab">Locations</a></li>
 				<li><a href="#history" role="tab" data-toggle="tab" class="colouredTab distributionTab">History</a></li>
 			</ul>
 
@@ -128,8 +140,8 @@
                     <div class="form-group">
                         <label for="collarType" class="col-md-1 control-label">Collar Type</label>
                         <div class="col-md-3" data-bind="with: collarType">
-                            <!-- ko if: $root.collarTypes().length > 0 -->
-                            <select class="form-control" id="collarType" name="collarType" data-bind="options: $root.collarTypes, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <!-- ko if: $root.dropdowns.collarTypes().length > 0 -->
+                            <select class="form-control" id="collarType" name="collarType" data-bind="options: $root.dropdowns.collarTypes, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
                             <!-- /ko -->
                         </div>
 
@@ -147,22 +159,22 @@
                     <div class="form-group">
                         <label for="collarStatus" class="col-md-1 control-label">Collar Status</label>
                         <div class="col-md-3" data-bind="with: collarStatus">
-                            <!-- ko if: $root.collarStatuses().length > 0 -->
-                            <select class="form-control" id="collarStatus" name="collarStatus" data-bind="options: $root.collarStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <!-- ko if: $root.dropdowns.collarStatuses().length > 0 -->
+                            <select class="form-control" id="collarStatus" name="collarStatus" data-bind="options: $root.dropdowns.collarStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
                             <!-- /ko -->
                         </div>
 
                         <label for="collarMalfunction" class="col-md-1 control-label">Collar Malfunction</label>
                         <div class="col-md-3" data-bind="with: collarMalfunction">
-                            <!-- ko if: $root.collarMalfunctions().length > 0 -->
-                            <select class="form-control" id="collarMalfunction" name="collarMalfunction" data-bind="options: $root.collarMalfunctions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <!-- ko if: $root.dropdowns.collarMalfunctions().length > 0 -->
+                            <select class="form-control" id="collarMalfunction" name="collarMalfunction" data-bind="options: $root.dropdowns.collarMalfunctions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
                             <!-- /ko -->
                         </div>
 
                         <label for="collarRegion" class="col-md-1 control-label">Region</label>
                         <div class="col-md-3" data-bind="with: collarRegion">
-                            <!-- ko if: $root.collarRegions().length > 0 -->
-                            <select class="form-control" id="collarRegion" name="collarRegion" data-bind="options: $root.collarRegions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <!-- ko if: $root.dropdowns.collarRegions().length > 0 -->
+                            <select class="form-control" id="collarRegion" name="collarRegion" data-bind="options: $root.dropdowns.collarRegions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
                             <!-- /ko -->
                         </div>
                     </div>
@@ -170,8 +182,8 @@
                     <div class="form-group">
                         <label for="collarState" class="col-md-1 control-label">Collar State</label>
                         <div class="col-md-3" data-bind="with: collarState">
-                            <!-- ko if: $root.collarStates().length > 0 -->
-                            <select class="form-control" id="collarState" name="collarState" data-bind="options: $root.collarStates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <!-- ko if: $root.dropdowns.collarStates().length > 0 -->
+                            <select class="form-control" id="collarState" name="collarState" data-bind="options: $root.dropdowns.collarStates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
                             <!-- /ko -->
                         </div>
 
@@ -194,7 +206,7 @@
                             <div class="row">
                                 <div class="col-md-4">Animal</div>
                                 <div class="col-md-8 text-right">
-                                    <button class="btn btn-default" data-bind="click: $root.assignAnimal">Assign Animal</button>
+                                    <button class="btn btn-default" data-bind="click: $root.animal.assignAnimal">Assign Animal</button>
                                 </div>
                             </div>
                             <hr />
@@ -206,15 +218,15 @@
                             <div class="row">
                                 <div class="col-md-4">Project</div>
                                 <div class="col-md-8 text-right">
-                                    <button class="btn btn-default" data-bind="visible: !$root.project(), click: $root.assignProject">Assign Project</button>
-                                    <button class="btn btn-default" data-bind="visible: $root.project, click: $root.assignProject">Assign New Project</button>
-                                    <button class="btn btn-default" data-bind="visible: $root.project, click: $root.unassignProject">Unassign Project</button>
+                                    <button class="btn btn-default" data-bind="visible: !$root.projectActions.projectData(), click: $root.projectActions.assignProject">Assign Project</button>
+                                    <button class="btn btn-default" data-bind="visible: $root.projectActions.projectData, click: $root.projectActions.assignProject">Assign New Project</button>
+                                    <button class="btn btn-default" data-bind="visible: $root.projectActions.projectData, click: $root.projectActions.unassignProject">Unassign Project</button>
                                 </div>
                             </div>
                             <hr />
                         </div>
 
-                        <div class="form-group" data-bind="with: $root.project">
+                        <div class="form-group" data-bind="with: $root.projectActions.projectData">
                             <div class="col-md-12">
                                 <table class="table table-bordered table-striped">
                                     <thead>
@@ -313,7 +325,7 @@
                 </div>
 				
 				<div class="tab-pane form-horizontal" id="locations">
-					
+                    <div id="map-canvas"></div>
 				</div>
 				
 				<div id="history" class="tab-pane form-horizontal">

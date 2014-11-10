@@ -10,7 +10,7 @@
 	using Dto;
     using Extensions;
 
-	/// <summary>
+    /// <summary>
 	/// WMIS Repository for SQL
 	/// </summary>
 	public class WmisRepository
@@ -219,6 +219,12 @@
         /// The Collar Save stored procedure
         /// </summary>
         private const string COLLARHISTORY_SAVE = "dbo.CollarHistory_Save";
+
+        private const string ARGOSPASS_CREATE = "dbo.ArgosPass_Create";
+
+        private const string ARGOSPASS_UPDATE = "dbo.ArgosPass_Update";
+
+        private const string ARGOSPASS_SEARCH = "dbo.ArgosPass_Search";
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -1758,6 +1764,54 @@
                 };
                 c.Execute(COLLARHISTORY_SAVE, param, commandType: CommandType.StoredProcedure);
             }
+        }
+        #endregion
+
+        #region Argos Passes
+        public void ArgosPassUpdate(int collarName, IEnumerable<ArgosPassForTvp> passes)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_argosPasses = passes.AsTableValuedParameter("dbo.ArgosPassTableType"),
+                    p_collarName = collarName,
+                };
+                c.Query<int>(ARGOSPASS_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public Dto.PagedResultset<ArgosPass> ArgosPassGet(Dto.ArgosPassSearchRequest apsr)
+        {
+            var pagedResultset = new Dto.PagedResultset<ArgosPass>
+            {
+                DataRequest = apsr,
+                ResultCount = 0
+            };
+
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = apsr.StartRow,
+                    p_rowCount = apsr.RowCount,
+                    p_collarKey = apsr.CollarId
+                };
+
+                using (var q = c.QueryMultiple(ARGOSPASS_SEARCH, param, commandType: CommandType.StoredProcedure))
+                {
+                    pagedResultset.Data = q.Read<int, ArgosPass, ArgosPass>(
+                    (tc, ap) =>
+                    {
+                        pagedResultset.ResultCount = tc;
+                        return ap;
+                    },
+                        "Key").ToList();
+
+                }
+            }
+
+            return pagedResultset;
         }
         #endregion
         #endregion

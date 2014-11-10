@@ -224,6 +224,11 @@
     <Build Include="dbo\Tables\CollarHistory.sql" />
     <Build Include="dbo\Stored Procedures\CollarHistory_Search.sql" />
     <Build Include="dbo\Stored Procedures\CollarHistory_Save.sql" />
+    <Build Include="dbo\Tables\ArgosPasses.sql" />
+    <Build Include="dbo\Stored Procedures\ArgosPass_Create.sql" />
+    <Build Include="dbo\Stored Procedures\ArgosPass_Search.sql" />
+    <Build Include="dbo\Stored Procedures\ArgosPass_Update.sql" />
+    <Build Include="dbo\User Defined Types\ArgosPassTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
