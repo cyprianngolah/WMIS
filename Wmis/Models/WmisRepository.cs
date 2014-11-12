@@ -1526,6 +1526,7 @@
                     p_Size = collar.Size,
                     p_BeltingColour = collar.BeltingColour,
                     p_FirmwareVersion = collar.FirmwareVersion,
+                    p_Comments = collar.Comments,
                     p_DropOffDate = collar.DropOffDate,
                     p_EstimatedDropOff = collar.EstimatedDropOff,
                     p_EstimatedGpsFailure = collar.EstimatedGpsFailure,

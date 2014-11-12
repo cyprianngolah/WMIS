@@ -12,6 +12,7 @@ AS
 		c.Size,
 		c.BeltingColour,
 		c.FirmwareVersion,
+		c.Comments,
 		c.DropOffDate,
 		c.EstimatedDropOff,
 		c.EstimatedGpsFailure,

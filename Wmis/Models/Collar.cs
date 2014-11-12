@@ -57,6 +57,8 @@
 	    
         public string FirmwareVersion { get; set; }
 
+        public string Comments { get; set; }
+
         [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? DropOffDate { get; set; }
 

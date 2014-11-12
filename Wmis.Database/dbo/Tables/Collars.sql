@@ -16,6 +16,7 @@
 	[Size]                        NVARCHAR (50)     NULL,
 	[BeltingColour]               NVARCHAR (50)     NULL,
 	[FirmwareVersion]             NVARCHAR (MAX)    NULL,
+	[Comments]                    NVARCHAR (MAX)    NULL,
 	[DropOffDate]                 DATETIME          NULL,
 	[EstimatedDropOff]            DATETIME          NULL,
 	[EstimatedGpsFailure]         DATETIME          NULL,
