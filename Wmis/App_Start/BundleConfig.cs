@@ -80,18 +80,18 @@
 			"~/js/modules/wmis.biodiversity.decision.edit.js"));
 			#endregion
 
-            #region Collar
-            bundles.Add(new ScriptBundle("~/bundles/collar/index").Include(
-                        "~/js/modules/wmis.collar.index.js"));
+            #region Collared Animal
+            bundles.Add(new ScriptBundle("~/bundles/collaredanimal/index").Include(
+                        "~/js/modules/wmis.collaredanimal.index.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/collar/new").Include(
-                        "~/js/modules/wmis.collar.new.js"));
+            bundles.Add(new ScriptBundle("~/bundles/collaredanimal/new").Include(
+                        "~/js/modules/wmis.collaredanimal.new.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/collar/edit").Include(
-                        "~/js/modules/wmis.collar.edit.js"));
+            bundles.Add(new ScriptBundle("~/bundles/collaredanimal/edit").Include(
+                        "~/js/modules/wmis.collaredanimal.edit.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/collar/mapping").Include(
-                        "~/js/modules/wmis.collar.mapping.js"));
+            bundles.Add(new ScriptBundle("~/bundles/collaredanimal/mapping").Include(
+                        "~/js/modules/wmis.collaredanimal.mapping.js"));
             #endregion
 
 			#region Projects

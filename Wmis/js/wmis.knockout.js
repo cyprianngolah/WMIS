@@ -15,7 +15,13 @@ $(function () {
                 $(element).select2(options);
             }, 0);
         },
-        update: function (element) {
+        update: function (element, valueAccessor) {
+            /*
+            Select2 doesn't need us to pass it the key, 
+            but by accessing the key's value we ensure that this update function is fired 
+            */
+            var value = ko.unwrap(valueAccessor());
+            value.key && value.key();
         	$(element).trigger('change');
         }
     };
@@ -81,6 +87,31 @@ $(function () {
     		var date = moment.utc(valueUnwrapped).local().format('L');
     		$(element).datepicker('update', date);
     	}
+    };
+
+    ko.bindingHandlers.booleanValueSelect = {
+        init: function (element, valueAccessor, allBindingsAccessor) {
+            $(element).append('<option value="true">Yes</option><option value="false">No</option><option value="unknown">Unknown</option>');
+            var observable = valueAccessor(),
+                interceptor = ko.computed({
+                    read: function () {
+                        if (observable() == null) {
+                            return "unknown";
+                        } else {
+                            return observable().toString();
+                        }
+                    },
+                    write: function (newValue) {
+                        if (newValue == "unknown") {
+                            observable(null);
+                        } else {
+                            observable(newValue === "true");
+                        }
+                    }
+                });
+
+            ko.applyBindingsToNode(element, { value: interceptor });
+        }
     };
 
     ko.bindingHandlers.dateText = {

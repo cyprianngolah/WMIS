@@ -1,17 +1,17 @@
-﻿CREATE PROCEDURE [dbo].[AnimalMortality_Get]
+﻿CREATE PROCEDURE [dbo].[ConfidenceLevel_Get]
 	@p_from INT = 0,
 	@p_to INT = 500,
-	@p_animalMortalityId INT = NULL,
+	@p_confidenceLevelId INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	SELECT
 		COUNT(*) OVER() as TotalRowCount,
-		t.AnimalMortalityId  as [Key],
+		t.ConfidenceLevelId  as [Key],
 		t.Name
 	FROM
-		dbo.AnimalMortalities t
+		dbo.ConfidenceLevels t
 	WHERE
-		t.AnimalMortalityId = ISNULL(@p_animalMortalityId, t.AnimalMortalityId)
+		t.ConfidenceLevelId = ISNULL(@p_confidenceLevelId, t.ConfidenceLevelId)
 		AND (@p_keywords IS NULL OR t.Name LIKE '%' + @p_keywords + '%')
 	ORDER BY
 		t.Name
@@ -23,5 +23,5 @@ AS
 RETURN 0
 GO
 
-GRANT EXECUTE ON [dbo].[AnimalMortality_Get] TO [WMISUser]
+GRANT EXECUTE ON [dbo].[ConfidenceLevel_Get] TO [WMISUser]
 GO

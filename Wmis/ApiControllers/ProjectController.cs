@@ -83,10 +83,10 @@
 		}
 		#endregion
 
-		#region Project Collars
+		#region Project CollaredAnimals
 		[HttpGet]
 		[Route("{projectKey:int}/collars")]
-		public Dto.PagedResultset<Models.Collar> GetCollars([FromUri]Dto.ProjectCollarRequest psr)
+		public Dto.PagedResultset<Models.Collar> GetCollaredAnimals([FromUri]Dto.ProjectCollarRequest psr)
 		{
 			return Repository.ProjectCollarGet(psr);
 		}

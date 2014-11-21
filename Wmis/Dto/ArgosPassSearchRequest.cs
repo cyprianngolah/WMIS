@@ -5,6 +5,6 @@
 	/// </summary>
 	public class ArgosPassSearchRequest : PagedDataRequest
 	{
-		public int CollarId { get; set; }
+		public int CollaredAnimalId { get; set; }
 	}
 }

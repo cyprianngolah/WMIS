@@ -207,11 +207,11 @@
     <Build Include="dbo\Stored Procedures\CollarMalfunction_Get.sql" />
     <Build Include="dbo\Stored Procedures\AnimalMortality_Get.sql" />
     <Build Include="dbo\Stored Procedures\AnimalStatus_Get.sql" />
-    <Build Include="dbo\Tables\Collars.sql" />
-    <Build Include="dbo\Stored Procedures\Collar_Create.sql" />
-    <Build Include="dbo\Stored Procedures\Collar_Get.sql" />
-    <Build Include="dbo\Stored Procedures\Collar_Update.sql" />
-    <Build Include="dbo\Stored Procedures\Collar_Search.sql" />
+    <Build Include="dbo\Tables\CollaredAnimals.sql" />
+    <Build Include="dbo\Stored Procedures\CollaredAnimal_Create.sql" />
+    <Build Include="dbo\Stored Procedures\CollaredAnimal_Get.sql" />
+    <Build Include="dbo\Stored Procedures\CollaredAnimal_Update.sql" />
+    <Build Include="dbo\Stored Procedures\CollaredAnimal_Search.sql" />
     <Build Include="dbo\Tables\CollarTypes.sql" />
     <None Include="dbo\Fill\CollarTypes.sql" />
     <Build Include="dbo\Stored Procedures\CollarType_Get.sql" />
@@ -230,9 +230,31 @@
     <Build Include="dbo\Stored Procedures\ArgosPass_Update.sql" />
     <Build Include="dbo\User Defined Types\ArgosPassTableType.sql" />
     <Build Include="dbo\Stored Procedures\BioDiversity_GetAll.sql" />
+    <Build Include="dbo\Tables\AgeClasses.sql" />
+    <Build Include="dbo\Tables\AnimalSexes.sql" />
+    <Build Include="dbo\Tables\HerdAssociationMethods.sql" />
+    <Build Include="dbo\Tables\ConfidenceLevels.sql" />
+    <Build Include="dbo\Tables\HerdPopulations.sql" />
+    <Build Include="dbo\Tables\BreedingStatuses.sql" />
+    <Build Include="dbo\Tables\BreedingStatusMethods.sql" />
+    <None Include="dbo\Fill\AgeClasses.sql" />
+    <None Include="dbo\Fill\AnimalSexes.sql" />
+    <None Include="dbo\Fill\HerdAssociationMethods.sql" />
+    <None Include="dbo\Fill\HerdPopulations.sql" />
+    <None Include="dbo\Fill\ConfidenceLevels.sql" />
+    <None Include="dbo\Fill\BreedingStatusMethods.sql" />
+    <None Include="dbo\Fill\BreedingStatuses.sql" />
+    <Build Include="dbo\Stored Procedures\AnimalSex_Get.sql" />
+    <Build Include="dbo\Stored Procedures\BreedingStatusMethod_Get.sql" />
+    <Build Include="dbo\Stored Procedures\BreedingStatus_Get.sql" />
+    <Build Include="dbo\Stored Procedures\ConfidenceLevel_Get.sql" />
+    <Build Include="dbo\Stored Procedures\HerdAssociationMethod_Get.sql" />
+    <Build Include="dbo\Stored Procedures\HerdPopulation_Get.sql" />
+    <Build Include="dbo\Stored Procedures\AgeClass_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
+    <None Include="Wmis.PreDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Fill\ProjectStatus.sql" />

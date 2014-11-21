@@ -8,7 +8,7 @@
     public class ArgosPass : KeyedModel
 	{
 
-        public int CollarId { get; set; }
+        public int CollaredAnimalId { get; set; }
 
         public double Latitude { get; set; }
 

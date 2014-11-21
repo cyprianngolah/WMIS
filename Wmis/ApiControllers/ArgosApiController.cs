@@ -29,19 +29,19 @@ namespace Wmis.Controllers
         }
         
         [HttpPost]
-        [Route("run/{collarId:int?}")]
-        public List<ArgosPassForTvp> RetrieveForCollar(int collarId)
+        [Route("run/{collaredAnimalId:int?}")]
+        public List<ArgosPassForTvp> RetrieveForCollar(int collaredAnimalId)
         {
-            return this.retrievePathFromArgos(collarId);
+            return this.retrievePathFromArgos(collaredAnimalId);
         }
 
-        List<ArgosPassForTvp> retrievePathFromArgos(int collarId)
+        List<ArgosPassForTvp> retrievePathFromArgos(int collaredAnimalId)
         {
-            var argosXmlString = retreiveArgosXmlStringForCollar(collarId);
+            var argosXmlString = retreiveArgosXmlStringForCollar(collaredAnimalId);
             var argosData = convertArgosXmlStringToArgosData(argosXmlString);
             var argosPasses = convertArgosDataToPasses(argosData);
 
-            Repository.ArgosPassUpdate(collarId, argosPasses);
+            Repository.ArgosPassUpdate(collaredAnimalId, argosPasses);
 
             return argosPasses;
         }

@@ -1,0 +1,196 @@
+﻿<div class="tab-pane form-horizontal active" data-bind="with: collar" id="animalTab">
+    <div class="form-group">
+        <label for="targetSpecies" class="col-md-2 control-label">Target Species</label>
+        <div class="col-md-3">
+            <input type="hidden" class="form-control" id="targetSpecies" name="targetSpecies" data-bind="value: speciesId, select2: $root.targetSpeciesOptions"></input>
+        </div>
+        <div class="col-md-1"></div>
+        <label for="animalStatus" class="col-md-1 control-label">Animal Status</label>
+        <div class="col-md-2" data-bind="with: animalStatus">
+            <!-- ko if: $root.dropdowns.collarTypes().length > 0 -->
+            <select class="form-control" id="animalStatus" name="animalStatus" data-bind="options: $root.dropdowns.animalStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="animalId" class="col-md-2 control-label">Animal ID</label>
+        <div class="col-md-2">
+            <input class="form-control" id="animalId" type="text" data-bind="value: animalId" />
+        </div>
+        <div class="col-md-1"></div>
+        <label for="estimatedBirthYear" class="col-md-2 control-label">Estimated Year of Birth</label>
+        <div class="col-md-2">
+            <input class="form-control" id="estimatedBirthYear" type="text" data-bind="value: estimatedYearOfBirth" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="ageClass" class="col-md-2 control-label">Age Class</label>
+        <div class="col-md-2" data-bind="with: ageClass">
+            <!-- ko if: $root.dropdowns.ageClasses().length > 0 -->
+            <select class="form-control" id="ageClass" name="ageClass" data-bind="options: $root.dropdowns.ageClasses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <!-- /ko -->
+        </div>
+        <div class="col-md-1"></div>
+        <label for="estimatedBirthYearMethod" class="col-md-2 control-label">Estimated Year of Birth Method</label>
+        <div class="col-md-2">
+            <input class="form-control" id="estimatedBirthYearMethod" type="text" data-bind="value: estimatedYearOfBirthMethod" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="animalSex" class="col-md-2 control-label">Sex</label>
+        <div class="col-md-2" data-bind="with: animalSex">
+            <!-- ko if: $root.dropdowns.animalSexes().length > 0 -->
+            <select class="form-control" id="animalSex" name="animalSex" data-bind="options: $root.dropdowns.animalSexes, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <!-- /ko -->
+        </div>
+        <div class="col-md-1"></div>
+        <label for="estimatedBirthYearBy" class="col-md-2 control-label">Estimated Year of Birth By</label>
+        <div class="col-md-2">
+            <input class="form-control" id="estimatedBirthYearBy" type="text" data-bind="value: estimatedYearOfBirthBy" />
+        </div>
+    </div>
+    <div class="col-md-12 h4">
+        <div class="row">
+            <div class="col-md-4">Herd Association</div>
+            <div class="col-md-8 text-right">
+                <button class="btn btn-default" data-bind="click: $root.editHerdAssociation">Update Herd Association</button>
+            </div>
+        </div>
+        <hr />
+    </div>
+    <div class="form-group">
+        <label for="herdPopulation" class="col-md-1 control-label">Population</label>
+        <div class="col-md-2" data-bind="with: herdPopulation">
+            <!-- ko if: $root.dropdowns.herdPopulations().length > 0 -->
+            <select class="form-control" id="herdPopulation" name="herdPopulation" disabled data-bind="options: $root.dropdowns.herdPopulations, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { key: key }"></select>
+            <!-- /ko -->
+        </div>
+        <label for="herdAssociationConfidenceLevel" class="col-md-1 control-label">Confidence</label>
+        <div class="col-md-2" data-bind="with: herdAssociationConfidenceLevel">
+            <!-- ko if: $root.dropdowns.confidenceLevels().length > 0 -->
+            <select class="form-control" id="herdAssociationConfidenceLevel" name="herdAssociationConfidenceLevel" disabled data-bind="options: $root.dropdowns.confidenceLevels, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { key: key }"></select>
+            <!-- /ko -->
+        </div>
+        <label for="herdAssociationMethod" class="col-md-1 control-label">Method</label>
+        <div class="col-md-2" data-bind="with: herdAssociationMethod">
+            <!-- ko if: $root.dropdowns.herdAssociationMethods().length > 0 -->
+            <select class="form-control" id="herdAssociationMethod" name="herdAssociationMethod" disabled data-bind="options: $root.dropdowns.herdAssociationMethods, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { key: key }"></select>
+            <!-- /ko -->
+        </div>
+        <label for="herdAssociationDate" class="col-md-1 control-label">Effective Date</label>
+        <div class="col-md-2">
+            <input class="form-control" id="herdAssociationDate" type="date" disabled data-bind="value: herdAssociationDate" />
+        </div>
+    </div>
+    <div class="col-md-12 h4">
+        <div class="row">
+            <div class="col-md-4">Breeding Status</div>
+            <div class="col-md-8 text-right">
+                <button class="btn btn-default" data-bind="click: $root.editBreedingStatus">Update Breeding Status</button>
+            </div>
+        </div>
+        <hr />
+    </div>
+    <div class="form-group">
+        <label for="breedingStatus" class="col-md-1 control-label">Status</label>
+        <div class="col-md-2" data-bind="with: breedingStatus">
+            <!-- ko if: $root.dropdowns.breedingStatuses().length > 0 -->
+            <select class="form-control" id="breedingStatus" name="breedingStatus" disabled data-bind="options: $root.dropdowns.breedingStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { key: key }"></select>
+            <!-- /ko -->
+        </div>
+        <label for="breedingStatusConfidenceLevel" class="col-md-1 control-label">Confidence</label>
+        <div class="col-md-2" data-bind="with: breedingStatusConfidenceLevel">
+            <!-- ko if: $root.dropdowns.confidenceLevels().length > 0 -->
+            <select class="form-control" id="breedingStatusConfidenceLevel" name="breedingStatusConfidenceLevel" disabled data-bind="options: $root.dropdowns.confidenceLevels, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { key: key }"></select>
+            <!-- /ko -->
+        </div>
+        <label for="breedingStatusMethod" class="col-md-1 control-label">Method</label>
+        <div class="col-md-2" data-bind="with: breedingStatusMethod">
+            <!-- ko if: $root.dropdowns.breedingStatusMethods().length > 0 -->
+            <select class="form-control" id="breedingStatusMethod" name="breedingStatusMethod" disabled data-bind="options: $root.dropdowns.breedingStatusMethods, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { key: key }"></select>
+            <!-- /ko -->
+        </div>
+        <label for="breedingStatusDate" class="col-md-1 control-label">Effective Date</label>
+        <div class="col-md-2">
+            <input class="form-control" id="breedingStatusDate" type="date" disabled data-bind="value: breedingStatusDate" />
+        </div>
+    </div>
+    <div class="col-md-12 h4">
+        <div class="row">
+            <div class="col-md-4">Mortality</div>
+            <div class="col-md-8 text-right">
+            </div>
+        </div>
+        <hr />
+    </div>
+    <div class="form-group">
+        <label for="mortalityCause" class="col-md-2 control-label">Cause</label>
+        <div class="col-md-2" data-bind="with: animalMortality">
+            <!-- ko if: $root.dropdowns.animalMortalities().length > 0 -->
+            <select class="form-control" id="mortalityCause" name="mortalityCause" data-bind="options: $root.dropdowns.animalMortalities, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <!-- /ko -->
+        </div>
+        <label for="mortalityDate" class="col-md-2 control-label">Effective Date</label>
+        <div class="col-md-2">
+            <input class="form-control" id="mortalityDate" type="date" data-bind="value: mortalityDate" />
+        </div>
+        <label for="mortalityConfidence" class="col-md-2 control-label">Confidence</label>
+        <div class="col-md-2" data-bind="with: mortalityConfidence">
+            <!-- ko if: $root.dropdowns.confidenceLevels().length > 0 -->
+            <select class="form-control" id="mortalityConfidence" name="mortalityConfidence" data-bind="options: $root.dropdowns.confidenceLevels, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="mortalityLatitude" class="col-md-2 control-label">Latitude</label>
+        <div class="col-md-2">
+            <input class="form-control" id="mortalityLatitude" type="text" data-bind="value: mortalityLatitude" />
+        </div>
+        <label for="mortalityLongitude" class="col-md-2 control-label">Longitude</label>
+        <div class="col-md-2">
+            <input class="form-control" id="mortalityLongitude" type="text" data-bind="value: mortalityLongitude" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="bodyCondition" class="col-md-2 control-label">Body Condition</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="bodyCondition" class="form-control" data-bind="value: bodyCondition"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="carcassPosition" class="col-md-2 control-label">Carcass Position</label>
+        <div class="col-md-2">
+            <input class="form-control" id="carcassPosition" type="text" data-bind="value: carcassPosition" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="carcassComments" class="col-md-2 control-label">Carcass Comments</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="carcassComments" class="form-control" data-bind="value: carcassComments"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="signsOfPredation" class="col-md-2 control-label">Signs of Predation</label>
+        <div class="col-md-2">
+            <select class="form-control col-md-2" id="signsOfPredation" name="signsOfPredation" data-bind="booleanValueSelect: signsOfPredation"></select>
+        </div>
+        <label for="evidenceOfChase" class="col-md-2 control-label">Evidence Of Chase</label>
+        <div class="col-md-2">
+            <select class="form-control col-md-2" id="evidenceOfChase" name="evidenceOfChase" data-bind="booleanValueSelect: evidenceOfChase"></select>
+          </div>
+        <label for="signsOfScavengers" class="col-md-2 control-label">Signs Of Scavengers</label>
+        <div class="col-md-2">
+            <select class="form-control col-md-2" id="signsOfScavengers" name="signsOfScavengers" data-bind="booleanValueSelect: signsOfScavengers"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="snowSinceDeath" class="col-md-2 control-label">Snow Since Death</label>
+        <div class="col-md-2">
+            <select class="form-control col-md-2" id="snowSinceDeath" name="snowSinceDeath" data-bind="booleanValueSelect: snowSinceDeath"></select>
+        </div>
+        <label for="signsOfHumans" class="col-md-2 control-label">Signs Of Humans</label>
+        <div class="col-md-2">
+            <select class="form-control col-md-2" id="signsOfHumans" name="signsOfHumans" data-bind="booleanValueSelect: signsOfHumans"></select>
+        </div>
+    </div>
+</div>

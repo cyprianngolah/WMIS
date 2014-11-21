@@ -173,22 +173,22 @@
         /// <summary>
         /// The Collar Update stored procedure
         /// </summary>
-	    private const string COLLAR_UPDATE = "dbo.Collar_Update";
+	    private const string COLLAREDANIMAL_UPDATE = "dbo.CollaredAnimal_Update";
 
         /// <summary>
         /// The Collar Create stored procedure
         /// </summary>
-        private const string COLLAR_CREATE = "dbo.Collar_Create";
+        private const string COLLAREDANIMAL_CREATE = "dbo.CollaredAnimal_Create";
 
         /// <summary>
         /// The Collar Get stored procedure
         /// </summary>
-        private const string COLLAR_GET = "dbo.Collar_Get";
+        private const string COLLAREDANIMAL_GET = "dbo.CollaredAnimal_Get";
         
         /// <summary>
         /// The Collar Search stored procedure
         /// </summary>
-        private const string COLLAR_SEARCH = "dbo.Collar_Search";
+        private const string COLLAREDANIMAL_SEARCH = "dbo.CollaredAnimal_Search";
 
         /// <summary>
         /// The Collar Type Get stored procedure
@@ -230,6 +230,24 @@
         private const string ARGOSPASS_UPDATE = "dbo.ArgosPass_Update";
 
         private const string ARGOSPASS_SEARCH = "dbo.ArgosPass_Search";
+
+        private const string ANIMALSEX_GET = "dbo.AnimalSex_Get";
+
+        private const string BREEDINGSTATUSMETHOD_GET = "dbo.BreedingStatusMethod_Get";
+
+        private const string BREEDINGSTATUS_GET = "dbo.BreedingStatus_Get";
+
+        private const string CONFIDENCELEVEL_GET = "dbo.ConfidenceLevel_Get";
+
+        private const string HERDASSOCIATIONMETHOD_GET = "dbo.HerdAssociationMethod_Get";
+
+        private const string HERDPOPULATION_GET = "dbo.HerdPopulation_Get";
+        
+        private const string AGECLASS_GET = "dbo.AgeClass_Get";
+
+        private const string ANIMALMORTALITY_GET = "dbo.AnimalMortality_Get";
+
+        private const string ANIMALSTATUS_GET = "dbo.AnimalStatus_Get";
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -1498,16 +1516,16 @@
 		}
 		#endregion
 
-        #region Collars
-        public int CollarCreate(string name)
+        #region CollaredAnimals
+        public int CollarCreate(string collarId)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_name = name
+                    p_collarId = collarId
                 };
-                return c.Query<int>(COLLAR_CREATE, param, commandType: CommandType.StoredProcedure).Single();
+                return c.Query<int>(COLLAREDANIMAL_CREATE, param, commandType: CommandType.StoredProcedure).Single();
             }
         }
 
@@ -1531,7 +1549,7 @@
                     p_regionKey = sr.regionKey
                 };
 
-                using (var q = c.QueryMultiple(COLLAR_SEARCH, param, commandType: CommandType.StoredProcedure))
+                using (var q = c.QueryMultiple(COLLAREDANIMAL_SEARCH, param, commandType: CommandType.StoredProcedure))
                 {
                     pagedResultset.Data = q.Read<int, Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(
                     (tc, collar, project, type, region, status, dyn) =>
@@ -1553,15 +1571,15 @@
             return pagedResultset;
         }
 
-        public Collar CollarGet(int collarKey)
+        public Collar CollarGet(int collaredAnimalKey)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_collarKey = collarKey
+                    p_collaredAnimalKey = collaredAnimalKey
                 };
-                return c.Query<Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAR_GET,
+                return c.Query<Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAREDANIMAL_GET,
                     (collar, project, type, region, status, dyn) =>
                         {
                             collar.Project = project ?? new SimpleProject();
@@ -1570,6 +1588,17 @@
                             collar.CollarStatus = status ?? new CollarStatus();
                             collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
                             collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
+                            collar.AnimalStatus = dyn.AnimalStatusKey == null ? new AnimalStatus() : new AnimalStatus { Key = dyn.AnimalStatusKey, Name = dyn.AnimalStatusName };
+                            collar.AgeClass = dyn.AgeClassKey == null ? new AgeClass() : new AgeClass { Key = dyn.AgeClassKey, Name = dyn.AgeClassName };
+                            collar.AnimalSex = dyn.AnimalSexKey == null ? new AnimalSex() : new AnimalSex { Key = dyn.AnimalSexKey, Name = dyn.AnimalSexName };
+                            collar.AnimalMortality = dyn.AnimalMortalityKey == null ? new AnimalMortality() : new AnimalMortality { Key = dyn.AnimalMortalityKey, Name = dyn.AnimalMortalityName };
+                            collar.MortalityConfidence = dyn.MortalityConfidenceKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.MortalityConfidenceKey, Name = dyn.MortalityConfidenceName };
+                            collar.HerdPopulation = dyn.HerdPopulationKey == null ? new HerdPopulation() : new HerdPopulation { Key = dyn.HerdPopulationKey, Name = dyn.HerdPopulationName };
+		                    collar.HerdAssociationConfidenceLevel = dyn.HerdAssociationConfidenceLevelKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.HerdAssociationConfidenceLevelKey, Name = dyn.HerdAssociationConfidenceLevelName };
+		                    collar.HerdAssociationMethod = dyn.HerdAssociationMethodKey == null ? new HerdAssociationMethod() : new HerdAssociationMethod { Key = dyn.HerdAssociationMethodKey, Name = dyn.HerdAssociationMethodName };
+		                    collar.BreedingStatus = dyn.BreedingStatusKey == null ? new BreedingStatus() : new BreedingStatus { Key = dyn.BreedingStatusKey, Name = dyn.BreedingStatusName };
+		                    collar.BreedingStatusConfidenceLevel = dyn.BreedingStatusConfidenceLevelKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.BreedingStatusConfidenceLevelKey, Name = dyn.BreedingStatusConfidenceLevelName };
+                            collar.BreedingStatusMethod = dyn.BreedingStatusMethodKey == null ? new BreedingStatusMethod() : new BreedingStatusMethod { Key = dyn.BreedingStatusMethodKey, Name = dyn.BreedingStatusMethodName };
                             return collar;
                         },
                         param,
@@ -1584,13 +1613,15 @@
             {
                 var param = new
                 {
-                    p_CollarId = collar.Key,
-                    p_Name = collar.Name,
+                    p_CollaredAnimalId = collar.Key,
+                    p_CollarId = collar.CollarId,
+                    p_SpeciesId = collar.SpeciesId,
                     p_SubscriptionId = collar.SubscriptionId,
                     p_VhfFrequency = collar.VhfFrequency,
                     p_JobNumber = collar.JobNumber,
                     p_Model = collar.Model,
                     p_InactiveDate = collar.InactiveDate,
+                    p_DeploymentDate = collar.DeploymentDate,
                     p_Size = collar.Size,
                     p_BeltingColour = collar.BeltingColour,
                     p_FirmwareVersion = collar.FirmwareVersion,
@@ -1601,14 +1632,43 @@
                     p_EstimatedGpsBatteryEnd = collar.EstimatedGpsBatteryEnd,
                     p_EstimatedVhfFailure = collar.EstimatedVhfFailure,
                     p_EstimatedVhfBatteryEnd = collar.EstimatedVhfBatteryEnd,
+                    p_EstimatedYearOfBirth = collar.EstimatedYearOfBirth,
+                    p_EstimatedYearOfBirthBy = collar.EstimatedYearOfBirthBy,
+                    p_EstimatedYearOfBirthMethod = collar.EstimatedYearOfBirthMethod,
+                    p_AnimalId = collar.AnimalId,
                     p_CollarTypeId = collar.CollarType.Key == 0 ? null : (int?)collar.CollarType.Key,
                     p_CollarRegionId = collar.CollarRegion.Key == 0 ? null : (int?)collar.CollarRegion.Key,
                     p_CollarStatusId = collar.CollarStatus.Key == 0 ? null : (int?)collar.CollarStatus.Key,
                     p_CollarMalfunctionId = collar.CollarMalfunction.Key == 0 ? null : (int?)collar.CollarMalfunction.Key,
                     p_CollarStateId = collar.CollarState.Key == 0 ? null : (int?)collar.CollarState.Key,
                     p_ProjectId = collar.Project.Key == 0 ? null : (int?)collar.Project.Key,
+                    p_AnimalStatusId = collar.AnimalStatus.Key == 0 ? null : (int?)collar.AnimalStatus.Key,
+                    p_AgeClassId = collar.AgeClass.Key == 0 ? null : (int?)collar.AgeClass.Key,
+                    p_AnimalSexId = collar.AnimalSex.Key == 0 ? null : (int?)collar.AnimalSex.Key,
+                    p_SignsOfPredation = collar.SignsOfPredation,
+                    p_EvidenceOfChase = collar.EvidenceOfChase,
+                    p_SignsOfScavengers = collar.SignsOfScavengers,
+	                p_SnowSinceDeath = collar.SnowSinceDeath,
+	                p_SignsOfHumans = collar.SignsOfHumans,
+                    p_AnimalMortalityId = collar.AnimalMortality.Key == 0 ? null : (int?)collar.AnimalMortality.Key,
+                    p_MortalityDate = collar.MortalityDate,
+                    p_MortalityConfidenceId = collar.MortalityConfidence.Key == 0 ? null : (int?)collar.MortalityConfidence.Key,
+                    p_MortalityLatitude = collar.MortalityLatitude,
+                    p_MortalityLongitude = collar.MortalityLongitude,
+                    p_BodyCondition = collar.BodyCondition,
+                    p_CarcassPosition = collar.CarcassPosition,
+                    p_CarcassComments = collar.CarcassComments,
+
+                    p_HerdPopulationId = collar.HerdPopulation.Key == 0 ? null : (int?)collar.HerdPopulation.Key,
+                    p_HerdAssociationConfidenceLevelId = collar.HerdAssociationConfidenceLevel.Key == 0 ? null : (int?)collar.HerdAssociationConfidenceLevel.Key,
+                    p_HerdAssociationMethodId = collar.HerdAssociationMethod.Key == 0 ? null : (int?)collar.HerdAssociationMethod.Key,
+                    p_BreedingStatusId = collar.BreedingStatus.Key == 0 ? null : (int?)collar.BreedingStatus.Key,
+                    p_BreedingStatusConfidenceLevelId = collar.BreedingStatusConfidenceLevel.Key == 0 ? null : (int?)collar.BreedingStatusConfidenceLevel.Key,
+                    p_BreedingStatusMethodId = collar.BreedingStatusMethod.Key == 0 ? null : (int?)collar.BreedingStatusMethod.Key,
+                    p_HerdAssociationDate = collar.HerdAssociationDate,
+                    p_BreedingStatusDate = collar.BreedingStatusDate
                 };
-                c.Execute(COLLAR_UPDATE, param, commandType: CommandType.StoredProcedure);
+                c.Execute(COLLAREDANIMAL_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -1790,7 +1850,7 @@
                 {
                     p_startRow = request.StartRow,
                     p_rowCount = request.StartRow + request.RowCount - 1,
-                    p_collarKey = request.CollarKey
+                    p_collaredAnimalKey = request.CollarKey
                 };
 
                 var pagedResults = new PagedResultset<CollarHistory>
@@ -1827,17 +1887,305 @@
                 c.Execute(COLLARHISTORY_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public PagedResultset<AgeClass> AgeClassGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<AgeClass>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<AgeClass>()
+                };
+
+                var results = c.Query<dynamic, AgeClass, AgeClass>(AGECLASS_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        public PagedResultset<HerdPopulation> HerdPopulationGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<HerdPopulation>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<HerdPopulation>()
+                };
+
+                var results = c.Query<dynamic, HerdPopulation, HerdPopulation>(HERDPOPULATION_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        
+        public PagedResultset<HerdAssociationMethod> HerdAssociationMethodGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<HerdAssociationMethod>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<HerdAssociationMethod>()
+                };
+
+                var results = c.Query<dynamic, HerdAssociationMethod, HerdAssociationMethod>(HERDASSOCIATIONMETHOD_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        
+        public PagedResultset<ConfidenceLevel> ConfidenceLevelGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<ConfidenceLevel>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<ConfidenceLevel>()
+                };
+
+                var results = c.Query<dynamic, ConfidenceLevel, ConfidenceLevel>(CONFIDENCELEVEL_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        
+        public PagedResultset<BreedingStatus> BreedingStatusGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<BreedingStatus>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<BreedingStatus>()
+                };
+
+                var results = c.Query<dynamic, BreedingStatus, BreedingStatus>(BREEDINGSTATUS_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        
+        public PagedResultset<BreedingStatusMethod> BreedingStatusMethodGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<BreedingStatusMethod>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<BreedingStatusMethod>()
+                };
+
+                var results = c.Query<dynamic, BreedingStatusMethod, BreedingStatusMethod>(BREEDINGSTATUSMETHOD_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        
+        public PagedResultset<AnimalSex> AnimalSexGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<AnimalSex>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<AnimalSex>()
+                };
+
+                var results = c.Query<dynamic, AnimalSex, AnimalSex>(ANIMALSEX_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        public PagedResultset<AnimalStatus> AnimalStatusGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<AnimalStatus>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<AnimalStatus>()
+                };
+
+                var results = c.Query<dynamic, AnimalStatus, AnimalStatus>(ANIMALSTATUS_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        public PagedResultset<AnimalMortality> AnimalMortalityGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<AnimalMortality>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<AnimalMortality>()
+                };
+
+                var results = c.Query<dynamic, AnimalMortality, AnimalMortality>(ANIMALMORTALITY_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
         #endregion
 
         #region Argos Passes
-        public void ArgosPassUpdate(int collarName, IEnumerable<ArgosPassForTvp> passes)
+        public void ArgosPassUpdate(int collarId, IEnumerable<ArgosPassForTvp> passes)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
                     p_argosPasses = passes.AsTableValuedParameter("dbo.ArgosPassTableType"),
-                    p_collarName = collarName,
+                    p_collarId = collarId,
                 };
                 c.Query<int>(ARGOSPASS_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
@@ -1857,7 +2205,7 @@
                 {
                     p_startRow = apsr.StartRow,
                     p_rowCount = apsr.RowCount,
-                    p_collarKey = apsr.CollarId
+                    p_collaredAnimalKey = apsr.CollaredAnimalId
                 };
 
                 using (var q = c.QueryMultiple(ARGOSPASS_SEARCH, param, commandType: CommandType.StoredProcedure))

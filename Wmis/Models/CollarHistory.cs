@@ -4,7 +4,7 @@
 
     public class CollarHistory: Base.KeyedModel
 	{
-        public int CollarId { get; set; }
+        public int CollaredAnimalId { get; set; }
 
         public string ActionTaken { get; set; }
 

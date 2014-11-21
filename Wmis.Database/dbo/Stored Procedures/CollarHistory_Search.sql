@@ -1,19 +1,19 @@
 ﻿CREATE PROCEDURE [dbo].[CollarHistory_Search]
 	@p_startRow int = 0,
 	@p_rowCount int = 25,
-	@p_collarKey int
+	@p_collaredAnimalKey int
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
 		c.CollarHistoryId as [Key],
-		c.CollarId,
+		c.CollaredAnimalId,
 		c.ActionTaken,
 		c.Comment,
 		c.ChangeDate
 	FROM
 		dbo.CollarHistory c
 	WHERE
-		c.CollarId = @p_collarKey
+		c.CollaredAnimalId = @p_collaredAnimalKey
 	ORDER BY
 		c.ChangeDate DESC
 	OFFSET 

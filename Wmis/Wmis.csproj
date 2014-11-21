@@ -143,7 +143,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiControllers\ArgosPassForTvp.cs" />
     <Compile Include="ApiControllers\BaseApiController.cs" />
     <Compile Include="ApiControllers\CollarApiController.cs" />
     <Compile Include="ApiControllers\CosewicStatusApiController.cs" />
@@ -166,7 +165,7 @@
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="ApiControllers\ArgosApiController.cs" />
     <Compile Include="ApiControllers\ArgosData.cs" />
-    <Compile Include="Controllers\CollarController.cs" />
+    <Compile Include="Controllers\CollaredAnimalController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
     <Compile Include="Controllers\EcoregionController.cs" />
     <Compile Include="Controllers\CosewicStatusController.cs" />
@@ -224,11 +223,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnimalMortality.cs" />
+    <Compile Include="Models\AnimalStatus.cs" />
+    <Compile Include="Models\ArgosPassForTvp.cs" />
     <Compile Include="Models\Base\AuditedKeyedModel.cs" />
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversityNew.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\ArgosPass.cs" />
+    <Compile Include="Models\AnimalSex.cs" />
+    <Compile Include="Models\BreedingStatusMethod.cs" />
+    <Compile Include="Models\BreedingStatus.cs" />
+    <Compile Include="Models\ConfidenceLevel.cs" />
+    <Compile Include="Models\HerdAssociationMethod.cs" />
+    <Compile Include="Models\HerdPopulation.cs" />
+    <Compile Include="Models\AgeClass.cs" />
     <Compile Include="Models\SpeciesBioDiversityReference.cs" />
     <Compile Include="Models\Collar.cs" />
     <Compile Include="Models\CollarHistory.cs" />
@@ -448,11 +457,11 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
-    <Content Include="js\Modules\wmis.collar.mapping.js" />
-    <Content Include="js\Modules\wmis.collar.edit.js" />
+    <Content Include="js\Modules\wmis.collaredanimal.mapping.js" />
+    <Content Include="js\Modules\wmis.collaredanimal.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.js" />
-    <Content Include="js\Modules\wmis.collar.index.js" />
-    <Content Include="js\Modules\wmis.collar.new.js" />
+    <Content Include="js\Modules\wmis.collaredanimal.index.js" />
+    <Content Include="js\Modules\wmis.collaredanimal.new.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
     <Content Include="js\Modules\wmis.cosewicstatus.edit.js" />
     <Content Include="js\Modules\wmis.nwtsarcassessment.edit.js" />
@@ -688,9 +697,9 @@
     <Content Include="Views\Project\EditSurvey.cshtml" />
     <Content Include="Views\Project\EditSurveyForm.cshtml" />
     <Content Include="Views\Project\NewSurvey.cshtml" />
-    <Content Include="Views\Collar\Edit.cshtml" />
-    <Content Include="Views\Collar\Index.cshtml" />
-    <Content Include="Views\Collar\New.cshtml" />
+    <Content Include="Views\CollaredAnimal\Edit.cshtml" />
+    <Content Include="Views\CollaredAnimal\Index.cshtml" />
+    <Content Include="Views\CollaredAnimal\New.cshtml" />
     <None Include="Service References\ArgosService\DixService.wsdl" />
     <Content Include="Service References\ArgosService\Wmis.ArgosService.getCsvResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -719,6 +728,9 @@
     <Content Include="Service References\ArgosService\Wmis.ArgosService.stringResponseType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Views\CollaredAnimal\CollarTab.cshtml" />
+    <Content Include="Views\CollaredAnimal\AnimalTab.cshtml" />
+    <Content Include="Views\CollaredAnimal\EditModals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

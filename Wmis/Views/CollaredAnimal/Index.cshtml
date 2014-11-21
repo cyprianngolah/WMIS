@@ -1,5 +1,5 @@
 ﻿@{
-	ViewBag.Title = "Collar";
+	ViewBag.Title = "Collared Animal";
 }
 
 @section Styles {
@@ -10,19 +10,19 @@
 @section Scripts {
 	@Html.Raw(Scripts.Render("~/bundles/datatables"))
 	@Html.Raw(Scripts.Render("~/bundles/select2"))
-	@Html.Raw(Scripts.Render("~/bundles/collar/index"))
+	@Html.Raw(Scripts.Render("~/bundles/collaredanimal/index"))
 
 	<script type="text/javascript">
 		$(function () {
-			wmis.collar.index.initialize();
+		    wmis.collaredanimal.index.initialize();
 		});
 	</script>
 }
 
     <div class="row">
 		<div class="col-md-12 text-right">
-			<a href="/Collar/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-			<a href="/Collar/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+			<a href="/CollaredAnimal/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+            <a href="/CollaredAnimal/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
 		</div>
 	</div>
 
@@ -64,14 +64,15 @@
 			<table id="collar" class="table">
 				<thead>
 					<tr>
-						<th>Region</th>
-						<th>Project Id</th>
-						<th>Project Name</th>
-						<th>Collar Type</th>
-						<th>Collar State</th>
-						<th>Collar Status</th>
-						<th>VHF Frequency</th>
-						<th>Inactive Date</th>
+						<th>Collar ID</th>
+					    <th>Collar Type</th>
+					    <th>Collar State</th>
+					    <th>Collar Status</th>
+					    <th>VHF Frequency</th>
+					    <th>Animal ID</th>
+					    <th>Project ID</th>
+					    <th>Project Name</th>
+					    <th>Inactive Date</th>
 					</tr>
 				</thead>
 			</table>

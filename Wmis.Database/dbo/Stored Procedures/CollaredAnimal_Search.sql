@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [dbo].[Collar_Search]
+CREATE PROCEDURE [dbo].[CollaredAnimal_Search]
 	@p_startRow int = 0,
 	@p_rowCount int = 25,
 	@p_sortBy NVARCHAR(25) = NULL,
@@ -9,8 +9,9 @@ CREATE PROCEDURE [dbo].[Collar_Search]
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
-		c.CollarId as [Key],
-		c.Name,
+		c.CollaredAnimalId as [Key],
+		c.CollarId,
+		c.AnimalId,
 		c.SubscriptionId,
 		c.VhfFrequency,
 		c.JobNumber,
@@ -41,7 +42,7 @@ AS
 		c.CollarStateId as [CollarStateKey],
 		collarState.Name as [CollarStateName]
 	FROM
-		dbo.Collars c
+		dbo.CollaredAnimals c
 		LEFT OUTER JOIN dbo.CollarStatuses collarStatus on c.CollarStatusId = collarStatus.CollarStatusId
 		LEFT OUTER JOIN dbo.CollarMalfunctions collarMalfunction on c.CollarMalfunctionId = collarMalfunction.CollarMalfunctionId
 		LEFT OUTER JOIN dbo.CollarStates collarState on c.CollarStateId = collarState.CollarStateId
@@ -53,7 +54,7 @@ AS
 		AND
 		(
 			@p_keywords IS NULL 
-			OR c.Name LIKE '%' + @p_keywords + '%' 
+			OR c.CollarId LIKE '%' + @p_keywords + '%' 
 			OR collarRegion.Name LIKE '%' + @p_keywords + '%'  
 			OR collarType.Name LIKE '%' + @p_keywords + '%'  
 			OR collarState.Name LIKE '%' + @p_keywords + '%'
@@ -81,5 +82,5 @@ AS
 RETURN 0
 GO
 
-GRANT EXECUTE ON [dbo].[Collar_Search] TO [WMISUser]
+GRANT EXECUTE ON [dbo].[CollaredAnimal_Search] TO [WMISUser]
 GO

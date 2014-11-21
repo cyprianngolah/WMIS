@@ -1,17 +1,17 @@
-﻿CREATE PROCEDURE [dbo].[AnimalMortality_Get]
+﻿CREATE PROCEDURE [dbo].[BreedingStatus_Get]
 	@p_from INT = 0,
 	@p_to INT = 500,
-	@p_animalMortalityId INT = NULL,
+	@p_breedingStatusId INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	SELECT
 		COUNT(*) OVER() as TotalRowCount,
-		t.AnimalMortalityId  as [Key],
+		t.BreedingStatusId  as [Key],
 		t.Name
 	FROM
-		dbo.AnimalMortalities t
+		dbo.BreedingStatuses t
 	WHERE
-		t.AnimalMortalityId = ISNULL(@p_animalMortalityId, t.AnimalMortalityId)
+		t.BreedingStatusId = ISNULL(@p_breedingStatusId, t.BreedingStatusId)
 		AND (@p_keywords IS NULL OR t.Name LIKE '%' + @p_keywords + '%')
 	ORDER BY
 		t.Name
@@ -23,5 +23,5 @@ AS
 RETURN 0
 GO
 
-GRANT EXECUTE ON [dbo].[AnimalMortality_Get] TO [WMISUser]
+GRANT EXECUTE ON [dbo].[BreedingStatus_Get] TO [WMISUser]
 GO

@@ -31,10 +31,10 @@
         }
 
 		[HttpGet]
-		[Route("{collarKey:int?}")]
-		public Collar CollarGet(int collarKey)
+		[Route("{collaredAnimalKey:int?}")]
+		public Collar CollarGet(int collaredAnimalKey)
 		{
-			return Repository.CollarGet(collarKey);
+			return Repository.CollarGet(collaredAnimalKey);
 		}
 
 		[HttpPost]
@@ -128,6 +128,114 @@
         public void Update([FromBody]CollarHistory collarHistory)
         {
             Repository.CollarHistorySave(collarHistory);
+        }
+
+        [HttpGet]
+        [Route("animalSexes")]
+        public PagedResultset<AnimalSex> GetAnimalSex([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.AnimalSexGet(request);
+        }
+
+        [HttpGet]
+        [Route("breedingStatusMethods")]
+        public PagedResultset<BreedingStatusMethod> GetBreedingStatusMethod([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.BreedingStatusMethodGet(request);
+        }
+
+        [HttpGet]
+        [Route("breedingStatuses")]
+        public PagedResultset<BreedingStatus> GetBreedingStatus([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.BreedingStatusGet(request);
+        }
+
+        [HttpGet]
+        [Route("confidenceLevels")]
+        public PagedResultset<ConfidenceLevel> GetConfidenceLevel([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.ConfidenceLevelGet(request);
+        }
+
+        [HttpGet]
+        [Route("herdAssociationMethods")]
+        public PagedResultset<HerdAssociationMethod> GetHerdAssociationMethod([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.HerdAssociationMethodGet(request);
+        }
+
+        [HttpGet]
+        [Route("herdPopulations")]
+        public PagedResultset<HerdPopulation> GetHerdPopulation([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.HerdPopulationGet(request);
+        }
+
+        [HttpGet]
+        [Route("ageClasses")]
+        public PagedResultset<AgeClass> GetAgeClass([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.AgeClassGet(request);
+        }
+
+        [HttpGet]
+        [Route("animalMortalities")]
+        public PagedResultset<AnimalMortality> GetAnimalMortality([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.AnimalMortalityGet(request);
+        }
+
+        [HttpGet]
+        [Route("animalStatuses")]
+        public PagedResultset<AnimalStatus> GetAnimalStatus([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.AnimalStatusGet(request);
         }
 
     }

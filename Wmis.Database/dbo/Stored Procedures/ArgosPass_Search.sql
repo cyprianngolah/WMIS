@@ -1,19 +1,19 @@
 ﻿CREATE PROCEDURE [dbo].[ArgosPass_Search]
 	@p_startRow int = 0,
 	@p_rowCount int = 25,
-	@p_collarKey int
+	@p_collaredAnimalKey int
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
 		ap.ArgosPassId as [Key],
-		ap.CollarId,
+		ap.CollaredAnimalId,
 		ap.Latitude,
 		ap.Longitude,
 		ap.LocationDate
 	FROM
 		dbo.ArgosPasses ap
 	WHERE
-		ap.CollarId = @p_collarKey
+		ap.CollaredAnimalId = @p_collaredAnimalKey
 	ORDER BY
 		ap.LocationDate DESC
 	OFFSET 

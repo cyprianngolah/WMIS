@@ -1,5 +1,5 @@
-﻿wmis.collar = wmis.collar || {};
-wmis.collar.index = (function($) {
+﻿wmis.collaredanimal = wmis.collaredanimal || {};
+wmis.collaredanimal.index = (function($) {
 	var collarTable;
 	var options = {
 		searchButtonSelector: "#searchButton",
@@ -41,18 +41,23 @@ wmis.collar.index = (function($) {
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
-				{ "data": "collarRegion.name" },
+				{ "data": "collarId" },
+				{ "data": "collarType.name" },
+                { "data": "collarState.name" },
+                { "data": "collarStatus.name" },
+                { "data": "vhfFrequency" },
+                { "data": "animalId" },
 				{ "data": "project.key" },
 				{ "data": "project.name" },
-				{ "data": "collarType.name" },
-				{ "data": "collarState.name" },
-				{ "data": "collarStatus.name" },
-				{ "data": "vhfFrequency" },
 			    {
 			         "data": "inactiveDate",
 				    "render": function (data, type, row) {
-				    	var date = moment.utc(data, moment.ISO_8601).local().format('L h:mm a');
-					    return date;
+				        var date = moment.utc(data, moment.ISO_8601).local();
+                        if (date.isValid()) {
+                            return date.format('L h:mm a');
+                        } else {
+                            return '';
+                        }
 				    }
 				}
 			],
@@ -110,7 +115,7 @@ wmis.collar.index = (function($) {
 
 							if (data.key) {
 								$(options.editButtonSelector).removeClass('disabled');
-								$(options.editButtonSelector).prop("href", "/Collar/Edit/" + data.key);
+								$(options.editButtonSelector).prop("href", "/CollaredAnimal/Edit/" + data.key);
 							}
 						}
 					}

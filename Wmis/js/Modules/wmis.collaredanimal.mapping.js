@@ -1,5 +1,5 @@
-﻿wmis.collar = wmis.collar || {};
-wmis.collar.mapping = (function ($) {
+﻿wmis.collaredanimal = wmis.collaredanimal || {};
+wmis.collaredanimal.mapping = (function ($) {
 	
     var Markers = (function() {
 
@@ -129,7 +129,7 @@ wmis.collar.mapping = (function ($) {
 
     })();
 
-	function initializeMap(collarId, mapDiv, passesObservable) {
+	function initializeMap(collaredAnimalId, mapDiv, passesObservable) {
 		var mapOptions = {
                 zoom: 6,
                 center: new google.maps.LatLng(64.91826, -103.93033)
@@ -144,7 +144,7 @@ wmis.collar.mapping = (function ($) {
 	            var coordinates = _.map(passes, function (pass) {
 	                return new google.maps.LatLng(pass.latitude, pass.longitude);
 	            });
-	            existingPolyline = Polyline.loadPolyline(map, coordinates, collarId);
+	            existingPolyline = Polyline.loadPolyline(map, coordinates, collaredAnimalId);
             }
 	    });
 	}

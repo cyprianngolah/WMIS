@@ -5,7 +5,7 @@
 	/// <summary>
 	/// UI Controller for Collar
 	/// </summary>
-	public class CollarController : Controller
+	public class CollaredAnimalController : Controller
     {
 		/// <summary>
 		/// Gets the Collar Set Page

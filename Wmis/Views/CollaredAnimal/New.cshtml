@@ -1,15 +1,15 @@
 ﻿@{
-    ViewBag.Title = "Collar";
+    ViewBag.Title = "Collared Animal";
 	ViewBag.SubTitle = "New";
 }
 
 @section Scripts {
 	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/collar/new"))
+	@Html.Raw(Scripts.Render("~/bundles/collaredanimal/new"))
 
 	<script type="text/javascript">
 		$(function() {
-			wmis.collar.new.initialize();
+		    wmis.collaredanimal.new.initialize();
 		});
 	</script>
 }
@@ -17,13 +17,13 @@
 <div class="col-md-6">
 	<form role="form">
 		<div class="form-group">
-			<label for="name">Name</label>
-			<input type="text" class="form-control" id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+			<label for="collarId">Collar ID (CTN)</label>
+            <input type="text" class="form-control" id="collarId" data-bind="value: collarId, valueUpdate: 'keyup'" />
 		</div>
 
 		<div class="text-right">
 			<button type="submit" class="btn btn-primary" data-bind="click: saveCollar, enable: saveEnabled">Save</button>
-			<a href="/Collar/Index" class="btn btn-default">Cancel</a>
+            <a href="/CollaredAnimal/Index" class="btn btn-default">Cancel</a>
 		</div>
 	</form>
 </div>

@@ -1,29 +1,29 @@
-﻿wmis.collar = wmis.collar || {};
-wmis.collar.new = (function ($) {
+﻿wmis.collaredanimal = wmis.collaredanimal || {};
+wmis.collaredanimal.new = (function ($) {
 	var options = {
 
 	};
 
 	function editCollarViewModel() {
 		var self = this;
-		this.name = ko.observable("");
-		this.name.subscribe(function (oldValue) {
-			$.trim(self.name()) == "" ? self.saveEnabled(false) : self.saveEnabled(true);
+		this.collarId = ko.observable("");
+		this.collarId.subscribe(function (oldValue) {
+		    $.trim(self.collarId()) == "" ? self.saveEnabled(false) : self.saveEnabled(true);
 		});
 
 		this.saveEnabled = ko.observable(false);
 
 		this.saveCollar = function () {
-			var name = $.trim(self.name());
+		    var collarId = $.trim(self.collarId());
 
 			var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
 			$.ajax({
 				url: "/api/collar/",
 				type: "POST",
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-				data: '=' + encodeURIComponent(name),
-			}).success(function(collarKey) {
-			    window.location.href = "/Collar/Edit/" + collarKey;
+				data: '=' + encodeURIComponent(collarId),
+			}).success(function(collaredAnimalKey) {
+			    window.location.href = "/CollaredAnimal/Edit/" + collaredAnimalKey;
 			}).always(function () {
 				wmis.global.hideWaitingScreen(waitingScreenId);
 			}).fail(wmis.global.ajaxErrorHandler);
