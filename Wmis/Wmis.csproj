@@ -143,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\ArgosPassForTvp.cs" />
     <Compile Include="ApiControllers\BaseApiController.cs" />
     <Compile Include="ApiControllers\CollarApiController.cs" />
     <Compile Include="ApiControllers\CosewicStatusApiController.cs" />
