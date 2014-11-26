@@ -37,6 +37,11 @@
 		private const string BIODIVERSITY_GET = "dbo.BioDiversity_Get";
 
 		/// <summary>
+		/// The BioDiversity Get All stored procedure
+		/// </summary>
+		private const string BIODIVERSITY_GETALL = "dbo.BioDiversity_GetAll";
+
+		/// <summary>
 		/// The BioDiversity Search stored procedure
 		/// </summary>
 		private const string BIODIVERSITY_SEARCH = "dbo.BioDiversity_Search";
@@ -355,6 +360,63 @@
 					}
 
 					return biodiversity;
+				}
+			}
+		}
+        
+        public IEnumerable<BioDiversity> BioDiversityGetAll()
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new {};
+
+                using (var q = c.QueryMultiple(BIODIVERSITY_GETALL, param, commandType: CommandType.StoredProcedure))
+				{
+					var biodiversityItems = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, NwtSarcAssessment, dynamic, BioDiversity>(
+						(bd, saraStatus, nwtStatusRank, status, cs, nsa, dyn) =>
+						    {
+						    bd.SaraStatus = saraStatus ?? new SaraStatus();
+						    bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
+							bd.StatusRank = status ?? new StatusRank();
+                            bd.CosewicStatus = cs ?? new CosewicStatus();
+                            bd.NwtSarcAssessment = nsa ?? new NwtSarcAssessment();
+                            bd.Kingdom = dyn.KingdomKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.KingdomKey, Name = dyn.KingdomName };
+                            bd.Phylum = dyn.PhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.PhylumKey, Name = dyn.PhylumName };
+							bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
+							bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
+							bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
+							bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
+							bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
+							bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
+							bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
+							bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
+							bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
+							bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
+
+							return bd;
+						}, 
+						"Key").ToList();
+
+                    var speciesEcozones = q.Read<SpeciesEcozone>().ToLookup(se => se.SpeciesId);
+                    var speciesEcoregions = q.Read<SpeciesEcoregion>().ToLookup(se => se.SpeciesId);
+                    var speciesProtectedAreas = q.Read<SpeciesProtectedArea>().ToLookup(spa => spa.SpeciesId);
+                    var speciesPopulations = q.Read<SpeciesPopulation>().ToLookup(sp => sp.SpeciesId);
+
+                    var speciesBioDiversityReference = q.Read<SpeciesBioDiversityReference, Reference, SpeciesBioDiversityReference>((sbr, r) => {
+                        sbr.Reference = r;
+                        return sbr;
+                    },
+                    "Key").ToLookup(sbdr => sbdr.SpeciesId);
+				   
+				    biodiversityItems.ForEach(bd => {
+			            bd.Ecozones = speciesEcozones[bd.Key].Select(se => new Ecozone { Key = se.Key, Name = se.Name }).ToList();
+                        bd.Ecoregions = speciesEcoregions[bd.Key].Select(se => new Ecoregion { Key = se.Key, Name = se.Name }).ToList();
+                        bd.ProtectedAreas = speciesProtectedAreas[bd.Key].Select(spa => new ProtectedArea { Key = spa.Key, Name = spa.Name }).ToList();
+                        bd.Populations = speciesPopulations[bd.Key].Select(sp => sp.Name).ToList();
+                        bd.References = speciesBioDiversityReference[bd.Key].Select(sbdr => new BioDiversityReference{CategoryKey = sbdr.CategoryKey, Reference = sbdr.Reference}).ToList();
+				    });
+
+					return biodiversityItems;
 				}
 			}
 		}

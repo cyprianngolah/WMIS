@@ -229,6 +229,7 @@
     <Build Include="dbo\Stored Procedures\ArgosPass_Search.sql" />
     <Build Include="dbo\Stored Procedures\ArgosPass_Update.sql" />
     <Build Include="dbo\User Defined Types\ArgosPassTableType.sql" />
+    <Build Include="dbo\Stored Procedures\BioDiversity_GetAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

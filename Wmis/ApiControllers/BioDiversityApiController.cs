@@ -1,6 +1,7 @@
 ﻿namespace Wmis.ApiControllers
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Linq;
     using System.Web.Http;
 	using Configuration;
@@ -35,6 +36,13 @@
 		public BioDiversity Get(int bioDiversityKey)
 		{
 			return Repository.BioDiversityGet(bioDiversityKey);
+		}
+
+		[HttpGet]
+		[Route("all")]
+		public IEnumerable<BioDiversity> Get()
+		{
+			return Repository.BioDiversityGetAll();
 		}
 
 		[HttpPost]

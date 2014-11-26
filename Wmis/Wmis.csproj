@@ -229,6 +229,7 @@
     <Compile Include="Models\BioDiversityNew.cs" />
     <Compile Include="Models\BioDiversity.cs" />
     <Compile Include="Models\ArgosPass.cs" />
+    <Compile Include="Models\SpeciesBioDiversityReference.cs" />
     <Compile Include="Models\Collar.cs" />
     <Compile Include="Models\CollarHistory.cs" />
     <Compile Include="Models\CollarRegion.cs" />
@@ -236,6 +237,10 @@
     <Compile Include="Models\CollarStatus.cs" />
     <Compile Include="Models\CollarState.cs" />
     <Compile Include="Models\CollarMalfunction.cs" />
+    <Compile Include="Models\SpeciesPopulation.cs" />
+    <Compile Include="Models\SpeciesProtectedArea.cs" />
+    <Compile Include="Models\SpeciesEcoregion.cs" />
+    <Compile Include="Models\SpeciesEcozone.cs" />
     <Compile Include="Models\NwtStatusRank.cs" />
     <Compile Include="Models\SaraStatus.cs" />
     <Compile Include="Models\Ecoregion.cs" />
