@@ -2,6 +2,6 @@
 {
 	public class CollarHistoryRequest : PagedDataRequest
 	{
-        public int CollarKey { get; set; }
+        public int CollaredAnimalKey { get; set; }
 	}
 }

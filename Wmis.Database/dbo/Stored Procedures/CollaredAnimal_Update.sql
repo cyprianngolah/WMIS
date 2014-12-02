@@ -51,33 +51,108 @@
 	@p_BreedingStatusId INT = NULL,
 	@p_BreedingStatusConfidenceLevelId INT = NULL,
 	@p_BreedingStatusMethodId INT = NULL,
-	@p_BreedingStatusDate DATETIME = NULL
+	@p_BreedingStatusDate DATETIME = NULL,
+	@p_ChangeBy NVARCHAR(50)
 AS
-
+	--Project Assigned
 	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
 		CollaredAnimalId = @p_CollaredAnimalId
 		AND @p_ProjectId IS NOT NULL
 		AND ProjectId != @p_ProjectId
 	)
 	BEGIN
-		INSERT INTO CollarHistory (CollaredAnimalId, ActionTaken) VALUES (@p_CollaredAnimalId, "Assigned Project ID = " + CAST(@p_ProjectId AS VARCHAR(13)))
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Assigned Project", (Select Name from Project where ProjectId = @p_ProjectId), @p_ChangeBy)
 	END
 
+	--Project Unassigned
 	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
 		CollaredAnimalId = @p_CollaredAnimalId
 		AND @p_ProjectId IS NULL
 		AND ProjectId IS NOT NULL
 	)
 	BEGIN
-		INSERT INTO CollarHistory (CollaredAnimalId, ActionTaken) VALUES (@p_CollaredAnimalId, "Unassigned Project")
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Unassigned Project", "N/A", @p_ChangeBy)
 	END
 
+	--Region Assigned
 	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
 		CollaredAnimalId = @p_CollaredAnimalId
 		AND CollarRegionId != @p_CollarRegionId
 	)
 	BEGIN
-		INSERT INTO CollarHistory (CollaredAnimalId, ActionTaken) VALUES (@p_CollaredAnimalId, "Assigned Region = " + (SELECT Name from CollarRegions where CollarRegionId = @p_CollarRegionId))
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Assigned Region", (SELECT Name from CollarRegions where CollarRegionId = @p_CollarRegionId), @p_ChangeBy)
+	END
+
+	--Collar State
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND CollarStateId != @p_CollarStateId
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Collar State", (SELECT Name from CollarStates where CollarStateId = @p_CollarStateId), @p_ChangeBy)
+	END
+
+	--Collar Status
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND CollarStatusId != @p_CollarStatusId
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Collar Status", (SELECT Name from CollarStatuses where CollarStatusId = @p_CollarStatusId), @p_ChangeBy)
+	END
+	
+	--Collar Malfunction
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND CollarMalfunctionId != @p_CollarMalfunctionId
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Collar Malfunction", (SELECT Name from CollarMalfunctions where CollarMalfunctionId = @p_CollarMalfunctionId), @p_ChangeBy)
+	END
+
+	--Animal Mortality
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND AnimalMortalityId != @p_AnimalMortalityId
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Animal Mortality", (SELECT Name from AnimalMortalities where AnimalMortalityId = @p_AnimalMortalityId), @p_ChangeBy)
+	END
+
+	--Animal Herd
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND HerdPopulationId != @p_HerdPopulationId
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Animal Herd", (SELECT Name from HerdPopulations where HerdPopulationId = @p_HerdPopulationId) + ' (' + (SELECT CONVERT(char(10),  @p_HerdAssociationDate, 101)) + ')', @p_ChangeBy)
+	END
+
+	--Animal Breeding
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND BreedingStatusId != @p_BreedingStatusId
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Animal Breeding", (SELECT Name from BreedingStatuses where BreedingStatusId = @p_BreedingStatusId) + ' (' + (SELECT CONVERT(char(10),  @p_BreedingStatusDate, 101)) + ')', @p_ChangeBy)
+	END
+	
+	--Inactive Date
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND InactiveDate != @p_InactiveDate
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Inactive Date", (SELECT CONVERT(char(10), @p_InactiveDate, 101)), @p_ChangeBy)
+	END
+
+	--Drop-off Date
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND DropOffDate != @p_DropOffDate
+	)
+	BEGIN
+		INSERT INTO CollarHistory (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Drop-Off Date", (SELECT CONVERT(char(10), @p_DropOffDate, 101)), @p_ChangeBy)
 	END
 
 

@@ -7,8 +7,10 @@ AS
 		COUNT(*) OVER() AS ResultCount,
 		c.CollarHistoryId as [Key],
 		c.CollaredAnimalId,
-		c.ActionTaken,
+		c.Item,
+		c.Value,
 		c.Comment,
+		c.ChangeBy,
 		c.ChangeDate
 	FROM
 		dbo.CollarHistory c

@@ -113,7 +113,9 @@ wmis.collaredanimal.edit = (function($) {
                         return date;
                     }
                 },
-                { "data": "actionTaken" },
+                { "data": "item" },
+                { "data": "value" },
+                { "data": "changeBy" },
                 { "data": "comment" },
                 {
                     "data": null,

@@ -1607,12 +1607,13 @@
             }
         }
 
-        public void CollarUpdate(Models.Collar collar)
+        public void CollarUpdate(Models.Collar collar, String changeBy)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
+                    p_ChangeBy = changeBy,
                     p_CollaredAnimalId = collar.Key,
                     p_CollarId = collar.CollarId,
                     p_SpeciesId = collar.SpeciesId,
@@ -1850,7 +1851,7 @@
                 {
                     p_startRow = request.StartRow,
                     p_rowCount = request.StartRow + request.RowCount - 1,
-                    p_collaredAnimalKey = request.CollarKey
+                    p_collaredAnimalKey = request.CollaredAnimalKey
                 };
 
                 var pagedResults = new PagedResultset<CollarHistory>
