@@ -1,137 +1,193 @@
-﻿<div class="modal" id="assignProjectModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Assign Project</h4>
-            </div>
-            <div class="modal-body form-horizontal">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="hidden" name="selectedProject" id="selectedProject" class="form-control" data-bind="select2: projectActions.projectOptions" />
+﻿<script id="assignProjectTemplate" type="text/html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Assign Project</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="hidden" name="selectedProject" id="selectedProject" class="form-control" data-bind="select2: projectOptions" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: projectActions.cancelProjectSelection">Cancel</button>
-                <button type="button" class="btn btn-primary" data-bind="click: projectActions.saveProjectSelection">Apply Changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</script>
 
-<div class="modal" id="editHistoryCommentModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" data-bind="with: history">
-            <div class="modal-header">
-                <h4 class="modal-title">Modify Comment</h4>
-            </div>
-            <div class="modal-body form-horizontal" data-bind="with: selectedCollarHistory">
-                <div class="form-group">
-                    <label class="col-md-2" for="item">Item</label>
-                    <div class="col-md-10">
-                        <input type="text" disabled class="form-control" id="item" data-bind="value: item" />
-                    </div>
-                </div> 
-                <div class="form-group">
-                    <label class="col-md-2" for="value">Value</label>
-                    <div class="col-md-10">
-                        <input type="text" disabled class="form-control" id="value" data-bind="value: value" />
-                    </div>
+<script id="editHistoryCommentTemplate" type="text/html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Modify Comment</h4>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-2" for="action">Date</label>
-                    <div class="col-md-10">
-                        <input type="text" disabled class="form-control" id="action" data-bind="dateText: changeDate, format: 'L h:mm a'" />
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2" for="item">Item</label>
+                        <div class="col-md-10">
+                            <input type="text" disabled class="form-control" id="item" data-bind="value: item" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2" for="action">Comment</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="action" data-bind="value: comment" />
+                    <div class="form-group">
+                        <label class="col-md-2" for="value">Value</label>
+                        <div class="col-md-10">
+                            <input type="text" disabled class="form-control" id="value" data-bind="value: value" />
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label class="col-md-2" for="action">Date</label>
+                        <div class="col-md-10">
+                            <input type="text" disabled class="form-control" id="action" data-bind="dateText: changeDate, format: 'L h:mm a'" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2" for="action">Comment</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="action" data-bind="value: comment" />
+                        </div>
+                    </div>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancelHistoryEdit">Cancel</button>
-                <button type="button" class="btn btn-primary" data-bind="click: saveHistoryEdit">Apply Changes</button>
-            </div>
-        </div> <!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
+                </div>
+            </div> <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</script>
 
-<div class="modal" id="editBreedingStatusModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" data-bind="with: editBreedingStatusData">
-            <div class="modal-header">
-                <h4 class="modal-title">Breeding Status</h4>
-            </div>
-            <div class="modal-body form-horizontal">
-                <div class="form-group">
-                    <label for="editBreedingStatus" class="col-md-2 control-label">Status</label>
-                    <div class="col-md-4" data-bind="with: status">
-                        <select class="form-control" id="editBreedingStatus" name="editBreedingStatus" data-bind="options: $root.dropdowns.breedingStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+<script id="editBreedingStatusTemplate" type="text/html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Breeding Status</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label for="editBreedingStatus" class="col-md-2 control-label">Status</label>
+                        <div class="col-md-4" data-bind="with: status">
+                            <select class="form-control" id="editBreedingStatus" name="editBreedingStatus" data-bind="options: $root.breedingStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                        </div>
+                        <label for="editBreedingStatusConfidenceLevel" class="col-md-2 control-label">Confidence</label>
+                        <div class="col-md-4" data-bind="with: confidenceLevel">
+                            <select class="form-control" id="editBreedingStatusConfidenceLevel" name="editBreedingStatusConfidenceLevel" data-bind="options: $root.confidenceLevels, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                        </div>
                     </div>
-                    <label for="editBreedingStatusConfidenceLevel" class="col-md-2 control-label">Confidence</label>
-                    <div class="col-md-4" data-bind="with: confidenceLevel">
-                        <select class="form-control" id="editBreedingStatusConfidenceLevel" name="editBreedingStatusConfidenceLevel" data-bind="options: $root.dropdowns.confidenceLevels, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                    <div class="form-group">
+                        <label for="editBreedingStatusMethod" class="col-md-2 control-label">Method</label>
+                        <div class="col-md-4" data-bind="with: method">
+                            <select class="form-control" id="editBreedingStatusMethod" name="editBreedingStatusMethod" data-bind="options: $root.breedingStatusMethods, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                        </div>
+                        <label for="editBreedingStatusDate" class="col-md-2 control-label">Effective Date</label>
+                        <div class="col-md-4">
+                            <input class="form-control" id="editBreedingStatusDate" type="date" data-bind="value: date" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bind="enable: saveAllowed, click: save">Update</button>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="editBreedingStatusMethod" class="col-md-2 control-label">Method</label>
-                    <div class="col-md-4" data-bind="with: method">
-                        <select class="form-control" id="editBreedingStatusMethod" name="editBreedingStatusMethod" data-bind="options: $root.dropdowns.breedingStatusMethods, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            </div> <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</script>
+
+<script id="editHerdAssociationTemplate" type="text/html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Herd Association</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label for="editHerdPopulation" class="col-md-2 control-label">Population</label>
+                        <div class="col-md-4" data-bind="with: population">
+                            <select class="form-control" id="editHerdPopulation" name="editHerdPopulation" data-bind="options: $root.herdPopulations, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                        </div>
+                        <label for="editHerdAssociationConfidenceLevel" class="col-md-2 control-label">Confidence</label>
+                        <div class="col-md-4" data-bind="with: confidenceLevel">
+                            <select class="form-control" id="editHerdAssociationConfidenceLevel" name="editHerdAssociationConfidenceLevel" data-bind="options: $root.confidenceLevels, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                        </div>
                     </div>
-                    <label for="editBreedingStatusDate" class="col-md-2 control-label">Effective Date</label>
-                    <div class="col-md-4">
-                        <input class="form-control" id="editBreedingStatusDate" type="date" data-bind="value: date" />
+                    <div class="form-group">
+                        <label for="editHerdAssociationMethod" class="col-md-2 control-label">Method</label>
+                        <div class="col-md-4" data-bind="with: method">
+                            <select class="form-control" id="editHerdAssociationMethod" name="editHerdAssociationMethod" data-bind="options: $root.herdAssociationMethods, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                        </div>
+                        <label for="editHerdAssociationDate" class="col-md-2 control-label">Effective Date</label>
+                        <div class="col-md-4">
+                            <input class="form-control" id="editHerdAssociationDate" type="date" data-bind="value: date" />
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bind="enable: saveAllowed, click: save">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</script>
+
+<script id="collarDataPointTemplate" type="text/html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Collar Data Point</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <span class="col-md-6" data-bind="text: date"></span>
+                        <span class="col-md-6" data-bind="text: acquiredTime"></span>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-md-6" data-bind="text: latitude"></span>
+                        <span class="col-md-6" data-bind="text: longitude"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="argosPassStatus" class="col-md-3 control-label">Status</label>
+                        <div class="col-md-6" data-bind="with: argosPassStatus">
+                            <select class="form-control" id="argosPassStatus" name="argosPassStatus" data-bind="options: $root.argosPassStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="form-group">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: clearStatus">Clear Status</button>
                         <button type="button" class="btn btn-primary" data-bind="enable: saveAllowed, click: save">Update</button>
                     </div>
                 </div>
             </div>
-        </div> <!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</script>
 
-<div class="modal" id="editHerdAssociationModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" data-bind="with: editHerdAssociationData">
-            <div class="modal-header">
-                <h4 class="modal-title">Herd Association</h4>
-            </div>
-            <div class="modal-body form-horizontal">
-                <div class="form-group">
-                    <label for="editHerdPopulation" class="col-md-2 control-label">Population</label>
-                    <div class="col-md-4" data-bind="with: population">
-                        <select class="form-control" id="editHerdPopulation" name="editHerdPopulation" data-bind="options: $root.dropdowns.herdPopulations, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-                    </div>
-                    <label for="editHerdAssociationConfidenceLevel" class="col-md-2 control-label">Confidence</label>
-                    <div class="col-md-4" data-bind="with: confidenceLevel">
-                        <select class="form-control" id="editHerdAssociationConfidenceLevel" name="editHerdAssociationConfidenceLevel" data-bind="options: $root.dropdowns.confidenceLevels, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="editHerdAssociationMethod" class="col-md-2 control-label">Method</label>
-                    <div class="col-md-4" data-bind="with: method">
-                        <select class="form-control" id="editHerdAssociationMethod" name="editHerdAssociationMethod" data-bind="options: $root.dropdowns.herdAssociationMethods, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-                    </div>
-                    <label for="editHerdAssociationDate" class="col-md-2 control-label">Effective Date</label>
-                    <div class="col-md-4">
-                        <input class="form-control" id="editHerdAssociationDate" type="date" data-bind="value: date" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                        <button type="button" class="btn btn-primary" data-bind="enable: saveAllowed, click: save">Update</button>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<script id="passTableFilterTemplate" type="text/html">
+    <div class="form-group">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-default" data-bind="click: fetchFromArgos">Pull Argos Feed</button>
+        </div>
+        <label for="statusFilter" class="col-md-3 control-label">Status Filter</label>
+        <div class="col-md-3">
+            <select class="form-control" id="statusFilter" name="statusFilter" data-bind="options: statusFilterOptions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: statusFilterKey, select2: { }"></select>
+        </div>
+    </div>
+</script>

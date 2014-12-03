@@ -149,3 +149,11 @@ hr {
 .hideSearch.select2-drop {
     display: none !important;
 }
+
+#locationTable tr.warning-status{
+    background-color: goldenrod;
+}
+
+#locationTable tr.rejected-status{
+    background-color: tomato ;
+}

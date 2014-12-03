@@ -17,86 +17,19 @@ wmis.collaredanimal.edit = (function($) {
             }
         });
 
-        // Click handlers
-        this.cancelProjectSelection = function() {
-            $("#selectedProject").select2("data", null);
-            $('#assignProjectModal').modal('hide');
-        };
-
-        this.saveProjectSelection = function() {
-            var selectedProject = $("#selectedProject").select2("data");
-            if (selectedProject) {
-                collar().project().key(selectedProject.key);
-                collar().project().name(selectedProject.name);
-                $('#assignProjectModal').modal('hide');
-            }
-        };
-        this.assignProject = function() {
-            $('#assignProjectModal').modal('show');
+        this.assignProject = function () {
+            wmis.collaredanimal.editmodals.selectProject(function(result) {
+                collar().project().key(result.projectKey);
+            });
         };
 
         this.unassignProject = function() {
             collar().project().key(0);
             collar().project().name(null);
         };
-
-        // Project options for assignment
-        this.projectOptions = {
-            minimumInputLength: 1,
-            ajax: {
-                url: "/api/project",
-                placeholder: "Projects",
-                dataType: "json",
-                data: function(term, page) {
-                    return {
-                        keywords: term,
-                        startRow: (page - 1) * 25,
-                        rowCount: 25
-                    };
-                },
-                results: function(result, page, query) {
-                    _.forEach(result.data, function(record) {
-                        record.id = record.key;
-                        var text = record.name;
-                        if (record.leadRegion != null)
-                            text += ' - ' + record.leadRegion.name;
-                        if (record.projectLead != null)
-                            text += ' - ' + record.projectLead.name;
-                        record.text = text;
-                    });
-                    return {
-                        results: result.data
-                    };
-                }
-            }
-        }
     }
 
-    function HistoryViewModel(collaredAnimalKey) {
-        var self = this;
-        this.selectedCollarHistory = ko.observable();
-
-        this.cancelHistoryEdit = function () {
-            $('#editHistoryCommentModal').modal('hide');
-        }
-
-        this.saveHistoryEdit = function() {
-            wmis.global.showWaitingScreen("Saving...");
-
-            $.ajax({
-                url: "/api/collar/history",
-                type: "PUT",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify(ko.toJS(self.selectedCollarHistory()))
-            }).success(function() {
-                $("#collarHistory").DataTable().ajax.reload();
-                $('#editHistoryCommentModal').modal('hide');
-            }).always(function() {
-                wmis.global.hideWaitingScreen();
-            }).fail(wmis.global.ajaxErrorHandler);
-        }
-
+    function initializeHistoryTable(collaredAnimalKey) {
         $("#collarHistory").DataTable({
             "iDisplayLength": 25,
             "ordering": false,
@@ -149,42 +82,9 @@ wmis.collaredanimal.edit = (function($) {
         $("#collarHistory").on('click', 'td.editHistory span', function (event) {
             var rowIndex = $(event.target).data().rowIndex;
             var rowData = $("#collarHistory").DataTable().row(rowIndex).data();
-            ko.mapper.fromJS(rowData, {}, self.selectedCollarHistory);
-            $('#editHistoryCommentModal').modal('show');
-            console.log(event);
-        });
-    }
-
-    function ArgosDataViewModel(collaredAnimalKey, collar) {
-        var self = this;
-        var argosPasses = ko.observableArray();
-
-        // Load the map the first time the tab is clicked
-        var mapTabClicked = ko.observable(false);
-        this.loadMap = function() {
-            mapTabClicked(true);
-        }
-        ko.computed(function() {
-            if (mapTabClicked()) wmis.collaredanimal.mapping.initializeMap(collaredAnimalKey, 'map-canvas', argosPasses);
-        });
-        
-        // Call the argos webservice to fetch new collar data
-        this.getArgosCollarData = function () {
-            // TODO dont do this by name, use the collaredAnimalId
-            wmis.global.showWaitingScreen("Pulling Argos Data...");
-            $.ajax({
-                url: "/api/argos/run/" + collar().name(),
-                type: "POST",
-            }).success(function () {
-                console.log("sucess!");
-            }).always(function () {
-                wmis.global.hideWaitingScreen();
-            }).fail(wmis.global.ajaxErrorHandler);
-        };
-
-        // Populate the initial passes
-        $.getJSON("/api/argos/passes?collaredAnimalId= " + collaredAnimalKey + "&startRow=0&rowCount=500", function (result) {
-            argosPasses(result.data);
+            wmis.collaredanimal.editmodals.editHistoryComment(rowData, function() {
+                $("#collarHistory").DataTable().ajax.reload();
+            });
         });
     }
 
@@ -219,59 +119,6 @@ wmis.collaredanimal.edit = (function($) {
         wmis.global.getDropDownData(self.ageClasses, "/api/collar/ageClasses?startRow=0&rowCount=500", function (result) { return result.data; });
         wmis.global.getDropDownData(self.animalMortalities, "/api/collar/animalMortalities?startRow=0&rowCount=500", function (result) { return result.data; });
         wmis.global.getDropDownData(self.animalStatuses, "/api/collar/animalStatuses?startRow=0&rowCount=500", function (result) { return result.data; });
-    }
-
-    function EditBreedingStatusModel(collar) {
-        var self = this;
-        this.element = $('#editBreedingStatusModal');
-        this.status = ko.observable({ key: ko.observable(0) });
-        this.confidenceLevel = ko.observable({ key: ko.observable(0) });
-        this.method = ko.observable({ key: ko.observable(0) });
-        this.date = ko.observable();
-
-        this.cancel = function() {
-            self.element.modal('hide');
-        };
-
-        this.saveAllowed = ko.computed(function() {
-            var checkKey = function(property) { return !!property().key(); }
-            return checkKey(self.status) && checkKey(self.confidenceLevel) && checkKey(self.method) && !!self.date();
-        });
-
-        this.save = function() {
-            collar().breedingStatus().key(self.status().key());
-            collar().breedingStatusConfidenceLevel().key(self.confidenceLevel().key());
-            collar().breedingStatusMethod().key(self.method().key());
-            collar().breedingStatusDate(self.date());
-                
-            self.element.modal('hide');
-        };
-    }
-
-    function EditHerdAssociationModel(collar) {
-        var self = this;
-        this.element = $('#editHerdAssociationModal');
-        this.population = ko.observable({ key: ko.observable(0) });
-        this.confidenceLevel = ko.observable({ key: ko.observable(0) });
-        this.method = ko.observable({ key: ko.observable(0) });
-        this.date = ko.observable();
-
-        this.cancel = function() {
-            self.element.modal('hide');
-        };
-
-        this.saveAllowed = ko.computed(function() {
-            var checkKey = function(property) { return !!property().key(); }
-            return checkKey(self.population) && checkKey(self.confidenceLevel) && checkKey(self.method) && !!self.date();
-        });
-
-        this.save = function() {
-            collar().herdPopulation().key(self.population().key());
-            collar().herdAssociationConfidenceLevel().key(self.confidenceLevel().key());
-            collar().herdAssociationMethod().key(self.method().key());
-            collar().herdAssociationDate(self.date());
-            self.element.modal('hide');
-        };
     }
 
     var targetSpeciesOptions = {
@@ -317,34 +164,43 @@ wmis.collaredanimal.edit = (function($) {
     };
 
     function EditCollarViewModel(collaredAnimalKey) {
-	    var self = this;
-	    this.collar = ko.observable();
-		
-		this.dataLoaded = ko.observable(false);
+        var self = this;
+        this.collar = ko.observable();
+
+        this.dataLoaded = ko.observable(false);
 
         this.targetSpeciesOptions = targetSpeciesOptions;
 
-		this.editHerdAssociationData = ko.observable();
-		this.editHerdAssociation = function () {
-		    self.editHerdAssociationData(new EditHerdAssociationModel(self.collar));
-		    $('#editHerdAssociationModal').modal('show');
-		};
+        this.editHerdAssociation = function () {
+            wmis.collaredanimal.editmodals.editHerdAssociation(self.dropdowns.herdPopulations, self.dropdowns.herdAssociationMethods, self.dropdowns.confidenceLevels, function(result) {
+                self.collar().herdPopulation().key(result.herdPopulationKey);
+                self.collar().herdAssociationConfidenceLevel().key(result.herdAssociationConfidenceLevelKey);
+                self.collar().herdAssociationMethod().key(result.herdAssociationMethodKey);
+                self.collar().herdAssociationDate(result.herdAssociationDate);
+            });
+        };
 
-		this.editBreedingStatusData = ko.observable();
-		this.editBreedingStatus = function () {
-		    self.editBreedingStatusData(new EditBreedingStatusModel(self.collar));
-		    $('#editBreedingStatusModal').modal('show');
-		}
-		
-		this.projectActions = new ProjectViewModel(this.collar);
-		this.dropdowns = new DropdownViewModel();
-		this.history = new HistoryViewModel(collaredAnimalKey);
-        this.argosData = new ArgosDataViewModel(collaredAnimalKey, this.collar);
+        this.editBreedingStatus = function() {
+            wmis.collaredanimal.editmodals.editBreedingStatus(self.dropdowns.breedingStatuses, self.dropdowns.breedingStatusMethods, self.dropdowns.confidenceLevels, function(result) {
+                self.collar().breedingStatus().key(result.breedingStatusKey);
+                self.collar().breedingStatusConfidenceLevel().key(result.breedingStatusConfidenceLevelKey);
+                self.collar().breedingStatusMethod().key(result.breedingStatusMethodKey);
+                self.collar().breedingStatusDate(result.breedingStatusDate);
+            });
+        }
 
-	    this.getcollar = function (key) {
+        this.projectActions = new ProjectViewModel(this.collar);
+        this.dropdowns = new DropdownViewModel();
+
+        this.mapTabClicked = function() {
+            wmis.collaredanimal.mapping.mapTabClicked(collaredAnimalKey);
+        }
+
+        initializeHistoryTable(collaredAnimalKey);
+
+        this.getcollar = function (key) {
 			wmis.global.showWaitingScreen("Loading...");
 			var url = "/api/collar/" + key;
-
 			$.getJSON(url, {}, function (json) {
 				ko.mapper.fromJS(json, "auto", self.collar);
 				self.dataLoaded(true);

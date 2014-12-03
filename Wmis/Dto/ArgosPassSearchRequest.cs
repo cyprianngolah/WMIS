@@ -6,5 +6,7 @@
 	public class ArgosPassSearchRequest : PagedDataRequest
 	{
 		public int CollaredAnimalId { get; set; }
+
+        public int? statusFilter { get; set; }
 	}
 }

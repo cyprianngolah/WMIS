@@ -32,7 +32,27 @@ namespace Wmis.Controllers
         [Route("run/{collaredAnimalId:int?}")]
         public List<ArgosPassForTvp> RetrieveForCollar(int collaredAnimalId)
         {
-            return this.retrievePathFromArgos(collaredAnimalId);
+            var collarId = Repository.CollarGet(collaredAnimalId).CollarId;
+            return this.retrievePathFromArgos(int.Parse(collarId));
+        }
+
+        [HttpGet]
+        [Route("passStatuses")]
+        public PagedResultset<ArgosPassStatus> GetArgosPassStatus([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.ArgosPassStatusGet(request);
+        }
+
+        [HttpPost]
+        [Route("pass/save")]
+        public void UpdateArgosPass([FromBody]Dto.ArgosPassUpdateRequest request)
+        {
+            Repository.ArgosPassUpdate(request.ArgosPassId, request.ArgosPassStatusId);
         }
 
         List<ArgosPassForTvp> retrievePathFromArgos(int collaredAnimalId)
@@ -41,7 +61,7 @@ namespace Wmis.Controllers
             var argosData = convertArgosXmlStringToArgosData(argosXmlString);
             var argosPasses = convertArgosDataToPasses(argosData);
 
-            Repository.ArgosPassUpdate(collaredAnimalId, argosPasses);
+            Repository.ArgosPassMerge(collaredAnimalId, argosPasses);
 
             return argosPasses;
         }

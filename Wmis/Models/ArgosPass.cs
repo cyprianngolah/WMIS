@@ -16,5 +16,7 @@
 
         public DateTime LocationDate { get; set; }
 
+        public ArgosPassStatus ArgosPassStatus { get; set; }
+
 	}
 }

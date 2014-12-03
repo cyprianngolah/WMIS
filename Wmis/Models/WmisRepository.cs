@@ -227,9 +227,11 @@
 
         private const string ARGOSPASS_CREATE = "dbo.ArgosPass_Create";
 
-        private const string ARGOSPASS_UPDATE = "dbo.ArgosPass_Update";
+        private const string ARGOSPASS_MERGE = "dbo.ArgosPass_Merge";
 
         private const string ARGOSPASS_SEARCH = "dbo.ArgosPass_Search";
+
+        private const string ARGOSPASS_UPDATE= "dbo.ArgosPass_Update";
 
         private const string ANIMALSEX_GET = "dbo.AnimalSex_Get";
 
@@ -248,6 +250,8 @@
         private const string ANIMALMORTALITY_GET = "dbo.AnimalMortality_Get";
 
         private const string ANIMALSTATUS_GET = "dbo.AnimalStatus_Get";
+
+        private const string ARGOSPASSSTATUS_GET = "dbo.ArgosPassStatus_Get";
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -2179,7 +2183,20 @@
         #endregion
 
         #region Argos Passes
-        public void ArgosPassUpdate(int collarId, IEnumerable<ArgosPassForTvp> passes)
+        public void ArgosPassUpdate(int argosPassId, int argosPassStatusId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_ArgosPassId = argosPassId,
+                    p_ArgosPassStatusId = argosPassStatusId == 0 ? null : (int?)argosPassStatusId,
+                };
+                c.Query<int>(ARGOSPASS_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void ArgosPassMerge(int collarId, IEnumerable<ArgosPassForTvp> passes)
         {
             using (var c = NewWmisConnection)
             {
@@ -2188,7 +2205,7 @@
                     p_argosPasses = passes.AsTableValuedParameter("dbo.ArgosPassTableType"),
                     p_collarId = collarId,
                 };
-                c.Query<int>(ARGOSPASS_UPDATE, param, commandType: CommandType.StoredProcedure);
+                c.Query<int>(ARGOSPASS_MERGE, param, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -2206,14 +2223,16 @@
                 {
                     p_startRow = apsr.StartRow,
                     p_rowCount = apsr.RowCount,
-                    p_collaredAnimalKey = apsr.CollaredAnimalId
+                    p_collaredAnimalKey = apsr.CollaredAnimalId,
+                    p_argosPassStatusFilter = apsr.statusFilter
                 };
 
                 using (var q = c.QueryMultiple(ARGOSPASS_SEARCH, param, commandType: CommandType.StoredProcedure))
                 {
-                    pagedResultset.Data = q.Read<int, ArgosPass, ArgosPass>(
-                    (tc, ap) =>
+                    pagedResultset.Data = q.Read<int, ArgosPass, ArgosPassStatus, ArgosPass>(
+                    (tc, ap, aps) =>
                     {
+                        ap.ArgosPassStatus = aps ?? new ArgosPassStatus();
                         pagedResultset.ResultCount = tc;
                         return ap;
                     },
@@ -2223,6 +2242,39 @@
             }
 
             return pagedResultset;
+        }
+
+
+        public PagedResultset<ArgosPassStatus> ArgosPassStatusGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<ArgosPassStatus>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<ArgosPassStatus>()
+                };
+
+                var results = c.Query<dynamic, ArgosPassStatus, ArgosPassStatus>(ARGOSPASSSTATUS_GET,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
         }
         #endregion
         #endregion

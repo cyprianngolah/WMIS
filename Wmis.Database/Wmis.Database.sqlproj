@@ -251,6 +251,10 @@
     <Build Include="dbo\Stored Procedures\HerdAssociationMethod_Get.sql" />
     <Build Include="dbo\Stored Procedures\HerdPopulation_Get.sql" />
     <Build Include="dbo\Stored Procedures\AgeClass_Get.sql" />
+    <Build Include="dbo\Tables\ArgosPassStatuses.sql" />
+    <None Include="dbo\Fill\ArgosPassStatuses.sql" />
+    <Build Include="dbo\Stored Procedures\ArgosPassStatus_Get.sql" />
+    <Build Include="dbo\Stored Procedures\ArgosPass_Merge.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

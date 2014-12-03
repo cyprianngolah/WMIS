@@ -88,10 +88,10 @@
                         "~/js/modules/wmis.collaredanimal.new.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/collaredanimal/edit").Include(
+                        "~/js/modules/wmis.collaredanimal.mapping.js",
+                        "~/js/modules/wmis.collaredanimal.editmodals.js",
                         "~/js/modules/wmis.collaredanimal.edit.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/collaredanimal/mapping").Include(
-                        "~/js/modules/wmis.collaredanimal.mapping.js"));
             #endregion
 
 			#region Projects
