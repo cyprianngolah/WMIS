@@ -1,9 +1,10 @@
 ﻿wmis.project = wmis.project || {};
 wmis.project.survey = wmis.project.survey || {};
 wmis.project.survey.edit = (function ($) {
-	var observationsTable;
+	var viewModel;
 	var options = {
 		projectSurveyKey: null,
+		uploadObservationForm: null
 	};
 
 	function editProjectSurveyViewModel() {
@@ -32,6 +33,11 @@ wmis.project.survey.edit = (function ($) {
 			wmis.global.getDropDownData(self.species, "/api/biodiversity?startRow=0&rowCount=500", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
+		};
+
+		this.uploadObservationFile = function() {
+			alert("do upload! to " + options.uploadObservationForm);
+			options.uploadObservationForm.submit();
 		};
 
 		this.canSave = ko.computed(function() {
@@ -63,7 +69,7 @@ wmis.project.survey.edit = (function ($) {
 
 		ko.applyBindings(viewModel);	
 	}
-
+	
 	return {
 		initialize: initialize
 	};

@@ -150,11 +150,13 @@
     <Compile Include="ApiControllers\LeadRegionController.cs" />
     <Compile Include="ApiControllers\NwtSarcAssessmentApiController.cs" />
     <Compile Include="ApiControllers\EcozoneApiController.cs" />
+    <Compile Include="ApiControllers\ObservationController.cs" />
     <Compile Include="ApiControllers\PersonController.cs" />
     <Compile Include="ApiControllers\ProjectController.cs" />
     <Compile Include="ApiControllers\ProtectedAreaApiController.cs" />
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
     <Compile Include="ApiControllers\ReferenceController.cs" />
+    <Compile Include="ApiControllers\SettingsController.cs" />
     <Compile Include="ApiControllers\StatusRankApiController.cs" />
     <Compile Include="ApiControllers\SurveyTemplateController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
@@ -203,6 +205,7 @@
     <Compile Include="Dto\NwtSarcAssessmentRequest.cs" />
     <Compile Include="Dto\EcozoneRequest.cs" />
     <Compile Include="Dto\NwtSarcAssessmentSaveRequest.cs" />
+    <Compile Include="Dto\ObservationUploadResponse.cs" />
     <Compile Include="Dto\PersonRequest.cs" />
     <Compile Include="Dto\ProjectCollarRequest.cs" />
     <Compile Include="Dto\ProjectRequest.cs" />

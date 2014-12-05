@@ -38,7 +38,7 @@
 						"~/Scripts/datepicker/bootstrap-datepicker.js"));		
 
 			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
-						"~/Scripts/select2.js"));		
+						"~/Scripts/select2.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
 						"~/Scripts/DataTables-1.10.3/jquery.dataTables.js",

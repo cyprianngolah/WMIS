@@ -22,12 +22,42 @@
 	@Html.Raw(Scripts.Render("~/bundles/project/survey/edit"))
 
 	<script>
-        $(function () {
-            wmis.project.survey.edit.initialize({
-            	projectSurveyKey: @ViewBag.Key,
-            });
-        });
+		$(function() {
+			wmis.project.survey.edit.initialize({
+				projectSurveyKey: @ViewBag.Key,
+				uploadObservationForm: $("#observationFileUploadForm")
+			});
+		});
 	</script>
+}
+
+@section Dialogs {
+	<div class="modal" id="observationUploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
+		<form role="form" id="observationFileUploadForm" enctype="multipart/form-data" action="~/api/observation/upload/@ViewBag.Key" method="post" target="uploadIframe">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">Upload Observations</h4>
+					</div>
+
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="exampleInputFile">Observation File</label>
+							<input type="file" id="exampleInputFile" name="exampleInputeFile">
+							<p class="help-block">Only .xls and .xlsx files are supported.</p>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" data-bind="click: uploadObservationFile">Upload</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 }
 
 @{ Html.RenderPartial("EditSurveyForm"); }

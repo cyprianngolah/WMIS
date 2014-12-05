@@ -1,22 +1,22 @@
-﻿<form role="form">
-	<div class="row">
-		<div class="col-md-12 text-right">
-			<a href="~/Project/" class="btn btn-default">Cancel</a>
-			<button type="submit" class="btn btn-primary" data-bind="click: saveProject, enable: canSave">Save</button>
-		</div>
-	</div>
+﻿<div class="row">
+	<div class="col-md-12">
+		<ul class="nav nav-tabs" role="tablist">
+			<li><a href="#surveyTab" role="tab" data-toggle="tab">Survey</a></li>
+			<li class="active"><a href="#observationTab" role="tab" data-toggle="tab">Observation</a></li>
+		</ul>
+	
+		<!-- Tab panes -->
+		<div class="tab-content" style="margin-top:10px;">
+			<!-- Survey -->
+			<div class="tab-pane form-horizontal" data-bind="with: survey" id="surveyTab">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<a href="~/Project/" class="btn btn-default">Cancel</a>
+						<button type="submit" class="btn btn-primary" data-bind="click: $root.saveProject, enable: $root.canSave">Save</button>
+					</div>
+				</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<ul class="nav nav-tabs" role="tablist">
-				<li class="active"><a href="#surveyTab" role="tab" data-toggle="tab">Survey</a></li>
-				<li><a href="#observationTab" role="tab" data-toggle="tab">Observation</a></li>
-			</ul>
-
-			<!-- Tab panes -->
-			<div class="tab-content" style="margin-top:10px;">
-				<!-- Survey -->
-				<div class="tab-pane form-horizontal active" data-bind="with: survey" id="surveyTab">
+				<form role="form">
 					<div class="form-group">
 						<label for="targetSpecies" class="col-md-1 control-label">Target Species</label>
 						<div class="col-md-5" data-bind="with: targetSpecies">
@@ -163,13 +163,23 @@
 							<textarea rows="4" name="weatherComments" class="form-control" data-bind="value: weatherComments"></textarea>
 						</div>
 					</div>
+				</form>
+			</div>
 
+			<!-- Observation -->
+			<div class="tab-pane form-horizontal active" data-bind="with: survey" id="observationTab">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#observationUploadModal">Upload Observations</button>
+					</div>
 				</div>
-
-				<!-- Observation -->
-				<div class="tab-pane form-horizontal" data-bind="with: survey" id="observationTab">
+				
+				<div class="row">
+					<div class="col-md-12">
+						<p>There are currently no Observations for this Survey. Click the Upload Observations button to get started. </p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</form>
+</div>
