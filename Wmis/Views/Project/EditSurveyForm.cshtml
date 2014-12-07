@@ -167,16 +167,23 @@
 			</div>
 
 			<!-- Observation -->
-			<div class="tab-pane form-horizontal active" data-bind="with: survey" id="observationTab">
+			<div class="tab-pane form-horizontal active" data-bind="with: $root" id="observationTab">
 				<div class="row">
 					<div class="col-md-12 text-right">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#observationUploadModal">Upload Observations</button>
+						<button type="button" class="btn btn-primary" data-bind="visible: canUploadObservations, click: showUploadModal">Upload Observations</button>
+						<button type="button" class="btn btn-primary" data-bind="visible: canUploadObservations, click: showResumeUploadModal">Resume Observation Upload</button>
 					</div>
 				</div>
 				
-				<div class="row">
+				<div class="row" data-bind="visible: observations().length === 0">
 					<div class="col-md-12">
 						<p>There are currently no Observations for this Survey. Click the Upload Observations button to get started. </p>
+					</div>
+				</div>
+				
+				<div class="row" data-bind="visible: observations().length > 0">
+					<div class="col-md-12">
+						<p>Show some surveys. </p>
 					</div>
 				</div>
 			</div>

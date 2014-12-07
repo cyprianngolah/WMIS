@@ -25,20 +25,22 @@
 		$(function() {
 			wmis.project.survey.edit.initialize({
 				projectSurveyKey: @ViewBag.Key,
-				uploadObservationForm: $("#observationFileUploadForm")
+				uploadObservationForm: $("#observationFileUploadForm"),
+				observationModal: $("#observationUploadModal"),
+				resumeObservationModal: $("resumeObservationUploadModal")
 			});
 		});
 	</script>
 }
 
 @section Dialogs {
-	<div class="modal" id="observationUploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal" id="observationUploadModal" data-bind="showModal: currentModal() == 'upload', with: $root">
 		<iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
 		<form role="form" id="observationFileUploadForm" enctype="multipart/form-data" action="~/api/observation/upload/@ViewBag.Key" method="post" target="uploadIframe">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<button type="button" class="close" data-bind="click: $root.hideUploadModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 						<h4 class="modal-title">Upload Observations</h4>
 					</div>
 
@@ -51,12 +53,129 @@
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" data-bind="click: uploadObservationFile">Upload</button>
+						<button type="button" class="btn btn-default" data-bind="click: $root.hideUploadModal">Cancel</button>
+						<button type="button" class="btn btn-primary" data-bind="click: $root.uploadObservationFile">Upload</button>
 					</div>
 				</div>
 			</div>
 		</form>
+	</div>
+	
+	<div class="modal" id="resumeObservationUploadModal" data-bind="showModal: currentModal() == 'resumeUpload', with: $root">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-bind="click: $root.hideResumeUploadModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Resume Observation Upload</h4>
+				</div>
+
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Started</th>
+								<th>Next Step</th>
+								<th>File Name</th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody data-bind="foreach: resumableUploads">
+							<tr>
+								<td data-bind="text: id"></td>
+								<td data-bind="text: started"></td>
+								<td data-bind="text: nextStep.description"></td>
+								<td data-bind="text: filename"></td>
+								<td><button data-bind="click: $root.resumeObservationUpload">Resume</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-bind="click: $root.hideResumeUploadModal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal" id="pickHeaderModal" data-bind="showModal: currentModal() == 'headerPicker', with: $root">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-bind="click: hideHeaderPickerModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Observation Header Rows</h4>
+				</div>
+
+				<div class="modal-body">
+					<div style="max-height: 420px; overflow-y: auto;">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Is Header Row</th>
+									<th>Is First Data Row</th>
+									<th>Row Index</th>
+								</tr>
+							</thead>
+
+							<tbody data-bind="foreach: workingData">
+								<tr>
+									<td><input type="radio" name="headerRow" data-bind="value: rowIndex" /></td>
+									<td><input type="radio" name="firstDataRow" data-bind="value: rowIndex" /></td>
+									<td data-bind="text: rowIndex"></td>
+									<!-- ko foreach: cellValues -->
+									<td data-bind="text: $data"></td>
+									<!-- /ko -->
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-bind="click: $root.hideHeaderPickerModal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal" id="columnMappingModal" data-bind="showModal: currentModal() == 'columnPicker', with: $root">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-bind="click: hideColumnMapperModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Observation Column Mapping</h4>
+				</div>
+
+				<div class="modal-body">
+					<p>Map Excel Columns to Template Columns</p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-bind="click: $root.hideColumnMapperModal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal" id="dataPreviewModal" data-bind="showModal: currentModal() == 'dataPreview', with: $root">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-bind="click: hideDataPreviewModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Observation Confirmation</h4>
+				</div>
+
+				<div class="modal-body">
+					<p>Check to make sure that the mapped data is what we expect before flagging it as "available".</p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-bind="click: $root.hideDataPreviewModal">Cancel</button>
+				</div>
+			</div>
+		</div>
 	</div>
 }
 
