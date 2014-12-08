@@ -1,0 +1,41 @@
+﻿<div class="tab-pane form-horizontal" id="threats">
+	<div class="row">
+		<div class="col-md-12 h4">
+			<div class="row">
+				<div class="col-md-4">Threats</div>
+				<div class="col-md-8 text-right">
+					<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Threats', categoryId: 22"></reference-widget>
+				</div>
+			</div>
+			<hr />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="threatsThreats" class="col-md-2 control-label">Threats</label>
+		<div class="col-md-1">
+			<input type="text" class="form-control" id="threatsThreats" data-bind="value: threatsScore">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="threatsThreatsDescription" class="col-md-2 control-label">Description</label>
+		<div class="col-md-10">
+			<textarea rows="4" name="threatsThreatsDescription" class="form-control" data-bind="value: threatsDescription"></textarea>
+		</div>
+	</div>
+					
+	<div class="form-group">
+		<label for="threatsIntrinsiceVulnerability" class="col-md-2 control-label">Intrinsic Vulnerability</label>
+		<div class="col-md-1">
+			<input type="text" class="form-control" id="threatsIntrinsiceVulnerability" data-bind="value: intrinsicVulnerabilityScore">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="threatsIntrinsiceVulnerabilityDescription" class="col-md-2 control-label">Description</label>
+		<div class="col-md-10">
+			<textarea rows="4" name="threatsIntrinsiceVulnerabilityDescription" class="form-control" data-bind="value: intrinsicVulnerabilityDescription"></textarea>
+		</div>
+	</div>
+</div>

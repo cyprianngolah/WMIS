@@ -735,6 +735,13 @@
     <Content Include="Views\CollaredAnimal\CollarTab.cshtml" />
     <Content Include="Views\CollaredAnimal\AnimalTab.cshtml" />
     <Content Include="Views\CollaredAnimal\EditModals.cshtml" />
+    <Content Include="Views\BioDiversity\GeneralTab.cshtml" />
+    <Content Include="Views\BioDiversity\ReproductionTab.cshtml" />
+    <Content Include="Views\BioDiversity\DistributionTab.cshtml" />
+    <Content Include="Views\BioDiversity\AbundanceTab.cshtml" />
+    <Content Include="Views\BioDiversity\ThreatsTab.cshtml" />
+    <Content Include="Views\BioDiversity\TrendsTab.cshtml" />
+    <Content Include="Views\BioDiversity\StatusTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
