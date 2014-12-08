@@ -8,6 +8,8 @@ AS
 		c.SubscriptionId,
 		c.VhfFrequency,
 		c.JobNumber,
+		c.ProgramNumber,
+		c.HasPttBeenReturned,
 		c.Model,
 		c.InactiveDate,
 		c.DeploymentDate,

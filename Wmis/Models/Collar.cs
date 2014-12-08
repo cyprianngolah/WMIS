@@ -37,6 +37,10 @@
         public CollarType CollarType { get; set; }
 	    
         public string JobNumber { get; set; }
+
+        public string ProgramNumber { get; set; }
+
+        public Boolean HasPttBeenReturned { get; set; }
 	    
         public string Model { get; set; }
 

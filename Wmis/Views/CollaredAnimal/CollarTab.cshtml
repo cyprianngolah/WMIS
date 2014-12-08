@@ -29,40 +29,17 @@
             <input type="text" class="form-control" id="jobNumber" data-bind="value: jobNumber">
         </div>
 
-        <label for="collarModel" class="col-md-1 control-label">Collar Model</label>
+        <label for="programNumber" class="col-md-1 control-label">Program Number</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="collarModel" data-bind="value: model">
+            <input type="text" class="form-control" id="programNumber" data-bind="value: programNumber">
         </div>
     </div>
 
     <div class="form-group">
-        <label for="collarStatus" class="col-md-1 control-label">Collar Status</label>
-        <div class="col-md-3" data-bind="with: collarStatus">
-            <!-- ko if: $root.dropdowns.collarStatuses().length > 0 -->
-            <select class="form-control" id="collarStatus" name="collarStatus" data-bind="options: $root.dropdowns.collarStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            <!-- /ko -->
-        </div>
-
-        <label for="collarMalfunction" class="col-md-1 control-label">Collar Malfunction</label>
-        <div class="col-md-3" data-bind="with: collarMalfunction">
-            <!-- ko if: $root.dropdowns.collarMalfunctions().length > 0 -->
-            <select class="form-control" id="collarMalfunction" name="collarMalfunction" data-bind="options: $root.dropdowns.collarMalfunctions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            <!-- /ko -->
-        </div>
-
         <label for="collarRegion" class="col-md-1 control-label">Region</label>
         <div class="col-md-3" data-bind="with: collarRegion">
             <!-- ko if: $root.dropdowns.collarRegions().length > 0 -->
             <select class="form-control" id="collarRegion" name="collarRegion" data-bind="options: $root.dropdowns.collarRegions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            <!-- /ko -->
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="collarState" class="col-md-1 control-label">Collar State</label>
-        <div class="col-md-3" data-bind="with: collarState">
-            <!-- ko if: $root.dropdowns.collarStates().length > 0 -->
-            <select class="form-control" id="collarState" name="collarState" data-bind="options: $root.dropdowns.collarStates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
             <!-- /ko -->
         </div>
 
@@ -77,6 +54,41 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label for="collarModel" class="col-md-1 control-label">Collar Model</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="collarModel" data-bind="value: model">
+        </div>
+
+        <label for="collarStatus" class="col-md-1 control-label">Collar Status</label>
+        <div class="col-md-3" data-bind="with: collarStatus">
+            <!-- ko if: $root.dropdowns.collarStatuses().length > 0 -->
+            <select class="form-control" id="collarStatus" name="collarStatus" data-bind="options: $root.dropdowns.collarStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <!-- /ko -->
+        </div>
+
+        <label for="collarMalfunction" class="col-md-1 control-label">Collar Malfunction</label>
+        <div class="col-md-3" data-bind="with: collarMalfunction">
+            <!-- ko if: $root.dropdowns.collarMalfunctions().length > 0 -->
+            <select class="form-control" id="collarMalfunction" name="collarMalfunction" data-bind="options: $root.dropdowns.collarMalfunctions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <!-- /ko -->
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="collarState" class="col-md-1 control-label">Collar State</label>
+        <div class="col-md-3" data-bind="with: collarState">
+            <!-- ko if: $root.dropdowns.collarStates().length > 0 -->
+            <select class="form-control" id="collarState" name="collarState" data-bind="options: $root.dropdowns.collarStates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <!-- /ko -->
+        </div>
+
+        <label for="hasPttBeenReturned" class="col-md-2 control-label">Has PTT been returned?</label>
+        <div class="col-md-2">
+            <input id="hasPttBeenReturned" type="checkbox" data-bind="checked: hasPttBeenReturned" />
+        </div>
+    </div>
 
     <div class="form-group">
         <label for="comments" class="col-md-1 control-label">Comments</label>

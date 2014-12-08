@@ -1624,6 +1624,8 @@
                     p_SubscriptionId = collar.SubscriptionId,
                     p_VhfFrequency = collar.VhfFrequency,
                     p_JobNumber = collar.JobNumber,
+                    p_ProgramNumber = collar.ProgramNumber,
+                    p_HasPttBeenReturned = collar.HasPttBeenReturned,
                     p_Model = collar.Model,
                     p_InactiveDate = collar.InactiveDate,
                     p_DeploymentDate = collar.DeploymentDate,

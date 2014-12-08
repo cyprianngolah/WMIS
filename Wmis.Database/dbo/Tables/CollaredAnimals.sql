@@ -6,6 +6,8 @@
 	[VhfFrequency]						NVARCHAR (50)		NULL,
 	[CollarTypeId]						INT					NULL,
 	[JobNumber]							NVARCHAR (50)		NULL,
+	[ProgramNumber]						NVARCHAR (50)		NULL,
+	[HasPttBeenReturned]				BIT					NOT NULL DEFAULT 0,
 	[Model]								NVARCHAR (50)		NULL,
 	[CollarStatusId]					INT					NULL,
 	[CollarMalfunctionId]				INT					NULL,
