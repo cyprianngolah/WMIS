@@ -49,7 +49,6 @@
 			//////////////////////////////////////////////////////////////////////
 			bundles.Add(new StyleBundle("~/bundles/css").Include(
 						"~/Content/bootstrap.css",
-						"~/Content/bootstrap-theme.css",
 						"~/Content/site.css"));
 
 			bundles.Add(new StyleBundle("~/bundles/datePickerCss").Include(
