@@ -22,6 +22,7 @@ AS
 			LEFT OUTER JOIN dbo.Taxonomy [order] on s.OrderTaxonomyId = [order].TaxonomyId AND [order].TaxonomyGroupId = 6
 			LEFT OUTER JOIN dbo.Taxonomy family on s.FamilyTaxonomyId = family.TaxonomyId AND family.TaxonomyGroupId = 10	
 			LEFT OUTER JOIN dbo.Taxonomy [group] on s.GroupTaxonomyId = [group].TaxonomyId AND [group].TaxonomyGroupId = 12	
+			LEFT OUTER JOIN (SELECT DISTINCT SpeciesId, 1 hasSynonym from dbo.SpeciesSynonyms ss where ss.Name like '%' + @p_keywords + '%') [synonyms] on s.SpeciesId = [synonyms].SpeciesId 
 	WHERE
 		(@p_groupKey IS NULL OR s.GroupTaxonomyId = @p_groupKey) 
 		AND (@p_orderKey IS NULL OR s.OrderTaxonomyId = @p_orderKey) 
@@ -32,6 +33,7 @@ AS
 			OR s.CommonName LIKE '%' + @p_keywords + '%'  
 			OR s.SubSpeciesName LIKE '%' + @p_keywords + '%'
 			OR s.ELCODE LIKE '%' + @p_keywords + '%'
+			OR [synonyms].hasSynonym = 1
 		) 
 	ORDER BY
 		CASE WHEN @p_sortBy = 'group.name' AND @p_sortDirection = '0'
@@ -79,6 +81,7 @@ AS
 			LEFT OUTER JOIN dbo.Taxonomy [order] on s.OrderTaxonomyId = [order].TaxonomyId AND [order].TaxonomyGroupId = 6
 			LEFT OUTER JOIN dbo.Taxonomy family on s.FamilyTaxonomyId = family.TaxonomyId AND family.TaxonomyGroupId = 10	
 			LEFT OUTER JOIN dbo.Taxonomy [group] on s.GroupTaxonomyId = [group].TaxonomyId AND [group].TaxonomyGroupId = 12	
+			LEFT OUTER JOIN (SELECT DISTINCT SpeciesId, 1 hasSynonym from dbo.SpeciesSynonyms ss where ss.Name like '%' + @p_keywords + '%') [synonyms] on s.SpeciesId = [synonyms].SpeciesId 
 	WHERE
 		(@p_groupKey IS NULL OR s.GroupTaxonomyId = @p_groupKey) 
 		AND (@p_orderKey IS NULL OR s.OrderTaxonomyId = @p_orderKey) 
@@ -89,6 +92,7 @@ AS
 			OR s.CommonName LIKE '%' + @p_keywords + '%'  
 			OR s.SubSpeciesName LIKE '%' + @p_keywords + '%'
 			OR s.ELCODE LIKE '%' + @p_keywords + '%'
+			OR [synonyms].hasSynonym = 1
 		) 
 
 	SELECT 
