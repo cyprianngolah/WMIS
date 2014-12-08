@@ -11,7 +11,8 @@ AS
 		COUNT(*) OVER() as TotalRowCount,
 		p.PersonId as [Key],
 		p.Name,
-		p.Email
+		p.Email,
+		p.JobTitle
 	FROM
 		dbo.Person p
 	WHERE

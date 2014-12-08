@@ -240,7 +240,12 @@ wmis.project.edit = (function ($) {
 			return json.data;
 		});
 		var ddp2 = wmis.global.getDropDownData(vm.projectLeads, "/api/person/projectLeads?startRow=0&rowCount=500", function (json) {
-			return json.data;
+			return _.map(json.data, function(record) {
+			    return {
+			        key: record.key,
+			        text: record.name + ' - ' + record.jobTitle
+			    };
+			});
 		});
 		var ddp3 = wmis.global.getDropDownData(vm.regions, "/api/leadregion?startRow=0&rowCount=500", function (json) {
 			return json.data;
