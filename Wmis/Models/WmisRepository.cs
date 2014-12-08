@@ -298,10 +298,12 @@
 
                 using (var q = c.QueryMultiple(BIODIVERSITY_SEARCH, param, commandType: CommandType.StoredProcedure))
                 {
-                    pagedResultset.Data = q.Read<int, BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, dynamic, BioDiversity>(
-                    (tc, bd, saraStatus, nwtStatusRank, status, cs, dyn) =>
+
+                    pagedResultset.ResultCount = q.Read<int>().First();
+
+                    pagedResultset.Data = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, dynamic, BioDiversity>(
+                    (bd, saraStatus, nwtStatusRank, status, cs, dyn) =>
                         {
-                            pagedResultset.ResultCount = tc;
                             bd.SaraStatus = saraStatus ?? new SaraStatus();
                             bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
                             bd.StatusRank = status ?? new StatusRank();

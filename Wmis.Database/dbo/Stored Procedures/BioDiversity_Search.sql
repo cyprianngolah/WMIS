@@ -71,8 +71,27 @@ AS
 	FETCH NEXT 
 		@p_rowCount ROWS ONLY
 
+	
 	SELECT 
-		COUNT(*) OVER() AS ResultCount,
+		COUNT(*) OVER() AS ResultCount
+	FROM 
+		dbo.Species s
+			LEFT OUTER JOIN dbo.Taxonomy [order] on s.OrderTaxonomyId = [order].TaxonomyId AND [order].TaxonomyGroupId = 6
+			LEFT OUTER JOIN dbo.Taxonomy family on s.FamilyTaxonomyId = family.TaxonomyId AND family.TaxonomyGroupId = 10	
+			LEFT OUTER JOIN dbo.Taxonomy [group] on s.GroupTaxonomyId = [group].TaxonomyId AND [group].TaxonomyGroupId = 12	
+	WHERE
+		(@p_groupKey IS NULL OR s.GroupTaxonomyId = @p_groupKey) 
+		AND (@p_orderKey IS NULL OR s.OrderTaxonomyId = @p_orderKey) 
+		AND (@p_familyKey IS NULL OR s.FamilyTaxonomyId = @p_familyKey) 
+		AND (
+			@p_keywords IS NULL 
+			OR s.Name LIKE '%' + @p_keywords + '%' 
+			OR s.CommonName LIKE '%' + @p_keywords + '%'  
+			OR s.SubSpeciesName LIKE '%' + @p_keywords + '%'
+			OR s.ELCODE LIKE '%' + @p_keywords + '%'
+		) 
+
+	SELECT 
 		s.SpeciesId as [Key],
 		s.Name,
 		s.CommonName,
