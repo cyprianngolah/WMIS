@@ -422,6 +422,7 @@
     <Content Include="Content\images\icon-0-32x32-documents2.png" />
     <Content Include="Content\images\icon-0-32x32-documents3.png" />
     <Content Include="Content\images\icon-0-32x32-news.png" />
+    <Content Include="Content\images\landing_WMIS.jpg" />
     <Content Include="Content\images\maps-symbol-blank-start.png" />
     <Content Include="Content\images\maps-symbol-blank-stop.png" />
     <Content Include="Content\select2-bootstrap.css" />
