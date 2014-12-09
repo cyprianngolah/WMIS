@@ -1,30 +1,75 @@
 ﻿/// <summary>
 /// Knockout infrastructure that will get reused
 /// </summary>
-$(function () {
+$(function() {
 
     // Define a global select2 binding handler to simplify creation of select2 controls in templates
     ko.bindingHandlers.select2 = {
-        init: function (element, valueAccessor) {
-            ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+        init: function(element, valueAccessor) {
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
                 $(element).select2('destroy');
             });
 
             var options = ko.toJS(valueAccessor()) || {};
-            setTimeout(function () {
+            setTimeout(function() {
                 $(element).select2(options);
             }, 0);
         },
-        update: function (element, valueAccessor) {
+        update: function(element, valueAccessor) {
             /*
             Select2 doesn't need us to pass it the key, 
             but by accessing the key's value we ensure that this update function is fired 
             */
             var value = ko.unwrap(valueAccessor());
             value.key && value.key();
-        	$(element).trigger('change');
+            $(element).trigger('change');
         }
     };
+
+    ko.bindingHandlers.select2KeyValueTags = (function () {
+        function getInitialValueKeys(initialValueObjects) {
+            return _.map(initialValueObjects, function (project) {
+                return project.key();
+            });
+        }
+
+        function getSelect2Options(valueAccessor, initialValueObjects) {
+            var options = ko.toJS(valueAccessor()) || {};
+            options.initSelection = function (element, callback) {
+                var selectedOptions = _.map(initialValueObjects, function (item) {
+                    return { id: item.key(), text: item.name() };
+                });
+                callback(selectedOptions);
+            }
+            return options;
+        }
+
+        return {
+            init: function(element, valueAccessor, allBindings) {
+                var elementDom = $(element);
+                var initialValueObjects = allBindings().valueObservable();
+                var initialValueKeys = getInitialValueKeys(initialValueObjects);
+                var options = getSelect2Options(valueAccessor, initialValueObjects);
+                
+                elementDom.select2(options).select2('val', initialValueKeys);
+                elementDom.on("change", function() {
+                    /*
+                    When updating the original observable, we need to update it as an array of objects with key-name pairs,
+                    since this is what the server will expect when saving. The names are set to blank values since we 
+                    don't know them in this context, and they aren't needed for saving the records.
+                    */
+                    var newValue = _.map(elementDom.val().split(","), function(key) {
+                        return { key: key, name: "" };
+                    });
+                    allBindings().valueObservable(newValue);
+                });
+
+                ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                    elementDom.select2('destroy');
+                });
+            }
+        }
+    })();
 
     ko.bindingHandlers.select2Tags = {
         init: function (element, valueAccessor) {

@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "User";
+	ViewBag.SubTitle = "Edit";
+}
+
+@section Styles {
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
+}
+
+@section Scripts {
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/user/edit"))
+
+	<script type="text/javascript">
+		$(function() {
+			wmis.user.edit.initialize({
+				key: @ViewBag.Key
+			});
+		});
+	</script>
+}
+
+@{ Html.RenderPartial("EditForm"); }

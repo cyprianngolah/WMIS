@@ -157,6 +157,7 @@
     <Compile Include="ApiControllers\StatusRankApiController.cs" />
     <Compile Include="ApiControllers\SurveyTemplateController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
+    <Compile Include="ApiControllers\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="ApiControllers\ArgosApiController.cs" />
     <Compile Include="ApiControllers\ArgosData.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CollaredAnimalController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
     <Compile Include="Controllers\EcoregionController.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="Controllers\ProtectedAreaController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
+    <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
     <Compile Include="Dto\CollarSearchRequest.cs" />
@@ -224,6 +227,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserNew.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\ArgosPassStatus.cs" />
     <Compile Include="Models\AnimalMortality.cs" />
     <Compile Include="Models\AnimalStatus.cs" />
@@ -468,6 +473,8 @@
     <Content Include="js\Modules\wmis.collaredanimal.new.js" />
     <Content Include="js\Modules\wmis.biodiversity.new.js" />
     <Content Include="js\Modules\wmis.cosewicstatus.edit.js" />
+    <Content Include="js\Modules\wmis.user.edit.js" />
+    <Content Include="js\Modules\wmis.user.index.js" />
     <Content Include="js\Modules\wmis.nwtsarcassessment.edit.js" />
     <Content Include="js\Modules\wmis.nwtsarcassessment.index.js" />
     <Content Include="js\Modules\wmis.project.survey.new.js" />
@@ -742,6 +749,10 @@
     <Content Include="Views\BioDiversity\ThreatsTab.cshtml" />
     <Content Include="Views\BioDiversity\TrendsTab.cshtml" />
     <Content Include="Views\BioDiversity\StatusTab.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\EditForm.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

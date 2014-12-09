@@ -253,6 +253,14 @@
 
         private const string ARGOSPASSSTATUS_GET = "dbo.ArgosPassStatus_Get";
 
+        private const string USERS_CREATE = "dbo.Users_Create";
+
+        private const string USERS_GET = "dbo.Users_Get";
+
+        private const string USERS_UPDATE = "dbo.Users_Update";
+
+        private const string USERS_SEARCH = "dbo.Users_Search";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -2280,6 +2288,94 @@
                 return pagedResults;
             }
         }
+        #endregion
+        #region Users
+
+        public int UserCreate(UserNew user)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_Username = user.Username,
+                    p_FirstName = user.FirstName,
+                    p_LastName = user.LastName,
+                    p_AdministratorProjects = user.AdministratorProjects,
+                    p_AdministratorBiodiversity = user.AdministratorBiodiversity,
+                };
+                return c.Query<int>(USERS_CREATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
+
+        public User UserGet(int userKey)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_userKey = userKey
+                };
+
+                using (var q = c.QueryMultiple(USERS_GET, param, commandType: CommandType.StoredProcedure))
+                {
+                    var user = q.Read<User>().Single();
+                    user.Projects = q.Read<SimpleProject>().ToList();
+                    return user;
+                }
+            }
+        }
+
+        public void UserUpdate(User user)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_UserId = user.Key,
+	                p_Username = user.Username,
+	                p_FirstName = user.FirstName,
+	                p_LastName = user.LastName,
+	                p_AdministratorProjects = user.AdministratorProjects,
+	                p_AdministratorBiodiversity = user.AdministratorBiodiversity,
+	                p_projectKeys = user.Projects.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType")
+                };
+                c.Execute(USERS_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public PagedResultset<User> UserSearch(PagedDataKeywordRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = request.StartRow,
+                    p_rowCount = request.StartRow + request.RowCount - 1,
+                    p_keywords = request.Keywords
+                };
+
+                var pagedResults = new PagedResultset<User>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<User>()
+                };
+
+                var results = c.Query<dynamic, User, User>(USERS_SEARCH,
+                    (d, user) =>
+                    {
+                        pagedResults.ResultCount = d.ResultCount;
+                        return user;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
         #endregion
         #endregion
 

@@ -158,6 +158,12 @@
 
             bundles.Add(new ScriptBundle("~/bundles/nwtsarcassessment/edit").Include(
                         "~/js/modules/wmis.nwtsarcassessment.edit.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/user/index").Include(
+                    "~/js/modules/wmis.user.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/user/edit").Include(
+                        "~/js/modules/wmis.user.edit.js"));
 			#endregion
 		}
 	}
