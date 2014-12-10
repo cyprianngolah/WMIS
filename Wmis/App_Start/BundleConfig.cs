@@ -164,6 +164,9 @@
 
             bundles.Add(new ScriptBundle("~/bundles/user/edit").Include(
                         "~/js/modules/wmis.user.edit.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/shared/filetab").Include(
+                        "~/js/modules/wmis.shared.filetab.js"));
 			#endregion
 		}
 	}

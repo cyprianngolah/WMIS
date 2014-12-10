@@ -261,6 +261,14 @@
 
         private const string USERS_SEARCH = "dbo.Users_Search";
 
+        private const string FILE_SEARCH = "dbo.File_Search";
+
+        private const string FILE_CREATE = "dbo.File_Create";
+
+        private const string FILE_UPDATE = "dbo.File_Update";
+
+        private const string FILE_DELETE = "dbo.File_Delete";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -2373,6 +2381,88 @@
 
                 pagedResults.Data = results.ToList();
                 return pagedResults;
+            }
+        }
+
+        #endregion
+
+        #region Files
+
+        public PagedResultset<File> FileSearch(FileSearchRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_keywords = request.Keywords,
+                    p_collaredAnimalId = request.Table == "CollaredAnimals" ? request.Key : (int?)null,
+                    p_projectId = request.Table == "Projects" ? request.Key : (int?)null,
+                };
+
+                var pagedResults = new PagedResultset<File>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<File>()
+                };
+
+                var results = c.Query<dynamic, File, File>(FILE_SEARCH,
+                    (d, file) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return file;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
+        public void FileCreate(FileCreateRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_collaredAnimalId = request.ParentTableName == "CollaredAnimals" ? request.ParentTableKey : (int?)null,
+                    p_projectId = request.ParentTableName == "Projects" ? request.ParentTableKey : (int?)null,
+                    p_name = request.Name,
+                    p_path = request.Path
+                };
+                c.Execute(FILE_CREATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void FileUpdate(FileUpdateRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_fileId = request.Key,
+                    p_name = request.Name,
+                    p_path = request.Path
+                };
+                c.Execute(FILE_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void FileDelete(int key)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_fileId = key
+                };
+                c.Execute(FILE_DELETE, param, commandType: CommandType.StoredProcedure);
             }
         }
 

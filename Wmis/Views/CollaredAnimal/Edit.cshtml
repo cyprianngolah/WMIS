@@ -31,18 +31,21 @@
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
 	@Html.Raw(Scripts.Render("~/bundles/collaredanimal/edit"))
+	@Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
 
     <script>
         $(function () {
             wmis.collaredanimal.edit.initialize({
             	collaredAnimalKey: @ViewBag.Key
             });
+            wmis.shared.filetab.initialize(@ViewBag.Key, 'CollaredAnimals', 'fileTemplateTempDiv');
         });
     </script>
 }
 
 @section Dialogs {
     @{Html.RenderPartial("EditModals");}
+    @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
 }
 
 <form role="form">
@@ -59,6 +62,7 @@
                 <li class="active"><a href="#animalTab" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Animal</a></li>
 		        <li><a href="#collarTab" role="tab" data-toggle="tab" class="colouredTab generalTab">Collar</a></li>
                 <li data-bind="click: mapTabClicked"><a href="#locations" role="tab" data-toggle="tab" id="map-tab" class="colouredTab distributionTab">Locations</a></li>
+                <li><a href="#files" role="tab" data-toggle="tab" class="colouredTab statusTab">Files</a></li>
 		        <li><a href="#history" role="tab" data-toggle="tab" class="colouredTab abundanceTab">History</a></li>
 		    </ul>
 
@@ -70,21 +74,25 @@
 				
 		        <div class="tab-pane form-horizontal" id="locations">
 		            <div id="map-canvas"></div>
-                    <br/>
+		            <br/>
 		            <div id="locationTableFilter"></div>
-                    <table id="locationTable" class="table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Latitude</th>
-                                <th>Longitude</th>
-                                <th>Status</th>
-                                <th>Review</th>
-                            </tr>
-                        </thead>
-                    </table>
+		            <table id="locationTable" class="table">
+		                <thead>
+		                    <tr>
+		                        <th>Date</th>
+		                        <th>Latitude</th>
+		                        <th>Longitude</th>
+		                        <th>Status</th>
+		                        <th>Review</th>
+		                    </tr>
+		                </thead>
+		            </table>
 		        </div>
-				
+
+		        <div id="files" class="tab-pane form-horizontal">
+		            <div id="fileTemplateTempDiv"></div>
+		        </div>
+                
 		        <div id="history" class="tab-pane form-horizontal">
 		            <div class="col-md-12">
 		                <table id="collarHistory" class="table">

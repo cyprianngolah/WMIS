@@ -146,6 +146,7 @@
     <Compile Include="ApiControllers\BaseApiController.cs" />
     <Compile Include="ApiControllers\CollarApiController.cs" />
     <Compile Include="ApiControllers\CosewicStatusApiController.cs" />
+    <Compile Include="ApiControllers\FileApiController.cs" />
     <Compile Include="ApiControllers\LeadRegionController.cs" />
     <Compile Include="ApiControllers\NwtSarcAssessmentApiController.cs" />
     <Compile Include="ApiControllers\EcozoneApiController.cs" />
@@ -182,6 +183,9 @@
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
+    <Compile Include="Dto\FileCreateRequest.cs" />
+    <Compile Include="Dto\FileUpdateRequest.cs" />
+    <Compile Include="Dto\FileSearchRequest.cs" />
     <Compile Include="Dto\CollarSearchRequest.cs" />
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
     <Compile Include="Dto\BioDiversityUpdateRequest.cs" />
@@ -227,6 +231,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\UserNew.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ArgosPassStatus.cs" />
@@ -465,6 +470,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
+    <Content Include="js\Modules\wmis.shared.filetab.js" />
     <Content Include="js\Modules\wmis.collaredanimal.editmodals.js" />
     <Content Include="js\Modules\wmis.collaredanimal.mapping.js" />
     <Content Include="js\Modules\wmis.collaredanimal.edit.js" />
@@ -650,6 +656,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Views\Shared\FileTab.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

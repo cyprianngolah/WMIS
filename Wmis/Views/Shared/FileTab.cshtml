@@ -1,0 +1,51 @@
+﻿<script id="editFileTemplate" type="text/html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" data-bind="text: title"></h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2" for="name">Name</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2" for="path">Path</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="path" data-bind="value: path, valueUpdate: 'keyup'" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bind="enable: saveAllowed, click: save">Apply Changes</button>
+                </div>
+            </div> <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</script>
+
+
+<script id="fileManagementTemplate" type="text/html">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="col-md-6">
+                <button class="btn btn-default" data-bind="click: addFile">Add File</button>
+            </div>
+        </div>
+        <table id="fileTable" class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Path</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</script>
