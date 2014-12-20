@@ -251,6 +251,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\File.cs" />
+    <Compile Include="Models\ObservationUpload.cs" />
     <Compile Include="Models\UserNew.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ArgosPassStatus.cs" />

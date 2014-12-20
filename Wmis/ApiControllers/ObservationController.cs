@@ -1,20 +1,21 @@
 ﻿namespace Wmis.ApiControllers
 {
 	using System;
-	using System.Collections;
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Linq;
 	using System.Net;
 	using System.Net.Http;
 	using System.Text;
-	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Web.Http;
 
 	using Wmis.Configuration;
 	using Wmis.Logic;
+	using Wmis.Models;
 	using Wmis.WebApi;
+
+	using File = System.IO.File;
 
 	public class ObservationUploadException : Exception
 	{
@@ -84,6 +85,13 @@
 					}
 				}
 			}
+		}
+		
+		[HttpGet]
+		[Route("upload/{projectKey:int?}")]
+		public IEnumerable<ObservationUpload> GetUploadsForProject(int projectKey)
+		{
+			return new List<ObservationUpload>();
 		}
 
 		[HttpGet]

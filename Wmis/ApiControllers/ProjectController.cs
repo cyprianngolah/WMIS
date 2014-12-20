@@ -1,6 +1,5 @@
 ﻿namespace Wmis.ApiControllers
 {
-	using System.Collections.Generic;
 	using System.Web.Http;
 	using Configuration;
 
@@ -56,11 +55,7 @@
 		[Route("survey/{surveyKey:int}")]
 		public Models.ProjectSurvey GetSurvey(int surveyKey)
 		{
-			if (surveyKey == 0)
-			{
-				return new Models.ProjectSurvey { TargetSpecies = new Models.BioDiversity(), SurveyType = new Models.SurveyType(), Template = new Models.SurveyTemplate() };
-			}
-			return Repository.ProjectSurveyGet(surveyKey);
+			return surveyKey > 0 ? this.Repository.ProjectSurveyGet(surveyKey) : new Models.ProjectSurvey { TargetSpecies = new Models.BioDiversity(), SurveyType = new Models.SurveyType(), Template = new Models.SurveyTemplate() };
 		}
 
 		[HttpPost]
