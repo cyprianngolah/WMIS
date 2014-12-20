@@ -22,6 +22,7 @@
 		<TargetDatabaseName>Wmis</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
 		<TargetPassword>0rangeWMIS$!</TargetPassword>
+		<BlockOnPossibleDataLoss>false</BlockOnPossibleDataLoss>
 	</PropertyGroup>
 
 	<!-- Dev Database -->
@@ -30,6 +31,7 @@
 		<TargetDatabaseName>Wmis-Dev</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
 		<TargetPassword>0rangeWMIS$!</TargetPassword>
+		<BlockOnPossibleDataLoss>true</BlockOnPossibleDataLoss>
 	</PropertyGroup>
 
 	<!-- Test Database -->
@@ -38,6 +40,7 @@
 		<TargetDatabaseName>Wmis-Test</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
 		<TargetPassword>0rangeWMIS$!</TargetPassword>
+		<BlockOnPossibleDataLoss>true</BlockOnPossibleDataLoss>
 	</PropertyGroup>
 
 	<!-- Prod Database -->
@@ -46,6 +49,7 @@
 		<TargetDatabaseName>Wmis-Prod</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
 		<TargetPassword>0rangeWMIS$!</TargetPassword>
+		<BlockOnPossibleDataLoss>true</BlockOnPossibleDataLoss>
 	</PropertyGroup>
 	<!-- End Environment Configurations-->
 	
@@ -88,7 +92,7 @@
 	<Target Name="UpdateDatabase">
 		<Exec 
 			WorkingDirectory="$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\"
-			Command="&quot;$(SqlPackageExe)&quot; /Action:Publish /SourceFile:&quot;$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\$(DacPackFilename)&quot; /TargetServerName:&quot;$(TargetServer)&quot; /TargetDatabaseName:&quot;$(TargetDatabaseName)&quot; /TargetUser:&quot;$(TargetUserName)&quot; /TargetPassword:&quot;$(TargetPassword)&quot;" />
+			Command="&quot;$(SqlPackageExe)&quot; /Action:Publish /SourceFile:&quot;$(MSBuildProjectDirectory)\..\WMIS.Database\bin\$(Configuration)\$(DacPackFilename)&quot; /TargetServerName:&quot;$(TargetServer)&quot; /TargetDatabaseName:&quot;$(TargetDatabaseName)&quot; /TargetUser:&quot;$(TargetUserName)&quot; /TargetPassword:&quot;$(TargetPassword)&quot; /p:BlockOnPossibleDataLoss=$(BlockOnPossibleDataLoss)" />
 
 		<!-- Publish Delta Script -->
 		<Message Importance="High"
