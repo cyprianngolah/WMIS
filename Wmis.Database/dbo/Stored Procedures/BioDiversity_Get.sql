@@ -109,8 +109,8 @@ AS
 		dbo.Species s
 			LEFT OUTER JOIN dbo.StatusRanks statusRank on s.StatusRankId = statusRank.StatusRankId
 			LEFT OUTER JOIN dbo.COSEWICStatus cosewic on s.COSEWICStatusId = cosewic.COSEWICStatusId
-			LEFT OUTER JOIN dbo.COSEWICStatus saraStatus on s.SARAStatusId = cosewic.COSEWICStatusId
-			LEFT OUTER JOIN dbo.COSEWICStatus nwtStatusRank on s.NWTStatusRankId = cosewic.COSEWICStatusId
+			LEFT OUTER JOIN dbo.COSEWICStatus saraStatus on s.SARAStatusId = saraStatus.COSEWICStatusId
+			LEFT OUTER JOIN dbo.COSEWICStatus nwtStatusRank on s.NWTStatusRankId = nwtStatusRank.COSEWICStatusId
 			LEFT OUTER JOIN dbo.NwtSarcAssessments nwtSarcAssessment on s.NwtSarcAssessmentId = nwtSarcAssessment.NwtSarcAssessmentId
 			LEFT OUTER JOIN dbo.Taxonomy kingdom on s.KingdomTaxonomyId = kingdom.TaxonomyId AND kingdom.TaxonomyGroupId = 1
 			LEFT OUTER JOIN dbo.Taxonomy phylum on s.PhylumTaxonomyId = phylum.TaxonomyId AND phylum.TaxonomyGroupId = 2
