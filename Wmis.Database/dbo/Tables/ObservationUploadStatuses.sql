@@ -1,5 +1,7 @@
 ﻿CREATE TABLE [dbo].[ObservationUploadStatuses]
 (
 	[ObservationUploadStatusId] INT NOT NULL,
-	CONSTRAINT [PK_ObservationUploadStatuses] PRIMARY KEY CLUSTERED ([ObservationUploadStatusId])
+	[Name] NVARCHAR(50) NOT NULL, 
+    [fkNextObservationUploadStatusId] INT NULL, 
+    CONSTRAINT [PK_ObservationUploadStatuses] PRIMARY KEY CLUSTERED ([ObservationUploadStatusId])
 )

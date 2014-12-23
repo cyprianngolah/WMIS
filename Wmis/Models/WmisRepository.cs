@@ -166,6 +166,10 @@
 
 		private const string SURVEY_SEARCH = "dbo.Survey_Search";
 
+	    private const string OBSERVATIONUPLOAD_GET = "dbo.ObservationUpload_Get";
+
+		private const string OBSERVATIONUPLOAD_UPDATE = "dbo.ObservationUpload_Update";
+
 		private const string SURVEYTYPE_SEARCH = "dbo.SurveyType_Search";
 
 		private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
@@ -1457,6 +1461,60 @@
 		}
 		#endregion
 
+		#region Project Survey Observations
+	    public IEnumerable<ObservationUpload> GetObservationUploads(int? projectId = null, int? observationUploadId = null)
+	    {
+		    using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_projectId = projectId,
+					p_observationUploadId = observationUploadId
+				};
+				return c.Query<ObservationUpload, ObservationUploadStatus, ObservationUploadStatus, ObservationUpload>(OBSERVATIONUPLOAD_GET,
+					(ou, ous, ouns) =>
+						{
+							ou.Status = ous;
+							ou.Status.NextStep = ouns;
+							return ou;
+						}, 
+					param, 
+					commandType: CommandType.StoredProcedure, 
+					splitOn: "Key");
+			}
+	    }
+
+	    public int InsertObservationUpload(int projectId, string originalFileName, string filePath)
+	    {
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_projectId = projectId,
+					p_originalFileName = originalFileName,
+					p_filePath = filePath
+				};
+				return c.Query<int>(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+			}
+	    }
+
+	    public void UpdateObservationUpload(ObservationUpload upload)
+	    {
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_observationUploadId = upload.Key,
+					p_observationUploadStatusId = upload.Status.Key,
+					p_headerRowIndex = upload.HeaderRowIndex,
+					p_firstDataRowIndex = upload.FirstDataRowIndex,
+					p_isDeleted = upload.IsDeleted
+				};
+				c.Execute(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure);
+			}
+	    }
+		#endregion
+
 		#region Project Survey Type
 		public Dto.PagedResultset<Models.SurveyType> SurveyTypeSearch(Dto.SurveyTypeRequest str)
 		{
@@ -2295,6 +2353,7 @@
             }
         }
         #endregion
+
         #region Users
 
         public int UserCreate(UserNew user)

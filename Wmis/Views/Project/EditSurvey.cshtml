@@ -34,7 +34,7 @@
 }
 
 @section Dialogs {
-	<div class="modal" id="observationUploadModal" data-bind="showModal: currentModal() == 'upload', with: $root">
+	<div class="modal" data-backdrop="static" id="observationUploadModal" data-bind="showModal: currentModal() == 'upload', with: $root">
 		<iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
 		<form role="form" id="observationFileUploadForm" enctype="multipart/form-data" action="~/api/observation/upload/@ViewBag.Key" method="post" target="uploadIframe">
 			<div class="modal-dialog">
@@ -61,7 +61,7 @@
 		</form>
 	</div>
 	
-	<div class="modal" id="resumeObservationUploadModal" data-bind="showModal: currentModal() == 'resumeUpload', with: $root">
+	<div class="modal" data-backdrop="static" id="resumeObservationUploadModal" data-bind="showModal: currentModal() == 'resumeUpload', with: $root">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -83,10 +83,14 @@
 
 						<tbody data-bind="foreach: resumableUploads">
 							<tr>
-								<td data-bind="text: id"></td>
-								<td data-bind="text: started"></td>
-								<td data-bind="text: nextStep.description"></td>
-								<td data-bind="text: filename"></td>
+								<td data-bind="text: key"></td>
+								<td data-bind="text: uploadedTimestamp"></td>
+								<!-- ko with: status -->
+									<!-- ko with: nextStep -->
+									<td data-bind="text: name"></td>
+									<!-- /ko -->
+								<!-- /ko -->
+								<td data-bind="text: originalFileName"></td>
 								<td><button data-bind="click: $root.resumeObservationUpload">Resume</button></td>
 							</tr>
 						</tbody>
@@ -100,7 +104,7 @@
 		</div>
 	</div>
 	
-	<div class="modal" id="pickHeaderModal" data-bind="showModal: currentModal() == 'headerPicker', with: $root">
+	<div class="modal" data-backdrop="static" id="pickHeaderModal" data-bind="showModal: currentModal() == 'headerPicker', with: $root">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -121,8 +125,8 @@
 
 							<tbody data-bind="foreach: workingData">
 								<tr>
-									<td><input type="radio" name="headerRow" data-bind="value: rowIndex" /></td>
-									<td><input type="radio" name="firstDataRow" data-bind="value: rowIndex" /></td>
+									<td><input type="radio" name="headerRow" data-bind="value: rowIndex, checked: $root.headerRowIndex" /></td>
+									<td><input type="radio" name="firstDataRow" data-bind="value: rowIndex, checked: $root.firstDataRowIndex" /></td>
 									<td data-bind="text: rowIndex"></td>
 									<!-- ko foreach: cellValues -->
 									<td data-bind="text: $data"></td>
@@ -135,12 +139,13 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-bind="click: $root.hideHeaderPickerModal">Cancel</button>
+					<button type="button" class="btn btn-primary" data-bind="click: $root.saveHeaderPickerRows">Save Rows</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	
-	<div class="modal" id="columnMappingModal" data-bind="showModal: currentModal() == 'columnPicker', with: $root">
+	<div class="modal" data-backdrop="static" id="columnMappingModal" data-bind="showModal: currentModal() == 'columnPicker', with: $root">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -159,7 +164,7 @@
 		</div>
 	</div>
 	
-	<div class="modal" id="dataPreviewModal" data-bind="showModal: currentModal() == 'dataPreview', with: $root">
+	<div class="modal" data-backdrop="static" id="dataPreviewModal" data-bind="showModal: currentModal() == 'dataPreview', with: $root">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">

@@ -1,8 +1,28 @@
 ﻿CREATE PROCEDURE [dbo].[ObservationUpload_Get]
-	@p_projectId INT,
+	@p_projectId INT = NULL,
 	@p_observationUploadId INT = NULL
 AS
 	
+	SELECT
+		[ou].[ObservationUploadId] as [Key],
+		[ou].[fkProjectId] as [ProjectKey],
+		[ou].[FilePath], 		
+		[ou].[OriginalFileName], 
+		[ou].[HeaderRowIndex], 
+		[ou].[FirstDataRowIndex], 
+		[ou].[IsDeleted],
+		[ou].[UploadedTimestamp],
+		[ous].[ObservationUploadStatusId] as [Key], 
+		[ous].[Name],
+		[ouns].[ObservationUploadStatusId] as [Key], 
+		[ouns].[Name]
+	FROM
+		[dbo].[ObservationUploads] ou
+			INNER JOIN [dbo].[ObservationUploadStatuses] ous on ous.ObservationUploadStatusId = ou.fkObservationUploadStatusId
+			LEFT OUTER JOIN [dbo].[ObservationUploadStatuses] ouns on ouns.ObservationUploadStatusId = ous.fkNextObservationUploadStatusId
+	WHERE
+		[ou].[fkProjectId] = ISNULL(@p_projectId, [ou].[fkProjectId]) 
+		AND [ou].[ObservationUploadId] = ISNULL(@p_observationUploadId, [ou].[ObservationUploadId]) 
 
 RETURN 0
 GO

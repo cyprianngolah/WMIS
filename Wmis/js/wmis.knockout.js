@@ -260,7 +260,6 @@ $(function() {
     	init: function (element, valueAccessor) {
     	},
     	update: function (element, valueAccessor) {
-		    console.log("show modal?");
     		var value = valueAccessor();
     		if (ko.utils.unwrapObservable(value)) {
     			$(element).modal('show');

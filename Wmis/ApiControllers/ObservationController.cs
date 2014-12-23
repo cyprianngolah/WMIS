@@ -29,6 +29,7 @@
 	public class ObservationController : BaseApiController
 	{
 		public const string ObservationUploadString = "observationUpload";
+		public const string ObservationUploadErrorString = "observationUploadError";
 
 		public ObservationController(WebConfiguration config) 
 			: base(config)
@@ -37,7 +38,7 @@
 
 		[HttpPost]
 		[Route("upload/{projectKey:int?}")]
-		[IFrameProgressExceptionHandler(ObservationUploadString)]
+		[IFrameProgressExceptionHandler(ObservationUploadErrorString)]
 		public async Task<HttpResponseMessage> Upload(int projectKey)
 		{
 			// Save the File to a Temporary path (generally C:/Temp
@@ -54,22 +55,22 @@
 
 				var tempFileData = streamProvider.FileData.First();
 				tempFile = new FileInfo(tempFileData.LocalFileName);
-				var fileExtension = new FileInfo(tempFileData.Headers.ContentDisposition.FileName.Replace("\"", "")).Extension;
-				if (!fileExtension.Contains("xls"))
+				var originalFile = new FileInfo(tempFileData.Headers.ContentDisposition.FileName.Replace("\"", ""));
+				if (!originalFile.Extension.Contains("xls"))
 				{
 					throw new ObservationUploadException("Invalid File Extension. Observation Upload only supports .xls or .xlsx extensions.");
 				}
-				var destinationFile = String.Concat(Guid.NewGuid(), fileExtension);
-				File.Copy(tempFileData.LocalFileName, Path.Combine(destinationFolder, destinationFile));
+				var destinationFile = String.Concat(Guid.NewGuid(), originalFile.Extension);
+				var destinationFilePath = Path.Combine(destinationFolder, destinationFile);
+				File.Copy(tempFileData.LocalFileName, destinationFilePath);
 
-				// Invoke Parse Service and return results			
-
-				//return new Dto.ObservationUploadResponse { Filenames = streamProvider.FileData.Select(fd => fd.LocalFileName) };
+				// Save the Observation Upload Status to the database
+				var observationUploadKey = Repository.InsertObservationUpload(projectKey, originalFile.Name, destinationFilePath);
 
 				// Send the Response back
 				var pageBuilder = new StringBuilder();
 				pageBuilder.Append("<html><head></head>");
-				pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:', '*');</script></body></html>", ObservationUploadString));
+				pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:{1}', '*');</script></body></html>", ObservationUploadString, observationUploadKey));
 				return Request.CreateResponse(HttpStatusCode.OK, pageBuilder.ToString(), new PlainTextFormatter());
 			}
 			finally
@@ -86,12 +87,26 @@
 				}
 			}
 		}
-		
+
+		[HttpPut]
+		[Route("upload/")]
+		public void UpdateObservationUpload([FromBody]ObservationUpload upload)
+		{
+			Repository.UpdateObservationUpload(upload);
+		}
+
 		[HttpGet]
-		[Route("upload/{projectKey:int?}")]
+		[Route("project/{projectKey:int?}")]
 		public IEnumerable<ObservationUpload> GetUploadsForProject(int projectKey)
 		{
-			return new List<ObservationUpload>();
+			return Repository.GetObservationUploads(projectKey, null);
+		}
+
+		[HttpGet]
+		[Route("upload/{uploadKey:int?}")]
+		public ObservationUpload GetObservationUpload(int uploadKey)
+		{
+			return Repository.GetObservationUploads(null, uploadKey).Single();
 		}
 
 		[HttpGet]

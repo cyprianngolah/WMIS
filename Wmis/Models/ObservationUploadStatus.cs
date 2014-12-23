@@ -4,6 +4,8 @@
 
 	public class ObservationUploadStatus : KeyedModel
 	{	
-		public string Description { get; set; }
+		public string Name { get; set; }
+
+		public ObservationUploadStatus NextStep { get; set; }
 	}
 }

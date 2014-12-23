@@ -14,4 +14,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ObservationUploadStatusId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="0262e77e-fb6f-40c8-b3f9-5274a0fc1e5a" ChangeDateTime="12/23/2014 19:31:04">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploads].[Filename]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploads]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="File" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3cc8ef53-907a-437e-93fc-712a127008a0" ChangeDateTime="12/23/2014 19:31:06">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploads].[File]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploads]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FilePath" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8d94aa52-094f-4b54-bfae-e1685ff738fd" ChangeDateTime="12/23/2014 19:32:16">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploads].[FirstDataRowIndext]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploads]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FirstDataRowIndex" />
+  </Operation>
 </Operations>

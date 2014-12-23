@@ -270,6 +270,7 @@
     <Build Include="dbo\Tables\ObservationUploadStatuses.sql" />
     <Build Include="dbo\Stored Procedures\ObservationUpload_Update.sql" />
     <Build Include="dbo\Stored Procedures\ObservationUpload_Get.sql" />
+    <None Include="dbo\Fill\ObservationUploadStatuses.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
