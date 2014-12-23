@@ -4,7 +4,7 @@ wmis.biodiversity.new = (function($) {
 
     };
 
-    function editBioDiversityViewModel() {
+    function EditBioDiversityViewModel() {
         var self = this;
         this.bd = new ko.observable({
             name: ko.observable(""),
@@ -41,7 +41,7 @@ wmis.biodiversity.new = (function($) {
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
 
-		var viewModel = new editBioDiversityViewModel();
+		var viewModel = new EditBioDiversityViewModel();
 		ko.applyBindings(viewModel);
 	}
 

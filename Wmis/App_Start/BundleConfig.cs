@@ -73,6 +73,7 @@
 						"~/js/modules/wmis.biodiversity.new.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/edit").Include(
+						"~/js/modules/wmis.biodiversity.edit.synonyms.js",
 						"~/js/modules/wmis.biodiversity.edit.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/decision/edit").Include(

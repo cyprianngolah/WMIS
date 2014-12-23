@@ -45,153 +45,6 @@
 	});
 });
 
-$(function() {
-    function getSynonyms(taxonomyId) {
-        return $.ajax({
-            url: "/api/taxonomy/synonym",
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            async: true,
-            dataType: 'json',
-            data: JSON.stringify([taxonomyId])
-        }).then(function (response) {
-            return response[0].synonyms;
-        });
-    }
-
-    function saveTaxonomySynonyms(taxonomyId, synonyms) {
-        return $.ajax({
-            url: "/api/taxonomy/synonym/savemany",
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({
-                taxonomyId: taxonomyId,
-                synonyms: synonyms
-            })
-        }).fail(wmis.global.ajaxErrorHandler);
-    }
-
-    function saveSpeciesSynonyms(speciesId, speciesSynonymTypeId, synonyms) {
-        var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
-        return $.ajax({
-            url: "/api/biodiversity/synonym/save",
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({
-                speciesId: speciesId,
-                speciesSynonymTypeId: speciesSynonymTypeId,
-                synonyms: synonyms
-            })
-        }).always(function () {
-            wmis.global.hideWaitingScreen(waitingScreenId);
-        }).fail(wmis.global.ajaxErrorHandler);
-    }
-
-    function formatSynonymsText(synonyms) {
-        if (synonyms.length == 0) {
-            return "Synonyms: None";
-        } else if (synonyms.length == 1) {
-            return "Synonym: " + synonyms[0];
-        } else {
-            return "Synonyms: " + synonyms.join(", ");
-        }
-    }
-
-    ko.components.register('taxonomy-synonym-editor', {
-        viewModel: function (params) {
-            var self = this;
-            self.taxonomyId = params.taxonomyId;
-            self.isEditing = ko.observable(false);
-            self.isSubmitting = ko.observable(false);
-            ko.computed(function () {
-                // If the selected taxonomyId changes, close eidting
-                self.taxonomyId();
-                self.isEditing(false);
-            });
-            self.synonymsArray = ko.computed(function () {
-                var taxonomyId = self.taxonomyId();
-                return (taxonomyId && getSynonyms(taxonomyId)) || [];
-            }).extend({ async: [] });
-            self.oldSynonymsArray = null;
-            self.synonymsText = ko.computed(function () {
-                return formatSynonymsText(self.synonymsArray());
-            });
-	        self.startEditing = function() {
-		        self.oldSynonymsArray = self.synonymsArray();
-		        self.isEditing(true);
-	        };
-	        self.stopEditing = function() {
-		        self.isSubmitting(true);
-		        saveTaxonomySynonyms(self.taxonomyId(), self.synonymsArray())
-			        .always(function() {
-				        self.isEditing(false);
-				        self.isSubmitting(false);
-			        });
-	        };
-	        self.cancelEditing = function() {
-		        self.isEditing(false);
-		        self.synonymsArray(self.oldSynonymsArray);
-	        };
-        },
-        template:
-            '<span data-bind="visible: !isEditing() && taxonomyId()">\
-            <span class="glyphicon glyphicon-edit" data-bind="visible: taxonomyId, click: startEditing"></span> <span data-bind="text: synonymsText"></span>\
-            </span>\
-            <span data-bind="visible: isEditing">\
-            <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray, placeholder: \'Enter Synonyms\'}" />\
-             <div class="text-center">\
-                <a class="btn btn-default" data-bind="click: cancelEditing, enabled: !isSubmitting()">Cancel</a>\
-                <a class="btn btn-primary" data-bind="click: stopEditing">Save</a>\
-            </div>\
-            </span>'
-    });
-
-    ko.components.register('species-synonym-editor', {
-        viewModel: function (params) {
-            var self = this;
-            self.speciesId = params.speciesId();
-            self.speciesSynonymTypeId = params.speciesSynonymTypeId;
-            self.synonymsArray = params.synonymsArray;
-            self.isEditing = ko.observable(false);
-            self.oldSynonymsArray = null;
-            self.normalNameIsPopulated = ko.computed(function () {
-                return params.normalName() && params.normalName().length > 0;;
-            });
-            
-            self.synonymsText = ko.computed(function () {
-                return formatSynonymsText(self.synonymsArray());
-            });
-	        self.startEditing = function() {
-		        self.isEditing(true);
-		        self.oldSynonymsArray = self.synonymsArray();
-	        };
-	        self.stopEditing = function() {
-		        saveSpeciesSynonyms(self.speciesId, self.speciesSynonymTypeId, self.synonymsArray())
-			        .always(function() {
-				        self.isEditing(false);
-			        });
-	        };
-            self.cancelEditing = function () {
-            	self.isEditing(false);
-            	self.synonymsArray(self.oldSynonymsArray);
-            };
-        },
-        template:
-            '<span data-bind="visible: !isEditing() && normalNameIsPopulated()">\
-            <span class="glyphicon glyphicon-edit" data-bind="click: startEditing"></span> <span data-bind="text: synonymsText"></span>\
-            </span>\
-            <span data-bind="visible: isEditing() && normalNameIsPopulated()">\
-            <input class="form-control" type="hidden" data-bind="select2Tags: {tags: [], val: synonymsArray, placeholder: \'Enter Synonyms\'}" />\
-            <div class="text-center">\
-                <a class="btn btn-default" data-bind="click: cancelEditing, enabled: !isSubmitting()">Cancel</a>\
-                <a class="btn btn-primary" data-bind="click: stopEditing">Save</a>\
-            </div>\
-            </span>'
-    });
-});
-
 wmis.biodiversity = wmis.biodiversity || {};
 wmis.biodiversity.edit = (function ($) {
 	var options = {
@@ -205,7 +58,43 @@ wmis.biodiversity.edit = (function ($) {
         4: 'ecoTypeSynonyms'
     };
 
-	function editBioDiversityViewModel() {
+
+    function SelectReferencesModel(categoryName, references) {
+        var self = this;
+        this.references = ko.observableArray(references);
+        this.categoryName = categoryName;
+        this.referenceOptions = {
+            valueObservable: self.references,
+            idProperty: 'key',
+            textFieldNames: ['code', 'author', 'title', 'year'],
+            url: '/api/references',
+            placeholder: 'References'
+        }
+
+        this.save = function () {
+            var resultAsObservables = ko.mapper.fromJS(self.references(), "auto");
+            self.modal.close(resultAsObservables());
+        }
+
+        this.cancel = function () {
+            self.modal.close();
+        }
+    }
+
+    function selectReferences(categoryName, references, callback) {
+        var viewModel = new SelectReferencesModel(categoryName, references);
+
+        wmis.global.showModal({
+            viewModel: viewModel,
+            context: this,
+            template: 'selectReferencesTemplate'
+        }).done(callback)
+        .fail(function () {
+            console.log("Modal cancelled");
+        });
+    }
+
+	function EditBioDiversityViewModel() {
 		var self = this;
 		this.bd = ko.observable();
 		this.kingdom = ko.observableArray();
@@ -233,45 +122,10 @@ wmis.biodiversity.edit = (function ($) {
 
         // This className observable is used because binding to bd.class doesn't work properly due to it being a reserved keyword
 	    this.className = ko.observable();
-
-		this.selectedReferenceCategoryName = ko.observable();
-		this.selectedReferencesCategoryId = ko.observable();
-		this.selectedReferences = ko.observableArray();
-
+        
 	    _.each(speciesSynonymsMapping, function(synonymType) {
 	        self[synonymType] = ko.observableArray();
 	    });
-
-		this.referenceOptions = {			
-			minimumInputLength: 1,
-			multiple: true,
-			ajax: {
-				url: "/api/references",
-				placeholder: "References",
-				dataType: "json",
-				data: function(term, page) {
-					return {
-						searchString: term,
-						startRow: (page - 1) * 25,
-						rowCount: 25
-					};
-				},
-				results: function (result, page, query) {
-					for (var i = 0; i < result.data.length; i++) {
-						result.data[i].id = result.data[i].key;
-						var text = result.data[i].code;
-						if (result.data[i].author != null)
-							text += ' - ' + result.data[i].author;
-						if (result.data[i].title != null)
-							text += ' - ' + result.data[i].title;
-						result.data[i].text = text;
-					}
-					return {
-						results: result.data
-					};
-				}
-			}
-		};
 
 		this.getBioDiversity = function (key) {
 			wmis.global.showWaitingScreen("Loading...");
@@ -313,43 +167,17 @@ wmis.biodiversity.edit = (function ($) {
 		};
 		
 		this.showReferencesDialog = function (categoryName, categoryId, references) {
-			self.selectedReferenceCategoryName(categoryName);
-			self.selectedReferencesCategoryId(categoryId);
-			for (var i = 0; i < references.length; i++) {
-				references[i].id = references[i].key;
-				var text = references[i].code;
-				if (references[i].author != null)
-					text += ' - ' + references[i].author;
-				if (references[i].title != null)
-					text += ' - ' + references[i].title;		
-				references[i].text = text;
-			}
-
-			$("#selectedReferences").select2("data", references);	
-			$('#referenceModal').modal('show');
-			$('#selectedReferences').select2('open');
-		};
-
-		this.cancelReferenceChanges = function () {
-			self.selectedReferences([]);			
-			$('#referenceModal').modal('hide');
-		};
-
-		this.saveReferenceChanges = function () {
-			// Replace all the existing References in bd.references() with categoryId == selectedReferencesCategoryId()
-			// with the ones in selectedReferences()
-			var selectedReferences = $("#selectedReferences").select2("data");
-			var remappedReferences = _.map(selectedReferences, function (ref) { return { categoryKey: self.selectedReferencesCategoryId(), reference: ref }; });
-			ko.mapper.fromJS(remappedReferences, "auto", self.selectedReferences);
-			
-			//self.selectedReferences(remappedReferences);
-
-			var originalArray = _.filter(self.bd().references(), function(item) { return item.categoryKey() != self.selectedReferencesCategoryId(); });
-			var newArray = _.union(originalArray, self.selectedReferences());
-
-			self.bd().references(newArray);
-
-			$('#referenceModal').modal('hide');
+		    selectReferences(categoryName, references, function (newReferences) {
+		        var originalArray = _.filter(self.bd().references(), function (item) { return item.categoryKey() != categoryId; });
+		        var newReferencesWithCategory = _.map(newReferences, function(reference) {
+		            return {
+		                categoryKey: ko.observable(categoryId),
+		                reference: ko.observable(reference)
+		            };
+		        });
+		        var newArray = _.union(originalArray, newReferencesWithCategory);
+                self.bd().references(newArray);
+		    });
 		};
 
 		this.convertToArrayOfKeys = function(source, destination) {
@@ -426,7 +254,7 @@ wmis.biodiversity.edit = (function ($) {
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
 		
-		var viewModel = new editBioDiversityViewModel();
+		var viewModel = new EditBioDiversityViewModel();
 		viewModel.getDropDowns();
 		viewModel.getBioDiversity(initOptions.bioDiversityKey);
 		viewModel.getSpeciesSynonyms(initOptions.bioDiversityKey);

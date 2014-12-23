@@ -4,8 +4,6 @@ wmis.user.edit = (function ($) {
 		key: null,
 	};
 
-    
-
 	function editViewModel(key) {
 		var self = this;
 		this.key = ko.observable(key);
@@ -15,17 +13,28 @@ wmis.user.edit = (function ($) {
 	    this.administratorProjects = ko.observable(false);
 	    this.administratorBiodiversity = ko.observable(false);
 	    this.projects = ko.observableArray();
-
+	    this.projectOptions = ko.observable();
 	    this.isLoadedForEditing = ko.observable(false);
 
 		this.canSave = ko.computed(function() {
 		    return "todo";//($.trim(self.name()) != "");
 		});
 
+        function enableProjectsInput() {
+            self.projectOptions({
+                valueObservable: self.projects,
+                idProperty: 'key',
+                textFieldNames: ['name'],
+                url: '/api/project',
+                placeholder: 'Projects...'
+            });
+        }
+
 		this.get = function () {
 			var url = "/api/user/" + self.key();
 		    $.getJSON(url, {}, function (json) {
 		        ko.mapper.fromJS(json, "auto", self);
+		        enableProjectsInput();
 		        self.isLoadedForEditing(true);
 		    }).fail(wmis.global.ajaxErrorHandler);
 		};
@@ -44,6 +53,7 @@ wmis.user.edit = (function ($) {
 			    } else {
 			        self.key(key);
 			        self.isLoadedForEditing(true);
+			        enableProjectsInput();
 			    }
 			}).always(function () {
 				wmis.global.hideWaitingScreen(waitingScreenId);
@@ -51,35 +61,7 @@ wmis.user.edit = (function ($) {
 		};
 
 		this.isEdit = function () { return self.key() > 0; }
-
-
-		this.projectOptions = {
-		    multiple: true,
-		    ajax: {
-		        url: "/api/project",
-		        placeholder: "Projects...",
-		        dataType: "json",
-		        data: function (term, page) {
-		            return {
-		                searchString: term,
-		                startRow: (page - 1) * 25,
-		                rowCount: 25
-		            };
-		        },
-		        results: function (result, page, query) {
-		            var results = _.map(result.data, function (record) {
-		                return {
-		                    id: record.key,
-		                    text: record.name
-		                };
-		            });
-		            return {
-		                results: results
-		            };
-		        }
-		    },
-		    
-		};
+        
 	}
 
 	function initialize(initOptions) {

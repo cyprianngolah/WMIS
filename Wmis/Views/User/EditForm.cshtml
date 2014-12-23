@@ -21,9 +21,14 @@
             <label for="administratorBiodiversity">Administrator Biodiversity</label>
         </div>
         
-        <div class="form-group" data-bind="if: isLoadedForEditing">
+        <div class="form-group">
             <label for="projects">Project(s) Editing</label>
-            <input type="hidden" class="form-control" id="projects" name="projects" data-bind="valueObservable: projects, select2KeyValueTags: projectOptions" />
+            <!-- ko if: projectOptions -->
+            <input type="hidden" class="form-control" id="projects" name="projects" data-bind="enable: isLoadedForEditing, select2KeyValueTags: projectOptions" />
+            <!-- /ko-->
+            <!-- ko ifnot: projectOptions -->
+            <input type="text" class="form-control" disabled value="Projects can be added after saving" />
+            <!-- /ko-->
         </div>
 
 	    <div class="text-right">

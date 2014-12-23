@@ -27,45 +27,87 @@ $(function() {
     };
 
     ko.bindingHandlers.select2KeyValueTags = (function () {
-        function getInitialValueKeys(initialValueObjects) {
-            return _.map(initialValueObjects, function (project) {
-                return project.key();
-            });
+        function getInitialValueKeys(valueObservable, idProperty) {
+            return _.pluck(valueObservable(), idProperty);
         }
 
-        function getSelect2Options(valueAccessor, initialValueObjects) {
-            var options = ko.toJS(valueAccessor()) || {};
-            options.initSelection = function (element, callback) {
-                var selectedOptions = _.map(initialValueObjects, function (item) {
-                    return { id: item.key(), text: item.name() };
-                });
-                callback(selectedOptions);
+        function createInitSelectionFunction(valueObservable, recordMapper) {
+           return function (element, callback) {
+               var initialValueObjects = _.map(valueObservable(), recordMapper);
+                callback(initialValueObjects);
             }
-            return options;
+        }
+
+        function createRecordMapper(idProperty, textFieldNames) {
+            return function (record) {
+                var recordData = ko.toJS(record);
+                var textValues = _.map(textFieldNames, function (propertyName) {
+                    return recordData[propertyName];
+                });
+                var text = _.compact(textValues).join(' - ');
+                return {
+                    id: recordData[idProperty],
+                    text: text,
+                    record: recordData
+                };
+            };
+        }
+
+        function createSelect2Options(url, placeholder, recordMapper, initSelectionFunction) {
+            return {
+                minimumInputLength: 1,
+                multiple: true,
+                initSelection: initSelectionFunction,
+                ajax: {
+                    url: url,
+                    placeholder: placeholder,
+                    dataType: "json",
+                    data: function(term, page) {
+                        return {
+                            searchString: term,
+                            startRow: (page - 1) * 25,
+                            rowCount: 25
+                        };
+                    },
+                    results: function(result, page, query) {
+                        var processedResults = _.map(result.data, recordMapper);
+                        return { results: processedResults };
+                    }
+                }
+            };
         }
 
         return {
-            init: function(element, valueAccessor, allBindings) {
-                var elementDom = $(element);
-                var initialValueObjects = allBindings().valueObservable();
-                var initialValueKeys = getInitialValueKeys(initialValueObjects);
-                var options = getSelect2Options(valueAccessor, initialValueObjects);
-                
-                elementDom.select2(options).select2('val', initialValueKeys);
-                elementDom.on("change", function() {
-                    /*
-                    When updating the original observable, we need to update it as an array of objects with key-name pairs,
-                    since this is what the server will expect when saving. The names are set to blank values since we 
-                    don't know them in this context, and they aren't needed for saving the records.
-                    */
-                    var newValue = _.map(elementDom.val().split(","), function(key) {
-                        return { key: key, name: "" };
-                    });
-                    allBindings().valueObservable(newValue);
-                });
+            init: function (element, valueAccessor, allBindings) {
+                // Pull the options out of the value binding
+                var $element = $(element);
+                var options = ko.unwrap(valueAccessor());
+                var valueObservable = options.valueObservable;
+                var idProperty = options.idProperty;
+                var textFieldNames = options.textFieldNames;
+                var url = options.url;
+                var placeholder = options.placeholder;
 
+                // Configure the dropdown
+                var recordMapper = createRecordMapper(idProperty, textFieldNames);
+                var initSelectionFunction = createInitSelectionFunction(valueObservable, recordMapper);
+                var select2Options = createSelect2Options(url, placeholder, recordMapper, initSelectionFunction);
+                $element.select2(select2Options);
+
+                // Initialize the dropdown
+                var initialValueKeys = getInitialValueKeys(valueObservable, idProperty);
+                $element.select2('val', initialValueKeys);
+
+                // Set up the dropdown change handler to update the observable
+                $element.on("change", function() {
+                    var data = $element.select2('data'); // IMPORTANT
+                    var originalRecordFormat = _.pluck(data, 'record');
+                    valueObservable(originalRecordFormat);
+                });
+                
+                // Handle disposal
                 ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                    elementDom.select2('destroy');
+                    $element.select2('destroy');
                 });
             }
         }
