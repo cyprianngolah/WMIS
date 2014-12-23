@@ -1,110 +1,110 @@
-﻿<div class="tab-pane form-horizontal" id="status">
-	<div class="row">
-		<div class="col-md-12 h4">
-			<div class="row">
-				<div class="col-md-4">Rank</div>
-				<div class="col-md-8 text-right">
+﻿<div class="tab-pane form-horizontal" id="status" data-bind="with: bd">
+    <div class="row">
+        <div class="col-md-12 h4">
+            <div class="row">
+                <div class="col-md-4">Rank</div>
+                <div class="col-md-8 text-right">
                     <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Rank', categoryId: 25"></reference-widget>
-				</div>
-			</div>
-			<hr />
-		</div>
-	</div>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="statusRank" class="col-md-2 control-label">Rank</label>
-		<div class="col-md-4" data-bind="with: statusRank">
-			<select class="form-control" id="statusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-		</div>
+    <div class="form-group">
+        <label for="statusRank" class="col-md-2 control-label">Rank</label>
+        <div class="col-md-4" data-bind="with: statusRank">
+            <select class="form-control" id="statusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+        </div>
 
         <label for="nRank" class="col-md-1 control-label">N Rank</label>
         <div class="col-md-2">
             <input type="text" class="form-control" id="nRank" data-bind="value: nRank">
         </div>
 
-		<label for="sRank" class="col-md-1 control-label">S Rank</label>
-		<div class="col-md-2">
-			<input type="text" class="form-control" id="sRank" data-bind="value: sRank">
-		</div>
-	</div>
-					
-	<div class="form-group">
-		<label for="rankDescription" class="col-md-2 control-label">Rank Description</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="rankDescription" class="form-control" data-bind="value: statusRankDescription"></textarea>
-		</div>
-	</div>
-					
-	<div class="form-group">
-		<label for="descisionProcess" class="col-md-2 control-label">Decision Process</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="descisionProcess" class="form-control" data-bind="value: decisionProcessDescription"></textarea>
-		</div>
-	</div>
-					
-	<div class="row">
-		<div class="col-md-12 h4">
-			<div class="row">
-				<div class="col-md-4">COSEWIC Status</div>
-				<div class="col-md-8 text-right">
-					<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'COSEWIC Status', categoryId: 27"></reference-widget>
-				</div>
-			</div>
-			<hr />
-		</div>
-	</div>
+        <label for="sRank" class="col-md-1 control-label">S Rank</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control" id="sRank" data-bind="value: sRank">
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="cosewicStatus" class="col-md-2 control-label">COSEWIC Status</label>
-		<div class="col-md-4" data-bind="with: cosewicStatus">
-			<select class="form-control" id="cosewicStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-		</div>
-	</div>
-					
-	<div class="form-group">
-		<label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="cosewicStatusDescription" class="form-control" data-bind="value: cosewicStatusDescription"></textarea>
-		</div>
-	</div>
-					
-	<div class="row">
-		<div class="col-md-12 h4">
-			<div class="row">
-				<div class="col-md-4">Federal Species At Risk</div>
-				<div class="col-md-8 text-right">
-					<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Federal Species At Risk', categoryId: 28"></reference-widget>
-				</div>
-			</div>
-			<hr />
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="rankDescription" class="col-md-2 control-label">Rank Description</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="rankDescription" class="form-control" data-bind="value: statusRankDescription"></textarea>
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="saraStatus" class="col-md-2 control-label">SARA Status</label>
+    <div class="form-group">
+        <label for="descisionProcess" class="col-md-2 control-label">Decision Process</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="descisionProcess" class="form-control" data-bind="value: decisionProcessDescription"></textarea>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 h4">
+            <div class="row">
+                <div class="col-md-4">COSEWIC Status</div>
+                <div class="col-md-8 text-right">
+                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'COSEWIC Status', categoryId: 27"></reference-widget>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="cosewicStatus" class="col-md-2 control-label">COSEWIC Status</label>
+        <div class="col-md-4" data-bind="with: cosewicStatus">
+            <select class="form-control" id="cosewicStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="cosewicStatusDescription" class="form-control" data-bind="value: cosewicStatusDescription"></textarea>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 h4">
+            <div class="row">
+                <div class="col-md-4">Federal Species At Risk</div>
+                <div class="col-md-8 text-right">
+                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Federal Species At Risk', categoryId: 28"></reference-widget>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="saraStatus" class="col-md-2 control-label">SARA Status</label>
         <div class="col-md-4" data-bind="with: saraStatus">
             <select class="form-control" id="saraStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
         </div>
-	</div>
+    </div>
 
-	<div class="form-group">
-		<label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="cosewicStatusDescription" class="form-control" data-bind="value: federalSpeciesAtRiskStatusDescription"></textarea>
-		</div>
-	</div>
-					
-	<div class="row">
-		<div class="col-md-12 h4">
-			<div class="row">
-				<div class="col-md-4">NWT SARC Assessment</div>
-				<div class="col-md-8 text-right">
-					<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'NWT SARC Assessment', categoryId: 29"></reference-widget>
-				</div>
-			</div>
-			<hr />
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="cosewicStatusDescription" class="form-control" data-bind="value: federalSpeciesAtRiskStatusDescription"></textarea>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 h4">
+            <div class="row">
+                <div class="col-md-4">NWT SARC Assessment</div>
+                <div class="col-md-8 text-right">
+                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'NWT SARC Assessment', categoryId: 29"></reference-widget>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
 
     <div class="form-group">
         <label for="nwtSarcAssessment" class="col-md-2 control-label">NWT SARC Assessment</label>
@@ -113,70 +113,70 @@
         </div>
     </div>
 
-	<div class="form-group">
-		<label for="nwtSarcAssessmentDescription" class="col-md-2 control-label">Description</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="nwtSarcAssessmentDescription" class="form-control" data-bind="value: nwtsarcAssessmentDescription"></textarea>
-		</div>
-	</div>
-					
-					
-	<div class="row">
-		<div class="col-md-12 h4">
-			<div class="row">
-				<div class="col-md-4">NWT Species at Risk Status</div>
-				<div class="col-md-8 text-right">
-					<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'NWT Species at Risk Status', categoryId: 30"></reference-widget>
-				</div>
-			</div>
-			<hr />
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="nwtSarcAssessmentDescription" class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="nwtSarcAssessmentDescription" class="form-control" data-bind="value: nwtsarcAssessmentDescription"></textarea>
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="nwtStatusRank" class="col-md-2 control-label">NWT Status</label>
+
+    <div class="row">
+        <div class="col-md-12 h4">
+            <div class="row">
+                <div class="col-md-4">NWT Species at Risk Status</div>
+                <div class="col-md-8 text-right">
+                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'NWT Species at Risk Status', categoryId: 30"></reference-widget>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="nwtStatusRank" class="col-md-2 control-label">NWT Status</label>
         <div class="col-md-4" data-bind="with: nwtStatusRank">
             <select class="form-control" id="nwtStatusRank" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
         </div>
-	</div>
+    </div>
 
-	<div class="form-group">
-		<label for="nwtStatusRankDescription" class="col-md-2 control-label">Description</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="nwtStatusRankDescription" class="form-control" data-bind="value: nwtSpeciesAtRiskStatusDescription"></textarea>
-		</div>
-	</div>
-					
-	<div class="row">
-		<div class="col-md-12 h4">
-			<div class="row">
-				<div class="col-md-4">IUCN Status</div>
-				<div class="col-md-8 text-right">
-					<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'IUCN Status', categoryId: 32"></reference-widget>
-				</div>
-			</div>
-			<hr />
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="nwtStatusRankDescription" class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="nwtStatusRankDescription" class="form-control" data-bind="value: nwtSpeciesAtRiskStatusDescription"></textarea>
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="iucnStatus" class="col-md-2 control-label">IUCN Status</label>
-		<div class="col-md-2">
-			<input type="text" class="form-control" id="iucnStatus" data-bind="value: iucnStatus">
-		</div>
+    <div class="row">
+        <div class="col-md-12 h4">
+            <div class="row">
+                <div class="col-md-4">IUCN Status</div>
+                <div class="col-md-8 text-right">
+                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'IUCN Status', categoryId: 32"></reference-widget>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
 
-		<label for="gRank" class="col-md-1 control-label">G Rank</label>
-		<div class="col-md-2">
-			<input type="text" class="form-control" id="gRank" data-bind="value: gRank">
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="iucnStatus" class="col-md-2 control-label">IUCN Status</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control" id="iucnStatus" data-bind="value: iucnStatus">
+        </div>
 
-	<div class="form-group">
-		<label for="iucnStatusDescription" class="col-md-2 control-label">Description</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="iucnStatusDescription" class="form-control" data-bind="value: iucnDescription"></textarea>
-		</div>
-	</div>
+        <label for="gRank" class="col-md-1 control-label">G Rank</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control" id="gRank" data-bind="value: gRank">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="iucnStatusDescription" class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="iucnStatusDescription" class="form-control" data-bind="value: iucnDescription"></textarea>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12 h4">

@@ -1,53 +1,53 @@
-﻿<div class="tab-pane form-horizontal" id="trends">
-	<div class="row">
-		<div class="col-md-12 h4">
-			<div class="row">
-				<div class="col-md-4">Short-Term Trends</div>
-				<div class="col-md-8 text-right">
-					<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Short-Term Trends', categoryId: 23"></reference-widget>
-				</div>
-			</div>
-			<hr />
-		</div>
-	</div>
+﻿<div class="tab-pane form-horizontal" id="trends" data-bind="with: bd">
+    <div class="row">
+        <div class="col-md-12 h4">
+            <div class="row">
+                <div class="col-md-4">Short-Term Trends</div>
+                <div class="col-md-8 text-right">
+                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Short-Term Trends', categoryId: 23"></reference-widget>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="trendsShortTermTrends" class="col-md-2 control-label">Short-Term Trend</label>
-		<div class="col-md-1">
-			<input type="text" class="form-control" id="trendsShortTermTrends" data-bind="value: shortTermTrendsScore">
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="trendsShortTermTrends" class="col-md-2 control-label">Short-Term Trend</label>
+        <div class="col-md-1">
+            <input type="text" class="form-control" id="trendsShortTermTrends" data-bind="value: shortTermTrendsScore">
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="trendsShortTermTrendsDescription" class="col-md-2 control-label">Description</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="trendsShortTermTrendsDescription" class="form-control" data-bind="value: shortTermTrendsDescription"></textarea>
-		</div>
-	</div>
-					
-	<div class="row">
-		<div class="col-md-12 h4">
-			<div class="row">
-				<div class="col-md-4">Long-Term Trends</div>
-				<div class="col-md-8 text-right">
-					<reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Long-Term Trends', categoryId: 24"></reference-widget>
-				</div>
-			</div>
-			<hr />
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="trendsShortTermTrendsDescription" class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="trendsShortTermTrendsDescription" class="form-control" data-bind="value: shortTermTrendsDescription"></textarea>
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="trendsLongTermTrends" class="col-md-2 control-label">Long-Term Trend</label>
-		<div class="col-md-1">
-			<input type="text" class="form-control" id="trendsLongTermTrends" data-bind="value: longTermTrendsScore">
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-12 h4">
+            <div class="row">
+                <div class="col-md-4">Long-Term Trends</div>
+                <div class="col-md-8 text-right">
+                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Long-Term Trends', categoryId: 24"></reference-widget>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
 
-	<div class="form-group">
-		<label for="trendsLongTermTrendsDescription" class="col-md-2 control-label">Description</label>
-		<div class="col-md-10">
-			<textarea rows="4" name="trendsLongTermTrendsDescription" class="form-control" data-bind="value: longTermTrendsDescription"></textarea>
-		</div>
-	</div>
+    <div class="form-group">
+        <label for="trendsLongTermTrends" class="col-md-2 control-label">Long-Term Trend</label>
+        <div class="col-md-1">
+            <input type="text" class="form-control" id="trendsLongTermTrends" data-bind="value: longTermTrendsScore">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="trendsLongTermTrendsDescription" class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+            <textarea rows="4" name="trendsLongTermTrendsDescription" class="form-control" data-bind="value: longTermTrendsDescription"></textarea>
+        </div>
+    </div>
 </div>

@@ -2401,6 +2401,7 @@
                     p_keywords = request.Keywords,
                     p_collaredAnimalId = request.Table == "CollaredAnimals" ? request.Key : (int?)null,
                     p_projectId = request.Table == "Projects" ? request.Key : (int?)null,
+                    p_speciesId = request.Table == "Biodiversity" ? request.Key : (int?)null,
                 };
 
                 var pagedResults = new PagedResultset<File>
@@ -2433,6 +2434,7 @@
                 {
                     p_collaredAnimalId = request.ParentTableName == "CollaredAnimals" ? request.ParentTableKey : (int?)null,
                     p_projectId = request.ParentTableName == "Projects" ? request.ParentTableKey : (int?)null,
+                    p_speciesId = request.ParentTableName == "Biodiversity" ? request.ParentTableKey : (int?)null,
                     p_name = request.Name,
                     p_path = request.Path
                 };

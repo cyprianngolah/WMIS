@@ -5,6 +5,7 @@
 	@p_sortDirection INT = NULL,
 	@p_collaredAnimalId INT = NULL,
 	@p_projectId INT = NULL,
+	@p_speciesId INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	SELECT
@@ -17,6 +18,7 @@ AS
 	WHERE
 		(@p_collaredAnimalId IS NULL OR f.CollaredAnimalId = @p_collaredAnimalId)
 		AND (@p_projectId IS NULL OR f.ProjectId = @p_projectId)
+		AND (@p_speciesId IS NULL OR f.SpeciesId = @p_speciesId)
 		AND (@p_keywords IS NULL OR f.Name LIKE '%' + @p_keywords + '%' OR f.Path LIKE '%' + @p_keywords + '%')
 	ORDER BY
 		f.Name

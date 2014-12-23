@@ -105,6 +105,10 @@ input[type="checkbox"].input-validation-error {
     background-color: #B65137;
 }
 
+.nav-tabs > li > a.fileTab {
+    background-color: #B65137;
+}
+
  /* Styles for the decision screen*/
 
 div.generalGroup input {

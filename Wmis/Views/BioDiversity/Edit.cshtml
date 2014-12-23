@@ -11,19 +11,23 @@
 }
 
 @section Styles {
+    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
 @section Scripts{
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
 	@Html.Raw(Scripts.Render("~/bundles/biodiversity/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
 
     <script>
         $(function () {
             wmis.biodiversity.edit.initialize({
             	bioDiversityKey: @ViewBag.Key
-            });
+            	});
+                wmis.shared.filetab.initialize(@ViewBag.Key, 'Biodiversity', 'fileTemplateTempDiv');
         });
     </script>
 }
@@ -51,6 +55,7 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+    @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
 }
 
 <form role="form">
@@ -71,18 +76,22 @@
                 <li><a href="#trends" role="tab" data-toggle="tab" class="colouredTab trendsTab">Trends</a></li>
                 <li><a href="#threats" role="tab" data-toggle="tab" class="colouredTab threatsTab">Threats</a></li>
 				<li><a href="#status" role="tab" data-toggle="tab" class="colouredTab statusTab">Status</a></li>
+				<li><a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Files</a></li>
 			</ul>
 
 			<!-- Tab panes -->
-			<div class="tab-content" data-bind="with: bd" style="margin-top:10px;">
-                @{Html.RenderPartial("GeneralTab");}				
-                @{Html.RenderPartial("ReproductionTab");}				
-                @{Html.RenderPartial("DistributionTab");}				
-                @{Html.RenderPartial("AbundanceTab");}				
-			    @{Html.RenderPartial("TrendsTab");}			
-                @{Html.RenderPartial("ThreatsTab");}				
-                @{Html.RenderPartial("StatusTab");}							
-			</div>
+		    <div class="tab-content" style="margin-top:10px;">
+		        @{Html.RenderPartial("GeneralTab");}				
+		        @{Html.RenderPartial("ReproductionTab");}				
+		        @{Html.RenderPartial("DistributionTab");}				
+		        @{Html.RenderPartial("AbundanceTab");}				
+		        @{Html.RenderPartial("TrendsTab");}			
+		        @{Html.RenderPartial("ThreatsTab");}				
+		        @{Html.RenderPartial("StatusTab");}					
+                <div id="files" class="tab-pane form-horizontal">
+                    <div id="fileTemplateTempDiv"></div>
+                </div>	
+		    </div>
 		</div>
 	</div>
 </form>

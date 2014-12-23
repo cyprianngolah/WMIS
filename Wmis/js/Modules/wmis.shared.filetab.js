@@ -43,7 +43,12 @@ wmis.shared.filetab = (function($) {
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
                 { "data": "name" },
-                { "data": "path" },
+                {
+                    "data": "path",
+                    "render": function (data, type, row, meta) {
+                        return '<a href="' + data + '">' + data + '</a>';
+                    }
+                },
                 {
                     "data": null,
                     "width": "40px",
