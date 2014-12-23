@@ -337,59 +337,6 @@
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.png" />
     <Content Include="Content\css\select2x2.png" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.autoFill.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.autoFill.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.bootstrap.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.colReorder.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.colReorder.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.colVis.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.colvis.jqueryui.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.colVis.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedColumns.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedColumns.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedHeader.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.fixedHeader.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.foundation.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.jqueryui.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.keyTable.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.keyTable.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.scroller.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.scroller.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.tableTools.css" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.tableTools.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables.css" />
-    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables.min.css" />
-    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables_themeroller.css" />
-    <Content Include="Content\DataTables-1.10.0\css\jquery.dataTables_themeroller.min.css" />
-    <Content Include="Content\DataTables-1.10.0\images\background.png" />
-    <Content Include="Content\DataTables-1.10.0\images\back_disabled.png" />
-    <Content Include="Content\DataTables-1.10.0\images\back_enabled.png" />
-    <Content Include="Content\DataTables-1.10.0\images\back_enabled_hover.png" />
-    <Content Include="Content\DataTables-1.10.0\images\collection.png" />
-    <Content Include="Content\DataTables-1.10.0\images\collection_hover.png" />
-    <Content Include="Content\DataTables-1.10.0\images\copy.png" />
-    <Content Include="Content\DataTables-1.10.0\images\copy_hover.png" />
-    <Content Include="Content\DataTables-1.10.0\images\csv.png" />
-    <Content Include="Content\DataTables-1.10.0\images\csv_hover.png" />
-    <Content Include="Content\DataTables-1.10.0\images\filler.png" />
-    <Content Include="Content\DataTables-1.10.0\images\forward_disabled.png" />
-    <Content Include="Content\DataTables-1.10.0\images\forward_enabled.png" />
-    <Content Include="Content\DataTables-1.10.0\images\forward_enabled_hover.png" />
-    <Content Include="Content\DataTables-1.10.0\images\insert.png" />
-    <Content Include="Content\DataTables-1.10.0\images\loading-background.png" />
-    <Content Include="Content\DataTables-1.10.0\images\pdf.png" />
-    <Content Include="Content\DataTables-1.10.0\images\pdf_hover.png" />
-    <Content Include="Content\DataTables-1.10.0\images\print.png" />
-    <Content Include="Content\DataTables-1.10.0\images\print_hover.png" />
-    <Content Include="Content\DataTables-1.10.0\images\sort_asc.png" />
-    <Content Include="Content\DataTables-1.10.0\images\sort_asc_disabled.png" />
-    <Content Include="Content\DataTables-1.10.0\images\sort_both.png" />
-    <Content Include="Content\DataTables-1.10.0\images\sort_desc.png" />
-    <Content Include="Content\DataTables-1.10.0\images\sort_desc_disabled.png" />
-    <Content Include="Content\DataTables-1.10.0\images\xls.png" />
-    <Content Include="Content\DataTables-1.10.0\images\xls_hover.png" />
-    <Content Include="Content\DataTables-1.10.0\swf\copy_csv_xls.swf" />
-    <Content Include="Content\DataTables-1.10.0\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.autoFill.css" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.autoFill.min.css" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.bootstrap.css" />
@@ -484,7 +431,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="JSLintNet.json" />
-    <Content Include="Content\DataTables-1.10.0\css\dataTables.jqueryui.scss" />
     <Content Include="Environments\environment.greg.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
