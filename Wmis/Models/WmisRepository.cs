@@ -215,15 +215,9 @@
         /// </summary>
         private const string COLLARMALFUNCTION_GET = "dbo.CollarMalfunction_Get";
 
-        /// <summary>
-        /// The Collar History Search stored procedure
-        /// </summary>
-        private const string COLLARHISTORY_SEARCH = "dbo.CollarHistory_Search";
+        private const string HISTORYLOG_SEARCH = "dbo.HistoryLog_Search";
 
-        /// <summary>
-        /// The Collar Save stored procedure
-        /// </summary>
-        private const string COLLARHISTORY_SAVE = "dbo.CollarHistory_Save";
+        private const string HISTORYLOG_SAVE = "dbo.HistoryLog_Save";
 
         private const string ARGOSPASS_CREATE = "dbo.ArgosPass_Create";
 
@@ -475,12 +469,13 @@
 			}
 		}
 
-		public DateTime BioDiversityUpdate(BioDiversity bd)
+		public DateTime BioDiversityUpdate(BioDiversity bd, string changeBy)
 		{
 			using (var c = NewWmisConnection)
 			{
 				var param = new
 				{
+                    p_ChangeBy = changeBy,
 					p_speciesId = bd.Key,
 					p_Name = bd.Name,
 					p_CommonName = bd.CommonName,
@@ -1867,7 +1862,7 @@
             }
         }
 
-        public PagedResultset<CollarHistory> CollarHistorySearch(CollarHistoryRequest request)
+        public PagedResultset<HistoryLog> HistoryLogSearch(HistoryLogSearchRequest request)
         {
             using (var c = NewWmisConnection)
             {
@@ -1875,17 +1870,18 @@
                 {
                     p_startRow = request.StartRow,
                     p_rowCount = request.StartRow + request.RowCount - 1,
-                    p_collaredAnimalKey = request.CollaredAnimalKey
+                    p_collaredAnimalId = request.Table == "CollaredAnimals" ? request.Key : (int?)null,
+                    p_speciesId = request.Table == "Biodiversity" ? request.Key : (int?)null
                 };
 
-                var pagedResults = new PagedResultset<CollarHistory>
+                var pagedResults = new PagedResultset<HistoryLog>
                 {
                     DataRequest = request,
                     ResultCount = 0,
-                    Data = new List<CollarHistory>()
+                    Data = new List<HistoryLog>()
                 };
 
-                var results = c.Query<dynamic, CollarHistory, CollarHistory>(COLLARHISTORY_SEARCH,
+                var results = c.Query<dynamic, HistoryLog, HistoryLog>(HISTORYLOG_SEARCH,
                     (d, collarHistory) =>
                     {
                         pagedResults.ResultCount = d.ResultCount;
@@ -1900,16 +1896,16 @@
             }
         }
 
-        public void CollarHistorySave(Models.CollarHistory collarHistory)
+        public void HistoryLogSave(Models.HistoryLog historyLog)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_CollarHistoryId = collarHistory.Key,
-                    p_Comment = collarHistory.Comment,
+                    p_historyLogId = historyLog.Key,
+                    p_comment = historyLog.Comment,
                 };
-                c.Execute(COLLARHISTORY_SAVE, param, commandType: CommandType.StoredProcedure);
+                c.Execute(HISTORYLOG_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
 

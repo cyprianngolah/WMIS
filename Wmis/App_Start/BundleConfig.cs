@@ -168,6 +168,9 @@
 
             bundles.Add(new ScriptBundle("~/bundles/shared/filetab").Include(
                         "~/js/modules/wmis.shared.filetab.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/shared/historytab").Include(
+                        "~/js/modules/wmis.shared.historytab.js"));
 			#endregion
 		}
 	}

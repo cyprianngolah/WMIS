@@ -238,51 +238,6 @@ wmis.collaredanimal.editmodals = (function ($) {
         });
     }
 
-    function EditHistoryCommentModel(selectedHistoryItem) {
-        var self = this;
-        this.item = selectedHistoryItem.item;
-        this.value = selectedHistoryItem.value;
-        this.changeDate = selectedHistoryItem.changeDate;
-        this.comment = ko.observable(selectedHistoryItem.comment);
-
-        this.save = function () {
-            wmis.global.showWaitingScreen("Saving...");
-            selectedHistoryItem.comment = self.comment();
-
-            $.ajax({
-                url: "/api/collar/history",
-                type: "PUT",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify(selectedHistoryItem)
-            }).success(function () {
-                self.modal.close(selectedHistoryItem);
-            }).always(function () {
-                wmis.global.hideWaitingScreen();
-            }).fail(function (f) {
-                self.modal.close();
-                wmis.global.ajaxErrorHandler(f);
-            });
-        }
-
-        this.cancel = function () {
-            self.modal.close();
-        }
-    }
-
-    function editHistoryComment(selectedHistoryItem, callback) {
-        var viewModel = new EditHistoryCommentModel(selectedHistoryItem);
-
-        wmis.global.showModal({
-            viewModel: viewModel,
-            context: this,
-            template: 'editHistoryCommentTemplate'
-        }).done(callback)
-        .fail(function () {
-            console.log("Modal cancelled");
-        });
-    }
-
     function SelectProjectModel() {
         var self = this;
         this.projectOptions = {
@@ -393,7 +348,6 @@ wmis.collaredanimal.editmodals = (function ($) {
     return {
         editBreedingStatus: editBreedingStatus,
         editHerdAssociation: editHerdAssociation,
-        editHistoryComment: editHistoryComment,
         selectProject: selectProject,
         reviewCollarDataPoint: reviewCollarDataPoint
     };

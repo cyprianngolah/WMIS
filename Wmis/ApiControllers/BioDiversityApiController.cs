@@ -56,7 +56,7 @@
 		[Route]
 		public DateTime Update([FromBody]BioDiversity bd)
 		{
-			return Repository.BioDiversityUpdate(bd);
+            return Repository.BioDiversityUpdate(bd, "Unknown User");
 		}
 
 		[HttpGet]
@@ -106,7 +106,7 @@
 
 		[HttpPut]
 		[Route("decision")]
-		public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request)
+		public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request, string changeBy)
 		{
 			var bioDiversity = Repository.BioDiversityGet(request.Key);
 			bioDiversity.RangeExtentScore = request.RangeExtentScore;
@@ -137,7 +137,7 @@
 			bioDiversity.SaraStatus = request.SaraStatus;
 			bioDiversity.IucnStatus = request.IucnStatus;
 			bioDiversity.GRank = request.GRank;
-			Repository.BioDiversityUpdate(bioDiversity);
+			Repository.BioDiversityUpdate(bioDiversity, changeBy);
 		}
 
         #region Synonym Various

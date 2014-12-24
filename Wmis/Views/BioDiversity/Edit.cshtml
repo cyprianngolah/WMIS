@@ -21,13 +21,15 @@
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
 	@Html.Raw(Scripts.Render("~/bundles/biodiversity/edit"))
     @Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
+    @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
 
     <script>
         $(function () {
             wmis.biodiversity.edit.initialize({
             	bioDiversityKey: @ViewBag.Key
             	});
-                wmis.shared.filetab.initialize(@ViewBag.Key, 'Biodiversity', 'fileTemplateTempDiv');
+            wmis.shared.filetab.initialize(@ViewBag.Key, 'Biodiversity', 'fileTemplateTempDiv');
+            wmis.shared.historytab.initialize(@ViewBag.Key, 'Biodiversity', 'historyTemplateTempDiv');
         });
     </script>
 }
@@ -58,6 +60,7 @@
 </script>
 
     @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
+@{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
 }
 
 <form role="form">
@@ -78,7 +81,8 @@
                 <li><a href="#trends" role="tab" data-toggle="tab" class="colouredTab trendsTab">Trends</a></li>
                 <li><a href="#threats" role="tab" data-toggle="tab" class="colouredTab threatsTab">Threats</a></li>
 				<li><a href="#status" role="tab" data-toggle="tab" class="colouredTab statusTab">Status</a></li>
-				<li><a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Files</a></li>
+			    <li><a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Files</a></li>
+                <li><a href="#history" role="tab" data-toggle="tab" class="colouredTab historyTab">History</a></li>
 			</ul>
 
 			<!-- Tab panes -->
@@ -93,6 +97,10 @@
                 <div id="files" class="tab-pane form-horizontal">
                     <div id="fileTemplateTempDiv"></div>
                 </div>	
+                <div id="history" class="tab-pane form-horizontal">
+                    <div id="historyTemplateTempDiv"></div>
+                </div>
+
 		    </div>
 		</div>
 	</div>

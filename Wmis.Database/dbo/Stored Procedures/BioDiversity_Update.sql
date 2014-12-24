@@ -81,7 +81,8 @@
 	@p_ecoregions [IntTableType] READONLY,
 	@p_protectedAreas [IntTableType] READONLY,
 	@p_populations [NameTableType] READONLY,
-	@p_references [TwoIntTableType] READONLY
+	@p_references [TwoIntTableType] READONLY,
+	@p_ChangeBy NVARCHAR(50)
 AS
 	
 	-- Only Update LastUpdated timestamp if a value in the "Status" tab changed
@@ -110,6 +111,159 @@ AS
 	BEGIN
 		SET @v_lastUpdated = GETUTCDATE()
 	END
+
+	--Status Rank
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND StatusRankId != @p_StatusRankId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "Rank", (SELECT Name from StatusRanks where StatusRankId = @p_StatusRankId), @p_ChangeBy)
+	END
+	
+	--Status Rank Description
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND StatusRankDescription != @p_StatusRankDescription
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "Rank Description", @p_StatusRankDescription, @p_ChangeBy)
+	END
+		
+	--S Rank
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND SRank != @p_SRank
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "S Rank", @p_SRank, @p_ChangeBy)
+	END	
+
+	--Decision Process
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND DecisionProcessDescription != @p_DecisionProcessDescription
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "Decision Process", @p_DecisionProcessDescription, @p_ChangeBy)
+	END
+
+	--Economic Status Description
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND EconomicStatusDescription != @p_EconomicStatusDescription
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "Economic Status Description", @p_EconomicStatusDescription, @p_ChangeBy)
+	END
+	
+	--COSEWIC Status Id
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND COSEWICStatusId != @p_COSEWICStatusId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "COSEWIC Status", (SELECT Name from COSEWICStatus where COSEWICStatusId = @p_COSEWICStatusId), @p_ChangeBy)
+	END
+
+	--COSEWIC Status Description
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND COSEWICStatusDescription != @p_COSEWICStatusDescription
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "COSEWIC Status Description", @p_COSEWICStatusDescription, @p_ChangeBy)
+	END
+
+	--N Rank
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND NRank != @p_NRank
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "N Rank", @p_NRank, @p_ChangeBy)
+	END	
+
+	--SARA Status Id
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND SARAStatusId != @p_SARAStatusId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "SARA Status", (SELECT Name from COSEWICStatus where COSEWICStatusId = @p_SARAStatusId), @p_ChangeBy)
+	END
+	
+	--FederalSpeciesAtRiskStatusDescription
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND FederalSpeciesAtRiskStatusDescription != @p_FederalSpeciesAtRiskStatusDescription
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "Federal Species At Risk Description", @p_FederalSpeciesAtRiskStatusDescription, @p_ChangeBy)
+	END	
+
+	--NwtSarcAssessmentId
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND NwtSarcAssessmentId != @p_NwtSarcAssessmentId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "NWT SARC Assessment", (SELECT Name from NwtSarcAssessments where NwtSarcAssessmentId = @p_NwtSarcAssessmentId), @p_ChangeBy)
+	END
+
+	--NWTSARCAssessmentDescription
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND NWTSARCAssessmentDescription != @p_NWTSARCAssessmentDescription
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "NWT SARC Assessment Description", @p_NWTSARCAssessmentDescription, @p_ChangeBy)
+	END		
+			
+	--NWTStatusRankId
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND NWTStatusRankId != @p_NWTStatusRankId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "NWT Status", (SELECT Name from COSEWICStatus where COSEWICStatusId = @p_NWTStatusRankId), @p_ChangeBy)
+	END
+	
+	--NWTSpeciesAtRiskStatusDescription
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND NWTSpeciesAtRiskStatusDescription != @p_NWTSpeciesAtRiskStatusDescription
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "NWT Species at Risk Status Description", @p_NWTSpeciesAtRiskStatusDescription, @p_ChangeBy)
+	END	
+
+	--IUCNStatus
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND IUCNStatus != @p_IUCNStatus
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "IUCN Status", @p_IUCNStatus, @p_ChangeBy)
+	END	
+
+	--GRank
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND GRank != @p_GRank
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "G Rank", @p_GRank, @p_ChangeBy)
+	END	
+
+	--IUCNDescription
+	IF EXISTS (SELECT 1 FROM dbo.Species WHERE
+		SpeciesId = @p_SpeciesId
+		AND IUCNDescription != @p_IUCNDescription
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (SpeciesId, Item, Value, ChangeBy) VALUES (@p_SpeciesId, "IUCN Status Description", @p_IUCNDescription, @p_ChangeBy)
+	END	
 
 	UPDATE
 		dbo.Species

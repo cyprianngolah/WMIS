@@ -221,9 +221,9 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </None>
     <Build Include="dbo\Stored Procedures\CollarRegion_Get.sql" />
-    <Build Include="dbo\Tables\CollarHistory.sql" />
-    <Build Include="dbo\Stored Procedures\CollarHistory_Search.sql" />
-    <Build Include="dbo\Stored Procedures\CollarHistory_Save.sql" />
+    <Build Include="dbo\Tables\HistoryLogs.sql" />
+    <Build Include="dbo\Stored Procedures\HistoryLog_Search.sql" />
+    <Build Include="dbo\Stored Procedures\HistoryLog_Save.sql" />
     <Build Include="dbo\Tables\ArgosPasses.sql" />
     <Build Include="dbo\Stored Procedures\ArgosPass_Create.sql" />
     <Build Include="dbo\Stored Procedures\ArgosPass_Search.sql" />

@@ -11,9 +11,9 @@
 	/// Collar API Controller
 	/// </summary>
 	[RoutePrefix("api/collar")]
-	public class CollarController : BaseApiController
+	public class CollarApiController : BaseApiController
     {
-		public CollarController(WebConfiguration config) 
+        public CollarApiController(WebConfiguration config) 
 			: base(config)
 		{
 		}
@@ -112,25 +112,6 @@
             return Repository.CollarMalfunctionGet(cmr);
         }
         
-        [HttpGet]
-        [Route("history")]
-        public PagedResultset<CollarHistory> GetCollarHistory([FromUri]Dto.CollarHistoryRequest chr)
-        {
-            if (chr == null)
-            {
-                chr = new CollarHistoryRequest();
-            }
-
-            return Repository.CollarHistorySearch(chr);
-        }
-
-        [HttpPut]
-        [Route("history")]
-        public void Update([FromBody]CollarHistory collarHistory)
-        {
-            Repository.CollarHistorySave(collarHistory);
-        }
-
         [HttpGet]
         [Route("animalSexes")]
         public PagedResultset<AnimalSex> GetAnimalSex([FromUri]Dto.PagedDataRequest request)

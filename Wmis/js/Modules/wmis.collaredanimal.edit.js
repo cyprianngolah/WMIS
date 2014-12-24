@@ -29,65 +29,7 @@ wmis.collaredanimal.edit = (function($) {
         };
     }
 
-    function initializeHistoryTable(collaredAnimalKey) {
-        $("#collarHistory").DataTable({
-            "iDisplayLength": 25,
-            "ordering": false,
-            "bJQueryUI": true,
-            "bProcessing": true,
-            "pagingType": "bootstrap",
-            "serverSide": true,
-            "dom": '<"top">rt<"bottom"ip><"clear">',
-            "columns": [
-                {
-                    "data": "changeDate",
-                    "render": function(data, type, row) {
-                        var date = moment.utc(data, moment.ISO_8601).local().format('L h:mm a');
-                        return date;
-                    }
-                },
-                { "data": "item" },
-                { "data": "value" },
-                { "data": "changeBy" },
-                { "data": "comment" },
-                {
-                    "data": null,
-                    "width": "40px",
-                    "className": "editHistory",
-                    "render": function(data, type, row, meta) {
-                        return '<span class="glyphicon glyphicon-edit" data-row-index="' + meta.row + '"/>';
-                    }
-                }
-            ],
-            searching: false,
-            "ajax": function(data, callback, settings) {
-                var parameters = {
-                    // Data Tables parameter transforms
-                    startRow: data.start,
-                    rowCount: data.length,
-                    collaredAnimalKey: collaredAnimalKey,
-                };
-                $.getJSON("/api/collar/history", parameters, function(json) {
-                    var result = {
-                        data: json.data,
-                        draw: data.draw,
-                        recordsTotal: json.resultCount,
-                        recordsFiltered: json.resultCount
-                    };
-                    callback(result);
-                });
-            },
-        });
-
-        $("#collarHistory").on('click', 'td.editHistory span', function (event) {
-            var rowIndex = $(event.target).data().rowIndex;
-            var rowData = $("#collarHistory").DataTable().row(rowIndex).data();
-            wmis.collaredanimal.editmodals.editHistoryComment(rowData, function() {
-                $("#collarHistory").DataTable().ajax.reload();
-            });
-        });
-    }
-
+    
     function DropdownViewModel() {
         var self = this;
         this.collarTypes = ko.observableArray();
@@ -195,8 +137,6 @@ wmis.collaredanimal.edit = (function($) {
         this.mapTabClicked = function() {
             wmis.collaredanimal.mapping.mapTabClicked(collaredAnimalKey);
         }
-
-        initializeHistoryTable(collaredAnimalKey);
 
         this.getcollar = function (key) {
 			wmis.global.showWaitingScreen("Loading...");

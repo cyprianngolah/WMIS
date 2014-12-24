@@ -21,49 +21,6 @@
     </div><!-- /.modal -->
 </script>
 
-<script id="editHistoryCommentTemplate" type="text/html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Modify Comment</h4>
-                </div>
-                <div class="modal-body form-horizontal">
-                    <div class="form-group">
-                        <label class="col-md-2" for="item">Item</label>
-                        <div class="col-md-10">
-                            <input type="text" disabled class="form-control" id="item" data-bind="value: item" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2" for="value">Value</label>
-                        <div class="col-md-10">
-                            <input type="text" disabled class="form-control" id="value" data-bind="value: value" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2" for="action">Date</label>
-                        <div class="col-md-10">
-                            <input type="text" disabled class="form-control" id="action" data-bind="dateText: changeDate, format: 'L h:mm a'" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2" for="action">Comment</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="action" data-bind="value: comment" />
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
-                </div>
-            </div> <!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</script>
-
 <script id="editBreedingStatusTemplate" type="text/html">
     <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

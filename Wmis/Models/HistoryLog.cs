@@ -2,10 +2,8 @@
 {
     using System;
 
-    public class CollarHistory: Base.KeyedModel
+    public class HistoryLog : Base.KeyedModel
 	{
-        public int CollaredAnimalId { get; set; }
-
         public string Item { get; set; }
 
         public string Value { get; set; }
