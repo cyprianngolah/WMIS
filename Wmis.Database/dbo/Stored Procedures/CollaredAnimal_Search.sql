@@ -5,7 +5,8 @@ CREATE PROCEDURE [dbo].[CollaredAnimal_Search]
 	@p_sortBy NVARCHAR(25) = NULL,
 	@p_sortDirection NVARCHAR(3) = NULL,
 	@p_keywords NVARCHAR(50) = NULL,
-	@p_regionKey int = NULL
+	@p_regionKey int = NULL,
+	@p_needingReview BIT = 0
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
@@ -60,6 +61,16 @@ AS
 			OR collarState.Name LIKE '%' + @p_keywords + '%'
 			OR collarStatus.Name LIKE '%' + @p_keywords + '%'
 			OR project.Name LIKE '%' + @p_keywords + '%'
+		)
+		AND 
+		(
+			@p_needingReview = 0
+			OR 
+			(	
+				c.CollarStateId = 1 --Active
+				AND
+				c.CollarStatusId IN (2, 3, 14) --(Suspected Stationary, Stationary, Malfunctioning)
+			)
 		)
 	ORDER BY
 		CASE WHEN @p_sortBy = 'collarType.name' AND @p_sortDirection = '0'

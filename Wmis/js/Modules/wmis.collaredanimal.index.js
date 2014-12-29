@@ -6,7 +6,8 @@ wmis.collaredanimal.index = (function($) {
 		editButtonSelector: "#editButton",
 		keywordsSelector: "#keywords",
 		collarSelector: "#collar",
-	    regionSelector: "#region"
+	    regionSelector: "#region",
+	    needingReviewSelector: "#needingReview"
 	};
 
 	function initialize(initOptions) {
@@ -84,6 +85,7 @@ wmis.collaredanimal.index = (function($) {
 					// Custom search data
 					keywords: $(options.keywordsSelector).val(),
 				    regionKey: $(options.regionSelector).val(),
+				    needingReview: $(options.needingReviewSelector).is(':checked'),
 				};
 
 				$.getJSON(source, parameters, function (json) {

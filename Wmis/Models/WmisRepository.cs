@@ -1563,7 +1563,8 @@
                     p_sortBy = sr.SortBy,
                     p_sortDirection = sr.SortDirection,
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim(),
-                    p_regionKey = sr.regionKey
+                    p_regionKey = sr.regionKey,
+                    p_needingReview = sr.NeedingReview
                 };
 
                 using (var q = c.QueryMultiple(COLLAREDANIMAL_SEARCH, param, commandType: CommandType.StoredProcedure))
