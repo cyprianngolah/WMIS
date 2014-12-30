@@ -1197,7 +1197,8 @@
 					p_studyArea = project.StudyArea,
 					p_methods = project.Methods,
 					p_comments = project.Comments,
-					p_results = project.Results
+					p_results = project.Results,
+					p_termsAndConditions = project.TermsAndConditions
 				};
 				c.Execute(PROJECT_UPDATE, param, commandType: CommandType.StoredProcedure);
 			}

@@ -35,6 +35,8 @@
 
 		public string Results { get; set; }
 
+        public string TermsAndConditions { get; set; }
+
 		public DateTime LastUpdated { get; set; }
 	}
 }

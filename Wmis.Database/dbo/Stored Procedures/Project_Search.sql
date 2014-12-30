@@ -8,10 +8,7 @@
 	@p_leadRegionId INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
-	/*
-	EXEC [dbo].[BioDiversity_Search]
-	*/
-
+	
 	SELECT 
 		COUNT(*) OVER() AS ResultCount,
 		p.[ProjectId] AS [Key], 
@@ -27,6 +24,7 @@ AS
 		p.[Methods], 
 		p.[Comments], 
 		p.[Results], 
+		p.[TermsAndConditions],
 		p.[LastUpdated], 
 		p.[LeadRegionId] AS [Key], 
 		lr.Name as Name,

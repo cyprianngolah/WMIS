@@ -14,7 +14,8 @@
 	@p_studyArea NVARCHAR(MAX) = NULL,
 	@p_methods NVARCHAR(MAX) = NULL,
 	@p_comments NVARCHAR(MAX) = NULL,
-	@p_results NVARCHAR(MAX) = NULL
+	@p_results NVARCHAR(MAX) = NULL,
+	@p_termsAndConditions NVARCHAR(MAX) = NULL
 
 AS
 	UPDATE
@@ -34,7 +35,8 @@ AS
 		StudyArea = @p_studyArea,
 		Methods = @p_methods,
 		Comments = @p_comments,
-		Results = @p_results
+		Results = @p_results,
+		TermsAndConditions = @p_termsAndConditions
 	WHERE
 		ProjectId = @p_projectId
 

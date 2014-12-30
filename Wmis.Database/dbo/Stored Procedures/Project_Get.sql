@@ -15,6 +15,7 @@ AS
 		p.[Methods], 
 		p.[Comments], 
 		p.[Results], 
+		p.[TermsAndConditions],
 		p.[LastUpdated], 
 		p.[LeadRegionId] AS [Key], 
 		lr.Name as Name,

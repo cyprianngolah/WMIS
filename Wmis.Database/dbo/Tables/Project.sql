@@ -16,6 +16,7 @@
     [Methods] NVARCHAR(MAX) NULL, 
     [Comments] NVARCHAR(MAX) NULL, 
     [Results] NVARCHAR(MAX) NULL, 
+    [TermsAndConditions] NVARCHAR(MAX) NULL, 
     [LastUpdated] DATETIME NOT NULL, 
     CONSTRAINT [PK_Project] PRIMARY KEY ([ProjectId]), 
     CONSTRAINT [FK_Project_LeadRegion] FOREIGN KEY ([LeadRegionId]) REFERENCES dbo.[LeadRegion]([LeadRegionId]), 
