@@ -5,13 +5,24 @@ using System.Web.Http;
 
 namespace Wmis.Controllers
 {
+    using System.Data;
     using System.IO;
+    using System.IO.Compression;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Xml.Serialization;
 
+    using DotSpatial.Data;
+    using DotSpatial.Projections;
+    using DotSpatial.Topology;
+    
     using Wmis.ApiControllers;
     using Wmis.Configuration;
     using Wmis.Dto;
     using Wmis.Models;
+
+    using File = System.IO.File;
 
     [RoutePrefix("api/argos")]
     public class ArgosApiController : BaseApiController
@@ -26,6 +37,57 @@ namespace Wmis.Controllers
         public Dto.PagedResultset<ArgosPass> PassesForCollar([FromUri]ArgosPassSearchRequest apsr)
         {
             return Repository.ArgosPassGet(apsr);
+        }
+
+        [HttpGet]
+        [Route("passesShapeFile")]
+        public HttpResponseMessage PassesForCollar2([FromUri]ArgosPassSearchRequest apsr)
+        {
+            var passes = Repository.ArgosPassGet(apsr).Data;
+          
+            FeatureSet fs = new FeatureSet(FeatureType.MultiPoint);
+//            fs.Projection = KnownCoordinateSystems.Geographic.World.
+
+            fs.DataTable.Columns.Add(new DataColumn("ID", typeof(int)));
+            fs.DataTable.Columns.Add(new DataColumn("Text", typeof(string)));
+            fs.DataTable.Columns.Add(new DataColumn("Latitude", typeof(double)));
+            fs.DataTable.Columns.Add(new DataColumn("Longitude", typeof(double)));
+            fs.DataTable.Columns.Add(new DataColumn("Date", typeof(string)));
+            fs.DataTable.Columns.Add(new DataColumn("Status", typeof(string)));
+
+            passes.ForEach(
+                pass =>
+                    {
+                        var feature = fs.AddFeature(new Point(pass.Latitude, pass.Longitude));
+                        feature.DataRow.BeginEdit();
+                        feature.DataRow["ID"] = pass.Key;
+                        feature.DataRow["Latitude"] = pass.Latitude;
+                        feature.DataRow["Longitude"] = pass.Longitude;
+                        feature.DataRow["Date"] = String.Format("{0:s}", pass.LocationDate);
+                        feature.DataRow["Status"] = pass.ArgosPassStatus.Name;
+                        feature.DataRow.EndEdit();
+                    }
+            );
+           
+            const string shapeFileName = @"C:\Users\Public\testdir\test.shp";
+            fs.SaveAs(shapeFileName, true);
+     
+            const string zipPath = @"C:\Users\Public\test.zip";
+                    ZipFile.CreateFromDirectory(@"C:\Users\Public\testdir\", zipPath);
+
+            var stream = new FileStream(zipPath, FileMode.Open);
+
+            var response = new FileHttpResponseMessage(zipPath)
+            {
+                Content =  new StreamContent(stream)
+
+            };
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = "passes.zip"
+            };
+            return response;
         }
         
         [HttpPost]
@@ -123,5 +185,22 @@ namespace Wmis.Controllers
             return days;
         }
     }
+
+    public class FileHttpResponseMessage : HttpResponseMessage
+    {
+        private string filePath;
+
+        public FileHttpResponseMessage(string filePath)
+        {
+            this.filePath = filePath;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing); 
+            Content.Dispose(); 
+            File.Delete(filePath);
+        }
+    } 
 
 }

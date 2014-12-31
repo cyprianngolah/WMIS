@@ -123,6 +123,10 @@ wmis.collaredanimal.mapping = (function ($) {
                 wmis.global.hideWaitingScreen();
             }).fail(wmis.global.ajaxErrorHandler);
         }
+
+        this.downloadShapeFile = function () {
+            window.open("/api/argos/passesShapeFile?startRow=0&rowCount=500&collaredAnimalId=" + collaredAnimalKey, '_self');
+        }
     }
 
     function loadPassesTable(collaredAnimalKey, argosDataViewModel) {
