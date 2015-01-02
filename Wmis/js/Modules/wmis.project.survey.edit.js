@@ -58,7 +58,6 @@ wmis.project.survey.edit = (function ($) {
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.survey()))
 			}).success(function (data) {
-				alert(data);
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
@@ -132,6 +131,7 @@ wmis.project.survey.edit = (function ($) {
 			self.firstDataRowIndex(self.workingUpload().firstDataRowIndex());
 
 			var observationUploadKey = self.workingUpload().key();
+			alert(observationUploadKey);
 			return $.ajax({
 				url: "/api/observation/" + observationUploadKey + "/rows",
 				type: "GET",
@@ -221,11 +221,11 @@ wmis.project.survey.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.workingUpload()))
-			}).always(function () {
+			}).always(function() {
 				self.hideWaitingScreen();
-			}).success(function (data) {
+			}).success(function(data) {
 			}).fail(wmis.global.ajaxErrorHandler);
-		}
+		};
 	}
 	
 	function initialize(initOptions) {

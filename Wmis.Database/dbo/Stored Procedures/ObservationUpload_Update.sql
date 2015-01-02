@@ -11,7 +11,7 @@ AS
 	IF (@p_observationUploadId IS NULL)
 	BEGIN
 		INSERT INTO
-			[dbo].[ObservationUploads] ([fkProjectId], [fkObservationUploadStatusId], [OriginalFileName], [FilePath], [UploadedTimestamp], [IsDeleted])
+			[dbo].[ObservationUploads] ([ProjectId], [ObservationUploadStatusId], [OriginalFileName], [FilePath], [UploadedTimestamp], [IsDeleted])
 		VALUES
 			(@p_projectId, 1, @p_originalFileName, @p_filePath, GETUTCDATE(), 0)
 
@@ -22,7 +22,7 @@ AS
 		UPDATE
 			[dbo].[ObservationUploads]
 		SET
-			[fkObservationUploadStatusId] = ISNULL(@p_observationUploadStatusId, ou.[fkObservationUploadStatusId]), 
+			[ObservationUploadStatusId] = ISNULL(@p_observationUploadStatusId, ou.[ObservationUploadStatusId]), 
 			[HeaderRowIndex] = ISNULL(@p_headerRowIndex, ou.[HeaderRowIndex]), 
 			[FirstDataRowIndex] = ISNULL(@p_firstDataRowIndex, ou.[FirstDataRowIndex]), 
 			[IsDeleted] = ISNULL(@p_isDeleted, ou.[IsDeleted]) 

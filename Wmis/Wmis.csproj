@@ -270,6 +270,8 @@
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\ObservationUpload.cs" />
     <Compile Include="Models\ObservationUploadStatus.cs" />
+    <Compile Include="Models\SurveyTemplateColumn.cs" />
+    <Compile Include="Models\SurveyTemplateColumnType.cs" />
     <Compile Include="Models\UserNew.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ArgosPassStatus.cs" />

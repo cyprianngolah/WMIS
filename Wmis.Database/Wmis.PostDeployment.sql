@@ -18,4 +18,6 @@ Post-Deployment Script Template
 :r .\dbo\Fill\SpeciesSynonymTypes.sql
 :r .\dbo\Fill\SurveyType.sql
 :r .\dbo\Fill\SurveyTemplate.sql
+:r .\dbo\Fill\SurveyTemplateColumns.sql
 :r .\dbo\Fill\ObservationUploadStatuses.sql
+:r .\dbo\Fill\SurveyTemplateColumnTypes.sql

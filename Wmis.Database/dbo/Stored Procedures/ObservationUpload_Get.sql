@@ -5,7 +5,7 @@ AS
 	
 	SELECT
 		[ou].[ObservationUploadId] as [Key],
-		[ou].[fkProjectId] as [ProjectKey],
+		[ou].[ProjectId] as [ProjectKey],
 		[ou].[FilePath], 		
 		[ou].[OriginalFileName], 
 		[ou].[HeaderRowIndex], 
@@ -18,10 +18,10 @@ AS
 		[ouns].[Name]
 	FROM
 		[dbo].[ObservationUploads] ou
-			INNER JOIN [dbo].[ObservationUploadStatuses] ous on ous.ObservationUploadStatusId = ou.fkObservationUploadStatusId
+			INNER JOIN [dbo].[ObservationUploadStatuses] ous on ous.ObservationUploadStatusId = ou.ObservationUploadStatusId
 			LEFT OUTER JOIN [dbo].[ObservationUploadStatuses] ouns on ouns.ObservationUploadStatusId = ous.fkNextObservationUploadStatusId
 	WHERE
-		[ou].[fkProjectId] = ISNULL(@p_projectId, [ou].[fkProjectId]) 
+		[ou].[ProjectId] = ISNULL(@p_projectId, [ou].[ProjectId]) 
 		AND [ou].[ObservationUploadId] = ISNULL(@p_observationUploadId, [ou].[ObservationUploadId]) 
 
 RETURN 0

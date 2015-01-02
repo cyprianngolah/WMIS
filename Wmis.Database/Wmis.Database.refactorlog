@@ -35,4 +35,102 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="FirstDataRowIndex" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f111eba1-8457-42bf-99e3-af5ffaa5e588" ChangeDateTime="01/02/2015 01:38:37">
+    <Property Name="ElementName" Value="[dbo].[SurveyTemplateColumns].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SurveyTemplateColumns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SurveyTemplateColumnId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fc66fb41-115e-44b9-81b1-fe63a67e5a4c" ChangeDateTime="01/02/2015 01:44:47">
+    <Property Name="ElementName" Value="[dbo].[SurveyTemplateColumnTypes].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SurveyTemplateColumnTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SurveyTemplateColumnTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="02210486-1621-49f2-93a3-59ab2202d0e6" ChangeDateTime="01/02/2015 01:47:35">
+    <Property Name="ElementName" Value="[dbo].[SurveyTemplateColumns].[fkColumnTypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SurveyTemplateColumns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="fkSurveyTemplateColumnTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a157e6c7-fd66-45cb-bb1a-f65d0fa8ba9f" ChangeDateTime="01/02/2015 02:07:12">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploadSurveyTemplateColumnMapping].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploadSurveyTemplateColumnMapping]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ObservationUploadSurveyTemplateColumnMapping" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6b3739da-776c-49a5-b940-dad121d94a87" ChangeDateTime="01/02/2015 02:07:14">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploadSurveyTemplateColumnMapping].[ObservationUploadSurveyTemplateColumnMapping]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploadSurveyTemplateColumnMapping]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ObservationUploadSurveyTemplateColumnMappingId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ab9d8aaa-2107-46f2-96a2-d8faa4d4232a" ChangeDateTime="01/02/2015 02:08:13">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploadSurveyTemplateColumnMapping].[fkO]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploadSurveyTemplateColumnMapping]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="fkSurveyTemplateColumnId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fd2b8c0f-53c7-466c-8a8c-edc6d059b6c6" ChangeDateTime="01/02/2015 02:23:51">
+    <Property Name="ElementName" Value="[dbo].[Observations].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Observations]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ObservationId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="37882fda-cee3-4821-b09b-2f7c5fcd98e1" ChangeDateTime="01/02/2015 02:53:26">
+    <Property Name="ElementName" Value="[dbo].[Observations].[fkObservationUploadId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Observations]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ObservationUploadId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c2dd4825-a6fc-4506-a4f0-d18bdbcd892e" ChangeDateTime="01/02/2015 02:53:29">
+    <Property Name="ElementName" Value="[dbo].[Observations].[fkObservationUploadSurveyTemplateColumnMappingId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Observations]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ObservationUploadSurveyTemplateColumnMappingId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bbafaf98-9026-4d9a-b399-e7774a7c5c73" ChangeDateTime="01/02/2015 02:53:41">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploadSurveyTemplateColumnMappings].[fkObservationUploadId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploadSurveyTemplateColumnMappings]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ObservationUploadId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="71998ed9-4084-46c7-b977-37f955b4cfcd" ChangeDateTime="01/02/2015 02:54:17">
+    <Property Name="ElementName" Value="[dbo].[SurveyTemplateColumns].[fkSurveyTemplateId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SurveyTemplateColumns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SurveyTemplateId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e17e4b50-bcdd-444e-8538-fe8a5fcf79a3" ChangeDateTime="01/02/2015 02:54:20">
+    <Property Name="ElementName" Value="[dbo].[SurveyTemplateColumns].[fkSurveyTemplateColumnTypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SurveyTemplateColumns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SurveyTemplateColumnTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d94ecdc7-59cd-4128-9951-3dba01d0e31f" ChangeDateTime="01/02/2015 02:54:31">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploads].[fkProjectId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploads]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ProjectId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4f385eea-bb68-49d8-83c9-8fe7a6372812" ChangeDateTime="01/02/2015 02:54:35">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploads].[fkObservationUploadStatusId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploads]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ObservationUploadStatusId" />
+  </Operation>
 </Operations>

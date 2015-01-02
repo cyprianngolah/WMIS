@@ -174,6 +174,8 @@
 
 		private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
 
+	    private const string SURVEYTEMPLATECOLUMN_GET = "dbo.SurveyTemplateColumn_Get";
+
         /// <summary>
         /// The Collar Update stored procedure
         /// </summary>
@@ -1514,7 +1516,7 @@
 			}
 	    }
 		#endregion
-
+		
 		#region Project Survey Type
 		public Dto.PagedResultset<Models.SurveyType> SurveyTypeSearch(Dto.SurveyTypeRequest str)
 		{
@@ -1590,6 +1592,29 @@
 				return pr;
 			}
 		}
+
+	    public IEnumerable<SurveyTemplateColumn> GetSurveyTemplateColumns(int observationUploadKey)
+	    {
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_observationUploadId = observationUploadKey
+				};
+
+
+				return c.Query<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
+					SURVEYTEMPLATECOLUMN_GET,
+					(stc, stct) =>
+					{
+						stc.ColumnType = stct;
+						return stc;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key").ToList();
+			}
+	    }
 		#endregion
 
         #region CollaredAnimals

@@ -110,14 +110,22 @@
 		}
 
 		[HttpGet]
-		[Route("{observationKey:int?}/rows")]
-		public IEnumerable<ObservationRow> GetFirstRows(int observationKey)
+		[Route("{uploadKey:int?}/rows")]
+		public IEnumerable<ObservationRow> GetFirstRows(int uploadKey)
 		{
 			var ops = new ObservationParserService(WebConfiguration);
 			var destinationFolder = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
-			var directoryInfo = new DirectoryInfo(destinationFolder);
-			var file = directoryInfo.GetFiles().OrderByDescending(x => x.CreationTimeUtc).First(x => x.Extension.Contains(".xls")).FullName;
-			return ops.GetFirstRows(10, file);
+			var upload = Repository.GetObservationUploads(null, uploadKey).Single();
+			var filePath = Path.Combine(destinationFolder, upload.FilePath);
+
+			return ops.GetFirstRows(10, filePath);
+		}
+
+		[HttpGet]
+		[Route("upload/{uploadKey:int?}/columns")]
+		public IEnumerable<SurveyTemplateColumn> GetObservationUploadTemplateColumns(int uploadKey)
+		{
+			return Repository.GetSurveyTemplateColumns(uploadKey);
 		}
     }
 }

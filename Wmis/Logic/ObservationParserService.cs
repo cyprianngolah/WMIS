@@ -52,12 +52,39 @@
 							                     RowIndex = rowIndex,
 												 CellValues = new List<string>(new String[maxColumnCount])
 						                     };
-					
+
 					for (var cellIndex = row.FirstCellNum; cellIndex < row.LastCellNum; cellIndex ++)
 					{
 						var cell = row.GetCell(cellIndex);
-						observationRow.CellValues[cellIndex] = cell.StringCellValue;
+						if (cell == null)
+						{
+							observationRow.CellValues[cellIndex] = string.Empty;
+							continue;
+						}
+
+						
+						switch (cell.CellType)
+						{
+							case CellType.String:
+								observationRow.CellValues[cellIndex] = cell.StringCellValue;
+								break;
+							case CellType.Numeric:
+								if (DateUtil.IsCellDateFormatted(cell))
+								{
+									observationRow.CellValues[cellIndex] = cell.DateCellValue.ToString();	
+								}
+								else
+								{
+									observationRow.CellValues[cellIndex] = cell.NumericCellValue.ToString();	
+								}
+								break;
+							default:
+								observationRow.CellValues[cellIndex] = string.Empty;
+								break;
+						}
 					}
+
+					//observationRow.CellValues[cellIndex] = cell.StringCellValue;
 					observationRows.Add(observationRow);
 				}
 			}
