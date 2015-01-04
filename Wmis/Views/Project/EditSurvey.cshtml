@@ -86,9 +86,9 @@
 								<td data-bind="text: key"></td>
 								<td data-bind="text: uploadedTimestamp"></td>
 								<!-- ko with: status -->
-									<!-- ko with: nextStep -->
-									<td data-bind="text: name"></td>
-									<!-- /ko -->
+								<!-- ko with: nextStep -->
+								<td data-bind="text: name"></td>
+								<!-- /ko -->
 								<!-- /ko -->
 								<td data-bind="text: originalFileName"></td>
 								<td><button data-bind="click: $root.resumeObservationUpload">Resume</button></td>
@@ -197,12 +197,30 @@
 					<h4 class="modal-title">Observation Confirmation</h4>
 				</div>
 
-				<div class="modal-body">
-					<p>Check to make sure that the mapped data is what we expect before flagging it as "available".</p>
+				<div class="modal-body" data-bind="with: observationConfirmationData">
+					<div style="max-height: 420px; overflow-y: auto;">
+						<table class="table">
+							<thead>
+								<tr data-bind="foreach: $data.columns">
+									<th data-bind="text: name"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- ko foreach: {data: $data.observationData, as: 'd'} -->
+								<tr>
+									<!-- ko foreach: {data: $parent.columns, as: 'c'} -->
+									<td data-bind="text: $parent[c.name()]()"></td>
+									<!-- /ko -->
+								</tr>
+								<!-- /ko -->
+							</tbody>
+						</table>
+					</div>
 				</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-bind="click: $root.hideDataPreviewModal">Cancel</button>
+					<button type="button" class="btn btn-primary" data-bind="click: $root.confirmData">Confirm Data</button>
 				</div>
 			</div>
 		</div>

@@ -3,14 +3,14 @@
 AS
 	MERGE dbo.[Observations] AS T
 	USING @p_observations AS S
-	ON (
-		T.[ObservationUploadId] = T.[ObservationUploadId] 
-		AND T.[ObservationUploadSurveyTemplateColumnMappingId] = s.[ObservationUploadSurveyTemplateColumnMappingId]
+	ON 
+	(	
+		T.[ObservationUploadSurveyTemplateColumnMappingId] = s.[ObservationUploadSurveyTemplateColumnMappingId]
 		AND T.[RowIndex] = S.[RowIndex]
 	) 
 	WHEN NOT MATCHED BY TARGET 
-		THEN INSERT([ObservationUploadId], [ObservationUploadSurveyTemplateColumnMappingId], [RowIndex], [Value]) 
-		VALUES(s.[ObservationUploadId], s.[ObservationUploadSurveyTemplateColumnMappingId], s.[RowIndex], s.[Value])
+		THEN INSERT([ObservationUploadSurveyTemplateColumnMappingId], [RowIndex], [Value]) 
+		VALUES(s.[ObservationUploadSurveyTemplateColumnMappingId], s.[RowIndex], s.[Value])
 	WHEN MATCHED
 		THEN UPDATE SET 
 			[Value] = s.[Value]

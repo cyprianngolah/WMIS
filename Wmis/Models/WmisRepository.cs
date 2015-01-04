@@ -180,6 +180,8 @@
 
 	    private const string OBSERVATION_SAVE = "dbo.Observation_Save";
 
+	    private const string OBSERVATION_GET = "dbo.Observation_Get";
+
         /// <summary>
         /// The Collar Update stored procedure
         /// </summary>
@@ -1517,6 +1519,32 @@
 					p_isDeleted = upload.IsDeleted
 				};
 				c.Execute(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure);
+			}
+	    }
+
+		public Observations GetObservations(int? surveyKey = null, int? uploadKey = null)
+	    {
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_surveyId = surveyKey,
+					p_observationUploadId = uploadKey,
+				};
+
+				using (var q = c.QueryMultiple(OBSERVATION_GET, param, commandType: CommandType.StoredProcedure ))
+				{
+					return new Observations 
+					{ 
+						Columns = q.Read<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
+						(stc, stct) =>
+							{
+								stc.Name = Char.ToLowerInvariant(stc.Name[0]) + stc.Name.Substring(1);
+								stc.ColumnType = stct;
+								return stc;
+							}, splitOn: "key"), 
+						ObservationData = q.Read() };
+				}
 			}
 	    }
 		#endregion

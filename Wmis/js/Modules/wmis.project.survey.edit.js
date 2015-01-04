@@ -9,9 +9,10 @@ wmis.project.survey.edit = (function ($) {
 		resumeObservationModal : null
 	};
 
-	function editProjectSurveyViewModel() {
+	function editProjectSurveyViewModel(projectSurveyKey) {
 		var self = this;
 
+		self.projectSurveyKey = projectSurveyKey;
 		self.currentModal = ko.observable("");
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,9 +25,9 @@ wmis.project.survey.edit = (function ($) {
 		self.surveyTypes = ko.observableArray();
 		self.templates = ko.observableArray();
 
-		self.getProjectSurvey = function (key) {
+		self.getProjectSurvey = function () {
 			wmis.global.showWaitingScreen("Loading...");
-			var url = "/api/Project/Survey/" + key;
+			var url = "/api/Project/Survey/" + self.projectSurveyKey;
 
 			$.getJSON(url, {}, function(json) {
 				ko.mapper.fromJS(json, "auto", self.survey);
@@ -66,7 +67,10 @@ wmis.project.survey.edit = (function ($) {
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Observation Functionality
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		self.observations = ko.observableArray();
+		self.observations = ko.observable(null);
+		self.hasObservations = ko.computed(function() {
+			return self.observations() != null && self.observations().observationData().length > 0;
+		});
 		self.canUploadObservations = ko.observable("true");
 		self.workingUpload = ko.observable(null);
 		self.workingData = ko.observable();
@@ -75,6 +79,7 @@ wmis.project.survey.edit = (function ($) {
 		self.firstDataRowIndex = ko.observableArray();
 		self.columns = ko.observableArray();
 		self.templateColumnMappings = ko.observableArray();
+		self.observationConfirmationData = ko.observableArray(null);
 
 		// Modal Management
 		self.showWaitingScreen = function () {
@@ -101,22 +106,8 @@ wmis.project.survey.edit = (function ($) {
 			self.currentModal("");
 		};
 
-		self.getResumableSurveys = function() {
-			self.showWaitingScreen();
-			return $.ajax({
-				url: "/api/observation/project/" + options.projectSurveyKey,
-				type: "GET",
-				contentType: "application/json",
-				dataType: "json"
-			}).always(function () {
-				self.hideWaitingScreen();
-			}).success(function (data) {
-				ko.mapper.fromJS(data, "auto", self.resumableUploads);
-			}).fail(wmis.global.ajaxErrorHandler);
-		};
-
 		self.showResumeUploadModal = function () {
-			self.getResumableSurveys().success(function() {
+			self.getObservationUploads().success(function() {
 				self.currentModal("resumeUpload");
 			});
 		};
@@ -147,16 +138,6 @@ wmis.project.survey.edit = (function ($) {
 
 		self.hideHeaderPickerModal = function() {
 			self.currentModal("");
-		};
-
-		self.saveHeaderPickerRows = function() {
-			self.workingUpload().headerRowIndex(self.headerRowIndex());
-			self.workingUpload().firstDataRowIndex(self.firstDataRowIndex());
-			self.workingUpload().status().key(2);
-
-			$.when(self.saveWorkingUpload()).then(function() {
-				self.showColumnMapperModal();
-			});
 		};
 
 		self.showColumnMapperModal = function () {
@@ -192,29 +173,42 @@ wmis.project.survey.edit = (function ($) {
 			self.currentModal("");
 		};
 
-		self.saveMappedColumns = function () {
+		self.showDataPreviewModal = function() {
+			self.showWaitingScreen();
 			var observationUploadKey = self.workingUpload().key();
 			$.ajax({
-				url: "/api/observation/upload/" + observationUploadKey + "/templateColumnMappings/",
-				type: "PUT",
+				url: "/api/observation/upload/" + observationUploadKey + "/data",
+				type: "GET",
 				contentType: "application/json",
-				dataType: "json",
-				data: JSON.stringify(ko.toJS(self.templateColumnMappings()))
+				dataType: "json"
+			}).success(function (data) {
+				ko.mapper.fromJS(data, "auto", self.observationConfirmationData);
+				self.currentModal("dataPreview");
 			}).always(function () {
 				self.hideWaitingScreen();
-			}).success(function (data) {
 			}).fail(wmis.global.ajaxErrorHandler);
-		};
-
-		self.showDataPreviewModal = function() {
-			self.currentModal("dataPreview");
 		};
 
 		self.hideDataPreviewModal = function() {
 			self.currentModal("");
 		};
 
+		self.confirmData = function() {
+
+		};
+
 		// Logic
+		self.getObservations = function() {
+			$.ajax({
+				url: "/api/observation/survey/" + self.projectSurveyKey + "/data",
+				type: "GET",
+				contentType: "application/json",
+				dataType: "json",
+			}).success(function (data) {
+				ko.mapper.fromJS(data, "auto", self.observations);
+			}).fail(wmis.global.ajaxErrorHandler);
+		};
+
 		self.uploadObservationFile = function () {
 			options.uploadObservationForm.submit();
 		};
@@ -252,6 +246,20 @@ wmis.project.survey.edit = (function ($) {
 					break;
 			}
 		};
+		
+		self.getObservationUploads = function () {
+			self.showWaitingScreen();
+			return $.ajax({
+				url: "/api/observation/project/" + options.projectSurveyKey,
+				type: "GET",
+				contentType: "application/json",
+				dataType: "json"
+			}).always(function () {
+				self.hideWaitingScreen();
+			}).success(function (data) {
+				ko.mapper.fromJS(data, "auto", self.resumableUploads);
+			}).fail(wmis.global.ajaxErrorHandler);
+		};
 
 		self.saveWorkingUpload = function() {
 			return $.ajax({
@@ -265,15 +273,41 @@ wmis.project.survey.edit = (function ($) {
 			}).success(function(data) {
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
+		
+		self.saveHeaderPickerRows = function () {
+			self.workingUpload().headerRowIndex(self.headerRowIndex());
+			self.workingUpload().firstDataRowIndex(self.firstDataRowIndex());
+			self.workingUpload().status().key(2);
+
+			$.when(self.saveWorkingUpload()).then(function () {
+				self.showColumnMapperModal();
+			});
+		};
+		
+		self.saveMappedColumns = function () {
+			var observationUploadKey = self.workingUpload().key();
+			$.ajax({
+				url: "/api/observation/upload/" + observationUploadKey + "/templateColumnMappings/",
+				type: "PUT",
+				contentType: "application/json",
+				dataType: "json",
+				data: JSON.stringify(ko.toJS(self.templateColumnMappings()))
+			}).always(function () {
+				self.hideWaitingScreen();
+				self.showDataPreviewModal();
+			}).success(function (data) {
+			}).fail(wmis.global.ajaxErrorHandler);
+		};
 	}
 	
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
 
-		viewModel = new editProjectSurveyViewModel();
+		viewModel = new editProjectSurveyViewModel(initOptions.projectSurveyKey);
 		viewModel.getDropDowns();
-		viewModel.getProjectSurvey(initOptions.projectSurveyKey);
-		viewModel.getResumableSurveys();
+		viewModel.getProjectSurvey();
+		viewModel.getObservationUploads();
+		viewModel.getObservations();
 
 		ko.applyBindings(viewModel);
 

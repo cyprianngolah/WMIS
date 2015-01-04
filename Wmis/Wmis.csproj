@@ -269,6 +269,7 @@
     </Compile>
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\MappedSurveyTemplateColumn.cs" />
+    <Compile Include="Models\Observations.cs" />
     <Compile Include="Models\ObservationUpload.cs" />
     <Compile Include="Models\ObservationUploadStatus.cs" />
     <Compile Include="Models\SurveyTemplateColumn.cs" />

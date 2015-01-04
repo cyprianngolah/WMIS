@@ -147,6 +147,10 @@
 			var observationData = _observationParserService.GetData(filePath, upload.FirstDataRowIndex ?? 1, newMappings);
 
 			Repository.SaveObservationData(uploadKey, observationData);
+
+			var observationUpload = Repository.GetObservationUploads(null, uploadKey).Single();
+			observationUpload.Status.Key++;
+			Repository.UpdateObservationUpload(observationUpload);
 		}
 
 		[HttpGet]
@@ -154,6 +158,14 @@
 		public IEnumerable<MappedSurveyTemplateColumn> GetObservationUploadTemplateColumnMappings(int uploadKey)
 		{
 			return Repository.GetSurveyTemplateColumnMappings(uploadKey);
+		}
+
+		[HttpGet]
+		[Route("survey/{surveyKey:int?}/data")]
+		[Route("upload/{uploadKey:int?}/data")]
+		public Observations GetObservations(int? surveyKey = null, int? uploadKey = null)
+		{
+			return Repository.GetObservations(surveyKey, uploadKey);
 		}
     }
 }

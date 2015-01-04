@@ -25,6 +25,22 @@ $(function() {
             $(element).trigger('change');
         }
     };
+	
+    ko.bindingHandlers.testes = {
+    	init: function (element, valueAccessor) {
+    		ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+    			$(element).select2('destroy');
+    		});
+
+    		console.log(valueAccessor());
+    	},
+    	update: function (element, valueAccessor) {
+    		console.log(valueAccessor());
+    		//var value = ko.unwrap(valueAccessor());
+    		//value.key && value.key();
+    		//$(element).trigger('change');
+    	}
+    };
 
     ko.bindingHandlers.select2KeyValueTags = (function () {
         function getInitialValueKeys(valueObservable, idProperty) {

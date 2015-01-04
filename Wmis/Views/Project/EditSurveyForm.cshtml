@@ -175,15 +175,30 @@
 					</div>
 				</div>
 				
-				<div class="row" data-bind="visible: observations().length === 0">
+				<div class="row" data-bind="visible: !$root.hasObservations">
 					<div class="col-md-12">
 						<p>There are currently no Observations for this Survey. Click the Upload Observations button to get started. </p>
 					</div>
 				</div>
 				
-				<div class="row" data-bind="visible: observations().length > 0">
-					<div class="col-md-12">
-						<p>Show some surveys. </p>
+				<div class="row" data-bind="visible: $root.hasObservations">
+					<div class="col-md-12" data-bind="with: $data.observations">
+						<table class="table">
+							<thead>
+								<tr data-bind="foreach: $data.columns">
+									<th data-bind="text: name"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- ko foreach: {data: $data.observationData, as: 'd'} -->
+								<tr>
+									<!-- ko foreach: {data: $parent.columns, as: 'c'} -->
+									<td data-bind="text: $parent[c.name()]()"></td>
+									<!-- /ko -->
+								</tr>
+								<!-- /ko -->
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
