@@ -73,6 +73,8 @@ wmis.project.survey.edit = (function ($) {
 		self.resumableUploads = ko.observableArray();
 		self.headerRowIndex = ko.observableArray();
 		self.firstDataRowIndex = ko.observableArray();
+		self.columns = ko.observableArray();
+		self.templateColumnMappings = ko.observableArray();
 
 		// Modal Management
 		self.showWaitingScreen = function () {
@@ -98,7 +100,6 @@ wmis.project.survey.edit = (function ($) {
 		self.hideUploadModal = function() {
 			self.currentModal("");
 		};
-
 
 		self.getResumableSurveys = function() {
 			self.showWaitingScreen();
@@ -131,9 +132,8 @@ wmis.project.survey.edit = (function ($) {
 			self.firstDataRowIndex(self.workingUpload().firstDataRowIndex());
 
 			var observationUploadKey = self.workingUpload().key();
-			alert(observationUploadKey);
 			return $.ajax({
-				url: "/api/observation/" + observationUploadKey + "/rows",
+				url: "/api/observation/upload/" + observationUploadKey + "/rows",
 				type: "GET",
 				contentType: "application/json",
 				dataType: "json"
@@ -159,12 +159,51 @@ wmis.project.survey.edit = (function ($) {
 			});
 		};
 
-		self.showColumnMapperModal = function() {
-			self.currentModal("columnPicker");
+		self.showColumnMapperModal = function () {
+			self.showWaitingScreen();
+			
+			var observationUploadKey = self.workingUpload().key();
+			var templateColumnsPromise = $.ajax({
+				url: "/api/observation/upload/" + observationUploadKey + "/templateColumnMappings",
+				type: "GET",
+				contentType: "application/json",
+				dataType: "json"
+			}).success(function (data) {
+				ko.mapper.fromJS(data, "auto", self.templateColumnMappings);
+			}).fail(wmis.global.ajaxErrorHandler);
+			
+			var columnsPromise = $.ajax({
+				url: "/api/observation/upload/" + observationUploadKey + "/columns",
+				type: "GET",
+				contentType: "application/json",
+				dataType: "json"
+			}).success(function (data) {
+				ko.mapper.fromJS(data, "auto", self.columns);
+			}).fail(wmis.global.ajaxErrorHandler);
+
+			$.when(templateColumnsPromise, columnsPromise).then(function() {
+				self.currentModal("columnPicker");
+			}).always(function() {
+				self.hideWaitingScreen();
+			});
 		};
 
 		self.hideColumnMapperModal = function () {
 			self.currentModal("");
+		};
+
+		self.saveMappedColumns = function () {
+			var observationUploadKey = self.workingUpload().key();
+			$.ajax({
+				url: "/api/observation/upload/" + observationUploadKey + "/templateColumnMappings/",
+				type: "PUT",
+				contentType: "application/json",
+				dataType: "json",
+				data: JSON.stringify(ko.toJS(self.templateColumnMappings()))
+			}).always(function () {
+				self.hideWaitingScreen();
+			}).success(function (data) {
+			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
 		self.showDataPreviewModal = function() {

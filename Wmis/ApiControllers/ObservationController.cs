@@ -31,9 +31,12 @@
 		public const string ObservationUploadString = "observationUpload";
 		public const string ObservationUploadErrorString = "observationUploadError";
 
-		public ObservationController(WebConfiguration config) 
+		private ObservationParserService _observationParserService;
+
+		public ObservationController(WebConfiguration config, ObservationParserService observationParserService) 
 			: base(config)
 		{
+			_observationParserService = observationParserService;
 		}
 
 		[HttpPost]
@@ -110,22 +113,47 @@
 		}
 
 		[HttpGet]
-		[Route("{uploadKey:int?}/rows")]
+		[Route("upload/{uploadKey:int?}/rows")]
 		public IEnumerable<ObservationRow> GetFirstRows(int uploadKey)
 		{
-			var ops = new ObservationParserService(WebConfiguration);
 			var destinationFolder = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
 			var upload = Repository.GetObservationUploads(null, uploadKey).Single();
 			var filePath = Path.Combine(destinationFolder, upload.FilePath);
 
-			return ops.GetFirstRows(10, filePath);
+			return _observationParserService.GetFirstRows(10, filePath);
 		}
 
 		[HttpGet]
 		[Route("upload/{uploadKey:int?}/columns")]
-		public IEnumerable<SurveyTemplateColumn> GetObservationUploadTemplateColumns(int uploadKey)
+		public IEnumerable<ObservationColumn> GetColumns(int uploadKey)
 		{
-			return Repository.GetSurveyTemplateColumns(uploadKey);
+			var destinationFolder = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
+			var upload = Repository.GetObservationUploads(null, uploadKey).Single();
+			var filePath = Path.Combine(destinationFolder, upload.FilePath);
+
+			return _observationParserService.GetColumns(filePath, upload.HeaderRowIndex ?? 1);
+		}
+
+		[HttpPut]
+		[Route("upload/{uploadKey:int?}/templateColumnMappings")]
+		public void MapColumns(int uploadKey, IEnumerable<MappedSurveyTemplateColumn> mappings)
+		{
+			Repository.SaveSurveyTemplateColumnMappings(uploadKey, mappings);
+
+			var destinationFolder = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
+			var upload = Repository.GetObservationUploads(null, uploadKey).Single();
+			var filePath = Path.Combine(destinationFolder, upload.FilePath);
+			var newMappings = Repository.GetSurveyTemplateColumnMappings(uploadKey);
+			var observationData = _observationParserService.GetData(filePath, upload.FirstDataRowIndex ?? 1, newMappings);
+
+			Repository.SaveObservationData(uploadKey, observationData);
+		}
+
+		[HttpGet]
+		[Route("upload/{uploadKey:int?}/templateColumnMappings")]
+		public IEnumerable<MappedSurveyTemplateColumn> GetObservationUploadTemplateColumnMappings(int uploadKey)
+		{
+			return Repository.GetSurveyTemplateColumnMappings(uploadKey);
 		}
     }
 }

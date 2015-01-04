@@ -174,7 +174,11 @@
 
 		private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
 
-	    private const string SURVEYTEMPLATECOLUMN_GET = "dbo.SurveyTemplateColumn_Get";
+		private const string SURVEYTEMPLATECOLUMNMAPPING_GET = "dbo.SurveyTemplateColumnMapping_Get";
+
+		private const string SURVEYTEMPLATECOLUMNMAPPING_SAVE = "dbo.SurveyTemplateColumnMapping_Save";
+
+	    private const string OBSERVATION_SAVE = "dbo.Observation_Save";
 
         /// <summary>
         /// The Collar Update stored procedure
@@ -1593,28 +1597,61 @@
 			}
 		}
 
-	    public IEnumerable<SurveyTemplateColumn> GetSurveyTemplateColumns(int observationUploadKey)
+		public IEnumerable<MappedSurveyTemplateColumn> GetSurveyTemplateColumnMappings(int observationUploadKey)
 	    {
 			using (var c = NewWmisConnection)
 			{
 				var param = new
 				{
-					p_observationUploadId = observationUploadKey
+					p_observationUploadId = observationUploadKey,
 				};
 
-
-				return c.Query<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
-					SURVEYTEMPLATECOLUMN_GET,
-					(stc, stct) =>
+				return c.Query<MappedSurveyTemplateColumn, SurveyTemplateColumn, SurveyTemplateColumnType, MappedSurveyTemplateColumn>(
+					SURVEYTEMPLATECOLUMNMAPPING_GET,
+					(mstc, stc, stct) =>
 					{
+						mstc.SurveyTemplateColumn = stc;
 						stc.ColumnType = stct;
-						return stc;
+						return mstc;
 					},
 					param,
 					commandType: CommandType.StoredProcedure,
 					splitOn: "Key").ToList();
 			}
 	    }
+
+	    public void SaveSurveyTemplateColumnMappings(int observationUploadKey, IEnumerable<MappedSurveyTemplateColumn> mappings)
+	    {
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_observationUploadId = observationUploadKey,
+					p_templateColumnMappings = mappings.Where(m => m.ColumnIndex.HasValue).Select(m => new { n = m.SurveyTemplateColumn.Key, p = m.ColumnIndex.Value}).AsTableValuedParameter("dbo.TwoIntTableType")
+				};
+
+				c.Execute(SURVEYTEMPLATECOLUMNMAPPING_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+	    }
+
+		public void SaveObservationData(int observationUploadKey, IEnumerable<Logic.ObservationData> data)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_observations = data.Select(m => new
+						                                  {
+							                                  ObservationUploadId = observationUploadKey,
+															  ObservationUploadSurveyTemplateColumnMappingId = m.ColumnMappingId,
+															  RowIndex = m.RowIndex,
+															  Value = m.Value
+														  }).AsTableValuedParameter("dbo.ObservationTableType")
+				};
+
+				c.Execute(OBSERVATION_SAVE, param, commandType: CommandType.StoredProcedure);
+			}
+		}
 		#endregion
 
         #region CollaredAnimals

@@ -154,11 +154,36 @@
 				</div>
 
 				<div class="modal-body">
-					<p>Map Excel Columns to Template Columns</p>
+					<div style="max-height: 420px; overflow-y: auto;">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Template Column</th>
+									<th>Upload Column</th>
+									<th>Is Required</th>
+								</tr>
+							</thead>
+
+							<tbody data-bind="foreach: templateColumnMappings">
+								<tr>
+									<!-- ko with: surveyTemplateColumn -->
+									<td data-bind="text: name"></td>
+									<!-- /ko -->
+									<td>
+										<select class="form-control" data-bind="options: $root.columns, optionsText: 'cellValue', optionsValue: 'columnIndex', optionsCaption: '', value: columnIndex"></select>
+									</td>
+									<!-- ko with: surveyTemplateColumn -->
+									<td data-bind="text: isRequired"></td>
+									<!-- /ko -->
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-bind="click: $root.hideColumnMapperModal">Cancel</button>
+					<button type="button" class="btn btn-primary" data-bind="click: $root.saveMappedColumns">Save Columns</button>
 				</div>
 			</div>
 		</div>

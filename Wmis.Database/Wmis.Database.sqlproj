@@ -278,6 +278,9 @@
     <Build Include="dbo\Stored Procedures\SurveyTemplateColumn_Get.sql" />
     <None Include="dbo\Fill\SurveyTemplateColumnTypes.sql" />
     <None Include="dbo\Fill\SurveyTemplateColumns.sql" />
+    <Build Include="dbo\Stored Procedures\SurveyTemplateColumnMapping_Save.sql" />
+    <Build Include="dbo\User Defined Types\ObservationTableType.sql" />
+    <Build Include="dbo\Stored Procedures\Observation_Save.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

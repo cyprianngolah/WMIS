@@ -6,6 +6,8 @@
 
 		public string Order { get; set; }
 
+		public bool IsRequired { get; set; }
+
 		public SurveyTemplateColumnType ColumnType { get;set; }
 	}
 }
