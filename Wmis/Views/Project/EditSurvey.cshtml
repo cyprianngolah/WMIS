@@ -61,11 +61,11 @@
 		</form>
 	</div>
 	
-	<div class="modal" data-backdrop="static" id="resumeObservationUploadModal" data-bind="showModal: currentModal() == 'resumeUpload', with: $root">
+	<div class="modal" data-backdrop="static" id="resumeObservationUploadModal" data-bind="showModal: currentModal() == 'manageUpload', with: $root">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-bind="click: $root.hideResumeUploadModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<button type="button" class="close" data-bind="click: $root.hideManageUploadModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<h4 class="modal-title">Resume Observation Upload</h4>
 				</div>
 
@@ -81,24 +81,25 @@
 							</tr>
 						</thead>
 
-						<tbody data-bind="foreach: resumableUploads">
+						<tbody data-bind="foreach: observationUploads">
 							<tr>
 								<td data-bind="text: key"></td>
 								<td data-bind="text: uploadedTimestamp"></td>
 								<!-- ko with: status -->
-								<!-- ko with: nextStep -->
-								<td data-bind="text: name"></td>
-								<!-- /ko -->
+								<td data-bind="with: nextStep"><span data-bind="text: name"></span></td>								
 								<!-- /ko -->
 								<td data-bind="text: originalFileName"></td>
-								<td><button data-bind="click: $root.resumeObservationUpload">Resume</button></td>
+								<td>
+									<button data-bind="click: $root.resumeObservationUpload, visible: status().nextStep() != null">Resume</button>
+									<span data-bind="visible: status().nextStep() == null">Completed</span>
+								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-bind="click: $root.hideResumeUploadModal">Cancel</button>
+					<button type="button" class="btn btn-default" data-bind="click: $root.hideManageUploadModal">Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -126,7 +127,7 @@
 							<tbody data-bind="foreach: workingData">
 								<tr>
 									<td><input type="radio" name="headerRow" data-bind="value: rowIndex, checked: $root.headerRowIndex" /></td>
-									<td><input type="radio" name="firstDataRow" data-bind="value: rowIndex, checked: $root.firstDataRowIndex" /></td>
+									<td><input type="radio" name="firstDataRow" data-bind="value: rowIndex, checked: $root.firstDataRowIndex, enable: $root.headerRowIndex() < rowIndex()" /></td>
 									<td data-bind="text: rowIndex"></td>
 									<!-- ko foreach: cellValues -->
 									<td data-bind="text: $data"></td>
@@ -139,7 +140,7 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-bind="click: $root.hideHeaderPickerModal">Cancel</button>
-					<button type="button" class="btn btn-primary" data-bind="click: $root.saveHeaderPickerRows">Save Rows</button>
+					<button type="button" class="btn btn-primary" data-bind="click: $root.saveHeaderPickerRows, enable: $root.rowsPicked">Save Rows</button>
 				</div>
 			</div>
 		</div>
@@ -160,7 +161,7 @@
 								<tr>
 									<th>Template Column</th>
 									<th>Upload Column</th>
-									<th>Is Required</th>
+									<th class="text-center">Required Mapping</th>
 								</tr>
 							</thead>
 
@@ -173,7 +174,7 @@
 										<select class="form-control" data-bind="options: $root.columns, optionsText: 'cellValue', optionsValue: 'columnIndex', optionsCaption: '', value: columnIndex"></select>
 									</td>
 									<!-- ko with: surveyTemplateColumn -->
-									<td data-bind="text: isRequired"></td>
+									<td class="text-center"><span class="glyphicon glyphicon-ok" data-bind="visible: isRequired" aria-hidden="true"></span></td>
 									<!-- /ko -->
 								</tr>
 							</tbody>
@@ -183,7 +184,7 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-bind="click: $root.hideColumnMapperModal">Cancel</button>
-					<button type="button" class="btn btn-primary" data-bind="click: $root.saveMappedColumns">Save Columns</button>
+					<button type="button" class="btn btn-primary" data-bind="click: $root.saveMappedColumns, enable: $root.columnsPicked">Save Columns</button>
 				</div>
 			</div>
 		</div>
@@ -201,15 +202,19 @@
 					<div style="max-height: 420px; overflow-y: auto;">
 						<table class="table">
 							<thead>
-								<tr data-bind="foreach: $data.columns">
+								<tr>
+									<th>Excel Row Index</th>
+									<!-- ko foreach: $data.columns -->
 									<th data-bind="text: name"></th>
+									<!-- /ko -->
 								</tr>
 							</thead>
 							<tbody>
 								<!-- ko foreach: {data: $data.observationData, as: 'd'} -->
 								<tr>
+									<td data-bind="text: rowIndex"></td>
 									<!-- ko foreach: {data: $parent.columns, as: 'c'} -->
-									<td data-bind="text: $parent[c.name()]()"></td>
+									<td data-bind="text: $parent[c.jsName()]()"></td>
 									<!-- /ko -->
 								</tr>
 								<!-- /ko -->
@@ -228,3 +233,4 @@
 }
 
 @{ Html.RenderPartial("EditSurveyForm"); }
+

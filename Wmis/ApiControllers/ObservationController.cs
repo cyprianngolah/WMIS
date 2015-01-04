@@ -149,7 +149,7 @@
 			Repository.SaveObservationData(uploadKey, observationData);
 
 			var observationUpload = Repository.GetObservationUploads(null, uploadKey).Single();
-			observationUpload.Status.Key++;
+			observationUpload.Status.Key = observationUpload.Status.NextStep.Key;
 			Repository.UpdateObservationUpload(observationUpload);
 		}
 

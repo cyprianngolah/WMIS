@@ -3,7 +3,7 @@
 	@p_observationUploadId INT = NULL
 AS
 
-	SELECT
+	SELECT DISTINCT
 		-- SurveyTemplateColumn
 		stc.SurveyTemplateColumnId as [Key]
 		, stc.SurveyTemplateId as SurveyTemplateKey
@@ -26,25 +26,6 @@ AS
 		AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
 	ORDER BY
 		stc.[Order], stc.Name
-
-	--SELECT
-	--	c.Name AS ColumnName
-	--FROM 
-	--	(
-	--		SELECT DISTINCT TOP 100 PERCENT
-	--			stc.Name, stc.[Order]
-	--		FROM	
-	--			dbo.SurveyTemplateColumns stc 
-	--				INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId
-	--				INNER JOIN dbo.Survey s on s.SurveyTemplateId = st.SurveyTemplateId
-	--				INNER JOIN dbo.Project p on s.ProjectId = p.ProjectId
-	--				INNER JOIN dbo.ObservationUploads ou on ou.ProjectId = p.ProjectId
-	--		WHERE
-	--			(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
-	--			AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
-	--		ORDER BY	
-	--			stc.[Order]
-	--	) c
 
 	-- Dynamic Sql to allow us to pivot a dynamic number of Survey Template Columns into a regular table structure
 	DECLARE @cols NVARCHAR(2000)
@@ -90,12 +71,13 @@ AS
 						INNER JOIN dbo.Survey s on s.SurveyTemplateId = st.SurveyTemplateId
 						INNER JOIN dbo.Project p on s.ProjectId = p.ProjectId
 						INNER JOIN dbo.ObservationUploads ou on ou.ProjectId = p.ProjectId
-						INNER JOIN dbo.ObservationUploadSurveyTemplateColumnMappings oustcm on oustcm.ObservationUploadId = oustcm.ObservationUploadId AND oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
+						INNER JOIN dbo.ObservationUploadSurveyTemplateColumnMappings oustcm on ou.ObservationUploadId = oustcm.ObservationUploadId AND oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
 						INNER JOIN dbo.Observations o on o.ObservationUploadSurveyTemplateColumnMappingId = oustcm.ObservationUploadSurveyTemplateColumnMappingId
 
 				WHERE
 					(' + @surveyId + ' IS NULL OR s.SurveyId = ' + @surveyId + ')
 					AND (' + @observationUploadId + ' IS NULL OR ou.ObservationUploadId = ' + @observationUploadId + ')
+					AND (' + @surveyId + ' IS NULL OR (ou.ObservationUploadStatusId = 4 AND ou.IsDeleted = 0))
 			) as pvt
 		PIVOT
 		(

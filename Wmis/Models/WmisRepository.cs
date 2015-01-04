@@ -1539,7 +1539,7 @@
 						Columns = q.Read<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
 						(stc, stct) =>
 							{
-								stc.Name = Char.ToLowerInvariant(stc.Name[0]) + stc.Name.Substring(1);
+								//stc.Name = Char.ToLowerInvariant(stc.Name[0]) + stc.Name.Substring(1);
 								stc.ColumnType = stct;
 								return stc;
 							}, splitOn: "key"), 
@@ -1668,9 +1668,9 @@
 			{
 				var param = new
 				{
+					p_observationUploadId = observationUploadKey,
 					p_observations = data.Select(m => new
 						                                  {
-							                                  ObservationUploadId = observationUploadKey,
 															  ObservationUploadSurveyTemplateColumnMappingId = m.ColumnMappingId,
 															  RowIndex = m.RowIndex,
 															  Value = m.Value

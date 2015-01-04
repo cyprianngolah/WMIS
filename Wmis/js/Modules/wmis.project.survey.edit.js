@@ -69,16 +69,35 @@ wmis.project.survey.edit = (function ($) {
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		self.observations = ko.observable(null);
 		self.hasObservations = ko.computed(function() {
-			return self.observations() != null && self.observations().observationData().length > 0;
+			if (self.observations() != null && self.observations().observationData().length > 0) {
+				return true;
+			} 
+			return false;
 		});
 		self.canUploadObservations = ko.observable("true");
 		self.workingUpload = ko.observable(null);
 		self.workingData = ko.observable();
-		self.resumableUploads = ko.observableArray();
+		self.observationUploads = ko.observableArray();
 		self.headerRowIndex = ko.observableArray();
+		self.headerRowIndex.subscribe(function (newValue) {
+			if (newValue != null && (newValue >= self.firstDataRowIndex() || self.firstDataRowIndex() == null)) {
+				self.firstDataRowIndex(++newValue);
+			}
+		}.bind(this));
 		self.firstDataRowIndex = ko.observableArray();
+		self.rowsPicked = ko.computed(function() {
+			return self.headerRowIndex() >= 0 && self.firstDataRowIndex() > 0 && self.headerRowIndex() < self.firstDataRowIndex();
+		});
 		self.columns = ko.observableArray();
 		self.templateColumnMappings = ko.observableArray();
+		self.columnsPicked = ko.computed(function() {
+			for (var i = 0; i < self.templateColumnMappings().length; i++) {
+				var tc = self.templateColumnMappings()[i];
+				if (tc.surveyTemplateColumn().isRequired() && tc.columnIndex() == null)
+					return false;
+			}
+			return true;
+		});
 		self.observationConfirmationData = ko.observableArray(null);
 
 		// Modal Management
@@ -106,13 +125,14 @@ wmis.project.survey.edit = (function ($) {
 			self.currentModal("");
 		};
 
-		self.showResumeUploadModal = function () {
-			self.getObservationUploads().success(function() {
-				self.currentModal("resumeUpload");
+		self.showManageUploadModal = function () {
+			self.getObservationUploads().success(function () {
+				
+				self.currentModal("manageUpload");
 			});
 		};
 
-		self.hideResumeUploadModal = function () {
+		self.hideManageUploadModal = function () {
 			self.currentModal("");
 		};
 
@@ -182,6 +202,18 @@ wmis.project.survey.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json"
 			}).success(function (data) {
+				// Dirty hack to deal with the fact that the Column Names are coming across title cased but in order to dynamically reference
+				// the columnar observation data, we need a pascal cased name. Really should be an computed property, but I don't know how to make that work
+				// and am running out of time. -JS
+				var appendedData = data;
+				for (var i = 0; i < appendedData.columns.length; i++) {
+					if (appendedData.columns[i].name == null) {
+						appendedData.columns[i].jsName = "";
+					} else {
+						appendedData.columns[i].jsName = appendedData.columns[i].name.charAt(0).toLowerCase() + appendedData.columns[i].name.slice(1);
+					}
+				}
+				// End Dirty Hack
 				ko.mapper.fromJS(data, "auto", self.observationConfirmationData);
 				self.currentModal("dataPreview");
 			}).always(function () {
@@ -193,10 +225,6 @@ wmis.project.survey.edit = (function ($) {
 			self.currentModal("");
 		};
 
-		self.confirmData = function() {
-
-		};
-
 		// Logic
 		self.getObservations = function() {
 			$.ajax({
@@ -205,7 +233,19 @@ wmis.project.survey.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json",
 			}).success(function (data) {
-				ko.mapper.fromJS(data, "auto", self.observations);
+				// Dirty hack to deal with the fact that the Column Names are coming across title cased but in order to dynamically reference
+				// the columnar observation data, we need a pascal cased name. Really should be an computed property, but I don't know how to make that work
+				// and am running out of time. -JS
+				var appendedData = data;
+				for (var i = 0; i < appendedData.columns.length; i++) {
+					if (appendedData.columns[i].name == null) {
+						appendedData.columns[i].jsName = "";
+					} else {
+						appendedData.columns[i].jsName = appendedData.columns[i].name.charAt(0).toLowerCase() + appendedData.columns[i].name.slice(1);
+					}
+				}
+				// End Dirty Hack
+				ko.mapper.fromJS(appendedData, "auto", self.observations);
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
@@ -223,13 +263,18 @@ wmis.project.survey.edit = (function ($) {
 				self.hideWaitingScreen();
 			}).success(function (data) {
 				ko.mapper.fromJS(data, "auto", self.workingUpload);
-				self.resumableUploads.push(self.workingUpload);
+				self.observationUploads.push(self.workingUpload);
 				self.showHeaderPickerModal();
 			}).fail(wmis.global.ajaxErrorHandler);			
 		};
 
+		self.canResumeObservationUpload = function(resumableUpload) {
+			var nextStep = resumableUpload().status().nextStep();
+			return nextStep != null;
+		};
+
 		self.resumeObservationUpload = function (resumableUpload) {
-			self.hideResumeUploadModal();
+			self.hideManageUploadModal();
 			self.workingUpload(resumableUpload);
 
 			// Depending on the current state of the resumed Upload, open the appropriate Modal
@@ -242,6 +287,9 @@ wmis.project.survey.edit = (function ($) {
 					self.showColumnMapperModal();
 					break;
 				case 4:
+					self.showDataPreviewModal();
+					break;
+				case 5:
 					self.showDataPreviewModal();
 					break;
 			}
@@ -257,7 +305,7 @@ wmis.project.survey.edit = (function ($) {
 			}).always(function () {
 				self.hideWaitingScreen();
 			}).success(function (data) {
-				ko.mapper.fromJS(data, "auto", self.resumableUploads);
+				ko.mapper.fromJS(data, "auto", self.observationUploads);
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
@@ -294,9 +342,18 @@ wmis.project.survey.edit = (function ($) {
 				data: JSON.stringify(ko.toJS(self.templateColumnMappings()))
 			}).always(function () {
 				self.hideWaitingScreen();
-				self.showDataPreviewModal();
 			}).success(function (data) {
+				self.showDataPreviewModal();
 			}).fail(wmis.global.ajaxErrorHandler);
+		};
+		
+		self.confirmData = function () {
+			self.workingUpload().status().key(4);
+
+			$.when(self.saveWorkingUpload()).then(function () {
+				self.hideDataPreviewModal();
+				self.getObservations();
+			});
 		};
 	}
 	

@@ -171,29 +171,39 @@
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<button type="button" class="btn btn-primary" data-bind="visible: canUploadObservations, click: showUploadModal">Upload Observations</button>
-						<button type="button" class="btn btn-primary" data-bind="visible: resumableUploads().length > 0, click: showResumeUploadModal">Resume Observation Upload</button>
+						<button type="button" class="btn btn-primary" data-bind="visible: observationUploads().length > 0, click: showManageUploadModal">Manage Observation Uploads</button>
 					</div>
 				</div>
 				
-				<div class="row" data-bind="visible: !$root.hasObservations">
+				<div class="row" data-bind="visible: !$root.hasObservations()">
 					<div class="col-md-12">
-						<p>There are currently no Observations for this Survey. Click the Upload Observations button to get started. </p>
+						<p data-bind="visible: observationUploads().length == 0">There are currently no Observations for this Survey. Click the Upload Observations button to get started.</p>
+						<div data-bind="visible: observationUploads().length > 0">
+							<p>There are currently no finalized Observations Uploads for this Survey.</p>
+							<p>Click the Manage Observation Uploads to complete an Observation Upload or the Upload Observations button to start a new Observation Upload.</p>
+						</div>
 					</div>
 				</div>
 				
-				<div class="row" data-bind="visible: $root.hasObservations">
+				<div class="row" data-bind="visible: $root.hasObservations()">
 					<div class="col-md-12" data-bind="with: $data.observations">
 						<table class="table">
 							<thead>
-								<tr data-bind="foreach: $data.columns">
+								<tr>
+									<th>Observation Upload Key</th>
+									<th>Excel Row Index</th>
+									<!-- ko foreach: $data.columns -->
 									<th data-bind="text: name"></th>
+									<!-- /ko -->
 								</tr>
 							</thead>
 							<tbody>
 								<!-- ko foreach: {data: $data.observationData, as: 'd'} -->
 								<tr>
+									<td data-bind="text: observationUploadId"></td>
+									<td data-bind="text: rowIndex"></td>
 									<!-- ko foreach: {data: $parent.columns, as: 'c'} -->
-									<td data-bind="text: $parent[c.name()]()"></td>
+									<td data-bind="text: $parent[c.jsName()]()"></td>
 									<!-- /ko -->
 								</tr>
 								<!-- /ko -->

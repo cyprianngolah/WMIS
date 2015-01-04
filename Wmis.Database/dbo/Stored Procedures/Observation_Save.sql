@@ -1,7 +1,18 @@
 ﻿CREATE PROCEDURE [dbo].[Observation_Save]
+	@p_observationUploadId INT,
 	@p_observations [dbo].[ObservationTableType] READONLY
 AS
-	MERGE dbo.[Observations] AS T
+	WITH AffectedMappings as 
+	(
+		SELECT 
+			o.*
+		FROM 
+			dbo.Observations o 
+				INNER JOIN dbo.[ObservationUploadSurveyTemplateColumnMappings] oustcm ON o.ObservationUploadSurveyTemplateColumnMappingId = oustcm.ObservationUploadSurveyTemplateColumnMappingId			
+		WHERE
+			oustcm.ObservationUploadId = @p_observationUploadId
+	)
+	MERGE AffectedMappings AS T
 	USING @p_observations AS S
 	ON 
 	(	

@@ -153,17 +153,24 @@
 
 						string value;
 						var cell = row.GetCell(m.ColumnIndex.Value);
-						switch (cell.CellType)
+						if (cell == null)
 						{
-							case CellType.String:
-								value = cell.StringCellValue;
-								break;
-							case CellType.Numeric:
-								value = DateUtil.IsCellDateFormatted(cell) ? cell.DateCellValue.ToString() : cell.NumericCellValue.ToString();
-								break;
-							default:
-								value = string.Empty;
-								break;
+							value = string.Empty;
+						}
+						else
+						{
+							switch (cell.CellType)
+							{
+								case CellType.String:
+									value = cell.StringCellValue;
+									break;
+								case CellType.Numeric:
+									value = DateUtil.IsCellDateFormatted(cell) ? cell.DateCellValue.ToString() : cell.NumericCellValue.ToString();
+									break;
+								default:
+									value = string.Empty;
+									break;
+							}
 						}
 
 						datas.Add(new ObservationData { RowIndex = rowIndex, ColumnMappingId = m.Key.Value, Value = value });
