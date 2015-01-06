@@ -199,7 +199,7 @@ namespace Wmis.Configuration
 			var settings = overrideSettings.AllKeys.ToDictionary(key => key, key => overrideSettings[key].Value);
 
 			// Iterate through the original settings and add any that don't already exist in the settings Dictionary
-			foreach (var key in originalSettings.AllKeys.Where(key => !settings.Keys.Any(k => k == key)))
+			foreach (var key in originalSettings.AllKeys.Where(key => settings.Keys.All(k => k != key)))
 			{
 				settings.Add(key, originalSettings[key]);
 			}
@@ -229,7 +229,7 @@ namespace Wmis.Configuration
 			for (var i = 0; i < originalConnectionStrings.Count; i++)
 			{
 				var css = overrideConnectionStrings[i];
-				if (!connectionStrings.Keys.Any(k => k == css.Name))
+				if (connectionStrings.Keys.All(k => k != css.Name))
 				{
 					var connectionString = css.ConnectionString;
 					connectionStrings.Add(css.Name, connectionString);

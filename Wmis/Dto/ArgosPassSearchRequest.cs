@@ -7,6 +7,6 @@
 	{
 		public int CollaredAnimalId { get; set; }
 
-        public int? statusFilter { get; set; }
+        public int? StatusFilter { get; set; }
 	}
 }

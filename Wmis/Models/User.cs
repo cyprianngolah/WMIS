@@ -1,6 +1,5 @@
 ﻿namespace Wmis.Models
 {
-    using System;
     using System.Collections.Generic;
 
     public class User : Base.KeyedModel
@@ -11,9 +10,9 @@
         
         public string LastName { get; set; }
 
-        public Boolean AdministratorProjects { get; set; }
+        public bool AdministratorProjects { get; set; }
         
-        public Boolean AdministratorBiodiversity { get; set; }
+        public bool AdministratorBiodiversity { get; set; }
 
         public List<SimpleProject> Projects { get; set; }
 	}

@@ -7,7 +7,7 @@
 	using System.Net.Http.Headers;
 	using System.Threading.Tasks;
 
-	public class PlainTextFormatter: MediaTypeFormatter
+	public class PlainTextFormatter : MediaTypeFormatter
 	{
 		public PlainTextFormatter()
 		{

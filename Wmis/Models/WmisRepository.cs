@@ -320,7 +320,6 @@
 
                 using (var q = c.QueryMultiple(BIODIVERSITY_SEARCH, param, commandType: CommandType.StoredProcedure))
                 {
-
                     pagedResultset.ResultCount = q.Read<int>().FirstOrDefault();
 
                     pagedResultset.Data = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, dynamic, BioDiversity>(
@@ -350,7 +349,8 @@
 					populationRecords = q.Read<Population>().ToLookup<Population, int, Population>(p => p.Key, p => p);
                 }
             }
-			pagedResultset.Data.ForEach(bd => bd.Populations = new List<string>(populationRecords[bd.Key].Select(x=>x.Name)));
+
+			pagedResultset.Data.ForEach(bd => bd.Populations = new List<string>(populationRecords[bd.Key].Select(x => x.Name)));
 			
             return pagedResultset;
         }
@@ -414,7 +414,7 @@
 		{
 			using (var c = NewWmisConnection)
 			{
-				var param = new {};
+				var param = new { };
 
                 using (var q = c.QueryMultiple(BIODIVERSITY_GETALL, param, commandType: CommandType.StoredProcedure))
 				{
@@ -448,13 +448,15 @@
                     var speciesProtectedAreas = q.Read<SpeciesProtectedArea>().ToLookup(spa => spa.SpeciesId);
                     var speciesPopulations = q.Read<SpeciesPopulation>().ToLookup(sp => sp.SpeciesId);
 
-                    var speciesBioDiversityReference = q.Read<SpeciesBioDiversityReference, Reference, SpeciesBioDiversityReference>((sbr, r) => {
+                    var speciesBioDiversityReference = q.Read<SpeciesBioDiversityReference, Reference, SpeciesBioDiversityReference>((sbr, r) => 
+                    {
                         sbr.Reference = r;
                         return sbr;
                     },
                     "Key").ToLookup(sbdr => sbdr.SpeciesId);
 				   
-				    biodiversityItems.ForEach(bd => {
+				    biodiversityItems.ForEach(bd => 
+                    {
 			            bd.Ecozones = speciesEcozones[bd.Key].Select(se => new Ecozone { Key = se.Key, Name = se.Name }).ToList();
                         bd.Ecoregions = speciesEcoregions[bd.Key].Select(se => new Ecoregion { Key = se.Key, Name = se.Name }).ToList();
                         bd.ProtectedAreas = speciesProtectedAreas[bd.Key].Select(spa => new ProtectedArea { Key = spa.Key, Name = spa.Name }).ToList();
@@ -566,10 +568,10 @@
 					p_IUCNStatus = bd.IucnStatus,
 					p_GRank = bd.GRank,
 					p_IUCNDescription = bd.IucnDescription,
-					p_ecozones = bd.Ecozones.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
-					p_ecoregions = bd.Ecoregions.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
-					p_protectedAreas = bd.ProtectedAreas.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
-					p_populations = bd.Populations.Select(i => new { Name = i}).AsTableValuedParameter("dbo.NameTableType"),
+					p_ecozones = bd.Ecozones.Select(i => new { n = i.Key } ).AsTableValuedParameter("dbo.IntTableType"),
+					p_ecoregions = bd.Ecoregions.Select(i => new { n = i.Key } ).AsTableValuedParameter("dbo.IntTableType"),
+					p_protectedAreas = bd.ProtectedAreas.Select(i => new { n = i.Key } ).AsTableValuedParameter("dbo.IntTableType"),
+					p_populations = bd.Populations.Select(i => new { Name = i} ).AsTableValuedParameter("dbo.NameTableType"),
 					p_references = bd.References.Select(i => new { n = i.CategoryKey, p = i.Reference.Key }).AsTableValuedParameter("dbo.TwoIntTableType")
 				};
 				return c.Query<DateTime>(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
@@ -1441,7 +1443,7 @@
 				{
 					p_surveyId = ps.Key,
 					p_projectId = ps.ProjectKey,
-					p_targetSpeciesId = ps.TargetSpecies.Key ==  0 ? null : (int?)ps.TargetSpecies.Key,
+					p_targetSpeciesId = ps.TargetSpecies.Key == 0 ? null : (int?)ps.TargetSpecies.Key,
 					p_surveyTypeId = ps.SurveyType.Key == 0 ? null : (int?)ps.SurveyType.Key,
 					p_surveyTemplateId = ps.Template.Key == 0 ? null : (int?)ps.Template.Key,
 					p_description = ps.Description,
@@ -1532,18 +1534,20 @@
 					p_observationUploadId = uploadKey,
 				};
 
-				using (var q = c.QueryMultiple(OBSERVATION_GET, param, commandType: CommandType.StoredProcedure ))
+				using (var q = c.QueryMultiple(OBSERVATION_GET, param, commandType: CommandType.StoredProcedure))
 				{
 					return new Observations 
 					{ 
 						Columns = q.Read<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
 						(stc, stct) =>
 							{
-								//stc.Name = Char.ToLowerInvariant(stc.Name[0]) + stc.Name.Substring(1);
+								// stc.Name = Char.ToLowerInvariant(stc.Name[0]) + stc.Name.Substring(1);
 								stc.ColumnType = stct;
 								return stc;
-							}, splitOn: "key"), 
-						ObservationData = q.Read() };
+							},
+                            splitOn: "key"), 
+						ObservationData = q.Read() 
+                    };
 				}
 			}
 	    }
@@ -1655,7 +1659,7 @@
 				var param = new
 				{
 					p_observationUploadId = observationUploadKey,
-					p_templateColumnMappings = mappings.Where(m => m.ColumnIndex.HasValue).Select(m => new { n = m.SurveyTemplateColumn.Key, p = m.ColumnIndex.Value}).AsTableValuedParameter("dbo.TwoIntTableType")
+					p_templateColumnMappings = mappings.Where(m => m.ColumnIndex.HasValue).Select(m => new { n = m.SurveyTemplateColumn.Key, p = m.ColumnIndex.Value} ).AsTableValuedParameter("dbo.TwoIntTableType")
 				};
 
 				c.Execute(SURVEYTEMPLATECOLUMNMAPPING_SAVE, param, commandType: CommandType.StoredProcedure);
@@ -1712,7 +1716,7 @@
                     p_sortBy = sr.SortBy,
                     p_sortDirection = sr.SortDirection,
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim(),
-                    p_regionKey = sr.regionKey,
+                    p_regionKey = sr.RegionKey,
                     p_needingReview = sr.NeedingReview
                 };
 
@@ -1731,7 +1735,6 @@
                         return collar;
                     },
                         "Key").ToList();
-
                 }
             }
 
@@ -2390,7 +2393,7 @@
                     p_startRow = apsr.StartRow,
                     p_rowCount = apsr.RowCount,
                     p_collaredAnimalKey = apsr.CollaredAnimalId,
-                    p_argosPassStatusFilter = apsr.statusFilter
+                    p_argosPassStatusFilter = apsr.StatusFilter
                 };
 
                 using (var q = c.QueryMultiple(ARGOSPASS_SEARCH, param, commandType: CommandType.StoredProcedure))
@@ -2403,13 +2406,11 @@
                         return ap;
                     },
                         "Key").ToList();
-
                 }
             }
 
             return pagedResultset;
         }
-
 
         public PagedResultset<ArgosPassStatus> ArgosPassStatusGet(PagedDataRequest request)
         {

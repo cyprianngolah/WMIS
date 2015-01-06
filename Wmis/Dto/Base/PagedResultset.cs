@@ -1,9 +1,8 @@
 ﻿namespace Wmis.Dto
 {
 	using System.Collections.Generic;
-	using System.Runtime.Serialization;
 
-	/// <summary>
+    /// <summary>
 	/// A result set with one or more pages
 	/// </summary>
 	/// <typeparam name="T">The type of data returned in the result set</typeparam>

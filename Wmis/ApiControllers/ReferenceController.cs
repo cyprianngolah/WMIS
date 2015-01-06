@@ -1,7 +1,6 @@
 ﻿namespace Wmis.ApiControllers
 {
-	using System.Collections.Generic;
-	using System.Web.Http;
+    using System.Web.Http;
 	using Configuration;
 	using Models;
 

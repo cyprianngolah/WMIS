@@ -4,10 +4,8 @@
 
     public class SpeciesEcoregion : KeyedModel	
 	{
-
         public int SpeciesId { get; set; }
 
         public string Name { get; set; }
-
 	}
 }

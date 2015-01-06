@@ -8,8 +8,9 @@
 
 	/// <summary>
 	/// Web API Dependency Resolver for Structure Map
-	/// Taken from solution at http://stackoverflow.com/questions/11889275/structuremap-and-asp-net-web-api-and-net-framework-4-5
+	/// Taken from solution at url
 	/// </summary>
+    /// <see href="http://stackoverflow.com/questions/11889275/structuremap-and-asp-net-web-api-and-net-framework-4-5"/>
 	public class StructureMapDependencyResolver : IDependencyResolver
 	{
 		public void Dispose()

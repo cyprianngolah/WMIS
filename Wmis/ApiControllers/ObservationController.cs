@@ -31,7 +31,7 @@
 		public const string ObservationUploadString = "observationUpload";
 		public const string ObservationUploadErrorString = "observationUploadError";
 
-		private ObservationParserService _observationParserService;
+		private readonly ObservationParserService _observationParserService;
 
 		public ObservationController(WebConfiguration config, ObservationParserService observationParserService) 
 			: base(config)
@@ -102,7 +102,7 @@
 		[Route("project/{projectKey:int?}")]
 		public IEnumerable<ObservationUpload> GetUploadsForProject(int projectKey)
 		{
-			return Repository.GetObservationUploads(projectKey, null);
+			return Repository.GetObservationUploads(projectKey);
 		}
 
 		[HttpGet]

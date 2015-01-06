@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-
-namespace Wmis.ApiControllers
+﻿namespace Wmis.ApiControllers
 {
+    using System.Web.Http;
+
     using Wmis.Configuration;
     using Wmis.Dto;
     using Wmis.Models;
@@ -14,7 +9,6 @@ namespace Wmis.ApiControllers
     [RoutePrefix("api/user")]
     public class UserApiController : BaseApiController
     {
-
         public UserApiController(WebConfiguration config)
 			: base(config)
 		{

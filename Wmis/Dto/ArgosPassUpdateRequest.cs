@@ -5,6 +5,5 @@
         public int ArgosPassId { get; set; }
 
         public int ArgosPassStatusId { get; set; }
-
     }
 }

@@ -8,7 +8,6 @@
 	[RoutePrefix("api/file")]
 	public class FileApiController : BaseApiController
 	{
-		
 		public FileApiController(WebConfiguration config)
 			: base(config)
 		{

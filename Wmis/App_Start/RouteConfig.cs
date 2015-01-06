@@ -16,10 +16,7 @@
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-			routes.MapRoute(
-				name: "Default",
-				url: "{controller}/{action}/{key}",
-				defaults: new { controller = "BioDiversity", action = "Index", key = UrlParameter.Optional });
+			routes.MapRoute("Default", "{controller}/{action}/{key}", new { controller = "BioDiversity", action = "Index", key = UrlParameter.Optional });
 		}
 	}
 }

@@ -1,7 +1,5 @@
 ﻿namespace Wmis.ApiControllers
 {
-	using System;
-	using System.Linq;
     using System.Web.Http;
 	using Configuration;
 	using Dto;
@@ -219,6 +217,5 @@
 
             return Repository.AnimalStatusGet(request);
         }
-
     }
 }

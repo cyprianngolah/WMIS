@@ -6,11 +6,6 @@
 	public class BaseApiController : ApiController
 	{
 		/// <summary>
-		/// Gets or sets the WMIS Repository
-		/// </summary>
-		protected WmisRepository Repository { get; set; }
-
-		/// <summary>
 		/// Gets or sets the environment WebConfiguration
 		/// </summary>
 		public Configuration.WebConfiguration WebConfiguration { get; set; }
@@ -21,5 +16,10 @@
 
 			Repository = new WmisRepository(configuration);
 		}
+
+        /// <summary>
+        /// Gets or sets the WMIS Repository
+        /// </summary>
+        protected WmisRepository Repository { get; set; }
 	}
 }

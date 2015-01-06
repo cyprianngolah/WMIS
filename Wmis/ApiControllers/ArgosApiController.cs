@@ -1,29 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-
-namespace Wmis.Controllers
+﻿namespace Wmis.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.IO;
     using System.IO.Compression;
-    using System.Net;
+    using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Web.Http;
     using System.Xml.Serialization;
-
     using DotSpatial.Data;
-    using DotSpatial.Projections;
     using DotSpatial.Topology;
-    
     using Wmis.ApiControllers;
     using Wmis.Configuration;
     using Wmis.Dto;
     using Wmis.Models;
-
-    using File = System.IO.File;
-
+    
     [RoutePrefix("api/argos")]
     public class ArgosApiController : BaseApiController
     {
@@ -45,9 +38,8 @@ namespace Wmis.Controllers
         {
             var passes = Repository.ArgosPassGet(apsr).Data;
           
-            FeatureSet fs = new FeatureSet(FeatureType.MultiPoint);
-//            fs.Projection = KnownCoordinateSystems.Geographic.World.
-
+            var fs = new FeatureSet(FeatureType.MultiPoint);
+////            fs.Projection = KnownCoordinateSystems.Geographic.World.
             fs.DataTable.Columns.Add(new DataColumn("ID", typeof(int)));
             fs.DataTable.Columns.Add(new DataColumn("Text", typeof(string)));
             fs.DataTable.Columns.Add(new DataColumn("Latitude", typeof(double)));
@@ -63,24 +55,22 @@ namespace Wmis.Controllers
                         feature.DataRow["ID"] = pass.Key;
                         feature.DataRow["Latitude"] = pass.Latitude;
                         feature.DataRow["Longitude"] = pass.Longitude;
-                        feature.DataRow["Date"] = String.Format("{0:s}", pass.LocationDate);
+                        feature.DataRow["Date"] = string.Format("{0:s}", pass.LocationDate);
                         feature.DataRow["Status"] = pass.ArgosPassStatus.Name;
                         feature.DataRow.EndEdit();
-                    }
-            );
+                    });
            
-            const string shapeFileName = @"C:\Users\Public\testdir\test.shp";
-            fs.SaveAs(shapeFileName, true);
+            const string ShapeFileName = @"C:\Users\Public\testdir\test.shp";
+            fs.SaveAs(ShapeFileName, true);
      
-            const string zipPath = @"C:\Users\Public\test.zip";
-                    ZipFile.CreateFromDirectory(@"C:\Users\Public\testdir\", zipPath);
+            const string ZipPath = @"C:\Users\Public\test.zip";
+                    ZipFile.CreateFromDirectory(@"C:\Users\Public\testdir\", ZipPath);
 
-            var stream = new FileStream(zipPath, FileMode.Open);
+            var stream = new FileStream(ZipPath, FileMode.Open);
 
-            var response = new FileHttpResponseMessage(zipPath)
+            var response = new FileHttpResponseMessage(ZipPath)
             {
-                Content =  new StreamContent(stream)
-
+                Content = new StreamContent(stream)
             };
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
@@ -95,7 +85,7 @@ namespace Wmis.Controllers
         public List<ArgosPassForTvp> RetrieveForCollar(int collaredAnimalId)
         {
             var collarId = Repository.CollarGet(collaredAnimalId).CollarId;
-            return this.retrievePathFromArgos(int.Parse(collarId));
+            return this.RetrievePathFromArgos(int.Parse(collarId));
         }
 
         [HttpGet]
@@ -117,18 +107,7 @@ namespace Wmis.Controllers
             Repository.ArgosPassUpdate(request.ArgosPassId, request.ArgosPassStatusId);
         }
 
-        List<ArgosPassForTvp> retrievePathFromArgos(int collaredAnimalId)
-        {
-            var argosXmlString = retreiveArgosXmlStringForCollar(collaredAnimalId);
-            var argosData = convertArgosXmlStringToArgosData(argosXmlString);
-            var argosPasses = convertArgosDataToPasses(argosData);
-
-            Repository.ArgosPassMerge(collaredAnimalId, argosPasses);
-
-            return argosPasses;
-        }
-
-        static ArgosData convertArgosXmlStringToArgosData(string xmlString)
+        private static ArgosData ConvertArgosXmlStringToArgosData(string xmlString)
         {
             var xmlStringReader = new StringReader(xmlString);
             var xRoot = new XmlRootAttribute { ElementName = "data", IsNullable = true };
@@ -136,15 +115,15 @@ namespace Wmis.Controllers
             return (ArgosData)serializer.Deserialize(xmlStringReader);
         }
 
-        static List<ArgosPassForTvp> convertArgosDataToPasses(ArgosData argosData)
+        private static List<ArgosPassForTvp> ConvertArgosDataToPasses(ArgosData argosData)
         {
             var passes = argosData.program[0].platform[0].satellitePass;
             var nonNull = passes.Where(pass => pass.location != null);
-            var coordinates = nonNull.Select(pass => new ArgosPassForTvp { Latitude = pass.location.latitude, Longitude = pass.location.longitude, LocationDate = pass.location.locationDate});
+            var coordinates = nonNull.Select(pass => new ArgosPassForTvp { Latitude = pass.location.latitude, Longitude = pass.location.longitude, LocationDate = pass.location.locationDate });
             return coordinates.ToList();
         }
 
-        static string retreiveXsd(int colarId)
+        private static string RetreiveXsd()
         {
             var service = new ArgosService.DixServicePortTypeClient();
             var request = new ArgosService.xsdRequestType();
@@ -152,7 +131,12 @@ namespace Wmis.Controllers
             return response.@return;
         }
 
-        static string retreiveArgosXmlStringForCollar(int colarId)
+        /*
+         * Other valid credentials:
+         * sahtu / gisewo
+         * nagyjohn / bluenose
+         */
+        private static string RetreiveArgosXmlStringForCollar(int colarId)
         {
             var service = new ArgosService.DixServicePortTypeClient();
 
@@ -160,47 +144,34 @@ namespace Wmis.Controllers
                               {
                                   username = "gunn",
                                   password = "northter",
-                                  Item1 = recordsForLastDays(9),
+                                  Item1 = RecordsForLastDays(9),
                                   ItemElementName = ArgosService.ItemChoiceType.platformId,
                                   Item = colarId.ToString()
                               };
-
-            //            username = "sahtu";
-            //            password = "gisewo";
-
-            //            username = "nagyjohn";
-            //            password = "bluenose";
-
+                        
             ArgosService.stringResponseType res = service.getXml(request);
             return res.@return;
         }
 
-        static ArgosService.periodType recordsFromDate(int year, int month, int day)
+        private static ArgosService.periodType RecordsFromDate(int year, int month, int day)
         {
             return new ArgosService.periodType { startDate = new DateTime(year, month, day), endDateSpecified = false };
         }
 
-        static int recordsForLastDays(int days)
+        private static int RecordsForLastDays(int days)
         {
             return days;
         }
+
+        private List<ArgosPassForTvp> RetrievePathFromArgos(int collaredAnimalId)
+        {
+            var argosXmlString = RetreiveArgosXmlStringForCollar(collaredAnimalId);
+            var argosData = ConvertArgosXmlStringToArgosData(argosXmlString);
+            var argosPasses = ConvertArgosDataToPasses(argosData);
+
+            Repository.ArgosPassMerge(collaredAnimalId, argosPasses);
+
+            return argosPasses;
+        }
     }
-
-    public class FileHttpResponseMessage : HttpResponseMessage
-    {
-        private string filePath;
-
-        public FileHttpResponseMessage(string filePath)
-        {
-            this.filePath = filePath;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing); 
-            Content.Dispose(); 
-            File.Delete(filePath);
-        }
-    } 
-
 }

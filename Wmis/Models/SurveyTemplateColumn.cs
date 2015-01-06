@@ -8,6 +8,6 @@
 
 		public bool IsRequired { get; set; }
 
-		public SurveyTemplateColumnType ColumnType { get;set; }
+		public SurveyTemplateColumnType ColumnType { get; set; }
 	}
 }
