@@ -30,3 +30,6 @@ AS
 		stc.[Order], stc.Name
 
 RETURN 0
+
+GRANT EXECUTE ON [dbo].[SurveyTemplateColumnMapping_Get] TO [WMISUser]
+GO

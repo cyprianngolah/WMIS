@@ -4,3 +4,7 @@
 	p INT
 )
 GO
+
+
+GRANT EXECUTE ON TYPE::[dbo].[TwoIntTableType] TO [WMISUser]
+GO

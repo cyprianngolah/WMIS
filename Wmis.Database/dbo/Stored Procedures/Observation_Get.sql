@@ -89,3 +89,7 @@ AS
 
 	EXEC (@query)
 RETURN 0
+
+
+GRANT EXECUTE ON [dbo].[Observation_Get] TO [WMISUser]
+GO
