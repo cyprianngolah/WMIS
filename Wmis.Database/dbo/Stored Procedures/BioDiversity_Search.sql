@@ -13,6 +13,28 @@ AS
 	EXEC [dbo].[BioDiversity_Search]
 	*/
 
+	CREATE TABLE #SpeciesTaxonomyKeywordMatchesTemp (SpeciesId INT);
+
+	INSERT INTO #SpeciesTaxonomyKeywordMatchesTemp (SpeciesId)
+	SELECT DISTINCT SpeciesId FROM (
+	SELECT SpeciesId, speciesTaxonomyId FROM dbo.Species UNPIVOT 
+	(
+	  speciesTaxonomyId
+	  FOR indicatorname in (
+		KingdomTaxonomyId, 
+		PhylumTaxonomyId, 
+		ClassTaxonomyId
+	  ) 
+	) speciesTaxonomies
+	INNER JOIN
+	(SELECT DISTINCT TaxonomyId
+		FROM 
+			dbo.TaxonomySynonyms s
+		WHERE
+			s.Name LIKE '%' + @p_keywords + '%') matchingTaxonomies on matchingTaxonomies.TaxonomyId = speciesTaxonomies.speciesTaxonomyId
+	) speciesTaxonomyMatches
+
+
 	CREATE TABLE #SpeciesTemp (SpeciesId INT);
 
 	INSERT INTO #SpeciesTemp (SpeciesId)
@@ -34,6 +56,7 @@ AS
 			OR s.SubSpeciesName LIKE '%' + @p_keywords + '%'
 			OR s.ELCODE LIKE '%' + @p_keywords + '%'
 			OR [synonyms].hasSynonym = 1
+			OR s.SpeciesId IN (SELECT SpeciesId from #SpeciesTaxonomyKeywordMatchesTemp)
 		) 
 	ORDER BY
 		CASE WHEN @p_sortBy = 'group.name' AND @p_sortDirection = '0'
@@ -196,8 +219,8 @@ AS
 			LEFT OUTER JOIN dbo.Species s on st.SpeciesId = s.SpeciesId
 			LEFT OUTER JOIN dbo.StatusRanks statusRank on s.StatusRankId = statusRank.StatusRankId
 			LEFT OUTER JOIN dbo.COSEWICStatus cosewic on s.COSEWICStatusId = cosewic.COSEWICStatusId
-			LEFT OUTER JOIN dbo.COSEWICStatus saraStatus on s.SARAStatusId = cosewic.COSEWICStatusId
-			LEFT OUTER JOIN dbo.COSEWICStatus nwtStatusRank on s.NWTStatusRankId = cosewic.COSEWICStatusId
+			LEFT OUTER JOIN dbo.COSEWICStatus saraStatus on s.SARAStatusId = saraStatus.COSEWICStatusId
+			LEFT OUTER JOIN dbo.COSEWICStatus nwtStatusRank on s.NWTStatusRankId = nwtStatusRank.COSEWICStatusId
 			LEFT OUTER JOIN dbo.Taxonomy kingdom on s.KingdomTaxonomyId = kingdom.TaxonomyId AND kingdom.TaxonomyGroupId = 1
 			LEFT OUTER JOIN dbo.Taxonomy phylum on s.PhylumTaxonomyId = phylum.TaxonomyId AND phylum.TaxonomyGroupId = 2
 			LEFT OUTER JOIN dbo.Taxonomy subphylum on s.SubPhylumTaxonomyId = subphylum.TaxonomyId AND subphylum.TaxonomyGroupId = 3
