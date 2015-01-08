@@ -9,7 +9,7 @@ AS
 		, oustcm.[ColumnIndex]
 		-- SurveyTemplateColumn
 		, stc.SurveyTemplateColumnId as [Key]
-		, stc.SurveyTemplateId as SurveyTemplateKey
+		, stc.SurveyTemplateId
 		, stc.Name
 		, stc.[Order]
 		, stc.[IsRequired]

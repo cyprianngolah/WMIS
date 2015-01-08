@@ -191,7 +191,7 @@
     <Compile Include="ApiControllers\ReferenceController.cs" />
     <Compile Include="ApiControllers\SettingsController.cs" />
     <Compile Include="ApiControllers\StatusRankApiController.cs" />
-    <Compile Include="ApiControllers\SurveyTemplateController.cs" />
+    <Compile Include="ApiControllers\SurveyTemplateApiController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
     <Compile Include="ApiControllers\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -202,6 +202,7 @@
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="ApiControllers\ArgosApiController.cs" />
     <Compile Include="ApiControllers\ArgosData.cs" />
+    <Compile Include="Controllers\SurveyTemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CollaredAnimalController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
@@ -219,6 +220,8 @@
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
+    <Compile Include="Dto\SurveyTemplateColumnSaveRequest.cs" />
+    <Compile Include="Dto\SurveyTemplateSaveRequest.cs" />
     <Compile Include="Dto\FileCreateRequest.cs" />
     <Compile Include="Dto\HistoryLogSearchRequest.cs" />
     <Compile Include="Dto\FileUpdateRequest.cs" />
@@ -255,7 +258,6 @@
     <Compile Include="Dto\StatusRankRequest.cs" />
     <Compile Include="Dto\ProtectedAreaSaveRequest.cs" />
     <Compile Include="Dto\ReferenceRequest.cs" />
-    <Compile Include="Dto\SurveyTemplateRequest.cs" />
     <Compile Include="Dto\SurveyTypeRequest.cs" />
     <Compile Include="Dto\TaxonomyRequest.cs" />
     <Compile Include="Dto\TaxonomySaveRequest.cs" />
@@ -268,6 +270,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Base\NamedKeyedModel.cs" />
     <Compile Include="Models\Base\NullableKeyedModel.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\MappedSurveyTemplateColumn.cs" />
@@ -472,6 +475,9 @@
     </Content>
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.synonyms.js" />
+    <Content Include="js\Modules\wmis.surveytemplate.new.js" />
+    <Content Include="js\Modules\wmis.surveytemplate.index.js" />
+    <Content Include="js\Modules\wmis.surveytemplate.edit.js" />
     <Content Include="js\Modules\wmis.shared.historytab.js" />
     <Content Include="js\Modules\wmis.shared.filetab.js" />
     <Content Include="js\Modules\wmis.collaredanimal.editmodals.js" />
@@ -602,6 +608,8 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\q.js" />
+    <Content Include="Scripts\q.min.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_ar.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_az.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_bg.js" />
@@ -660,6 +668,11 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Views\Shared\FileTab.cshtml" />
+    <Content Include="Views\SurveyTemplate\Edit.cshtml" />
+    <Content Include="Views\SurveyTemplate\EditForm.cshtml" />
+    <Content Include="Views\SurveyTemplate\Index.cshtml" />
+    <Content Include="Views\SurveyTemplate\New.cshtml" />
+    <None Include="Views\Shared\FileTab.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

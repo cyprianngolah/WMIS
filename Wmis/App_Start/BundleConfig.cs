@@ -27,6 +27,7 @@
 						"~/Scripts/modernizr-*",
 						"~/Scripts/moment.js",
 						"~/Scripts/underscore.js",
+						"~/Scripts/q.js",
 						"~/js/wmis.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
@@ -171,6 +172,16 @@
 
             bundles.Add(new ScriptBundle("~/bundles/shared/historytab").Include(
                         "~/js/modules/wmis.shared.historytab.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/surveytemplate/index").Include(
+                        "~/js/modules/wmis.surveytemplate.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/surveytemplate/new").Include(
+                        "~/js/modules/wmis.surveytemplate.new.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/surveytemplate/edit").Include(
+                        "~/js/modules/wmis.surveytemplate.edit.js"));
+
 			#endregion
 		}
 	}

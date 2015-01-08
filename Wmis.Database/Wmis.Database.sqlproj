@@ -282,6 +282,12 @@
     <Build Include="dbo\User Defined Types\ObservationTableType.sql" />
     <Build Include="dbo\Stored Procedures\Observation_Save.sql" />
     <Build Include="dbo\Stored Procedures\Observation_Get.sql" />
+    <Build Include="dbo\Stored Procedures\SurveyTemplateColumnType_Get.sql" />
+    <Build Include="dbo\Stored Procedures\SurveyTemplateColumns_Get.sql" />
+    <Build Include="dbo\Stored Procedures\SurveyTemplate_Save.sql" />
+    <Build Include="dbo\Stored Procedures\SurveyTemplateColumn_Save.sql" />
+    <Build Include="dbo\Stored Procedures\SurveyTemplateColumn_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\SurveyTemplate_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

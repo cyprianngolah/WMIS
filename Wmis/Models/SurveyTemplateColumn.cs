@@ -2,6 +2,8 @@
 {
 	public class SurveyTemplateColumn : Base.KeyedModel
 	{
+        public int SurveyTemplateId { get; set; }
+
 		public string Name { get; set; }
 
 		public string Order { get; set; }

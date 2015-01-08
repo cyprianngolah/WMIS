@@ -10,6 +10,8 @@
 	using Dto;
     using Extensions;
 
+	using Wmis.Models.Base;
+
     /// <summary>
 	/// WMIS Repository for SQL
 	/// </summary>
@@ -166,6 +168,14 @@
 
 		private const string SURVEY_SEARCH = "dbo.Survey_Search";
 
+		private const string SURVEYTEMPLATE_GET = "dbo.SurveyTemplate_Get";
+
+		private const string SURVEYTEMPLATE_SAVE = "dbo.SurveyTemplate_Save";
+
+		private const string SURVEYTEMPLATECOLUMN_SAVE = "dbo.SurveyTemplateColumn_Save";
+
+        private const string SURVEYTEMPLATECOLUMN_DELETE = "dbo.SurveyTemplateColumn_Delete";
+
 	    private const string OBSERVATIONUPLOAD_GET = "dbo.ObservationUpload_Get";
 
 		private const string OBSERVATIONUPLOAD_UPDATE = "dbo.ObservationUpload_Update";
@@ -175,8 +185,10 @@
 		private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
 
 		private const string SURVEYTEMPLATECOLUMNMAPPING_GET = "dbo.SurveyTemplateColumnMapping_Get";
-
+		
 		private const string SURVEYTEMPLATECOLUMNMAPPING_SAVE = "dbo.SurveyTemplateColumnMapping_Save";
+
+        private const string SURVEYTEMPLATECOLUMNS_GET = "dbo.SurveyTemplateColumns_Get";
 
 	    private const string OBSERVATION_SAVE = "dbo.Observation_Save";
 
@@ -274,6 +286,8 @@
         private const string FILE_UPDATE = "dbo.File_Update";
 
         private const string FILE_DELETE = "dbo.File_Delete";
+
+        private const string SURVEYTEMPLATECOLUMNTYPE_GET = "dbo.SurveyTemplateColumnType_Get";
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -1582,7 +1596,77 @@
 				return pr;
 			}
 		}
-		#endregion
+
+        public List<NamedKeyedModel> SurveyTemplateColumnTypesGet()
+        {
+            using (var c = NewWmisConnection)
+            {
+                var results = c.Query<NamedKeyedModel>(
+                    SURVEYTEMPLATECOLUMNTYPE_GET,
+                    commandType: CommandType.StoredProcedure);
+                    
+                return results.ToList();
+            }
+        }
+
+        public int SurveyTemplateSave(SurveyTemplateSaveRequest request, string createdBy)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyTemplateId = request.SurveyTemplateId == 0 ? null : request.SurveyTemplateId,
+                    p_name = request.Name,
+                    p_createdBy = createdBy
+                };
+
+                return c.Query<int>(SURVEYTEMPLATE_SAVE, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+
+        public int SurveyTemplateColumnSave(SurveyTemplateColumnSaveRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyTemplateColumnId = request.Key == 0 ? null : request.Key,
+                    p_surveyTemplateId = request.SurveyTemplateId,
+                    p_surveyTemplateColumnTypeId = request.ColumnType.Key,
+                    p_name = request.Name,
+                    p_order = request.Order,
+                    p_isRequired = request.IsRequired
+                };
+
+                return c.Query<int>(SURVEYTEMPLATECOLUMN_SAVE, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+
+        public void SurveyTemplateColumnDelete(int surveyTemplateColumnId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyTemplateColumnId = surveyTemplateColumnId
+                };
+
+                c.Execute(SURVEYTEMPLATECOLUMN_DELETE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public SurveyTemplate SurveyTemplateGet(int surveyTemplateId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyTemplateId = surveyTemplateId
+                };
+                return c.Query<SurveyTemplate>(SURVEYTEMPLATE_GET, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+        #endregion
 
 		#region Project Collar
 		public Dto.PagedResultset<Collar> ProjectCollarGet(Dto.ProjectCollarRequest psr)
@@ -1600,19 +1684,20 @@
 		#endregion
 
 		#region Templates
-		public Dto.PagedResultset<Models.SurveyTemplate> SurveyTemplateSearch(Dto.SurveyTemplateRequest str)
+        public Dto.PagedResultset<Models.SurveyTemplate> SurveyTemplateSearch(Dto.PagedDataKeywordRequest request)
 		{
 			using (var c = NewWmisConnection)
 			{
 				var param = new
 				{
-					p_from = str.StartRow,
-					p_to = str.RowCount,
-					p_sortBy = str.SortBy,
-					p_sortDirection = str.SortDirection,
+					p_from = request.StartRow,
+					p_to = request.RowCount,
+					p_sortBy = request.SortBy,
+					p_sortDirection = request.SortDirection,
+                    p_keywords = request.Keywords
 				};
 
-				var pr = new Dto.PagedResultset<SurveyTemplate> { DataRequest = str };
+				var pr = new Dto.PagedResultset<SurveyTemplate> { DataRequest = request };
 
 				pr.Data = c.Query<int, SurveyTemplate, SurveyTemplate>(
 					SURVEYTEMPLATE_SEARCH,
@@ -1645,6 +1730,28 @@
 						mstc.SurveyTemplateColumn = stc;
 						stc.ColumnType = stct;
 						return mstc;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "Key").ToList();
+			}
+	    }
+
+        public IEnumerable<SurveyTemplateColumn> GetSurveyTemplateColumns(int surveyTemplateId)
+	    {
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+                    p_surveyTemplateId = surveyTemplateId,
+				};
+
+                return c.Query<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
+                    SURVEYTEMPLATECOLUMNS_GET,
+					(stc, stct) =>
+					{
+						stc.ColumnType = stct;
+                        return stc;
 					},
 					param,
 					commandType: CommandType.StoredProcedure,
