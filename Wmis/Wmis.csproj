@@ -659,7 +659,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Views\Shared\FileTab.cshtml" />
+    <Content Include="Views\Shared\FileTab.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
