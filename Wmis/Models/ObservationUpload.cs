@@ -6,7 +6,7 @@
 
 	public class ObservationUpload : KeyedModel
 	{
-		public int ProjectKey { get; set; }
+		public int SurveyKey { get; set; }
 
 		public string FilePath { get; set; }
 

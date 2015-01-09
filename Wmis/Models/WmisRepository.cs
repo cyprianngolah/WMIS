@@ -1472,13 +1472,13 @@
 		#endregion
 
 		#region Project Survey Observations
-	    public IEnumerable<ObservationUpload> GetObservationUploads(int? projectId = null, int? observationUploadId = null)
+	    public IEnumerable<ObservationUpload> GetObservationUploads(int? surveyKey = null, int? observationUploadId = null)
 	    {
 		    using (var c = NewWmisConnection)
 			{
 				var param = new
 				{
-					p_projectId = projectId,
+					p_surveyId = surveyKey,
 					p_observationUploadId = observationUploadId
 				};
 				return c.Query<ObservationUpload, ObservationUploadStatus, ObservationUploadStatus, ObservationUpload>(OBSERVATIONUPLOAD_GET,
@@ -1494,13 +1494,13 @@
 			}
 	    }
 
-	    public int InsertObservationUpload(int projectId, string originalFileName, string filePath)
+	    public int UpdateObservationUpload(int surveyKey, string originalFileName, string filePath)
 	    {
 			using (var c = NewWmisConnection)
 			{
 				var param = new
 				{
-					p_projectId = projectId,
+					p_surveyId = surveyKey,
 					p_originalFileName = originalFileName,
 					p_filePath = filePath
 				};

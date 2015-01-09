@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[ObservationUpload_Update]
 	@p_observationUploadId INT = NULL,
-	@p_projectId INT = NULL,
+	@p_surveyId INT = NULL,
 	@p_observationUploadStatusId INT = NULL,
 	@p_originalFileName NVARCHAR(255) = NULL,
 	@p_filePath NVARCHAR(255) = NULL,
@@ -11,9 +11,9 @@ AS
 	IF (@p_observationUploadId IS NULL)
 	BEGIN
 		INSERT INTO
-			[dbo].[ObservationUploads] ([ProjectId], [ObservationUploadStatusId], [OriginalFileName], [FilePath], [UploadedTimestamp], [IsDeleted])
+			[dbo].[ObservationUploads] ([SurveyId], [ObservationUploadStatusId], [OriginalFileName], [FilePath], [UploadedTimestamp], [IsDeleted])
 		VALUES
-			(@p_projectId, 1, @p_originalFileName, @p_filePath, GETUTCDATE(), 0)
+			(@p_surveyId, 1, @p_originalFileName, @p_filePath, GETUTCDATE(), 0)
 
 		SELECT SCOPE_IDENTITY()
 	END

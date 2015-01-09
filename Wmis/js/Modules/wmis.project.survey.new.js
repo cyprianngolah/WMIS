@@ -16,6 +16,8 @@ wmis.project.survey.new = (function ($) {
 		this.surveyTypes = ko.observableArray();
 		this.templates = ko.observableArray();
 
+		self.showObservationTab = ko.observable(false);
+
 		this.getProjectSurvey = function(projectKey) {
 			wmis.global.showWaitingScreen("Loading...");
 			var url = "/api/Project/Survey/0";

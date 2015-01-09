@@ -32,6 +32,10 @@ wmis.project.survey.edit = (function ($) {
 			$.getJSON(url, {}, function(json) {
 				ko.mapper.fromJS(json, "auto", self.survey);
 
+				if (typeof(self.survey()) != 'undefined' && self.survey().template().key() > 0) {
+					self.showObservationTab(true);
+				}
+
 				self.dataLoaded(true);
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
@@ -59,6 +63,7 @@ wmis.project.survey.edit = (function ($) {
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.survey()))
 			}).success(function (data) {
+				self.getProjectSurvey();
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
@@ -67,6 +72,13 @@ wmis.project.survey.edit = (function ($) {
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Observation Functionality
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		self.showObservationTab = ko.observable(false);
+		self.showObservationTab.subscribe(function() {
+			if (self.showObservationTab()) {
+				self.getObservationUploads();
+				self.getObservations();
+			}
+		});
 		self.observations = ko.observable(null);
 		self.hasObservations = ko.computed(function() {
 			if (self.observations() != null && self.observations().observationData().length > 0) {
@@ -363,8 +375,6 @@ wmis.project.survey.edit = (function ($) {
 		viewModel = new editProjectSurveyViewModel(initOptions.projectSurveyKey);
 		viewModel.getDropDowns();
 		viewModel.getProjectSurvey();
-		viewModel.getObservationUploads();
-		viewModel.getObservations();
 
 		ko.applyBindings(viewModel);
 

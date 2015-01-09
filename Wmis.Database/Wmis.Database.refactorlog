@@ -133,4 +133,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ObservationUploadStatusId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9eb75c72-ac24-4064-a73d-0b7d8021682b" ChangeDateTime="01/09/2015 02:59:40">
+    <Property Name="ElementName" Value="[dbo].[ObservationUploads].[ProjectId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ObservationUploads]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SurveyId" />
+  </Operation>
 </Operations>

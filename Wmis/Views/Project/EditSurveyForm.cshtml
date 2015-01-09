@@ -1,14 +1,14 @@
 ﻿<div class="row">
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
-			<li><a href="#surveyTab" role="tab" data-toggle="tab">Survey</a></li>
-			<li class="active"><a href="#observationTab" role="tab" data-toggle="tab">Observation</a></li>
+			<li class="active"><a href="#surveyTab" role="tab" data-toggle="tab">Survey</a></li>
+			<li data-bind="visible: showObservationTab"><a href="#observationTab" role="tab" data-toggle="tab">Observation</a></li>
 		</ul>
 	
 		<!-- Tab panes -->
 		<div class="tab-content" style="margin-top:10px;">
 			<!-- Survey -->
-			<div class="tab-pane form-horizontal" data-bind="with: survey" id="surveyTab">
+			<div class="tab-pane form-horizontal active" data-bind="with: survey" id="surveyTab">
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<a href="~/Project/" class="btn btn-default">Cancel</a>
@@ -32,7 +32,7 @@
 
 						<label for="template" class="col-md-1 control-label">Template</label>
 						<div class="col-md-5" data-bind="with: template">
-							<select class="form-control" id="template" data-bind="options: $root.templates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+							<select class="form-control" id="template" data-bind="options: $root.templates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }, disable: $root.showObservationTab"></select>
 						</div>
 					</div>
 
@@ -167,14 +167,15 @@
 			</div>
 
 			<!-- Observation -->
-			<div class="tab-pane form-horizontal active" data-bind="with: $root" id="observationTab">
+			<div class="tab-pane form-horizontal" id="observationTab" data-bind="visible: showObservationTab">
+				<!-- ko with: $root -->
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<button type="button" class="btn btn-primary" data-bind="visible: canUploadObservations, click: showUploadModal">Upload Observations</button>
 						<button type="button" class="btn btn-primary" data-bind="visible: observationUploads().length > 0, click: showManageUploadModal">Manage Observation Uploads</button>
 					</div>
 				</div>
-				
+
 				<div class="row" data-bind="visible: !$root.hasObservations()">
 					<div class="col-md-12">
 						<p data-bind="visible: observationUploads().length == 0">There are currently no Observations for this Survey. Click the Upload Observations button to get started.</p>
@@ -184,7 +185,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row" data-bind="visible: $root.hasObservations()">
 					<div class="col-md-12" data-bind="with: $data.observations">
 						<table class="table">
@@ -211,6 +212,7 @@
 						</table>
 					</div>
 				</div>
+				<!-- /ko-->
 			</div>
 		</div>
 	</div>

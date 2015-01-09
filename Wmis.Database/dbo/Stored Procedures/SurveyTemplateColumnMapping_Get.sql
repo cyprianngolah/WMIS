@@ -18,8 +18,7 @@ AS
 		, stct.Name
 	FROM	
 		dbo.ObservationUploads ou 
-			INNER JOIN dbo.Project p on ou.ProjectId = p.ProjectId
-			INNER JOIN dbo.Survey s on p.ProjectId = s.ProjectId
+			INNER JOIN dbo.Survey s on ou.SurveyId = s.SurveyId
 			INNER JOIN dbo.SurveyTemplate st on s.SurveyTemplateId = st.SurveyTemplateId
 			INNER JOIN dbo.SurveyTemplateColumns stc on st.SurveyTemplateId = stc.SurveyTemplateId
 			INNER JOIN dbo.SurveyTemplateColumnTypes stct on stc.SurveyTemplateColumnTypeId = stct.SurveyTemplateColumnTypeId

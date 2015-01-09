@@ -14,12 +14,11 @@ AS
 		, stct.SurveyTemplateColumnTypeId as [Key]
 		, stct.Name
 	FROM	
-		dbo.ObservationUploads ou 
-			INNER JOIN dbo.Project p on ou.ProjectId = p.ProjectId
-			INNER JOIN dbo.Survey s on p.ProjectId = s.ProjectId
+		dbo.Survey s
 			INNER JOIN dbo.SurveyTemplate st on s.SurveyTemplateId = st.SurveyTemplateId
 			INNER JOIN dbo.SurveyTemplateColumns stc on st.SurveyTemplateId = stc.SurveyTemplateId
 			INNER JOIN dbo.SurveyTemplateColumnTypes stct on stc.SurveyTemplateColumnTypeId = stct.SurveyTemplateColumnTypeId
+			LEFT OUTER JOIN  dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
 			LEFT OUTER JOIN [dbo].[ObservationUploadSurveyTemplateColumnMappings] oustcm ON stc.SurveyTemplateColumnId = oustcm.SurveyTemplateColumnId AND oustcm.ObservationUploadId = ou.ObservationUploadId
 	WHERE
 		(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
@@ -41,8 +40,7 @@ AS
 						dbo.SurveyTemplateColumns stc 
 							INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId
 							INNER JOIN dbo.Survey s on s.SurveyTemplateId = st.SurveyTemplateId
-							INNER JOIN dbo.Project p on s.ProjectId = p.ProjectId
-							INNER JOIN dbo.ObservationUploads ou on ou.ProjectId = p.ProjectId
+							LEFT OUTER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
 					WHERE
 						(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
 						AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
@@ -56,7 +54,6 @@ AS
 		@surveyId NVARCHAR(10) = ISNULL(CAST(@p_surveyId AS NVARCHAR(10)), 'NULL'),
 		@observationUploadId NVARCHAR(10) = ISNULL(CAST(@p_observationUploadId AS NVARCHAR(10)), 'NULL')
 
-
 	DECLARE @query NVARCHAR(4000)
 	SET @query = 
 		N'SELECT 
@@ -64,13 +61,12 @@ AS
 		FROM
 			(
 				SELECT
-					  oustcm.ObservationUploadId, o.RowIndex, stc.Name, o.Value
+						oustcm.ObservationUploadId, o.RowIndex, stc.Name, o.Value
 				FROM	
 					dbo.SurveyTemplateColumns stc 
 						INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId
 						INNER JOIN dbo.Survey s on s.SurveyTemplateId = st.SurveyTemplateId
-						INNER JOIN dbo.Project p on s.ProjectId = p.ProjectId
-						INNER JOIN dbo.ObservationUploads ou on ou.ProjectId = p.ProjectId
+						INNER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
 						INNER JOIN dbo.ObservationUploadSurveyTemplateColumnMappings oustcm on ou.ObservationUploadId = oustcm.ObservationUploadId AND oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
 						INNER JOIN dbo.Observations o on o.ObservationUploadSurveyTemplateColumnMappingId = oustcm.ObservationUploadSurveyTemplateColumnMappingId
 

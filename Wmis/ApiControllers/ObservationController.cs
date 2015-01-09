@@ -40,9 +40,9 @@
 		}
 
 		[HttpPost]
-		[Route("upload/{projectKey:int?}")]
+		[Route("upload/{surveyKey:int?}")]
 		[IFrameProgressExceptionHandler(ObservationUploadErrorString)]
-		public async Task<HttpResponseMessage> Upload(int projectKey)
+		public async Task<HttpResponseMessage> Upload(int surveyKey)
 		{
 			// Save the File to a Temporary path (generally C:/Temp
 			var uploadPath = Path.Combine(Path.GetTempPath(), "WMIS");
@@ -68,7 +68,7 @@
 				File.Copy(tempFileData.LocalFileName, destinationFilePath);
 
 				// Save the Observation Upload Status to the database
-				var observationUploadKey = Repository.InsertObservationUpload(projectKey, originalFile.Name, destinationFilePath);
+				var observationUploadKey = Repository.UpdateObservationUpload(surveyKey, originalFile.Name, destinationFilePath);
 
 				// Send the Response back
 				var pageBuilder = new StringBuilder();
@@ -99,10 +99,10 @@
 		}
 
 		[HttpGet]
-		[Route("project/{projectKey:int?}")]
-		public IEnumerable<ObservationUpload> GetUploadsForProject(int projectKey)
+		[Route("project/{surveyKey:int?}")]
+		public IEnumerable<ObservationUpload> GetUploadsForProject(int surveyKey)
 		{
-			return Repository.GetObservationUploads(projectKey);
+			return Repository.GetObservationUploads(surveyKey);
 		}
 
 		[HttpGet]
