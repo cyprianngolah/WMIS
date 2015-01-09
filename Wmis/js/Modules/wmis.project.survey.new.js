@@ -17,6 +17,11 @@ wmis.project.survey.new = (function ($) {
 		this.templates = ko.observableArray();
 
 		self.showObservationTab = ko.observable(false);
+		self.showUploadModal = ko.observable(false);
+		self.canUploadObservations = ko.observable(false);
+		self.showManageUploadModal = ko.observable(false);
+		self.hasObservations = ko.observable(false);
+		self.observationUploads = ko.observableArray();
 
 		this.getProjectSurvey = function(projectKey) {
 			wmis.global.showWaitingScreen("Loading...");
