@@ -88,7 +88,7 @@
 
         public AnimalSex AnimalSex { get; set; }
 
-        public int? AnimalId { get; set; }
+        public string AnimalId { get; set; }
 
         public AnimalMortality AnimalMortality { get; set; }
 

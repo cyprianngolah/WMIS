@@ -29,7 +29,7 @@
 
 	[SpeciesId]							INT					NULL,
 	[AnimalStatusId]					INT					NULL,
-	[AnimalId]							INT					NULL,
+	[AnimalId]							NVARCHAR (50)		NULL,
 	[EstimatedYearOfBirth]				INT				    NULL,
 	[EstimatedYearOfBirthBy]			NVARCHAR (50)	    NULL,
 	[AgeClassId]						INT					NULL,

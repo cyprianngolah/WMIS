@@ -37,7 +37,7 @@
 	@p_ProjectId INT = NULL,
 	@p_AgeClassId INT = NULL,
 	@p_AnimalSexId INT = NULL,
-	@p_AnimalId INT = NULL,
+	@p_AnimalId NVARCHAR (50) = NULL,
 	@p_AnimalMortalityId INT = NULL,
 	@p_MortalityDate DATETIME = NULL,
 	@p_MortalityConfidenceId INT = NULL,
