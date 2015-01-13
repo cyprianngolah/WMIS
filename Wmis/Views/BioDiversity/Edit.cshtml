@@ -1,11 +1,16 @@
 ﻿@{
     ViewBag.Title = "Biodiversity";
-	ViewBag.SubTitle = "<span data-bind='with: bd'><span data-bind='text: name'></span></span>";
+    ViewBag.SubTitle = @"<span data-bind='with: bd'>
+            <span class='speciesNameText' data-bind='text: name'></span>
+            <span class='speciesNameText' data-bind='text: subSpeciesName'></span>
+            <span data-bind='text: ecoType'></span>
+            <span data-bind='text: $root.populationText'></span>
+        </span>";
 }
 
 @section TopRight{
 	<div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: bd">
-        <span data-bind="with: nwtStatusRank">Status Rank: <strong><span data-bind="text: name"></span></strong><br /></span>
+        <span data-bind="with: statusRank">Status Rank: <strong><span data-bind="text: name"></span></strong><br /></span>
 		<span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
 	</div>
 }
