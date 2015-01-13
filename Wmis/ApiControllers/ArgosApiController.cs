@@ -84,8 +84,8 @@
         [Route("run/{collaredAnimalId:int?}")]
         public List<ArgosPassForTvp> RetrieveForCollar(int collaredAnimalId)
         {
-            var collarId = Repository.CollarGet(collaredAnimalId).CollarId;
-            return this.RetrievePathFromArgos(int.Parse(collarId));
+            var subscriptionId = Repository.CollarGet(collaredAnimalId).SubscriptionId;
+            return this.RetrievePathFromArgos(int.Parse(subscriptionId), collaredAnimalId);
         }
 
         [HttpGet]
@@ -136,7 +136,7 @@
          * sahtu / gisewo
          * nagyjohn / bluenose
          */
-        private static string RetreiveArgosXmlStringForCollar(int colarId)
+        private static string RetreiveArgosXmlStringForCollar(int subscriptionId)
         {
             var service = new ArgosService.DixServicePortTypeClient();
 
@@ -146,7 +146,7 @@
                                   password = "northter",
                                   Item1 = RecordsForLastDays(9),
                                   ItemElementName = ArgosService.ItemChoiceType.platformId,
-                                  Item = colarId.ToString()
+                                  Item = subscriptionId.ToString()
                               };
                         
             ArgosService.stringResponseType res = service.getXml(request);
@@ -163,9 +163,9 @@
             return days;
         }
 
-        private List<ArgosPassForTvp> RetrievePathFromArgos(int collaredAnimalId)
+        private List<ArgosPassForTvp> RetrievePathFromArgos(int subscriptionId, int collaredAnimalId)
         {
-            var argosXmlString = RetreiveArgosXmlStringForCollar(collaredAnimalId);
+            var argosXmlString = RetreiveArgosXmlStringForCollar(subscriptionId);
             var argosData = ConvertArgosXmlStringToArgosData(argosXmlString);
             var argosPasses = ConvertArgosDataToPasses(argosData);
 

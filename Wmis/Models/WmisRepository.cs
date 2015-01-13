@@ -2472,14 +2472,14 @@
             }
         }
 
-        public void ArgosPassMerge(int collarId, IEnumerable<ArgosPassForTvp> passes)
+        public void ArgosPassMerge(int collaredAnimalId, IEnumerable<ArgosPassForTvp> passes)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
                     p_argosPasses = passes.AsTableValuedParameter("dbo.ArgosPassTableType"),
-                    p_collarId = collarId,
+                    p_collaredAnimalId = collaredAnimalId,
                 };
                 c.Query<int>(ARGOSPASS_MERGE, param, commandType: CommandType.StoredProcedure);
             }

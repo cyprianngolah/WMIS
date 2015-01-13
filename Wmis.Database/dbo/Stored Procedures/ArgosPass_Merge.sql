@@ -1,16 +1,13 @@
 ﻿CREATE PROCEDURE [dbo].[ArgosPass_Merge]
 	@p_argosPasses [ArgosPassTableType] READONLY,
-	@p_collarId INT
+	@p_collaredAnimalId INT
 AS
 
-	DECLARE @v_collaredAnimalId INT;
-	SELECT TOP 1 @v_collaredAnimalId = CollaredAnimalId FROM dbo.CollaredAnimals where CollarId = @p_collarId
-	
 	MERGE ArgosPasses AS T
 	USING @p_argosPasses AS S
-	ON (T.CollaredAnimalId = @v_collaredAnimalId AND T.LocationDate = S.LocationDate) 
+	ON (T.CollaredAnimalId = @p_collaredAnimalId AND T.LocationDate = S.LocationDate) 
 	WHEN NOT MATCHED BY TARGET 
-		THEN INSERT(CollaredAnimalId, Latitude, Longitude, LocationDate) VALUES (@v_collaredAnimalId, S.Latitude, S.Longitude, S.LocationDate);
+		THEN INSERT(CollaredAnimalId, Latitude, Longitude, LocationDate) VALUES (@p_collaredAnimalId, S.Latitude, S.Longitude, S.LocationDate);
 
 RETURN 0
 GO
