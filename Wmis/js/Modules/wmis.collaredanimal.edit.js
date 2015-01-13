@@ -79,7 +79,7 @@ wmis.collaredanimal.edit = (function($) {
                 var results = _.map(result.data, function(record) {
                     return {
                         id: record.key,
-                        text: record.name
+                        text: record.name + (record.commonName ? ' - ' + record.commonName : '')
                     };
                 });
                 return {
@@ -98,7 +98,7 @@ wmis.collaredanimal.edit = (function($) {
                 }).done(function(data) {
                      callback({
                          id: data.key,
-                         text: data.name
+                         text: data.name + (data.commonName ? ' - ' + data.commonName : '')
                      });
                 });
             }

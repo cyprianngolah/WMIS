@@ -9,11 +9,55 @@ wmis.project.survey.edit = (function ($) {
 		resumeObservationModal : null
 	};
 
+	var targetSpeciesOptions = {
+	    ajax: {
+	        url: "/api/biodiversity",
+	        placeholder: "Target Species",
+	        dataType: "json",
+	        data: function (term, page) {
+	            return {
+	                searchString: term,
+	                startRow: (page - 1) * 25,
+	                rowCount: 25
+	            };
+	        },
+	        results: function (result, page, query) {
+	            var results = _.map(result.data, function (record) {
+	                return {
+	                    id: record.key,
+	                    text: record.name + (record.commonName ? ' - ' + record.commonName : '')
+	                };
+	            });
+	            return {
+	                results: results
+	            };
+	        }
+	    },
+	    initSelection: function (element, callback) {
+	        // the input tag has a value attribute preloaded that points to a preselected repository's id
+	        // this function resolves that id attribute to an object that select2 can render
+	        // using its formatResult renderer - that way the repository name is shown preselected
+	        var id = $(element).val();
+	        if (id != null && id != 0) {
+	            $.ajax("/api/biodiversity/" + id, {
+	                dataType: "json"
+	            }).done(function (data) {
+	                callback({
+	                    id: data.key,
+	                    text: data.name + (data.commonName ? ' - ' + data.commonName : '')
+	                });
+	            });
+	        }
+	    },
+	};
+
 	function editProjectSurveyViewModel(projectSurveyKey) {
 		var self = this;
 
 		self.projectSurveyKey = projectSurveyKey;
 		self.currentModal = ko.observable("");
+
+		this.targetSpeciesOptions = targetSpeciesOptions;
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Survey Functionality
