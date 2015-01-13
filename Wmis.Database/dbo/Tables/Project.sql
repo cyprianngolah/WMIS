@@ -2,7 +2,7 @@
 (
 	[ProjectId] INT NOT NULL IDENTITY , 
 	[WildlifeResearchPermitId] INT NULL, 
-    [Name] NVARCHAR(50) NOT NULL, 
+    [Name] NVARCHAR(250) NOT NULL, 
     [LeadRegionId] INT NULL, 
     [ProjectStatusId] INT NULL, 
     [StatusDate] DATETIME NULL, 
