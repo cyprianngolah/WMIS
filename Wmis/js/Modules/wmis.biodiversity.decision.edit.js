@@ -12,9 +12,6 @@ wmis.biodiversity.decision.edit = (function ($) {
 		this.cosewicStatus = ko.observableArray();
 		this.nwtSarcAssessment = ko.observableArray();
 		this.dataLoaded = ko.observable(false);
-	    this.populationText = ko.computed(function() {
-	        return self.model() && self.model().populations().join(", ");
-	    });
 
 		this.load = function (key) {
 			wmis.global.showWaitingScreen("Loading...");
