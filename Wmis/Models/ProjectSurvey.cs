@@ -4,7 +4,9 @@
 
 	using Base;
 
-	public class ProjectSurvey : NullableKeyedModel
+	using Newtonsoft.Json;
+
+    public class ProjectSurvey : NullableKeyedModel
 	{
 		public int ProjectKey { get; set; }
 
@@ -55,6 +57,9 @@
 		#endregion
 
 		public int ObservationCount { get; set; }
+
+        [JsonConverter(typeof(ShortDateConverter))]
+		public DateTime? StartDate { get; set; }
 
 		public DateTime LastUpdated { get; set; }
 	}

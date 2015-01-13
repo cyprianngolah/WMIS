@@ -22,6 +22,7 @@ AS
 		s.[WindSpeed], 
 		s.[WindDirection], 
 		s.[WeatherComments], 
+		s.[StartDate], 
 		s.[LastUpdated],
 		s.[TargetSpeciesId] as [Key], 
 		sp.[Name],

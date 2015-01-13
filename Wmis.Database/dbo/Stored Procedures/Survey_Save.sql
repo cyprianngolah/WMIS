@@ -21,8 +21,8 @@
 	@p_precipitation NVARCHAR(MAX),
 	@p_windSpeed NVARCHAR(MAX),
 	@p_windDirection NVARCHAR(MAX),
-	@p_weatherComments NVARCHAR(MAX)
-
+	@p_weatherComments NVARCHAR(MAX),
+	@p_startDate DATETIME = NULL
 AS
 	IF(@p_surveyId IS NULL)
 	BEGIN
@@ -50,6 +50,7 @@ AS
 			WindSpeed,
 			WindDirection,
 			WeatherComments,
+			StartDate,
 			LastUpdated
 		)
 		VALUES
@@ -76,6 +77,7 @@ AS
 			@p_windSpeed,
 			@p_windDirection,
 			@p_weatherComments,
+			@p_startDate,
 			GETUTCDATE()
 		)
 
@@ -108,6 +110,7 @@ AS
 			WindSpeed = @p_windSpeed,
 			WindDirection = @p_windDirection,
 			WeatherComments = @p_weatherComments,
+			StartDate = @p_startDate,
 			LastUpdated = GETUTCDATE()
 		WHERE
 			SurveyId = @p_surveyId

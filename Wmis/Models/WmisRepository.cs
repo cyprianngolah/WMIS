@@ -1477,7 +1477,8 @@
 					p_precipitation = ps.Precipitation,
 					p_windSpeed = ps.WindSpeed,
 					p_windDirection = ps.WindDirection,
-					p_weatherComments = ps.WeatherComments
+					p_weatherComments = ps.WeatherComments,
+                    p_startDate = ps.StartDate
 				};
 
 				return c.Query<int>(SURVEY_SAVE, param, commandType: CommandType.StoredProcedure).Single();
