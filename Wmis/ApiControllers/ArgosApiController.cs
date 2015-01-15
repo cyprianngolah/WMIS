@@ -85,7 +85,7 @@
         public List<ArgosPassForTvp> RetrieveForCollar(int collaredAnimalId)
         {
             var subscriptionId = Repository.CollarGet(collaredAnimalId).SubscriptionId;
-            return this.RetrievePathFromArgos(int.Parse(subscriptionId), collaredAnimalId);
+            return string.IsNullOrEmpty(subscriptionId) ? new List<ArgosPassForTvp>() : this.RetrievePathFromArgos(int.Parse(subscriptionId), collaredAnimalId);
         }
 
         [HttpGet]
@@ -167,6 +167,9 @@
         {
             var argosXmlString = RetreiveArgosXmlStringForCollar(subscriptionId);
             var argosData = ConvertArgosXmlStringToArgosData(argosXmlString);
+            //No data check
+            if (argosData.program == null)
+                return new List<ArgosPassForTvp>();
             var argosPasses = ConvertArgosDataToPasses(argosData);
 
             Repository.ArgosPassMerge(collaredAnimalId, argosPasses);
