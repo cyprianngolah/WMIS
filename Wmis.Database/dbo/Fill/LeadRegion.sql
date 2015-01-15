@@ -1,6 +1,7 @@
 ﻿/*
 	Initial Seeding, this will probably need to get updated later
-*/
+
+
 
 SET IDENTITY_INSERT [dbo].[LeadRegion] ON;
 
@@ -16,3 +17,4 @@ WHEN NOT MATCHED BY TARGET THEN INSERT ([LeadRegionId], [Name]) VALUES ([LeadReg
 WHEN NOT MATCHED BY SOURCE THEN DELETE;
 
 SET IDENTITY_INSERT [dbo].[LeadRegion] OFF;
+*/
