@@ -288,6 +288,14 @@
     <Build Include="dbo\Stored Procedures\SurveyTemplateColumn_Save.sql" />
     <Build Include="dbo\Stored Procedures\SurveyTemplateColumn_Delete.sql" />
     <Build Include="dbo\Stored Procedures\SurveyTemplate_Get.sql" />
+    <Build Include="dbo\Tables\Collaborators.sql" />
+    <Build Include="dbo\Tables\ProjectCollaborators.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCollaborators_Get.sql" />
+    <Build Include="dbo\Stored Procedures\ProjectCollaborators_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Collaborator_Create.sql" />
+    <Build Include="dbo\Stored Procedures\Collaborator_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Collaborator_Get.sql" />
+    <Build Include="dbo\Stored Procedures\Collaborator_Search.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

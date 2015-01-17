@@ -185,7 +185,8 @@
     <Compile Include="ApiControllers\EcozoneApiController.cs" />
     <Compile Include="ApiControllers\ObservationController.cs" />
     <Compile Include="ApiControllers\PersonController.cs" />
-    <Compile Include="ApiControllers\ProjectController.cs" />
+    <Compile Include="ApiControllers\CollaboratorApiController.cs" />
+    <Compile Include="ApiControllers\ProjectApiController.cs" />
     <Compile Include="ApiControllers\ProtectedAreaApiController.cs" />
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
     <Compile Include="ApiControllers\ReferenceController.cs" />
@@ -216,10 +217,12 @@
     <Compile Include="Controllers\ProtectedAreaController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
+    <Compile Include="Dto\ProjectCollaboratorsUpdateRequest.cs" />
     <Compile Include="Dto\Base\PagedDataKeyedKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
+    <Compile Include="Dto\CollaboratorCreateRequest.cs" />
     <Compile Include="Dto\SurveyTemplateColumnSaveRequest.cs" />
     <Compile Include="Dto\SurveyTemplateSaveRequest.cs" />
     <Compile Include="Dto\FileCreateRequest.cs" />
@@ -272,6 +275,7 @@
     </Compile>
     <Compile Include="Models\Base\NamedKeyedModel.cs" />
     <Compile Include="Models\Base\NullableKeyedModel.cs" />
+    <Compile Include="Models\Collaborator.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\MappedSurveyTemplateColumn.cs" />
     <Compile Include="Models\Observations.cs" />

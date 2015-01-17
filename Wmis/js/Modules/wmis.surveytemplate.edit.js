@@ -161,8 +161,6 @@ wmis.surveytemplate.edit = (function ($) {
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
 
-	    Q.longStackSupport = true; // TODO REMOVE THIS
-
 		var surveyTemplatePromise = Q($.ajax({
 		    url: '/api/surveytemplate/' + options.surveyTemplateKey,
 		    dataType: 'json',

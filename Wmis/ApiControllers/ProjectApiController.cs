@@ -1,14 +1,16 @@
 ﻿namespace Wmis.ApiControllers
 {
-	using System.Web.Http;
+    using System.Collections.Generic;
+    using System.Web.Http;
 	using Configuration;
 
 	using Wmis.Dto;
+	using Wmis.Models;
 
-	[RoutePrefix("api/project")]
-	public class ProjectController : BaseApiController
+    [RoutePrefix("api/project")]
+	public class ProjectApiController : BaseApiController
     {
-		public ProjectController(WebConfiguration config) 
+		public ProjectApiController(WebConfiguration config) 
 			: base(config)
 		{
 		}
@@ -99,5 +101,5 @@
 			return Repository.ProjectStatusSearch(psr ?? new ProjectStatusRequest());
 		}
 		#endregion
-	}
+    }
 }

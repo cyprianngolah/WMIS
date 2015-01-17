@@ -289,6 +289,18 @@
 
         private const string SURVEYTEMPLATECOLUMNTYPE_GET = "dbo.SurveyTemplateColumnType_Get";
 
+        private const string PROJECTCOLLABORATORS_GET = "dbo.ProjectCollaborators_Get";
+
+        private const string PROJECTCOLLABORATORS_UPDATE = "dbo.ProjectCollaborators_Update";
+
+        private const string COLLABORATOR_CREATE = "dbo.Collaborator_Create";
+
+        private const string COLLABORATOR_UPDATE = "dbo.Collaborator_Update";
+
+        private const string COLLABORATOR_GET = "dbo.Collaborator_Get";
+
+        private const string COLLABORATOR_SEARCH = "dbo.Collaborator_Search";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -2724,6 +2736,109 @@
             }
         }
 
+        #endregion
+        #region Collaborators
+        public int CollaboratorCreate(CollaboratorCreateRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_projectId = request.ProjectId == 0 ? null : (int?)request.ProjectId,
+                    p_name = request.Name,
+                    p_organization = request.Organization,
+                    p_email = request.Email,
+                    p_phoneNumber = request.PhoneNumber
+                };
+                return c.Query<int>(COLLABORATOR_CREATE, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+
+        public void CollaboratorUpdate(Collaborator request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_collaboratorId = request.Key,
+                    p_name = request.Name,
+                    p_organization = request.Organization,
+                    p_email = request.Email,
+                    p_phoneNumber = request.PhoneNumber
+                };
+                c.Execute(COLLABORATOR_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public Collaborator CollaboratorGet(int collaboratorId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_collaboratorId = collaboratorId
+                };
+                return c.Query<Collaborator>(COLLABORATOR_GET, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+
+        public PagedResultset<Collaborator> CollaboratorSearch(PagedDataKeywordRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_keywords = request.Keywords,
+                };
+
+                var pagedResults = new PagedResultset<Collaborator>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<Collaborator>()
+                };
+
+                var results = c.Query<dynamic, Collaborator, Collaborator>(COLLABORATOR_SEARCH,
+                    (d, collaborator) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return collaborator;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        
+        public IEnumerable<Collaborator> ProjectCollaboratorsGet(int projectId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_projectId = projectId
+                };
+                return c.Query<Collaborator>(PROJECTCOLLABORATORS_GET, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void ProjectCollaboratorsUpdate(ProjectCollaboratorsUpdateRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_projectId = request.ProjectId,
+                    p_collaboratorIds = request.CollaboratorIds.Select(id => new { n = id } ).AsTableValuedParameter("dbo.IntTableType"),
+                };
+                c.Execute(PROJECTCOLLABORATORS_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
         #endregion
         #endregion
 

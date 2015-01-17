@@ -41,47 +41,52 @@
 }
 
 <form role="form">
-	<div class="row">
-		<div class="col-md-12 text-right">
-			<a href="~/Project/" class="btn btn-default">Cancel</a>
-			<button type="submit" class="btn btn-primary" data-bind="click: saveProject, enable: canSave">Save</button>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a href="~/Project/" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-primary" data-bind="click: saveProject, enable: canSave">Save</button>
+        </div>
+    </div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<ul class="nav nav-tabs" role="tablist">
-				<li class="active"><a href="#generalTab" role="tab" data-toggle="tab">General</a></li>
-				<li><a href="#surveysTab" role="tab" data-toggle="tab">Surveys</a></li>
-				<li><a href="#collarsTab" role="tab" data-toggle="tab">Collars</a></li>
-			</ul>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#generalTab" role="tab" data-toggle="tab">General</a></li>
+                <li><a href="#surveysTab" role="tab" data-toggle="tab">Surveys</a></li>
+                <li><a href="#collarsTab" role="tab" data-toggle="tab">Collars</a></li>
+                <li><a href="#collaboratorsTab" role="tab" data-toggle="tab">Collaborators</a></li>
+            </ul>
 
-			<!-- Tab panes -->
-			<!-- General -->
-			<div class="tab-content" style="margin-top:10px;">
-				<div class="tab-pane form-horizontal active" data-bind="with: project" id="generalTab">
-					<div class="form-group">
-						<label for="name" class="col-md-1 control-label">Name</label>
-					    <div class="col-md-7">
-					        <input type="text" class="form-control" id="name" data-bind="value: name">
-					    </div>
+            <!-- Tab panes -->
+            <!-- General -->
+            <div class="tab-content" style="margin-top:10px;">
+                <div class="tab-pane form-horizontal active" data-bind="with: project" id="generalTab">
+                    <div class="form-group">
+                        <label for="name" class="col-md-1 control-label">Name</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="name" data-bind="value: name">
+                        </div>
                         
                         <label for="name" class="col-md-1 control-label">NWT WRP ID</label>
                         <div class="col-md-3">
                             <input type="number" class="form-control" id="name" data-bind="value: wildlifeResearchPermitId">
                         </div>
-					</div>
+                    </div>
 
-				    <div class="form-group">
+                    <div class="form-group">
                         <label for="leadRegion" class="col-md-1 control-label">Lead Region</label>
-				        <div class="col-md-3" data-bind="with: leadRegion">
-				            <select class="form-control" id="leadRegion" data-bind="options: $root.regions, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
-				        </div>
+                        <div class="col-md-3" data-bind="with: leadRegion">
+                            <!-- ko if: $root.regions().length > 0 -->
+                            <select class="form-control" id="leadRegion" data-bind="options: $root.regions, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
+                            <!-- /ko -->
+                        </div>
                         
                         <label for="projectLead" class="col-md-1 control-label">Project Lead</label>
-				        <div class="col-md-3" data-bind="with: projectLead">
-				            <select class="form-control" id="status" data-bind="options: $root.projectLeads, value: key, optionsText: 'text', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
-				        </div>
+                        <div class="col-md-3" data-bind="with: projectLead">
+                            <!-- ko if: $root.projectLeads().length > 0 -->
+                            <select class="form-control" id="status" data-bind="options: $root.projectLeads, value: key, optionsText: 'text', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
+                            <!-- /ko -->
+                        </div>
                         
                         <label for="name" class="col-md-1 control-label"></label>
                         <div class="col-md-3">
@@ -92,12 +97,14 @@
                                 </label>
                             </div>
                         </div>
-				    </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="name" class="col-md-1 control-label">Status</label>
                         <div class="col-md-3" data-bind="with: status">
+                            <!-- ko if: $root.statuses().length > 0 -->
                             <select class="form-control" id="status" data-bind="options: $root.statuses, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
+                            <!-- /ko -->
                         </div>
 
                         <label for="name" class="col-md-1 control-label">Status Date</label>
@@ -109,126 +116,225 @@
                         </div>
                     </div>
 
-					<div class="form-group">
-						<label for="name" class="col-md-1 control-label">Start Date</label>
-						<div class="col-md-3">
-							<div class="input-group date" data-bind="datePicker: startDate">
-								<input type="text" class="form-control" readonly="readonly">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-							</div>
-						</div>
+                    <div class="form-group">
+                        <label for="name" class="col-md-1 control-label">Start Date</label>
+                        <div class="col-md-3">
+                            <div class="input-group date" data-bind="datePicker: startDate">
+                                <input type="text" class="form-control" readonly="readonly">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
 
-						<label for="name" class="col-md-1 control-label">End Date</label>
-						<div class="col-md-3">
-							<div class="input-group date" data-bind="datePicker: endDate">
-								<input type="text" class="form-control" readonly="readonly">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-							</div>
-						</div>
-					</div>
+                        <label for="name" class="col-md-1 control-label">End Date</label>
+                        <div class="col-md-3">
+                            <div class="input-group date" data-bind="datePicker: endDate">
+                                <input type="text" class="form-control" readonly="readonly">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<label for="description" class="col-md-1 control-label">Description</label>
-						<div class="col-md-11">
-							<textarea rows="4" name="description" class="form-control" data-bind="value: description"></textarea>
-						</div>
-					</div>
+                    <div class="form-group">
+                        <label for="description" class="col-md-1 control-label">Description</label>
+                        <div class="col-md-11">
+                            <textarea rows="4" name="description" class="form-control" data-bind="value: description"></textarea>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<label for="objectives" class="col-md-1 control-label">Objectives</label>
-						<div class="col-md-11">
-							<textarea rows="4" name="objectives" class="form-control" data-bind="value: objectives"></textarea>
-						</div>
-					</div>
+                    <div class="form-group">
+                        <label for="objectives" class="col-md-1 control-label">Objectives</label>
+                        <div class="col-md-11">
+                            <textarea rows="4" name="objectives" class="form-control" data-bind="value: objectives"></textarea>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<label for="studyArea" class="col-md-1 control-label">Study Area</label>
-						<div class="col-md-11">
-							<textarea rows="4" name="studyArea" class="form-control" data-bind="value: studyArea"></textarea>
-						</div>
-					</div>
+                    <div class="form-group">
+                        <label for="studyArea" class="col-md-1 control-label">Study Area</label>
+                        <div class="col-md-11">
+                            <textarea rows="4" name="studyArea" class="form-control" data-bind="value: studyArea"></textarea>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<label for="methods" class="col-md-1 control-label">Methods</label>
-						<div class="col-md-11">
-							<textarea rows="4" name="methods" class="form-control" data-bind="value: methods"></textarea>
-						</div>
-					</div>
+                    <div class="form-group">
+                        <label for="methods" class="col-md-1 control-label">Methods</label>
+                        <div class="col-md-11">
+                            <textarea rows="4" name="methods" class="form-control" data-bind="value: methods"></textarea>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<label for="comments" class="col-md-1 control-label">Comments</label>
-						<div class="col-md-11">
-							<textarea rows="4" name="comments" class="form-control" data-bind="value: comments"></textarea>
-						</div>
-					</div>
+                    <div class="form-group">
+                        <label for="comments" class="col-md-1 control-label">Comments</label>
+                        <div class="col-md-11">
+                            <textarea rows="4" name="comments" class="form-control" data-bind="value: comments"></textarea>
+                        </div>
+                    </div>
 
-				    <div class="form-group">
-				        <label for="results" class="col-md-1 control-label">Results</label>
-				        <div class="col-md-11">
-				            <textarea rows="4" name="results" class="form-control" data-bind="value: results"></textarea>
-				        </div>
-				    </div>
+                    <div class="form-group">
+                        <label for="results" class="col-md-1 control-label">Results</label>
+                        <div class="col-md-11">
+                            <textarea rows="4" name="results" class="form-control" data-bind="value: results"></textarea>
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<label for="results" class="col-md-1 control-label">Terms and Conditions</label>
-						<div class="col-md-11">
+                    <div class="form-group">
+                        <label for="results" class="col-md-1 control-label">Terms and Conditions</label>
+                        <div class="col-md-11">
                             <textarea rows="4" name="results" class="form-control" data-bind="value: termsAndConditions"></textarea>
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="tab-pane form-horizontal" id="surveysTab">
-					<div class="row">
-						<div class="col-md-12 text-right">
-							<a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-							<a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
-						</div>
-					</div>
+                <div class="tab-pane form-horizontal" id="surveysTab">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+                            <a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+                        </div>
+                    </div>
 
-					<div class="row">
-						<div class="col-md-12">
-							<table id="surveys" class="table">
-								<thead>
-									<tr>
-										<th>Survey Type</th>
-										<th>Survey Template</th>
-										<th>Target Species</th>
-										<th>Common Name</th>
-										<th>Start Date</th>
-										<th># of Observations</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-					</div>
-				</div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="surveys" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Survey Type</th>
+                                        <th>Survey Template</th>
+                                        <th>Target Species</th>
+                                        <th>Common Name</th>
+                                        <th>Start Date</th>
+                                        <th># of Observations</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 				
-				<div class="tab-pane form-horizontal" id="collarsTab">
-					@*<div class="row">
+                <div class="tab-pane form-horizontal" id="collarsTab">
+                    @*<div class="row">
 						<div class="col-md-12 text-right">
 							<a href="~/Project/NewCollar" id="newCollarButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
 							<a href="~/Project/EditCollar" id="editCollarButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
 						</div>
 					</div>*@
 
-					<div class="row">
-						<div class="col-md-12">
-							<table id="collars" class="table">
-								<thead>
-									<tr>
-										<th>Admin Region</th>
-										<th>Collar Status</th>
-										<th>Species</th>
-										<th>Common Name</th>
-										<th>Sub Species</th>
-										<th>Animal Status</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="collars" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Admin Region</th>
+                                        <th>Collar Status</th>
+                                        <th>Species</th>
+                                        <th>Common Name</th>
+                                        <th>Sub Species</th>
+                                        <th>Animal Status</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane form-horizontal" id="collaboratorsTab">
+                    <div class="row h4">
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-primary" data-bind="click: createCollaborator">Create New Collaborator</button>
+                            <button class="btn btn-primary" data-bind="click: addCollaborator">Add Existing Collaborator</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Organization</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
+                                        <th>Edit</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: projectCollaborators">
+                                    <tr>
+                                        <td data-bind="text: name"></td>
+                                        <td data-bind="text: organization"></td>
+                                        <td data-bind="text: email"></td>
+                                        <td data-bind="text: phoneNumber"></td>
+                                        <td data-bind="click: $root.editCollaborator"><span class="glyphicon glyphicon-edit"></span></td>
+                                        <td data-bind="click: $root.removeCollaborator"><span class="glyphicon glyphicon-remove"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
+
+<script id="addCollaboratorTemplate" type="text/html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Collaborator</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="hidden" id="collaboratorInput" class="form-control" data-bind="select2: collaboratorOptions" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: save">Add</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</script>
+
+<script id="createEditCollaboratorTemplate" type="text/html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" data-bind="text: titleText"></h4>
+                </div>
+                <div class="modal-body form-horizontal" data-bind="with: collaborator">
+                    <div class="form-group">
+                        <label for="name" class="col-md-2 control-label">Name</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="name" data-bind="value: name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="organization" class="col-md-2 control-label">Organization</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="organization" data-bind="value: organization">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-md-2 control-label">Email</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="email" data-bind="value: email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber" class="col-md-2 control-label">Phone Number</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="phoneNumber" data-bind="value: phoneNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: save, text: confirmText"></button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</script>

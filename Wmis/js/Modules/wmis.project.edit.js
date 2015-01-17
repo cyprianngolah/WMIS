@@ -14,31 +14,196 @@ wmis.project.edit = (function ($) {
 		$collarTable: $("#collars"),
 	};
 
-	function editProjectViewModel() {
+	function selectCollaborator(currentCollaboratorIds, callback) {
+	    var viewModel = new SelectCollaboratorModel(currentCollaboratorIds);
+
+	    wmis.global.showModal({
+	        viewModel: viewModel,
+	        context: this,
+	        template: 'addCollaboratorTemplate'
+	    }).done(callback)
+        .fail(function () {
+            console.log("Modal cancelled");
+        });
+	}
+
+	function SelectCollaboratorModel(currentCollaboratorIds) {
+	    var self = this;
+	    this.collaboratorOptions = {
+	        minimumInputLength: 1,
+	        ajax: {
+	            url: "/api/collaborator",
+	            placeholder: "Collaborators",
+	            dataType: "json",
+	            data: function(term, page) {
+	                return {
+	                    keywords: term,
+	                    startRow: (page - 1) * 25,
+	                    rowCount: 25
+	                };
+	            },
+	            results: function(result, page, query) {
+	                var data = _.chain(result.data)
+                        .filter(function (record) {
+                            // Remove all collaborators that have already been selected
+	                        return !_.contains(currentCollaboratorIds, record.key);
+	                    })
+                        .map(function (record) {
+	                        var id = record.key;
+	                        var text = record.name + (record.email == "" ? '' : ' - ' + record.email);
+	                        return {
+	                            id: id,
+	                            text: text,
+	                            data: record
+	                        };
+	                    }).value();
+	                return {
+	                    results: data
+	                };
+	            }
+	        }
+	    };
+
+	    this.save = function () {
+	        var selectedValue = $("#collaboratorInput").select2("data");
+	        var selectedCollaborator = selectedValue && selectedValue.data;
+	        if (selectedCollaborator) {
+	            var newCollaboratorIds = currentCollaboratorIds.concat(selectedCollaborator.key);
+	            updateCollaborators(newCollaboratorIds, function() {
+	                self.modal.close(selectedCollaborator);
+	            }, function() {
+	                self.modal.close();
+	            });
+	        } else {
+	            self.modal.close();
+	        }
+	    }
+
+	    this.cancel = function () {
+	        self.modal.close();
+	    }
+	}
+
+	function createEditCollaborator(collaboratorData, callback) {
+	    var viewModel = new CreateEditCollaboratorModel(collaboratorData);
+
+	    wmis.global.showModal({
+	        viewModel: viewModel,
+	        context: this,
+	        template: 'createEditCollaboratorTemplate'
+	    }).done(callback)
+        .fail(function () {
+            console.log("Modal cancelled");
+        });
+	}
+
+	function CreateEditCollaboratorModel(collaboratorData) {
+	    var self = this;
+	    var isEdit = !!collaboratorData;
+	    this.titleText = isEdit ? "Edit Collaborator" : "Create Collaborator";
+	    this.confirmText = isEdit ? "Save" : "Create";
+
+	    this.collaborator = null;
+	    if (collaboratorData) {
+	        this.collaborator = ko.mapper.fromJS(collaboratorData);
+	    } else {
+	        this.collaborator = {
+	            key: ko.observable(0),
+	            name: ko.observable(""),
+	            organization: ko.observable(""),
+	            email: ko.observable(""),
+	            phoneNumber: ko.observable("")
+	        }
+	    }
+
+	    this.save = function () {
+	        var collaborator = ko.mapper.toJS(self.collaborator);
+	        collaborator.projectId = options.projectKey;
+	        $.ajax({
+	            url: "/api/collaborator",
+	            type: self.collaborator.key() == 0 ? "POST" : "PUT",
+	            contentType: "application/json",
+	            dataType: "json",
+	            data: JSON.stringify(collaborator)
+	        }).success(function (newCollaboratorId) {
+	            collaborator.key = collaborator.key || newCollaboratorId;
+	            self.modal.close(collaborator);
+	        }).always(function () {
+                wmis.global.hideWaitingScreen();
+            }).fail(function (error) {
+                wmis.global.ajaxErrorHandler(error);
+                self.modal.close();
+            });
+	    }
+
+	    this.cancel = function () {
+	        self.modal.close();
+	    }
+	}
+
+	function updateCollaborators(collaboratorIds, success, failure) {
+	    wmis.global.showWaitingScreen("Saving...");
+	    $.ajax({
+	        url: "/api/collaborator/project",
+	        type: "PUT",
+	        contentType: "application/json",
+	        dataType: "json",
+	        data: JSON.stringify({
+	            projectId: options.projectKey,
+	            collaboratorIds: collaboratorIds
+	        })
+	    }).success(success)
+        .always(function () {
+	        wmis.global.hideWaitingScreen();
+	    }).fail(function(error) {
+	        wmis.global.ajaxErrorHandler(error);
+	        failure();
+	    });
+	}
+
+	function EditProjectViewModel(project, projectCollaborators) {
 		var self = this;
-		this.project = ko.observable();
-		this.dataLoaded = ko.observable(false);
+		this.project = ko.mapper.fromJS(project);
 
 		this.statuses = ko.observableArray();
 		this.regions = ko.observableArray();
 		this.projectLeads = ko.observableArray();
 
-		this.getProject = function(key) {
-			wmis.global.showWaitingScreen("Loading...");
-			var url = "/api/Project/" + key;
+		this.projectCollaborators = ko.observableArray(projectCollaborators);
 
-			return $.getJSON(url, {}, function(json) {
-				ko.mapper.fromJS(json, "auto", self.project);
+		this.projectCollaboratorIds = ko.computed(function () {
+		    return _.pluck(self.projectCollaborators(), 'key');
+		});
 
-				self.dataLoaded(true);
-			}).always(function() {
-				wmis.global.hideWaitingScreen();
-			}).fail(wmis.global.ajaxErrorHandler);
-		};
+	    this.addCollaborator = function() {
+	        selectCollaborator(self.projectCollaboratorIds(), function (newCollaborator) {
+	            self.projectCollaborators.push(newCollaborator);
+	        });
+	    };
+
+	    this.createCollaborator = function() {
+	        createEditCollaborator(null, function (newCollaborator) {
+	            self.projectCollaborators.push(newCollaborator);
+	        });
+	    };
+
+	    this.editCollaborator = function (collaboratorData) {
+	        createEditCollaborator(collaboratorData, function (newCollaborator) {
+	            self.projectCollaborators.remove(collaboratorData);
+	            self.projectCollaborators.push(newCollaborator);
+	        });
+	    };
+
+	    this.removeCollaborator = function(collaborator) {
+	        var newCollaboratorIds = _.without(self.projectCollaboratorIds(), collaborator.key);
+	        updateCollaborators(newCollaboratorIds, function() {
+	            self.projectCollaborators.remove(collaborator);
+	        });
+	    };
 
 		this.canSave = ko.computed(function() {
-			return self.dataLoaded() && self.project() != null && typeof(self.project().name) == "function" && $.trim(self.project().name()) != "";
-		}, this.project());
+		    return $.trim(ko.unwrap(self.project.name)) != "";
+		});
 
 		this.saveProject = function() {
 			wmis.global.showWaitingScreen("Saving...");
@@ -48,9 +213,9 @@ wmis.project.edit = (function ($) {
 				type: "PUT",
 				contentType: "application/json",
 				dataType: "json",
-				data: JSON.stringify(ko.toJS(self.project()))
-			}).success(function () {
-				self.getProject(options.projectKey);
+				data: JSON.stringify(ko.toJS(self.project))
+			}).success(function() {
+				// TODO is it necessary to reload the project
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
@@ -233,14 +398,11 @@ wmis.project.edit = (function ($) {
 		});
 	}
 
-	function initialize(initOptions) {
-		$.extend(options, initOptions);
-
-		var vm = new editProjectViewModel();
-		var ddp1 = wmis.global.getDropDownData(vm.statuses, "/api/project/statuses/?startRow=0&rowCount=500", function (json) {
+    function loadDropDowns(viewModel) {
+        var ddp1 = wmis.global.getDropDownData(viewModel.statuses, "/api/project/statuses/?startRow=0&rowCount=500", function (json) {
 			return json.data;
 		});
-		var ddp2 = wmis.global.getDropDownData(vm.projectLeads, "/api/person/projectLeads?startRow=0&rowCount=500", function (json) {
+        var ddp2 = wmis.global.getDropDownData(viewModel.projectLeads, "/api/person/projectLeads?startRow=0&rowCount=500", function (json) {
 			return _.map(json.data, function(record) {
 			    return {
 			        key: record.key,
@@ -248,12 +410,9 @@ wmis.project.edit = (function ($) {
 			    };
 			});
 		});
-		var ddp3 = wmis.global.getDropDownData(vm.regions, "/api/leadregion?startRow=0&rowCount=500", function (json) {
+        var ddp3 = wmis.global.getDropDownData(viewModel.regions, "/api/leadregion?startRow=0&rowCount=500", function (json) {
 			return json.data;
 		});
-		vm.getProject(initOptions.projectKey);
-		
-		ko.applyBindings(vm);
 
 		options.$surveyTab.on('shown.bs.tab', function (e) {
 			if (surveysTable == null) {
@@ -277,7 +436,34 @@ wmis.project.edit = (function ($) {
 		$('.nav-tabs a').on('shown.bs.tab', function(e) {
 			window.location.hash = e.target.hash;
 		});
-	}
+    }
+
+    function initialize(initOptions) {
+        $.extend(options, initOptions);
+
+        var projectPromise = Q($.ajax({
+            url: '/api/Project/' + initOptions.projectKey,
+            dataType: 'json',
+            type: "GET"
+        }));
+
+        var projectCollaboratorsPromise = Q($.ajax({
+            url: '/api/Collaborator/project/' + initOptions.projectKey,
+            dataType: 'json',
+            type: "GET"
+        }));
+
+        wmis.global.showWaitingScreen("Loading...");
+        Q.all([projectPromise, projectCollaboratorsPromise]).spread(function (project, collaborators) {
+            var viewModel = new EditProjectViewModel(project, collaborators);
+            loadDropDowns(viewModel);
+            ko.applyBindings(viewModel);
+            wmis.global.hideWaitingScreen();
+        }, function (error) {
+            wmis.global.hideWaitingScreen();
+            wmis.global.ajaxErrorHandler(error);
+        }).done();
+    }
 
 	return {
 		initialize: initialize
