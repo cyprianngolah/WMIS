@@ -50,15 +50,15 @@ wmis.project.survey.new = (function ($) {
 
 	function newProjectSurveyViewModel() {
 		var self = this;
-		this.survey = ko.observable();
+		self.survey = ko.observable();
 
-		this.dataLoaded = ko.observable(false);
+		self.dataLoaded = ko.observable(false);
 
-		this.targetSpeciesOptions = targetSpeciesOptions;
+		self.targetSpeciesOptions = targetSpeciesOptions;
 
-		this.species = ko.observableArray();
-		this.surveyTypes = ko.observableArray();
-		this.templates = ko.observableArray();
+		self.species = ko.observableArray();
+		self.surveyTypes = ko.observableArray();
+		self.templates = ko.observableArray();
 
 		self.showObservationTab = ko.observable(false);
 		self.showUploadModal = ko.observable(false);
@@ -67,7 +67,7 @@ wmis.project.survey.new = (function ($) {
 		self.hasObservations = ko.observable(false);
 		self.observationUploads = ko.observableArray();
 
-		this.getProjectSurvey = function(projectKey) {
+		self.getProjectSurvey = function (projectKey) {
 			wmis.global.showWaitingScreen("Loading...");
 			var url = "/api/Project/Survey/0";
 
@@ -81,17 +81,17 @@ wmis.project.survey.new = (function ($) {
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
-		this.getDropDowns = function() {
+		self.getDropDowns = function () {
 			wmis.global.getDropDownData(self.species, "/api/biodiversity?startRow=0&rowCount=500", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
 		};
 
-		this.canSave = ko.computed(function() {
+		self.canSave = ko.computed(function () {
 			return self.dataLoaded() && self.survey() != null;
 		}, this.survey());
 
-		this.saveProject = function() {
+		self.saveProject = function () {
 			wmis.global.showWaitingScreen("Saving...");
 
 			$.ajax({
@@ -105,6 +105,11 @@ wmis.project.survey.new = (function ($) {
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
+		};
+		
+		self.navigateToProject = function () {
+			var projectUrl = "/Project/Edit/" + self.survey().projectKey() + "#surveysTab";
+			window.location.href = projectUrl;
 		};
 	}
 	

@@ -22,22 +22,22 @@
 					</div>
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li>@Html.MenuLink("Biodiversity", "Index", "BioDiversity")</li>
-							<li>@Html.MenuLink("Collar", "Index", "CollaredAnimal")</li>
-							<li>@Html.MenuLink("Projects", "Index", "Project")</li>
+							@Html.MenuLink("Biodiversity", "Index", "BioDiversity")
+							@Html.MenuLink("Collar", "Index", "CollaredAnimal")
+							@Html.MenuLink("Projects", "Index", "Project")
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li>@Html.MenuLink("Taxonomies", "Index", "Taxonomy")</li>
-									<li>@Html.MenuLink("Ecozones", "Index", "Ecozone")</li>
-									<li>@Html.MenuLink("Ecoregions", "Index", "Ecoregion")</li>
-                                    <li>@Html.MenuLink("Protected Areas", "Index", "ProtectedArea")</li>
-                                    <li>@Html.MenuLink("Ranks", "Index", "StatusRank")</li>
-                                    <li>@Html.MenuLink("COSEWIC Status", "Index", "CosewicStatus")</li>
-									<li>@Html.MenuLink("NWT SARC Assessments", "Index", "NwtSarcAssessment")</li>
-									<li>@Html.MenuLink("References", "Index", "Reference")</li>
-									<li>@Html.MenuLink("Users", "Index", "User")</li>
-									<li>@Html.MenuLink("Survey Templates", "Index", "SurveyTemplate")</li>
+									@Html.MenuLink("Taxonomies", "Index", "Taxonomy")
+									@Html.MenuLink("Ecozones", "Index", "Ecozone")
+									@Html.MenuLink("Ecoregions", "Index", "Ecoregion")
+                                    @Html.MenuLink("Protected Areas", "Index", "ProtectedArea")
+                                    @Html.MenuLink("Ranks", "Index", "StatusRank")
+                                    @Html.MenuLink("COSEWIC Status", "Index", "CosewicStatus")
+									@Html.MenuLink("NWT SARC Assessments", "Index", "NwtSarcAssessment")
+									@Html.MenuLink("References", "Index", "Reference")
+									@Html.MenuLink("Users", "Index", "User")
+									@Html.MenuLink("Survey Templates", "Index", "SurveyTemplate")
 									@*<li class="divider"></li>*@
 								</ul>
 							</li>
