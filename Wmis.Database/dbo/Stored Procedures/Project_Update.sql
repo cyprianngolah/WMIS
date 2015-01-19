@@ -4,10 +4,10 @@
 	@p_name NVARCHAR(250) = NULL,
 	@p_leadRegionId INT = NULL,
 	@p_projectStatusId INT = NULL,
-	@p_statusDate DATETIME = NULL,
+	@p_statusDate DATE = NULL,
 	@p_projectLeadId INT = NULL,
-	@p_startDate DATETIME = NULL,
-	@p_endDate DATETIME = NULL,
+	@p_startDate DATE = NULL,
+	@p_endDate DATE = NULL,
 	@p_isSensitiveData BIT = NULL,
 	@p_description NVARCHAR(MAX) = NULL,
 	@p_objectives NVARCHAR(MAX) = NULL,
@@ -36,7 +36,8 @@ AS
 		Methods = @p_methods,
 		Comments = @p_comments,
 		Results = @p_results,
-		TermsAndConditions = @p_termsAndConditions
+		TermsAndConditions = @p_termsAndConditions,
+		LastUpdated = GETUTCDATE()
 	WHERE
 		ProjectId = @p_projectId
 

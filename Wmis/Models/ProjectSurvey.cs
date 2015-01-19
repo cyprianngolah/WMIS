@@ -58,7 +58,7 @@
 
 		public int ObservationCount { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
+		//[JsonConverter(typeof(ShortDateConverter))]
 		public DateTime? StartDate { get; set; }
 
 		public DateTime LastUpdated { get; set; }

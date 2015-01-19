@@ -25,7 +25,11 @@
                         
                         <label for="startDate" class="col-md-1 control-label">Start Date</label>
                         <div class="col-md-3">
-                            <input class="form-control" id="startDate" type="date" data-bind="value: startDate" />
+	                        @*<input class="form-control" id="startDate" type="date" data-bind="value: startDate" />*@
+							<div class="input-group date" data-bind="datePicker: startDate">
+								<input type="text" class="form-control" readonly="readonly">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							</div>
                         </div>
 					</div>
 

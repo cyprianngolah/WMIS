@@ -54,13 +54,19 @@ wmis.project.index = (function ($) {
 				{
 					"data": "statusDate",
 					"render": function (data, type, row) {
-						return new Date(data).toLocaleString();
+						if (typeof (data) != 'undefined' && data != null)
+							return moment.utc(data, moment.ISO_8601).format('L');
+						else
+							return "";
 					}
 				},
 				{
 					"data": "startDate",
 					"render": function (data, type, row) {
-						return new Date(data).toLocaleString();
+						if (typeof (data) != 'undefined' && data != null)
+							return moment.utc(data, moment.ISO_8601).format('L');
+						else
+							return "";
 					}
 				}
 			],

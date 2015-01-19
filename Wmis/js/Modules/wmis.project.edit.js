@@ -49,7 +49,8 @@ wmis.project.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.project()))
-			}).success(function() {
+			}).success(function () {
+				self.getProject(options.projectKey);
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
@@ -112,7 +113,7 @@ wmis.project.edit = (function ($) {
 					"data": "startDate",
 					"render": function (data, type, row) {
 						if (typeof(data) != 'undefined' && data != null)
-							return new Date(data).toLocaleString();
+							return moment.utc(data, moment.ISO_8601).format('L');
 						else
 							return "";
 					}

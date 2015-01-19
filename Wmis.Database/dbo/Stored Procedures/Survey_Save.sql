@@ -22,7 +22,7 @@
 	@p_windSpeed NVARCHAR(MAX),
 	@p_windDirection NVARCHAR(MAX),
 	@p_weatherComments NVARCHAR(MAX),
-	@p_startDate DATETIME = NULL
+	@p_startDate DATE = NULL
 AS
 	IF(@p_surveyId IS NULL)
 	BEGIN

@@ -155,10 +155,12 @@ $(function() {
     		// Set Initial value
     		var value = valueAccessor();
     		var valueUnwrapped = ko.utils.unwrapObservable(value);
-    		var date = moment.utc(valueUnwrapped, moment.ISO_8601).local().format('L');
-    		$(element).datepicker('update', date);
+    		if (valueUnwrapped != null) {
+    			var date = moment.utc(valueUnwrapped, moment.ISO_8601).format('L');
+    			$(element).datepicker('update', date);
+    		}
 
-			// Handle Change events
+    		// Handle Change events
     		$(element).on("changeDate", function (ev) {
     			var date = moment(ev.date);
 			    valueAccessor()(date.toDate());
@@ -171,8 +173,10 @@ $(function() {
     	},
     	update: function (element, valueAccessor) {
     		var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
-    		var date = moment.utc(valueUnwrapped).local().format('L');
-    		$(element).datepicker('update', date);
+    		if (valueUnwrapped != null) {
+    			var date = moment.utc(valueUnwrapped).format('L');
+    			$(element).datepicker('update', date);
+    		}
     	}
     };
 

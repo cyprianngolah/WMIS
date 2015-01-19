@@ -54,8 +54,10 @@ wmis.biodiversity.index = (function($) {
 				{
 				    "data": "lastUpdated",
 				    "render": function (data, type, row) {
-				    	var date = moment.utc(data, moment.ISO_8601).local().format('L h:mm a');
-					    return date;
+				    	if (typeof (data) != 'undefined' && data != null)
+				    		return moment.utc(data, moment.ISO_8601).format('L');
+				    	else
+				    		return "";
 				    }
 				}
 			],

@@ -23,7 +23,7 @@
     [WindSpeed] NVARCHAR(MAX) NULL, 
 	[WindDirection] NVARCHAR(MAX) NULL, 
     [WeatherComments] NVARCHAR(MAX) NULL, 
-    [StartDate] DATETIME NULL, 
+    [StartDate] DATE NULL, 
     [LastUpdated] DATETIME NOT NULL, 
     CONSTRAINT [PK_Survey] PRIMARY KEY ([SurveyId]), 
 	CONSTRAINT [FK_Survey_Project] FOREIGN KEY ([ProjectId]) REFERENCES [Project]([ProjectId]), 
