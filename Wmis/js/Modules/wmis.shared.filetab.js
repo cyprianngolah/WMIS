@@ -13,7 +13,7 @@ wmis.shared.filetab = (function($) {
         this.path = ko.observable(file.path || "");
         this.key = ko.observable(file.key || 0);
 
-        this.title = self.key() > 0 ? "Edit File" : "Add File";
+        this.title = self.key() > 0 ? "Edit Link" : "Add Link";
 
         this.saveAllowed = ko.computed(function () {
             return !!self.name() && !!self.path();
