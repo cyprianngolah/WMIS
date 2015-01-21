@@ -416,7 +416,7 @@ wmis.project.edit = (function ($) {
 
 		options.$surveyTab.on('shown.bs.tab', function (e) {
 			if (surveysTable == null) {
-				initSurveyDataTable(initOptions.projectKey);
+				initSurveyDataTable(options.projectKey);
 			}
 		});
 		
