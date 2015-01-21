@@ -1,21 +1,8 @@
 ﻿wmis.collaredanimal = wmis.collaredanimal || {};
 wmis.collaredanimal.mapping = (function ($) {
     var options = {
-        mapElementId: 'map-canvas'
+        collaredAnimalId: null
     };
-
-    var argosPassStatusToImage = {
-        0: '/content/images/maps-symbol-blank-red.png', //Null status
-        1: '/content/images/maps-symbol-x-red.png', //Reject - Impassable Terrain
-        2: '/content/images/maps-symbol-x-red.png', //Reject - Location in Water
-	    3: '/content/images/maps-symbol-x-red.png', //Reject - Unusual Movement
-	    4: '/content/images/maps-symbol-blank-yellow.png', //Warning - Fast Mover
-	    5: '/content/images/maps-symbol-blank-yellow.png', //Warning - Suspected Error
-	    6: '/content/images/maps-symbol-blank-yellow.png', //Warning - Unexpected Reports
-	    7: '/content/images/maps-symbol-blank-orange.png' //Warning - Possibly Stationary
-    };
-
-    var selectedArgosPassImage = '/content/images/maps-symbol-blank-green.png';
 
     function saveArgosPass(pass) {
         var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
@@ -35,9 +22,9 @@ wmis.collaredanimal.mapping = (function ($) {
         }).fail(wmis.global.ajaxErrorHandler);
     }
 
-    function setHighlightRowForPass(pass, enable) {
+    function setHighlightRowForKey(key, enable) {
         var row = $("#locationTable").DataTable().rows(function (idx, data, node) {
-            return data.key == pass.key;
+            return data.key == key;
         });
         if (enable) {
             $(row.nodes()).addClass('highlightPassRow');
@@ -46,11 +33,12 @@ wmis.collaredanimal.mapping = (function ($) {
         }
     }
 
-    function ArgosDataViewModel(collaredAnimalKey, map) {
+    function LocationTableModel() {
         var self = this;
         this.argosPasses = ko.observableArray();
-        this.passStatuses = ko.observableArray();
+        this.selectedPass = ko.observable();
 
+        this.passStatuses = ko.observableArray();
         this.statusFilterKey = ko.observable(-1);
         
         this.statusFilterOptions = [
@@ -60,61 +48,40 @@ wmis.collaredanimal.mapping = (function ($) {
         ];
 
         wmis.global.getDropDownData(self.passStatuses, "/api/argos/passStatuses?startRow=0&rowCount=500", function (result) { return result.data; });
-
-        var existingPolyline = null;
-        var existingMarkers = null;
-
-        this.reviewPass = function (pass) {
-            // Hide the existing marker
-            var existingMarker = _.find(existingMarkers, function(m) {
-                return m.get('pass').key == pass.key;
-            });
-            existingMarker.setMap(null);
-            // Show a new animated marker
-            var temporaryMarker = Markers.createMiddleMarker(map, pass, selectedArgosPassImage);
-            temporaryMarker.setMap(map);
-            temporaryMarker.setAnimation(google.maps.Animation.BOUNCE);
-
-            setHighlightRowForPass(pass, true);
-
+        
+        this.reviewPass = function(pass) {
+            self.selectedPass(pass);
             wmis.collaredanimal.editmodals.reviewCollarDataPoint(
                 pass,
                 self.passStatuses,
-                function (updatedPass) {
+                function(updatedPass) {
                     saveArgosPass(updatedPass);
                 },
-                function () {
-                    temporaryMarker.setAnimation(null);
-                    temporaryMarker.setMap(null);
-                    existingMarker.setMap(map);
-                    setHighlightRowForPass(pass, false);
+                function() {
+                    self.selectedPass(null);
                 }
             );
-        }
+        };
 
-        ko.computed(function () {
-            var passes = self.argosPasses();
-            if (existingPolyline) {
-                existingPolyline.setMap(null);
-                existingPolyline = null;
-            }
-            if (existingMarkers) {
-                _.forEach(existingMarkers, function(marker) {
-                    marker.setMap(null);
-                });
-                existingMarkers = null;
-            }
-            if (passes.length > 0) {
-                existingPolyline = Polyline.loadPolyline(map, passes);
-                existingMarkers = Markers.loadMarkers(map, passes, self.reviewPass);
-            }
-        });
+        // Handle highlighting the selected row
+        (function () {
+            var currentKey = null;
+            self.selectedPass.subscribe(function (newPass) {
+                if (currentKey) {
+                    setHighlightRowForKey(currentKey, false);
+                    currentKey = null;
+                }
+                if (newPass) {
+                    currentKey = newPass.key;
+                    setHighlightRowForKey(currentKey, true);
+                }
+            });
+        })();
 
         this.fetchFromArgos = function () {
-            // TODO dont do this by name, use the collaredAnimalId
             wmis.global.showWaitingScreen("Pulling Argos Data...");
             $.ajax({
-                url: "/api/argos/run/" + collaredAnimalKey,
+                url: "/api/argos/run/" + options.collaredAnimalId,
                 type: "POST",
             }).success(function() {
                 console.log("sucess!");
@@ -125,14 +92,14 @@ wmis.collaredanimal.mapping = (function ($) {
         }
 
         this.downloadShapeFile = function () {
-            window.open("/api/argos/passesShapeFile?startRow=0&rowCount=500&collaredAnimalId=" + collaredAnimalKey, '_self');
+            window.open("/api/argos/passesShapeFile?startRow=0&rowCount=500&collaredAnimalId=" + options.collaredAnimalId, '_self');
         }
     }
 
-    function loadPassesTable(collaredAnimalKey, argosDataViewModel) {
+    function loadPassesTable(locationTableModel) {
         ko.renderTemplate(
                      'passTableFilterTemplate',
-                     argosDataViewModel,
+                     locationTableModel,
                      {},
                      document.getElementById('locationTableFilter'),
                      "replaceNode"
@@ -182,13 +149,13 @@ wmis.collaredanimal.mapping = (function ($) {
                     // Data Tables parameter transforms
                     startRow: data.start,
                     rowCount: data.length,
-                    collaredAnimalId: collaredAnimalKey,
+                    collaredAnimalId: options.collaredAnimalId,
                 };
-                var statusFilterValue = argosDataViewModel.statusFilterKey();
+                var statusFilterValue = locationTableModel.statusFilterKey();
                 if (statusFilterValue >= 0) parameters.statusFilter = statusFilterValue;
 
                 $.getJSON("/api/argos/passes", parameters, function (json) {
-                    argosDataViewModel.argosPasses(json.data);
+                    locationTableModel.argosPasses(json.data);
                     var result = {
                         data: json.data,
                         draw: data.draw,
@@ -203,127 +170,24 @@ wmis.collaredanimal.mapping = (function ($) {
         $("#locationTable").on('click', 'td.editHistory span', function (event) {
             var rowIndex = $(event.target).data().rowIndex;
             var rowData = $("#locationTable").DataTable().row(rowIndex).data();
-            argosDataViewModel.reviewPass(rowData);
+            locationTableModel.reviewPass(rowData);
         });
 
-        argosDataViewModel.statusFilterKey.subscribe(function () {
+        locationTableModel.statusFilterKey.subscribe(function () {
             $("#locationTable").DataTable().ajax.reload();
         });
     }
 
-    var Markers = (function() {
-
-        function createMarker(pass, message, icon) {
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(pass.latitude, pass.longitude),
-                title: message,
-                icon: icon
-            });
-            marker.set('pass', pass);
-            return marker;
-        }
-
-        function getHoverMessage(pass) {
-            return pass.latitude + ", " + pass.longitude;
-        }
-
-        function createStartMarker(map, pass) {
-            return createMarker(pass, "Start: " + getHoverMessage(pass), "/content/images/maps-symbol-blank-start.png");
-        }
-
-        function createStopMarker(map, pass) {
-            return createMarker(pass, "Stop" + getHoverMessage(pass), "/content/images/maps-symbol-blank-stop.png");
-        }
-
-        function createMiddleMarker(map, pass, imageUrl) {
-            imageUrl = imageUrl || argosPassStatusToImage[pass.argosPassStatus.key];
-            return createMarker(pass, getHoverMessage(pass), imageUrl);
-        }
-
-        function loadMarkers(map, passes, reviewPassFunction) {
-            var markers = [];
-            var startPass = passes[0];
-            markers.push(createStartMarker(map, startPass));
-
-            var middlePoints = passes.slice(1, -1);
-            _.forEach(middlePoints, function (pass) {
-                markers.push(createMiddleMarker(map, pass));
-            });
-
-            var stopPass = passes.length > 1 ? passes[passes.length - 1] : null;
-            stopPass && markers.push(createStopMarker(map, stopPass));
-
-            _.forEach(markers, function(marker) {
-                marker.setMap(map);
-                google.maps.event.addListener(marker, 'click', function() {
-                    reviewPassFunction(marker.get('pass'), map);
-                });
-            });
-            return markers;
-        }
-
-        return {
-            loadMarkers: loadMarkers,
-            createMiddleMarker: createMiddleMarker
-        }
-    })();
-
-    var Polyline = (function() {
-
-        function polyOptionsForPath(path) {
-            return {
-                path: path,
-                strokeColor: '#ff0000',
-                strokeOpacity: 1.0,
-                strokeWeight: 1
-            };
-        }
-        
-        function loadPolyline(map, passes) {
-            var nonRejectedPasses = _.filter(passes, function (pass) { return !pass.argosPassStatus.isRejected; });
-            var coordinates = _.map(nonRejectedPasses, function (pass) {
-                return new google.maps.LatLng(pass.latitude, pass.longitude);
-            });
-            var pathCoordinates = new google.maps.MVCArray(coordinates);
-            var polylineOptions = polyOptionsForPath(pathCoordinates);
-            var polyline = new google.maps.Polyline(polylineOptions);
-
-            polyline.setMap(map);
-            return polyline;
-        }
-
-        return {
-            loadPolyline: loadPolyline
-        };
-
-    })();
-
-    function createMapInstance() {
-        var mapOptions = {
-            zoom: 5,
-            center: new google.maps.LatLng(64.918325, -118.002385)
-        };
-
-        return new google.maps.Map(document.getElementById(options.mapElementId), mapOptions);
-    }
 
     function initializeMap(collaredAnimalId) {
-        var map = createMapInstance();
-        var argosDataViewModel = new ArgosDataViewModel(collaredAnimalId, map);
-        loadPassesTable(collaredAnimalId, argosDataViewModel);
+        options.collaredAnimalId = collaredAnimalId;
+        var locationTableModel = new LocationTableModel();
+        wmis.mapping.initialize(locationTableModel.argosPasses, locationTableModel.selectedPass, locationTableModel.reviewPass);
+        
+        loadPassesTable(locationTableModel);
 	}
 
-    var mapTabClicked = (function() {
-        var initialized = false;
-        return function(collaredAnimalKey) {
-            if (!initialized) {
-                initialized = true;
-                initializeMap(collaredAnimalKey);
-            }
-        }
-    })();
-
 	return {
-	    mapTabClicked: mapTabClicked
+	    initializeMap: _.once(initializeMap)
 	};
 }(jQuery));

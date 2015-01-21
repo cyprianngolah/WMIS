@@ -135,7 +135,7 @@ wmis.collaredanimal.edit = (function($) {
         this.dropdowns = new DropdownViewModel();
 
         this.mapTabClicked = function() {
-            wmis.collaredanimal.mapping.mapTabClicked(collaredAnimalKey);
+            wmis.collaredanimal.mapping.initializeMap(collaredAnimalKey);
         }
 
         this.getcollar = function (key) {

@@ -520,6 +520,7 @@
     <Content Include="Content\DataTables-1.10.3\css\dataTables.jqueryui.scss" />
     <None Include="DixService.wsdl" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />
     <None Include="Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
