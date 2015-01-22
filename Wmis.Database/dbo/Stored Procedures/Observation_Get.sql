@@ -23,6 +23,7 @@ AS
 	WHERE
 		(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
 		AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
+		AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp'))
 	ORDER BY
 		stc.[Order], stc.Name
 
@@ -44,6 +45,7 @@ AS
 					WHERE
 						(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
 						AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
+						AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp'))
 					ORDER BY	
 						stc.[Order]
 				) c
@@ -57,11 +59,11 @@ AS
 	DECLARE @query NVARCHAR(4000)
 	SET @query = 
 		N'SELECT 
-			ObservationUploadId, RowIndex,' + @cols + '
+			ObservationUploadId, RowIndex, Latitude, Longitude, [Timestamp],' + @cols + '
 		FROM
 			(
 				SELECT
-						oustcm.ObservationUploadId, o.RowIndex, stc.Name, o.Value
+						oustcm.ObservationUploadId, ors.RowIndex, ors.Latitude, ors.Longitude, ors.[Timestamp], stc.Name, o.Value
 				FROM	
 					dbo.SurveyTemplateColumns stc 
 						INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId
@@ -69,6 +71,7 @@ AS
 						INNER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
 						INNER JOIN dbo.ObservationUploadSurveyTemplateColumnMappings oustcm on ou.ObservationUploadId = oustcm.ObservationUploadId AND oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
 						INNER JOIN dbo.Observations o on o.ObservationUploadSurveyTemplateColumnMappingId = oustcm.ObservationUploadSurveyTemplateColumnMappingId
+						INNER JOIN dbo.ObservationRows ors on ors.ObservationRowId = o.ObservationRowId
 
 				WHERE
 					(' + @surveyId + ' IS NULL OR s.SurveyId = ' + @surveyId + ')

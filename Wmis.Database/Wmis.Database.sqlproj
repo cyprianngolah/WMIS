@@ -296,6 +296,7 @@
     <Build Include="dbo\Stored Procedures\Collaborator_Update.sql" />
     <Build Include="dbo\Stored Procedures\Collaborator_Get.sql" />
     <Build Include="dbo\Stored Procedures\Collaborator_Search.sql" />
+    <Build Include="dbo\Tables\ObservationRows.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

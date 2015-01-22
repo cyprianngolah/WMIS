@@ -202,6 +202,9 @@
 								<tr>
 									<th>Observation Upload Key</th>
 									<th>Excel Row Index</th>
+									<th>Timestamp</th>
+									<th>Latitude</th>
+									<th>Longitude</th>
 									<!-- ko foreach: $data.columns -->
 									<th data-bind="text: name"></th>
 									<!-- /ko -->
@@ -212,6 +215,9 @@
 								<tr>
 									<td data-bind="text: observationUploadId"></td>
 									<td data-bind="text: rowIndex"></td>
+									<td data-bind="text: timestamp"></td>
+									<td data-bind="text: latitude"></td>
+									<td data-bind="text: longitude"></td>
 									<!-- ko foreach: {data: $parent.columns, as: 'c'} -->
 									<td data-bind="text: $parent[c.jsName()]()"></td>
 									<!-- /ko -->
