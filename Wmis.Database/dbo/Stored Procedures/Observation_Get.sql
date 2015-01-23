@@ -57,36 +57,55 @@ AS
 		@observationUploadId NVARCHAR(10) = ISNULL(CAST(@p_observationUploadId AS NVARCHAR(10)), 'NULL')
 
 	DECLARE @query NVARCHAR(4000)
-	SET @query = 
-		N'SELECT 
-			ObservationUploadId, RowIndex, Latitude, Longitude, [Timestamp],' + @cols + '
-		FROM
-			(
-				SELECT
-						oustcm.ObservationUploadId, ors.RowIndex, ors.Latitude, ors.Longitude, ors.[Timestamp], stc.Name, o.Value
-				FROM	
-					dbo.SurveyTemplateColumns stc 
-						INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId
-						INNER JOIN dbo.Survey s on s.SurveyTemplateId = st.SurveyTemplateId
-						INNER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
-						INNER JOIN dbo.ObservationUploadSurveyTemplateColumnMappings oustcm on ou.ObservationUploadId = oustcm.ObservationUploadId AND oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
-						INNER JOIN dbo.Observations o on o.ObservationUploadSurveyTemplateColumnMappingId = oustcm.ObservationUploadSurveyTemplateColumnMappingId
-						INNER JOIN dbo.ObservationRows ors on ors.ObservationRowId = o.ObservationRowId
+	
+	IF(@cols IS NULL)
+	BEGIN
+		SET @query = N'SELECT
+							ou.ObservationUploadId, ors.RowIndex, ors.Latitude, ors.Longitude, ors.[Timestamp]
+					FROM	
+						dbo.Survey s
+							INNER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
+							INNER JOIN dbo.ObservationRows ors on ors.ObservationUploadId = ou.ObservationUploadId
+					WHERE
+						(' + @surveyId + ' IS NULL OR s.SurveyId = ' + @surveyId + ')
+						AND (' + @observationUploadId + ' IS NULL OR ou.ObservationUploadId = ' + @observationUploadId + ')
+						AND (' + @surveyId + ' IS NULL OR (ou.ObservationUploadStatusId = 4 AND ou.IsDeleted = 0))
+					ORDER BY
+						ObservationUploadId, RowIndex'
+	END
+	ELSE
+	BEGIN
+			SET @query = N'SELECT 
+						ObservationUploadId, RowIndex, Latitude, Longitude, [Timestamp],' + @cols + 
+					N'FROM
+						(
+							SELECT
+									oustcm.ObservationUploadId, ors.RowIndex, ors.Latitude, ors.Longitude, ors.[Timestamp], stc.Name, o.Value
+							FROM	
+								dbo.SurveyTemplateColumns stc 
+									INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId
+									INNER JOIN dbo.Survey s on s.SurveyTemplateId = st.SurveyTemplateId
+									INNER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
+									INNER JOIN dbo.ObservationUploadSurveyTemplateColumnMappings oustcm on ou.ObservationUploadId = oustcm.ObservationUploadId AND oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
+									INNER JOIN dbo.Observations o on o.ObservationUploadSurveyTemplateColumnMappingId = oustcm.ObservationUploadSurveyTemplateColumnMappingId
+									INNER JOIN dbo.ObservationRows ors on ors.ObservationRowId = o.ObservationRowId
 
-				WHERE
-					(' + @surveyId + ' IS NULL OR s.SurveyId = ' + @surveyId + ')
-					AND (' + @observationUploadId + ' IS NULL OR ou.ObservationUploadId = ' + @observationUploadId + ')
-					AND (' + @surveyId + ' IS NULL OR (ou.ObservationUploadStatusId = 4 AND ou.IsDeleted = 0))
-			) as pvt
-		PIVOT
-		(
-			MAX(Value)
-			FOR Name IN ('+ @cols + ')
-		) AS p
-		ORDER BY
-			ObservationUploadId, RowIndex'
+							WHERE
+								(' + @surveyId + ' IS NULL OR s.SurveyId = ' + @surveyId + ')
+								AND (' + @observationUploadId + ' IS NULL OR ou.ObservationUploadId = ' + @observationUploadId + ')
+								AND (' + @surveyId + ' IS NULL OR (ou.ObservationUploadStatusId = 4 AND ou.IsDeleted = 0))
+						) as pvt
+					PIVOT
+					(
+						MAX(Value)
+						FOR Name IN ('+ ISNULL(@cols,'') + ')
+					) AS p
+					ORDER BY
+						ObservationUploadId, RowIndex'
+	END
 
 	EXEC (@query)
+
 RETURN 0
 
 
