@@ -1,7 +1,6 @@
 ﻿wmis.project = wmis.project || {};
 wmis.project.survey = wmis.project.survey || {};
 wmis.project.survey.edit = (function ($) {
-	var viewModel;
 	var options = {
 		projectSurveyKey: null,
 		uploadObservationForm: null,
@@ -51,10 +50,9 @@ wmis.project.survey.edit = (function ($) {
 	    },
 	};
 
-	function editProjectSurveyViewModel(projectSurveyKey) {
+	function EditProjectSurveyViewModel(projectSurvey, passStatuses) {
 		var self = this;
 
-		self.projectSurveyKey = projectSurveyKey;
 		self.currentModal = ko.observable("");
 
 		this.targetSpeciesOptions = targetSpeciesOptions;
@@ -62,39 +60,15 @@ wmis.project.survey.edit = (function ($) {
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Survey Functionality
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		self.survey = ko.observable();
-		self.dataLoaded = ko.observable(false);
+		self.survey = ko.mapper.fromJS(projectSurvey);
 
-		self.species = ko.observableArray();
 		self.surveyTypes = ko.observableArray();
 		self.templates = ko.observableArray();
 
-		self.getProjectSurvey = function () {
-			wmis.global.showWaitingScreen("Loading...");
-			var url = "/api/Project/Survey/" + self.projectSurveyKey;
-
-			$.getJSON(url, {}, function(json) {
-				ko.mapper.fromJS(json, "auto", self.survey);
-
-				if (typeof(self.survey()) != 'undefined' && self.survey().template().key() > 0) {
-					self.showObservationTab(true);
-				}
-
-				self.dataLoaded(true);
-			}).always(function() {
-				wmis.global.hideWaitingScreen();
-			}).fail(wmis.global.ajaxErrorHandler);
-		};
-
 		self.getDropDowns = function () {
-			wmis.global.getDropDownData(self.species, "/api/biodiversity?startRow=0&rowCount=500", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
 		};
-
-		self.canSave = ko.computed(function () {
-			return self.dataLoaded() && self.survey() != null;
-		}, this.survey());
 
 		self.saveProject = function () {
 			self.hideUploadModal();
@@ -105,25 +79,28 @@ wmis.project.survey.edit = (function ($) {
 				type: "PUT",
 				contentType: "application/json",
 				dataType: "json",
-				data: JSON.stringify(ko.toJS(self.survey()))
+				data: JSON.stringify(ko.toJS(self.survey))
 			}).success(function (data) {
-				self.getProjectSurvey();
+			    self.showObservationTab(isTemplateAssigned());
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
 		self.navigateToProject = function () {
-			var projectUrl = "/Project/Edit/" + self.survey().projectKey() + "#surveysTab";
+			var projectUrl = "/Project/Edit/" + self.survey.projectKey() + "#surveysTab";
 			window.location.href = projectUrl;
 		};
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Observation Functionality
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		self.showObservationTab = ko.observable(false);
-		self.showObservationTab.subscribe(function() {
-			if (self.showObservationTab()) {
+        function isTemplateAssigned () {
+            return self.survey.template().key() > 0;
+        }
+        self.showObservationTab = ko.observable();
+		self.showObservationTab.subscribe(function(showObservations) {
+		    if (showObservations) {
 				self.getObservationUploads();
 				self.getObservations();
 			}
@@ -289,7 +266,7 @@ wmis.project.survey.edit = (function ($) {
 		// Logic
 		self.getObservations = function() {
 			$.ajax({
-				url: "/api/observation/survey/" + self.projectSurveyKey + "/data",
+				url: "/api/observation/survey/" + options.projectSurveyKey + "/data",
 				type: "GET",
 				contentType: "application/json",
 				dataType: "json",
@@ -416,37 +393,156 @@ wmis.project.survey.edit = (function ($) {
 				self.getObservations();
 			});
 		};
+
+	    this.selectedPass = ko.observable();
+
+	    this.observationDataComputedObservable = ko.computed(function() {
+	        return (self.observations() && self.observations().observationData()) || [];
+	    });
+
+	    this.mapTabClicked = _.once(function() {
+	        wmis.mapping.initialize(self.observationDataComputedObservable, self.selectedPass, function() { console.log('REVIEW'); }, function(pass) { return pass.observationRowStatusId || 0; });
+	    });
+
+	    this.reviewObservation = function (observation) {
+	        var selectedPass = ko.mapper.toJS(observation);
+	        self.selectedPass(selectedPass);
+	        reviewObservationDataPoint(selectedPass, passStatuses, function (result) {
+	            var projectSurveyPromise = $.ajax({
+	                url: '/api/observation/survey/row/' + selectedPass.key + '?argosPassStatusId=' + result.observationRowStatusId,
+	                type: "PUT"
+	            }).success(function () {
+	                observation.observationRowStatusId(result.observationRowStatusId);
+	                self.observations().observationData.valueHasMutated();
+	                console.log('yay!');
+	            }).always(function () {
+	                
+	            }).fail(wmis.global.ajaxErrorHandler);;
+	        }, function() {
+	            self.selectedPass(null);
+	        });
+	    }
+
+		self.showObservationTab(isTemplateAssigned());
 	}
 	
+	function ObservationDataPointViewModel(point, argosPassStatuses) {
+	    var self = this;
+	    this.latitude = 'Latitude: ' + point.latitude;
+	    this.longitude = 'Longitude: ' + point.longitude;
+	    this.timestamp = 'Timestamp: ' + point.timestamp;
+	    this.observationUploadId = 'Upload Key: ' + point.observationUploadId;
+	    this.rowIndex = 'Excel Row: ' + point.rowIndex;
+
+	    var matchingStatus = _.findWhere(argosPassStatuses, { key: point.observationRowStatusId });
+	    var name = matchingStatus ? matchingStatus.name : '';
+	    this.argosPassStatus = ko.observable({
+	        key: ko.observable(point.observationRowStatusId),
+	        name: ko.observable(name)
+	    });
+
+	    this.argosPassStatuses = argosPassStatuses;
+	    this.saveAllowed = ko.observable(true);
+	    this.save = function () {
+	        self.modal.close({
+	            observationRowStatusId: self.argosPassStatus().key()
+	        });
+	    }
+	    this.clearStatus = function () {
+	        self.modal.close({
+	            observationRowStatusId: 0
+	        });
+	    }
+	    this.cancel = function () {
+	        self.modal.close();
+	    }
+	};
+
+	function reviewObservationDataPoint(observationDataPoint, passStatuses, callback, alwaysCallback) {
+	    var viewModel = new ObservationDataPointViewModel(observationDataPoint, passStatuses);
+
+	    wmis.global.showModal({
+	        viewModel: viewModel,
+	        context: this,
+	        template: 'observationDataPointTemplate'
+	    }).done(callback)
+        .fail(function () {
+            console.log("Modal cancelled");
+        })
+        .always(function () {
+            alwaysCallback && alwaysCallback();
+        });
+	}
+
+    function createPassStatusBindingHandler(passStatuses) {
+	    var passStatusesMap = _.indexBy(passStatuses, _.property('key'));
+        ko.bindingHandlers.passStatus = {
+            update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                var passStatusId = ko.utils.unwrapObservable(valueAccessor());
+                var text = passStatusId ? passStatusesMap[passStatusId].name : '';
+                $(element).text(text);
+            }
+        };
+        ko.bindingHandlers.passStatusHighlight = {
+            update: function(element, valueAccessor, allBindingsAccessor, viewModel) {
+                var passStatusId = ko.utils.unwrapObservable(valueAccessor());
+                if (!!passStatusId) {
+                    var isRejected = passStatusesMap[passStatusId].isRejected;
+                    var className = isRejected ? 'rejected-status' : 'warning-status';
+                    $(element).addClass(className);
+                } else {
+                    $(element).removeClass('rejected-status warning-status');
+                }
+            }
+        };
+    }
+
+	function addEventHandlers(viewModel) {
+        // Create IE + others compatible event handler
+        var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+        var eventer = window[eventMethod];
+        var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+        // Listen to message from upload iframe
+        eventer(messageEvent, function (event) {
+            if (event.origin.indexOf(location.hostname) == -1) {
+                alert('Origin not allowed! ' + event.origin + " != " + location.hostname);
+                return;
+            }
+            if (event.data.indexOf("observationUploadError:") == 0) {
+                var message = event.data.replace("observationUploadError:", "");
+                viewModel.showMessageModal(message);
+            }
+            else if (event.data.indexOf("observationUpload:") == 0) {
+                var observationUploadKey = event.data.replace("observationUpload:", "");
+                viewModel.successfulUpload(observationUploadKey);
+            }
+        }, false);
+    }
+
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
 
-		viewModel = new editProjectSurveyViewModel(initOptions.projectSurveyKey);
-		viewModel.getDropDowns();
-		viewModel.getProjectSurvey();
+		var projectSurveyPromise = Q($.ajax({
+		    url: "/api/Project/Survey/" + options.projectSurveyKey,
+		    dataType: 'json',
+		    type: "GET"
+		}));
 
-		ko.applyBindings(viewModel);
+		var passStatusesPromise = Q($.ajax({
+		    url: "/api/argos/passStatuses?startRow=0&rowCount=500",
+		    dataType: 'json',
+		    type: "GET"
+		}));
 
-		// Create IE + others compatible event handler
-		var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-		var eventer = window[eventMethod];
-		var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+	    Q.all([projectSurveyPromise, passStatusesPromise]).spread(function (projectSurvey, passStatusesResponse) {
+	        createPassStatusBindingHandler(passStatusesResponse.data);
+	        var viewModel = new EditProjectSurveyViewModel(projectSurvey, passStatusesResponse.data);
+	        viewModel.getDropDowns();
+	        ko.applyBindings(viewModel);
 
-		// Listen to message from upload iframe
-		eventer(messageEvent, function (event) {
-			if (event.origin.indexOf(location.hostname) == -1) {
-				alert('Origin not allowed! ' + event.origin + " != " + location.hostname);
-				return;
-			}
-			if (event.data.indexOf("observationUploadError:") == 0) {
-				var message = event.data.replace("observationUploadError:", "");
-				viewModel.showMessageModal(message);
-			}
-			else if (event.data.indexOf("observationUpload:") == 0) {
-				var observationUploadKey = event.data.replace("observationUpload:", "");
-				viewModel.successfulUpload(observationUploadKey);
-			}
-		}, false);
+	        addEventHandlers(viewModel);
+		}, wmis.global.ajaxErrorHandler).done();	
 	}
 
 	return {

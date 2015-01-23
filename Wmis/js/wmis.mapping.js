@@ -2,6 +2,9 @@
 wmis.mapping = (function ($) {
     var options = {
         mapElementId: 'map-canvas',
+        passStatusFunction: function(pass) {
+            return pass.argosPassStatus.key;
+        }
     };
 
     var argosPassStatusToImage = {
@@ -13,6 +16,17 @@ wmis.mapping = (function ($) {
         5: '/content/images/maps-symbol-blank-yellow.png', //Warning - Suspected Error
         6: '/content/images/maps-symbol-blank-yellow.png', //Warning - Unexpected Reports
         7: '/content/images/maps-symbol-blank-orange.png' //Warning - Possibly Stationary
+    };
+
+    var argosPassStatusToIsRejected = {
+        0: false, //Null status
+        1: true, //Reject - Impassable Terrain
+        2: true, //Reject - Location in Water
+        3: true, //Reject - Unusual Movement
+        4: false, //Warning - Fast Mover
+        5: false, //Warning - Suspected Error
+        6: false, //Warning - Unexpected Reports
+        7: false //Warning - Possibly Stationary
     };
 
     var selectedArgosPassImage = '/content/images/maps-symbol-blank-green.png';
@@ -56,7 +70,8 @@ wmis.mapping = (function ($) {
         // Handle the line being updated
         (function() {
             var existingPolyline = null;
-            self.points.subscribe(function(points) {
+            function handleNewPoints (points) {
+                points = ko.mapper.toJS(points);
                 if (existingPolyline) {
                     existingPolyline.setMap(null);
                     existingPolyline = null;
@@ -71,7 +86,9 @@ wmis.mapping = (function ($) {
                     existingPolyline = Polyline.loadPolyline(map, points);
                     existingMarkers = Markers.loadMarkers(map, points, reviewPassFunction);
                 }
-            });
+            };
+            self.points.subscribe(handleNewPoints);
+            handleNewPoints(self.points());
         })();
     }
 
@@ -100,7 +117,7 @@ wmis.mapping = (function ($) {
         }
 
         function createMiddleMarker(map, pass, imageUrl) {
-            imageUrl = imageUrl || argosPassStatusToImage[pass.argosPassStatus.key];
+            imageUrl = imageUrl || argosPassStatusToImage[options.passStatusFunction(pass)];
             return createMarker(pass, getHoverMessage(pass), imageUrl);
         }
 
@@ -111,7 +128,7 @@ wmis.mapping = (function ($) {
 
             var middlePoints = passes.slice(1, -1);
             _.forEach(middlePoints, function (pass) {
-                markers.push(createMiddleMarker(map, pass));
+                markers.push(createMiddleMarker(map, pass, null));
             });
 
             var stopPass = passes.length > 1 ? passes[passes.length - 1] : null;
@@ -144,7 +161,10 @@ wmis.mapping = (function ($) {
         }
 
         function loadPolyline(map, passes) {
-            var nonRejectedPasses = _.filter(passes, function (pass) { return !pass.argosPassStatus.isRejected; });
+            var nonRejectedPasses = _.filter(passes, function (pass) {
+                var passStatus = options.passStatusFunction(pass);
+                 return !argosPassStatusToIsRejected[passStatus];
+            });
             var coordinates = _.map(nonRejectedPasses, function (pass) {
                 return new google.maps.LatLng(pass.latitude, pass.longitude);
             });
@@ -171,8 +191,9 @@ wmis.mapping = (function ($) {
         return new google.maps.Map(document.getElementById(options.mapElementId), mapOptions);
     }
 
-    function initialize(pointsObservable, selectedPointObservable, reviewPassFunction, mapElementId) {
+    function initialize(pointsObservable, selectedPointObservable, reviewPassFunction, passStatusFunction, mapElementId) {
         options.mapElementId = mapElementId || options.mapElementId;
+        options.passStatusFunction = passStatusFunction || options.mapElementId;
         var map = createMapInstance();
         var argosDataViewModel = new ArgosDataViewModel(pointsObservable, selectedPointObservable, reviewPassFunction, map);
     }

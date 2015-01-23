@@ -61,7 +61,7 @@ AS
 	IF(@cols IS NULL)
 	BEGIN
 		SET @query = N'SELECT
-							ou.ObservationUploadId, ors.RowIndex, ors.Latitude, ors.Longitude, ors.[Timestamp]
+							ou.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.ObservationRowStatusId
 					FROM	
 						dbo.Survey s
 							INNER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
@@ -76,11 +76,11 @@ AS
 	ELSE
 	BEGIN
 			SET @query = N'SELECT 
-						ObservationUploadId, RowIndex, Latitude, Longitude, [Timestamp],' + @cols + 
+						ObservationUploadId, RowIndex, ObservationRowId as [Key], Latitude, Longitude, [Timestamp], ObservationRowStatusId,' + @cols + 
 					N'FROM
 						(
 							SELECT
-									oustcm.ObservationUploadId, ors.RowIndex, ors.Latitude, ors.Longitude, ors.[Timestamp], stc.Name, o.Value
+									oustcm.ObservationUploadId, ors.RowIndex, ors.ObservationRowId, ors.Latitude, ors.Longitude, ors.[Timestamp], ors.ObservationRowStatusId, stc.Name, o.Value
 							FROM	
 								dbo.SurveyTemplateColumns stc 
 									INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId

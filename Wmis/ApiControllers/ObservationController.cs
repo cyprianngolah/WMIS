@@ -167,5 +167,12 @@
 		{
 			return Repository.GetObservations(surveyKey, uploadKey);
 		}
+        
+        [HttpPut]
+		[Route("survey/row/{observationRowId:int?}")]
+        public void UpdateObservationRow(int observationRowId, [FromUri]int argosPassStatusId)
+		{
+            Repository.ObservationRowUpdate(observationRowId, argosPassStatusId);
+		}
     }
 }

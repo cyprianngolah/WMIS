@@ -677,6 +677,7 @@
     <Content Include="Views\SurveyTemplate\EditForm.cshtml" />
     <Content Include="Views\SurveyTemplate\Index.cshtml" />
     <Content Include="Views\SurveyTemplate\New.cshtml" />
+    <Content Include="Views\Shared\Mapping.cshtml" />
     <None Include="Views\Shared\FileTab.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

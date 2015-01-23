@@ -194,6 +194,8 @@
 
 	    private const string OBSERVATION_GET = "dbo.Observation_Get";
 
+	    private const string OBSERVATIONROW_UPDATE = "dbo.ObservationRow_Update";
+
         /// <summary>
         /// The Collar Update stored procedure
         /// </summary>
@@ -1578,6 +1580,20 @@
 				}
 			}
 	    }
+
+        public void ObservationRowUpdate(int observationRowId, int argosPassStatusId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_observationRowId = observationRowId,
+                    p_argosPassStatusId = argosPassStatusId == 0 ? (int?)null : argosPassStatusId
+                };
+
+                c.Execute(OBSERVATIONROW_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 		#endregion
 		
 		#region Project Survey Type

@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="active"><a href="#surveyTab" role="tab" data-toggle="tab">Survey</a></li>
-			<li data-bind="visible: showObservationTab"><a href="#observationTab" role="tab" data-toggle="tab">Observation</a></li>
+            <li data-bind="visible: showObservationTab, click: mapTabClicked"><a href="#observationTab" role="tab" data-toggle="tab">Observation</a></li>
 		</ul>
 	
 		<!-- Tab panes -->
@@ -12,7 +12,7 @@
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<a class="btn btn-default" data-bind="click: $root.navigateToProject">Cancel</a>
-						<button type="submit" class="btn btn-primary" data-bind="click: $root.saveProject, enable: $root.canSave">Save</button>
+						<button type="submit" class="btn btn-primary" data-bind="click: $root.saveProject">Save</button>
 					</div>
 				</div>
 
@@ -35,14 +35,18 @@
 
 					<div class="form-group">
 						<label for="surveyType" class="col-md-1 control-label">Survey Type</label>
-						<div class="col-md-5" data-bind="with: surveyType">
-							<select class="form-control" id="surveyType" data-bind="options: $root.surveyTypes, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-						</div>
+					    <div class="col-md-5" data-bind="with: surveyType">
+                            <!-- ko if: $root.surveyTypes().length > 0 -->
+					        <select class="form-control" id="surveyType" data-bind="options: $root.surveyTypes, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <!-- /ko -->
+					    </div>
 
 						<label for="template" class="col-md-1 control-label">Template</label>
-						<div class="col-md-5" data-bind="with: template">
-							<select class="form-control" id="template" data-bind="options: $root.templates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }, disable: $root.observationUploads().length > 0"></select>
-						</div>
+					    <div class="col-md-5" data-bind="with: template">
+                            <!-- ko if: $root.templates().length > 0 -->
+					        <select class="form-control" id="template" data-bind="options: $root.templates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }, disable: $root.observationUploads().length > 0"></select>
+                            <!-- /ko -->
+					    </div>
 					</div>
 
 					<div class="form-group">
@@ -178,7 +182,7 @@
 			<!-- Observation -->
 			<div class="tab-pane form-horizontal" id="observationTab" data-bind="visible: showObservationTab">
 				<!-- ko with: $root -->
-				<div class="row">
+				<div class="row h4">
 					<div class="col-md-12 text-right">
 						<button type="button" class="btn btn-primary" data-bind="visible: canUploadObservations, click: showUploadModal">Upload Observations</button>
 						<button type="button" class="btn btn-primary" data-bind="visible: observationUploads().length > 0, click: showManageUploadModal">Manage Observation Uploads</button>
@@ -195,38 +199,44 @@
 					</div>
 				</div>
 
-				<div class="row" data-bind="visible: $root.hasObservations()">
-					<div class="col-md-12" data-bind="with: $data.observations">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Observation Upload Key</th>
-									<th>Excel Row Index</th>
-									<th>Timestamp</th>
-									<th>Latitude</th>
-									<th>Longitude</th>
-									<!-- ko foreach: $data.columns -->
-									<th data-bind="text: name"></th>
-									<!-- /ko -->
-								</tr>
-							</thead>
-							<tbody>
-								<!-- ko foreach: {data: $data.observationData, as: 'd'} -->
-								<tr>
-									<td data-bind="text: observationUploadId"></td>
-									<td data-bind="text: rowIndex"></td>
-									<td data-bind="text: timestamp"></td>
-									<td data-bind="text: latitude"></td>
-									<td data-bind="text: longitude"></td>
-									<!-- ko foreach: {data: $parent.columns, as: 'c'} -->
-									<td data-bind="text: $parent[c.jsName()]()"></td>
-									<!-- /ko -->
-								</tr>
-								<!-- /ko -->
-							</tbody>
-						</table>
-					</div>
-				</div>
+			    <div class="row" data-bind="visible: $root.hasObservations()">
+                    <div id="map-canvas"></div>
+                    <br />
+			        <div class="col-md-12" data-bind="with: $data.observations">
+                        <table id="locationTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Observation Upload Key</th>
+                                    <th>Excel Row Index</th>
+                                    <th>Timestamp</th>
+                                    <th>Latitude</th>
+                                    <th>Longitude</th>
+                                    <th>Status</th>
+                                    <!-- ko foreach: $data.columns -->
+                                    <th data-bind="text: name"></th>
+                                    <!-- /ko -->
+                                    <th>Review</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- ko foreach: {data: $data.observationData, as: 'd'} -->
+                                <tr data-bind="passStatusHighlight: observationRowStatusId">
+                                    <td data-bind="text: observationUploadId"></td>
+                                    <td data-bind="text: rowIndex"></td>
+                                    <td data-bind="text: timestamp"></td>
+                                    <td data-bind="text: latitude"></td>
+                                    <td data-bind="text: longitude"></td>
+                                    <td data-bind="passStatus: observationRowStatusId"></td>
+                                    <!-- ko foreach: {data: $parent.columns, as: 'c'} -->
+                                    <td data-bind="text: $parent[c.jsName()]()"></td>
+                                    <!-- /ko -->
+                                    <td data-bind="click: $root.reviewObservation"><span class="glyphicon glyphicon-edit"></span></td>
+                                </tr>
+                                <!-- /ko -->
+                            </tbody>
+                        </table>
+			        </div>
+			    </div>
 				<!-- /ko-->
 			</div>
 		</div>
