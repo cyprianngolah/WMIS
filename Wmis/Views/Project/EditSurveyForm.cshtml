@@ -219,8 +219,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- ko foreach: {data: $data.observationData, as: 'd'} -->
-                                <tr data-bind="passStatusHighlight: observationRowStatusId">
+                                <!-- ko foreach: {data: $data.observationData, as: 'row'} -->
+                                <tr data-bind="passStatusHighlight: {row: row, selectedRow: $root.selectedPass}">
                                     <td data-bind="text: observationUploadId"></td>
                                     <td data-bind="text: rowIndex"></td>
                                     <td data-bind="text: timestamp"></td>

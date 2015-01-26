@@ -400,10 +400,6 @@ wmis.project.survey.edit = (function ($) {
 	        return (self.observations() && self.observations().observationData()) || [];
 	    });
 
-	    this.mapTabClicked = _.once(function() {
-	        wmis.mapping.initialize(self.observationDataComputedObservable, self.selectedPass, function() { console.log('REVIEW'); }, function(pass) { return pass.observationRowStatusId || 0; });
-	    });
-
 	    this.reviewObservation = function (observation) {
 	        var selectedPass = ko.mapper.toJS(observation);
 	        self.selectedPass(selectedPass);
@@ -416,12 +412,16 @@ wmis.project.survey.edit = (function ($) {
 	                self.observations().observationData.valueHasMutated();
 	                console.log('yay!');
 	            }).always(function () {
-	                
+
 	            }).fail(wmis.global.ajaxErrorHandler);;
-	        }, function() {
+	        }, function () {
 	            self.selectedPass(null);
 	        });
 	    }
+
+	    this.mapTabClicked = _.once(function () {
+	        wmis.mapping.initialize(self.observationDataComputedObservable, self.selectedPass, self.reviewObservation, function (pass) { return pass.observationRowStatusId || 0; });
+	    });
 
 		self.showObservationTab(isTemplateAssigned());
 	}
@@ -485,13 +485,16 @@ wmis.project.survey.edit = (function ($) {
         };
         ko.bindingHandlers.passStatusHighlight = {
             update: function(element, valueAccessor, allBindingsAccessor, viewModel) {
-                var passStatusId = ko.utils.unwrapObservable(valueAccessor());
-                if (!!passStatusId) {
-                    var isRejected = passStatusesMap[passStatusId].isRejected;
+                var value = ko.mapper.toJS(valueAccessor());
+                var row = value.row;
+                var selectedRow = value.selectedRow;
+                $(element).removeClass('highlightPassRow rejected-status warning-status');
+                if (selectedRow && row.key == selectedRow.key) {
+                    $(element).addClass('highlightPassRow');
+                } else if (!!row.observationRowStatusId) {
+                    var isRejected = passStatusesMap[row.observationRowStatusId].isRejected;
                     var className = isRejected ? 'rejected-status' : 'warning-status';
                     $(element).addClass(className);
-                } else {
-                    $(element).removeClass('rejected-status warning-status');
                 }
             }
         };
