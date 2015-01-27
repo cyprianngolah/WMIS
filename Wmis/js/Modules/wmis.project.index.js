@@ -19,8 +19,8 @@ wmis.project.index = (function ($) {
 
 		initDataTable();
 
-		wmis.global.loadAndInitializeSelect2(options.$projectLead, "/api/person/projectLeads/", "Project Lead");
-		wmis.global.loadAndInitializeSelect2(options.$projectStatus, "/api/project/statuses/", "Project Status");
+		wmis.global.loadAndInitializeSelect2(options.$projectLead, "/api/person/projectLeads/", "Project Lead", true, "data");
+		wmis.global.loadAndInitializeSelect2(options.$projectStatus, "/api/project/statuses/", "Project Status",true,"data");
 		wmis.global.loadAndInitializeSelect2(options.$region, "/api/ecoregion?startRow=0&rowCount=500", "Ecoregion", true, "data");
 
 		options.$keywords.keyup(function (e) {
