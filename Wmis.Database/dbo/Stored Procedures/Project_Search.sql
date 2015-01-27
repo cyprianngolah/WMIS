@@ -43,7 +43,8 @@ AS
 		AND (@p_projectStatusId IS NULL OR p.[ProjectStatusId] = @p_projectStatusId)
 		AND (@p_leadRegionId IS NULL OR p.[LeadRegionId] = @p_leadRegionId)
 		AND (
-			@p_keywords IS NULL 
+			@p_keywords IS NULL
+			OR p.[ProjectId] LIKE '%' + @p_keywords + '%' 
 			OR p.[Name] LIKE '%' + @p_keywords + '%' 
 		)
 	ORDER BY

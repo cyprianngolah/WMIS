@@ -105,7 +105,7 @@ wmis.collaredanimal.editmodals = (function ($) {
                 results: function (result, page, query) {
                     _.forEach(result.data, function (record) {
                         record.id = record.key;
-                        var text = record.name;
+                        var text = record.key + ' - ' + record.name;
                         if (record.leadRegion != null)
                             text += ' - ' + record.leadRegion.name;
                         if (record.projectLead != null)
