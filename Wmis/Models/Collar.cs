@@ -30,10 +30,8 @@
 
         public CollarState CollarState { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? InactiveDate { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? DeploymentDate { get; set; }
 	    
         public string Size { get; set; }
@@ -44,22 +42,16 @@
 
         public string Comments { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? DropOffDate { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? EstimatedDropOff { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? EstimatedGpsFailure { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? EstimatedGpsBatteryEnd { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? EstimatedVhfFailure { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? EstimatedVhfBatteryEnd { get; set; }
 
         public int? EstimatedYearOfBirth { get; set; }
@@ -92,7 +84,6 @@
 
         public AnimalMortality AnimalMortality { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? MortalityDate { get; set; }
 
         public ConfidenceLevel MortalityConfidence { get; set; }
@@ -119,10 +110,8 @@
 
         public BreedingStatusMethod BreedingStatusMethod { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? HerdAssociationDate { get; set; }
 
-        [JsonConverter(typeof(ShortDateConverter))]
         public DateTime? BreedingStatusDate { get; set; }
 
         public int? SpeciesId { get; set; }

@@ -12,6 +12,7 @@
 }
 
 @section Styles {
+    @Html.Raw(Styles.Render("~/bundles/datePickerCss"))
     @Html.Raw(Styles.Render("~/bundles/content/datatables"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
 
@@ -20,13 +21,17 @@
         height: 500px;
         width: 100%;
     }
+    .datepicker{
+        z-index:1151 !important;
+    }
+
 </style>
 
 }
 
 @section Scripts{
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-
+    @Html.Raw(Scripts.Render("~/bundles/datePicker"))
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))

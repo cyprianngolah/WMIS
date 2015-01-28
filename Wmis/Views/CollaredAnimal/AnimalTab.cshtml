@@ -132,7 +132,11 @@
         </div>
         <label for="mortalityDate" class="col-md-2 control-label">Effective Date</label>
         <div class="col-md-2">
-            <input class="form-control" id="mortalityDate" type="date" data-bind="value: mortalityDate" />
+            <div class="input-group date" data-bind="datePicker: mortalityDate">
+                <input type="text" class="form-control" readonly="readonly">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+            <!--<input class="form-control" id="mortalityDate" type="date" data-bind="value: mortalityDate" />-->
         </div>
         <label for="mortalityConfidence" class="col-md-2 control-label">Confidence</label>
         <div class="col-md-2" data-bind="with: mortalityConfidence">

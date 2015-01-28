@@ -45,12 +45,20 @@
 
         <label for="inactiveDate" class="col-md-1 control-label">Inactive Date</label>
         <div class="col-md-3">
-            <input class="form-control" id="inactiveDate" type="date" data-bind="value: inactiveDate" />
+            <div class="input-group date" data-bind="datePicker: inactiveDate">
+                <input type="text" class="form-control" readonly="readonly">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+            @*<input class="form-control" id="inactiveDate" type="date" data-bind="value: inactiveDate" />*@
         </div>
 
         <label for="deploymentDate" class="col-md-1 control-label">Deployment Date</label>
         <div class="col-md-3">
-            <input class="form-control" id="deploymentDate" type="date" data-bind="value: deploymentDate" />
+            <div class="input-group date" data-bind="datePicker: deploymentDate">
+                <input type="text" class="form-control" readonly="readonly">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+            @*<input class="form-control" id="deploymentDate" type="date" data-bind="value: deploymentDate" />*@
         </div>
     </div>
 
@@ -171,36 +179,60 @@
         <div class="form-group">
             <label for="dropOffDate" class="col-md-2 control-label">Drop-off Date</label>
             <div class="col-md-2">
-                <input class="form-control" id="dropOffDate" type="date" data-bind="value: dropOffDate" />
+                <div class="input-group date" data-bind="datePicker: dropOffDate">
+                    <input type="text" class="form-control" readonly="readonly">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+                @*<input class="form-control" id="dropOffDate" type="date" data-bind="value: dropOffDate" />*@
             </div>
 
             <label for="estimatedDropOff" class="col-md-2 control-label">Est. Dropoff</label>
             <div class="col-md-2">
-                <input class="form-control" id="estimatedDropOff" type="date" data-bind="value: estimatedDropOff" />
+                <div class="input-group date" data-bind="datePicker: estimatedDropOff">
+                    <input type="text" class="form-control" readonly="readonly">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+                @*<input class="form-control" id="estimatedDropOff" type="date" data-bind="value: estimatedDropOff" />*@
             </div>
         </div>
 
         <div class="form-group">
             <label for="estimatedGpsFailure" class="col-md-2 control-label">Est. GPS Failure</label>
             <div class="col-md-2">
-                <input class="form-control" id="estimatedGpsFailure" type="date" data-bind="value: estimatedGpsFailure" />
+                <div class="input-group date" data-bind="datePicker: estimatedGpsFailure">
+                    <input type="text" class="form-control" readonly="readonly">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+                @*<input class="form-control" id="estimatedGpsFailure" type="date" data-bind="value: estimatedGpsFailure" />*@
             </div>
 
             <label for="estimatedGpsBatteryEnd" class="col-md-2 control-label">Est. GPS Battery End</label>
             <div class="col-md-2">
-                <input class="form-control" id="estimatedGpsBatteryEnd" type="date" data-bind="value: estimatedGpsBatteryEnd" />
+                <div class="input-group date" data-bind="datePicker: estimatedGpsBatteryEnd">
+                    <input type="text" class="form-control" readonly="readonly">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+                @*<input class="form-control" id="estimatedGpsBatteryEnd" type="date" data-bind="value: estimatedGpsBatteryEnd" />*@
             </div>
         </div>
 
         <div class="form-group">
             <label for="estimatedVhfFailure" class="col-md-2 control-label">Estimated VHF Failure</label>
             <div class="col-md-2">
-                <input class="form-control" id="estimatedVhfFailure" type="date" data-bind="value: estimatedVhfFailure" />
+                <div class="input-group date" data-bind="datePicker: estimatedVhfFailure">
+                    <input type="text" class="form-control" readonly="readonly">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+                @*<input class="form-control" id="estimatedVhfFailure" type="date" data-bind="value: estimatedVhfFailure" />*@
             </div>
 
             <label for="estimatedVhfBatteryEnd" class="col-md-2 control-label">Est. VHF Battery End</label>
             <div class="col-md-2">
-                <input class="form-control" id="estimatedVhfBatteryEnd" type="date" data-bind="value: estimatedVhfBatteryEnd" />
+                <div class="input-group date" data-bind="datePicker: estimatedVhfBatteryEnd">
+                    <input type="text" class="form-control" readonly="readonly">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+                @*<input class="form-control" id="estimatedVhfBatteryEnd" type="date" data-bind="value: estimatedVhfBatteryEnd" />*@
             </div>
         </div>
     </div>
