@@ -193,7 +193,9 @@ wmis.mapping = (function ($) {
 
     function initialize(pointsObservable, selectedPointObservable, reviewPassFunction, passStatusFunction, mapElementId) {
         options.mapElementId = mapElementId || options.mapElementId;
-        options.passStatusFunction = passStatusFunction || options.mapElementId;
+        if (typeof (passStatusFunction) != 'undefined' && passStatusFunction != null) {
+            options.passStatusFunction = passStatusFunction;
+        }
         var map = createMapInstance();
         var argosDataViewModel = new ArgosDataViewModel(pointsObservable, selectedPointObservable, reviewPassFunction, map);
     }
