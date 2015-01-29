@@ -357,12 +357,19 @@ wmis.project.edit = (function ($) {
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
-				{ "data": "adminRegion.name" },
+                { "data": "key" },
+				{ "data": "animalId" },
+				{ "data": "animalStatus.name" },
+				{ "data": "animalSex.name" },
 				{ "data": "collarStatus.name" },
-				{ "data": "species" },
-				{ "data": "commonName" },
-				{ "data": "subSpecies" },
-				{ "data": "animalStatus.name" }
+				{ "data": "collarState.name" },
+                {
+                    "data": "key",
+                    "render": function ( data, type, full, meta ) {
+                        return '<a href="/CollaredAnimal/Edit/' + data + '">View/Edit</a>';
+                    },
+                    "orderable": false
+                }
 			],
 			"fnServerData": function (source, data, callback, settings) {
 				var sortDirection = null;
@@ -422,7 +429,7 @@ wmis.project.edit = (function ($) {
 		
 		options.$collarTab.on('shown.bs.tab', function (e) {
 			if (collarsTable == null) {
-				//initCollarDataTable(initOptions.projectKey);
+			    initCollarDataTable(options.projectKey);
 			}
 		});
 		

@@ -1,7 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[CollaredAnimal_Get]
-	@p_collaredAnimalKey INT
+	@p_collaredAnimalKey INT = NULL,
+	@p_projectId INT = NULL
 AS
-	SELECT TOP 1
+	SELECT
 		c.CollaredAnimalId as [Key],
 		c.CollarId,
 		c.SpeciesId,
@@ -96,7 +97,8 @@ AS
 		LEFT OUTER JOIN dbo.ConfidenceLevels breedingStatusConfidenceLevel on c.BreedingStatusConfidenceLevelId = breedingStatusConfidenceLevel.ConfidenceLevelId
 		LEFT OUTER JOIN dbo.BreedingStatusMethods breedingStatusMethod on c.BreedingStatusMethodId = breedingStatusMethod.BreedingStatusMethodId
 	WHERE
-		c.CollaredAnimalId = @p_collaredAnimalKey
+		(@p_collaredAnimalKey IS NULL OR c.CollaredAnimalId = @p_collaredAnimalKey)
+		AND (@p_projectId IS NULL OR c.ProjectId = @p_projectId)
 
 RETURN 0
 GO
