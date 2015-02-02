@@ -87,6 +87,10 @@ wmis.project.survey.new = (function ($) {
 			wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
 		};
 
+		this.mapTabClicked = function () {
+		    wmis.collaredanimal.mapping.initializeMap(collaredAnimalKey);
+		}
+
 		self.canSave = ko.computed(function () {
 			return self.dataLoaded() && self.survey() != null;
 		}, this.survey());
