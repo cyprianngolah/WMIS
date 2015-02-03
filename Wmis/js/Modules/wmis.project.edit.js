@@ -164,6 +164,9 @@ wmis.project.edit = (function ($) {
 	function EditProjectViewModel(project, projectCollaborators) {
 		var self = this;
 		this.project = ko.mapper.fromJS(project);
+        
+		var hasCollars = (project.collarCount > 0) ? true : false;
+		this.showCollarTab = ko.observable(hasCollars);
 
 		this.statuses = ko.observableArray();
 		this.regions = ko.observableArray();
@@ -202,6 +205,10 @@ wmis.project.edit = (function ($) {
 	    };
 
 		this.canSave = ko.computed(function() {
+		    return $.trim(ko.unwrap(self.project.name)) != "";
+		});
+
+		this.canSave = ko.computed(function () {
 		    return $.trim(ko.unwrap(self.project.name)) != "";
 		});
 
@@ -345,7 +352,7 @@ wmis.project.edit = (function ($) {
 		});
 	}
 	
-	function initCollarDataTable(projectKey) {
+	function initCollarDataTable(projectKey, viewmodel) {
 		var parameters;
 		collarsTable = options.$collarTable.dataTable({
 			"iDisplayLength": 25,
@@ -429,7 +436,7 @@ wmis.project.edit = (function ($) {
 		
 		options.$collarTab.on('shown.bs.tab', function (e) {
 			if (collarsTable == null) {
-			    initCollarDataTable(options.projectKey);
+			    initCollarDataTable(options.projectKey, viewModel);
 			}
 		});
 		

@@ -37,6 +37,8 @@
 
         public string TermsAndConditions { get; set; }
 
+        public int CollarCount { get; set; }
+
 		public DateTime LastUpdated { get; set; }
 	}
 }
