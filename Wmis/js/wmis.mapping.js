@@ -85,8 +85,10 @@ wmis.mapping = (function ($) {
                 if (points.length > 0) {
                     if (!hideLineAndMarkers) {
                         existingPolyline = Polyline.loadPolyline(map, points);
+                        existingMarkers = Markers.loadMarkers(map, points, reviewPassFunction);
+                    } else {
+                        existingMarkers = Markers.loadMarkersWithoutStartStopIcons(map, points, reviewPassFunction);
                     }
-                    existingMarkers = Markers.loadMarkers(map, points, reviewPassFunction);
                 }
             };
             self.points.subscribe(handleNewPoints);
@@ -145,8 +147,25 @@ wmis.mapping = (function ($) {
             return markers;
         }
 
+        function loadMarkersWithoutStartStopIcons(map, passes, reviewPassFunction) {
+            var markers = [];
+           
+            _.forEach(passes, function (pass) {
+                markers.push(createMiddleMarker(map, pass, null));
+            });
+
+            _.forEach(markers, function (marker) {
+                marker.setMap(map);
+                google.maps.event.addListener(marker, 'click', function () {
+                    reviewPassFunction(marker.get('pass'));
+                });
+            });
+            return markers;
+        }
+
         return {
             loadMarkers: loadMarkers,
+            loadMarkersWithoutStartStopIcons: loadMarkersWithoutStartStopIcons,
             createMiddleMarker: createMiddleMarker
         }
     })();
