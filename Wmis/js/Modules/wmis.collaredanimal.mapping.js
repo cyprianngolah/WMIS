@@ -182,7 +182,7 @@ wmis.collaredanimal.mapping = (function ($) {
     function initializeMap(collaredAnimalId) {
         options.collaredAnimalId = collaredAnimalId;
         var locationTableModel = new LocationTableModel();
-        wmis.mapping.initialize(locationTableModel.argosPasses, locationTableModel.selectedPass, locationTableModel.reviewPass);
+        wmis.mapping.initialize(locationTableModel.argosPasses, locationTableModel.selectedPass, locationTableModel.reviewPass, null, false);
         
         loadPassesTable(locationTableModel);
 	}

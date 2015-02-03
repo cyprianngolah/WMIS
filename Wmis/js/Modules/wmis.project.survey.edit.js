@@ -420,7 +420,7 @@ wmis.project.survey.edit = (function ($) {
 	    }
 
 	    this.mapTabClicked = _.once(function () {
-	        wmis.mapping.initialize(self.observationDataComputedObservable, self.selectedPass, self.reviewObservation, function (pass) { return pass.observationRowStatusId || 0; });
+	        wmis.mapping.initialize(self.observationDataComputedObservable, self.selectedPass, self.reviewObservation, function (pass) { return pass.observationRowStatusId || 0; }, null, true);
 	    });
 
 		self.showObservationTab(isTemplateAssigned());

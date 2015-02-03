@@ -31,7 +31,7 @@ wmis.mapping = (function ($) {
 
     var selectedArgosPassImage = '/content/images/maps-symbol-blank-green.png';
 
-    function ArgosDataViewModel(pointsObservable, selectedPointObservable, reviewPassFunction, map) {
+    function ArgosDataViewModel(pointsObservable, selectedPointObservable, reviewPassFunction, map, hideLineAndMarkers) {
         var self = this;
         this.points = pointsObservable;
         this.selectedPoint = selectedPointObservable;
@@ -83,7 +83,9 @@ wmis.mapping = (function ($) {
                     existingMarkers = null;
                 }
                 if (points.length > 0) {
-                    existingPolyline = Polyline.loadPolyline(map, points);
+                    if (!hideLineAndMarkers) {
+                        existingPolyline = Polyline.loadPolyline(map, points);
+                    }
                     existingMarkers = Markers.loadMarkers(map, points, reviewPassFunction);
                 }
             };
@@ -191,13 +193,13 @@ wmis.mapping = (function ($) {
         return new google.maps.Map(document.getElementById(options.mapElementId), mapOptions);
     }
 
-    function initialize(pointsObservable, selectedPointObservable, reviewPassFunction, passStatusFunction, mapElementId) {
+    function initialize(pointsObservable, selectedPointObservable, reviewPassFunction, passStatusFunction, mapElementId, hideLineAndMarkers) {
         options.mapElementId = mapElementId || options.mapElementId;
         if (typeof (passStatusFunction) != 'undefined' && passStatusFunction != null) {
             options.passStatusFunction = passStatusFunction;
         }
         var map = createMapInstance();
-        var argosDataViewModel = new ArgosDataViewModel(pointsObservable, selectedPointObservable, reviewPassFunction, map);
+        var argosDataViewModel = new ArgosDataViewModel(pointsObservable, selectedPointObservable, reviewPassFunction, map, hideLineAndMarkers);
     }
     
     return {
