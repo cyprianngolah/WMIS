@@ -57,7 +57,7 @@ AS
 	) 
 	WHEN NOT MATCHED BY TARGET 
 		THEN INSERT([ObservationUploadId], [RowIndex], [Latitude], [Longitude], [Timestamp], [ObservationRowStatusId]) 
-		VALUES(s.ObservationUploadId, s.[RowIndex], s.[Latitude], s.[Longitude], s.[Timestamp], 1)
+		VALUES(s.ObservationUploadId, s.[RowIndex], s.[Latitude], s.[Longitude], s.[Timestamp], null)
 	WHEN MATCHED
 		THEN UPDATE SET 
 			[Latitude] = s.[Latitude], 
