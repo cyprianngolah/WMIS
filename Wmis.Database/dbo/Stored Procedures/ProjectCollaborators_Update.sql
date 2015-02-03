@@ -7,7 +7,7 @@ MERGE ProjectCollaborators as T
 USING @p_collaboratorIds AS S
 ON T.CollaboratorId = S.n AND T.ProjectId = @p_projectId
 WHEN NOT MATCHED BY TARGET THEN INSERT (ProjectId, CollaboratorId) VALUES (@p_projectId, n) 
-WHEN NOT MATCHED BY SOURCE THEN DELETE;
+WHEN NOT MATCHED BY SOURCE AND T.ProjectId = @p_projectId THEN DELETE;
 
 RETURN 0
 GO
