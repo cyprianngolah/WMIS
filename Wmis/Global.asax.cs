@@ -5,8 +5,7 @@
 	using System.Web.Optimization;
 	using System.Web.Routing;
 	using App_Start;
-	using Extensions;
-	using StructureMap;
+	using WebApi;
 
 	/// <summary>
 	/// Application Start
@@ -18,12 +17,12 @@
 		/// </summary>
         protected void Application_Start()
 		{
-			ObjectFactory.Initialize(x =>
-			{
-				x.ForConcreteType<Configuration.WebConfiguration>();
-				x.ForConcreteType<Models.WmisRepository>();
-			});
-			GlobalConfiguration.Configuration.DependencyResolver = new StructureMapDependencyResolver();
+			WebApi.ObjectFactory.Container.Configure(x =>
+				{
+					x.ForConcreteType<Configuration.WebConfiguration>();
+					x.ForConcreteType<Models.WmisRepository>();
+				});
+			GlobalConfiguration.Configuration.DependencyResolver = new StructureMapDependencyResolver(WebApi.ObjectFactory.Container);
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

@@ -1,4 +1,4 @@
-﻿namespace Wmis.Extensions
+﻿namespace Wmis.WebApi
 {
 	using System;
 	using System.Collections.Generic;
@@ -13,6 +13,13 @@
     /// <see href="http://stackoverflow.com/questions/11889275/structuremap-and-asp-net-web-api-and-net-framework-4-5"/>
 	public class StructureMapDependencyResolver : IDependencyResolver
 	{
+		private readonly IContainer _container;
+
+		public StructureMapDependencyResolver(IContainer container)
+		{
+			_container = container;
+		}
+
 		public void Dispose()
 		{
 		}
@@ -21,15 +28,15 @@
 		{
 			if (serviceType.IsAbstract || serviceType.IsInterface)
 			{
-				return ObjectFactory.Container.TryGetInstance(serviceType);
+				return _container.TryGetInstance(serviceType);
 			}
 
-			return ObjectFactory.Container.GetInstance(serviceType);
+			return _container.GetInstance(serviceType);
 		}
 
 		public IEnumerable<object> GetServices(Type serviceType)
 		{
-			var instances = ObjectFactory.GetAllInstances(serviceType);
+			var instances = _container.GetAllInstances(serviceType);
 
 			return instances.Cast<object>().ToList();
 		}

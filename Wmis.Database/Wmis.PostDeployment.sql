@@ -9,6 +9,10 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+-- Hangfire SQL 
+-- Typically this would just be instantiated on first use, but that user doesn't have access to make changes
+-- So we initialize it as part of the Post-Deployment
+:r .\..\packages\HangFire.SqlServer.1.3.4\tools\install.sql
 
 :r .\dbo\Fill\LeadRegion.sql
 :r .\dbo\Fill\ProjectStatus.sql
