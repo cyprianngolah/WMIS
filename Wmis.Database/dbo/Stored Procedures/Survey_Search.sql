@@ -4,6 +4,7 @@
 	@p_sortBy NVARCHAR(25) = NULL,
 	@p_sortDirection NVARCHAR(3) = NULL,
 	@p_projectId INT = NULL,
+	@p_surveyId INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	/*
@@ -48,6 +49,10 @@ AS
 			LEFT OUTER JOIN dbo.SurveyTemplate ste on s.SurveyTemplateId = ste.SurveyTemplateId
 	WHERE
 		s.[ProjectId] = @p_projectId
+		AND (
+			@p_surveyId IS NULL
+			OR s.[SurveyTypeId] = @p_surveyId
+		)
 		AND (
 			@p_keywords IS NULL 
 			OR s.[Description] LIKE '%' + @p_keywords + '%' 

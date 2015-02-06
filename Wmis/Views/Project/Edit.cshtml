@@ -106,7 +106,6 @@
                             <select class="form-control" id="status" data-bind="options: $root.statuses, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
                             <!-- /ko -->
                         </div>
-
                         <label for="name" class="col-md-1 control-label">Status Date</label>
                         <div class="col-md-3">
                             <div class="input-group date" data-bind="datePicker: statusDate">
@@ -186,7 +185,11 @@
 
                 <div class="tab-pane form-horizontal" id="surveysTab">
                     <div class="row">
-                        <div class="col-md-12 text-right">
+                        <label for="projectSurveyType" class="col-md-1 control-label">Survey Type</label>
+                        <div class="col-md-2">
+                            <select class="form-control" id="surveyTypeKey" data-bind="options: $root.surveyTypes, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: surveyFilterKey, select2: { }"></select>
+                        </div>
+                        <div class="col-md-9 text-right">
                             <a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
                             <a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
                         </div>
