@@ -222,7 +222,6 @@
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="ApiControllers\ArgosApiController.cs" />
-    <Compile Include="ApiControllers\ArgosData.cs" />
     <Compile Include="Controllers\SurveyTemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CollaredAnimalController.cs" />
@@ -819,6 +818,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ArgosService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wmis.Argos\Wmis.Argos.csproj">
+      <Project>{86408d6a-e350-4984-907a-9e6d7a8fb4a4}</Project>
+      <Name>Wmis.Argos</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

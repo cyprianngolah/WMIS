@@ -2705,7 +2705,6 @@
         #endregion
 
         #region Files
-
         public PagedResultset<File> FileSearch(FileSearchRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2787,6 +2786,7 @@
         }
 
         #endregion
+
         #region Collaborators
         public int CollaboratorCreate(CollaboratorCreateRequest request)
         {

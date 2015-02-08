@@ -64,7 +64,7 @@
             fs.SaveAs(ShapeFileName, true);
      
             const string ZipPath = @"C:\Users\Public\test.zip";
-                    ZipFile.CreateFromDirectory(@"C:\Users\Public\testdir\", ZipPath);
+            ZipFile.CreateFromDirectory(@"C:\Users\Public\testdir\", ZipPath);
 
             var stream = new FileStream(ZipPath, FileMode.Open);
 
