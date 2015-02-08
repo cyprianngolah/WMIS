@@ -1,6 +1,4 @@
-﻿[assembly: System.CLSCompliant(true)]
-
-namespace Wmis.Configuration
+﻿namespace Wmis.Configuration
 {
 	using System;
 	using System.Collections.Generic;

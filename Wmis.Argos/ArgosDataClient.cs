@@ -17,12 +17,6 @@
 		#endregion
 
 		#region Constructors
-		public ArgosDataClient()
-		{
-			_username = "gunn";
-			_password = "northter";
-		}
-
 		public ArgosDataClient(string username, string password)
 		{
 			_username = username;
@@ -30,8 +24,9 @@
 		}
 		#endregion
 
-		private IEnumerable<ArgosSatellitePass> RetrieveArgosDataForCollar(int subscriptionId)
+		public IEnumerable<ArgosSatellitePass> RetrieveArgosDataForCollar(string subscriptionId)
 		{
+			// Request
 			var service = new ArgosService.DixServicePortTypeClient();
 			var request = new ArgosService.xmlRequestType
 			{
@@ -39,23 +34,27 @@
 				password = _password,
 				Item1 = RecordsForLastDays(9),
 				ItemElementName = ArgosService.ItemChoiceType.platformId,
-				Item = subscriptionId.ToString()
+				Item = subscriptionId
 			};
-
 			var response = service.getXml(request);
+
+			// Parse Response from XML into a collection of ArgosSatellitePass data
 			var xmlResponseString = response.@return;
 			var xmlStringReader = new StringReader(xmlResponseString);
 			var xRoot = new XmlRootAttribute { ElementName = "data", IsNullable = true };
 			var serializer = new XmlSerializer(typeof(ArgosData), xRoot);
 			var data = (ArgosData)serializer.Deserialize(xmlStringReader);
-			return data.program[0].platform[0].satellitePass.Where(x => x.location != null).Select(
-				pass =>
-					new ArgosSatellitePass
-						{
-							Latitude = pass.location.latitude,
-							Longitude = pass.location.longitude,
-							Timestamp = pass.location.locationDate
-						});
+			if(data.program != null && data.program.Any() && data.program[0].platform.Any() && data.program[0].platform[0].satellitePass.Any(x=>x.location != null))
+				return data.program[0].platform[0].satellitePass.Where(x => x.location != null).Select(
+					pass =>
+						new ArgosSatellitePass
+							{
+								Latitude = pass.location.latitude,
+								Longitude = pass.location.longitude,
+								Timestamp = pass.location.locationDate
+							});
+
+			return new List<ArgosSatellitePass>();
 		}
 
 		#region Helpers

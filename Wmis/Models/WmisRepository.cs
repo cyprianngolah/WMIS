@@ -10,6 +10,7 @@
 	using Dto;
     using Extensions;
 
+	using Wmis.Argos.Entities;
 	using Wmis.Models.Base;
 
     /// <summary>
@@ -1887,7 +1888,8 @@
                     p_sortDirection = sr.SortDirection,
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim(),
                     p_regionKey = sr.RegionKey,
-                    p_needingReview = sr.NeedingReview
+                    p_needingReview = sr.NeedingReview,
+					p_activeOnly = sr.ActiveOnly
                 };
 
                 using (var q = c.QueryMultiple(COLLAREDANIMAL_SEARCH, param, commandType: CommandType.StoredProcedure))
@@ -1917,7 +1919,7 @@
             {
                 var param = new
                 {
-                    p_collaredAnimalKey = collaredAnimalKey
+					p_collaredAnimalKey = collaredAnimalKey
                 };
                 return c.Query<Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAREDANIMAL_GET,
                     (collar, project, type, region, status, dyn) =>
@@ -2535,13 +2537,18 @@
             }
         }
 
-        public void ArgosPassMerge(int collaredAnimalId, IEnumerable<ArgosPassForTvp> passes)
+		public void ArgosPassMerge(int collaredAnimalId, IEnumerable<ArgosSatellitePass> passes)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_argosPasses = passes.AsTableValuedParameter("dbo.ArgosPassTableType"),
+                    p_argosPasses = passes.Select(p => new
+	                                                {
+		                                                p.Latitude,
+														p.Longitude,
+														LocationDate = p.Timestamp
+	                                                }).AsTableValuedParameter("dbo.ArgosPassTableType"),
                     p_collaredAnimalId = collaredAnimalId,
                 };
                 c.Query<int>(ARGOSPASS_MERGE, param, commandType: CommandType.StoredProcedure);
