@@ -12,6 +12,7 @@ wmis.project.edit = (function ($) {
 		$surveyTable: $("#surveys"),
 		$collarTab: $('a[href="#collarsTab"]'),
 		$collarTable: $("#collars"),
+	    surveyFilter: "#surveyFilter"
 	};
 
 	function selectCollaborator(currentCollaboratorIds, callback) {
@@ -171,6 +172,8 @@ wmis.project.edit = (function ($) {
 		this.statuses = ko.observableArray();
 		this.regions = ko.observableArray();
 		this.projectLeads = ko.observableArray();
+		this.surveyTypes = ko.observableArray();
+		this.surveyFilterKey = ko.observable(-1);
 
 		this.projectCollaborators = ko.observableArray(projectCollaborators);
 
@@ -227,9 +230,19 @@ wmis.project.edit = (function ($) {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
+
+		(function () {
+		    self.surveyFilterKey.subscribe(function (newPass) {
+		        if (newPass)
+		        {
+		            surveysTable.fnFilter();
+		        }
+		            
+		    });
+		})();
 	}
 	
-	function initSurveyDataTable(projectKey) {
+	function initSurveyDataTable(projectKey, viewmodel) {
 		var parameters;
 		surveysTable = options.$surveyTable.dataTable({
 			"iDisplayLength": 25,
@@ -311,6 +324,9 @@ wmis.project.edit = (function ($) {
 					sortBy: sortedColumnName,
 					sortDirection: sortDirection,
 					i: settings.oAjaxData.sEcho,
+
+				    //Custom search data
+					surveyTypeKey: viewmodel.surveyFilterKey()
 				};
 
 				$.getJSON(source, parameters, function (json) {
@@ -378,6 +394,7 @@ wmis.project.edit = (function ($) {
                     "orderable": false
                 }
 			],
+
 			"fnServerData": function (source, data, callback, settings) {
 				var sortDirection = null;
 				var sortedColumnName = null;
@@ -426,11 +443,15 @@ wmis.project.edit = (function ($) {
 		});
         var ddp3 = wmis.global.getDropDownData(viewModel.regions, "/api/leadregion?startRow=0&rowCount=500", function (json) {
 			return json.data;
-		});
+        });
+
+        var ddp4 = wmis.global.getDropDownData(viewModel.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500", function (json) {
+            return json.data;
+        });
 
 		options.$surveyTab.on('shown.bs.tab', function (e) {
-			if (surveysTable == null) {
-				initSurveyDataTable(options.projectKey);
+		    if (surveysTable == null) {
+		        initSurveyDataTable(options.projectKey, viewModel);
 			}
 		});
 		
@@ -477,6 +498,7 @@ wmis.project.edit = (function ($) {
             wmis.global.hideWaitingScreen();
             wmis.global.ajaxErrorHandler(error);
         }).done();
+
     }
 
 	return {
