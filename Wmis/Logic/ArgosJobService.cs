@@ -46,7 +46,8 @@
 
 			foreach (var c in legitCollars)
 			{
-				BackgroundJob.Enqueue(() => GetArgosDataForCollar(c.Key, c.SubscriptionId));
+                if(!string.IsNullOrEmpty(c.SubscriptionId))
+				    BackgroundJob.Enqueue(() => GetArgosDataForCollar(c.Key, c.SubscriptionId));
 			}
 		}
 
