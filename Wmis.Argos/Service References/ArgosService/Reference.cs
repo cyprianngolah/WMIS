@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wmis.ArgosService {
+namespace Wmis.Argos.ArgosService {
     
     
     /// <remarks/>
@@ -768,83 +768,113 @@ namespace Wmis.ArgosService {
         
         // CODEGEN: Generating message contract since the operation getCsv is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="Get Argos data on CSV format", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.ArgosService.DixException), Action="Get Argos data on CSV format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Get Argos data on CSV format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
-        Wmis.ArgosService.getCsvResponse getCsv(Wmis.ArgosService.getCsvRequest request);
+        Wmis.Argos.ArgosService.getCsvResponse getCsv(Wmis.Argos.ArgosService.getCsvRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="Get Argos data on CSV format", ReplyAction="*")]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getCsvResponse> getCsvAsync(Wmis.ArgosService.getCsvRequest request);
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getCsvResponse> getCsvAsync(Wmis.Argos.ArgosService.getCsvRequest request);
         
         // CODEGEN: Generating message contract since the operation getStreamXml is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.ArgosService.DixException), Action="", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
-        Wmis.ArgosService.getStreamXmlResponse getStreamXml(Wmis.ArgosService.getStreamXmlRequest request);
+        Wmis.Argos.ArgosService.getStreamXmlResponse getStreamXml(Wmis.Argos.ArgosService.getStreamXmlRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getStreamXmlResponse> getStreamXmlAsync(Wmis.ArgosService.getStreamXmlRequest request);
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getStreamXmlResponse> getStreamXmlAsync(Wmis.Argos.ArgosService.getStreamXmlRequest request);
         
         // CODEGEN: Generating message contract since the operation getKml is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="Get Argos data on KML format", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.ArgosService.DixException), Action="Get Argos data on KML format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Get Argos data on KML format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
-        Wmis.ArgosService.getKmlResponse getKml(Wmis.ArgosService.getKmlRequest request);
+        Wmis.Argos.ArgosService.getKmlResponse getKml(Wmis.Argos.ArgosService.getKmlRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="Get Argos data on KML format", ReplyAction="*")]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getKmlResponse> getKmlAsync(Wmis.ArgosService.getKmlRequest request);
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getKmlResponse> getKmlAsync(Wmis.Argos.ArgosService.getKmlRequest request);
         
         // CODEGEN: Generating message contract since the operation getXml is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="Get Argos data on XML format", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.ArgosService.DixException), Action="Get Argos data on XML format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Get Argos data on XML format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
-        Wmis.ArgosService.getXmlResponse getXml(Wmis.ArgosService.getXmlRequest request);
+        Wmis.Argos.ArgosService.getXmlResponse getXml(Wmis.Argos.ArgosService.getXmlRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="Get Argos data on XML format", ReplyAction="*")]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getXmlResponse> getXmlAsync(Wmis.ArgosService.getXmlRequest request);
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getXmlResponse> getXmlAsync(Wmis.Argos.ArgosService.getXmlRequest request);
         
         // CODEGEN: Generating message contract since the operation getXsd is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="Get the XSD for the XML format", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.ArgosService.DixException), Action="Get the XSD for the XML format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Get the XSD for the XML format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
-        Wmis.ArgosService.getXsdResponse getXsd(Wmis.ArgosService.getXsdRequest request);
+        Wmis.Argos.ArgosService.getXsdResponse getXsd(Wmis.Argos.ArgosService.getXsdRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="Get the XSD for the XML format", ReplyAction="*")]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getXsdResponse> getXsdAsync(Wmis.ArgosService.getXsdRequest request);
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getXsdResponse> getXsdAsync(Wmis.Argos.ArgosService.getXsdRequest request);
         
         // CODEGEN: Generating message contract since the operation getPlatformList is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="Get the list of platforms", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.ArgosService.DixException), Action="Get the list of platforms", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Get the list of platforms", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
-        Wmis.ArgosService.getPlatformListResponse getPlatformList(Wmis.ArgosService.getPlatformListRequest request);
+        Wmis.Argos.ArgosService.getPlatformListResponse getPlatformList(Wmis.Argos.ArgosService.getPlatformListRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="Get the list of platforms", ReplyAction="*")]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getPlatformListResponse> getPlatformListAsync(Wmis.ArgosService.getPlatformListRequest request);
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getPlatformListResponse> getPlatformListAsync(Wmis.Argos.ArgosService.getPlatformListRequest request);
         
         // CODEGEN: Generating message contract since the operation getObsCsv is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="Get the observations on CSV Format", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.ArgosService.DixException), Action="Get the observations on CSV Format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Get the observations on CSV Format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
-        Wmis.ArgosService.getObsCsvResponse getObsCsv(Wmis.ArgosService.getObsCsvRequest request);
+        Wmis.Argos.ArgosService.getObsCsvResponse getObsCsv(Wmis.Argos.ArgosService.getObsCsvRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="Get the observations on CSV Format", ReplyAction="*")]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getObsCsvResponse> getObsCsvAsync(Wmis.ArgosService.getObsCsvRequest request);
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getObsCsvResponse> getObsCsvAsync(Wmis.Argos.ArgosService.getObsCsvRequest request);
         
         // CODEGEN: Generating message contract since the operation getObsXml is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="Get the observations on XML Format", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.ArgosService.DixException), Action="Get the observations on XML Format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Get the observations on XML Format", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
-        Wmis.ArgosService.getObsCsvResponse getObsXml(Wmis.ArgosService.getObsCsvRequest request);
+        Wmis.Argos.ArgosService.getObsCsvResponse getObsXml(Wmis.Argos.ArgosService.getObsCsvRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="Get the observations on XML Format", ReplyAction="*")]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getObsCsvResponse> getObsXmlAsync(Wmis.ArgosService.getObsCsvRequest request);
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getObsCsvResponse> getObsXmlAsync(Wmis.Argos.ArgosService.getObsCsvRequest request);
+        
+        // CODEGEN: Generating message contract since the operation getAop is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="Get the orbital parameters", ReplyAction="*")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Get the orbital parameters", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
+        Wmis.Argos.ArgosService.getAopResponse getAop(Wmis.Argos.ArgosService.getAopRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="Get the orbital parameters", ReplyAction="*")]
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getAopResponse> getAopAsync(Wmis.Argos.ArgosService.getAopRequest request);
+        
+        // CODEGEN: Generating message contract since the operation sendMessage is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="Send free hexadecimal message", ReplyAction="*")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Send free hexadecimal message", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
+        Wmis.Argos.ArgosService.sendMessageResponse sendMessage(Wmis.Argos.ArgosService.sendMessageRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="Send free hexadecimal message", ReplyAction="*")]
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.sendMessageResponse> sendMessageAsync(Wmis.Argos.ArgosService.sendMessageRequest request);
+        
+        // CODEGEN: Generating message contract since the operation consultMessage is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="Consult message status", ReplyAction="*")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Wmis.Argos.ArgosService.DixException), Action="Consult message status", Name="DixException", Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(baseRequestType))]
+        Wmis.Argos.ArgosService.consultMessageResponse consultMessage(Wmis.Argos.ArgosService.consultMessageRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="Consult message status", ReplyAction="*")]
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.consultMessageResponse> consultMessageAsync(Wmis.Argos.ArgosService.consultMessageRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -854,12 +884,12 @@ namespace Wmis.ArgosService {
     public partial class getCsvRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.csvRequestType csvRequest;
+        public Wmis.Argos.ArgosService.csvRequestType csvRequest;
         
         public getCsvRequest() {
         }
         
-        public getCsvRequest(Wmis.ArgosService.csvRequestType csvRequest) {
+        public getCsvRequest(Wmis.Argos.ArgosService.csvRequestType csvRequest) {
             this.csvRequest = csvRequest;
         }
     }
@@ -871,12 +901,12 @@ namespace Wmis.ArgosService {
     public partial class getCsvResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.stringResponseType csvResponse;
+        public Wmis.Argos.ArgosService.stringResponseType csvResponse;
         
         public getCsvResponse() {
         }
         
-        public getCsvResponse(Wmis.ArgosService.stringResponseType csvResponse) {
+        public getCsvResponse(Wmis.Argos.ArgosService.stringResponseType csvResponse) {
             this.csvResponse = csvResponse;
         }
     }
@@ -920,12 +950,12 @@ namespace Wmis.ArgosService {
     public partial class getStreamXmlRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.xmlRequestType streamXmlRequest;
+        public Wmis.Argos.ArgosService.xmlRequestType streamXmlRequest;
         
         public getStreamXmlRequest() {
         }
         
-        public getStreamXmlRequest(Wmis.ArgosService.xmlRequestType streamXmlRequest) {
+        public getStreamXmlRequest(Wmis.Argos.ArgosService.xmlRequestType streamXmlRequest) {
             this.streamXmlRequest = streamXmlRequest;
         }
     }
@@ -937,12 +967,12 @@ namespace Wmis.ArgosService {
     public partial class getStreamXmlResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.streamResponseType streamXmlResponse;
+        public Wmis.Argos.ArgosService.streamResponseType streamXmlResponse;
         
         public getStreamXmlResponse() {
         }
         
-        public getStreamXmlResponse(Wmis.ArgosService.streamResponseType streamXmlResponse) {
+        public getStreamXmlResponse(Wmis.Argos.ArgosService.streamResponseType streamXmlResponse) {
             this.streamXmlResponse = streamXmlResponse;
         }
     }
@@ -954,12 +984,12 @@ namespace Wmis.ArgosService {
     public partial class getKmlRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.kmlRequestType kmlRequest;
+        public Wmis.Argos.ArgosService.kmlRequestType kmlRequest;
         
         public getKmlRequest() {
         }
         
-        public getKmlRequest(Wmis.ArgosService.kmlRequestType kmlRequest) {
+        public getKmlRequest(Wmis.Argos.ArgosService.kmlRequestType kmlRequest) {
             this.kmlRequest = kmlRequest;
         }
     }
@@ -971,12 +1001,12 @@ namespace Wmis.ArgosService {
     public partial class getKmlResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.stringResponseType kmlResponse;
+        public Wmis.Argos.ArgosService.stringResponseType kmlResponse;
         
         public getKmlResponse() {
         }
         
-        public getKmlResponse(Wmis.ArgosService.stringResponseType kmlResponse) {
+        public getKmlResponse(Wmis.Argos.ArgosService.stringResponseType kmlResponse) {
             this.kmlResponse = kmlResponse;
         }
     }
@@ -988,12 +1018,12 @@ namespace Wmis.ArgosService {
     public partial class getXmlRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.xmlRequestType xmlRequest;
+        public Wmis.Argos.ArgosService.xmlRequestType xmlRequest;
         
         public getXmlRequest() {
         }
         
-        public getXmlRequest(Wmis.ArgosService.xmlRequestType xmlRequest) {
+        public getXmlRequest(Wmis.Argos.ArgosService.xmlRequestType xmlRequest) {
             this.xmlRequest = xmlRequest;
         }
     }
@@ -1005,12 +1035,12 @@ namespace Wmis.ArgosService {
     public partial class getXmlResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.stringResponseType xmlResponse;
+        public Wmis.Argos.ArgosService.stringResponseType xmlResponse;
         
         public getXmlResponse() {
         }
         
-        public getXmlResponse(Wmis.ArgosService.stringResponseType xmlResponse) {
+        public getXmlResponse(Wmis.Argos.ArgosService.stringResponseType xmlResponse) {
             this.xmlResponse = xmlResponse;
         }
     }
@@ -1040,12 +1070,12 @@ namespace Wmis.ArgosService {
     public partial class getXsdRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.xsdRequestType xsdRequest;
+        public Wmis.Argos.ArgosService.xsdRequestType xsdRequest;
         
         public getXsdRequest() {
         }
         
-        public getXsdRequest(Wmis.ArgosService.xsdRequestType xsdRequest) {
+        public getXsdRequest(Wmis.Argos.ArgosService.xsdRequestType xsdRequest) {
             this.xsdRequest = xsdRequest;
         }
     }
@@ -1057,12 +1087,12 @@ namespace Wmis.ArgosService {
     public partial class getXsdResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.stringResponseType xsdResponse;
+        public Wmis.Argos.ArgosService.stringResponseType xsdResponse;
         
         public getXsdResponse() {
         }
         
-        public getXsdResponse(Wmis.ArgosService.stringResponseType xsdResponse) {
+        public getXsdResponse(Wmis.Argos.ArgosService.stringResponseType xsdResponse) {
             this.xsdResponse = xsdResponse;
         }
     }
@@ -1078,6 +1108,10 @@ namespace Wmis.ArgosService {
         private string usernameField;
         
         private string passwordField;
+        
+        private string itemField;
+        
+        private ItemChoiceType1 itemElementNameField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -1103,6 +1137,33 @@ namespace Wmis.ArgosService {
             }
         }
         
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("platformHexId", typeof(string), Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute("platformId", typeof(string), Order=2)]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
+        public string Item {
+            get {
+                return this.itemField;
+            }
+            set {
+                this.itemField = value;
+                this.RaisePropertyChanged("Item");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemChoiceType1 ItemElementName {
+            get {
+                return this.itemElementNameField;
+            }
+            set {
+                this.itemElementNameField = value;
+                this.RaisePropertyChanged("ItemElementName");
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -1113,6 +1174,19 @@ namespace Wmis.ArgosService {
         }
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", IncludeInSchema=false)]
+    public enum ItemChoiceType1 {
+        
+        /// <remarks/>
+        platformHexId,
+        
+        /// <remarks/>
+        platformId,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1120,12 +1194,12 @@ namespace Wmis.ArgosService {
     public partial class getPlatformListRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.platformListRequestType platformListRequest;
+        public Wmis.Argos.ArgosService.platformListRequestType platformListRequest;
         
         public getPlatformListRequest() {
         }
         
-        public getPlatformListRequest(Wmis.ArgosService.platformListRequestType platformListRequest) {
+        public getPlatformListRequest(Wmis.Argos.ArgosService.platformListRequestType platformListRequest) {
             this.platformListRequest = platformListRequest;
         }
     }
@@ -1137,12 +1211,12 @@ namespace Wmis.ArgosService {
     public partial class getPlatformListResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.stringResponseType platformListResponse;
+        public Wmis.Argos.ArgosService.stringResponseType platformListResponse;
         
         public getPlatformListResponse() {
         }
         
-        public getPlatformListResponse(Wmis.ArgosService.stringResponseType platformListResponse) {
+        public getPlatformListResponse(Wmis.Argos.ArgosService.stringResponseType platformListResponse) {
             this.platformListResponse = platformListResponse;
         }
     }
@@ -1161,7 +1235,7 @@ namespace Wmis.ArgosService {
         
         private string itemField;
         
-        private ItemChoiceType1 itemElementNameField;
+        private ItemChoiceType2 itemElementNameField;
         
         private int nbMaxObsField;
         
@@ -1211,7 +1285,7 @@ namespace Wmis.ArgosService {
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=3)]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemChoiceType1 ItemElementName {
+        public ItemChoiceType2 ItemElementName {
             get {
                 return this.itemElementNameField;
             }
@@ -1272,7 +1346,7 @@ namespace Wmis.ArgosService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", IncludeInSchema=false)]
-    public enum ItemChoiceType1 {
+    public enum ItemChoiceType2 {
         
         /// <remarks/>
         platformId,
@@ -1291,12 +1365,12 @@ namespace Wmis.ArgosService {
     public partial class getObsCsvRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.observationRequestType observationRequest;
+        public Wmis.Argos.ArgosService.observationRequestType observationRequest;
         
         public getObsCsvRequest() {
         }
         
-        public getObsCsvRequest(Wmis.ArgosService.observationRequestType observationRequest) {
+        public getObsCsvRequest(Wmis.Argos.ArgosService.observationRequestType observationRequest) {
             this.observationRequest = observationRequest;
         }
     }
@@ -1308,23 +1382,305 @@ namespace Wmis.ArgosService {
     public partial class getObsCsvResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
-        public Wmis.ArgosService.stringResponseType observationResponse;
+        public Wmis.Argos.ArgosService.stringResponseType observationResponse;
         
         public getObsCsvResponse() {
         }
         
-        public getObsCsvResponse(Wmis.ArgosService.stringResponseType observationResponse) {
+        public getObsCsvResponse(Wmis.Argos.ArgosService.stringResponseType observationResponse) {
             this.observationResponse = observationResponse;
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface DixServicePortTypeChannel : Wmis.ArgosService.DixServicePortType, System.ServiceModel.IClientChannel {
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+    public partial class aopRequestType : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string usernameField;
+        
+        private string passwordField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string username {
+            get {
+                return this.usernameField;
+            }
+            set {
+                this.usernameField = value;
+                this.RaisePropertyChanged("username");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string password {
+            get {
+                return this.passwordField;
+            }
+            set {
+                this.passwordField = value;
+                this.RaisePropertyChanged("password");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class DixServicePortTypeClient : System.ServiceModel.ClientBase<Wmis.ArgosService.DixServicePortType>, Wmis.ArgosService.DixServicePortType {
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class getAopRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
+        public Wmis.Argos.ArgosService.aopRequestType aopRequest;
+        
+        public getAopRequest() {
+        }
+        
+        public getAopRequest(Wmis.Argos.ArgosService.aopRequestType aopRequest) {
+            this.aopRequest = aopRequest;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class getAopResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
+        public Wmis.Argos.ArgosService.stringResponseType aopResponse;
+        
+        public getAopResponse() {
+        }
+        
+        public getAopResponse(Wmis.Argos.ArgosService.stringResponseType aopResponse) {
+            this.aopResponse = aopResponse;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+    public partial class sendMessageRequestType : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string usernameField;
+        
+        private string passwordField;
+        
+        private string pmtIdField;
+        
+        private string freehexField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string username {
+            get {
+                return this.usernameField;
+            }
+            set {
+                this.usernameField = value;
+                this.RaisePropertyChanged("username");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string password {
+            get {
+                return this.passwordField;
+            }
+            set {
+                this.passwordField = value;
+                this.RaisePropertyChanged("password");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string pmtId {
+            get {
+                return this.pmtIdField;
+            }
+            set {
+                this.pmtIdField = value;
+                this.RaisePropertyChanged("pmtId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string freehex {
+            get {
+                return this.freehexField;
+            }
+            set {
+                this.freehexField = value;
+                this.RaisePropertyChanged("freehex");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class sendMessageRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="sendMessageRequest", Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
+        public Wmis.Argos.ArgosService.sendMessageRequestType sendMessageRequest1;
+        
+        public sendMessageRequest() {
+        }
+        
+        public sendMessageRequest(Wmis.Argos.ArgosService.sendMessageRequestType sendMessageRequest1) {
+            this.sendMessageRequest1 = sendMessageRequest1;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class sendMessageResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="sendMessageResponse", Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
+        public Wmis.Argos.ArgosService.stringResponseType sendMessageResponse1;
+        
+        public sendMessageResponse() {
+        }
+        
+        public sendMessageResponse(Wmis.Argos.ArgosService.stringResponseType sendMessageResponse1) {
+            this.sendMessageResponse1 = sendMessageResponse1;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://service.dataxmldistribution.argos.cls.fr/types")]
+    public partial class consultMessageRequestType : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string usernameField;
+        
+        private string passwordField;
+        
+        private string cmdIdField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string username {
+            get {
+                return this.usernameField;
+            }
+            set {
+                this.usernameField = value;
+                this.RaisePropertyChanged("username");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string password {
+            get {
+                return this.passwordField;
+            }
+            set {
+                this.passwordField = value;
+                this.RaisePropertyChanged("password");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string cmdId {
+            get {
+                return this.cmdIdField;
+            }
+            set {
+                this.cmdIdField = value;
+                this.RaisePropertyChanged("cmdId");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class consultMessageRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="consultMessageRequest", Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
+        public Wmis.Argos.ArgosService.consultMessageRequestType consultMessageRequest1;
+        
+        public consultMessageRequest() {
+        }
+        
+        public consultMessageRequest(Wmis.Argos.ArgosService.consultMessageRequestType consultMessageRequest1) {
+            this.consultMessageRequest1 = consultMessageRequest1;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class consultMessageResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="consultMessageResponse", Namespace="http://service.dataxmldistribution.argos.cls.fr/types", Order=0)]
+        public Wmis.Argos.ArgosService.stringResponseType consultMessageResponse1;
+        
+        public consultMessageResponse() {
+        }
+        
+        public consultMessageResponse(Wmis.Argos.ArgosService.stringResponseType consultMessageResponse1) {
+            this.consultMessageResponse1 = consultMessageResponse1;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface DixServicePortTypeChannel : Wmis.Argos.ArgosService.DixServicePortType, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class DixServicePortTypeClient : System.ServiceModel.ClientBase<Wmis.Argos.ArgosService.DixServicePortType>, Wmis.Argos.ArgosService.DixServicePortType {
         
         public DixServicePortTypeClient() {
         }
@@ -1346,187 +1702,256 @@ namespace Wmis.ArgosService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Wmis.ArgosService.getCsvResponse Wmis.ArgosService.DixServicePortType.getCsv(Wmis.ArgosService.getCsvRequest request) {
+        Wmis.Argos.ArgosService.getCsvResponse Wmis.Argos.ArgosService.DixServicePortType.getCsv(Wmis.Argos.ArgosService.getCsvRequest request) {
             return base.Channel.getCsv(request);
         }
         
-        public Wmis.ArgosService.stringResponseType getCsv(Wmis.ArgosService.csvRequestType csvRequest) {
-            Wmis.ArgosService.getCsvRequest inValue = new Wmis.ArgosService.getCsvRequest();
+        public Wmis.Argos.ArgosService.stringResponseType getCsv(Wmis.Argos.ArgosService.csvRequestType csvRequest) {
+            Wmis.Argos.ArgosService.getCsvRequest inValue = new Wmis.Argos.ArgosService.getCsvRequest();
             inValue.csvRequest = csvRequest;
-            Wmis.ArgosService.getCsvResponse retVal = ((Wmis.ArgosService.DixServicePortType)(this)).getCsv(inValue);
+            Wmis.Argos.ArgosService.getCsvResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getCsv(inValue);
             return retVal.csvResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getCsvResponse> Wmis.ArgosService.DixServicePortType.getCsvAsync(Wmis.ArgosService.getCsvRequest request) {
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getCsvResponse> Wmis.Argos.ArgosService.DixServicePortType.getCsvAsync(Wmis.Argos.ArgosService.getCsvRequest request) {
             return base.Channel.getCsvAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Wmis.ArgosService.getCsvResponse> getCsvAsync(Wmis.ArgosService.csvRequestType csvRequest) {
-            Wmis.ArgosService.getCsvRequest inValue = new Wmis.ArgosService.getCsvRequest();
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getCsvResponse> getCsvAsync(Wmis.Argos.ArgosService.csvRequestType csvRequest) {
+            Wmis.Argos.ArgosService.getCsvRequest inValue = new Wmis.Argos.ArgosService.getCsvRequest();
             inValue.csvRequest = csvRequest;
-            return ((Wmis.ArgosService.DixServicePortType)(this)).getCsvAsync(inValue);
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getCsvAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Wmis.ArgosService.getStreamXmlResponse Wmis.ArgosService.DixServicePortType.getStreamXml(Wmis.ArgosService.getStreamXmlRequest request) {
+        Wmis.Argos.ArgosService.getStreamXmlResponse Wmis.Argos.ArgosService.DixServicePortType.getStreamXml(Wmis.Argos.ArgosService.getStreamXmlRequest request) {
             return base.Channel.getStreamXml(request);
         }
         
-        public Wmis.ArgosService.streamResponseType getStreamXml(Wmis.ArgosService.xmlRequestType streamXmlRequest) {
-            Wmis.ArgosService.getStreamXmlRequest inValue = new Wmis.ArgosService.getStreamXmlRequest();
+        public Wmis.Argos.ArgosService.streamResponseType getStreamXml(Wmis.Argos.ArgosService.xmlRequestType streamXmlRequest) {
+            Wmis.Argos.ArgosService.getStreamXmlRequest inValue = new Wmis.Argos.ArgosService.getStreamXmlRequest();
             inValue.streamXmlRequest = streamXmlRequest;
-            Wmis.ArgosService.getStreamXmlResponse retVal = ((Wmis.ArgosService.DixServicePortType)(this)).getStreamXml(inValue);
+            Wmis.Argos.ArgosService.getStreamXmlResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getStreamXml(inValue);
             return retVal.streamXmlResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getStreamXmlResponse> Wmis.ArgosService.DixServicePortType.getStreamXmlAsync(Wmis.ArgosService.getStreamXmlRequest request) {
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getStreamXmlResponse> Wmis.Argos.ArgosService.DixServicePortType.getStreamXmlAsync(Wmis.Argos.ArgosService.getStreamXmlRequest request) {
             return base.Channel.getStreamXmlAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Wmis.ArgosService.getStreamXmlResponse> getStreamXmlAsync(Wmis.ArgosService.xmlRequestType streamXmlRequest) {
-            Wmis.ArgosService.getStreamXmlRequest inValue = new Wmis.ArgosService.getStreamXmlRequest();
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getStreamXmlResponse> getStreamXmlAsync(Wmis.Argos.ArgosService.xmlRequestType streamXmlRequest) {
+            Wmis.Argos.ArgosService.getStreamXmlRequest inValue = new Wmis.Argos.ArgosService.getStreamXmlRequest();
             inValue.streamXmlRequest = streamXmlRequest;
-            return ((Wmis.ArgosService.DixServicePortType)(this)).getStreamXmlAsync(inValue);
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getStreamXmlAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Wmis.ArgosService.getKmlResponse Wmis.ArgosService.DixServicePortType.getKml(Wmis.ArgosService.getKmlRequest request) {
+        Wmis.Argos.ArgosService.getKmlResponse Wmis.Argos.ArgosService.DixServicePortType.getKml(Wmis.Argos.ArgosService.getKmlRequest request) {
             return base.Channel.getKml(request);
         }
         
-        public Wmis.ArgosService.stringResponseType getKml(Wmis.ArgosService.kmlRequestType kmlRequest) {
-            Wmis.ArgosService.getKmlRequest inValue = new Wmis.ArgosService.getKmlRequest();
+        public Wmis.Argos.ArgosService.stringResponseType getKml(Wmis.Argos.ArgosService.kmlRequestType kmlRequest) {
+            Wmis.Argos.ArgosService.getKmlRequest inValue = new Wmis.Argos.ArgosService.getKmlRequest();
             inValue.kmlRequest = kmlRequest;
-            Wmis.ArgosService.getKmlResponse retVal = ((Wmis.ArgosService.DixServicePortType)(this)).getKml(inValue);
+            Wmis.Argos.ArgosService.getKmlResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getKml(inValue);
             return retVal.kmlResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getKmlResponse> Wmis.ArgosService.DixServicePortType.getKmlAsync(Wmis.ArgosService.getKmlRequest request) {
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getKmlResponse> Wmis.Argos.ArgosService.DixServicePortType.getKmlAsync(Wmis.Argos.ArgosService.getKmlRequest request) {
             return base.Channel.getKmlAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Wmis.ArgosService.getKmlResponse> getKmlAsync(Wmis.ArgosService.kmlRequestType kmlRequest) {
-            Wmis.ArgosService.getKmlRequest inValue = new Wmis.ArgosService.getKmlRequest();
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getKmlResponse> getKmlAsync(Wmis.Argos.ArgosService.kmlRequestType kmlRequest) {
+            Wmis.Argos.ArgosService.getKmlRequest inValue = new Wmis.Argos.ArgosService.getKmlRequest();
             inValue.kmlRequest = kmlRequest;
-            return ((Wmis.ArgosService.DixServicePortType)(this)).getKmlAsync(inValue);
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getKmlAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Wmis.ArgosService.getXmlResponse Wmis.ArgosService.DixServicePortType.getXml(Wmis.ArgosService.getXmlRequest request) {
+        Wmis.Argos.ArgosService.getXmlResponse Wmis.Argos.ArgosService.DixServicePortType.getXml(Wmis.Argos.ArgosService.getXmlRequest request) {
             return base.Channel.getXml(request);
         }
         
-        public Wmis.ArgosService.stringResponseType getXml(Wmis.ArgosService.xmlRequestType xmlRequest) {
-            Wmis.ArgosService.getXmlRequest inValue = new Wmis.ArgosService.getXmlRequest();
+        public Wmis.Argos.ArgosService.stringResponseType getXml(Wmis.Argos.ArgosService.xmlRequestType xmlRequest) {
+            Wmis.Argos.ArgosService.getXmlRequest inValue = new Wmis.Argos.ArgosService.getXmlRequest();
             inValue.xmlRequest = xmlRequest;
-            Wmis.ArgosService.getXmlResponse retVal = ((Wmis.ArgosService.DixServicePortType)(this)).getXml(inValue);
+            Wmis.Argos.ArgosService.getXmlResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getXml(inValue);
             return retVal.xmlResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getXmlResponse> Wmis.ArgosService.DixServicePortType.getXmlAsync(Wmis.ArgosService.getXmlRequest request) {
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getXmlResponse> Wmis.Argos.ArgosService.DixServicePortType.getXmlAsync(Wmis.Argos.ArgosService.getXmlRequest request) {
             return base.Channel.getXmlAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Wmis.ArgosService.getXmlResponse> getXmlAsync(Wmis.ArgosService.xmlRequestType xmlRequest) {
-            Wmis.ArgosService.getXmlRequest inValue = new Wmis.ArgosService.getXmlRequest();
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getXmlResponse> getXmlAsync(Wmis.Argos.ArgosService.xmlRequestType xmlRequest) {
+            Wmis.Argos.ArgosService.getXmlRequest inValue = new Wmis.Argos.ArgosService.getXmlRequest();
             inValue.xmlRequest = xmlRequest;
-            return ((Wmis.ArgosService.DixServicePortType)(this)).getXmlAsync(inValue);
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getXmlAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Wmis.ArgosService.getXsdResponse Wmis.ArgosService.DixServicePortType.getXsd(Wmis.ArgosService.getXsdRequest request) {
+        Wmis.Argos.ArgosService.getXsdResponse Wmis.Argos.ArgosService.DixServicePortType.getXsd(Wmis.Argos.ArgosService.getXsdRequest request) {
             return base.Channel.getXsd(request);
         }
         
-        public Wmis.ArgosService.stringResponseType getXsd(Wmis.ArgosService.xsdRequestType xsdRequest) {
-            Wmis.ArgosService.getXsdRequest inValue = new Wmis.ArgosService.getXsdRequest();
+        public Wmis.Argos.ArgosService.stringResponseType getXsd(Wmis.Argos.ArgosService.xsdRequestType xsdRequest) {
+            Wmis.Argos.ArgosService.getXsdRequest inValue = new Wmis.Argos.ArgosService.getXsdRequest();
             inValue.xsdRequest = xsdRequest;
-            Wmis.ArgosService.getXsdResponse retVal = ((Wmis.ArgosService.DixServicePortType)(this)).getXsd(inValue);
+            Wmis.Argos.ArgosService.getXsdResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getXsd(inValue);
             return retVal.xsdResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getXsdResponse> Wmis.ArgosService.DixServicePortType.getXsdAsync(Wmis.ArgosService.getXsdRequest request) {
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getXsdResponse> Wmis.Argos.ArgosService.DixServicePortType.getXsdAsync(Wmis.Argos.ArgosService.getXsdRequest request) {
             return base.Channel.getXsdAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Wmis.ArgosService.getXsdResponse> getXsdAsync(Wmis.ArgosService.xsdRequestType xsdRequest) {
-            Wmis.ArgosService.getXsdRequest inValue = new Wmis.ArgosService.getXsdRequest();
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getXsdResponse> getXsdAsync(Wmis.Argos.ArgosService.xsdRequestType xsdRequest) {
+            Wmis.Argos.ArgosService.getXsdRequest inValue = new Wmis.Argos.ArgosService.getXsdRequest();
             inValue.xsdRequest = xsdRequest;
-            return ((Wmis.ArgosService.DixServicePortType)(this)).getXsdAsync(inValue);
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getXsdAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Wmis.ArgosService.getPlatformListResponse Wmis.ArgosService.DixServicePortType.getPlatformList(Wmis.ArgosService.getPlatformListRequest request) {
+        Wmis.Argos.ArgosService.getPlatformListResponse Wmis.Argos.ArgosService.DixServicePortType.getPlatformList(Wmis.Argos.ArgosService.getPlatformListRequest request) {
             return base.Channel.getPlatformList(request);
         }
         
-        public Wmis.ArgosService.stringResponseType getPlatformList(Wmis.ArgosService.platformListRequestType platformListRequest) {
-            Wmis.ArgosService.getPlatformListRequest inValue = new Wmis.ArgosService.getPlatformListRequest();
+        public Wmis.Argos.ArgosService.stringResponseType getPlatformList(Wmis.Argos.ArgosService.platformListRequestType platformListRequest) {
+            Wmis.Argos.ArgosService.getPlatformListRequest inValue = new Wmis.Argos.ArgosService.getPlatformListRequest();
             inValue.platformListRequest = platformListRequest;
-            Wmis.ArgosService.getPlatformListResponse retVal = ((Wmis.ArgosService.DixServicePortType)(this)).getPlatformList(inValue);
+            Wmis.Argos.ArgosService.getPlatformListResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getPlatformList(inValue);
             return retVal.platformListResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getPlatformListResponse> Wmis.ArgosService.DixServicePortType.getPlatformListAsync(Wmis.ArgosService.getPlatformListRequest request) {
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getPlatformListResponse> Wmis.Argos.ArgosService.DixServicePortType.getPlatformListAsync(Wmis.Argos.ArgosService.getPlatformListRequest request) {
             return base.Channel.getPlatformListAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Wmis.ArgosService.getPlatformListResponse> getPlatformListAsync(Wmis.ArgosService.platformListRequestType platformListRequest) {
-            Wmis.ArgosService.getPlatformListRequest inValue = new Wmis.ArgosService.getPlatformListRequest();
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getPlatformListResponse> getPlatformListAsync(Wmis.Argos.ArgosService.platformListRequestType platformListRequest) {
+            Wmis.Argos.ArgosService.getPlatformListRequest inValue = new Wmis.Argos.ArgosService.getPlatformListRequest();
             inValue.platformListRequest = platformListRequest;
-            return ((Wmis.ArgosService.DixServicePortType)(this)).getPlatformListAsync(inValue);
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getPlatformListAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Wmis.ArgosService.getObsCsvResponse Wmis.ArgosService.DixServicePortType.getObsCsv(Wmis.ArgosService.getObsCsvRequest request) {
+        Wmis.Argos.ArgosService.getObsCsvResponse Wmis.Argos.ArgosService.DixServicePortType.getObsCsv(Wmis.Argos.ArgosService.getObsCsvRequest request) {
             return base.Channel.getObsCsv(request);
         }
         
-        public Wmis.ArgosService.stringResponseType getObsCsv(Wmis.ArgosService.observationRequestType observationRequest) {
-            Wmis.ArgosService.getObsCsvRequest inValue = new Wmis.ArgosService.getObsCsvRequest();
+        public Wmis.Argos.ArgosService.stringResponseType getObsCsv(Wmis.Argos.ArgosService.observationRequestType observationRequest) {
+            Wmis.Argos.ArgosService.getObsCsvRequest inValue = new Wmis.Argos.ArgosService.getObsCsvRequest();
             inValue.observationRequest = observationRequest;
-            Wmis.ArgosService.getObsCsvResponse retVal = ((Wmis.ArgosService.DixServicePortType)(this)).getObsCsv(inValue);
+            Wmis.Argos.ArgosService.getObsCsvResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getObsCsv(inValue);
             return retVal.observationResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getObsCsvResponse> Wmis.ArgosService.DixServicePortType.getObsCsvAsync(Wmis.ArgosService.getObsCsvRequest request) {
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getObsCsvResponse> Wmis.Argos.ArgosService.DixServicePortType.getObsCsvAsync(Wmis.Argos.ArgosService.getObsCsvRequest request) {
             return base.Channel.getObsCsvAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Wmis.ArgosService.getObsCsvResponse> getObsCsvAsync(Wmis.ArgosService.observationRequestType observationRequest) {
-            Wmis.ArgosService.getObsCsvRequest inValue = new Wmis.ArgosService.getObsCsvRequest();
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getObsCsvResponse> getObsCsvAsync(Wmis.Argos.ArgosService.observationRequestType observationRequest) {
+            Wmis.Argos.ArgosService.getObsCsvRequest inValue = new Wmis.Argos.ArgosService.getObsCsvRequest();
             inValue.observationRequest = observationRequest;
-            return ((Wmis.ArgosService.DixServicePortType)(this)).getObsCsvAsync(inValue);
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getObsCsvAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Wmis.ArgosService.getObsCsvResponse Wmis.ArgosService.DixServicePortType.getObsXml(Wmis.ArgosService.getObsCsvRequest request) {
+        Wmis.Argos.ArgosService.getObsCsvResponse Wmis.Argos.ArgosService.DixServicePortType.getObsXml(Wmis.Argos.ArgosService.getObsCsvRequest request) {
             return base.Channel.getObsXml(request);
         }
         
-        public Wmis.ArgosService.stringResponseType getObsXml(Wmis.ArgosService.observationRequestType observationRequest) {
-            Wmis.ArgosService.getObsCsvRequest inValue = new Wmis.ArgosService.getObsCsvRequest();
+        public Wmis.Argos.ArgosService.stringResponseType getObsXml(Wmis.Argos.ArgosService.observationRequestType observationRequest) {
+            Wmis.Argos.ArgosService.getObsCsvRequest inValue = new Wmis.Argos.ArgosService.getObsCsvRequest();
             inValue.observationRequest = observationRequest;
-            Wmis.ArgosService.getObsCsvResponse retVal = ((Wmis.ArgosService.DixServicePortType)(this)).getObsXml(inValue);
+            Wmis.Argos.ArgosService.getObsCsvResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getObsXml(inValue);
             return retVal.observationResponse;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Wmis.ArgosService.getObsCsvResponse> Wmis.ArgosService.DixServicePortType.getObsXmlAsync(Wmis.ArgosService.getObsCsvRequest request) {
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getObsCsvResponse> Wmis.Argos.ArgosService.DixServicePortType.getObsXmlAsync(Wmis.Argos.ArgosService.getObsCsvRequest request) {
             return base.Channel.getObsXmlAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Wmis.ArgosService.getObsCsvResponse> getObsXmlAsync(Wmis.ArgosService.observationRequestType observationRequest) {
-            Wmis.ArgosService.getObsCsvRequest inValue = new Wmis.ArgosService.getObsCsvRequest();
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getObsCsvResponse> getObsXmlAsync(Wmis.Argos.ArgosService.observationRequestType observationRequest) {
+            Wmis.Argos.ArgosService.getObsCsvRequest inValue = new Wmis.Argos.ArgosService.getObsCsvRequest();
             inValue.observationRequest = observationRequest;
-            return ((Wmis.ArgosService.DixServicePortType)(this)).getObsXmlAsync(inValue);
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getObsXmlAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Wmis.Argos.ArgosService.getAopResponse Wmis.Argos.ArgosService.DixServicePortType.getAop(Wmis.Argos.ArgosService.getAopRequest request) {
+            return base.Channel.getAop(request);
+        }
+        
+        public Wmis.Argos.ArgosService.stringResponseType getAop(Wmis.Argos.ArgosService.aopRequestType aopRequest) {
+            Wmis.Argos.ArgosService.getAopRequest inValue = new Wmis.Argos.ArgosService.getAopRequest();
+            inValue.aopRequest = aopRequest;
+            Wmis.Argos.ArgosService.getAopResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getAop(inValue);
+            return retVal.aopResponse;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getAopResponse> Wmis.Argos.ArgosService.DixServicePortType.getAopAsync(Wmis.Argos.ArgosService.getAopRequest request) {
+            return base.Channel.getAopAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.getAopResponse> getAopAsync(Wmis.Argos.ArgosService.aopRequestType aopRequest) {
+            Wmis.Argos.ArgosService.getAopRequest inValue = new Wmis.Argos.ArgosService.getAopRequest();
+            inValue.aopRequest = aopRequest;
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).getAopAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Wmis.Argos.ArgosService.sendMessageResponse Wmis.Argos.ArgosService.DixServicePortType.sendMessage(Wmis.Argos.ArgosService.sendMessageRequest request) {
+            return base.Channel.sendMessage(request);
+        }
+        
+        public Wmis.Argos.ArgosService.stringResponseType sendMessage(Wmis.Argos.ArgosService.sendMessageRequestType sendMessageRequest1) {
+            Wmis.Argos.ArgosService.sendMessageRequest inValue = new Wmis.Argos.ArgosService.sendMessageRequest();
+            inValue.sendMessageRequest1 = sendMessageRequest1;
+            Wmis.Argos.ArgosService.sendMessageResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).sendMessage(inValue);
+            return retVal.sendMessageResponse1;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.sendMessageResponse> Wmis.Argos.ArgosService.DixServicePortType.sendMessageAsync(Wmis.Argos.ArgosService.sendMessageRequest request) {
+            return base.Channel.sendMessageAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.sendMessageResponse> sendMessageAsync(Wmis.Argos.ArgosService.sendMessageRequestType sendMessageRequest1) {
+            Wmis.Argos.ArgosService.sendMessageRequest inValue = new Wmis.Argos.ArgosService.sendMessageRequest();
+            inValue.sendMessageRequest1 = sendMessageRequest1;
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).sendMessageAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Wmis.Argos.ArgosService.consultMessageResponse Wmis.Argos.ArgosService.DixServicePortType.consultMessage(Wmis.Argos.ArgosService.consultMessageRequest request) {
+            return base.Channel.consultMessage(request);
+        }
+        
+        public Wmis.Argos.ArgosService.stringResponseType consultMessage(Wmis.Argos.ArgosService.consultMessageRequestType consultMessageRequest1) {
+            Wmis.Argos.ArgosService.consultMessageRequest inValue = new Wmis.Argos.ArgosService.consultMessageRequest();
+            inValue.consultMessageRequest1 = consultMessageRequest1;
+            Wmis.Argos.ArgosService.consultMessageResponse retVal = ((Wmis.Argos.ArgosService.DixServicePortType)(this)).consultMessage(inValue);
+            return retVal.consultMessageResponse1;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Wmis.Argos.ArgosService.consultMessageResponse> Wmis.Argos.ArgosService.DixServicePortType.consultMessageAsync(Wmis.Argos.ArgosService.consultMessageRequest request) {
+            return base.Channel.consultMessageAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Wmis.Argos.ArgosService.consultMessageResponse> consultMessageAsync(Wmis.Argos.ArgosService.consultMessageRequestType consultMessageRequest1) {
+            Wmis.Argos.ArgosService.consultMessageRequest inValue = new Wmis.Argos.ArgosService.consultMessageRequest();
+            inValue.consultMessageRequest1 = consultMessageRequest1;
+            return ((Wmis.Argos.ArgosService.DixServicePortType)(this)).consultMessageAsync(inValue);
         }
     }
 }

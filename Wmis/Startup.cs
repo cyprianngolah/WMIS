@@ -9,6 +9,8 @@ namespace Wmis
 	using Hangfire.StructureMap;
 	using Owin;
 
+	using Wmis.Logic;
+
 	public class Startup
 	{
 		public void Configuration(IAppBuilder app)
@@ -35,6 +37,9 @@ namespace Wmis
 
 					config.UseServer();
 				});
+
+			var jobService = container.GetInstance<ArgosJobService>();
+			jobService.ScheduleArgos();
 		}
 	}
 }

@@ -84,6 +84,10 @@
         <xs:sequence>
           <xs:element name="username" type="xs:string" />
           <xs:element name="password" type="xs:string" />
+          <xs:choice>
+            <xs:element minOccurs="0" name="platformId" type="xs:string" />
+            <xs:element minOccurs="0" name="platformHexId" type="xs:string" />
+          </xs:choice>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="observationRequestType">
@@ -100,6 +104,27 @@
             <xs:element name="period" type="tns:periodType" />
             <xs:element name="nbDaysFromNow" type="xs:int" />
           </xs:choice>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="aopRequestType">
+        <xs:sequence>
+          <xs:element name="username" type="xs:string" />
+          <xs:element name="password" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sendMessageRequestType">
+        <xs:sequence>
+          <xs:element name="username" type="xs:string" />
+          <xs:element name="password" type="xs:string" />
+          <xs:element name="pmtId" type="xs:string" />
+          <xs:element name="freehex" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="consultMessageRequestType">
+        <xs:sequence>
+          <xs:element name="username" type="xs:string" />
+          <xs:element name="password" type="xs:string" />
+          <xs:element name="cmdId" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="stringResponseType">
@@ -129,14 +154,29 @@
       <xs:element name="platformListResponse" type="tns:stringResponseType" />
       <xs:element name="observationRequest" type="tns:observationRequestType" />
       <xs:element name="observationResponse" type="tns:stringResponseType" />
+      <xs:element name="aopRequest" type="tns:aopRequestType" />
+      <xs:element name="aopResponse" type="tns:stringResponseType" />
+      <xs:element name="sendMessageRequest" type="tns:sendMessageRequestType" />
+      <xs:element name="sendMessageResponse" type="tns:stringResponseType" />
+      <xs:element name="consultMessageRequest" type="tns:consultMessageRequestType" />
+      <xs:element name="consultMessageResponse" type="tns:stringResponseType" />
       <xs:element name="DixException" type="tns:DixException" />
     </xs:schema>
   </wsdl:types>
+  <wsdl:message name="sendMessageResponse">
+    <wsdl:part name="params" element="x1:sendMessageResponse" />
+  </wsdl:message>
   <wsdl:message name="csvRequest">
     <wsdl:part name="params" element="x1:csvRequest" />
   </wsdl:message>
+  <wsdl:message name="consultMessageRequest">
+    <wsdl:part name="params" element="x1:consultMessageRequest" />
+  </wsdl:message>
   <wsdl:message name="xsdResponse">
     <wsdl:part name="params" element="x1:xsdResponse" />
+  </wsdl:message>
+  <wsdl:message name="aopRequest">
+    <wsdl:part name="params" element="x1:aopRequest" />
   </wsdl:message>
   <wsdl:message name="kmlResponse">
     <wsdl:part name="params" element="x1:kmlResponse" />
@@ -146,6 +186,12 @@
   </wsdl:message>
   <wsdl:message name="kmlRequest">
     <wsdl:part name="params" element="x1:kmlRequest" />
+  </wsdl:message>
+  <wsdl:message name="consultMessageResponse">
+    <wsdl:part name="params" element="x1:consultMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="aopResponse">
+    <wsdl:part name="params" element="x1:aopResponse" />
   </wsdl:message>
   <wsdl:message name="platformListRequest">
     <wsdl:part name="params" element="x1:platformListRequest" />
@@ -167,6 +213,9 @@
   </wsdl:message>
   <wsdl:message name="xmlResponse">
     <wsdl:part name="params" element="x1:xmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendMessageRequest">
+    <wsdl:part name="params" element="x1:sendMessageRequest" />
   </wsdl:message>
   <wsdl:message name="xmlRequest">
     <wsdl:part name="params" element="x1:xmlRequest" />
@@ -216,6 +265,21 @@
     <wsdl:operation name="getObsXml">
       <wsdl:input message="tns:observationRequest" />
       <wsdl:output message="tns:observationResponse" />
+      <wsdl:fault name="DixException" message="tns:DixException" />
+    </wsdl:operation>
+    <wsdl:operation name="getAop">
+      <wsdl:input message="tns:aopRequest" />
+      <wsdl:output message="tns:aopResponse" />
+      <wsdl:fault name="DixException" message="tns:DixException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendMessage">
+      <wsdl:input message="tns:sendMessageRequest" />
+      <wsdl:output message="tns:sendMessageResponse" />
+      <wsdl:fault name="DixException" message="tns:DixException" />
+    </wsdl:operation>
+    <wsdl:operation name="consultMessage">
+      <wsdl:input message="tns:consultMessageRequest" />
+      <wsdl:output message="tns:consultMessageResponse" />
       <wsdl:fault name="DixException" message="tns:DixException" />
     </wsdl:operation>
   </wsdl:portType>
@@ -307,6 +371,42 @@
     </wsdl:operation>
     <wsdl:operation name="getObsXml">
       <soap12:operation soapAction="Get the observations on XML Format" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault use="literal" name="DixException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAop">
+      <soap12:operation soapAction="Get the orbital parameters" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault use="literal" name="DixException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendMessage">
+      <soap12:operation soapAction="Send free hexadecimal message" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault use="literal" name="DixException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="consultMessage">
+      <soap12:operation soapAction="Consult message status" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

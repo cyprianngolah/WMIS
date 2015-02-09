@@ -222,7 +222,6 @@
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="ApiControllers\ArgosApiController.cs" />
-    <Compile Include="ApiControllers\ArgosData.cs" />
     <Compile Include="Controllers\SurveyTemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CollaredAnimalController.cs" />
@@ -289,6 +288,7 @@
     <Compile Include="Dto\TaxonomySynonymRequest.cs" />
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
+    <Compile Include="Logic\ArgosJobService.cs" />
     <Compile Include="WebApi\ObjectFactory.cs" />
     <Compile Include="WebApi\StructureMapDependencyResolver.cs" />
     <Compile Include="Global.asax.cs">
@@ -311,7 +311,6 @@
     <Compile Include="Logic\ObservationParserService.cs" />
     <Compile Include="Models\AnimalMortality.cs" />
     <Compile Include="Models\AnimalStatus.cs" />
-    <Compile Include="Models\ArgosPassForTvp.cs" />
     <Compile Include="Models\Base\AuditedKeyedModel.cs" />
     <Compile Include="Models\Base\KeyedModel.cs" />
     <Compile Include="Models\BioDiversityNew.cs" />
@@ -362,24 +361,11 @@
     <Compile Include="Models\TaxonomySynonym.cs" />
     <Compile Include="Models\WmisRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reference.cs" />
-    <Compile Include="Reference1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ArgosService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="WebApi\IFrameProgressExceptionHandler.cs" />
     <Compile Include="WebApi\PlainTextFormatter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="configuration.svcinfo" />
-    <None Include="configuration91.svcinfo" />
     <Content Include="Content\bootstrap-cerulean.css" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
@@ -540,14 +526,9 @@
     <Content Include="js\Modules\wmis.project.edit.js" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.responsive.scss" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.jqueryui.scss" />
-    <None Include="DixService.wsdl" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />
-    <None Include="Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference1.cs</LastGenOutput>
-    </None>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables-1.10.3\dataTables.autoFill.js" />
@@ -688,12 +669,6 @@
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Service References\ArgosService\configuration91.svcinfo" />
-    <None Include="Service References\ArgosService\configuration.svcinfo" />
-    <None Include="Service References\ArgosService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Views\Shared\FileTab.cshtml" />
     <Content Include="Views\SurveyTemplate\Edit.cshtml" />
     <Content Include="Views\SurveyTemplate\EditForm.cshtml" />
@@ -762,34 +737,6 @@
     <Content Include="Views\CollaredAnimal\Edit.cshtml" />
     <Content Include="Views\CollaredAnimal\Index.cshtml" />
     <Content Include="Views\CollaredAnimal\New.cshtml" />
-    <None Include="Service References\ArgosService\DixService.wsdl" />
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.getCsvResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.getKmlResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.getObsCsvResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.getPlatformListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.getStreamXmlResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.getXmlResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.getXsdResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.streamResponseType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\ArgosService\Wmis.ArgosService.stringResponseType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Views\CollaredAnimal\CollarTab.cshtml" />
     <Content Include="Views\CollaredAnimal\AnimalTab.cshtml" />
     <Content Include="Views\CollaredAnimal\EditModals.cshtml" />
@@ -815,10 +762,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ArgosService\" />
+    <ProjectReference Include="..\Wmis.Argos\Wmis.Argos.csproj">
+      <Project>{86408D6A-E350-4984-907A-9E6D7A8FB4A4}</Project>
+      <Name>Wmis.Argos</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -10,5 +10,12 @@
 		public int? RegionKey { get; set; }
 
         public bool NeedingReview { get; set; }
+
+		public bool ActiveOnly { get; set; }
+
+	    public CollarSearchRequest()
+	    {
+			ActiveOnly = false;
+	    }
 	}
 }

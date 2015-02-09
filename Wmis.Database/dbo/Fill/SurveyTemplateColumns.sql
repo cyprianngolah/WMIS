@@ -1,6 +1,6 @@
 ﻿/*
 	Initial Seeding, this will probably need to get updated later
-*/
+
 
 SET IDENTITY_INSERT [dbo].[SurveyTemplateColumns] ON;
 
@@ -29,3 +29,5 @@ WHEN MATCHED THEN UPDATE SET
 WHEN NOT MATCHED BY SOURCE THEN DELETE;
 
 SET IDENTITY_INSERT [dbo].[SurveyTemplateColumns] OFF;
+
+*/
