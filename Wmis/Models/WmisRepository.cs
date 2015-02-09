@@ -1416,7 +1416,7 @@
 					p_sortBy = psr.SortBy,
 					p_sortDirection = psr.SortDirection,
 					p_projectId = psr.ProjectKey,
-                    p_surveyId = psr.SurveyTypeKey,
+                    p_surveyId = (psr.SurveyTypeKey == -1 || psr.SurveyTypeKey ==null) ? null : psr.SurveyTypeKey,
 					p_keywords = string.IsNullOrWhiteSpace(psr.Keywords) ? null : psr.Keywords
 				};
 

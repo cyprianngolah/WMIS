@@ -445,7 +445,7 @@ wmis.project.edit = (function ($) {
 			return json.data;
         });
 
-        var ddp4 = wmis.global.getDropDownData(viewModel.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500", function (json) {
+        var ddp4 = wmis.global.getDropDownData(viewModel.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=true", function (json) {
             return json.data;
         });
 

@@ -78,9 +78,19 @@
 		#region Project Survey Types
 		[HttpGet]
 		[Route("surveytype")]
-		public Dto.PagedResultset<Models.SurveyType> GetProjectSurveyTypes(Dto.SurveyTypeRequest str)
+        public Dto.PagedResultset<Models.SurveyType> GetProjectSurveyTypes([FromUri]Dto.SurveyTypeRequest str)
 		{
-			return Repository.SurveyTypeSearch(str ?? new SurveyTypeRequest());
+            var surveyTypes = Repository.SurveyTypeSearch(str);
+            if (str.IncludeAllOption)
+            {
+                var allType = new SurveyType()
+                {
+                    Key = -1,
+                    Name = "All"
+                };
+                surveyTypes.Data.Insert(0, allType);
+            }
+            return surveyTypes;
 		}
 		#endregion
 
