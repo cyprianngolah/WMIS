@@ -1,23 +1,16 @@
 ﻿<script id="passTableFilterTemplate" type="text/html">
     <div class="form-group">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <button type="submit" class="btn btn-default" data-bind="click: fetchFromArgos">Pull Argos Feed</button>
             <button type="submit" class="btn btn-default" data-bind="click: downloadShapeFile">Download Shapefile</button>
         </div>
-        <label for="statusFilter" class="col-md-4 control-label">Status Filter</label>
+        <label for="daysFilter" class="col-md-2 control-label">Days Filter</label>
+        <div class="col-md-2">
+            <select class="form-control" id="daysFilter" name="daysFilter" data-bind="options: daysFilterOptions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: daysFilterKey, select2: { }"></select>
+        </div>
+        <label for="statusFilter" class="col-md-2 control-label">Status Filter</label>
         <div class="col-md-2">
             <select class="form-control" id="statusFilter" name="statusFilter" data-bind="options: statusFilterOptions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: statusFilterKey, select2: { }"></select>
-        </div>
-    </div>
-    <div class="form-group pull-right">
-        <div class="btn-group">
-            <div class="col-md-12">
-                <label class="control-label">Data Filter</label>
-                <button type="button" class="btn btn-default" data-v>All</button>
-                <button type="button" class="btn btn-default">Last Week (7 days)</button>
-                <button type="button" class="btn btn-default">Last Month (30 days)</button>
-                <button type="button" class="btn btn-default">Last Quarter (90 days)</button>
-            </div>
         </div>
     </div>
 </script>

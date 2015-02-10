@@ -1,8 +1,10 @@
 ﻿CREATE PROCEDURE [dbo].[ArgosPass_Search]
-	@p_startRow int = 0,
-	@p_rowCount int = 25,
-	@p_collaredAnimalKey int,
-	@p_argosPassStatusFilter bit
+	@p_startRow INT = 0,
+	@p_rowCount INT = 25,
+	@p_collaredAnimalKey INT,
+	@p_argosPassStatusFilter INT = null,
+	@p_daysStart DateTime = null,
+	@p_daysEnd DateTime = null
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
@@ -19,7 +21,8 @@ AS
 		LEFT OUTER JOIN dbo.ArgosPassStatuses argosPassStatus on ap.ArgosPassStatusId = argosPassStatus.ArgosPassStatusId
 	WHERE
 		ap.CollaredAnimalId = @p_collaredAnimalKey
-		AND (@p_argosPassStatusFilter IS NULL OR @p_argosPassStatusFilter = argosPassStatus.isRejected)
+		AND (@p_argosPassStatusFilter IS NULL OR argosPassStatus.isRejected = @p_argosPassStatusFilter)
+		AND (@p_daysStart IS NULL OR ap.LocationDate >= @p_daysStart)
 	ORDER BY
 		ap.LocationDate DESC
 	OFFSET 

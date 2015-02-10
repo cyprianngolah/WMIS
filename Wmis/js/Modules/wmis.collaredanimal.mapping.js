@@ -40,11 +40,19 @@ wmis.collaredanimal.mapping = (function ($) {
 
         this.passStatuses = ko.observableArray();
         this.statusFilterKey = ko.observable(-1);
-        
+        this.daysFilterKey = ko.observable(-1);
+
         this.statusFilterOptions = [
-            { key: '-1', name: 'All' },
-            { key: '0', name: 'Warnings' },
-            { key: '1', name: 'Rejected' }
+            { key: -1, name: 'All' },
+            { key: 0, name: 'Warnings' },
+            { key: 1, name: 'Rejected' }
+        ];
+
+        this.daysFilterOptions = [
+            { key: -1, name: 'All' },
+            { key: 7, name: 'Last Week' },
+            { key: 30, name: 'Last Month' },
+            { key: 90, name: 'Last Quarter' }
         ];
 
         wmis.global.getDropDownData(self.passStatuses, "/api/argos/passStatuses?startRow=0&rowCount=500", function (result) { return result.data; });
@@ -151,8 +159,12 @@ wmis.collaredanimal.mapping = (function ($) {
                     rowCount: data.length,
                     collaredAnimalId: options.collaredAnimalId,
                 };
+                //Check Status Filter
                 var statusFilterValue = locationTableModel.statusFilterKey();
                 if (statusFilterValue >= 0) parameters.statusFilter = statusFilterValue;
+                //Check Days Filter
+                var daysFilterValue = locationTableModel.daysFilterKey();
+                if (daysFilterValue >= 0) parameters.daysFilter = daysFilterValue;
 
                 $.getJSON("/api/argos/passes", parameters, function (json) {
                     locationTableModel.argosPasses(json.data);
@@ -174,6 +186,10 @@ wmis.collaredanimal.mapping = (function ($) {
         });
 
         locationTableModel.statusFilterKey.subscribe(function () {
+            $("#locationTable").DataTable().ajax.reload();
+        });
+
+        locationTableModel.daysFilterKey.subscribe(function () {
             $("#locationTable").DataTable().ajax.reload();
         });
     }

@@ -8,5 +8,7 @@
 		public int CollaredAnimalId { get; set; }
 
         public int? StatusFilter { get; set; }
+
+        public int? DaysFilter { get; set; }
 	}
 }
