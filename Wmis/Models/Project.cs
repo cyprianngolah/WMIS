@@ -40,5 +40,7 @@
         public int CollarCount { get; set; }
 
 		public DateTime LastUpdated { get; set; }
+
+        public bool IsAdmin { get; set; }
 	}
 }

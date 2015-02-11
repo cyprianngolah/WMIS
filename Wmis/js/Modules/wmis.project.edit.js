@@ -169,6 +169,8 @@ wmis.project.edit = (function ($) {
 		var hasCollars = (project.collarCount > 0) ? true : false;
 		this.showCollarTab = ko.observable(hasCollars);
 
+		this.showSurveyTab = ko.observable(!project.isSensitiveData);
+
 		this.statuses = ko.observableArray();
 		this.regions = ko.observableArray();
 		this.projectLeads = ko.observableArray();
@@ -224,8 +226,8 @@ wmis.project.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.project))
-			}).success(function() {
-				// TODO is it necessary to reload the project
+			}).success(function () {
+			   
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
@@ -238,6 +240,10 @@ wmis.project.edit = (function ($) {
 		            surveysTable.fnFilter();
 		        }
 		            
+		    });
+            //TODO: Temp solution. Replace when users are tracked
+		    self.project.isSensitiveData.subscribe(function (newVal) {
+		        self.showSurveyTab(!newVal);
 		    });
 		})();
 	}

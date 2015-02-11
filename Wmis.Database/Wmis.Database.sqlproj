@@ -298,6 +298,7 @@
     <Build Include="dbo\Stored Procedures\Collaborator_Search.sql" />
     <Build Include="dbo\Tables\ObservationRows.sql" />
     <Build Include="dbo\Stored Procedures\ObservationRow_Update.sql" />
+    <Build Include="dbo\Stored Procedures\SpeciesType_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

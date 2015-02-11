@@ -140,6 +140,14 @@
 			Repository.BioDiversityUpdate(bioDiversity, changeBy);
 		}
 
+        [HttpGet]
+        [Route("species")]
+        public Dto.PagedResultset<Models.SpeciesType> SpeciesGet(Dto.SpeciesTypeRequest psr)
+        {
+            var species = Repository.TargetSpeciesGet(new SpeciesTypeRequest());
+            return species;
+        }
+
         #region Synonym Various
 
 	    /// <summary>

@@ -242,6 +242,7 @@
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
     <Compile Include="Dto\CollaboratorCreateRequest.cs" />
+    <Compile Include="Dto\SpeciesTypeRequest.cs" />
     <Compile Include="Dto\SurveyTemplateColumnSaveRequest.cs" />
     <Compile Include="Dto\SurveyTemplateSaveRequest.cs" />
     <Compile Include="Dto\FileCreateRequest.cs" />
@@ -289,6 +290,7 @@
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
+    <Compile Include="Models\SpeciesType.cs" />
     <Compile Include="WebApi\ObjectFactory.cs" />
     <Compile Include="WebApi\StructureMapDependencyResolver.cs" />
     <Compile Include="Global.asax.cs">

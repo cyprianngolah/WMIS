@@ -57,7 +57,7 @@
 		[Route("survey/{surveyKey:int}")]
 		public Models.ProjectSurvey GetSurvey(int surveyKey)
 		{
-			return surveyKey > 0 ? this.Repository.ProjectSurveyGet(surveyKey) : new Models.ProjectSurvey { TargetSpecies = new Models.BioDiversity(), SurveyType = new Models.SurveyType(), Template = new Models.SurveyTemplate() };
+			return surveyKey > 0 ? this.Repository.ProjectSurveyGet(surveyKey) : new Models.ProjectSurvey { TargetSpecies = new Models.SpeciesType(), SurveyType = new Models.SurveyType(), Template = new Models.SurveyTemplate() };
 		}
 
 		[HttpPost]

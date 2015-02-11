@@ -10,7 +10,7 @@
 	{
 		public int ProjectKey { get; set; }
 
-		public BioDiversity TargetSpecies { get; set; }
+		public SpeciesType TargetSpecies { get; set; }
 
 		public SurveyType SurveyType { get; set; }
 

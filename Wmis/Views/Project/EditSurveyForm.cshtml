@@ -20,7 +20,10 @@
 					<div class="form-group">
                         <label for="targetSpecies" class="col-md-1 control-label">Target Species</label>
                         <div class="col-md-5" data-bind="with: targetSpecies">
-	                        <input type="hidden" class="form-control" id="targetSpecies" name="targetSpecies" data-bind="value: key, select2: $root.targetSpeciesOptions" />
+	                        @*<input type="hidden" class="form-control" id="targetSpecies" name="targetSpecies" data-bind="value: key, select2: $root.targetSpeciesOptions" />*@
+                            <!-- ko if: $root.targetSpeciesOptions().length > 0 -->
+                            <select class="form-control" id="targetSpecies" data-bind="options: $root.targetSpeciesOptions, optionsText: 'commonName', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+                            <!-- /ko -->
                         </div>
                         
                         <label for="startDate" class="col-md-1 control-label">Start Date</label>

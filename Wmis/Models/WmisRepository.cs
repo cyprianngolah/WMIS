@@ -183,6 +183,8 @@
 
 		private const string SURVEYTYPE_SEARCH = "dbo.SurveyType_Search";
 
+        private const string SPECIESTYPE_GET = "dbo.SpeciesType_Get";
+
 		private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
 
 		private const string SURVEYTEMPLATECOLUMNMAPPING_GET = "dbo.SurveyTemplateColumnMapping_Get";
@@ -1421,7 +1423,7 @@
 				};
 
 				var pr = new Dto.PagedResultset<ProjectSurvey> { DataRequest = psr };
-				pr.Data = c.Query<int, ProjectSurvey, BioDiversity, SurveyType, SurveyTemplate, ProjectSurvey>(
+				pr.Data = c.Query<int, ProjectSurvey, SpeciesType, SurveyType, SurveyTemplate, ProjectSurvey>(
 					SURVEY_SEARCH,
 					(count, ps, s, st, t) =>
 					{
@@ -1448,11 +1450,11 @@
 					p_surveyId = surveyKey
 				};
 
-				var survey = c.Query<ProjectSurvey, BioDiversity, SurveyType, SurveyTemplate, ProjectSurvey>(
+                var survey = c.Query<ProjectSurvey, SpeciesType, SurveyType, SurveyTemplate, ProjectSurvey>(
 					SURVEY_GET,
 					(ps, s, st, t) =>
 					{
-						ps.TargetSpecies = s ?? new BioDiversity();
+						ps.TargetSpecies = s ?? new SpeciesType();
 						ps.SurveyType = st ?? new SurveyType();
 						ps.Template = t ?? new SurveyTemplate();
 						return ps;
@@ -1597,9 +1599,45 @@
             }
         }
 		#endregion
-		
-		#region Project Survey Type
-		public Dto.PagedResultset<Models.SurveyType> SurveyTypeSearch(Dto.SurveyTypeRequest str)
+
+        #region Species Types
+        public Dto.PagedResultset<Models.SpeciesType> TargetSpeciesGet(Dto.SpeciesTypeRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    //p_from = request.StartRow,
+                    //p_to = request.StartRow + request.RowCount - 1,
+                    //p_sortBy = request.SortBy,
+                    //p_sortDirection = request.SortDirection,
+                };
+
+                var pagedResults = new PagedResultset<SpeciesType>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<SpeciesType>()
+                };
+
+                var results = c.Query<dynamic, SpeciesType, SpeciesType>(SPECIESTYPE_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.ResultCount;
+                        return t;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        #endregion
+
+        #region Project Survey Type
+        public Dto.PagedResultset<Models.SurveyType> SurveyTypeSearch(Dto.SurveyTypeRequest str)
 		{
 			using (var c = NewWmisConnection)
 			{
@@ -2911,5 +2949,5 @@
 			get { return new SqlConnection(_connectionString); }
 		}
 		#endregion
-	}
+    }
 }
