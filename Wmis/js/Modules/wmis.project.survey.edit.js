@@ -21,7 +21,9 @@ wmis.project.survey.edit = (function ($) {
 		self.surveyTypes = ko.observableArray();
 		self.templates = ko.observableArray();
 		self.targetSpeciesOptions = ko.observableArray();
-		
+		self.observationData = ko.observableArray();
+		self.initializedMap = ko.observable(false);
+
 		self.getDropDowns = function () {
 			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false", function (result) { return result.data; });
 			wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
@@ -60,13 +62,12 @@ wmis.project.survey.edit = (function ($) {
 		self.showObservationTab.subscribe(function(showObservations) {
 		    if (showObservations) {
 				self.getObservationUploads();
-				self.getObservations();
 			}
 		});
 		self.observations = ko.observable(null);
 		self.hasObservations = ko.computed(function() {
 			if (self.observations() != null && self.observations().observationData().length > 0) {
-				return true;
+			    return true;
 			} 
 			return false;
 		});
@@ -242,6 +243,12 @@ wmis.project.survey.edit = (function ($) {
 				}
 				// End Dirty Hack
 				ko.mapper.fromJS(appendedData, "auto", self.observations);
+				self.observationData(self.observations().observationData())
+			    //initialize the map.*Map should be visible here or will cause error*
+				if (!self.initializedMap() && self.hasObservations()) {
+				    wmis.mapping.initialize(self.observationData, self.selectedPass, self.reviewObservation, function (pass) { return pass.observationRowStatusId || 0; }, false, true);
+				    self.initializedMap(true);
+				}
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
@@ -354,10 +361,6 @@ wmis.project.survey.edit = (function ($) {
 
 	    this.selectedPass = ko.observable();
 
-	    this.observationDataComputedObservable = ko.computed(function() {
-	        return (self.observations() && self.observations().observationData()) || [];
-	    });
-
 	    this.reviewObservation = function (observation) {
 	        var selectedPass = ko.mapper.toJS(observation);
 	        self.selectedPass(selectedPass);
@@ -378,7 +381,8 @@ wmis.project.survey.edit = (function ($) {
 	    }
 
 	    this.mapTabClicked = _.once(function () {
-	        wmis.mapping.initialize(self.observationDataComputedObservable, self.selectedPass, self.reviewObservation, function (pass) { return pass.observationRowStatusId || 0; }, null, true);
+            //initialize here so map doesn't get initialize before map is visible (causes error). 
+	        self.getObservations();
 	    });
 
 		self.showObservationTab(isTemplateAssigned());
