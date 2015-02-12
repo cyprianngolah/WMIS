@@ -6,57 +6,13 @@ wmis.project.survey.new = (function ($) {
 		projectKey: null,
 	};
 
-	var targetSpeciesOptions = {
-	    ajax: {
-	        url: "/api/biodiversity",
-	        placeholder: "Target Species",
-	        dataType: "json",
-	        data: function (term, page) {
-	            return {
-	                searchString: term,
-	                startRow: (page - 1) * 25,
-	                rowCount: 25
-	            };
-	        },
-	        results: function (result, page, query) {
-	            var results = _.map(result.data, function (record) {
-	                return {
-	                    id: record.key,
-	                    text: record.name + (record.commonName ? ' - ' + record.commonName : '')
-	                };
-	            });
-	            return {
-	                results: results
-	            };
-	        }
-	    },
-	    initSelection: function (element, callback) {
-	        // the input tag has a value attribute preloaded that points to a preselected repository's id
-	        // this function resolves that id attribute to an object that select2 can render
-	        // using its formatResult renderer - that way the repository name is shown preselected
-	        var id = $(element).val();
-	        if (id != null && id != 0) {
-	            $.ajax("/api/biodiversity/" + id, {
-	                dataType: "json"
-	            }).done(function (data) {
-	                callback({
-	                    id: data.key,
-	                    text: data.name + (data.commonName ? ' - ' + data.commonName : '')
-	                });
-	            });
-	        }
-	    },
-	};
-
 	function newProjectSurveyViewModel() {
 		var self = this;
 		self.survey = ko.observable();
 
 		self.dataLoaded = ko.observable(false);
 
-		self.targetSpeciesOptions = targetSpeciesOptions;
-
-		self.species = ko.observableArray();
+		self.targetSpeciesOptions = ko.observableArray();
 		self.surveyTypes = ko.observableArray();
 		self.templates = ko.observableArray();
 
@@ -82,9 +38,9 @@ wmis.project.survey.new = (function ($) {
 		};
 
 		self.getDropDowns = function () {
-			wmis.global.getDropDownData(self.species, "/api/biodiversity?startRow=0&rowCount=500", function (result) { return result.data; });
-			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false", function (result) { return result.data; });
-			wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
+		    wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false", function (result) { return result.data; });
+		    wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
+		    wmis.global.getDropDownData(self.targetSpeciesOptions, "/api/biodiversity/species?startRow=0&rowCount=500", function (result) { return result.data; });
 		};
 
 		this.mapTabClicked = function () {
