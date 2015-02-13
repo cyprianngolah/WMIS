@@ -1746,7 +1746,6 @@
                 ResultCount = 0,
                 Data = new List<Collar>()
             };
-            //return pr;
 
             using (var c = NewWmisConnection)
             {
@@ -1940,6 +1939,7 @@
                         collar.CollarType = type ?? new CollarType();
                         collar.CollarRegion = region ?? new CollarRegion();
                         collar.CollarStatus = status ?? new CollarStatus();
+                        collar.HerdPopulation = dyn.HerdPopulationKey == null ? new HerdPopulation() : new HerdPopulation { Key = dyn.HerdPopulationKey, Name = dyn.HerdPopulationName };
                         collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
                         collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
                         return collar;

@@ -48,6 +48,7 @@ wmis.collaredanimal.index = (function($) {
                 { "data": "collarStatus.name" },
                 { "data": "vhfFrequency" },
                 { "data": "animalId" },
+                { "data": "herdPopulation.name" },
 				{ "data": "project.key" },
 				{ "data": "project.name" },
 			    {

@@ -1,4 +1,11 @@
-﻿<div class="row">
+﻿
+<div class="row">
+    <div class="col-md-12 text-right">
+        <a class="btn btn-default" data-bind="click: $root.navigateToProject">Cancel</a>
+        <button type="submit" class="btn btn-primary" data-bind="click: $root.saveProject">Save</button>
+    </div>
+</div>
+<div class="row">
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="active"><a href="#surveyTab" role="tab" data-toggle="tab">Survey</a></li>
@@ -9,13 +16,6 @@
 		<div class="tab-content" style="margin-top:10px;">
 			<!-- Survey -->
 			<div class="tab-pane form-horizontal active" data-bind="with: survey" id="surveyTab">
-				<div class="row">
-					<div class="col-md-12 text-right">
-						<a class="btn btn-default" data-bind="click: $root.navigateToProject">Cancel</a>
-						<button type="submit" class="btn btn-primary" data-bind="click: $root.saveProject">Save</button>
-					</div>
-				</div>
-
 				<form role="form">
 					<div class="form-group">
                         <label for="targetSpecies" class="col-md-1 control-label">Target Species</label>

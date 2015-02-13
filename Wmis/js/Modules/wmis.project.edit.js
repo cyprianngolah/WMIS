@@ -388,6 +388,7 @@ wmis.project.edit = (function ($) {
 			"columns": [
 				{ "data": "animalId" },
 				{ "data": "animalStatus.name" },
+                { "data": "herdPopulation.name" },
 				{ "data": "animalSex.name" },
 				{ "data": "collarStatus.name" },
 				{ "data": "collarState.name" },
