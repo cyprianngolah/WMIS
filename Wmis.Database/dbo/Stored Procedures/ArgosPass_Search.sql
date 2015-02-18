@@ -13,6 +13,7 @@ AS
 		ap.Latitude,
 		ap.Longitude,
 		ap.LocationDate,
+		ap.Comment,
 		argosPassStatus.ArgosPassStatusId as [Key],
 		argosPassStatus.Name,
 		argosPassStatus.isRejected

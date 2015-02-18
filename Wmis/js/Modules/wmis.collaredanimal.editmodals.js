@@ -158,19 +158,21 @@ wmis.collaredanimal.editmodals = (function ($) {
             key: ko.observable(point.argosPassStatus.key),
             name: ko.observable(point.argosPassStatus.name)
         });
-
+        this.comment = ko.observable(point.comment);
         this.argosPassStatuses = argosPassStatuses;
         this.saveAllowed = ko.observable(true);
         this.save = function () {
             self.modal.close({
                 argosPassId: point.key,
-                argosPassStatusId: self.argosPassStatus().key()
+                argosPassStatusId: self.argosPassStatus().key(),
+                comment: self.comment()
             });
         }
         this.clearStatus = function () {
             self.modal.close({
                 argosPassId: point.key,
-                argosPassStatusId: 0
+                argosPassStatusId: 0,
+                comment: self.comment()
             });
         }
         this.cancel = function () {

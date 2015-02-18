@@ -109,7 +109,7 @@
         [Route("pass/save")]
         public void UpdateArgosPass([FromBody]Dto.ArgosPassUpdateRequest request)
         {
-            Repository.ArgosPassUpdate(request.ArgosPassId, request.ArgosPassStatusId);
+            Repository.ArgosPassUpdate(request.ArgosPassId, request.ArgosPassStatusId, request.Comment);
         }
     }
 }

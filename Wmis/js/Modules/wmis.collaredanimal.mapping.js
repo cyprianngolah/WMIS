@@ -13,7 +13,8 @@ wmis.collaredanimal.mapping = (function ($) {
             dataType: "json",
             data: JSON.stringify({
                 argosPassId: pass.argosPassId,
-                argosPassStatusId: pass.argosPassStatusId
+                argosPassStatusId: pass.argosPassStatusId,
+                comment: pass.comment
             })
         }).done(function() {
             $("#locationTable").DataTable().ajax.reload(null, false);
@@ -141,6 +142,7 @@ wmis.collaredanimal.mapping = (function ($) {
                 { "data": "latitude" },
                 { "data": "longitude" },
                 { "data": "argosPassStatus.name" },
+                { "data": "comment" },
                 {
                     "data": null,
                     "width": "40px",

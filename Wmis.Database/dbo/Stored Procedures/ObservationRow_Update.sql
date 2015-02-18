@@ -1,12 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[ObservationRow_Update]
 	@p_observationRowId INT,
-	@p_argosPassStatusId INT = NULL
+	@p_argosPassStatusId INT = NULL,
+	@p_comment NVARCHAR(MAX) = NULL
 AS
 
 	UPDATE 
 		ObservationRows
 	SET 
-		ObservationRowStatusId = @p_argosPassStatusId
+		ObservationRowStatusId = @p_argosPassStatusId,
+		Comment = @p_comment
 	WHERE 
 		ObservationRowId = @p_observationRowId
 

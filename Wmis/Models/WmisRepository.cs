@@ -248,7 +248,8 @@
 
         private const string HISTORYLOG_SAVE = "dbo.HistoryLog_Save";
 
-        private const string ARGOSPASS_CREATE = "dbo.ArgosPass_Create";
+        //TODO: not being used? Cleanup..
+        //private const string ARGOSPASS_CREATE = "dbo.ArgosPass_Create";
 
         private const string ARGOSPASS_MERGE = "dbo.ArgosPass_Merge";
 
@@ -1585,14 +1586,15 @@
 			}
 	    }
 
-        public void ObservationRowUpdate(int observationRowId, int argosPassStatusId)
+        public void ObservationRowUpdate(Models.ObservationRows observationRow)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_observationRowId = observationRowId,
-                    p_argosPassStatusId = argosPassStatusId == 0 ? (int?)null : argosPassStatusId
+                    p_observationRowId = observationRow.ObservationRowId,
+                    p_argosPassStatusId = observationRow.ArgosPassStatusId == 0 ? (int?)null : observationRow.ArgosPassStatusId,
+                    p_comment = observationRow.Comment
                 };
 
                 c.Execute(OBSERVATIONROW_UPDATE, param, commandType: CommandType.StoredProcedure);
@@ -2562,7 +2564,7 @@
         #endregion
 
         #region Argos Passes
-        public void ArgosPassUpdate(int argosPassId, int argosPassStatusId)
+        public void ArgosPassUpdate(int argosPassId, int argosPassStatusId, string comment)
         {
             using (var c = NewWmisConnection)
             {
@@ -2570,6 +2572,7 @@
                 {
                     p_ArgosPassId = argosPassId,
                     p_ArgosPassStatusId = argosPassStatusId == 0 ? null : (int?)argosPassStatusId,
+                    p_Comment = comment
                 };
                 c.Query<int>(ARGOSPASS_UPDATE, param, commandType: CommandType.StoredProcedure);
             }

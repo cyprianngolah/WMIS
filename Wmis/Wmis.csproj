@@ -236,9 +236,11 @@
     <Compile Include="Controllers\ProtectedAreaController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
-    <Compile Include="Dto\ProjectCollaboratorsUpdateRequest.cs" />
     <Compile Include="Dto\Base\PagedDataKeyedKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
+    <Compile Include="Dto\Base\PagedDataRequest.cs" />
+    <Compile Include="Dto\Base\PagedResultset.cs" />
+    <Compile Include="Dto\ProjectCollaboratorsUpdateRequest.cs" />
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
     <Compile Include="Dto\CollaboratorCreateRequest.cs" />
@@ -252,8 +254,6 @@
     <Compile Include="Dto\CollarSearchRequest.cs" />
     <Compile Include="Dto\BioDiversitySearchRequest.cs" />
     <Compile Include="Dto\BioDiversityUpdateRequest.cs" />
-    <Compile Include="Dto\Base\PagedResultset.cs" />
-    <Compile Include="Dto\Base\PagedDataRequest.cs" />
     <Compile Include="Dto\CollarStateRequest.cs" />
     <Compile Include="Dto\CollarMalfunctionRequest.cs" />
     <Compile Include="Dto\CollarTypeRequest.cs" />
@@ -290,6 +290,7 @@
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
+    <Compile Include="Models\ObservationRows.cs" />
     <Compile Include="Models\SpeciesType.cs" />
     <Compile Include="WebApi\ObjectFactory.cs" />
     <Compile Include="WebApi\StructureMapDependencyResolver.cs" />

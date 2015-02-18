@@ -364,14 +364,23 @@ wmis.project.survey.edit = (function ($) {
 	    this.reviewObservation = function (observation) {
 	        var selectedPass = ko.mapper.toJS(observation);
 	        self.selectedPass(selectedPass);
+
 	        reviewObservationDataPoint(selectedPass, passStatuses, function (result) {
 	            var projectSurveyPromise = $.ajax({
-	                url: '/api/observation/survey/row/' + selectedPass.key + '?argosPassStatusId=' + result.observationRowStatusId,
-	                type: "PUT"
+	                url: '/api/observation/survey/row/',
+	                type: "PUT",
+	                contentType: "application/json",
+	                dataType: "json",
+	                data: JSON.stringify({
+	                    observationRowId: selectedPass.key,
+	                    argosPassStatusId: result.observationRowStatusId,
+	                    comment: result.comment
+	                })
 	            }).success(function () {
 	                observation.observationRowStatusId(result.observationRowStatusId);
+	                observation.comment(result.comment);
 	                self.observations().observationData.valueHasMutated();
-	                console.log('yay!');
+	                
 	            }).always(function () {
 
 	            }).fail(wmis.global.ajaxErrorHandler);;
@@ -395,6 +404,7 @@ wmis.project.survey.edit = (function ($) {
 	    this.timestamp = 'Timestamp: ' + point.timestamp;
 	    this.observationUploadId = 'Upload Key: ' + point.observationUploadId;
 	    this.rowIndex = 'Excel Row: ' + point.rowIndex;
+	    this.comment = ko.observable(point.comment);
 
 	    var matchingStatus = _.findWhere(argosPassStatuses, { key: point.observationRowStatusId });
 	    var name = matchingStatus ? matchingStatus.name : '';
@@ -407,12 +417,14 @@ wmis.project.survey.edit = (function ($) {
 	    this.saveAllowed = ko.observable(true);
 	    this.save = function () {
 	        self.modal.close({
-	            observationRowStatusId: self.argosPassStatus().key()
+	            observationRowStatusId: self.argosPassStatus().key(),
+                comment: self.comment()
 	        });
 	    }
 	    this.clearStatus = function () {
 	        self.modal.close({
-	            observationRowStatusId: 0
+	            observationRowStatusId: 0,
+                comment: self.comment()
 	        });
 	    }
 	    this.cancel = function () {
