@@ -16,12 +16,14 @@
 	@Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
+
 @section Scripts{
 	@Html.Raw(Scripts.Render("~/bundles/datePicker"))
 	@Html.Raw(Scripts.Render("~/bundles/datatables"))
 	@Html.Raw(Scripts.Render("~/bundles/select2"))
 	@Html.Raw(Scripts.Render("~/bundles/knockout"))
 	@Html.Raw(Scripts.Render("~/bundles/project/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
 
 	<script>
         $(function () {
@@ -36,8 +38,13 @@
             	$collarTab: $('a[href="#collarsTab"]'),
             	$collarTable: $("#collars")
             });
+            wmis.shared.historytab.initialize(@ViewBag.Key, 'ProjectHistory', 'historyTemplateTempDiv');
         });
 	</script>
+}
+
+@section Dialogs {
+    @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
 }
 
 <form role="form">
@@ -55,11 +62,15 @@
                 <li data-bind="visible: showSurveyTab"><a href="#surveysTab" role="tab" data-toggle="tab">Surveys</a></li>
                 <li data-bind="visible: showCollarTab"><a href="#collarsTab" role="tab" data-toggle="tab">Collars</a></li>
                 <li><a href="#collaboratorsTab" role="tab" data-toggle="tab">Collaborators</a></li>
+                <li><a href="#history" role="tab" data-toggle="tab">History</a></li>
             </ul>
 
             <!-- Tab panes -->
             <!-- General -->
             <div class="tab-content" style="margin-top:10px;">
+                <div id="history" class="tab-pane form-horizontal">
+                    <div id="historyTemplateTempDiv"></div>
+                </div>
                 <div class="tab-pane form-horizontal active" data-bind="with: project" id="generalTab">
                     <div class="form-group">
                         <label for="name" class="col-md-1 control-label">Name</label>
