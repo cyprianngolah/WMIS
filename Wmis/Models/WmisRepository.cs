@@ -2238,7 +2238,8 @@
                     p_rowCount = request.StartRow + request.RowCount - 1,
                     p_collaredAnimalId = request.Table == "CollaredAnimals" ? request.Key : (int?)null,
                     p_speciesId = request.Table == "Biodiversity" ? request.Key : (int?)null,
-                    p_projectId = request.Table == "ProjectHistory" ? request.Key : (int?)null
+                    p_projectId = request.Table == "ProjectHistory" ? request.Key : (int?)null,
+                    p_surveyId = request.Table == "SurveyHistory" ? request.Key : (int?)null
                 };
 
                 var pagedResults = new PagedResultset<HistoryLog>

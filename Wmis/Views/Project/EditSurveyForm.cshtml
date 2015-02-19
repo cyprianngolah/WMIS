@@ -10,6 +10,7 @@
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="active"><a href="#surveyTab" role="tab" data-toggle="tab">Survey</a></li>
             <li data-bind="visible: showObservationTab, click: mapTabClicked"><a href="#observationTab" role="tab" data-toggle="tab">Observation</a></li>
+            <li><a href="#history" role="tab" data-toggle="tab">History</a></li>
 		</ul>
 	
 		<!-- Tab panes -->
@@ -243,6 +244,11 @@
 			    </div>
 				<!-- /ko-->
 			</div>
+
+            <!-- History Tab -->
+            <div id="history" class="tab-pane form-horizontal">
+                <div id="historyTemplateTempDiv"></div>
+            </div>
 		</div>
 	</div>
 </div>
