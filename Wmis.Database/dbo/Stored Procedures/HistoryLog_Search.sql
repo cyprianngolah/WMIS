@@ -4,7 +4,8 @@
 	@p_collaredAnimalId INT = NULL,
 	@p_speciesId INT = NULL,
 	@p_projectId INT = NULL,
-	@p_surveyId INT = NULL
+	@p_surveyId INT = NULL,
+	@p_userId INT = NULL
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
@@ -21,6 +22,7 @@ AS
 		AND (@p_speciesId IS NULL OR h.SpeciesId = @p_speciesId)
 		AND (@p_projectId IS NULL OR h.ProjectId = @p_projectId)
 		AND (@p_surveyId IS NULL OR h.SurveyId = @p_surveyId)
+		AND (@p_userId IS NULL OR h.UserId = @p_userId)
 	ORDER BY
 		h.ChangeDate DESC
 	OFFSET 

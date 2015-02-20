@@ -9,16 +9,24 @@
 
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
 	@Html.Raw(Scripts.Render("~/bundles/knockout"))
 	@Html.Raw(Scripts.Render("~/bundles/user/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
 
 	<script type="text/javascript">
 		$(function() {
 			wmis.user.edit.initialize({
 				key: @ViewBag.Key
-			});
+				});
+		    wmis.shared.historytab.initialize(@ViewBag.Key, 'UserHistory', 'historyTemplateTempDiv');
 		});
 	</script>
 }
+
+@section Dialogs {
+    @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+}
+
 
 @{ Html.RenderPartial("EditForm"); }
