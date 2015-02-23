@@ -24,10 +24,22 @@
   - Physical path: <path to your source code directory>
   - Binding: http, All unassigned, port 80 
   - Host name: wmis.local
-
+  - (Windows Auth) Add the following Registry Information:
+	Navigate To:
+		HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters
+	Add:
+		Value name: DisableStrictNameChecking
+		Data type: REG_DWORD
+		Radix: Decimal
+		Value: 1 
+  - (Windows Auth) Follow the steps for Method 1 at http://support.microsoft.com/kb/896861 (adding wmis.local as the host)
+  - (Windows Auth) In IIS Manager for YEC site, click Authentication and ensure only Windows Authentication is checked
+  - (Windows Auth) Ensure the "Users" group has permission the Website folder
+  
 ##### Edit hosts file #####
   - Navigate to the hosts file (C:\Windows\System32\drivers\etc)
   - Open the 'hosts' file and add the following mapping to the bottom of the file: **127.0.0.1 wmis.local**
+  
 
 #### WMIS.Database workflow ####
 

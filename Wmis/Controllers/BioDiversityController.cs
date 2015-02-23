@@ -2,6 +2,8 @@
 {
 	using System.Web.Mvc;
 
+	using Wmis.Auth;
+
 	/// <summary>
 	/// UI Controller for BioDiversity
 	/// </summary>
@@ -11,7 +13,7 @@
 		/// Gets the BioDiversity Set Page
 		/// </summary>
 		/// <returns>The results</returns>
-        public ActionResult Index()
+		public ActionResult Index()
         {
             return View();
         }
@@ -20,6 +22,7 @@
 		/// Gets the New BioDiversity Page
 		/// </summary>
 		/// <returns>The New BioDiversity Page</returns>
+		//[WmisMvcAuthorize(Roles = "AdministratorBiodiversity")]
 		public ActionResult New()
 	    {
 		    return View();

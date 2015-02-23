@@ -281,6 +281,8 @@
 
         private const string USERS_GET = "dbo.Users_Get";
 
+		private const string USER_CREATEANDGET = "dbo.User_CreateAndGet";
+
         private const string USERS_UPDATE = "dbo.Users_Update";
 
         private const string USERS_SEARCH = "dbo.Users_Search";
@@ -2705,6 +2707,24 @@
                 }
             }
         }
+
+		public User UserGet(string username)
+		{
+			using (var c = NewWmisConnection)
+			{
+				var param = new
+				{
+					p_username = username
+				};
+
+				using (var q = c.QueryMultiple(USER_CREATEANDGET, param, commandType: CommandType.StoredProcedure))
+				{
+					var user = q.Read<User>().Single();
+					user.Projects = q.Read<SimpleProject>().ToList();
+					return user;
+				}
+			}
+		}
 
         public void UserUpdate(User user)
         {
