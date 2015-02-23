@@ -290,7 +290,7 @@
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
-    <Compile Include="Models\ObservationRows.cs" />
+    <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\SpeciesType.cs" />
     <Compile Include="WebApi\ObjectFactory.cs" />
     <Compile Include="WebApi\StructureMapDependencyResolver.cs" />

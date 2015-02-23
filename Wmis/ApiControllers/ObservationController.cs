@@ -16,6 +16,7 @@
 	using Wmis.WebApi;
 
 	using File = System.IO.File;
+	using ObservationRow = Wmis.Logic.ObservationRow;
 
 	public class ObservationUploadException : Exception
 	{
@@ -170,7 +171,7 @@
 
         [HttpPut]
         [Route("survey/row/")]
-        public void UpdateObservationRow(Models.ObservationRows observationRow)
+        public void UpdateObservationRow(Models.ObservationRow observationRow)
         {
             Repository.ObservationRowUpdate(observationRow);
         }

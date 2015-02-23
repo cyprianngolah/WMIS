@@ -1587,13 +1587,13 @@
 			}
 	    }
 
-        public void ObservationRowUpdate(Models.ObservationRows observationRow)
+        public void ObservationRowUpdate(Models.ObservationRow observationRow)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_observationRowId = observationRow.ObservationRowId,
+                    p_observationRowId = observationRow.Key,
                     p_argosPassStatusId = observationRow.ArgosPassStatusId == 0 ? (int?)null : observationRow.ArgosPassStatusId,
                     p_comment = observationRow.Comment
                 };

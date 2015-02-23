@@ -372,7 +372,7 @@ wmis.project.survey.edit = (function ($) {
 	                contentType: "application/json",
 	                dataType: "json",
 	                data: JSON.stringify({
-	                    observationRowId: selectedPass.key,
+	                    key: selectedPass.key,
 	                    argosPassStatusId: result.observationRowStatusId,
 	                    comment: result.comment
 	                })
