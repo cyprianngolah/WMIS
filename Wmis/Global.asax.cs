@@ -21,6 +21,13 @@
 	/// </summary>
 	public class MvcApplication : System.Web.HttpApplication
     {
+		public override void Init()
+		{
+			base.Init();
+
+			PostAuthenticateRequest += MvcApplication_PostAuthenticateRequest;
+		}
+
 		/// <summary>
 		/// The Application Start
 		/// </summary>
@@ -51,13 +58,6 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-
-		public override void Init()
-		{
-			base.Init();
-
-			PostAuthenticateRequest += MvcApplication_PostAuthenticateRequest;
-		}
 
 		#region Manage User Identity Here
 		void MvcApplication_PostAuthenticateRequest(object sender, System.EventArgs e)
