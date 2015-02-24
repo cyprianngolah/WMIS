@@ -72,6 +72,7 @@ wmis.project.survey.edit = (function ($) {
 			return false;
 		});
 		self.canUploadObservations = ko.observable("true");
+		self.observationsTableInitialized = ko.observable(false);
 		self.workingUpload = ko.observable(null);
 		self.workingData = ko.observable();
 		self.observationUploads = ko.observableArray();
@@ -243,11 +244,19 @@ wmis.project.survey.edit = (function ($) {
 				}
 				// End Dirty Hack
 				ko.mapper.fromJS(appendedData, "auto", self.observations);
-				self.observationData(self.observations().observationData())
+				self.observationData(self.observations().observationData());
 			    //initialize the map.*Map should be visible here or will cause error*
 				if (!self.initializedMap() && self.hasObservations()) {
 				    wmis.mapping.initialize(self.observationData, self.selectedPass, self.reviewObservation, function (pass) { return pass.observationRowStatusId || 0; }, false, true);
 				    self.initializedMap(true);
+				}
+
+				if (!self.observationsTableInitialized()) {
+					$('#locationTable').DataTable({
+						"pagingType": "bootstrap",
+						"scrollX": true,
+						"dom": '<"top">rt<"bottom"ip><"clear">'
+					});
 				}
 			}).fail(wmis.global.ajaxErrorHandler);
 		};

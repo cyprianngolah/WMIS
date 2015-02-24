@@ -65,24 +65,24 @@ wmis.project.edit = (function ($) {
 	        }
 	    };
 
-	    this.save = function () {
-	        var selectedValue = $("#collaboratorInput").select2("data");
-	        var selectedCollaborator = selectedValue && selectedValue.data;
-	        if (selectedCollaborator) {
-	            var newCollaboratorIds = currentCollaboratorIds.concat(selectedCollaborator.key);
-	            updateCollaborators(newCollaboratorIds, function() {
-	                self.modal.close(selectedCollaborator);
-	            }, function() {
-	                self.modal.close();
-	            });
-	        } else {
-	            self.modal.close();
-	        }
-	    }
+		this.save = function() {
+			var selectedValue = $("#collaboratorInput").select2("data");
+			var selectedCollaborator = selectedValue && selectedValue.data;
+			if (selectedCollaborator) {
+				var newCollaboratorIds = currentCollaboratorIds.concat(selectedCollaborator.key);
+				updateCollaborators(newCollaboratorIds, function() {
+					self.modal.close(selectedCollaborator);
+				}, function() {
+					self.modal.close();
+				});
+			} else {
+				self.modal.close();
+			}
+		};
 
-	    this.cancel = function () {
-	        self.modal.close();
-	    }
+		this.cancel = function() {
+			self.modal.close();
+		};
 	}
 
 	function createEditCollaborator(collaboratorData, callback) {
