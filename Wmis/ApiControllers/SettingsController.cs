@@ -1,5 +1,8 @@
 ﻿namespace Wmis.ApiControllers
 {
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Security.Claims;
 	using System.Web.Http;
 
 	using Wmis.Auth;
@@ -32,6 +35,13 @@
 		public WmisUser GetUser()
 		{
 			return _user;
+		}
+
+		[HttpGet]
+		[Route("user/claims")]
+		public List<Claim> Claims()
+		{
+			return ClaimsPrincipal.Current.Claims.ToList();
 		}
     }
 }
