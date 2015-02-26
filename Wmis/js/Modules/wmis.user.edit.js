@@ -8,12 +8,13 @@ wmis.user.edit = (function ($) {
 		var self = this;
 		this.key = ko.observable(key);
 		this.username = ko.observable("");
-		this.firstName = ko.observable("");
+		this.name = ko.observable("");
 		this.lastName = ko.observable("");
-	    this.administratorProjects = ko.observable(false);
-	    this.administratorBiodiversity = ko.observable(false);
+		this.hasAdministratorProjectRole = ko.observable(false);
+		this.hasAdministratorBiodiversityRole = ko.observable(false);
 	    this.projects = ko.observableArray();
 	    this.projectOptions = ko.observable();
+	    this.roleOptions = ko.observable();
 	    this.isLoadedForEditing = ko.observable(false);
 
 		this.canSave = ko.computed(function() {
@@ -31,7 +32,7 @@ wmis.user.edit = (function ($) {
         }
 
 		this.get = function () {
-			var url = "/api/user/" + self.key();
+			var url = "/api/person/" + self.key();
 		    $.getJSON(url, {}, function (json) {
 		        ko.mapper.fromJS(json, "auto", self);
 		        enableProjectsInput();
@@ -42,14 +43,14 @@ wmis.user.edit = (function ($) {
 		this.save = function() {
 			var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
 			$.ajax({
-				url: "/api/user/",
+				url: "/api/person/",
 				type: self.isEdit() ? "PUT" : "POST",
 				contentType: "application/json",
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self))
-			}).success(function (key) {
+			}).success(function () {
 			    if (self.isLoadedForEditing()) {
-			        window.location.href = "/user/";
+			        window.location.href = "/user/Edit/" + self.key();
 			    } else {
 			        self.key(key);
 			        self.isLoadedForEditing(true);

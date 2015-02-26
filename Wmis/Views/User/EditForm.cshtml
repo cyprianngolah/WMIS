@@ -24,30 +24,24 @@
                         </div>
                        
                         <div class="form-group">
-                            <label for="firstName" class="col-md-1 control-label">First Name</label>
+                            <label for="firstName" class="col-md-1 control-label">Name</label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control" id="firstName" name="firstName" data-bind="value: firstName, valueUpdate: 'keyup'">
+                                <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="lastName" class="col-md-1 control-label">Last Name</label>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control" id="lastName" name="lastName" data-bind="value: lastName, valueUpdate: 'keyup'">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" value="1" data-bind="checked: administratorProjects">
+                                        <input type="checkbox" value="1" data-bind="checked: hasAdministratorProjectRole ">
                                         Administrator Projects
                                     </label>
                                 </div>
-                            </div>   
+                            </div>
                             <div class="col-md-3">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" value="1" data-bind="checked: administratorBiodiversity">
+                                        <input type="checkbox" value="1" data-bind="checked: hasAdministratorBiodiversityRole">
                                         Administrator Biodiversity
                                     </label>
                                 </div>

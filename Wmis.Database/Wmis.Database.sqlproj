@@ -300,6 +300,9 @@
     <Build Include="dbo\Stored Procedures\ObservationRow_Update.sql" />
     <Build Include="dbo\Stored Procedures\SpeciesType_Get.sql" />
     <Build Include="dbo\Stored Procedures\Users_Get.sql" />
+    <Build Include="dbo\Stored Procedures\Person_CreateAndGet.sql" />
+    <Build Include="dbo\Stored Procedures\Person_Create.sql" />
+    <Build Include="dbo\Stored Procedures\Person_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
@@ -307,6 +310,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Fill\ProjectStatus.sql" />
+    <None Include="dbo\Tables\PersonProjects.sql" />
+    <None Include="dbo\Stored Procedures\Person_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\Project_Create.sql" />

@@ -11,10 +11,14 @@ AS
 		COUNT(*) OVER() as TotalRowCount,
 		p.PersonId as [Key],
 		p.Name,
+		p.Username,
 		p.Email,
 		p.JobTitle
+
 	FROM
 		dbo.Person p
+		LEFT OUTER JOIN dbo.PersonRole [role] on  p.PersonId = [role].PersonId
+		LEFT OUTER JOIN dbo.PersonProjects pp on  p.PersonId = pp.PersonId
 	WHERE
 		p.PersonId = ISNULL(@p_personId, P.PersonId)
 		AND (@p_keywords IS NULL OR p.Name LIKE '%' + @p_keywords + '%' OR p.Email LIKE '%' + @p_keywords + '%')
@@ -30,7 +34,14 @@ AS
 			)
 		)
 	ORDER BY
-		p.Name
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '0'
+			THEN p.Name END ASC,
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '1'
+			THEN p.Name END DESC,
+		CASE WHEN @p_sortBy = 'username' AND @p_sortDirection = '0'
+			THEN p.Username END ASC,
+		CASE WHEN @p_sortBy = 'username' AND @p_sortDirection = '1'
+			THEN p.Username END DESC
 	OFFSET 
 		@p_from ROWS
 	FETCH NEXT

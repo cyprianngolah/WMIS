@@ -155,6 +155,14 @@
 
 		private const string PERSON_SEARCH = "dbo.Person_Search";
 
+        private const string PERSON_CREATEANDGET = "dbo.Person_CreateAndGet";
+
+        private const string PERSON_CREATE = "dbo.Person_Create";
+
+        private const string PERSON_GET = "dbo.Person_Get";
+
+        private const string PERSON_UPDATE = "dbo.Person_Update";
+
 		private const string PROJECT_CREATE = "dbo.Project_Create";
 
 		private const string PROJECT_UPDATE = "dbo.Project_Update";
@@ -280,8 +288,6 @@
         private const string USERS_CREATE = "dbo.Users_Create";
 
         private const string USERS_GET = "dbo.Users_Get";
-
-		private const string USER_CREATEANDGET = "dbo.User_CreateAndGet";
 
         private const string USERS_UPDATE = "dbo.Users_Update";
 
@@ -2242,7 +2248,7 @@
                     p_speciesId = request.Table == "Biodiversity" ? request.Key : (int?)null,
                     p_projectId = request.Table == "ProjectHistory" ? request.Key : (int?)null,
                     p_surveyId = request.Table == "SurveyHistory" ? request.Key : (int?)null,
-                    p_userId = request.Table == "UserHistory" ? request.Key : (int?)null
+                    p_personId = request.Table == "PersonHistory" ? request.Key : (int?)null
                 };
 
                 var pagedResults = new PagedResultset<HistoryLog>
@@ -2674,41 +2680,41 @@
 
         #region Users
 
-        public int UserCreate(UserNew user)
+        public int PersonCreate(PersonNew person)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_Username = user.Username,
-                    p_FirstName = user.FirstName,
-                    p_LastName = user.LastName,
-                    p_AdministratorProjects = user.AdministratorProjects,
-                    p_AdministratorBiodiversity = user.AdministratorBiodiversity,
+                    p_Username = person.Username,
+                    p_Name = person.Name
                 };
-                return c.Query<int>(USERS_CREATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return c.Query<int>(PERSON_CREATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
 
-        public User UserGet(int userKey)
+        public Person PersonGet(int userKey)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_userKey = userKey
+                    p_personId = userKey
                 };
 
-                using (var q = c.QueryMultiple(USERS_GET, param, commandType: CommandType.StoredProcedure))
+                using (var q = c.QueryMultiple(PERSON_GET, param, commandType: CommandType.StoredProcedure))
                 {
-                    var user = q.Read<User>().Single();
-                    user.Projects = q.Read<SimpleProject>().ToList();
-                    return user;
+                    var person = q.Read<Person>().Single();
+                    person.Roles = q.Read<Role>().ToList();
+                    person.Projects = q.Read<SimpleProject>().ToList();
+                    person.HasAdministratorBiodiversityRole = (person.Roles != null && person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
+                    person.HasAdministratorProjectRole = (person.Roles != null && person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
+                    return person;
                 }
             }
         }
 
-		public User UserGet(string username)
+		public Person PersonGet(string username)
 		{
 			using (var c = NewWmisConnection)
 			{
@@ -2717,55 +2723,56 @@
 					p_username = username
 				};
 
-				using (var q = c.QueryMultiple(USER_CREATEANDGET, param, commandType: CommandType.StoredProcedure))
+                //TODO: Probably don't always want to create a new person each time? Good for testing..
+				using (var q = c.QueryMultiple(PERSON_CREATEANDGET, param, commandType: CommandType.StoredProcedure))
 				{
-					var user = q.Read<User>().Single();
+					var user = q.Read<Person>().Single();
 					user.Projects = q.Read<SimpleProject>().ToList();
 					return user;
 				}
 			}
 		}
 
-        public void UserUpdate(User user)
+        public void PersonUpdate(Person person)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_UserId = user.Key,
-	                p_Username = user.Username,
-	                p_FirstName = user.FirstName,
-	                p_LastName = user.LastName,
-	                p_AdministratorProjects = user.AdministratorProjects,
-	                p_AdministratorBiodiversity = user.AdministratorBiodiversity,
-	                p_projectKeys = user.Projects.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType")
+                    p_PersonId = person.Key,
+	                p_Username = person.Username,
+	                p_Name = person.Name,
+                    p_roleKeys = person.Roles.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
+	                p_projectKeys = person.Projects.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType")
                 };
-                c.Execute(USERS_UPDATE, param, commandType: CommandType.StoredProcedure);
+                c.Execute(PERSON_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
         }
 
-        public PagedResultset<User> UserSearch(PagedDataKeywordRequest request)
+        public PagedResultset<Person> PersonSearch(PagedDataKeywordRequest request)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_startRow = request.StartRow,
-                    p_rowCount = request.StartRow + request.RowCount - 1,
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
                     p_keywords = request.Keywords
                 };
 
-                var pagedResults = new PagedResultset<User>
+                var pagedResults = new PagedResultset<Person>
                 {
                     DataRequest = request,
                     ResultCount = 0,
-                    Data = new List<User>()
+                    Data = new List<Person>()
                 };
 
-                var results = c.Query<dynamic, User, User>(USERS_SEARCH,
+                var results = c.Query<dynamic, Person, Person>(PERSON_SEARCH,
                     (d, user) =>
                     {
-                        pagedResults.ResultCount = d.ResultCount;
+                        pagedResults.ResultCount = d.TotalRowCount;
                         return user;
                     },
                     param,

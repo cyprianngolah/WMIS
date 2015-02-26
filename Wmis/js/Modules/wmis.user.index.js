@@ -32,19 +32,14 @@ wmis.user.index = (function ($) {
 			"bJQueryUI": true,
 			"bProcessing": true,
 			"serverSide": true,
-			"ajaxSource": "/api/user",
+			"ajaxSource": "/api/person",
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
-                {
-                    "data": null,
-                    "render": function(data, type, row, meta) {
-                        return data.firstName + ' ' + data.lastName;
-                    }
-                },
+                { "data": "name" },
 				{ "data": "username" },
-				{ "data": "administratorProjects", "render": booleanRenderer },
-				{ "data": "administratorBiodiversity", "render": booleanRenderer }
+				{ "data": "hasAdministratorProjectRole", "render": booleanRenderer },
+				{ "data": "hasAdministratorBiodiversityRole", "render": booleanRenderer }
 			],
 			"fnServerData": function (source, data, callback, settings) {
 				var sortDirection = null;

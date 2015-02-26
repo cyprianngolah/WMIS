@@ -312,7 +312,7 @@
     <Compile Include="Models\ShortDateConverter.cs" />
     <Compile Include="Models\SurveyTemplateColumn.cs" />
     <Compile Include="Models\SurveyTemplateColumnType.cs" />
-    <Compile Include="Models\UserNew.cs" />
+    <Compile Include="Models\PersonNew.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ArgosPassStatus.cs" />
     <Compile Include="Logic\ObservationParserService.cs" />

@@ -1,12 +1,10 @@
 ﻿namespace Wmis.Models
 {
-    public class UserNew
+    public class PersonNew
     {
         public string Username { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
+        public string Name { get; set; }
 
         public bool AdministratorProjects { get; set; }
 

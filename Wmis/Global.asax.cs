@@ -15,8 +15,9 @@
 	using Wmis.Argos;
 	using Wmis.Auth;
 	using Wmis.Logic;
+	using Wmis.Models;
 
-	/// <summary>
+    /// <summary>
 	/// Application Start
 	/// </summary>
 	public class MvcApplication : System.Web.HttpApplication
@@ -67,15 +68,15 @@
 
 			var username = User.Identity.Name;
 			var repo = WebApi.ObjectFactory.Container.GetInstance<Models.WmisRepository>();
-			var user = repo.UserGet(username);
+			var person = repo.PersonGet(username);
 
 			var identity = ClaimsPrincipal.Current.Identities.First();
-			identity.AddClaim(new Claim(WmisClaimTypes.UserKey, user.Key.ToString()));
-			identity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName + " " + user.LastName));
-			if(user.AdministratorBiodiversity)
-				identity.AddClaim(new Claim(ClaimTypes.Role, "AdministratorBiodiversity"));
-			if (user.AdministratorProjects)
-				identity.AddClaim(new Claim(ClaimTypes.Role, "AdministratorProjects"));
+            identity.AddClaim(new Claim(WmisClaimTypes.UserKey, person.Key.ToString()));
+            identity.AddClaim(new Claim(ClaimTypes.GivenName, person.Name));
+            if (person.HasAdministratorProjectRole)
+				identity.AddClaim(new Claim(ClaimTypes.Role, Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
+            if (person.HasAdministratorProjectRole)
+				identity.AddClaim(new Claim(ClaimTypes.Role, Role.ADMINISTRATOR_PROJECTS_ROLE));
 		}
 		#endregion
 	}
