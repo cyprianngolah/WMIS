@@ -7,14 +7,11 @@
 	@p_roleName NVARCHAR(50) = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
-	SELECT Distinct
-		COUNT(*) OVER() as TotalRowCount,
-		p.PersonId as [Key],
+	SELECT 
+		COUNT(Distinct p.PersonId) as TotalRowCount,
+	    p.PersonId as [Key],
 		p.Name,
-		p.Username,
-		p.Email,
-		p.JobTitle
-
+		p.Username
 	FROM
 		dbo.Person p
 		LEFT OUTER JOIN dbo.PersonRole [role] on  p.PersonId = [role].PersonId
@@ -33,6 +30,7 @@ AS
 					pr.PersonId = p.PersonId
 			)
 		)
+	Group By p.PersonId, p.Name, p.Username
 	ORDER BY
 		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '0'
 			THEN p.Name END ASC,
