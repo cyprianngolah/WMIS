@@ -7,7 +7,7 @@
 	@p_roleName NVARCHAR(50) = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
-	SELECT
+	SELECT Distinct
 		COUNT(*) OVER() as TotalRowCount,
 		p.PersonId as [Key],
 		p.Name,

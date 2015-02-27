@@ -28,8 +28,8 @@ AS
 		PersonId = @v_personKey
 
 	SELECT
-		pp.ProjectId as [Key],
-		pp.Name
+		p.ProjectId as [Key],
+		p.Name
 	FROM
 		dbo.PersonProjects pp
 			INNER JOIN dbo.Project p on pp.ProjectId = p.ProjectId
