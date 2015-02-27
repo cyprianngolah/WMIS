@@ -217,7 +217,6 @@
     <Compile Include="ApiControllers\StatusRankApiController.cs" />
     <Compile Include="ApiControllers\SurveyTemplateApiController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
-    <Compile Include="ApiControllers\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -313,7 +312,6 @@
     <Compile Include="Models\SurveyTemplateColumn.cs" />
     <Compile Include="Models\SurveyTemplateColumnType.cs" />
     <Compile Include="Models\PersonNew.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Models\ArgosPassStatus.cs" />
     <Compile Include="Logic\ObservationParserService.cs" />
     <Compile Include="Models\AnimalMortality.cs" />
