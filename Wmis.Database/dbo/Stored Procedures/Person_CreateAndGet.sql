@@ -29,12 +29,12 @@ AS
 
 	SELECT
 		pp.ProjectId as [Key],
-		p.Name
+		pp.Name
 	FROM
 		dbo.PersonProjects pp
-			INNER JOIN dbo.Project p on up.ProjectId = p.ProjectId
+			INNER JOIN dbo.Project p on pp.ProjectId = p.ProjectId
 	WHERE
-		up.UserId = @v_personKey
+		pp.PersonId = @v_personKey
 
 RETURN 0
 GO
