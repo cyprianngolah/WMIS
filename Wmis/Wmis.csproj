@@ -760,6 +760,7 @@
     <Content Include="Views\User\New.cshtml" />
     <Content Include="Views\Shared\HistoryTab.cshtml" />
   </ItemGroup>
+  
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\LeadRegion\" />
