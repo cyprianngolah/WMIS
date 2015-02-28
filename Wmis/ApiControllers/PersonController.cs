@@ -1,6 +1,7 @@
 ﻿// ReSharper disable All
 namespace Wmis.ApiControllers
 {
+    using System.Collections.Generic;
     using System.Web.Http;
 
 	using Wmis.Configuration;
@@ -19,7 +20,13 @@ namespace Wmis.ApiControllers
         [Route("{userId:int?}")]
         public Person GetPerson(int userId)
         {
-            return Repository.PersonGet(userId);
+            var person =  Repository.PersonGet(userId);
+
+            person.HasAdministratorBiodiversityRole = (person.Roles != null && person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
+            person.HasAdministratorProjectRole = (person.Roles != null && person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
+            person.Roles.Clear();
+
+            return person;
         }
 
         [HttpGet]
@@ -27,6 +34,13 @@ namespace Wmis.ApiControllers
         public PagedResultset<Person> GetUsers([FromUri]PagedDataKeywordRequest request)
         {
             return Repository.PersonSearch(request ?? new PagedDataKeywordRequest());
+        }
+
+        [HttpGet]
+        [Route("userRoles")]
+        public IEnumerable<Role> GetUserRoles()
+        {
+            return Repository.UserRolesGet();
         }
 
 		[HttpGet]

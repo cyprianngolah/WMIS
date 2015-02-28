@@ -163,6 +163,8 @@
 
         private const string PERSON_UPDATE = "dbo.Person_Update";
 
+        private const string ROLE_GET = "dbo.Role_Get";
+
 		private const string PROJECT_CREATE = "dbo.Project_Create";
 
 		private const string PROJECT_UPDATE = "dbo.Project_Update";
@@ -2707,8 +2709,7 @@
                     var person = q.Read<Person>().Single();
                     person.Roles = q.Read<Role>().ToList();
                     person.Projects = q.Read<SimpleProject>().ToList();
-                    person.HasAdministratorBiodiversityRole = (person.Roles != null && person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
-                    person.HasAdministratorProjectRole = (person.Roles != null && person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
+                   
                     return person;
                 }
             }
@@ -2735,8 +2736,16 @@
 
         public void PersonUpdate(Person person)
         {
+            var roles = this.UserRolesGet();
             using (var c = NewWmisConnection)
             {
+                //ugly...but can't think of a better way right now.
+                if(person.HasAdministratorProjectRole &&  !person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_PROJECTS_ROLE))
+                    person.Roles.Add(roles.Single( x=> x.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
+          
+                if (person.HasAdministratorBiodiversityRole && !person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE))
+                    person.Roles.Add(roles.Single(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
+                
                 var param = new
                 {
                     p_PersonId = person.Key,
@@ -2983,5 +2992,13 @@
 			get { return new SqlConnection(_connectionString); }
 		}
 		#endregion
+
+        internal IEnumerable<Role> UserRolesGet()
+        {
+            using (var c = NewWmisConnection)
+            {
+                return c.Query<Role>(ROLE_GET, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }

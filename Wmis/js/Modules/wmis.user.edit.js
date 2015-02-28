@@ -14,7 +14,6 @@ wmis.user.edit = (function ($) {
 		this.hasAdministratorBiodiversityRole = ko.observable(false);
 	    this.projects = ko.observableArray();
 	    this.projectOptions = ko.observable();
-	    this.roleOptions = ko.observable();
 	    this.isLoadedForEditing = ko.observable(false);
 
 		this.canSave = ko.computed(function() {
@@ -28,6 +27,16 @@ wmis.user.edit = (function ($) {
                 textFieldNames: ['name'],
                 url: '/api/project',
                 placeholder: 'Projects...'
+            });
+        }
+
+        function enableRoles() {
+            self.roleOptions({
+                valueObservable: self.projects,
+                idProperty: 'key',
+                textFieldNames: ['name'],
+                url: '/api/person/userRoles',
+                placeholder: 'Roles...'
             });
         }
 

@@ -20,6 +20,14 @@ AS
 		THEN INSERT(PersonId, ProjectId) VALUES(@p_PersonId, s.n)
 	WHEN NOT MATCHED BY SOURCE AND T.PersonId = @p_PersonId
 		THEN DELETE; 
+
+	MERGE PersonRole AS P
+	USING @p_roleKeys AS R
+	ON (P.RoleId = R.n AND P.PersonId = @p_PersonId) 
+	WHEN NOT MATCHED BY TARGET 
+		THEN INSERT(PersonId, RoleId) VALUES(@p_PersonId, r.n)
+	WHEN NOT MATCHED BY SOURCE AND P.PersonId = @p_PersonId
+		THEN DELETE; 
 		
 RETURN 0
 GO

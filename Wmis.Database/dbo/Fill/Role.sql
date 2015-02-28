@@ -2,7 +2,9 @@
 
 MERGE INTO dbo.[Role] as [Target]
 USING (VALUES
-	(1, 'Project Lead')
+	(1, 'Project Lead'),
+	(2, 'AdministratorBiodiversity'),
+	(3, 'AdministratorProjects')
 )
 AS [Source] ([RoleId], [Name]) 
 ON [Target].[RoleId] = [source].[RoleId]
