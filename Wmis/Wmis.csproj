@@ -247,6 +247,7 @@
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
     <Compile Include="Dto\CollaboratorCreateRequest.cs" />
+    <Compile Include="Dto\PagedRoleRequest.cs" />
     <Compile Include="Dto\SpeciesTypeRequest.cs" />
     <Compile Include="Dto\SurveyTemplateColumnSaveRequest.cs" />
     <Compile Include="Dto\SurveyTemplateSaveRequest.cs" />
@@ -294,6 +295,8 @@
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
     <Compile Include="Models\ObservationRow.cs" />
+    <Compile Include="Models\PersonProject.cs" />
+    <Compile Include="Models\PersonRole.cs" />
     <Compile Include="Models\SpeciesType.cs" />
     <Compile Include="WebApi\ObjectFactory.cs" />
     <Compile Include="WebApi\StructureMapDependencyResolver.cs" />
@@ -760,7 +763,6 @@
     <Content Include="Views\User\New.cshtml" />
     <Content Include="Views\Shared\HistoryTab.cshtml" />
   </ItemGroup>
-  
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\LeadRegion\" />

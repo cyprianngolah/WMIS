@@ -10,6 +10,10 @@ wmis.user.index = (function ($) {
 
 		initDataTable();
 
+		$("form").on("submit", function(e) {
+			e.preventDefault();
+		});
+
 		$("#keywords").keyup(function (e) {
 			if (e.keyCode == 13) {
 				userTable.fnFilter();
@@ -38,8 +42,22 @@ wmis.user.index = (function ($) {
 			"columns": [
                 { "data": "name" },
 				{ "data": "username" },
-				{ "data": "hasAdministratorProjectRole", "render": booleanRenderer },
-				{ "data": "hasAdministratorBiodiversityRole", "render": booleanRenderer }
+				{
+					"data": "roles",
+					"render": function(data, type, full, meta) {
+						if (data.length > 0) {
+							var r = "";
+							for (var i = 0; i < data.length; i++) {
+								if (i > 0)
+									r += ", ";
+								r += data[i].name;
+							}
+							return r;
+						} else {
+							return "";
+						}
+					}
+				}
 			],
 			"fnServerData": function (source, data, callback, settings) {
 				var sortDirection = null;

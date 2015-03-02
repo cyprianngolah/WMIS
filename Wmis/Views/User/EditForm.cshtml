@@ -5,7 +5,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" data-bind="with: user">
     <div class="col-md-12">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active"><a href="#userTab" role="tab" data-toggle="tab">User</a></li>
@@ -23,38 +23,54 @@
                             </div>
                         </div>
                        
-                        <div class="form-group">
-                            <label for="firstName" class="col-md-1 control-label">Name</label>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="1" data-bind="checked: hasAdministratorProjectRole ">
-                                        Administrator Projects
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="1" data-bind="checked: hasAdministratorBiodiversityRole">
-                                        Administrator Biodiversity
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
+	                    <div class="form-group">
+		                    <label for="firstName" class="col-md-1 control-label">Name</label>
+		                    <div class="col-md-3">
+			                    <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
+		                    </div>
+	                    </div>
+
+	                    @*<div class="form-group">
+		                    <div class="col-md-4">
+			                    <div class="checkbox">
+				                    <label>
+					                    <input type="checkbox" value="1" data-bind="checked: hasAdministratorProjectRole ">
+					                    Administrator Projects
+				                    </label>
+			                    </div>
+		                    </div>
+		                    <div class="col-md-3">
+			                    <div class="checkbox">
+				                    <label>
+					                    <input type="checkbox" value="1" data-bind="checked: hasAdministratorBiodiversityRole">
+					                    Administrator Biodiversity
+				                    </label>
+			                    </div>
+		                    </div>
+	                    </div>*@
+						
+						<div class="form-group">
+							<label for="roles" class="col-md-1 control-label">Roles(s)</label>
+							<!-- ko if: $root.roleOptions -->
+							<div class="col-md-10">
+								<input type="hidden" class="form-control" id="roles" name="roles" data-bind="enable: $root.isLoadedForEditing, select2KeyValueTags: $root.roleOptions" />
+							</div>
+							<!-- /ko-->
+							<!-- ko ifnot: $root.roleOptions -->
+							<div class="col-md-3">
+								<input type="text" class="form-control" disabled value="Roles can be added after saving" />
+							</div>
+							<!-- /ko-->
+						</div>
+
+	                    <div class="form-group">
                             <label for="projects" class="col-md-1 control-label">Project(s)</label>
-                            <!-- ko if: projectOptions -->
+                            <!-- ko if: $root.projectOptions -->
                             <div class="col-md-10">
-                                <input type="hidden" class="form-control" id="projects" name="projects" data-bind="enable: isLoadedForEditing, select2KeyValueTags: projectOptions" />
+								<input type="hidden" class="form-control" id="projects" name="projects" data-bind="enable: $root.isLoadedForEditing, select2KeyValueTags: $root.projectOptions" />
                             </div>
                             <!-- /ko-->
-                            <!-- ko ifnot: projectOptions -->
+                            <!-- ko ifnot: $root.projectOptions -->
                             <div class="col-md-3">
                                 <input type="text" class="form-control" disabled value="Projects can be added after saving" />
                             </div>

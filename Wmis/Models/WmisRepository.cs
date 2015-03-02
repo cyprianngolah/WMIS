@@ -2706,8 +2706,8 @@
                 using (var q = c.QueryMultiple(PERSON_GET, param, commandType: CommandType.StoredProcedure))
                 {
                     var person = q.Read<Person>().Single();
-                    person.Roles = q.Read<Role>().ToList();
                     person.Projects = q.Read<SimpleProject>().ToList();
+					person.Roles = q.Read<Role>().ToList();
                    
                     return person;
                 }
@@ -2736,16 +2736,8 @@
 
         public void PersonUpdate(Person person)
         {
-            var roles = this.UserRolesGet();
             using (var c = NewWmisConnection)
             {
-                //ugly...but can't think of a better way right now.
-                if(person.HasAdministratorProjectRole &&  !person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_PROJECTS_ROLE))
-                    person.Roles.Add(roles.Single( x=> x.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
-          
-                if (person.HasAdministratorBiodiversityRole && !person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE))
-                    person.Roles.Add(roles.Single(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
-                
                 var param = new
                 {
                     p_PersonId = person.Key,
@@ -2778,28 +2770,56 @@
                     Data = new List<Person>()
                 };
 
-                var results = c.Query<dynamic, Person, Person>(PERSON_SEARCH,
-                    (d, user) =>
-                    {
-                        pagedResults.ResultCount = d.TotalRowCount;
-                        return user;
-                    },
-                    param,
-                    commandType: CommandType.StoredProcedure,
-                    splitOn: "Key");
+				using (var q = c.QueryMultiple(PERSON_SEARCH, param, commandType: CommandType.StoredProcedure))
+				{
+					pagedResults.Data = q.Read<int,Person, Person>((count, p) =>{
+						pagedResults.ResultCount = count;
+						return p;
+					}, "Key").ToList();
 
-                pagedResults.Data = results.ToList();
+					var userDict = pagedResults.Data.ToDictionary(x => x.Key);
+					var project = q.Read<PersonProject, SimpleProject, PersonProject>((pp, p) =>
+						{
+							pp.Project = p;
+							return pp;
+						}, "Key").ToList();
+					foreach (var p in project)
+					{
+						userDict[p.PersonKey].Projects.Add(p.Project);
+					}
+					var roles = q.Read<PersonRole, Role, PersonRole>((pr, r) =>
+						{
+							pr.Role = r;
+							return pr;
+						}, "Key").ToList();
+					foreach (var r in roles)
+					{
+						userDict[r.PersonKey].Roles.Add(r.Role);
+					}
+				}
+
                 return pagedResults;
             }
         }
 		#endregion
 
 		#region Roles
-		internal IEnumerable<Role> UserRolesGet()
+		internal PagedResultset<Role> UserRolesGet(Dto.PagedRoleRequest request)
 		{
 			using (var c = NewWmisConnection)
 			{
-				return c.Query<Role>(ROLE_GET, commandType: CommandType.StoredProcedure);
+
+				var pagedResults = new PagedResultset<Role>
+				{
+					DataRequest = request,
+					ResultCount = 0,
+					Data = new List<Role>()
+				};
+
+				pagedResults.Data = c.Query<Role>(ROLE_GET, commandType: CommandType.StoredProcedure).ToList();
+				pagedResults.ResultCount = pagedResults.Data.Count();
+
+				return pagedResults;
 			}
 		}
 		#endregion

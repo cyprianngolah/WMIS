@@ -7,15 +7,18 @@
 	@p_roleName NVARCHAR(50) = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
+	DECLARE @v_people TABLE(PersonId INT, Name NVARCHAR(50), Email NVARCHAR(50), JobTitle NVARCHAR(50), Username NVARCHAR(50), TotalResultCount INT)
+
+	INSERT INTO @v_people
 	SELECT 
-		COUNT(Distinct p.PersonId) as TotalRowCount,
 	    p.PersonId as [Key],
 		p.Name,
-		p.Username
+		p.Email,
+		p.JobTitle,
+		p.Username,
+		COUNT(*) OVER() AS TotalResultCount
 	FROM
 		dbo.Person p
-		LEFT OUTER JOIN dbo.PersonRole [role] on  p.PersonId = [role].PersonId
-		LEFT OUTER JOIN dbo.PersonProjects pp on  p.PersonId = pp.PersonId
 	WHERE
 		p.PersonId = ISNULL(@p_personId, P.PersonId)
 		AND (@p_keywords IS NULL OR p.Name LIKE '%' + @p_keywords + '%' OR p.Email LIKE '%' + @p_keywords + '%')
@@ -30,7 +33,6 @@ AS
 					pr.PersonId = p.PersonId
 			)
 		)
-	Group By p.PersonId, p.Name, p.Username
 	ORDER BY
 		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '0'
 			THEN p.Name END ASC,
@@ -44,6 +46,48 @@ AS
 		@p_from ROWS
 	FETCH NEXT
 		(@p_to - @p_from) ROWS ONLY
+
+	SELECT 
+		p.TotalResultCount,
+	    p.PersonId as [Key],
+		p.Name,
+		p.Email,
+		p.JobTitle,
+		p.Username
+	FROM
+		@v_people p
+	ORDER BY
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '0'
+			THEN p.Name END ASC,
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '1'
+			THEN p.Name END DESC,
+		CASE WHEN @p_sortBy = 'username' AND @p_sortDirection = '0'
+			THEN p.Username END ASC,
+		CASE WHEN @p_sortBy = 'username' AND @p_sortDirection = '1'
+			THEN p.Username END DESC
+
+	SELECT
+		pp.PersonProjectId as [Key],
+		pp.PersonId as [PersonKey],
+		proj.ProjectId as [Key],
+		proj.Name
+	FROM
+		dbo.PersonProjects pp
+			INNER JOIN dbo.Project proj on pp.ProjectId = proj.ProjectId
+			INNER JOIN @v_people p ON p.PersonId = pp.PersonId
+	ORDER BY
+		pp.PersonId, p.Name
+
+	SELECT
+		pr.PersonRoleId as [Key],
+		pr.PersonId as [PersonKey],
+		r.RoleId as [Key],
+		r.Name
+	FROM
+		dbo.PersonRole pr
+			INNER JOIN @v_people p ON p.PersonId = pr.PersonId
+			LEFT OUTER JOIN dbo.[Role] r on pr.RoleId = r.RoleId
+
 RETURN 0
 GO
 

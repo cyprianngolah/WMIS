@@ -73,10 +73,8 @@
 			var identity = ClaimsPrincipal.Current.Identities.First();
             identity.AddClaim(new Claim(WmisClaimTypes.UserKey, person.Key.ToString()));
             identity.AddClaim(new Claim(ClaimTypes.GivenName, person.Name));
-            if (person.HasAdministratorProjectRole)
-				identity.AddClaim(new Claim(ClaimTypes.Role, Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
-            if (person.HasAdministratorProjectRole)
-				identity.AddClaim(new Claim(ClaimTypes.Role, Role.ADMINISTRATOR_PROJECTS_ROLE));
+            foreach(var r in person.Roles)
+				identity.AddClaim(new Claim(ClaimTypes.Role, r.Name));
 		}
 		#endregion
 	}

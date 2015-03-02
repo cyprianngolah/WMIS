@@ -8,15 +8,15 @@
 }
 
 @section Scripts {
-    @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/knockout"))
-    @Html.Raw(Scripts.Render("~/bundles/person/edit"))
+	@Html.Raw(Scripts.Render("~/bundles/select2"))
+	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/user/edit"))
 
-    <script type="text/javascript">
-        $(function() {
-            wmis.user.edit.initialize();
-        });
-    </script>
+	<script type="text/javascript">
+		$(function() {
+			wmis.user.edit.initialize({ key: 0 });
+		});
+	</script>
 }
 
 @{ Html.RenderPartial("EditForm"); }

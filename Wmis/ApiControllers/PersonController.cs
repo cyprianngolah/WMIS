@@ -6,7 +6,6 @@ namespace Wmis.ApiControllers
 
 	using Wmis.Configuration;
 	using Wmis.Dto;
-    using Wmis.Models;
 
     [RoutePrefix("api/person")]
 	public class PersonController : BaseApiController
@@ -18,29 +17,23 @@ namespace Wmis.ApiControllers
 
         [HttpGet]
         [Route("{userId:int?}")]
-        public Person GetPerson(int userId)
+        public Models.Person GetPerson(int userId)
         {
-            var person =  Repository.PersonGet(userId);
-
-            person.HasAdministratorBiodiversityRole = (person.Roles != null && person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE));
-            person.HasAdministratorProjectRole = (person.Roles != null && person.Roles.Exists(x => x.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
-            person.Roles.Clear();
-
-            return person;
+	        return Repository.PersonGet(userId);
         }
 
         [HttpGet]
         [Route]
-        public PagedResultset<Person> GetUsers([FromUri]PagedDataKeywordRequest request)
+		public PagedResultset<Models.Person> GetUsers([FromUri]PagedDataKeywordRequest request)
         {
             return Repository.PersonSearch(request ?? new PagedDataKeywordRequest());
         }
 
         [HttpGet]
         [Route("userRoles")]
-        public IEnumerable<Role> GetUserRoles()
+        public PagedResultset<Models.Role> GetUserRoles(Dto.PagedRoleRequest request)
         {
-            return Repository.UserRolesGet();
+            return Repository.UserRolesGet(request);
         }
 
 		[HttpGet]
@@ -52,14 +45,14 @@ namespace Wmis.ApiControllers
 
         [HttpPost]
         [Route]
-        public int Create([FromBody]PersonNew un)
+		public int Create([FromBody]Models.PersonNew un)
         {
             return Repository.PersonCreate(un);
         }
 
         [HttpPut]
         [Route]
-        public void Update([FromBody]Person u)
+		public void Update([FromBody]Models.Person u)
         {
             Repository.PersonUpdate(u);
         }
