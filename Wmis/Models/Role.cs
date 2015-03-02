@@ -9,7 +9,5 @@
         public const string ADMINISTRATOR_PROJECTS_ROLE = "AdministratorProjects";
 
 		public string Name { get; set; }
-
-	    
 	}
 }

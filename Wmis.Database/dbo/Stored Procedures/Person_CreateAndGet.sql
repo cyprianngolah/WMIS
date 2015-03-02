@@ -18,23 +18,7 @@ AS
 			@p_PersonKey = @v_personKey OUTPUT
 	END
 
-	SELECT TOP 1
-		PersonId as [Key],
-		Username,
-		Name
-	FROM
-		dbo.Person	
-	WHERE
-		PersonId = @v_personKey
-
-	SELECT
-		p.ProjectId as [Key],
-		p.Name
-	FROM
-		dbo.PersonProjects pp
-			INNER JOIN dbo.Project p on pp.ProjectId = p.ProjectId
-	WHERE
-		pp.PersonId = @v_personKey
+	EXEC [dbo].[Person_Get] @v_personKey
 
 RETURN 0
 GO

@@ -303,9 +303,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Fill\ProjectStatus.sql" />
-    <None Include="dbo\Tables\PersonProjects.sql" />
-    <None Include="dbo\Stored Procedures\Person_Get.sql" />
-    <None Include="dbo\Stored Procedures\Role_Get.sql" />
+    <Build Include="dbo\Tables\PersonProjects.sql" />
+    <Build Include="dbo\Stored Procedures\Person_Get.sql" />
+    <Build Include="dbo\Stored Procedures\Role_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\Project_Create.sql" />

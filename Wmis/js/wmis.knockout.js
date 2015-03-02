@@ -32,10 +32,10 @@ $(function() {
         }
 
         function createInitSelectionFunction(valueObservable, recordMapper) {
-           return function (element, callback) {
-               var initialValueObjects = _.map(valueObservable(), recordMapper);
-                callback(initialValueObjects);
-            }
+        	return function (element, callback) {
+        		var initialValueObjects = _.map(valueObservable(), recordMapper);
+        		callback(initialValueObjects);
+        	};
         }
 
         function createRecordMapper(idProperty, textFieldNames) {
@@ -64,7 +64,7 @@ $(function() {
                     dataType: "json",
                     data: function(term, page) {
                         return {
-                            searchString: term,
+                            keywords: term,
                             startRow: (page - 1) * 25,
                             rowCount: 25
                         };

@@ -1177,7 +1177,7 @@
 					p_referenceId = rr.ReferenceKey,
 					p_startRow = rr.StartRow,
 					p_rowCount = rr.RowCount,
-					p_searchString = rr.SearchString
+					p_searchString = rr.Keywords
 				};
 
 				var pagedResults = new Dto.PagedResultset<Reference> { DataRequest = rr };
@@ -2681,7 +2681,6 @@
         #endregion
 
         #region Users
-
         public int PersonCreate(PersonNew person)
         {
             using (var c = NewWmisConnection)
@@ -2729,6 +2728,7 @@
 				{
 					var user = q.Read<Person>().Single();
 					user.Projects = q.Read<SimpleProject>().ToList();
+					user.Roles = q.Read<Role>().ToList();
 					return user;
 				}
 			}
@@ -2792,11 +2792,20 @@
                 return pagedResults;
             }
         }
+		#endregion
 
-        #endregion
+		#region Roles
+		internal IEnumerable<Role> UserRolesGet()
+		{
+			using (var c = NewWmisConnection)
+			{
+				return c.Query<Role>(ROLE_GET, commandType: CommandType.StoredProcedure);
+			}
+		}
+		#endregion
 
-        #region Files
-        public PagedResultset<File> FileSearch(FileSearchRequest request)
+		#region Files
+		public PagedResultset<File> FileSearch(FileSearchRequest request)
         {
             using (var c = NewWmisConnection)
             {
@@ -2992,13 +3001,5 @@
 			get { return new SqlConnection(_connectionString); }
 		}
 		#endregion
-
-        internal IEnumerable<Role> UserRolesGet()
-        {
-            using (var c = NewWmisConnection)
-            {
-                return c.Query<Role>(ROLE_GET, commandType: CommandType.StoredProcedure);
-            }
-        }
     }
 }

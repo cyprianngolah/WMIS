@@ -4,6 +4,6 @@
 	{
 		public int? ReferenceKey { get; set; }
 
-		public string SearchString { get; set; }
+		public string Keywords { get; set; }
 	}
 }

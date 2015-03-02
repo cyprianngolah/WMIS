@@ -31,6 +31,16 @@ AS
 	WHERE
 		up.PersonId = @p_personId
 
+	SELECT
+		pr.PersonRoleId as [Key],
+		r.RoleId,
+		r.Name
+	FROM
+		dbo.PersonRole pr
+			INNER JOIN dbo.[Role] r on pr.RoleId = r.RoleId
+	WHERE	
+		pr.PersonId = @p_personId
+
 RETURN 0
 GO
 
