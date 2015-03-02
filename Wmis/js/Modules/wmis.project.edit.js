@@ -443,7 +443,7 @@ wmis.project.edit = (function ($) {
 			return _.map(json.data, function(record) {
 			    return {
 			        key: record.key,
-			        text: record.name + ' - ' + record.jobTitle
+			        text: record.name + ((record.jobTitle == null) ? "" :' - ' + record.jobTitle)
 			    };
 			});
 		});
