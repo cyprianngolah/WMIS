@@ -51,20 +51,28 @@
 
 		<div class="container wrap">
 			<div class="row clearfix">
-				@if (!string.IsNullOrEmpty(ViewBag.Title))
-				{
-					<div class="page-header">
+				
+			
+					@if (!string.IsNullOrEmpty(ViewBag.Title))
+					{
+						<div class="page-header">
+							@if (IsSectionDefined("CustomTitle")) {
+								@RenderSection("CustomTitle", false);
+							}
+							else
+							{
+								<div class="h1 pull-left" style="margin:0;">
+									@ViewBag.Title @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
+												   {<small>@Html.Raw(ViewBag.SubTitle)</small>}
+								</div>
+							}
 
-						<div class="h1 pull-left" style="margin:0;">
-							@ViewBag.Title @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
-							{<small>@Html.Raw(ViewBag.SubTitle)</small>}
+							@RenderSection("TopRight", false)
+
+							<div style="clear:both;"></div>
 						</div>
+					}
 
-						@RenderSection("TopRight", false)
-
-						<div style="clear:both;"></div>
-					</div>
-				}
 			</div>
 
 		    <div class="row clearfix">

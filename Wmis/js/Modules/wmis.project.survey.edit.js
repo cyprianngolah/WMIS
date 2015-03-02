@@ -23,6 +23,7 @@ wmis.project.survey.edit = (function ($) {
 		self.targetSpeciesOptions = ko.observableArray();
 		self.observationData = ko.observableArray();
 		self.initializedMap = ko.observable(false);
+		self.projectName = ko.observable("Asdf");
 
 		self.getDropDowns = function () {
 			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false", function (result) { return result.data; });
@@ -41,7 +42,8 @@ wmis.project.survey.edit = (function ($) {
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.survey))
 			}).success(function (data) {
-			    self.showObservationTab(isTemplateAssigned());
+				self.showObservationTab(isTemplateAssigned());
+				self.getProject();
 			}).always(function() {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
@@ -224,6 +226,17 @@ wmis.project.survey.edit = (function ($) {
 		};
 
 		// Logic
+		self.getProject = function() {
+			$.ajax({
+				url: "/api/Project/" + self.survey.projectKey(),
+				type: "GET",
+				contentType: "application/json",
+				dataType: "json",
+			}).success(function (data) {
+				self.projectName(data.name);
+			}).fail(wmis.global.ajaxErrorHandler);
+		};
+
 		self.getObservations = function() {
 			$.ajax({
 				url: "/api/observation/survey/" + options.projectSurveyKey + "/data",
@@ -370,33 +383,34 @@ wmis.project.survey.edit = (function ($) {
 
 	    this.selectedPass = ko.observable();
 
-	    this.reviewObservation = function (observation) {
-	        var selectedPass = ko.mapper.toJS(observation);
-	        self.selectedPass(selectedPass);
+		this.reviewObservation = function(observation) {
+			var selectedPass = ko.mapper.toJS(observation);
+			self.selectedPass(selectedPass);
 
-	        reviewObservationDataPoint(selectedPass, passStatuses, function (result) {
-	            var projectSurveyPromise = $.ajax({
-	                url: '/api/observation/survey/row/',
-	                type: "PUT",
-	                contentType: "application/json",
-	                dataType: "json",
-	                data: JSON.stringify({
-	                    key: selectedPass.key,
-	                    argosPassStatusId: result.observationRowStatusId,
-	                    comment: result.comment
-	                })
-	            }).success(function () {
-	                observation.observationRowStatusId(result.observationRowStatusId);
-	                observation.comment(result.comment);
-	                self.observations().observationData.valueHasMutated();
-	                
-	            }).always(function () {
+			reviewObservationDataPoint(selectedPass, passStatuses, function(result) {
+				var projectSurveyPromise = $.ajax({
+					url: '/api/observation/survey/row/',
+					type: "PUT",
+					contentType: "application/json",
+					dataType: "json",
+					data: JSON.stringify({
+						key: selectedPass.key,
+						argosPassStatusId: result.observationRowStatusId,
+						comment: result.comment
+					})
+				}).success(function() {
+					observation.observationRowStatusId(result.observationRowStatusId);
+					observation.comment(result.comment);
+					self.observations().observationData.valueHasMutated();
 
-	            }).fail(wmis.global.ajaxErrorHandler);;
-	        }, function () {
-	            self.selectedPass(null);
-	        });
-	    }
+				}).always(function() {
+
+				}).fail(wmis.global.ajaxErrorHandler);
+				;
+			}, function() {
+				self.selectedPass(null);
+			});
+		};
 
 	    this.mapTabClicked = _.once(function () {
             //initialize here so map doesn't get initialize before map is visible (causes error). 
