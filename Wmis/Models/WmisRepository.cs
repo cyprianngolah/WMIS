@@ -2839,6 +2839,7 @@
                     p_collaredAnimalId = request.Table == "CollaredAnimals" ? request.Key : (int?)null,
                     p_projectId = request.Table == "Projects" ? request.Key : (int?)null,
                     p_speciesId = request.Table == "Biodiversity" ? request.Key : (int?)null,
+                    p_surveyId = request.Table == "Survey" ? request.Key : (int?)null,
                 };
 
                 var pagedResults = new PagedResultset<File>
@@ -2872,6 +2873,7 @@
                     p_collaredAnimalId = request.ParentTableName == "CollaredAnimals" ? request.ParentTableKey : (int?)null,
                     p_projectId = request.ParentTableName == "Projects" ? request.ParentTableKey : (int?)null,
                     p_speciesId = request.ParentTableName == "Biodiversity" ? request.ParentTableKey : (int?)null,
+                    p_surveyId = request.ParentTableName == "Survey" ? request.ParentTableKey : (int?)null,
                     p_name = request.Name,
                     p_path = request.Path
                 };
