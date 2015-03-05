@@ -1,6 +1,7 @@
 ﻿namespace Wmis.Controllers
 {
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.IO;
     using System.IO.Compression;
@@ -9,7 +10,8 @@
     using System.Web.Http;
 
 	using DotSpatial.Data;
-    using DotSpatial.Topology;
+	using DotSpatial.Projections;
+	using DotSpatial.Topology;
     using Wmis.ApiControllers;
 	using Wmis.Argos.Entities;
     using Wmis.Configuration;
@@ -42,31 +44,31 @@
         public HttpResponseMessage PassesForCollar2([FromUri]ArgosPassSearchRequest apsr)
         {
             var passes = Repository.ArgosPassGet(apsr).Data;
-          
-            var fs = new FeatureSet(FeatureType.MultiPoint);
-////            fs.Projection = KnownCoordinateSystems.Geographic.World.
-            fs.DataTable.Columns.Add(new DataColumn("ID", typeof(int)));
-            fs.DataTable.Columns.Add(new DataColumn("Text", typeof(string)));
-            fs.DataTable.Columns.Add(new DataColumn("Latitude", typeof(double)));
-            fs.DataTable.Columns.Add(new DataColumn("Longitude", typeof(double)));
-            fs.DataTable.Columns.Add(new DataColumn("Date", typeof(string)));
-            fs.DataTable.Columns.Add(new DataColumn("Status", typeof(string)));
 
-            passes.ForEach(
-                pass =>
-                    {
-                        var feature = fs.AddFeature(new Point(pass.Latitude, pass.Longitude));
-                        feature.DataRow.BeginEdit();
-                        feature.DataRow["ID"] = pass.Key;
-                        feature.DataRow["Latitude"] = pass.Latitude;
-                        feature.DataRow["Longitude"] = pass.Longitude;
-                        feature.DataRow["Date"] = string.Format("{0:s}", pass.LocationDate);
-                        feature.DataRow["Status"] = pass.ArgosPassStatus.Name;
-                        feature.DataRow.EndEdit();
-                    });
+            var myPoints = new FeatureSet(FeatureType.Point);
+            myPoints.Projection = KnownCoordinateSystems.Geographic.World.WGS1984;
+
+            myPoints.DataTable.Columns.Add(new DataColumn("ID", typeof(int)));
+            myPoints.DataTable.Columns.Add(new DataColumn("Latitude", typeof(double)));
+            myPoints.DataTable.Columns.Add(new DataColumn("Longitude", typeof(double)));
+            myPoints.DataTable.Columns.Add(new DataColumn("Date", typeof(DateTime)));
+            myPoints.DataTable.Columns.Add(new DataColumn("Time", typeof(string)));
+            foreach (var pass in passes)
+            {
+                var coord = new Coordinate(pass.Longitude, pass.Latitude);
+                var newPoint = new DotSpatial.Topology.Point(coord);
+                var feature = myPoints.AddFeature(newPoint);
+                feature.DataRow.BeginEdit();
+                feature.DataRow["ID"] = pass.Key;
+                feature.DataRow["Latitude"] = pass.Latitude;
+                feature.DataRow["Longitude"] = pass.Longitude;
+                feature.DataRow["Date"] = pass.LocationDate;
+                feature.DataRow["Time"] = pass.LocationDate.TimeOfDay;
+                feature.DataRow.EndEdit();
+            }
            
             const string ShapeFileName = @"C:\Users\Public\testdir\test.shp";
-            fs.SaveAs(ShapeFileName, true);
+            myPoints.SaveAs(ShapeFileName, true);
      
             const string ZipPath = @"C:\Users\Public\test.zip";
             ZipFile.CreateFromDirectory(@"C:\Users\Public\testdir\", ZipPath);
