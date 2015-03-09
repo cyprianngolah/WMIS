@@ -9,7 +9,7 @@
 			@if (!string.IsNullOrEmpty(@ViewBag.SubTitle)) {<small>@Html.Raw(ViewBag.SubTitle)</small>}*@
 		
 		<ol class="breadcrumb">
-			<li><a href="#" data-bind="click: $root.navigateToProject, text: projectName"></a></li>
+			<li><a href="#" data-bind="click: $root.navigateToProject, text: projectId"></a></li>
 			<li class="active">Survey @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
 			{<small>@Html.Raw(ViewBag.SubTitle)</small>}</li>
 		</ol>
@@ -21,8 +21,6 @@
 	<div class="h5 pull-right" style="text-align: right; margin:0;" data-bind="with: survey">
 		<span data-bind="with: targetSpecies">Target Species: <span data-bind="text: name"></span><br /></span>
 		<span data-bind="with: targetSpecies">Common Name: <span data-bind="text: commonName"></span></span>
-		
-		@*<span class="h3" data-bind="with: projectName">Project: <a href="#" data-bind="click: $root.navigateToProject, text: $data"></a></span>*@
 	</div>
 }
 

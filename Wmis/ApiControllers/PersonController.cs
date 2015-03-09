@@ -6,6 +6,7 @@ namespace Wmis.ApiControllers
 
 	using Wmis.Configuration;
 	using Wmis.Dto;
+    using Wmis.Models;
 
     [RoutePrefix("api/person")]
 	public class PersonController : BaseApiController
@@ -23,10 +24,10 @@ namespace Wmis.ApiControllers
         }
 
         [HttpGet]
-        [Route]
+        [Route("users")]
 		public PagedResultset<Models.Person> GetUsers([FromUri]PagedDataKeywordRequest request)
         {
-            return Repository.PersonSearch(request ?? new PagedDataKeywordRequest());
+            return Repository.PersonSearch(new PersonRequest { Role = {Role.ADMINISTRATOR_BIODIVERSITY, Role.ADMINISTRATOR_PROJECTS} });
         }
 
         [HttpGet]
@@ -40,7 +41,7 @@ namespace Wmis.ApiControllers
 		[Route("projectLeads")]
 		public PagedResultset<Models.Person> GetProjectLeads()
 		{
-			return Repository.PersonSearch(new PersonRequest { Role = "Project Lead" });
+			return Repository.PersonSearch(new PersonRequest { Role = {Role.PROJECT_LEAD} });
 		}
 
         [HttpPost]

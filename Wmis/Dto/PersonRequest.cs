@@ -1,7 +1,11 @@
 ﻿namespace Wmis.Dto
 {
-	public class PersonRequest : PagedDataRequest
+    using System.Collections.Generic;
+
+    using Wmis.Models;
+
+    public class PersonRequest : PagedDataRequest
 	{
-		public string Role { get; set; }
+		public List<Role> Role { get; set; }
 	}
 }

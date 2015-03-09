@@ -23,7 +23,7 @@ wmis.project.survey.edit = (function ($) {
 		self.targetSpeciesOptions = ko.observableArray();
 		self.observationData = ko.observableArray();
 		self.initializedMap = ko.observable(false);
-		self.projectName = ko.observable("Asdf");
+	    self.projectId = self.survey.projectKey();
 
 		self.getDropDowns = function () {
 			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false", function (result) { return result.data; });
@@ -50,7 +50,7 @@ wmis.project.survey.edit = (function ($) {
 		};
 
 		self.navigateToProject = function () {
-			var projectUrl = "/Project/Edit/" + self.survey.projectKey() + "#surveysTab";
+		    var projectUrl = "/Project/Edit/" + self.projectId + "#surveysTab";
 			window.location.href = projectUrl;
 		};
 
@@ -233,7 +233,7 @@ wmis.project.survey.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json",
 			}).success(function (data) {
-				self.projectName(data.name);
+				//self.projectName(data.name);
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
