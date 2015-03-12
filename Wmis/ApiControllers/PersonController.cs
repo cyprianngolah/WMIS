@@ -2,9 +2,11 @@
 namespace Wmis.ApiControllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Http;
+    using System.Web.Security;
 
-	using Wmis.Configuration;
+    using Wmis.Configuration;
 	using Wmis.Dto;
     using Wmis.Models;
 
@@ -25,9 +27,9 @@ namespace Wmis.ApiControllers
 
         [HttpGet]
         [Route("users")]
-		public PagedResultset<Models.Person> GetUsers([FromUri]PagedDataKeywordRequest request)
+        public PagedResultset<Models.Person> GetUsers([FromUri]PersonRequest request)
         {
-            return Repository.PersonSearch(new PersonRequest { Role = {Role.ADMINISTRATOR_BIODIVERSITY, Role.ADMINISTRATOR_PROJECTS} });
+            return Repository.PersonSearch(request);
         }
 
         [HttpGet]
@@ -41,7 +43,7 @@ namespace Wmis.ApiControllers
 		[Route("projectLeads")]
 		public PagedResultset<Models.Person> GetProjectLeads()
 		{
-			return Repository.PersonSearch(new PersonRequest { Role = {Role.PROJECT_LEAD} });
+		    return Repository.PersonSearch(new PersonRequest() {ProjectLeadsOnly = true});
 		}
 
         [HttpPost]

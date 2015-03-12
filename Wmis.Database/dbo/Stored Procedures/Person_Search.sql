@@ -5,6 +5,7 @@
 	@p_sortDirection INT = NULL,
 	@p_personId INT = NULL,
 	@p_roleName NVARCHAR(50) = NULL,
+	@p_projectLeadExists BIT = 0,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	DECLARE @v_people TABLE(PersonId INT, Name NVARCHAR(50), Email NVARCHAR(50), JobTitle NVARCHAR(50), Username NVARCHAR(50), TotalResultCount INT)
@@ -31,6 +32,17 @@ AS
 						INNER JOIN dbo.[PersonRole] pr on r.RoleId = pr.RoleId 
 				WHERE
 					pr.PersonId = p.PersonId
+			)
+		)
+		AND (
+			@p_projectLeadExists = 0 
+			OR EXISTS (
+				SELECT 
+					1
+				FROM
+					dbo.[Project] p2 
+				WHERE
+					p2.ProjectLeadId = p.PersonId
 			)
 		)
 	ORDER BY

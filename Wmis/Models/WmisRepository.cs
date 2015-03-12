@@ -1353,36 +1353,36 @@
 		#endregion
 
 		#region Person
-		public Dto.PagedResultset<Person> PersonSearch(Dto.PersonRequest sr)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = sr.StartRow,
-					p_to = sr.RowCount,
-					p_sortBy = sr.SortBy,
-					p_sortDirection = sr.SortDirection,
-				};
+        //public Dto.PagedResultset<Person> PersonSearch(Dto.PersonRequest sr)
+        //{
+        //    using (var c = NewWmisConnection)
+        //    {
+        //        var param = new
+        //        {
+        //            p_from = sr.StartRow,
+        //            p_to = sr.RowCount,
+        //            p_sortBy = sr.SortBy,
+        //            p_sortDirection = sr.SortDirection,
+        //        };
 
-				var pr = new Dto.PagedResultset<Person> { DataRequest = sr };
+        //        var pr = new Dto.PagedResultset<Person> { DataRequest = sr };
 
-				var results = c.Query<int, Person, Person>(
-					PERSON_SEARCH,
-					(count, p) =>
-					{
-						pr.ResultCount = count;
-						return p;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key");
+        //        var results = c.Query<int, Person, Person>(
+        //            PERSON_SEARCH,
+        //            (count, p) =>
+        //            {
+        //                pr.ResultCount = count;
+        //                return p;
+        //            },
+        //            param,
+        //            commandType: CommandType.StoredProcedure,
+        //            splitOn: "Key");
 
-				pr.Data = new List<Person>(results);
+        //        pr.Data = new List<Person>(results);
 
-				return pr;
-			}
-		}
+        //        return pr;
+        //    }
+        //}
 		#endregion
 
 		#region Lead Region 
@@ -2750,7 +2750,7 @@
             }
         }
 
-        public PagedResultset<Person> PersonSearch(PagedDataKeywordRequest request)
+        public PagedResultset<Person> PersonSearch(PersonRequest request)
         {
             using (var c = NewWmisConnection)
             {
@@ -2760,6 +2760,7 @@
                     p_to = request.StartRow + request.RowCount - 1,
                     p_sortBy = request.SortBy,
                     p_sortDirection = request.SortDirection,
+                    p_projectLeadExists = request.ProjectLeadsOnly,
                     p_keywords = request.Keywords
                 };
 

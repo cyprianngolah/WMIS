@@ -6,6 +6,13 @@
 
     public class PersonRequest : PagedDataRequest
 	{
-		public List<Role> Role { get; set; }
+        public bool ProjectLeadsOnly { get; set; }
+
+        public string Keywords { get; set; }
+
+        public PersonRequest()
+        {
+            ProjectLeadsOnly = false;
+        }
 	}
 }
