@@ -46,6 +46,8 @@ wmis.user.edit = (function ($) {
 			}).success(function (data) {
 			    if (!self.isLoadedForEditing()) {
 			        window.location.href = "/user/Edit/" + data;
+			    } else {
+			        window.location.href = "/user";
 			    }
 			}).always(function () {
 				wmis.global.hideWaitingScreen(waitingScreenId);
