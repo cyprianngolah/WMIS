@@ -9,7 +9,7 @@
 			@if (!string.IsNullOrEmpty(@ViewBag.SubTitle)) {<small>@Html.Raw(ViewBag.SubTitle)</small>}*@
 		
 		<ol class="breadcrumb">
-			<li><a href="#" data-bind="click: $root.navigateToProject, text: projectId"></a></li>
+			<li><a href="#" data-bind="click: $root.navigateToProject, text: projectHeaderDetail"></a></li>
 			<li class="active">Survey @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
 			{<small>@Html.Raw(ViewBag.SubTitle)</small>}</li>
 		</ol>
