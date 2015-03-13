@@ -26,10 +26,14 @@ namespace Wmis.ApiControllers
         }
 
         [HttpGet]
-        [Route("users")]
+        [Route("applicationUsers")]
         public PagedResultset<Models.Person> GetUsers([FromUri]PersonRequest request)
         {
-            return Repository.PersonSearch(request);
+            var users = Repository.PersonSearch(request);
+            //TODO: For now Lena only wants to see Admin's. This should change but will do it for now
+            users.Data = users.Data.FindAll( x => x.Roles.Exists( y =>
+                    y.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE || y.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
+            return users;
         }
 
         [HttpGet]

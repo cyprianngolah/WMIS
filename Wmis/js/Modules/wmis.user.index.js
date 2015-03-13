@@ -36,7 +36,7 @@ wmis.user.index = (function ($) {
 			"bJQueryUI": true,
 			"bProcessing": true,
 			"serverSide": true,
-			"ajaxSource": "/api/person/users",
+			"ajaxSource": "/api/person/applicationUsers",
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
