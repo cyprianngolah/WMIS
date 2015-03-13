@@ -3015,6 +3015,18 @@
         #endregion
         #endregion
 
+        #region Site
+        public PagedResultset<Site> SiteGet(int siteKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SiteSave(SiteSaveRequest ss)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
         #region Helpers
         /// <summary>
 		/// Gets a new SQLConnection to the WMIS Database for the current environment
