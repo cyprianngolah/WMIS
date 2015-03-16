@@ -58,27 +58,26 @@ wmis.biodiversity.edit = (function ($) {
         4: 'ecoTypeSynonyms'
     };
 
-
     function SelectReferencesModel(categoryName, references) {
         var self = this;
         this.references = ko.observableArray(references);
         this.categoryName = categoryName;
-        this.referenceOptions = {
-            valueObservable: self.references,
-            idProperty: 'key',
-            textFieldNames: ['code', 'author', 'title', 'year'],
-            url: '/api/references',
-            placeholder: 'References'
-        }
+	    this.referenceOptions = {
+		    valueObservable: self.references,
+		    idProperty: 'key',
+		    textFieldNames: ['code', 'author', 'title', 'year'],
+		    url: '/api/references',
+		    placeholder: 'References'
+	    };
 
-        this.save = function () {
-            var resultAsObservables = ko.mapper.fromJS(self.references(), "auto");
-            self.modal.close(resultAsObservables());
-        }
+	    this.save = function() {
+		    var resultAsObservables = ko.mapper.fromJS(self.references(), "auto");
+		    self.modal.close(resultAsObservables());
+	    };
 
-        this.cancel = function () {
-            self.modal.close();
-        }
+	    this.cancel = function() {
+		    self.modal.close();
+	    };
     }
 
     function selectReferences(categoryName, references, callback) {

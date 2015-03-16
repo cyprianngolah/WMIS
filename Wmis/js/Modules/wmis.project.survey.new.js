@@ -40,7 +40,7 @@ wmis.project.survey.new = (function ($) {
 		self.getDropDowns = function () {
 		    wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false", function (result) { return result.data; });
 		    wmis.global.getDropDownData(self.templates, "/api/surveytemplate?startRow=0&rowCount=500", function (result) { return result.data; });
-		    wmis.global.getDropDownData(self.targetSpeciesOptions, "/api/biodiversity/species?startRow=0&rowCount=500", function (result) { return result.data; });
+		    wmis.global.getDropDownData(self.targetSpeciesOptions, "/api/biodiversity/species?startRow=0&rowCount=5000", function (result) { return result.data; });
 		};
 
 		this.mapTabClicked = function () {
