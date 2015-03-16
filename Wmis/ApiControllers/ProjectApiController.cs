@@ -3,6 +3,7 @@
 	using System.Web.Http;
 	using Configuration;
 
+	using Wmis.Auth;
 	using Wmis.Dto;
 	using Wmis.Models;
 
@@ -34,6 +35,7 @@
 
 		[HttpPost]
 		[Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
 		public int Create([FromBody]string name)
 		{
 			return Repository.ProjectCreate(name);
@@ -41,6 +43,7 @@
 
 		[HttpPut]
 		[Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
 		public void Update(Models.Project p)
 		{
 			Repository.ProjectUpdate(p);
@@ -64,6 +67,7 @@
 
 		[HttpPost]
 		[Route("survey")]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
 		public int CreateSurvey(Models.ProjectSurvey pssr)
 		{
 			return Repository.ProjectSurveySave(pssr);
@@ -71,6 +75,7 @@
 
 		[HttpPut]
 		[Route("survey")]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
 		public void UpdateSurvey(Models.ProjectSurvey pssr)
 		{
 			Repository.ProjectSurveySave(pssr);

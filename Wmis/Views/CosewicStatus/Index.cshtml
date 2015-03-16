@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
     ViewBag.Title = "COSEWIC Status";
 }
 
@@ -20,10 +21,22 @@
 }
 
 <div class="row">
-    <div class="col-md-12 text-right">
-        <a href="/CosewicStatus/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-        <a href="/CosewicStatus/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
-    </div>
+	<div class="col-md-12 text-right">
+		@if (Html.UserIsBiodiversityAdministrator())
+		{
+			<a href="/CosewicStatus/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+		}
+		<a href="/CosewicStatus/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+			@if (Html.UserIsBiodiversityAdministrator())
+			{
+				<span>Edit</span>
+			}
+			else
+			{
+				<span>View</span>
+			}
+		</a>
+	</div>
 </div>
 
 <div class="well" style="margin-bottom: 0px;">

@@ -5,6 +5,8 @@
 	using Dto;
 	using Models;
 
+	using Wmis.Auth;
+
 	/// <summary>
 	/// The NWT SARC Assessment API Controller
 	/// </summary>
@@ -38,6 +40,7 @@
         /// <param name="request">The NWT SARC Assessment details</param>
 		[HttpPost]
 		[Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public void SaveNwtSarcAssessment([FromBody]NwtSarcAssessmentSaveRequest request)
 		{
 			Repository.NwtSarcAssessmentSave(request);

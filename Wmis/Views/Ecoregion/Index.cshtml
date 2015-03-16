@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
 	ViewBag.Title = "Ecoregions";
 }
 
@@ -21,8 +22,20 @@
 
 <div class="row">
 	<div class="col-md-12 text-right">
-		<a href="/Ecoregion/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-        <a href="/Ecoregion/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+		@if (Html.UserIsBiodiversityAdministrator())
+		{
+			<a href="/Ecoregion/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+		}
+		<a href="/Ecoregion/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+			@if (Html.UserIsBiodiversityAdministrator())
+			{
+				<span>Edit</span>
+			}
+			else
+			{
+				<span>View</span>
+			}
+		</a>
 	</div>
 </div>
 

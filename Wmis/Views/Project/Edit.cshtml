@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
 	ViewBag.Title = "Project";
 	ViewBag.SubTitle = "<span data-bind='with: project'><span data-bind='text: name'></span></span>";
 }
@@ -15,7 +16,6 @@
 	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
 	@Html.Raw(Styles.Render("~/bundles/select2css"))
 }
-
 
 @section Scripts{
 	@Html.Raw(Scripts.Render("~/bundles/datePicker"))
@@ -50,8 +50,20 @@
 <form role="form">
     <div class="row">
         <div class="col-md-12 text-right">
-            <a href="~/Project/" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-primary" data-bind="click: saveProject, enable: canSave">Save</button>
+	        <a href="~/Project/" class="btn btn-default">
+		        @if (Html.UserIsProjectCollarAdministrator())
+		        {
+			        <span>Cancel</span>
+		        }
+		        else
+		        {
+			        <span>Back</span>
+		        }
+	        </a>
+			@if (Html.UserIsProjectCollarAdministrator())
+			{
+				<button type="submit" class="btn btn-primary" data-bind="click: saveProject, enable: canSave">Save</button>
+			}
         </div>
     </div>
 
@@ -200,10 +212,23 @@
                         <div class="col-md-2">
                             <select class="form-control" id="surveyTypeKey" data-bind="options: $root.surveyTypes, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: surveyFilterKey, select2: { }"></select>
                         </div>
-                        <div class="col-md-9 text-right">
-                            <a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-                            <a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
-                        </div>
+	                    <div class="col-md-9 text-right">
+							<a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+								@if (Html.UserIsProjectCollarAdministrator())
+								{
+									<a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+								}
+
+								@if (Html.UserIsProjectCollarAdministrator())
+								{
+									<span>Edit</span>
+								}
+								else
+								{
+									<span>Open</span>
+								}
+							</a>
+	                    </div>
                     </div>
 
                     <div class="row">

@@ -3,7 +3,8 @@
     using System.Collections.Generic;
     using System.Web.Http;
 
-	using Wmis.Configuration;
+    using Wmis.Auth;
+    using Wmis.Configuration;
     using Wmis.Dto;
     using Wmis.Models;
     using Wmis.Models.Base;
@@ -46,6 +47,7 @@
 
         [HttpPost]
         [Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public int Create([FromBody]SurveyTemplateSaveRequest request)
         {
             return Repository.SurveyTemplateSave(request, "Unknown User");
@@ -53,6 +55,7 @@
         
         [HttpPost]
         [Route("column")]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public int CreateColumn([FromBody]SurveyTemplateColumnSaveRequest request)
         {
             return Repository.SurveyTemplateColumnSave(request);
@@ -60,6 +63,7 @@
 
         [HttpDelete]
         [Route("column/{surveyTemplateColumnId:int}")]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public void DeleteSurveyTemplateColumn(int surveyTemplateColumnId)
         {
             Repository.SurveyTemplateColumnDelete(surveyTemplateColumnId);

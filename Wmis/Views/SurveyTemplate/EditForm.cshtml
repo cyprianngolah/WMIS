@@ -1,50 +1,65 @@
-﻿
+﻿@using Wmis.Extensions
+
 <script id="editSurveyColumnTemplate" type="text/html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Survey Template Column</h4>
-                </div>
-                <div class="modal-body form-horizontal" data-bind="with: columnData">
-                    <div class="form-group">
-                        <label for="editColumnHeader" class="col-md-3 control-label">Column Header</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="editColumnHeader" data-bind="value: name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editColumnDataType" class="col-md-3 control-label">Column Data Type</label>
-                        <div class="col-md-8" data-bind="with: columnType">
-                            <select class="form-control" id="editColumnDataType" data-bind="options: $root.columnTypeOptions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="order" class="col-md-3 control-label">Order</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="order" data-bind="value: order">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-10">
-                            <label class="control-label">
-                                <input type="checkbox" data-bind="checked: isRequired" /> Required
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
-                </div>
-            </div> <!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+	<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Survey Template Column</h4>
+				</div>
+				<div class="modal-body form-horizontal" data-bind="with: columnData">
+					<div class="form-group">
+						<label for="editColumnHeader" class="col-md-3 control-label">Column Header</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" id="editColumnHeader" data-bind="value: name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="editColumnDataType" class="col-md-3 control-label">Column Data Type</label>
+						<div class="col-md-8" data-bind="with: columnType">
+							<select class="form-control" id="editColumnDataType" data-bind="options: $root.columnTypeOptions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="order" class="col-md-3 control-label">Order</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" id="order" data-bind="value: order">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-10">
+							<label class="control-label">
+								<input type="checkbox" data-bind="checked: isRequired" /> Required
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+					<button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
+				</div>
+			</div> <!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </script>
+
 <div class="text-right">
-    <button type="submit" class="btn btn-primary" data-bind="click: saveSurveyTemplate, enabled: canSave">Save</button>
-    <a href="/SurveyTemplate" class="btn btn-default">Cancel</a>
+	<a href="/SurveyTemplate" class="btn btn-default">
+		@if (Html.UserIsProjectCollarAdministrator())
+		{
+			<span>Cancel</span>
+		}
+		else
+		{
+			<span>Back</span>
+		}
+		@if (Html.UserIsProjectCollarAdministrator())
+		{
+			<button type="submit" class="btn btn-primary" data-bind="click: saveSurveyTemplate, enabled: canSave">Save</button>
+		}
+	</a>
 </div>
+
 <div class="col-md-12 form-horizontal ">
     <form role="form">
         <div class="form-group">

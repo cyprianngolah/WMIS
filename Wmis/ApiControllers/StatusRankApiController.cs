@@ -5,6 +5,8 @@
     using Dto;
 	using Models;
 
+    using Wmis.Auth;
+
 	/// <summary>
 	/// The Status Rank API Controller
 	/// </summary>
@@ -38,6 +40,7 @@
         /// <param name="request">The Status Rank details</param>
         [HttpPost]
         [Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public void SaveStatusRank([FromBody]StatusRankSaveRequest request)
         {
             Repository.StatusRankSave(request);

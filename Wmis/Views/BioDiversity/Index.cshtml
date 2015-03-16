@@ -1,13 +1,11 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
 	ViewBag.Title = "Biodiversity";
 }
 
 @section Styles {
 	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
 	@Html.Raw(Styles.Render("~/bundles/select2css"))
-
-
-
 }
 
 @section Scripts {
@@ -24,8 +22,20 @@
 
     <div class="row">
 		<div class="col-md-12 text-right">
-			<a href="/BioDiversity/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-			<a href="/BioDiversity/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+			@if (Html.UserIsBiodiversityAdministrator())
+			{
+				<a href="/BioDiversity/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+			}
+			<a href="/BioDiversity/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+				@if (Html.UserIsBiodiversityAdministrator())
+				{
+					<span>Edit</span>
+				}
+				else
+				{
+					<span>View</span>
+				}
+			</a>
 			<a href="/BioDiversity/Decision" id="decisionButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Decision</a>
 		</div>
 	</div>

@@ -5,6 +5,8 @@
 	using Dto;
 	using Models;
 
+	using Wmis.Auth;
+
 	[RoutePrefix("api/protectedarea")]
 	public class ProtectedAreaApiController : BaseApiController
     {
@@ -31,6 +33,7 @@
 		/// <param name="request">The Protected Area details</param>
 		[HttpPost]
 		[Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
 		public void SaveProtectedArea([FromBody]ProtectedAreaSaveRequest request)
 		{
 			Repository.ProtectedAreaSave(request);

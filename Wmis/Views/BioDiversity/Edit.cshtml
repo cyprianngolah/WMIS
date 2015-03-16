@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
     ViewBag.Title = "Biodiversity";
     ViewBag.SubTitle = @"<span data-bind='with: bd'>
             <span class='speciesNameText' data-bind='text: name'></span>
@@ -39,39 +40,51 @@
 }
 
 @section Dialogs {
-<script id="selectReferencesTemplate" type="text/html">
-    <div class="modal" id="referenceModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @*<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>*@
-                    <h4 class="modal-title">References - <span data-bind="text: categoryName"></span></h4>
-                </div>
-                <div class="modal-body form-horizontal">
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <input type="hidden" name="selectedReferences" id="selectedReferences" class="form-control" data-bind="select2KeyValueTags: referenceOptions" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</script>
+	<script id="selectReferencesTemplate" type="text/html">
+		<div class="modal" id="referenceModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						@*<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>*@
+						<h4 class="modal-title">References - <span data-bind="text: categoryName"></span></h4>
+					</div>
+					<div class="modal-body form-horizontal">
+						<div class="form-group">
+							<div class="col-md-12">
+								<input type="hidden" name="selectedReferences" id="selectedReferences" class="form-control" data-bind="select2KeyValueTags: referenceOptions" />
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
+						<button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	</script>
 
-    @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
-@{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+    @{ Html.RenderPartial("~/Views/Shared/FileTab.cshtml"); }
+	@{ Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml"); }
 }
 
 <form role="form">
 	<div class="row">
 		<div class="col-md-12 text-right">
-			<a href="/BioDiversity/" class="btn btn-default">Cancel</a>
-			<button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: canSave">Save</button>
+			<a href="/BioDiversity/" class="btn btn-default">
+				@if (Html.UserIsBiodiversityAdministrator())
+				{
+					<span>Cancel</span>
+				}
+				else
+				{
+					<span>Back</span>
+				}
+			</a>
+			@if (Html.UserIsBiodiversityAdministrator())
+			{		
+				<button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: canSave">Save</button>
+			}
 		</div>
 	</div>
 

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
 	ViewBag.Title = "Survey Templates";
 }
 
@@ -21,8 +22,20 @@
 
 <div class="row">
 	<div class="col-md-12 text-right">
-		<a href="/SurveyTemplate/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-        <a href="/SurveyTemplate/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+		@if (Html.UserIsProjectCollarAdministrator())
+		{
+			<a href="/SurveyTemplate/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+		}
+		<a href="/SurveyTemplate/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+			@if (Html.UserIsProjectCollarAdministrator())
+			{
+				<span>Edit</span>
+			}
+			else
+			{
+				<span>View</span>
+			}
+		</a>
 	</div>
 </div>
 

@@ -5,6 +5,8 @@
 	using Dto;
 	using Models;
 
+	using Wmis.Auth;
+
 	/// <summary>
 	/// The Ecozone API Controller
 	/// </summary>
@@ -38,6 +40,7 @@
 		/// <param name="request">The Ecozone details</param>
 		[HttpPost]
 		[Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
 		public void SaveEcozone([FromBody]EcozoneSaveRequest request)
 		{
 			Repository.EcozoneSave(request);

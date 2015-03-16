@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
     ViewBag.Title = "Biodiversity Decision";
     ViewBag.SubTitle =
         @"<span data-bind='with: model'>
@@ -36,8 +37,20 @@
 <form role="form">
     <div class="row">
         <div class="col-md-12 text-right">
-            <a href="/BioDiversity" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-primary" data-bind="click: save, enable: canSave">Save</button>
+	        <a href="/BioDiversity" class="btn btn-default">
+		        @if (Html.UserIsBiodiversityAdministrator())
+		        {
+			        <span>Cancel</span>
+		        }
+		        else
+		        {
+			        <span>Back</span>
+		        }
+	        </a>
+			@if (Html.UserIsBiodiversityAdministrator())
+			{
+				<button type="submit" class="btn btn-primary" data-bind="click: save, enable: canSave">Save</button>
+			}
         </div>
     </div>
     
@@ -263,10 +276,23 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 text-right">
-            <a href="/BioDiversity" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-primary" data-bind="click: save, enable: canSave">Save</button>
-        </div>
-    </div>
+   
+	<div class="row">
+		<div class="col-md-12 text-right">
+			<a href="/BioDiversity" class="btn btn-default">
+				@if (Html.UserIsBiodiversityAdministrator())
+				{
+					<span>Cancel</span>
+				}
+				else
+				{
+					<span>Back</span>
+				}
+			</a>
+			@if (Html.UserIsBiodiversityAdministrator())
+			{
+				<button type="submit" class="btn btn-primary" data-bind="click: save, enable: canSave">Save</button>
+			}
+		</div>
+	</div>
 </form>

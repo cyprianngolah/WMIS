@@ -1,7 +1,20 @@
-﻿<div class="row">
+﻿@using Wmis.Extensions
+<div class="row">
     <div class="col-md-12 text-right">
-        <a href="/User/Index" class="btn btn-default">Cancel</a>
-        <button type="submit" class="btn btn-primary" data-bind="click: save, enabled: canSave">Save</button>
+	    <a href="/User/Index" class="btn btn-default">
+		    @if (Html.UserInAnyAdministratorRole())
+		    {
+			    <span>Cancel</span>
+		    }
+		    else
+		    {
+			    <span>Back</span>
+		    }
+	    </a>
+		@if (Html.UserInAnyAdministratorRole())
+		{
+			<button type="submit" class="btn btn-primary" data-bind="click: save, enabled: canSave">Save</button>
+		}
     </div>
 </div>
 

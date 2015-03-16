@@ -6,6 +6,7 @@ namespace Wmis.ApiControllers
     using System.Web.Http;
     using System.Web.Security;
 
+    using Wmis.Auth;
     using Wmis.Configuration;
 	using Wmis.Dto;
     using Wmis.Models;
@@ -31,8 +32,9 @@ namespace Wmis.ApiControllers
         {
             var users = Repository.PersonSearch(request);
             //TODO: For now Lena only wants to see Admin's. This should change but will do it for now
-            users.Data = users.Data.FindAll( x => x.Roles.Exists( y =>
-                    y.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE || y.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
+			// How are you supposed to assign admins if you can't see a user?
+			//users.Data = users.Data.FindAll( x => x.Roles.Exists( y =>
+			//		y.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE || y.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
             return users;
         }
 
@@ -52,6 +54,7 @@ namespace Wmis.ApiControllers
 
         [HttpPost]
         [Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AllRoles)]
 		public int Create([FromBody]Models.PersonNew un)
         {
             return Repository.PersonCreate(un);
@@ -59,6 +62,7 @@ namespace Wmis.ApiControllers
 
         [HttpPut]
         [Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AllRoles)]
 		public void Update([FromBody]Models.Person u)
         {
             Repository.PersonUpdate(u);

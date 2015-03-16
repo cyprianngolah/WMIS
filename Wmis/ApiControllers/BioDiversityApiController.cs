@@ -8,6 +8,8 @@
 	using Dto;
 	using Models;
 
+	using Wmis.Auth;
+
 	/// <summary>
 	/// Bio Diversity API Controller
 	/// </summary>
@@ -47,6 +49,7 @@
 
 		[HttpPost]
 		[Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity )]
         public int Create([FromBody]BioDiversityNew bdn)
 		{
             return Repository.BioDiversityCreate(bdn);
@@ -54,6 +57,7 @@
 
 		[HttpPut]
 		[Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
 		public DateTime Update([FromBody]BioDiversity bd)
 		{
             return Repository.BioDiversityUpdate(bd, "Unknown User");
@@ -106,6 +110,7 @@
 
 		[HttpPut]
 		[Route("decision")]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
 		public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request, string changeBy)
 		{
 			var bioDiversity = Repository.BioDiversityGet(request.Key);
@@ -171,6 +176,7 @@
         /// <param name="sssr">Synonyms to save</param>
         [HttpPost]
         [Route("synonym/save")]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public void SaveSynonyms([FromBody]Dto.SpeciesSynonymSaveRequest sssr)
         {
             Repository.SpeciesSynonymSaveMany(sssr.SpeciesId, sssr.SpeciesSynonymTypeId, sssr.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));

@@ -1,4 +1,5 @@
-﻿<div class="col-md-6">
+﻿@using Wmis.Extensions
+<div class="col-md-6">
 	<form role="form">
 		<div class="form-group">
 			<label for="taxonomyGroup">Taxonomy Group</label>
@@ -17,8 +18,20 @@
 	    </div>
 
 		<div class="text-right">
-			<button type="submit" class="btn btn-primary" data-bind="click: saveTaxonomy, enabled: canSave">Save</button>
-			<a href="/Taxonomy/Index" class="btn btn-default">Cancel</a>
+			@if (Html.UserIsBiodiversityAdministrator())
+			{
+				<button type="submit" class="btn btn-primary" data-bind="click: saveTaxonomy, enabled: canSave">Save</button>
+			}
+			<a href="/Taxonomy/Index" class="btn btn-default">
+				@if (Html.UserIsBiodiversityAdministrator())
+				{
+					<span>Cancel</span>
+				}
+				else
+				{
+					<span>Back</span>
+				}
+			</a>
 		</div>
 	</form>
 </div>

@@ -5,7 +5,9 @@
     using Dto;
     using Models;
 
-    /// <summary>
+    using Wmis.Auth;
+
+	/// <summary>
     /// The COSEWIC Status API Controller
     /// </summary>
     [RoutePrefix("api/cosewicstatus")]
@@ -38,6 +40,7 @@
         /// <param name="request">The Cosewic Status details</param>
         [HttpPost]
         [Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public void SaveStatusRank([FromBody]CosewicStatusSaveRequest request)
         {
             Repository.CosewicStatusSave(request);

@@ -1,4 +1,5 @@
-﻿<div class="col-md-6">
+﻿@using Wmis.Extensions
+<div class="col-md-6">
 	<form role="form">
 		<div class="form-group">
 			<label for="name">Name</label>
@@ -6,8 +7,20 @@
 		</div>
 
 		<div class="text-right">
-			<button type="submit" class="btn btn-primary" data-bind="click: save, enabled: canSave">Save</button>
-			<a href="/Ecozone/Index" class="btn btn-default">Cancel</a>
+			<a href="/Ecozone/Index" class="btn btn-default">
+				@if (Html.UserIsBiodiversityAdministrator())
+				{
+					<span>Cancel</span>
+				}
+				else
+				{
+					<span>Back</span>
+				}
+			</a>
+			@if (Html.UserIsBiodiversityAdministrator())
+			{
+				<button type="submit" class="btn btn-primary" data-bind="click: save, enabled: canSave"></button>
+			}
 		</div>
 	</form>
 </div>

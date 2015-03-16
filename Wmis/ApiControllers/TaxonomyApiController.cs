@@ -7,7 +7,9 @@
     using Dto;
     using Models;
 
-    [RoutePrefix("api/taxonomy")]
+	using Wmis.Auth;
+
+	[RoutePrefix("api/taxonomy")]
 	public class TaxonomyApiController : BaseApiController
     {
 		public TaxonomyApiController(WebConfiguration configuration)
@@ -35,6 +37,7 @@
 
 		[HttpPost]
 		[Route]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
 		public void SaveTaxonomy([FromBody]Dto.TaxonomySaveRequest tr)
 		{
 			Repository.TaxonomySave(tr);
@@ -231,6 +234,7 @@
         /// <param name="tsr">Taxonomy Synonym Request to save</param>
         [HttpPost]
         [Route("synonym/savemany")]
+		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public void SaveSynonyms([FromBody]Dto.TaxonomySynonymRequest tsr)
         {
             Repository.TaxonomySynonymSaveMany(tsr.TaxonomyId, tsr.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
