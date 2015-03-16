@@ -1,7 +1,6 @@
 ﻿namespace Wmis.ApiControllers
 {
-    using System.Collections.Generic;
-    using System.Web.Http;
+	using System.Web.Http;
 	using Configuration;
 
 	using Wmis.Dto;
@@ -10,9 +9,12 @@
     [RoutePrefix("api/project")]
 	public class ProjectApiController : BaseApiController
     {
-		public ProjectApiController(WebConfiguration config) 
+	    private readonly Auth.WmisUser _user;
+
+		public ProjectApiController(WebConfiguration config, Auth.WmisUser user) 
 			: base(config)
 		{
+			_user = user;
 		}
 
 		#region Projects
