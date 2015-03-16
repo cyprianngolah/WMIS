@@ -26,13 +26,36 @@
 		private readonly ArgosJobService _argosJobService;
 		#endregion
 
+		#region Constructor
 		public ArgosApiController(WebConfiguration config, ArgosJobService argosJobService) 
 			: base(config)
 		{
 			_argosJobService = argosJobService;
 		}
+		#endregion
 
-        [HttpGet]
+		[HttpGet]
+		[Route("schedule")]
+	    public string Schedule()
+	    {
+			return WebConfiguration.AppSettings["ArgosWebserviceScheduleCronExpression"];
+	    }
+
+		[HttpPost]
+		[Route("schedule")]
+		public void GetSchedule()
+		{
+			_argosJobService.ScheduleArgos();
+		}
+
+		[HttpPost]
+		[Route("queueJobs")]
+		public void QueueJobs()
+		{
+			_argosJobService.EnqueueActiveCollars();
+		}
+
+		[HttpGet]
         [Route("passes")]
         public Dto.PagedResultset<ArgosPass> PassesForCollar([FromUri]ArgosPassSearchRequest apsr)
         {

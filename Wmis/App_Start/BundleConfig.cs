@@ -184,6 +184,8 @@
             bundles.Add(new ScriptBundle("~/bundles/surveytemplate/edit").Include(
                         "~/js/modules/wmis.surveytemplate.edit.js"));
 
+			bundles.Add(new ScriptBundle("~/bundles/argosservice/index").Include(
+						"~/js/modules/wmis.argosservice.index.js"));
 			#endregion
 		}
 	}

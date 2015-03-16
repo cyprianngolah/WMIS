@@ -30,11 +30,18 @@
 		{
 			if (_configuration.AppSettings.Keys.Any(k => k == "ArgosWebserviceScheduleCronExpression"))
 			{
-				var cronExpression = _configuration.AppSettings["ArgosWebserviceScheduleCronExpression"];
-				if (!string.IsNullOrEmpty(cronExpression))
+				if (_configuration.AppSettings.Keys.Any(k => k == "ArgosWebserviceScheduleCronExpression"))
 				{
-					BackgroundJob.Enqueue(() => EnqueueActiveCollars());
-					RecurringJob.AddOrUpdate("TimeForArgosWebserviceToRun", () => EnqueueActiveCollars(), cronExpression);
+					var cronExpression = _configuration.AppSettings["ArgosWebserviceScheduleCronExpression"];
+					if (string.IsNullOrEmpty(cronExpression))
+					{
+						RecurringJob.RemoveIfExists("TimeForArgosWebserviceToRun");
+					}
+					else
+					{
+						BackgroundJob.Enqueue(() => EnqueueActiveCollars());
+						RecurringJob.AddOrUpdate("TimeForArgosWebserviceToRun", () => EnqueueActiveCollars(), cronExpression);
+					}
 				}
 			}
 		}
