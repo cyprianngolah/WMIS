@@ -296,6 +296,7 @@
     <Compile Include="Dto\TaxonomySynonymRequest.cs" />
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
+    <Compile Include="Extensions\MvcSecurityExtension.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />

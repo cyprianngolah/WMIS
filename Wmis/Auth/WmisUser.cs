@@ -5,6 +5,15 @@
 	using System.Linq;
 	using System.Security.Claims;
 
+	public static class WmisRoles
+	{
+		public const string AdministratorBiodiversity = "Administrator Biodiversity";
+			
+		public const string AdministratorProjects = "Administrator Projects";
+
+		public const string AllRoles = "Administrator Biodiversity,Administrator Projects";
+	}
+
 	public class WmisClaimTypes
 	{
 		public static string UserKey
