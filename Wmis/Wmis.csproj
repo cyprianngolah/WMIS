@@ -226,6 +226,7 @@
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="ApiControllers\ArgosApiController.cs" />
+    <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\ArgosServiceController.cs" />
     <Compile Include="Controllers\SurveyTemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -483,6 +484,7 @@
     </Content>
     <Content Include="Environments\environment.prod.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Environments\environment.dev.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -502,6 +504,8 @@
     </Content>
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.synonyms.js" />
+    <Content Include="js\Modules\wmis.site.edit.js" />
+    <Content Include="js\Modules\wmis.site.index.js" />
     <Content Include="js\Modules\wmis.surveytemplate.new.js" />
     <Content Include="js\Modules\wmis.surveytemplate.index.js" />
     <Content Include="js\Modules\wmis.surveytemplate.edit.js" />
@@ -770,6 +774,9 @@
     <Content Include="Views\User\New.cshtml" />
     <Content Include="Views\Shared\HistoryTab.cshtml" />
     <Content Include="Views\Site\Index.cshtml" />
+    <Content Include="Views\Site\Edit.cshtml" />
+    <Content Include="Views\Site\New.cshtml" />
+    <Content Include="Views\Site\EditForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

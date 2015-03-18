@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Site";
+    ViewBag.SubTitle = "New";
+}
+
+@section Scripts {
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/site/edit"))
+
+    <script type="text/javascript">
+        $(function() {
+            wmis.site.edit.initialize();
+        });
+    </script>
+}
+
+@{ Html.RenderPartial("EditForm"); }

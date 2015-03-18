@@ -16,9 +16,12 @@
 	[RoutePrefix("api/biodiversity")]
 	public class BioDiversityController : BaseApiController
     {
-		public BioDiversityController(WebConfiguration config) 
+        private readonly Auth.WmisUser _user;
+
+        public BioDiversityController(WebConfiguration config, Auth.WmisUser user) 
 			: base(config)
 		{
+            _user = user;
 		}
 
 		/// <summary>
@@ -111,7 +114,7 @@
 		[HttpPut]
 		[Route("decision")]
 		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
-		public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request, string changeBy)
+		public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request)
 		{
 			var bioDiversity = Repository.BioDiversityGet(request.Key);
 			bioDiversity.RangeExtentScore = request.RangeExtentScore;
@@ -142,7 +145,7 @@
 			bioDiversity.SaraStatus = request.SaraStatus;
 			bioDiversity.IucnStatus = request.IucnStatus;
 			bioDiversity.GRank = request.GRank;
-			Repository.BioDiversityUpdate(bioDiversity, changeBy);
+			Repository.BioDiversityUpdate(bioDiversity, _user.Username);
 		}
 
         [HttpGet]
