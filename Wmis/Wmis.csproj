@@ -467,6 +467,7 @@
     <Content Include="Content\images\maps-symbol-blank-start.png" />
     <Content Include="Content\images\maps-symbol-blank-stop.png" />
     <Content Include="Content\images\maps-symbol-blank-yellow.png" />
+    <Content Include="Content\images\maps-symbol-line.png" />
     <Content Include="Content\images\maps-symbol-x-red.png" />
     <Content Include="Content\select2-bootstrap.css" />
     <Content Include="favicon.ico" />

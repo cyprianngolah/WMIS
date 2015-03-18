@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "Collared Animal";
-	ViewBag.SubTitle = "<span data-bind='with: collar'><span data-bind='text: name'></span></span>";
+    ViewBag.SubTitle = "<span data-bind='with: collar'><span data-bind='text: name'></span></span>";
 }
 
 @section TopRight{
-    <div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: collar">
+    <div class="h4 pull-right" style="text-align: right; margin: 0;" data-bind="with: collar">
         <span data-bind="with: collarState">Collar State: <strong><span data-bind="text: name"></span></strong><br /></span>
         <span data-bind="with: collarRegion">Collar Region: <strong><span data-bind="text: name"></span></strong><br /></span>
         <span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
@@ -16,16 +16,15 @@
     @Html.Raw(Styles.Render("~/bundles/content/datatables"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
 
-<style>
-    #map-canvas {
-        height: 500px;
-        width: 100%;
-    }
-    .datepicker{
-        z-index:1151 !important;
-    }
+    <style>
+        #map-canvas {
+            height: 500px;
+            width: 100%;
+        }
 
-</style>
+        .datepicker { z-index: 1151 !important; }
+
+    </style>
 
 }
 
@@ -35,14 +34,14 @@
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/collaredanimal/edit"))
-	@Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
-	@Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
+    @Html.Raw(Scripts.Render("~/bundles/collaredanimal/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
+    @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
 
     <script>
-        $(function () {
+        $(function() {
             wmis.collaredanimal.edit.initialize({
-            	collaredAnimalKey: @ViewBag.Key
+                collaredAnimalKey: @ViewBag.Key
             });
             wmis.shared.filetab.initialize(@ViewBag.Key, 'CollaredAnimals', 'fileTemplateTempDiv');
             wmis.shared.historytab.initialize(@ViewBag.Key, 'CollaredAnimals', 'historyTemplateTempDiv');
@@ -51,63 +50,86 @@
 }
 
 @section Dialogs {
-    @{Html.RenderPartial("EditModals");}
-    @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
-    @{Html.RenderPartial("~/Views/Shared/Mapping.cshtml");}
-    @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+    @{ Html.RenderPartial("EditModals"); }
+    @{ Html.RenderPartial("~/Views/Shared/FileTab.cshtml"); }
+    @{ Html.RenderPartial("~/Views/Shared/Mapping.cshtml"); }
+    @{ Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml"); }
 }
 
 <form role="form">
-	<div class="row">
-		<div class="col-md-12 text-right">
-			<a href="/CollaredAnimal/" class="btn btn-default">Cancel</a>
-		    <button type="submit" class="btn btn-primary" data-bind="click: saveCollar, enable: canSave">Save</button>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a href="/CollaredAnimal/" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-primary" data-bind="click: saveCollar, enable: canSave">Save</button>
+        </div>
+    </div>
 
-	<div class="row">
-		<div class="col-md-12">
-		    <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#animalTab" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Animal</a></li>
-		        <li><a href="#collarTab" role="tab" data-toggle="tab" class="colouredTab generalTab">Collar</a></li>
-                <li data-bind="click: mapTabClicked"><a href="#locations" role="tab" data-toggle="tab" id="map-tab" class="colouredTab distributionTab">Locations</a></li>
-                <li><a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Links</a></li>
-		        <li><a href="#history" role="tab" data-toggle="tab" class="colouredTab historyTab">History</a></li>
-		    </ul>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#animalTab" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Animal</a>
+                </li>
+                <li>
+                    <a href="#collarTab" role="tab" data-toggle="tab" class="colouredTab generalTab">Collar</a>
+                </li>
+                <li data-bind="click: mapTabClicked">
+                    <a href="#locations" role="tab" data-toggle="tab" id="map-tab" class="colouredTab distributionTab">Locations</a>
+                </li>
+                <li>
+                    <a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Links</a>
+                </li>
+                <li>
+                    <a href="#history" role="tab" data-toggle="tab" class="colouredTab historyTab">History</a>
+                </li>
+            </ul>
 
-			<!-- Tab panes -->
-		    <div class="tab-content" style="margin-top:10px;">
+            <!-- Tab panes -->
+            <div class="tab-content" style="margin-top: 10px;">
 
-                @{Html.RenderPartial("AnimalTab");}
-                @{Html.RenderPartial("CollarTab");}
-				
-		        <div class="tab-pane form-horizontal" id="locations">
-		            <div id="map-canvas"></div>
-		            <br/>
-		            <div id="locationTableFilter"></div>
-		            <table id="locationTable" class="table">
-		                <thead>
-		                    <tr>
-		                        <th>Date</th>
-		                        <th>Latitude</th>
-		                        <th>Longitude</th>
-		                        <th>Status</th>
-                                <th>Comment</th>
-		                        <th>Review</th>
-		                    </tr>
-		                </thead>
-		            </table>
-		        </div>
+                @{ Html.RenderPartial("AnimalTab"); }
+                @{ Html.RenderPartial("CollarTab"); }
 
-		        <div id="files" class="tab-pane form-horizontal">
-		            <div id="fileTemplateTempDiv"></div>
-		        </div>
-                
-		        <div id="history" class="tab-pane form-horizontal">
+                <div class="tab-pane form-horizontal" id="locations">
+                    <div id="map-canvas"></div>
+                    <div id="map-legend">
+                        <ul class="clearfix">
+                            <li>Legend</li>
+                            <li style="background: url(/content/images/maps-symbol-blank-red.png) no-repeat center left">Location - No warnings</li>
+                            <li style="background: url(/content/images/maps-symbol-x-red.png) no-repeat center left">Rejected location</li>
+                            <li style="background: url(/content/images/maps-symbol-blank-yellow.png) no-repeat center left">Warning location</li>
+                            <li style="background: url(/content/images/maps-symbol-blank-start.png) no-repeat center left; padding-left: 38px;">Starting location</li>
+                            <li style="background: url(/content/images/maps-symbol-blank-stop.png) no-repeat center left">Last location</li>
+                            <li style="background: url(/content/images/maps-symbol-line.png) no-repeat center left">Line goes from Starting location through each point up to the Last location</li>
+                        </ul>
+                        <hr style="clear: left"/>
+                    </div>
+
+                    <br/>
+                    <div id="locationTableFilter"></div>
+                    <table id="locationTable" class="table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Status</th>
+                            <th>Comment</th>
+                            <th>Review</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div id="files" class="tab-pane form-horizontal">
+                    <div id="fileTemplateTempDiv"></div>
+                </div>
+
+                <div id="history" class="tab-pane form-horizontal">
                     <div id="historyTemplateTempDiv"></div>
-		        </div>
-				
-		    </div>
-		</div>
-	</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </form>

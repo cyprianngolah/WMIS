@@ -115,7 +115,7 @@ wmis.collaredanimal.mapping = (function ($) {
                  );
 
         $("#locationTable").DataTable({
-            "iDisplayLength": 10,
+            "iDisplayLength": 100,
             "ordering": false,
             "bJQueryUI": true,
             "bProcessing": true,

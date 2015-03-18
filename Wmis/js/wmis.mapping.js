@@ -15,7 +15,7 @@ wmis.mapping = (function ($) {
         4: '/content/images/maps-symbol-blank-yellow.png', //Warning - Fast Mover
         5: '/content/images/maps-symbol-blank-yellow.png', //Warning - Suspected Error
         6: '/content/images/maps-symbol-blank-yellow.png', //Warning - Unexpected Reports
-        7: '/content/images/maps-symbol-blank-orange.png' //Warning - Possibly Stationary
+        7: '/content/images/maps-symbol-blank-yellow.png' //Warning - Possibly Stationary
     };
 
     var argosPassStatusToIsRejected = {
@@ -206,7 +206,8 @@ wmis.mapping = (function ($) {
     function createMapInstance() {
         var mapOptions = {
             zoom: 5,
-            center: new google.maps.LatLng(64.918325, -118.002385)
+            center: new google.maps.LatLng(64.918325, -118.002385),
+            scaleControl: true
         };
 
         return new google.maps.Map(document.getElementById(options.mapElementId), mapOptions);
@@ -219,6 +220,8 @@ wmis.mapping = (function ($) {
         }
         var map = createMapInstance();
         var argosDataViewModel = new ArgosDataViewModel(pointsObservable, selectedPointObservable, reviewPassFunction, map, hideLineAndMarkers);
+
+        return map;
     }
     
     return {
