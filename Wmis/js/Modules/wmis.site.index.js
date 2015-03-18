@@ -23,13 +23,13 @@ wmis.site.index = (function ($) {
 
     function initDataTable() {
         var parameters;
-        siteTable = $('#sites').dataTable({
+        siteTable = $('#animalSites').dataTable({
             "iDisplayLength": 20,
             "scrollX": true,
             "bJQueryUI": true,
             "bProcessing": true,
             "serverSide": true,
-            "ajaxSource": "/api/statusrank",
+            "ajaxSource": "/api/site",
             "pagingType": "bootstrap",
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
