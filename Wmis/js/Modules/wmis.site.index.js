@@ -33,7 +33,7 @@ wmis.site.index = (function ($) {
             "pagingType": "bootstrap",
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
-				{ "data": "key" },
+				{ "data": "siteNumber" },
 				{ "data": "name" }
             ],
             "fnServerData": function (source, data, callback, settings) {

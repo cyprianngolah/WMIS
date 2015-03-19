@@ -9,6 +9,8 @@ namespace Wmis.Models
 
     public class Site : KeyedModel
     {
+        public int SiteNumber { get; set; }
+
         public string Name { get; set; }
     }
 }

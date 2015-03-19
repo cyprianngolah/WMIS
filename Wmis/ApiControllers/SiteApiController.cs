@@ -26,6 +26,13 @@ namespace Wmis.ApiControllers
             return Repository.SiteGet(siteKey);
         }
 
+        [HttpGet]
+        [Route]
+        public PagedResultset<Site> Get([FromUri]SiteRequest searchRequestParameters)
+        {
+            return Repository.SiteGet(searchRequestParameters);
+        }
+
         [HttpPost]
         [Route]
         public void CreateSite([FromUri]SiteSaveRequest request)

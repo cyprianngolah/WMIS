@@ -251,6 +251,7 @@
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
     <Compile Include="Dto\CollaboratorCreateRequest.cs" />
     <Compile Include="Dto\PagedRoleRequest.cs" />
+    <Compile Include="Dto\SiteRequest.cs" />
     <Compile Include="Dto\SiteSaveRequest.cs" />
     <Compile Include="Dto\SpeciesTypeRequest.cs" />
     <Compile Include="Dto\SurveyTemplateColumnSaveRequest.cs" />

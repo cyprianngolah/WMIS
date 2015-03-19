@@ -287,14 +287,6 @@
 
         private const string ARGOSPASSSTATUS_GET = "dbo.ArgosPassStatus_Get";
 
-        private const string USERS_CREATE = "dbo.Users_Create";
-
-        private const string USERS_GET = "dbo.Users_Get";
-
-        private const string USERS_UPDATE = "dbo.Users_Update";
-
-        private const string USERS_SEARCH = "dbo.Users_Search";
-
         private const string FILE_SEARCH = "dbo.File_Search";
 
         private const string FILE_CREATE = "dbo.File_Create";
@@ -316,6 +308,8 @@
         private const string COLLABORATOR_GET = "dbo.Collaborator_Get";
 
         private const string COLLABORATOR_SEARCH = "dbo.Collaborator_Search";
+
+        private const string SITE_GET = "dbo.Site_Get";
 
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
@@ -3016,6 +3010,35 @@
         #endregion
 
         #region Site
+        public PagedResultset<Site> SiteGet(SiteRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new { p_from = request.StartRow, p_to = request.StartRow + request.RowCount - 1 };
+
+                var pagedResults = new PagedResultset<Site>
+                                {
+                                    DataRequest = request,
+                                    ResultCount = 0,
+                                    Data = new List<Site>()
+                                };
+
+                var results = c.Query<dynamic, Site, Site>(
+                    SITE_GET,
+                    (d, record) =>
+                        {
+                            pagedResults.ResultCount = d.TotalRowCount;
+                            return record;
+                        },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+
         public PagedResultset<Site> SiteGet(int siteKey)
         {
             throw new NotImplementedException();

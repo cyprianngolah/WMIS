@@ -296,6 +296,8 @@
     <Build Include="dbo\Stored Procedures\Person_CreateAndGet.sql" />
     <Build Include="dbo\Stored Procedures\Person_Create.sql" />
     <Build Include="dbo\Stored Procedures\Person_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Site_Get.sql" />
+    <Build Include="dbo\Tables\Sites.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

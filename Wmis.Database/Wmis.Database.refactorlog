@@ -161,4 +161,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ObservationRowStatusId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="0507967b-e46c-4ee4-b73b-61ae418bc588" ChangeDateTime="03/19/2015 22:41:54">
+    <Property Name="ElementName" Value="[dbo].[Sites].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Sites]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SiteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ce5db358-6920-43ac-8e7c-791fe3ce99eb" ChangeDateTime="03/19/2015 22:42:57">
+    <Property Name="ElementName" Value="[dbo].[Sites].[SiteDescription]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Sites]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
 </Operations>
