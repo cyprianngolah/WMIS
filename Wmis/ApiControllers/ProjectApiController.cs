@@ -38,7 +38,7 @@
 		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
 		public int Create([FromBody]string name)
 		{
-			return Repository.ProjectCreate(name);
+			return Repository.ProjectCreate(name, _user.Username);
 		}
 
 		[HttpPut]
