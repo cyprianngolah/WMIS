@@ -226,6 +226,7 @@
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="ApiControllers\ArgosApiController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\ArgosServiceController.cs" />
     <Compile Include="Controllers\SurveyTemplateController.cs" />
@@ -698,6 +699,7 @@
     <Content Include="Views\SurveyTemplate\New.cshtml" />
     <Content Include="Views\Shared\Mapping.cshtml" />
     <Content Include="Views\ArgosService\Index.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
     <None Include="Views\Shared\FileTab.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

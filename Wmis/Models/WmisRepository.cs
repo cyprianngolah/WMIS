@@ -1216,14 +1216,14 @@
 		#endregion
 
 		#region Project
-		public int ProjectCreate(string name)
+		public int ProjectCreate(string name, string createdBy)
 		{
 			using (var c = NewWmisConnection)
 			{
 				var param = new
 				{
 					p_name = name,
-                    p_createdBy = "Unknown User"
+                    p_createdBy = createdBy
 				};
 				return c.Query<int>(PROJECT_CREATE, param, commandType: CommandType.StoredProcedure).Single();
 			}
