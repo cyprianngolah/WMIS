@@ -5,12 +5,10 @@ using System.Web;
 
 namespace Wmis.Dto
 {
-    public class SiteSaveRequest
+    public class SiteRequest : PagedDataRequest
     {
         public int? Key { get; set; }
 
-        public int SiteNumber { get; set; }
-
-        public string Name { get; set; }
+        public string Keywords { get; set; }
     }
 }

@@ -311,6 +311,8 @@
 
         private const string SITE_GET = "dbo.Site_Get";
 
+        private const string SITE_SAVE = "dbo.Site_Save";
+
         /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
@@ -1344,39 +1346,6 @@
 				return pr;
 			}
 		}
-		#endregion
-
-		#region Person
-        //public Dto.PagedResultset<Person> PersonSearch(Dto.PersonRequest sr)
-        //{
-        //    using (var c = NewWmisConnection)
-        //    {
-        //        var param = new
-        //        {
-        //            p_from = sr.StartRow,
-        //            p_to = sr.RowCount,
-        //            p_sortBy = sr.SortBy,
-        //            p_sortDirection = sr.SortDirection,
-        //        };
-
-        //        var pr = new Dto.PagedResultset<Person> { DataRequest = sr };
-
-        //        var results = c.Query<int, Person, Person>(
-        //            PERSON_SEARCH,
-        //            (count, p) =>
-        //            {
-        //                pr.ResultCount = count;
-        //                return p;
-        //            },
-        //            param,
-        //            commandType: CommandType.StoredProcedure,
-        //            splitOn: "Key");
-
-        //        pr.Data = new List<Person>(results);
-
-        //        return pr;
-        //    }
-        //}
 		#endregion
 
 		#region Lead Region 
@@ -3014,7 +2983,12 @@
         {
             using (var c = NewWmisConnection)
             {
-                var param = new { p_from = request.StartRow, p_to = request.StartRow + request.RowCount - 1 };
+                var param = new
+                {
+                    p_from = request.StartRow, 
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_siteId = request.Key
+                };
 
                 var pagedResults = new PagedResultset<Site>
                                 {
@@ -3039,14 +3013,19 @@
             }
         }
 
-        public PagedResultset<Site> SiteGet(int siteKey)
+        public void SiteSave(SiteSaveRequest request)
         {
-            throw new NotImplementedException();
-        }
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_siteId = request.Key,
+                    p_siteNumber = request.SiteNumber,
+                    p_name = request.Name
+                };
 
-        public void SiteSave(SiteSaveRequest ss)
-        {
-            throw new NotImplementedException();
+                c.Execute(SITE_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
         }
         #endregion
 

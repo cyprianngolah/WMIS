@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-
-namespace Wmis.ApiControllers
+﻿namespace Wmis.ApiControllers
 {
+    using System.Web.Http;
+
     using Wmis.Configuration;
     using Wmis.Dto;
     using Wmis.Models;
@@ -21,9 +16,9 @@ namespace Wmis.ApiControllers
 
         [HttpGet]
         [Route("{siteKey:int}")]
-        public Dto.PagedResultset<Models.Site> GetSite(int siteKey)
+        public PagedResultset<Site> GetSite(int siteKey)
         {
-            return Repository.SiteGet(siteKey);
+            return Repository.SiteGet(new SiteRequest() {Key = siteKey});
         }
 
         [HttpGet]
@@ -35,7 +30,7 @@ namespace Wmis.ApiControllers
 
         [HttpPost]
         [Route]
-        public void CreateSite([FromUri]SiteSaveRequest request)
+        public void SaveSite([FromBody]SiteSaveRequest request)
         {
             Repository.SiteSave(request ?? new SiteSaveRequest());
         }

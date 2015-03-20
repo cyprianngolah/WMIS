@@ -74,7 +74,7 @@ wmis.site.index = (function ($) {
                 siteTable.$('tr.info').removeClass('info');
                 $("#editButton").addClass('disabled');
 
-                $("#site tbody tr").click(function () {
+                $("#animalSites tbody tr").click(function () {
                     // Highlight selected row
                     if ($(this).hasClass('info')) {
                         $(this).removeClass('info');

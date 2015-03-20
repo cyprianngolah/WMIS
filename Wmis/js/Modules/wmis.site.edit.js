@@ -1,5 +1,5 @@
-﻿wmis.statusrank = wmis.statusrank || {};
-wmis.statusrank.edit = (function ($) {
+﻿wmis.site = wmis.site || {};
+wmis.site.edit = (function ($) {
     var options = {
         key: null,
     };
@@ -7,6 +7,7 @@ wmis.statusrank.edit = (function ($) {
     function editViewModel(key) {
         var self = this;
         this.key = ko.observable(key);
+        this.siteNumber = ko.observable("");
         this.name = ko.observable("");
         this.canSave = ko.computed(function () {
             return ($.trim(self.name()) != "");
@@ -18,6 +19,7 @@ wmis.statusrank.edit = (function ($) {
                 if (json.data.length > 0) {
                     var d = json.data[0];
                     self.name(d.name);
+                    self.siteNumber(d.siteNumber);
                 }
             }).fail(wmis.global.ajaxErrorHandler);
         };
