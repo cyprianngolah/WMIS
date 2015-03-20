@@ -22,10 +22,10 @@
 
 <div class="row">
     <div class="col-md-12 text-right">
-        @*@if (Html.UserIsBiodiversityAdministrator())
-        {*@
+        @if (Html.UserIsBiodiversityAdministrator())
+        {
             <a href="/Site/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-        @*}*@
+        }
         <a href="/Site/Edit" id="editButton" class="btn btn-default" style="margin-bottom: 10px;">
             @if (Html.UserIsBiodiversityAdministrator())
             {

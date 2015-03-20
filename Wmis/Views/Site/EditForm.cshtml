@@ -21,10 +21,10 @@
                     <span>Back</span>
                 }
             </a>
-            @*@if (Html.UserIsBiodiversityAdministrator())
-            {*@
+            @if (Html.UserIsBiodiversityAdministrator())
+            {
                 <button type="submit" class="btn btn-primary" data-bind="click: save, enabled: canSave">Save</button>
-            @*}*@
+            }
         </div>
     </form>
 </div>
