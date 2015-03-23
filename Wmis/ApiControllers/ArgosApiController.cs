@@ -114,8 +114,9 @@
         [Route("run/{collaredAnimalId:int?}")]
 		public IEnumerable<ArgosSatellitePass> RetrieveForCollar(int collaredAnimalId)
         {
-            var subscriptionId = Repository.CollarGet(collaredAnimalId).SubscriptionId;
-			return _argosJobService.GetArgosDataForCollar(collaredAnimalId, subscriptionId);
+            var collar = Repository.CollarGet(collaredAnimalId);
+            var subscriptionId = collar.SubscriptionId;
+			return _argosJobService.GetArgosDataForCollar(collar.ArgosProgram, collaredAnimalId, subscriptionId);
         }
 
         [HttpGet]

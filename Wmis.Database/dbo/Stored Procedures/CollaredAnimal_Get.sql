@@ -9,7 +9,6 @@ AS
 		c.SubscriptionId,
 		c.VhfFrequency,
 		c.JobNumber,
-		c.ProgramNumber,
 		c.HasPttBeenReturned,
 		c.Model,
 		c.InactiveDate,
@@ -76,7 +75,12 @@ AS
 		c.BreedingStatusConfidenceLevelId as [BreedingStatusConfidenceLevelKey],
 		breedingStatusConfidenceLevel.Name as [BreedingStatusConfidenceLevelName],
 		c.BreedingStatusMethodId as [BreedingStatusMethodKey],
-		breedingStatusMethod.Name as [BreedingStatusMethodName]
+		breedingStatusMethod.Name as [BreedingStatusMethodName],
+		c.ArgosProgramId as [ArgosProgramKey],
+		argosProgram.ProgramNumber as [ArgosProgramNumber],
+		argosProgram.ArgosUserId as [ArgosUserKey],
+		argosUser.Name as [ArgosUserName],
+		argosUser.[Password] as [ArgosUserPassword]
 	FROM
 		dbo.CollaredAnimals c
 		LEFT OUTER JOIN dbo.CollarStatuses collarStatus on c.CollarStatusId = collarStatus.CollarStatusId
@@ -96,6 +100,8 @@ AS
 		LEFT OUTER JOIN dbo.BreedingStatuses breedingStatus on c.BreedingStatusId = breedingStatus.BreedingStatusId
 		LEFT OUTER JOIN dbo.ConfidenceLevels breedingStatusConfidenceLevel on c.BreedingStatusConfidenceLevelId = breedingStatusConfidenceLevel.ConfidenceLevelId
 		LEFT OUTER JOIN dbo.BreedingStatusMethods breedingStatusMethod on c.BreedingStatusMethodId = breedingStatusMethod.BreedingStatusMethodId
+		LEFT OUTER JOIN dbo.ArgosPrograms argosProgram on c.ArgosProgramId = argosProgram.ArgosProgramId
+		LEFT OUTER JOIN dbo.ArgosUsers argosUser on argosProgram.ArgosUserId = argosUser.ArgosUserId
 	WHERE
 		(@p_collaredAnimalKey IS NULL OR c.CollaredAnimalId = @p_collaredAnimalKey)
 		AND (@p_projectId IS NULL OR c.ProjectId = @p_projectId)

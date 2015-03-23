@@ -314,6 +314,11 @@
         private const string SITE_SAVE = "dbo.Site_Save";
 
         /// <summary>
+        /// The ArgosProgram Get All stored procedure
+        /// </summary>
+        private const string ARGOSPROGRAMS_GETALL = "dbo.ArgosProgram_GetAll";
+
+        /// <summary>
 		/// The Connection String to connect to the WMIS database for the current environment
 		/// </summary>
 		private readonly string _connectionString;
@@ -1915,6 +1920,10 @@
                         collar.CollarType = type ?? new CollarType();
                         collar.CollarRegion = region ?? new CollarRegion();
                         collar.CollarStatus = status ?? new CollarStatus();
+                        collar.ArgosProgram = dyn.P ?? new ArgosProgram();
+
+                        collar.ArgosProgram = dyn.ArgosProgramKey == null ? new ArgosProgram() : new ArgosProgram { Key = dyn.ArgosProgramKey, ProgramNumber = dyn.ArgosProgramNumber, ArgosUser = new ArgosUser { Key = dyn.ArgosUserKey, Name = dyn.ArgosUserName, Password = dyn.ArgosUserPassword } };
+
                         collar.HerdPopulation = dyn.HerdPopulationKey == null ? new HerdPopulation() : new HerdPopulation { Key = dyn.HerdPopulationKey, Name = dyn.HerdPopulationName };
                         collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
                         collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
@@ -1942,6 +1951,11 @@
                         collar.CollarType = type ?? new CollarType();
                         collar.CollarRegion = region ?? new CollarRegion();
                         collar.CollarStatus = status ?? new CollarStatus();
+
+
+                        collar.ArgosProgram = dyn.ArgosProgramKey == null ? new ArgosProgram() : new ArgosProgram { Key = dyn.ArgosProgramKey, ProgramNumber = dyn.ArgosProgramNumber, ArgosUser =  new ArgosUser{ Key = dyn.ArgosUserKey, Name = dyn.ArgosUserName, Password = dyn.ArgosUserPassword }};
+
+
                         collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
                         collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
                         collar.AnimalStatus = dyn.AnimalStatusKey == null ? new AnimalStatus() : new AnimalStatus { Key = dyn.AnimalStatusKey, Name = dyn.AnimalStatusName };
@@ -1976,7 +1990,7 @@
                     p_SubscriptionId = collar.SubscriptionId,
                     p_VhfFrequency = collar.VhfFrequency,
                     p_JobNumber = collar.JobNumber,
-                    p_ProgramNumber = collar.ProgramNumber,
+                    p_ArgosProgramId = collar.ArgosProgram.Key == 0 ? null : (int?)collar.ArgosProgram.Key,
                     p_HasPttBeenReturned = collar.HasPttBeenReturned,
                     p_Model = collar.Model,
                     p_InactiveDate = collar.InactiveDate,
@@ -2975,7 +2989,68 @@
                 c.Execute(PROJECTCOLLABORATORS_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
         }
+
+
+
+
+
+
+
+
         #endregion
+
+        #region ArgosPrograms
+
+        public IEnumerable<ArgosProgram> ArgosProgramsGetAll()
+        {
+            using (var c = NewWmisConnection)
+            {
+                return c.Query<ArgosProgram, ArgosUser, ArgosProgram>(ARGOSPROGRAMS_GETALL,
+                    (p, u) =>
+                    {
+                        p.ArgosUser = u;
+                        return p;
+                    },
+                    new {},
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+            }
+        }
+
+        public PagedResultset<ArgosProgram> ArgosProgramsGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1
+                };
+
+                var pagedResults = new PagedResultset<ArgosProgram>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<ArgosProgram>()
+                };
+
+                var results = c.Query<ArgosProgram, ArgosUser, ArgosProgram>(ARGOSPROGRAMS_GETALL,
+                    (p, u) =>
+                    {
+                        p.ArgosUser = u;
+                        return p;
+                    },
+                    new { },
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.OrderBy(p => p.ProgramNumber).ToList();
+                return pagedResults;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Site

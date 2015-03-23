@@ -48,7 +48,16 @@
 
 		public void EnqueueActiveCollars()
 		{
-			var collars = _repository.CollarGet(new Dto.CollarSearchRequest { ActiveOnly = true, StartRow = 0, RowCount = Int32.MaxValue });
+		    var programs = _repository.ArgosProgramsGetAll(); //.Where(p => p.ArgosUser.Name  == "gunn");
+
+		    foreach (var program in programs)
+		    {
+                BackgroundJob.Enqueue(() => GetArgosDataForProgram(program));
+		    }
+
+            // This is the old code block that downloads a single collar at a time.
+            /*        
+		    var collars = _repository.CollarGet(new Dto.CollarSearchRequest { ActiveOnly = true, StartRow = 0, RowCount = Int32.MaxValue });
 			var legitCollars = collars.Data.Where(c => !string.IsNullOrEmpty(c.SubscriptionId.Trim()));
 
 			foreach (var c in legitCollars)
@@ -56,12 +65,13 @@
                 if(!string.IsNullOrEmpty(c.SubscriptionId))
 				    BackgroundJob.Enqueue(() => GetArgosDataForCollar(c.Key, c.SubscriptionId));
 			}
+            */
 		}
 
 		[AutomaticRetry(Attempts=1, LogEvents=true)]
-		public IEnumerable<ArgosSatellitePass> GetArgosDataForCollar(int collaredAnimalId, string subscriptionId)
+		public IEnumerable<ArgosSatellitePass> GetArgosDataForCollar(ArgosProgram program, int collaredAnimalId, string subscriptionId)
 		{
-			var data = _argosDataClient.RetrieveArgosDataForCollar(subscriptionId);
+			var data = _argosDataClient.RetrieveArgosDataForCollar(subscriptionId, program.ArgosUser.Name, program.ArgosUser.Password);
 
 			// Merge the Data into the databse
 			if (data.Any())
@@ -69,5 +79,23 @@
 
 			return data;
 		}
+
+	    [AutomaticRetry(Attempts = 1, LogEvents = true)]
+        public IEnumerable<ArgosSatellitePass> GetArgosDataForProgram(ArgosProgram program)
+	    {
+            var collars = _repository.CollarGet(new Dto.CollarSearchRequest { ActiveOnly = true, StartRow = 0, RowCount = Int32.MaxValue });
+            var legitCollars = collars.Data.Where(c => !string.IsNullOrEmpty(c.SubscriptionId.Trim()));
+            
+	        var data = _argosDataClient.RetrieveArgosDataForProgram(program.ProgramNumber, program.ArgosUser.Name, program.ArgosUser.Password);
+
+            foreach (var collar in legitCollars)
+            {
+                var passesForCollar = data.Where(d => (d.PlatformId + "") == collar.SubscriptionId);
+
+                _repository.ArgosPassMerge(collar.Key, passesForCollar);
+            }
+
+	        return data;
+	    }
 	}
 }

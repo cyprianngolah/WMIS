@@ -299,6 +299,7 @@
     <Build Include="dbo\Stored Procedures\Site_Get.sql" />
     <Build Include="dbo\Tables\Sites.sql" />
     <Build Include="dbo\Stored Procedures\Site_Save.sql" />
+    <None Include="dbo\Fill\ArgosUsers.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
@@ -309,6 +310,9 @@
     <Build Include="dbo\Tables\PersonProjects.sql" />
     <Build Include="dbo\Stored Procedures\Person_Get.sql" />
     <Build Include="dbo\Stored Procedures\Role_Get.sql" />
+    <Build Include="dbo\Stored Procedures\ArgosProgram_GetAll.sql" />
+    <Build Include="dbo\Tables\ArgosUsers.sql" />
+    <Build Include="dbo\Tables\ArgosPrograms.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\Project_Create.sql" />

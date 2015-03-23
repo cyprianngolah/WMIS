@@ -9,5 +9,7 @@
 		public double Longitude { get; set; }
 
 		public DateTime Timestamp { get; set; }
+
+        public int PlatformId { get; set; }
 	}
 }

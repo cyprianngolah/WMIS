@@ -11,13 +11,26 @@
 		public void GetArgosDataForCollar()
 		{
 			// Arrange
-			var ac = new ArgosDataClient("gunn", "northter");
+			var ac = new ArgosDataClient();
 
 			// Act
-			var data = ac.RetrieveArgosDataForCollar("110918");
+			var data = ac.RetrieveArgosDataForCollar("110918", "gunn", "northter");
 
 			// Assert
 			Assert.IsTrue(data.Any());
 		}
+
+	    [TestMethod]
+	    public void GetArgosDataForProgram()
+        {
+            // Arrange
+            var ac = new ArgosDataClient();
+
+            // Act
+            var data = ac.RetrieveArgosDataForProgram("606", "gunn", "northter");
+
+            // Assert
+            Assert.IsTrue(data.Any()); 
+	    }
 	}
 }

@@ -29,9 +29,11 @@
             <input type="text" class="form-control" id="jobNumber" data-bind="value: jobNumber">
         </div>
 
-        <label for="programNumber" class="col-md-1 control-label">Program Number</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="programNumber" data-bind="value: programNumber">
+        <label for="argosProgram" class="col-md-1 control-label">Program Number</label>
+        <div class="col-md-3" data-bind="with: argosProgram">
+            <!-- ko if: $root.dropdowns.programs().length > 0 -->
+            <select class="form-control" id="argosProgram" name="argosProgram" data-bind="options: $root.dropdowns.programs, optionsText: 'programNumber', optionsValue: 'key', optionsCaption: '', value: key, select2: {}"></select>
+            <!-- /ko -->
         </div>
     </div>
 

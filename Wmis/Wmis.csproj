@@ -301,6 +301,8 @@
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Extensions\MvcSecurityExtension.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
+    <Compile Include="Models\ArgosProgram.cs" />
+    <Compile Include="Models\ArgosUser.cs" />
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />
     <Compile Include="Models\PersonRole.cs" />

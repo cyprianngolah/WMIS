@@ -6,7 +6,6 @@
 	[VhfFrequency]						NVARCHAR (50)		NULL,
 	[CollarTypeId]						INT					NULL,
 	[JobNumber]							NVARCHAR (50)		NULL,
-	[ProgramNumber]						NVARCHAR (50)		NULL,
 	[HasPttBeenReturned]				BIT					NOT NULL DEFAULT 0,
 	[Model]								NVARCHAR (50)		NULL,
 	[CollarStatusId]					INT					NULL,
@@ -61,8 +60,8 @@
 	[SnowSinceDeath]					BIT				    NULL,
 	[SignsOfHumans]						BIT				    NULL,
 	[LastUpdated]						DATETIME		    NOT NULL DEFAULT GETUTCDATE(),
-
-	CONSTRAINT [PK_CollaredAnimals] PRIMARY KEY CLUSTERED ([CollaredAnimalId]),
+	[ArgosProgramId]					INT					NULL, 
+    CONSTRAINT [PK_CollaredAnimals] PRIMARY KEY CLUSTERED ([CollaredAnimalId]),
 	CONSTRAINT [FK_CollaredAnimals_CollarMalfunctions] FOREIGN KEY ([CollarMalfunctionId]) REFERENCES [dbo].[CollarMalfunctions] ([CollarMalfunctionId]),
 	CONSTRAINT [FK_CollaredAnimals_CollarStates] FOREIGN KEY ([CollarStateId]) REFERENCES [dbo].[CollarStates] ([CollarStateId]),
 	CONSTRAINT [FK_CollaredAnimals_CollarStatuses] FOREIGN KEY ([CollarStatusId]) REFERENCES [dbo].[CollarStatuses] ([CollarStatusId]),
@@ -78,5 +77,6 @@
 	CONSTRAINT [FK_CollaredAnimals_HerdAssociationMethods] FOREIGN KEY ([HerdAssociationMethodId]) REFERENCES [dbo].[HerdAssociationMethods] ([HerdAssociationMethodId]),
 	CONSTRAINT [FK_CollaredAnimals_BreedingStatuses] FOREIGN KEY ([BreedingStatusId]) REFERENCES [dbo].[BreedingStatuses] ([BreedingStatusId]),
 	CONSTRAINT [FK_CollaredAnimals_ConfidenceLevels_BreedingStatus] FOREIGN KEY ([BreedingStatusConfidenceLevelId]) REFERENCES [dbo].[ConfidenceLevels] ([ConfidenceLevelId]),
-	CONSTRAINT [FK_CollaredAnimals_BreedingStatusMethods] FOREIGN KEY ([BreedingStatusMethodId]) REFERENCES [dbo].[BreedingStatusMethods] ([BreedingStatusMethodId])
+	CONSTRAINT [FK_CollaredAnimals_BreedingStatusMethods] FOREIGN KEY ([BreedingStatusMethodId]) REFERENCES [dbo].[BreedingStatusMethods] ([BreedingStatusMethodId]),
+	CONSTRAINT [FK_CollaredAnimals_ArgosPrograms] FOREIGN KEY ([ArgosProgramId]) REFERENCES [dbo].[ArgosPrograms] ([ArgosProgramId])
 )

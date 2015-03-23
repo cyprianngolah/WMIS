@@ -1,5 +1,6 @@
 ﻿namespace Wmis.ApiControllers
 {
+    using System.Linq;
     using System.Web.Http;
 	using Configuration;
 	using Dto;
@@ -216,6 +217,18 @@
             }
 
             return Repository.AnimalStatusGet(request);
+        }
+
+        [HttpGet]
+        [Route("programs")]
+        public PagedResultset<ArgosProgram> GetArgosPrograms([FromUri]Dto.PagedDataRequest request)
+        {
+            if (request == null)
+            {
+                request = new PagedDataRequest();
+            }
+
+            return Repository.ArgosProgramsGet(request);
         }
     }
 }

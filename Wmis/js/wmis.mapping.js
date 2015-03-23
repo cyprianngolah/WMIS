@@ -128,7 +128,7 @@ wmis.mapping = (function ($) {
         function loadMarkers(map, passes, reviewPassFunction) {
             var markers = [];
             var startPass = passes[0];
-            markers.push(createStartMarker(map, startPass));
+            markers.push(createStopMarker(map, startPass));
 
             var middlePoints = passes.slice(1, -1);
             _.forEach(middlePoints, function (pass) {
@@ -136,7 +136,7 @@ wmis.mapping = (function ($) {
             });
 
             var stopPass = passes.length > 1 ? passes[passes.length - 1] : null;
-            stopPass && markers.push(createStopMarker(map, stopPass));
+            stopPass && markers.push(createStartMarker(map, stopPass)); 
 
             _.forEach(markers, function (marker) {
                 marker.setMap(map);

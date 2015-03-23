@@ -46,6 +46,7 @@ wmis.collaredanimal.edit = (function($) {
         this.ageClasses = ko.observableArray();
         this.animalMortalities = ko.observableArray();
         this.animalStatuses = ko.observableArray();
+        this.programs = ko.observableArray();
 
         wmis.global.getDropDownData(self.collarTypes, "/api/collar/type?startRow=0&rowCount=500", function (result) { return result.data; });
         wmis.global.getDropDownData(self.collarRegions, "/api/collar/region?startRow=0&rowCount=500", function (result) { return result.data; });
@@ -61,6 +62,7 @@ wmis.collaredanimal.edit = (function($) {
         wmis.global.getDropDownData(self.ageClasses, "/api/collar/ageClasses?startRow=0&rowCount=500", function (result) { return result.data; });
         wmis.global.getDropDownData(self.animalMortalities, "/api/collar/animalMortalities?startRow=0&rowCount=500", function (result) { return result.data; });
         wmis.global.getDropDownData(self.animalStatuses, "/api/collar/animalStatuses?startRow=0&rowCount=500", function (result) { return result.data; });
+        wmis.global.getDropDownData(self.programs, "/api/collar/programs?startRow=0&rowCount=500", function (result) { return result.data; });
     }
 
     var targetSpeciesOptions = {

@@ -6,7 +6,7 @@
 	@p_VhfFrequency NVARCHAR (50) = NULL,
 	@p_CollarTypeId NVARCHAR (50) = NULL,
 	@p_JobNumber NVARCHAR (50) = NULL,
-	@p_ProgramNumber NVARCHAR (50) = NULL,
+	@p_ArgosProgramId INT = NULL,
 	@p_HasPttBeenReturned BIT = 0,
 	@p_Model NVARCHAR (50) = NULL,
 	@p_CollarStatusId INT = NULL,
@@ -138,6 +138,15 @@ AS
 	BEGIN
 		INSERT INTO HistoryLogs (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Animal Breeding", (SELECT Name from BreedingStatuses where BreedingStatusId = @p_BreedingStatusId) + ' (' + (SELECT CONVERT(char(10),  @p_BreedingStatusDate, 101)) + ')', @p_ChangeBy)
 	END
+
+	--Argos Program
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND ArgosProgramId != @p_ArgosProgramId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Argos Program", (SELECT ProgramNumber from ArgosPrograms where ArgosProgramId = @p_ArgosProgramId), @p_ChangeBy)
+	END
 	
 	--Inactive Date
 	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
@@ -167,7 +176,7 @@ AS
 		VhfFrequency = @p_VhfFrequency,
 		CollarTypeId = @p_CollarTypeId,
 		JobNumber = @p_JobNumber,
-		ProgramNumber  = @p_ProgramNumber,
+		ArgosProgramId = @p_ArgosProgramId,
 		HasPttBeenReturned = @p_HasPttBeenReturned,
 		Model = @p_Model,
 		CollarRegionId = @p_CollarRegionId,

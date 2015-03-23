@@ -25,3 +25,22 @@ Post-Deployment Script Template
 :r .\dbo\Fill\SurveyTemplateColumns.sql
 :r .\dbo\Fill\ObservationUploadStatuses.sql
 :r .\dbo\Fill\SurveyTemplateColumnTypes.sql
+
+
+:r .\dbo\Fill\AgeClasses.sql
+:r .\dbo\Fill\AnimalMortalities.sql
+:r .\dbo\Fill\AnimalSexes.sql
+:r .\dbo\Fill\AnimalStatuses.sql
+:r .\dbo\Fill\ArgosPassStatuses.sql
+:r .\dbo\Fill\ArgosUsers.sql
+:r .\dbo\Fill\BreedingStatuses.sql
+:r .\dbo\Fill\BreedingStatusMethods.sql
+:r .\dbo\Fill\CollarMalfunctions.sql
+:r .\dbo\Fill\CollarRegions.sql
+:r .\dbo\Fill\CollarStates.sql
+:r .\dbo\Fill\CollarStatuses.sql
+:r .\dbo\Fill\CollarTypes.sql
+:r .\dbo\Fill\ConfidenceLevels.sql
+:r .\dbo\Fill\HerdAssociationMethods.sql
+:r .\dbo\Fill\HerdPopulations.sql
+:r .\dbo\Fill\ProjectStatus.sql

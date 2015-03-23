@@ -16,7 +16,8 @@
 	    
         public string JobNumber { get; set; }
 
-        public string ProgramNumber { get; set; }
+        //public string ProgramNumber { get; set; }
+        public ArgosProgram ArgosProgram { get;set; }
 
         public bool HasPttBeenReturned { get; set; }
 	    

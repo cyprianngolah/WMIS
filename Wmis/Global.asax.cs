@@ -44,11 +44,7 @@
 					x.ForConcreteType<Configuration.WebConfiguration>();
 					x.ForConcreteType<Models.WmisRepository>();
 
-					x.For<ArgosDataClient>()
-						.Use<ArgosDataClient>()
-						.Ctor<string>("username").Is(c.AppSettings["ArgosWebserviceUsername"])
-						.Ctor<string>("password").Is(c.AppSettings["ArgosWebservicePassword"]);
-
+				    x.ForConcreteType<ArgosDataClient>();
 					x.ForConcreteType<ArgosJobService>();
 				});
 			GlobalConfiguration.Configuration.DependencyResolver = new StructureMapDependencyResolver(WebApi.ObjectFactory.Container);
