@@ -6,6 +6,8 @@
 
 	using Hangfire;
 
+	using NPOI.Util;
+
 	using Wmis.Argos;
 	using Wmis.Argos.Entities;
 	using Wmis.Configuration;
@@ -71,6 +73,9 @@
 		[AutomaticRetry(Attempts=1, LogEvents=true)]
 		public IEnumerable<ArgosSatellitePass> GetArgosDataForCollar(ArgosProgram program, int collaredAnimalId, string subscriptionId)
 		{
+		    if (program.ArgosUser == null || string.IsNullOrEmpty(program.ArgosUser.Name) || string.IsNullOrEmpty(program.ArgosUser.Password)) 
+                return new List<ArgosSatellitePass>();
+
 			var data = _argosDataClient.RetrieveArgosDataForCollar(subscriptionId, program.ArgosUser.Name, program.ArgosUser.Password);
 
 			// Merge the Data into the databse
@@ -82,7 +87,10 @@
 
 	    [AutomaticRetry(Attempts = 1, LogEvents = true)]
         public IEnumerable<ArgosSatellitePass> GetArgosDataForProgram(ArgosProgram program)
-	    {
+        {
+            if (program.ArgosUser == null || string.IsNullOrEmpty(program.ArgosUser.Name) || string.IsNullOrEmpty(program.ArgosUser.Password))
+                return new List<ArgosSatellitePass>();
+
             var collars = _repository.CollarGet(new Dto.CollarSearchRequest { ActiveOnly = true, StartRow = 0, RowCount = Int32.MaxValue });
             var legitCollars = collars.Data.Where(c => !string.IsNullOrEmpty(c.SubscriptionId.Trim()));
             
