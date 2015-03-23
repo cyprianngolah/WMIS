@@ -6,10 +6,11 @@ SET IDENTITY_INSERT [dbo].[CollarRegions] ON;
 
 MERGE INTO dbo.[CollarRegions] as [Target]
 USING (VALUES
-	(1, 'Sahtu'),
-	(2, 'Inuvik'),
-	(3, 'North Slave'),
-	(4, 'South Slave')
+	(4, 'Sahtu'),
+	(5, 'Inuvik'),
+	(2, 'North Slave'),
+	(3, 'South Slave'),
+	(1, 'Dehcho')
 )
 AS [Source] ([CollarRegionId], [Name]) 
 ON [Target].[CollarRegionId] = [source].[CollarRegionId]
