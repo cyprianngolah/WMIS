@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Site_Save]
 	@p_siteId INT,
-	@p_siteNumber INT,
+	@p_siteNumber NVARCHAR(50),
 	@p_name NVARCHAR(50) 
 	
 AS

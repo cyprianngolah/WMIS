@@ -9,7 +9,7 @@ namespace Wmis.Dto
     {
         public int? Key { get; set; }
 
-        public int SiteNumber { get; set; }
+        public string SiteNumber { get; set; }
 
         public string Name { get; set; }
     }
