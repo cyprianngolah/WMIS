@@ -551,6 +551,10 @@
     <Content Include="js\Modules\wmis.project.edit.js" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.responsive.scss" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.jqueryui.scss" />
+    <Content Include="Environments\environment.michael.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />
