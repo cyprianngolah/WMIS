@@ -9,6 +9,7 @@ namespace Wmis
 	using Hangfire.StructureMap;
 	using Owin;
 
+	using Wmis.Auth;
 	using Wmis.Logic;
 
 	public class Startup
@@ -22,6 +23,8 @@ namespace Wmis
 				{
 					// Make the Container available to the Activated Jobs
 					config.UseStructureMapActivator(container);
+
+					config.UseAuthorizationFilters(new HangfireAuthorizationFilter());
 
 					// Use Sql Server to store Job info
 					config.UseSqlServerStorage(configuration.ConnectionStrings["WMIS"],  new SqlServerStorageOptions
