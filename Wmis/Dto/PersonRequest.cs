@@ -10,6 +10,8 @@
 
         public string Keywords { get; set; }
 
+        public string RoleName { get; set; }
+
         public PersonRequest()
         {
             ProjectLeadsOnly = false;

@@ -31,7 +31,7 @@ AS
 					dbo.[Role] r 
 						INNER JOIN dbo.[PersonRole] pr on r.RoleId = pr.RoleId 
 				WHERE
-					pr.PersonId = p.PersonId
+					pr.PersonId = p.PersonId AND r.Name LIKE '%' + @p_roleName + '%'
 			)
 		)
 		AND (

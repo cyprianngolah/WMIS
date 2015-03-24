@@ -104,7 +104,8 @@
 						"~/js/modules/wmis.project.new.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/project/edit").Include(
-						"~/js/modules/wmis.project.edit.js"));
+                        "~/js/modules/wmis.project.edit.js",
+                        "~/js/modules/wmis.project.editmodals.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/project/survey/edit").Include(
 						"~/js/wmis.mapping.js",

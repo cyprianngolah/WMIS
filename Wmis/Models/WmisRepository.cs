@@ -2738,7 +2738,8 @@
                     p_sortBy = request.SortBy,
                     p_sortDirection = request.SortDirection,
                     p_projectLeadExists = request.ProjectLeadsOnly,
-                    p_keywords = request.Keywords
+                    p_keywords = request.Keywords,
+                    p_roleName = request.RoleName
                 };
 
                 var pagedResults = new PagedResultset<Person>

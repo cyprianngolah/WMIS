@@ -52,6 +52,21 @@ namespace Wmis.ApiControllers
 		    return Repository.PersonSearch(new PersonRequest() {ProjectLeadsOnly = true});
 		}
 
+        [HttpGet]
+        [Route("projectAdmins")]
+        public PagedResultset<Models.Person> getProjectAdministrators()
+        {
+            return Repository.PersonSearch(new PersonRequest() { RoleName = Wmis.Models.Role.ADMINISTRATOR_PROJECTS_ROLE });
+        }
+
+        [HttpGet]
+        [Route("projectUsers/{projectId:int}")]
+        public PagedResultset<Models.Person> GetUsersForProject(int projectId)
+        {
+            var users = Repository.PersonSearch(new PersonRequest()).Data.Where(u => u.Projects.Select(p => p.Key).Contains(projectId));
+            return new PagedResultset<Person> { Data = users.ToList(), ResultCount = users.Count() };
+        }
+
         [HttpPost]
         [Route]
 		[WmisWebApiAuthorize(Roles = WmisRoles.AllRoles)]
