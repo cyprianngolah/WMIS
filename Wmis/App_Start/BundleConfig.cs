@@ -115,8 +115,13 @@
 						"~/js/modules/wmis.project.survey.new.js"));
 			#endregion
 
-			#region Admin Pages
-			bundles.Add(new ScriptBundle("~/bundles/taxonomy/index").Include(
+            #region Search
+            bundles.Add(new ScriptBundle("~/bundles/search/index").Include(
+                "~/js/modules/wmis.search.index.js"));
+            #endregion
+            
+            #region Admin Pages
+            bundles.Add(new ScriptBundle("~/bundles/taxonomy/index").Include(
 						"~/js/modules/wmis.taxonomy.index.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/taxonomy/edit").Include(

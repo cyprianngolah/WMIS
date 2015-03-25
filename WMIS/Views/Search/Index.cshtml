@@ -1,0 +1,191 @@
+﻿@using Wmis.Extensions
+@{
+    ViewBag.Title = "WMIS Search";
+}
+
+@section Styles {
+    @Html.Raw(Styles.Render("~/bundles/datePickerCss"))
+    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
+
+    <style>
+        #map-canvas {
+            height: 500px;
+            width: 100%;
+        }
+
+        .datepicker {
+            z-index: 1151 !important;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    @Html.Raw(Scripts.Render("~/bundles/datePicker"))
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/search/index"))
+
+    <script type="text/javascript">
+        $(function () {
+            wmis.search.index.initialize();
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12 text-right">
+        <button class="btn btn-primary" style="margin-bottom: 10px;" data-bind="click: doSearch">Search</button>
+    </div>
+</div>
+
+
+<div class="well">
+    <div class="row form-group">
+        <div class="col-md-2">
+            <label>Observations</label>
+        </div>
+        <div class="col-sm-1">
+            <label class="pull-right">From:</label>
+        </div>
+        <div class="col-sm-3">
+            <div class="input-group date" data-bind="datePicker: fromDate">
+                <input type="text" class="form-control" readonly="readonly">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <label class="pull-right">To:</label>
+        </div>
+        <div class="col-sm-3">
+            <div class="input-group date" data-bind="datePicker: toDate">
+                <input type="text" class="form-control" readonly="readonly">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label class="pull-right">Species:</label>
+        </div>
+        <div class="col-md-9">
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label class="pull-right">NWT SARA Status:</label>
+        </div>
+        <div class="col-md-9">
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label class="pull-right">Federal SARA Status:</label>
+        </div>
+        <div class="col-md-9">
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label class="pull-right">General Rank Status:</label>
+        </div>
+        <div class="col-md-9">
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label class="pull-right">NWT SARC Assessment:</label>
+        </div>
+        <div class="col-md-9">
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-3">
+            <label class="pull-right">Survey Types:</label>
+        </div>
+        <div class="col-md-9">
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="row form-group">
+        <div class="col-md-2">
+            <label>Top Left</label>
+        </div>
+        <div class="col-md-1">
+            <label class="pull-right">Latitude:</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" />
+        </div>
+        <div class="col-md-1">
+            <label class="pull-right">Longitude:</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-2">
+            <label>Bottom Right</label>
+        </div>
+        <div class="col-md-1">
+            <label class="pull-right">Latitude:</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" />
+        </div>
+        <div class="col-md-1">
+            <label class="pull-right">Longitude:</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 h4">
+        <div class="row">
+            <div class="col-md-12">Search Results</div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+
+<div id="map-canvas"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="search" class="table">
+            <thead>
+                <tr>
+                    <th>Project Id</th>
+                    <th>Name</th>
+                    <th>Lead Region</th>
+                    <th>Project Lead</th>
+                    <th>Status</th>
+                    <th>Status Date</th>
+                    <th>Start Date</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
