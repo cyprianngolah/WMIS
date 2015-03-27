@@ -1,58 +1,58 @@
 ﻿namespace Wmis.Models
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Data;
-	using System.Data.SqlClient;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
     using System.Linq;
-	using Configuration;
-	using Dapper;
-	using Dto;
+    using Configuration;
+    using Dapper;
+    using Dto;
     using Extensions;
 
-	using Wmis.Argos.Entities;
-	using Wmis.Models.Base;
+    using Wmis.Argos.Entities;
+    using Wmis.Models.Base;
 
     /// <summary>
-	/// WMIS Repository for SQL
-	/// </summary>
-	public class WmisRepository
-	{
-		#region Fields
-		/// <summary>
-		/// The Taxonomy Get stored procedure
-		/// </summary>
-		private const string TAXONOMY_GET = "dbo.Taxonomy_Get";
+    /// WMIS Repository for SQL
+    /// </summary>
+    public class WmisRepository
+    {
+        #region Fields
+        /// <summary>
+        /// The Taxonomy Get stored procedure
+        /// </summary>
+        private const string TAXONOMY_GET = "dbo.Taxonomy_Get";
 
-		/// <summary>
-		/// The Taxonomy Update stored procedure
-		/// </summary>
-		private const string TAXONOMY_SAVE = "dbo.Taxonomy_Save";
+        /// <summary>
+        /// The Taxonomy Update stored procedure
+        /// </summary>
+        private const string TAXONOMY_SAVE = "dbo.Taxonomy_Save";
 
-		/// <summary>
-		/// The Taxonomy Create stored procedure
-		/// </summary>
-		private const string BIODIVERSITY_CREATE = "dbo.BioDiversity_Create";
+        /// <summary>
+        /// The Taxonomy Create stored procedure
+        /// </summary>
+        private const string BIODIVERSITY_CREATE = "dbo.BioDiversity_Create";
 
-		/// <summary>
-		/// The BioDiversity Get stored procedure
-		/// </summary>
-		private const string BIODIVERSITY_GET = "dbo.BioDiversity_Get";
+        /// <summary>
+        /// The BioDiversity Get stored procedure
+        /// </summary>
+        private const string BIODIVERSITY_GET = "dbo.BioDiversity_Get";
 
-		/// <summary>
-		/// The BioDiversity Get All stored procedure
-		/// </summary>
-		private const string BIODIVERSITY_GETALL = "dbo.BioDiversity_GetAll";
+        /// <summary>
+        /// The BioDiversity Get All stored procedure
+        /// </summary>
+        private const string BIODIVERSITY_GETALL = "dbo.BioDiversity_GetAll";
 
-		/// <summary>
-		/// The BioDiversity Search stored procedure
-		/// </summary>
-		private const string BIODIVERSITY_SEARCH = "dbo.BioDiversity_Search";
+        /// <summary>
+        /// The BioDiversity Search stored procedure
+        /// </summary>
+        private const string BIODIVERSITY_SEARCH = "dbo.BioDiversity_Search";
 
-		/// <summary>
-		/// The BioDiversity Update
-		/// </summary>
-		private const string BIODIVERSITY_UPDATE = "dbo.BioDiversity_Update";
+        /// <summary>
+        /// The BioDiversity Update
+        /// </summary>
+        private const string BIODIVERSITY_UPDATE = "dbo.BioDiversity_Update";
 
         /// <summary>
         /// The Taxonomy Synonym Get stored procedure
@@ -64,10 +64,10 @@
         /// </summary>
         private const string TAXONOMYSYNONYM_SAVEMANY = "dbo.TaxonomySynonym_SaveMany";
 
-		/// <summary>
-		/// The Taxonomy Groups Get stored procedure
-		/// </summary>
-		private const string TAXONOMYGROUP_GET = "dbo.TaxonomyGroups_Get";
+        /// <summary>
+        /// The Taxonomy Groups Get stored procedure
+        /// </summary>
+        private const string TAXONOMYGROUP_GET = "dbo.TaxonomyGroups_Get";
 
         /// <summary>
         /// The Species Synonym Get stored procedure
@@ -80,24 +80,24 @@
         private const string SPECIESSYNONYM_SAVEMANY = "dbo.SpeciesSynonym_SaveMany";
 
         /// <summary>
-		/// The Ecoregion Get stored procedure
-		/// </summary>
-		private const string ECOREGION_GET = "dbo.Ecoregion_Get";
-        
-		/// <summary>
-		/// The Ecoregion Save stored procedure
-		/// </summary>
-		private const string ECOREGION_SAVE = "dbo.Ecoregion_Save";
-        
-		/// <summary>
-		/// The Ecozone Get stored procedure
-		/// </summary>
-		private const string ECOZONE_GET = "dbo.Ecozone_Get";
+        /// The Ecoregion Get stored procedure
+        /// </summary>
+        private const string ECOREGION_GET = "dbo.Ecoregion_Get";
 
-		/// <summary>
-		/// The Ecozone Save stored procedure
-		/// </summary>
-		private const string ECOZONE_SAVE = "dbo.Ecozone_Save";
+        /// <summary>
+        /// The Ecoregion Save stored procedure
+        /// </summary>
+        private const string ECOREGION_SAVE = "dbo.Ecoregion_Save";
+
+        /// <summary>
+        /// The Ecozone Get stored procedure
+        /// </summary>
+        private const string ECOZONE_GET = "dbo.Ecozone_Get";
+
+        /// <summary>
+        /// The Ecozone Save stored procedure
+        /// </summary>
+        private const string ECOZONE_SAVE = "dbo.Ecozone_Save";
 
         /// <summary>
         /// The NWT SARC Assessment Get stored procedure
@@ -109,51 +109,51 @@
         /// </summary>
         private const string NWTSARCASSESSMENT_SAVE = "dbo.NwtSarcAssessment_Save";
 
-		/// <summary>
-		/// The Protected Area Get stored procedure
-		/// </summary>
-		private const string PROTECTEDAREA_GET = "dbo.ProtectedArea_Get";
+        /// <summary>
+        /// The Protected Area Get stored procedure
+        /// </summary>
+        private const string PROTECTEDAREA_GET = "dbo.ProtectedArea_Get";
 
-		/// <summary>
-		/// The Protected Area Save stored procedure
-		/// </summary>
-		private const string PROTECTEDAREA_SAVE = "dbo.ProtectedArea_Save";
+        /// <summary>
+        /// The Protected Area Save stored procedure
+        /// </summary>
+        private const string PROTECTEDAREA_SAVE = "dbo.ProtectedArea_Save";
 
-		/// <summary>
-		/// The COSEWIC Status Get stored procedure
-		/// </summary>
-		private const string COSEWICSTATUS_GET = "dbo.CosewicStatus_Get";
+        /// <summary>
+        /// The COSEWIC Status Get stored procedure
+        /// </summary>
+        private const string COSEWICSTATUS_GET = "dbo.CosewicStatus_Get";
 
         /// <summary>
         /// The COSEWIC Status Save stored procedure
         /// </summary>
         private const string COSEWICSTATUS_SAVE = "dbo.CosewicStatus_Save";
 
-		/// <summary>
-		/// The Status Rank Get stored procedure
-		/// </summary>
-		private const string STATUSRANK_GET = "dbo.StatusRank_Get";
+        /// <summary>
+        /// The Status Rank Get stored procedure
+        /// </summary>
+        private const string STATUSRANK_GET = "dbo.StatusRank_Get";
 
-		/// <summary>
-		/// The Reference Get stored procedure
-		/// </summary>
-		private const string REFERENCE_GET = "dbo.Reference_Get";
+        /// <summary>
+        /// The Reference Get stored procedure
+        /// </summary>
+        private const string REFERENCE_GET = "dbo.Reference_Get";
 
-		/// <summary>
-		/// Create/Update References stored procedure
-		/// </summary>
-		private const string REFERENCE_SAVE = "dbo.Reference_Save";
+        /// <summary>
+        /// Create/Update References stored procedure
+        /// </summary>
+        private const string REFERENCE_SAVE = "dbo.Reference_Save";
 
         /// <summary>
         /// The Status Rank Save stored procedure
         /// </summary>
         private const string STATUSRANK_SAVE = "dbo.StatusRank_Save";
 
-		private const string PROJECTSTATUS_SEARCH = "dbo.ProjectStatus_Search";
+        private const string PROJECTSTATUS_SEARCH = "dbo.ProjectStatus_Search";
 
-		private const string LEADREGION_SEARCH = "dbo.LeadRegion_Search";
+        private const string LEADREGION_SEARCH = "dbo.LeadRegion_Search";
 
-		private const string PERSON_SEARCH = "dbo.Person_Search";
+        private const string PERSON_SEARCH = "dbo.Person_Search";
 
         private const string PERSON_CREATEANDGET = "dbo.Person_CreateAndGet";
 
@@ -165,54 +165,54 @@
 
         private const string ROLE_GET = "dbo.Role_Get";
 
-		private const string PROJECT_CREATE = "dbo.Project_Create";
+        private const string PROJECT_CREATE = "dbo.Project_Create";
 
-		private const string PROJECT_UPDATE = "dbo.Project_Update";
+        private const string PROJECT_UPDATE = "dbo.Project_Update";
 
-		private const string PROJECT_GET = "dbo.Project_Get";
+        private const string PROJECT_GET = "dbo.Project_Get";
 
-		private const string PROJECT_SEARCH = "dbo.Project_Search";
+        private const string PROJECT_SEARCH = "dbo.Project_Search";
 
-		private const string SURVEY_SAVE = "dbo.Survey_Save";
+        private const string SURVEY_SAVE = "dbo.Survey_Save";
 
-		private const string SURVEY_GET = "dbo.Survey_Get";
+        private const string SURVEY_GET = "dbo.Survey_Get";
 
-		private const string SURVEY_SEARCH = "dbo.Survey_Search";
+        private const string SURVEY_SEARCH = "dbo.Survey_Search";
 
-		private const string SURVEYTEMPLATE_GET = "dbo.SurveyTemplate_Get";
+        private const string SURVEYTEMPLATE_GET = "dbo.SurveyTemplate_Get";
 
-		private const string SURVEYTEMPLATE_SAVE = "dbo.SurveyTemplate_Save";
+        private const string SURVEYTEMPLATE_SAVE = "dbo.SurveyTemplate_Save";
 
-		private const string SURVEYTEMPLATECOLUMN_SAVE = "dbo.SurveyTemplateColumn_Save";
+        private const string SURVEYTEMPLATECOLUMN_SAVE = "dbo.SurveyTemplateColumn_Save";
 
         private const string SURVEYTEMPLATECOLUMN_DELETE = "dbo.SurveyTemplateColumn_Delete";
 
-	    private const string OBSERVATIONUPLOAD_GET = "dbo.ObservationUpload_Get";
+        private const string OBSERVATIONUPLOAD_GET = "dbo.ObservationUpload_Get";
 
-		private const string OBSERVATIONUPLOAD_UPDATE = "dbo.ObservationUpload_Update";
+        private const string OBSERVATIONUPLOAD_UPDATE = "dbo.ObservationUpload_Update";
 
-		private const string SURVEYTYPE_SEARCH = "dbo.SurveyType_Search";
+        private const string SURVEYTYPE_SEARCH = "dbo.SurveyType_Search";
 
         private const string SPECIESTYPE_GET = "dbo.SpeciesType_Get";
 
-		private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
+        private const string SURVEYTEMPLATE_SEARCH = "dbo.SurveyTemplate_Search";
 
-		private const string SURVEYTEMPLATECOLUMNMAPPING_GET = "dbo.SurveyTemplateColumnMapping_Get";
-		
-		private const string SURVEYTEMPLATECOLUMNMAPPING_SAVE = "dbo.SurveyTemplateColumnMapping_Save";
+        private const string SURVEYTEMPLATECOLUMNMAPPING_GET = "dbo.SurveyTemplateColumnMapping_Get";
+
+        private const string SURVEYTEMPLATECOLUMNMAPPING_SAVE = "dbo.SurveyTemplateColumnMapping_Save";
 
         private const string SURVEYTEMPLATECOLUMNS_GET = "dbo.SurveyTemplateColumns_Get";
 
-	    private const string OBSERVATION_SAVE = "dbo.Observation_Save";
+        private const string OBSERVATION_SAVE = "dbo.Observation_Save";
 
-	    private const string OBSERVATION_GET = "dbo.Observation_Get";
+        private const string OBSERVATION_GET = "dbo.Observation_Get";
 
-	    private const string OBSERVATIONROW_UPDATE = "dbo.ObservationRow_Update";
+        private const string OBSERVATIONROW_UPDATE = "dbo.ObservationRow_Update";
 
         /// <summary>
         /// The Collar Update stored procedure
         /// </summary>
-	    private const string COLLAREDANIMAL_UPDATE = "dbo.CollaredAnimal_Update";
+        private const string COLLAREDANIMAL_UPDATE = "dbo.CollaredAnimal_Update";
 
         /// <summary>
         /// The Collar Create stored procedure
@@ -223,7 +223,7 @@
         /// The Collar Get stored procedure
         /// </summary>
         private const string COLLAREDANIMAL_GET = "dbo.CollaredAnimal_Get";
-        
+
         /// <summary>
         /// The Collar Search stored procedure
         /// </summary>
@@ -265,7 +265,7 @@
 
         private const string ARGOSPASS_SEARCH = "dbo.ArgosPass_Search";
 
-        private const string ARGOSPASS_UPDATE= "dbo.ArgosPass_Update";
+        private const string ARGOSPASS_UPDATE = "dbo.ArgosPass_Update";
 
         private const string ANIMALSEX_GET = "dbo.AnimalSex_Get";
 
@@ -278,7 +278,7 @@
         private const string HERDASSOCIATIONMETHOD_GET = "dbo.HerdAssociationMethod_Get";
 
         private const string HERDPOPULATION_GET = "dbo.HerdPopulation_Get";
-        
+
         private const string AGECLASS_GET = "dbo.AgeClass_Get";
 
         private const string ANIMALMORTALITY_GET = "dbo.AnimalMortality_Get";
@@ -313,53 +313,55 @@
 
         private const string SITE_SAVE = "dbo.Site_Save";
 
+        private const string GENERAL_SEARCH = "dbo.General_Search";
+
         /// <summary>
         /// The ArgosProgram Get All stored procedure
         /// </summary>
         private const string ARGOSPROGRAMS_GETALL = "dbo.ArgosProgram_GetAll";
 
         /// <summary>
-		/// The Connection String to connect to the WMIS database for the current environment
-		/// </summary>
-		private readonly string _connectionString;
-		#endregion
+        /// The Connection String to connect to the WMIS database for the current environment
+        /// </summary>
+        private readonly string _connectionString;
+        #endregion
 
-		#region Constructors
-		/// <summary>
-		/// Initializes a new instance of the <see cref="WmisRepository" /> class.
-		/// </summary>
-		/// <param name="configuration">Configuration information about the current environment</param>
-		public WmisRepository(WebConfiguration configuration)
-		{
-			_connectionString = configuration.ConnectionStrings["WMIS"];
-		}
-		#endregion
+        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WmisRepository" /> class.
+        /// </summary>
+        /// <param name="configuration">Configuration information about the current environment</param>
+        public WmisRepository(WebConfiguration configuration)
+        {
+            _connectionString = configuration.ConnectionStrings["WMIS"];
+        }
+        #endregion
 
-		#region Methods
-		#region BioDiversity
-		public Dto.PagedResultset<BioDiversity> BioDiversityGet(Dto.BioDiversitySearchRequest sr)
-		{
-			var pagedResultset = new Dto.PagedResultset<BioDiversity>
-			{
-				DataRequest = sr,
-				ResultCount = 0
-			};
+        #region Methods
+        #region BioDiversity
+        public Dto.PagedResultset<BioDiversity> BioDiversityGet(Dto.BioDiversitySearchRequest sr)
+        {
+            var pagedResultset = new Dto.PagedResultset<BioDiversity>
+            {
+                DataRequest = sr,
+                ResultCount = 0
+            };
 
-			ILookup<int, Population> populationRecords;
+            ILookup<int, Population> populationRecords;
 
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_startRow = sr.StartRow,
-					p_rowCount = sr.RowCount, 
-					p_sortBy = sr.SortBy,
-					p_sortDirection = sr.SortDirection,
-					p_groupKey = sr.GroupKey,
-					p_orderKey = sr.OrderKey,
-					p_familyKey = sr.FamilyKey,
-					p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim()
-				};
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = sr.StartRow,
+                    p_rowCount = sr.RowCount,
+                    p_sortBy = sr.SortBy,
+                    p_sortDirection = sr.SortDirection,
+                    p_groupKey = sr.GroupKey,
+                    p_orderKey = sr.OrderKey,
+                    p_familyKey = sr.FamilyKey,
+                    p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim()
+                };
 
                 using (var q = c.QueryMultiple(BIODIVERSITY_SEARCH, param, commandType: CommandType.StoredProcedure))
                 {
@@ -367,11 +369,56 @@
 
                     pagedResultset.Data = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, dynamic, BioDiversity>(
                     (bd, saraStatus, nwtStatusRank, status, cs, dyn) =>
+                    {
+                        bd.SaraStatus = saraStatus ?? new SaraStatus();
+                        bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
+                        bd.StatusRank = status ?? new StatusRank();
+                        bd.CosewicStatus = cs ?? new CosewicStatus();
+                        bd.Kingdom = dyn.KingdomKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.KingdomKey, Name = dyn.KingdomName };
+                        bd.Phylum = dyn.PhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.PhylumKey, Name = dyn.PhylumName };
+                        bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
+                        bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
+                        bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
+                        bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
+                        bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
+                        bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
+                        bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
+                        bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
+                        bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
+                        bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
+
+                        return bd;
+                    },
+                        "Key").ToList();
+
+                    populationRecords = q.Read<Population>().ToLookup<Population, int, Population>(p => p.Key, p => p);
+                }
+            }
+
+            pagedResultset.Data.ForEach(bd => bd.Populations = new List<string>(populationRecords[bd.Key].Select(x => x.Name)));
+
+            return pagedResultset;
+        }
+
+        public BioDiversity BioDiversityGet(int bioDiversityKey)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_bioDiversityKey = bioDiversityKey
+                };
+
+                using (var q = c.QueryMultiple(BIODIVERSITY_GET, param, commandType: CommandType.StoredProcedure))
+                {
+                    var biodiversity = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, NwtSarcAssessment, dynamic, BioDiversity>(
+                        (bd, saraStatus, nwtStatusRank, status, cs, nsa, dyn) =>
                         {
                             bd.SaraStatus = saraStatus ?? new SaraStatus();
                             bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
                             bd.StatusRank = status ?? new StatusRank();
                             bd.CosewicStatus = cs ?? new CosewicStatus();
+                            bd.NwtSarcAssessment = nsa ?? new NwtSarcAssessment();
                             bd.Kingdom = dyn.KingdomKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.KingdomKey, Name = dyn.KingdomName };
                             bd.Phylum = dyn.PhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.PhylumKey, Name = dyn.PhylumName };
                             bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
@@ -386,240 +433,195 @@
                             bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
 
                             return bd;
-                        }, 
-                        "Key").ToList();
+                        },
+                        "Key").SingleOrDefault();
 
-					populationRecords = q.Read<Population>().ToLookup<Population, int, Population>(p => p.Key, p => p);
+                    if (biodiversity != null)
+                    {
+                        biodiversity.Ecozones = q.Read<Ecozone>().ToList();
+                        biodiversity.Ecoregions = q.Read<Ecoregion>().ToList();
+                        biodiversity.ProtectedAreas = q.Read<ProtectedArea>().ToList();
+                        biodiversity.Populations = q.Read<string>().ToList();
+                        biodiversity.References = q.Read<BioDiversityReference, Reference, BioDiversityReference>((br, r) =>
+                        {
+                            br.Reference = r;
+                            return br;
+                        },
+                        "Key").ToList();
+                    }
+
+                    return biodiversity;
                 }
             }
-
-			pagedResultset.Data.ForEach(bd => bd.Populations = new List<string>(populationRecords[bd.Key].Select(x => x.Name)));
-			
-            return pagedResultset;
         }
 
-		public BioDiversity BioDiversityGet(int bioDiversityKey)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_bioDiversityKey = bioDiversityKey
-				};
-				
-				using (var q = c.QueryMultiple(BIODIVERSITY_GET, param, commandType: CommandType.StoredProcedure))
-				{
-					var biodiversity = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, NwtSarcAssessment, dynamic, BioDiversity>(
-						(bd, saraStatus, nwtStatusRank, status, cs, nsa, dyn) =>
-						    {
-						    bd.SaraStatus = saraStatus ?? new SaraStatus();
-						    bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
-							bd.StatusRank = status ?? new StatusRank();
-                            bd.CosewicStatus = cs ?? new CosewicStatus();
-                            bd.NwtSarcAssessment = nsa ?? new NwtSarcAssessment();
-                            bd.Kingdom = dyn.KingdomKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.KingdomKey, Name = dyn.KingdomName };
-                            bd.Phylum = dyn.PhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.PhylumKey, Name = dyn.PhylumName };
-							bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
-							bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
-							bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
-							bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
-							bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
-							bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
-							bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
-							bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
-							bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
-							bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
-
-							return bd;
-						}, 
-						"Key").SingleOrDefault();
-
-					if (biodiversity != null)
-					{
-						biodiversity.Ecozones = q.Read<Ecozone>().ToList();
-						biodiversity.Ecoregions = q.Read<Ecoregion>().ToList();
-						biodiversity.ProtectedAreas = q.Read<ProtectedArea>().ToList();
-						biodiversity.Populations = q.Read<string>().ToList();
-						biodiversity.References = q.Read<BioDiversityReference, Reference, BioDiversityReference>((br, r) =>
-						{
-							br.Reference = r;
-							return br;
-						}, 
-						"Key").ToList();
-					}
-
-					return biodiversity;
-				}
-			}
-		}
-        
         public IEnumerable<BioDiversity> BioDiversityGetAll()
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new { };
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new { };
 
                 using (var q = c.QueryMultiple(BIODIVERSITY_GETALL, param, commandType: CommandType.StoredProcedure))
-				{
-					var biodiversityItems = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, NwtSarcAssessment, dynamic, BioDiversity>(
-						(bd, saraStatus, nwtStatusRank, status, cs, nsa, dyn) =>
-						    {
-						    bd.SaraStatus = saraStatus ?? new SaraStatus();
-						    bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
-							bd.StatusRank = status ?? new StatusRank();
+                {
+                    var biodiversityItems = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, NwtSarcAssessment, dynamic, BioDiversity>(
+                        (bd, saraStatus, nwtStatusRank, status, cs, nsa, dyn) =>
+                        {
+                            bd.SaraStatus = saraStatus ?? new SaraStatus();
+                            bd.NwtStatusRank = nwtStatusRank ?? new NwtStatusRank();
+                            bd.StatusRank = status ?? new StatusRank();
                             bd.CosewicStatus = cs ?? new CosewicStatus();
                             bd.NwtSarcAssessment = nsa ?? new NwtSarcAssessment();
                             bd.Kingdom = dyn.KingdomKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.KingdomKey, Name = dyn.KingdomName };
                             bd.Phylum = dyn.PhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.PhylumKey, Name = dyn.PhylumName };
-							bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
-							bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
-							bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
-							bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
-							bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
-							bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
-							bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
-							bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
-							bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
-							bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
+                            bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
+                            bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
+                            bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
+                            bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
+                            bd.SubOrder = dyn.SubOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubOrderKey, Name = dyn.SubOrderName };
+                            bd.InfraOrder = dyn.InfraOrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.InfraOrderKey, Name = dyn.InfraOrderName };
+                            bd.SuperFamily = dyn.SuperFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SuperFamilyKey, Name = dyn.SuperFamilyName };
+                            bd.Family = dyn.FamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.FamilyKey, Name = dyn.FamilyName };
+                            bd.SubFamily = dyn.SubFamilyKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubFamilyKey, Name = dyn.SubFamilyName };
+                            bd.Group = dyn.GroupKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.GroupKey, Name = dyn.GroupName };
 
-							return bd;
-						}, 
-						"Key").ToList();
+                            return bd;
+                        },
+                        "Key").ToList();
 
                     var speciesEcozones = q.Read<SpeciesEcozone>().ToLookup(se => se.SpeciesId);
                     var speciesEcoregions = q.Read<SpeciesEcoregion>().ToLookup(se => se.SpeciesId);
                     var speciesProtectedAreas = q.Read<SpeciesProtectedArea>().ToLookup(spa => spa.SpeciesId);
                     var speciesPopulations = q.Read<SpeciesPopulation>().ToLookup(sp => sp.SpeciesId);
 
-                    var speciesBioDiversityReference = q.Read<SpeciesBioDiversityReference, Reference, SpeciesBioDiversityReference>((sbr, r) => 
+                    var speciesBioDiversityReference = q.Read<SpeciesBioDiversityReference, Reference, SpeciesBioDiversityReference>((sbr, r) =>
                     {
                         sbr.Reference = r;
                         return sbr;
                     },
                     "Key").ToLookup(sbdr => sbdr.SpeciesId);
-				   
-				    biodiversityItems.ForEach(bd => 
+
+                    biodiversityItems.ForEach(bd =>
                     {
-			            bd.Ecozones = speciesEcozones[bd.Key].Select(se => new Ecozone { Key = se.Key, Name = se.Name }).ToList();
+                        bd.Ecozones = speciesEcozones[bd.Key].Select(se => new Ecozone { Key = se.Key, Name = se.Name }).ToList();
                         bd.Ecoregions = speciesEcoregions[bd.Key].Select(se => new Ecoregion { Key = se.Key, Name = se.Name }).ToList();
                         bd.ProtectedAreas = speciesProtectedAreas[bd.Key].Select(spa => new ProtectedArea { Key = spa.Key, Name = spa.Name }).ToList();
                         bd.Populations = speciesPopulations[bd.Key].Select(sp => sp.Name).ToList();
-                        bd.References = speciesBioDiversityReference[bd.Key].Select(sbdr => new BioDiversityReference{CategoryKey = sbdr.CategoryKey, Reference = sbdr.Reference}).ToList();
-				    });
+                        bd.References = speciesBioDiversityReference[bd.Key].Select(sbdr => new BioDiversityReference { CategoryKey = sbdr.CategoryKey, Reference = sbdr.Reference }).ToList();
+                    });
 
-					return biodiversityItems;
-				}
-			}
-		}
+                    return biodiversityItems;
+                }
+            }
+        }
 
         public int BioDiversityCreate(BioDiversityNew bdn)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_name = bdn.Name,
-					p_subSpeciesName = bdn.SubSpeciesName,
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_name = bdn.Name,
+                    p_subSpeciesName = bdn.SubSpeciesName,
                     p_ecoType = bdn.EcoType
-				};
-				return c.Query<int>(BIODIVERSITY_CREATE, param, commandType: CommandType.StoredProcedure).Single();
-			}
-		}
+                };
+                return c.Query<int>(BIODIVERSITY_CREATE, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
 
-		public DateTime BioDiversityUpdate(BioDiversity bd, string changeBy)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
+        public DateTime BioDiversityUpdate(BioDiversity bd, string changeBy)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
                     p_ChangeBy = changeBy,
-					p_speciesId = bd.Key,
-					p_Name = bd.Name,
-					p_CommonName = bd.CommonName,
-					p_SubSpeciesName = bd.SubSpeciesName,
-					p_EcoType = bd.EcoType,
-					p_NSGlobalId = bd.NsGlobalId,
-					p_NSNWTId = bd.NsNwtId,
-					p_ELCODE = bd.Elcode,
-					p_KingdomTaxonomyId = bd.Kingdom.Key == 0 ? null : (int?)bd.Kingdom.Key,
-					p_PhylumTaxonomyId = bd.Phylum.Key == 0 ? null : (int?)bd.Phylum.Key,
-					p_SubPhylumTaxonomyId = bd.SubPhylum.Key == 0 ? null : (int?)bd.SubPhylum.Key,
-					p_ClassTaxonomyId = bd.Class.Key == 0 ? null : (int?)bd.Class.Key,
-					p_SubClassTaxonomyId = bd.SubClass.Key == 0 ? null : (int?)bd.SubClass.Key,
-					p_OrderTaxonomyId = bd.Order.Key == 0 ? null : (int?)bd.Order.Key,
-					p_SubOrderTaxonomyId = bd.SubOrder.Key == 0 ? null : (int?)bd.SubOrder.Key,
-					p_InfraOrderTaxonomyId = bd.InfraOrder.Key == 0 ? null : (int?)bd.InfraOrder.Key,
-					p_SuperFamilyTaxonomyId = bd.SuperFamily.Key == 0 ? null : (int?)bd.SuperFamily.Key,
-					p_FamilyTaxonomyId = bd.Family.Key == 0 ? null : (int?)bd.Family.Key,
-					p_SubFamilyTaxonomyId = bd.SubFamily.Key == 0 ? null : (int?)bd.SubFamily.Key,
-					p_GroupTaxonomyId = bd.Group.Key == 0 ? null : (int?)bd.Group.Key,
-					p_NonNTSpecies = bd.NonNtSpecies,
-					p_CanadaKnownSubSpeciesCount = bd.CanadaKnownSubSpeciesCount,
-					p_CanadaKnownSubSpeciesDescription = bd.CanadaKnownSubSpeciesDescription,
-					p_NWTKnownSubSpeciesCount = bd.NwtKnownSubSpeciesCount,
-					p_NWTKnownSubSpeciesDescription = bd.NwtKnownSubSpeciesDescription,
-					p_AgeOfMaturity = bd.AgeOfMaturity,
-					p_AgeOfMaturityDescription = bd.AgeOfMaturityDescription,
-					p_ReproductionFrequencyPerYear = bd.ReproductionFrequencyPerYear,
-					p_ReproductionFrequencyPerYearDescription = bd.ReproductionFrequencyPerYearDescription,
-					p_Longevity = bd.Longevity,
-					p_LongevityDescription = bd.LongevityDescription,
-					p_VegetationReproductionDescription = bd.VegetationReproductionDescription,
-					p_HostFishDescription = bd.HostFishDescription,
-					p_OtherReproductionDescription = bd.OtherReproductionDescription,
-					p_EcozoneDescription = bd.EcozoneDescription,
-					p_EcoregionDescription = bd.EcoregionDescription,
-					p_ProtectedAreaDescription = bd.ProtectedAreaDescription,
-					p_RangeExtentScore = bd.RangeExtentScore,
-					p_RangeExtentDescription = bd.RangeExtentDescription,
-					p_DistributionPercentage = bd.DistributionPercentage,
-					p_AreaOfOccupancyScore = bd.AreaOfOccupancyScore,
-					p_AreaOfOccupancyDescription = bd.AreaOfOccupancyDescription,
-					p_HistoricalDistributionDescription = bd.HistoricalDistributionDescription,
-					p_MarineDistributionDescription = bd.MarineDistributionDescription,
-					p_WinterDistributionDescription = bd.WinterDistributionDescription,
-					p_HabitatDescription = bd.HabitatDescription,
-					p_EnvironmentalSpecificityScore = bd.EnvironmentalSpecificityScore,
-					p_EnvironmentalSpecificityDescription = bd.EnvironmentalSpecificityDescription,
-					p_PopulationSizeScore = bd.PopulationSizeScore,
-					p_PopulationSizeDescription = bd.PopulationSizeDescription,
-					p_NumberOfOccurencesScore = bd.NumberOfOccurencesScore,
-					p_NumberOfOccurencesDescription = bd.NumberOfOccurencesDescription,
-					p_DensityDescription = bd.DensityDescription,
-					p_ThreatsScore = bd.ThreatsScore,
-					p_ThreatsDescription = bd.ThreatsDescription,
-					p_IntrinsicVulnerabilityScore = bd.IntrinsicVulnerabilityScore,
-					p_IntrinsicVulnerabilityDescription = bd.IntrinsicVulnerabilityDescription,
-					p_ShortTermTrendsScore = bd.ShortTermTrendsScore,
-					p_ShortTermTrendsDescription = bd.ShortTermTrendsDescription,
-					p_LongTermTrendsScore = bd.LongTermTrendsScore,
-					p_LongTermTrendsDescription = bd.LongTermTrendsDescription,
-					p_StatusRankId = bd.StatusRank == null || bd.StatusRank.Key == 0 ? null : (int?)bd.StatusRank.Key,
-					p_StatusRankDescription = bd.StatusRankDescription,
-					p_SRank = bd.SRank,
-					p_DecisionProcessDescription = bd.DecisionProcessDescription,
-					p_EconomicStatusDescription = bd.EconomicStatusDescription,
-					p_COSEWICStatusId = bd.CosewicStatus == null || bd.CosewicStatus.Key == 0 ? null : (int?)bd.CosewicStatus.Key,
-					p_COSEWICStatusDescription = bd.CosewicStatusDescription,
-					p_NRank = bd.NRank,
+                    p_speciesId = bd.Key,
+                    p_Name = bd.Name,
+                    p_CommonName = bd.CommonName,
+                    p_SubSpeciesName = bd.SubSpeciesName,
+                    p_EcoType = bd.EcoType,
+                    p_NSGlobalId = bd.NsGlobalId,
+                    p_NSNWTId = bd.NsNwtId,
+                    p_ELCODE = bd.Elcode,
+                    p_KingdomTaxonomyId = bd.Kingdom.Key == 0 ? null : (int?)bd.Kingdom.Key,
+                    p_PhylumTaxonomyId = bd.Phylum.Key == 0 ? null : (int?)bd.Phylum.Key,
+                    p_SubPhylumTaxonomyId = bd.SubPhylum.Key == 0 ? null : (int?)bd.SubPhylum.Key,
+                    p_ClassTaxonomyId = bd.Class.Key == 0 ? null : (int?)bd.Class.Key,
+                    p_SubClassTaxonomyId = bd.SubClass.Key == 0 ? null : (int?)bd.SubClass.Key,
+                    p_OrderTaxonomyId = bd.Order.Key == 0 ? null : (int?)bd.Order.Key,
+                    p_SubOrderTaxonomyId = bd.SubOrder.Key == 0 ? null : (int?)bd.SubOrder.Key,
+                    p_InfraOrderTaxonomyId = bd.InfraOrder.Key == 0 ? null : (int?)bd.InfraOrder.Key,
+                    p_SuperFamilyTaxonomyId = bd.SuperFamily.Key == 0 ? null : (int?)bd.SuperFamily.Key,
+                    p_FamilyTaxonomyId = bd.Family.Key == 0 ? null : (int?)bd.Family.Key,
+                    p_SubFamilyTaxonomyId = bd.SubFamily.Key == 0 ? null : (int?)bd.SubFamily.Key,
+                    p_GroupTaxonomyId = bd.Group.Key == 0 ? null : (int?)bd.Group.Key,
+                    p_NonNTSpecies = bd.NonNtSpecies,
+                    p_CanadaKnownSubSpeciesCount = bd.CanadaKnownSubSpeciesCount,
+                    p_CanadaKnownSubSpeciesDescription = bd.CanadaKnownSubSpeciesDescription,
+                    p_NWTKnownSubSpeciesCount = bd.NwtKnownSubSpeciesCount,
+                    p_NWTKnownSubSpeciesDescription = bd.NwtKnownSubSpeciesDescription,
+                    p_AgeOfMaturity = bd.AgeOfMaturity,
+                    p_AgeOfMaturityDescription = bd.AgeOfMaturityDescription,
+                    p_ReproductionFrequencyPerYear = bd.ReproductionFrequencyPerYear,
+                    p_ReproductionFrequencyPerYearDescription = bd.ReproductionFrequencyPerYearDescription,
+                    p_Longevity = bd.Longevity,
+                    p_LongevityDescription = bd.LongevityDescription,
+                    p_VegetationReproductionDescription = bd.VegetationReproductionDescription,
+                    p_HostFishDescription = bd.HostFishDescription,
+                    p_OtherReproductionDescription = bd.OtherReproductionDescription,
+                    p_EcozoneDescription = bd.EcozoneDescription,
+                    p_EcoregionDescription = bd.EcoregionDescription,
+                    p_ProtectedAreaDescription = bd.ProtectedAreaDescription,
+                    p_RangeExtentScore = bd.RangeExtentScore,
+                    p_RangeExtentDescription = bd.RangeExtentDescription,
+                    p_DistributionPercentage = bd.DistributionPercentage,
+                    p_AreaOfOccupancyScore = bd.AreaOfOccupancyScore,
+                    p_AreaOfOccupancyDescription = bd.AreaOfOccupancyDescription,
+                    p_HistoricalDistributionDescription = bd.HistoricalDistributionDescription,
+                    p_MarineDistributionDescription = bd.MarineDistributionDescription,
+                    p_WinterDistributionDescription = bd.WinterDistributionDescription,
+                    p_HabitatDescription = bd.HabitatDescription,
+                    p_EnvironmentalSpecificityScore = bd.EnvironmentalSpecificityScore,
+                    p_EnvironmentalSpecificityDescription = bd.EnvironmentalSpecificityDescription,
+                    p_PopulationSizeScore = bd.PopulationSizeScore,
+                    p_PopulationSizeDescription = bd.PopulationSizeDescription,
+                    p_NumberOfOccurencesScore = bd.NumberOfOccurencesScore,
+                    p_NumberOfOccurencesDescription = bd.NumberOfOccurencesDescription,
+                    p_DensityDescription = bd.DensityDescription,
+                    p_ThreatsScore = bd.ThreatsScore,
+                    p_ThreatsDescription = bd.ThreatsDescription,
+                    p_IntrinsicVulnerabilityScore = bd.IntrinsicVulnerabilityScore,
+                    p_IntrinsicVulnerabilityDescription = bd.IntrinsicVulnerabilityDescription,
+                    p_ShortTermTrendsScore = bd.ShortTermTrendsScore,
+                    p_ShortTermTrendsDescription = bd.ShortTermTrendsDescription,
+                    p_LongTermTrendsScore = bd.LongTermTrendsScore,
+                    p_LongTermTrendsDescription = bd.LongTermTrendsDescription,
+                    p_StatusRankId = bd.StatusRank == null || bd.StatusRank.Key == 0 ? null : (int?)bd.StatusRank.Key,
+                    p_StatusRankDescription = bd.StatusRankDescription,
+                    p_SRank = bd.SRank,
+                    p_DecisionProcessDescription = bd.DecisionProcessDescription,
+                    p_EconomicStatusDescription = bd.EconomicStatusDescription,
+                    p_COSEWICStatusId = bd.CosewicStatus == null || bd.CosewicStatus.Key == 0 ? null : (int?)bd.CosewicStatus.Key,
+                    p_COSEWICStatusDescription = bd.CosewicStatusDescription,
+                    p_NRank = bd.NRank,
                     p_SARAStatusId = bd.SaraStatus == null || bd.SaraStatus.Key == 0 ? null : (int?)bd.SaraStatus.Key,
-					p_FederalSpeciesAtRiskStatusDescription = bd.FederalSpeciesAtRiskStatusDescription,
+                    p_FederalSpeciesAtRiskStatusDescription = bd.FederalSpeciesAtRiskStatusDescription,
                     p_NwtSarcAssessmentId = bd.NwtSarcAssessment == null || bd.NwtSarcAssessment.Key == 0 ? null : (int?)bd.NwtSarcAssessment.Key,
-					p_NWTSARCAssessmentDescription = bd.NwtsarcAssessmentDescription,
-					p_NWTStatusRankId = bd.NwtStatusRank == null || bd.NwtStatusRank.Key == 0 ? null : (int?)bd.NwtStatusRank.Key,
-					p_NWTSpeciesAtRiskStatusDescription = bd.NwtSpeciesAtRiskStatusDescription,
-					p_IUCNStatus = bd.IucnStatus,
-					p_GRank = bd.GRank,
-					p_IUCNDescription = bd.IucnDescription,
-					p_ecozones = bd.Ecozones.Select(i => new { n = i.Key } ).AsTableValuedParameter("dbo.IntTableType"),
-					p_ecoregions = bd.Ecoregions.Select(i => new { n = i.Key } ).AsTableValuedParameter("dbo.IntTableType"),
-					p_protectedAreas = bd.ProtectedAreas.Select(i => new { n = i.Key } ).AsTableValuedParameter("dbo.IntTableType"),
-					p_populations = bd.Populations.Select(i => new { Name = i} ).AsTableValuedParameter("dbo.NameTableType"),
-					p_references = bd.References.Select(i => new { n = i.CategoryKey, p = i.Reference.Key }).AsTableValuedParameter("dbo.TwoIntTableType")
-				};
-				return c.Query<DateTime>(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
-			}
-		}
+                    p_NWTSARCAssessmentDescription = bd.NwtsarcAssessmentDescription,
+                    p_NWTStatusRankId = bd.NwtStatusRank == null || bd.NwtStatusRank.Key == 0 ? null : (int?)bd.NwtStatusRank.Key,
+                    p_NWTSpeciesAtRiskStatusDescription = bd.NwtSpeciesAtRiskStatusDescription,
+                    p_IUCNStatus = bd.IucnStatus,
+                    p_GRank = bd.GRank,
+                    p_IUCNDescription = bd.IucnDescription,
+                    p_ecozones = bd.Ecozones.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
+                    p_ecoregions = bd.Ecoregions.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
+                    p_protectedAreas = bd.ProtectedAreas.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
+                    p_populations = bd.Populations.Select(i => new { Name = i }).AsTableValuedParameter("dbo.NameTableType"),
+                    p_references = bd.References.Select(i => new { n = i.CategoryKey, p = i.Reference.Key }).AsTableValuedParameter("dbo.TwoIntTableType")
+                };
+                return c.Query<DateTime>(BIODIVERSITY_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
 
         /// <summary>
         /// Gets a list of Species Synonyms
@@ -660,96 +662,96 @@
             }
         }
 
-		#endregion
+        #endregion
 
-		#region Taxonomy
-		/// <summary>
-		/// Gets a list of Taxonomies
-		/// </summary>
-		/// <param name="taxonomyId">The id of the Taxonomy to retrieve, can be null</param>
-		/// <param name="taxonomyGroupId">The group id for the Taxonomies to retrieve, can be null </param>
-		/// <returns>A list of matching Taxonomies</returns>
-		public IEnumerable<Taxonomy> TaxonomyGet(int? taxonomyId = null, int? taxonomyGroupId = null)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_taxonomyId = taxonomyId,
-					p_taxonomyGroupId = taxonomyGroupId
-				};
-				return c.Query<dynamic, Taxonomy, TaxonomyGroup, Taxonomy>(TAXONOMY_GET,
-					(d, t, tg) =>
-					{
-						t.TaxonomyGroup = tg;
-						return t;
-					}, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
-			}
-		}
+        #region Taxonomy
+        /// <summary>
+        /// Gets a list of Taxonomies
+        /// </summary>
+        /// <param name="taxonomyId">The id of the Taxonomy to retrieve, can be null</param>
+        /// <param name="taxonomyGroupId">The group id for the Taxonomies to retrieve, can be null </param>
+        /// <returns>A list of matching Taxonomies</returns>
+        public IEnumerable<Taxonomy> TaxonomyGet(int? taxonomyId = null, int? taxonomyGroupId = null)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_taxonomyId = taxonomyId,
+                    p_taxonomyGroupId = taxonomyGroupId
+                };
+                return c.Query<dynamic, Taxonomy, TaxonomyGroup, Taxonomy>(TAXONOMY_GET,
+                    (d, t, tg) =>
+                    {
+                        t.TaxonomyGroup = tg;
+                        return t;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+            }
+        }
 
-		/// <summary>
-		/// Gets a list of Taxonomies
-		/// </summary>
-		/// <param name="tr">The information about the Taxonomy Request</param>
-		/// <returns>A list of matching Taxonomies</returns>
-		public Dto.PagedResultset<Taxonomy> TaxonomyGet(Dto.TaxonomyRequest tr)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = tr.StartRow,
-					p_to = tr.StartRow + tr.RowCount - 1,
-					p_sortBy = tr.SortBy,
-					p_sortDirection = tr.SortDirection,
-					p_keywords = tr.Keywords,
-					p_taxonomyId = tr.TaxonomyKey,
-					p_taxonomyGroupId = tr.TaxonomyGroupKey
-				};
+        /// <summary>
+        /// Gets a list of Taxonomies
+        /// </summary>
+        /// <param name="tr">The information about the Taxonomy Request</param>
+        /// <returns>A list of matching Taxonomies</returns>
+        public Dto.PagedResultset<Taxonomy> TaxonomyGet(Dto.TaxonomyRequest tr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = tr.StartRow,
+                    p_to = tr.StartRow + tr.RowCount - 1,
+                    p_sortBy = tr.SortBy,
+                    p_sortDirection = tr.SortDirection,
+                    p_keywords = tr.Keywords,
+                    p_taxonomyId = tr.TaxonomyKey,
+                    p_taxonomyGroupId = tr.TaxonomyGroupKey
+                };
 
-				var pagedResults = new Dto.PagedResultset<Taxonomy>
-				{
-					DataRequest = tr,
-					ResultCount = 0,
-					Data = new List<Taxonomy>()
-				};
+                var pagedResults = new Dto.PagedResultset<Taxonomy>
+                {
+                    DataRequest = tr,
+                    ResultCount = 0,
+                    Data = new List<Taxonomy>()
+                };
 
-				var results = c.Query<dynamic, Taxonomy, TaxonomyGroup, Taxonomy>(TAXONOMY_GET,
-					(d, t, tg) =>
-					{
-						pagedResults.ResultCount = d.TotalRowCount;
-						t.TaxonomyGroup = tg;
-						return t;
-					}, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
+                var results = c.Query<dynamic, Taxonomy, TaxonomyGroup, Taxonomy>(TAXONOMY_GET,
+                    (d, t, tg) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        t.TaxonomyGroup = tg;
+                        return t;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
-				pagedResults.Data = results.ToList();
-				return pagedResults;
-			}
-		}
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
 
-		/// <summary>
-		/// Gets a list of Taxonomy Groups
-		/// </summary>
-		/// <param name="taxonomyGroupKey">The Taxonomy Group Key</param>
-		/// <returns>A list of matching Taxonomy Groups</returns>
-		public IEnumerable<TaxonomyGroup> TaxonomyGroupGet(int? taxonomyGroupKey = null)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_taxonomyGroupId = taxonomyGroupKey
-				};
+        /// <summary>
+        /// Gets a list of Taxonomy Groups
+        /// </summary>
+        /// <param name="taxonomyGroupKey">The Taxonomy Group Key</param>
+        /// <returns>A list of matching Taxonomy Groups</returns>
+        public IEnumerable<TaxonomyGroup> TaxonomyGroupGet(int? taxonomyGroupKey = null)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_taxonomyGroupId = taxonomyGroupKey
+                };
 
-				return c.Query<TaxonomyGroup>(TAXONOMYGROUP_GET, param, commandType: CommandType.StoredProcedure);
-			}
-		}
+                return c.Query<TaxonomyGroup>(TAXONOMYGROUP_GET, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 
         /// <summary>
         /// Gets a list of Taxonomy Synonyms
@@ -768,27 +770,27 @@
             }
         }
 
-		public void TaxonomySave(Dto.TaxonomySaveRequest sr)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_taxonomyId = sr.TaxonomyKey,
-					p_taxonomyGroupId = sr.TaxonomyGroupKey,
-					p_name = sr.Name
-				};
+        public void TaxonomySave(Dto.TaxonomySaveRequest sr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_taxonomyId = sr.TaxonomyKey,
+                    p_taxonomyGroupId = sr.TaxonomyGroupKey,
+                    p_name = sr.Name
+                };
 
-				c.Execute(TAXONOMY_SAVE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
+                c.Execute(TAXONOMY_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 
-	    /// <summary>
-	    /// Save a list of Taxonomy Synonyms
-	    /// </summary>
-	    /// <param name="taxonomyId">The id of the Taxonomy to save synonyms for</param>
-	    /// <param name="synonyms">The complete list of synonyms for the specified Taxonomy</param>
-	    public void TaxonomySynonymSaveMany(int taxonomyId, IEnumerable<string> synonyms)
+        /// <summary>
+        /// Save a list of Taxonomy Synonyms
+        /// </summary>
+        /// <param name="taxonomyId">The id of the Taxonomy to save synonyms for</param>
+        /// <param name="synonyms">The complete list of synonyms for the specified Taxonomy</param>
+        public void TaxonomySynonymSaveMany(int taxonomyId, IEnumerable<string> synonyms)
         {
             using (var c = NewWmisConnection)
             {
@@ -800,129 +802,129 @@
                 c.Execute(TAXONOMYSYNONYM_SAVEMANY, param, commandType: CommandType.StoredProcedure);
             }
         }
-		#endregion
+        #endregion
 
-		#region Ecoregion
-		/// <summary>
-		/// Gets a list of Eco-regions
-		/// </summary>
-		/// <param name="request">The information about the Eco-region Request</param>
-		/// <returns>A list of matching Eco-regions</returns>
-		public PagedResultset<Ecoregion> EcoregionGet(EcoregionRequest request)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = request.StartRow,
-					p_to = request.StartRow + request.RowCount - 1,
-					p_sortBy = request.SortBy,
-					p_sortDirection = request.SortDirection,
-					p_ecoregionId = request.Key,
-					p_keywords = request.Keywords,
-				};
+        #region Ecoregion
+        /// <summary>
+        /// Gets a list of Eco-regions
+        /// </summary>
+        /// <param name="request">The information about the Eco-region Request</param>
+        /// <returns>A list of matching Eco-regions</returns>
+        public PagedResultset<Ecoregion> EcoregionGet(EcoregionRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_ecoregionId = request.Key,
+                    p_keywords = request.Keywords,
+                };
 
-				var pagedResults = new PagedResultset<Ecoregion>
-				{
-					DataRequest = request,
-					ResultCount = 0,
-					Data = new List<Ecoregion>()
-				};
+                var pagedResults = new PagedResultset<Ecoregion>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<Ecoregion>()
+                };
 
-				var results = c.Query<dynamic, Ecoregion, Ecoregion>(ECOREGION_GET,
-					(d, t) =>
-					{
-						pagedResults.ResultCount = d.TotalRowCount;
-						return t;
-					}, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
+                var results = c.Query<dynamic, Ecoregion, Ecoregion>(ECOREGION_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return t;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
-				pagedResults.Data = results.ToList();
-				return pagedResults;
-			}
-		}
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
 
-		/// <summary>
-		/// Saves the Ecoregion
-		/// </summary>
-		/// <param name="request">The information about the Ecoregion Request</param>
-		public void EcoregionSave(EcoregionSaveRequest request)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_ecoregionId = request.Key,
-					p_name = request.Name
-				};
+        /// <summary>
+        /// Saves the Ecoregion
+        /// </summary>
+        /// <param name="request">The information about the Ecoregion Request</param>
+        public void EcoregionSave(EcoregionSaveRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_ecoregionId = request.Key,
+                    p_name = request.Name
+                };
 
-				c.Execute(ECOREGION_SAVE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
-		#endregion
+                c.Execute(ECOREGION_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion
 
-		#region Ecozone
-		/// <summary>
-		/// Gets a list of Eco-zones
-		/// </summary>
-		/// <param name="request">The information about the Eco-zone Request</param>
-		/// <returns>A list of matching Eco-zones</returns>
-		public PagedResultset<Ecozone> EcozoneGet(EcozoneRequest request)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = request.StartRow,
-					p_to = request.StartRow + request.RowCount - 1,
-					p_sortBy = request.SortBy,
-					p_sortDirection = request.SortDirection,
-					p_ecozoneId = request.Key,
-					p_keywords = request.Keywords,
-				};
+        #region Ecozone
+        /// <summary>
+        /// Gets a list of Eco-zones
+        /// </summary>
+        /// <param name="request">The information about the Eco-zone Request</param>
+        /// <returns>A list of matching Eco-zones</returns>
+        public PagedResultset<Ecozone> EcozoneGet(EcozoneRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_ecozoneId = request.Key,
+                    p_keywords = request.Keywords,
+                };
 
-				var pagedResults = new PagedResultset<Ecozone>
-				{
-					DataRequest = request,
-					ResultCount = 0,
-					Data = new List<Ecozone>()
-				};
+                var pagedResults = new PagedResultset<Ecozone>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<Ecozone>()
+                };
 
-				var results = c.Query<dynamic, Ecozone, Ecozone>(ECOZONE_GET,
-					(d, t) =>
-					{
-						pagedResults.ResultCount = d.TotalRowCount;
-						return t;
-					}, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
+                var results = c.Query<dynamic, Ecozone, Ecozone>(ECOZONE_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return t;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
-				pagedResults.Data = results.ToList();
-				return pagedResults;
-			}
-		}
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
 
-		/// <summary>
-		/// Saves the Ecozone
-		/// </summary>
-		/// <param name="request">The information about the Ecozone Request</param>
-		public void EcozoneSave(EcozoneSaveRequest request)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_ecozoneId = request.Key,
-					p_name = request.Name
-				};
+        /// <summary>
+        /// Saves the Ecozone
+        /// </summary>
+        /// <param name="request">The information about the Ecozone Request</param>
+        public void EcozoneSave(EcozoneSaveRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_ecozoneId = request.Key,
+                    p_name = request.Name
+                };
 
-				c.Execute(ECOZONE_SAVE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
-		#endregion
+                c.Execute(ECOZONE_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion
 
         #region NwtSarcAssessment
         /// <summary>
@@ -956,10 +958,10 @@
                     {
                         pagedResults.ResultCount = d.TotalRowCount;
                         return t;
-                    }, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
                 pagedResults.Data = results.ToList();
                 return pagedResults;
@@ -985,68 +987,68 @@
         }
         #endregion
 
-		#region ProtectedArea
-		/// <summary>
-		/// Gets a list of Protected Areas
-		/// </summary>
-		/// <param name="request">The information about the Protected Area Request</param>
-		/// <returns>A list of matching Protected Areas</returns>
-		public PagedResultset<ProtectedArea> ProtectedAreaGet(ProtectedAreaRequest request)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = request.StartRow,
-					p_to = request.StartRow + request.RowCount - 1,
-					p_sortBy = request.SortBy,
-					p_sortDirection = request.SortDirection,
-					p_protectedAreaId = request.Key,
-					p_keywords = request.Keywords,
-				};
+        #region ProtectedArea
+        /// <summary>
+        /// Gets a list of Protected Areas
+        /// </summary>
+        /// <param name="request">The information about the Protected Area Request</param>
+        /// <returns>A list of matching Protected Areas</returns>
+        public PagedResultset<ProtectedArea> ProtectedAreaGet(ProtectedAreaRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_protectedAreaId = request.Key,
+                    p_keywords = request.Keywords,
+                };
 
-				var pagedResults = new PagedResultset<ProtectedArea>
-				{
-					DataRequest = request,
-					ResultCount = 0,
-					Data = new List<ProtectedArea>()
-				};
+                var pagedResults = new PagedResultset<ProtectedArea>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<ProtectedArea>()
+                };
 
-				var results = c.Query<dynamic, ProtectedArea, ProtectedArea>(PROTECTEDAREA_GET,
-					(d, t) =>
-					{
-						pagedResults.ResultCount = d.TotalRowCount;
-						return t;
-					}, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
+                var results = c.Query<dynamic, ProtectedArea, ProtectedArea>(PROTECTEDAREA_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return t;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
-				pagedResults.Data = results.ToList();
-				return pagedResults;
-			}
-		}
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
 
-		/// <summary>
-		/// Saves the Protected Area
-		/// </summary>
-		/// <param name="request">The information about the Protected Area Request</param>
-		public void ProtectedAreaSave(ProtectedAreaSaveRequest request)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_protectedAreaId = request.Key,
-					p_name = request.Name
-				};
+        /// <summary>
+        /// Saves the Protected Area
+        /// </summary>
+        /// <param name="request">The information about the Protected Area Request</param>
+        public void ProtectedAreaSave(ProtectedAreaSaveRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_protectedAreaId = request.Key,
+                    p_name = request.Name
+                };
 
-				c.Execute(PROTECTEDAREA_SAVE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
-		#endregion
+                c.Execute(PROTECTEDAREA_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion
 
-		#region CosewicStatus
+        #region CosewicStatus
         /// <summary>
         /// Gets a list of Cosewic Status
         /// </summary>
@@ -1078,10 +1080,10 @@
                     {
                         pagedResults.ResultCount = d.TotalRowCount;
                         return t;
-                    }, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
                 pagedResults.Data = results.ToList();
                 return pagedResults;
@@ -1105,9 +1107,9 @@
                 c.Execute(COSEWICSTATUS_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-		#endregion
+        #endregion
 
-		#region StatusRank
+        #region StatusRank
         /// <summary>
         /// Gets a list of Status Ranks
         /// </summary>
@@ -1139,10 +1141,10 @@
                     {
                         pagedResults.ResultCount = d.TotalRowCount;
                         return t;
-                    }, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
                 pagedResults.Data = results.ToList();
                 return pagedResults;
@@ -1166,404 +1168,404 @@
                 c.Execute(STATUSRANK_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-		#endregion
+        #endregion
 
-		#region References
-		public Dto.PagedResultset<Reference> ReferencesGet(Dto.ReferenceRequest rr) 
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_referenceId = rr.ReferenceKey,
-					p_startRow = rr.StartRow,
-					p_rowCount = rr.RowCount,
-					p_searchString = rr.Keywords
-				};
+        #region References
+        public Dto.PagedResultset<Reference> ReferencesGet(Dto.ReferenceRequest rr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_referenceId = rr.ReferenceKey,
+                    p_startRow = rr.StartRow,
+                    p_rowCount = rr.RowCount,
+                    p_searchString = rr.Keywords
+                };
 
-				var pagedResults = new Dto.PagedResultset<Reference> { DataRequest = rr };
-				pagedResults.Data = c.Query<int, Reference, Reference>(REFERENCE_GET, 
-					(count, r) =>
-						{
-							pagedResults.ResultCount = count;
-							return r;
-						},  
-					param, 
-					commandType: 
-					CommandType.StoredProcedure, 
-					splitOn: "Key").ToList();
+                var pagedResults = new Dto.PagedResultset<Reference> { DataRequest = rr };
+                pagedResults.Data = c.Query<int, Reference, Reference>(REFERENCE_GET,
+                    (count, r) =>
+                    {
+                        pagedResults.ResultCount = count;
+                        return r;
+                    },
+                    param,
+                    commandType:
+                    CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
 
-				return pagedResults;
-			}
-		}
+                return pagedResults;
+            }
+        }
 
-		public void ReferenceSave(Models.Reference r)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_referenceId = r.Key == 0 ? null : (int?)r.Key,
-					p_code = r.Code, 
-					p_author = r.Author,
-					p_year = r.Year,
-					p_title = r.Title,
-					p_editionPublicationOrganization = r.EditionPublicationOrganization,
-					p_volumePage = r.VolumePage,
-					p_publisher = r.Publisher,
-					p_city = r.City,
-					p_location = r.Location
-				};
-				
-				c.Execute(REFERENCE_SAVE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
-		#endregion
+        public void ReferenceSave(Models.Reference r)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_referenceId = r.Key == 0 ? null : (int?)r.Key,
+                    p_code = r.Code,
+                    p_author = r.Author,
+                    p_year = r.Year,
+                    p_title = r.Title,
+                    p_editionPublicationOrganization = r.EditionPublicationOrganization,
+                    p_volumePage = r.VolumePage,
+                    p_publisher = r.Publisher,
+                    p_city = r.City,
+                    p_location = r.Location
+                };
 
-		#region Project
-		public int ProjectCreate(string name, string createdBy)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_name = name,
+                c.Execute(REFERENCE_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion
+
+        #region Project
+        public int ProjectCreate(string name, string createdBy)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_name = name,
                     p_createdBy = createdBy
-				};
-				return c.Query<int>(PROJECT_CREATE, param, commandType: CommandType.StoredProcedure).Single();
-			}
-		}
+                };
+                return c.Query<int>(PROJECT_CREATE, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
 
-		public void ProjectUpdate(Models.Project project)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_projectId = project.Key,
-					p_wildlifeResearchPermitId = project.WildlifeResearchPermitId,
-					p_name = project.Name,
-					p_leadRegionId = project.LeadRegion.Key == 0 ? null : (int?)project.LeadRegion.Key,
-					p_projectStatusId = project.Status.Key == 0 ? null : (int?)project.Status.Key,
-					p_statusDate = project.StatusDate,
-					p_projectLeadId = project.ProjectLead.Key == 0 ? null : (int?)project.ProjectLead.Key,
-					p_startDate = project.StartDate,
-					p_endDate = project.EndDate,
-					p_isSensitiveData = project.IsSensitiveData,
-					p_description = project.Description,
-					p_objectives = project.Objectives,
-					p_studyArea = project.StudyArea,
-					p_methods = project.Methods,
-					p_comments = project.Comments,
-					p_results = project.Results,
-					p_termsAndConditions = project.TermsAndConditions
-				};
-				c.Execute(PROJECT_UPDATE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
+        public void ProjectUpdate(Models.Project project)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_projectId = project.Key,
+                    p_wildlifeResearchPermitId = project.WildlifeResearchPermitId,
+                    p_name = project.Name,
+                    p_leadRegionId = project.LeadRegion.Key == 0 ? null : (int?)project.LeadRegion.Key,
+                    p_projectStatusId = project.Status.Key == 0 ? null : (int?)project.Status.Key,
+                    p_statusDate = project.StatusDate,
+                    p_projectLeadId = project.ProjectLead.Key == 0 ? null : (int?)project.ProjectLead.Key,
+                    p_startDate = project.StartDate,
+                    p_endDate = project.EndDate,
+                    p_isSensitiveData = project.IsSensitiveData,
+                    p_description = project.Description,
+                    p_objectives = project.Objectives,
+                    p_studyArea = project.StudyArea,
+                    p_methods = project.Methods,
+                    p_comments = project.Comments,
+                    p_results = project.Results,
+                    p_termsAndConditions = project.TermsAndConditions
+                };
+                c.Execute(PROJECT_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 
-		public Project ProjectGet(int projectKey)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_projectId = projectKey
-				};
-				return c.Query<Project, LeadRegion, Person, ProjectStatus, Project>(PROJECT_GET,
-					(p, lr, lead, status) =>
-						{
-							p.LeadRegion = lr ?? new LeadRegion();
-							p.ProjectLead = lead ?? new Person();
-							p.Status = status ?? new ProjectStatus();
-							return p;
-						}, 
-						param, 
-						commandType: CommandType.StoredProcedure, 
-						splitOn: "Key").Single();
-			}
-		}
+        public Project ProjectGet(int projectKey)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_projectId = projectKey
+                };
+                return c.Query<Project, LeadRegion, Person, ProjectStatus, Project>(PROJECT_GET,
+                    (p, lr, lead, status) =>
+                    {
+                        p.LeadRegion = lr ?? new LeadRegion();
+                        p.ProjectLead = lead ?? new Person();
+                        p.Status = status ?? new ProjectStatus();
+                        return p;
+                    },
+                        param,
+                        commandType: CommandType.StoredProcedure,
+                        splitOn: "Key").Single();
+            }
+        }
 
-		public Dto.PagedResultset<Project> ProjectSearch(Dto.ProjectRequest sr)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_startRow = sr.StartRow,
-					p_rowCount = sr.RowCount,
-					p_sortBy = sr.SortBy,
-					p_sortDirection = sr.SortDirection,
-					p_projectLeadId = sr.ProjectLead,
-					p_projectStatusId = sr.ProjectStatus,
-					p_leadRegionId = sr.Region,
-					p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
-				};
+        public Dto.PagedResultset<Project> ProjectSearch(Dto.ProjectRequest sr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = sr.StartRow,
+                    p_rowCount = sr.RowCount,
+                    p_sortBy = sr.SortBy,
+                    p_sortDirection = sr.SortDirection,
+                    p_projectLeadId = sr.ProjectLead,
+                    p_projectStatusId = sr.ProjectStatus,
+                    p_leadRegionId = sr.Region,
+                    p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
+                };
 
-				var pr = new Dto.PagedResultset<Project> { DataRequest = sr };
-				pr.Data = c.Query<int, Project, LeadRegion, Person, ProjectStatus, Project>(
-					PROJECT_SEARCH,
-					(count, p, lr, lead, status) =>
-						{
-							pr.ResultCount = count;
-							p.LeadRegion = lr ?? new LeadRegion();
-							p.ProjectLead = lead ?? new Person();
-							p.Status = status ?? new ProjectStatus();
-							return p;
-						},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key").ToList();
+                var pr = new Dto.PagedResultset<Project> { DataRequest = sr };
+                pr.Data = c.Query<int, Project, LeadRegion, Person, ProjectStatus, Project>(
+                    PROJECT_SEARCH,
+                    (count, p, lr, lead, status) =>
+                    {
+                        pr.ResultCount = count;
+                        p.LeadRegion = lr ?? new LeadRegion();
+                        p.ProjectLead = lead ?? new Person();
+                        p.Status = status ?? new ProjectStatus();
+                        return p;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
 
-				return pr;
-			}
-		}
-		#endregion
+                return pr;
+            }
+        }
+        #endregion
 
-		#region Project Status
-		public Dto.PagedResultset<ProjectStatus> ProjectStatusSearch(Dto.ProjectStatusRequest sr)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = sr.StartRow,
-					p_to = sr.RowCount,
-					p_sortBy = sr.SortBy,
-					p_sortDirection = sr.SortDirection,
-				};
+        #region Project Status
+        public Dto.PagedResultset<ProjectStatus> ProjectStatusSearch(Dto.ProjectStatusRequest sr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = sr.StartRow,
+                    p_to = sr.RowCount,
+                    p_sortBy = sr.SortBy,
+                    p_sortDirection = sr.SortDirection,
+                };
 
-				var pr = new Dto.PagedResultset<ProjectStatus> { DataRequest = sr };
+                var pr = new Dto.PagedResultset<ProjectStatus> { DataRequest = sr };
 
-				var results = c.Query<int, ProjectStatus, ProjectStatus>(
-					PROJECTSTATUS_SEARCH,
-					(count, ps) =>
-					{
-						pr.ResultCount = count;
-						return ps;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key");
+                var results = c.Query<int, ProjectStatus, ProjectStatus>(
+                    PROJECTSTATUS_SEARCH,
+                    (count, ps) =>
+                    {
+                        pr.ResultCount = count;
+                        return ps;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
-				pr.Data = new List<ProjectStatus>(results);
+                pr.Data = new List<ProjectStatus>(results);
 
-				return pr;
-			}
-		}
-		#endregion
+                return pr;
+            }
+        }
+        #endregion
 
-		#region Lead Region 
-		public Dto.PagedResultset<LeadRegion> LeadRegionSearch(Dto.LeadRegionRequest sr)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = sr.StartRow,
-					p_to = sr.RowCount,
-					p_sortBy = sr.SortBy,
-					p_sortDirection = sr.SortDirection,
-				};
+        #region Lead Region
+        public Dto.PagedResultset<LeadRegion> LeadRegionSearch(Dto.LeadRegionRequest sr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = sr.StartRow,
+                    p_to = sr.RowCount,
+                    p_sortBy = sr.SortBy,
+                    p_sortDirection = sr.SortDirection,
+                };
 
-				var pr = new Dto.PagedResultset<LeadRegion> { DataRequest = sr };
+                var pr = new Dto.PagedResultset<LeadRegion> { DataRequest = sr };
 
-				var results = c.Query<int, LeadRegion, LeadRegion>(
-					LEADREGION_SEARCH,
-					(count, lr) =>
-					{
-						pr.ResultCount = count;
-						return lr;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key");
+                var results = c.Query<int, LeadRegion, LeadRegion>(
+                    LEADREGION_SEARCH,
+                    (count, lr) =>
+                    {
+                        pr.ResultCount = count;
+                        return lr;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
 
-				pr.Data = new List<LeadRegion>(results);
+                pr.Data = new List<LeadRegion>(results);
 
-				return pr;
-			}
-		}
-		#endregion
+                return pr;
+            }
+        }
+        #endregion
 
-		#region Project Survey
-		public Dto.PagedResultset<ProjectSurvey> ProjectSurveyGet(Dto.ProjectSurveyRequest psr)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_startRow = psr.StartRow,
-					p_rowCount = psr.RowCount,
-					p_sortBy = psr.SortBy,
-					p_sortDirection = psr.SortDirection,
-					p_projectId = psr.ProjectKey,
-                    p_surveyId = (psr.SurveyTypeKey == -1 || psr.SurveyTypeKey ==null) ? null : psr.SurveyTypeKey,
-					p_keywords = string.IsNullOrWhiteSpace(psr.Keywords) ? null : psr.Keywords
-				};
+        #region Project Survey
+        public Dto.PagedResultset<ProjectSurvey> ProjectSurveyGet(Dto.ProjectSurveyRequest psr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = psr.StartRow,
+                    p_rowCount = psr.RowCount,
+                    p_sortBy = psr.SortBy,
+                    p_sortDirection = psr.SortDirection,
+                    p_projectId = psr.ProjectKey,
+                    p_surveyId = (psr.SurveyTypeKey == -1 || psr.SurveyTypeKey == null) ? null : psr.SurveyTypeKey,
+                    p_keywords = string.IsNullOrWhiteSpace(psr.Keywords) ? null : psr.Keywords
+                };
 
-				var pr = new Dto.PagedResultset<ProjectSurvey> { DataRequest = psr };
-				pr.Data = c.Query<int, ProjectSurvey, SpeciesType, SurveyType, SurveyTemplate, ProjectSurvey>(
-					SURVEY_SEARCH,
-					(count, ps, s, st, t) =>
-					{
-						pr.ResultCount = count;
-						ps.TargetSpecies = s;
-						ps.SurveyType = st;
-						ps.Template = t;
-						return ps;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key").ToList();
+                var pr = new Dto.PagedResultset<ProjectSurvey> { DataRequest = psr };
+                pr.Data = c.Query<int, ProjectSurvey, SpeciesType, SurveyType, SurveyTemplate, ProjectSurvey>(
+                    SURVEY_SEARCH,
+                    (count, ps, s, st, t) =>
+                    {
+                        pr.ResultCount = count;
+                        ps.TargetSpecies = s;
+                        ps.SurveyType = st;
+                        ps.Template = t;
+                        return ps;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
 
-				return pr;
-			}
-		}
+                return pr;
+            }
+        }
 
-		public ProjectSurvey ProjectSurveyGet(int surveyKey)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_surveyId = surveyKey
-				};
+        public ProjectSurvey ProjectSurveyGet(int surveyKey)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyId = surveyKey
+                };
 
                 var survey = c.Query<ProjectSurvey, SpeciesType, SurveyType, SurveyTemplate, ProjectSurvey>(
-					SURVEY_GET,
-					(ps, s, st, t) =>
-					{
-						ps.TargetSpecies = s ?? new SpeciesType();
-						ps.SurveyType = st ?? new SurveyType();
-						ps.Template = t ?? new SurveyTemplate();
-						return ps;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key").SingleOrDefault();
+                    SURVEY_GET,
+                    (ps, s, st, t) =>
+                    {
+                        ps.TargetSpecies = s ?? new SpeciesType();
+                        ps.SurveyType = st ?? new SurveyType();
+                        ps.Template = t ?? new SurveyTemplate();
+                        return ps;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").SingleOrDefault();
 
-				return survey ?? new ProjectSurvey();
-			}
-		}
+                return survey ?? new ProjectSurvey();
+            }
+        }
 
-		public int ProjectSurveySave(Models.ProjectSurvey ps)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_surveyId = ps.Key,
-					p_projectId = ps.ProjectKey,
-					p_targetSpeciesId = ps.TargetSpecies.Key == 0 ? null : (int?)ps.TargetSpecies.Key,
-					p_surveyTypeId = ps.SurveyType.Key == 0 ? null : (int?)ps.SurveyType.Key,
-					p_surveyTemplateId = ps.Template.Key == 0 ? null : (int?)ps.Template.Key,
-					p_description = ps.Description,
-					p_method = ps.Method,
-					p_results = ps.Results,
-					p_aircraftType = ps.AircraftType,
-					p_aircraftCallsign = ps.AircraftCallsign,
-					p_pilot = ps.Pilot,
-					p_leadSurveyor = ps.LeadSurveyor,
-					p_surveyCrew = ps.SurveyCrew,
-					p_observerExpertise = ps.ObserverExpertise,
-					p_aircraftCrewResults = ps.AircraftCrewResults,
-					p_cloudCover = ps.CloudCover,
-					p_lightConditions = ps.LightConditions,
-					p_snowCover = ps.SnowCover,
-					p_temperature = ps.Temperature,
-					p_precipitation = ps.Precipitation,
-					p_windSpeed = ps.WindSpeed,
-					p_windDirection = ps.WindDirection,
-					p_weatherComments = ps.WeatherComments,
+        public int ProjectSurveySave(Models.ProjectSurvey ps)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyId = ps.Key,
+                    p_projectId = ps.ProjectKey,
+                    p_targetSpeciesId = ps.TargetSpecies.Key == 0 ? null : (int?)ps.TargetSpecies.Key,
+                    p_surveyTypeId = ps.SurveyType.Key == 0 ? null : (int?)ps.SurveyType.Key,
+                    p_surveyTemplateId = ps.Template.Key == 0 ? null : (int?)ps.Template.Key,
+                    p_description = ps.Description,
+                    p_method = ps.Method,
+                    p_results = ps.Results,
+                    p_aircraftType = ps.AircraftType,
+                    p_aircraftCallsign = ps.AircraftCallsign,
+                    p_pilot = ps.Pilot,
+                    p_leadSurveyor = ps.LeadSurveyor,
+                    p_surveyCrew = ps.SurveyCrew,
+                    p_observerExpertise = ps.ObserverExpertise,
+                    p_aircraftCrewResults = ps.AircraftCrewResults,
+                    p_cloudCover = ps.CloudCover,
+                    p_lightConditions = ps.LightConditions,
+                    p_snowCover = ps.SnowCover,
+                    p_temperature = ps.Temperature,
+                    p_precipitation = ps.Precipitation,
+                    p_windSpeed = ps.WindSpeed,
+                    p_windDirection = ps.WindDirection,
+                    p_weatherComments = ps.WeatherComments,
                     p_startDate = ps.StartDate
-				};
+                };
 
-				return c.Query<int>(SURVEY_SAVE, param, commandType: CommandType.StoredProcedure).Single();
-			}
-		}
-		#endregion
+                return c.Query<int>(SURVEY_SAVE, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+        #endregion
 
-		#region Project Survey Observations
-	    public IEnumerable<ObservationUpload> GetObservationUploads(int? surveyKey = null, int? observationUploadId = null)
-	    {
-		    using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_surveyId = surveyKey,
-					p_observationUploadId = observationUploadId
-				};
-				return c.Query<ObservationUpload, ObservationUploadStatus, ObservationUploadStatus, ObservationUpload>(OBSERVATIONUPLOAD_GET,
-					(ou, ous, ouns) =>
-						{
-							ou.Status = ous;
-							ou.Status.NextStep = ouns;
-							return ou;
-						}, 
-					param, 
-					commandType: CommandType.StoredProcedure, 
-					splitOn: "Key");
-			}
-	    }
+        #region Project Survey Observations
+        public IEnumerable<ObservationUpload> GetObservationUploads(int? surveyKey = null, int? observationUploadId = null)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyId = surveyKey,
+                    p_observationUploadId = observationUploadId
+                };
+                return c.Query<ObservationUpload, ObservationUploadStatus, ObservationUploadStatus, ObservationUpload>(OBSERVATIONUPLOAD_GET,
+                    (ou, ous, ouns) =>
+                    {
+                        ou.Status = ous;
+                        ou.Status.NextStep = ouns;
+                        return ou;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+            }
+        }
 
-	    public int UpdateObservationUpload(int surveyKey, string originalFileName, string filePath)
-	    {
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_surveyId = surveyKey,
-					p_originalFileName = originalFileName,
-					p_filePath = filePath
-				};
-				return c.Query<int>(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
-			}
-	    }
+        public int UpdateObservationUpload(int surveyKey, string originalFileName, string filePath)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyId = surveyKey,
+                    p_originalFileName = originalFileName,
+                    p_filePath = filePath
+                };
+                return c.Query<int>(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
 
-	    public void UpdateObservationUpload(ObservationUpload upload)
-	    {
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_observationUploadId = upload.Key,
-					p_observationUploadStatusId = upload.Status.Key,
-					p_headerRowIndex = upload.HeaderRowIndex,
-					p_firstDataRowIndex = upload.FirstDataRowIndex,
-					p_isDeleted = upload.IsDeleted
-				};
-				c.Execute(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure);
-			}
-	    }
+        public void UpdateObservationUpload(ObservationUpload upload)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_observationUploadId = upload.Key,
+                    p_observationUploadStatusId = upload.Status.Key,
+                    p_headerRowIndex = upload.HeaderRowIndex,
+                    p_firstDataRowIndex = upload.FirstDataRowIndex,
+                    p_isDeleted = upload.IsDeleted
+                };
+                c.Execute(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 
-		public Observations GetObservations(int? surveyKey = null, int? uploadKey = null)
-	    {
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_surveyId = surveyKey,
-					p_observationUploadId = uploadKey,
-				};
+        public Observations GetObservations(int? surveyKey = null, int? uploadKey = null)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_surveyId = surveyKey,
+                    p_observationUploadId = uploadKey,
+                };
 
-				using (var q = c.QueryMultiple(OBSERVATION_GET, param, commandType: CommandType.StoredProcedure))
-				{
-					return new Observations 
-					{ 
-						Columns = q.Read<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
-						(stc, stct) =>
-							{
-								// stc.Name = Char.ToLowerInvariant(stc.Name[0]) + stc.Name.Substring(1);
-								stc.ColumnType = stct;
-								return stc;
-							},
-                            splitOn: "key"), 
-						ObservationData = q.Read() 
+                using (var q = c.QueryMultiple(OBSERVATION_GET, param, commandType: CommandType.StoredProcedure))
+                {
+                    return new Observations
+                    {
+                        Columns = q.Read<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
+                        (stc, stct) =>
+                        {
+                            // stc.Name = Char.ToLowerInvariant(stc.Name[0]) + stc.Name.Substring(1);
+                            stc.ColumnType = stct;
+                            return stc;
+                        },
+                            splitOn: "key"),
+                        ObservationData = q.Read()
                     };
-				}
-			}
-	    }
+                }
+            }
+        }
 
         public void ObservationRowUpdate(Models.ObservationRow observationRow)
         {
@@ -1579,7 +1581,7 @@
                 c.Execute(OBSERVATIONROW_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
         }
-		#endregion
+        #endregion
 
         #region Species Types
         public Dto.PagedResultset<Models.SpeciesType> TargetSpeciesGet(Dto.SpeciesTypeRequest request)
@@ -1619,33 +1621,34 @@
 
         #region Project Survey Type
         public Dto.PagedResultset<Models.SurveyType> SurveyTypeSearch(Dto.SurveyTypeRequest str)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = str.StartRow,
-					p_to = str.RowCount,
-					p_sortBy = str.SortBy,
-					p_sortDirection = str.SortDirection,
-				};
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = str.StartRow,
+                    p_to = str.RowCount,
+                    p_sortBy = str.SortBy,
+                    p_sortDirection = str.SortDirection,
+                    p_keywords = str.Keywords
+                };
 
-				var pr = new Dto.PagedResultset<SurveyType> { DataRequest = str };
+                var pr = new Dto.PagedResultset<SurveyType> { DataRequest = str };
 
-				pr.Data = c.Query<int, SurveyType, SurveyType>(
-					SURVEYTYPE_SEARCH,
-					(count, ps) =>
-					{
-						pr.ResultCount = count;
-						return ps;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key").ToList();
+                pr.Data = c.Query<int, SurveyType, SurveyType>(
+                    SURVEYTYPE_SEARCH,
+                    (count, ps) =>
+                    {
+                        pr.ResultCount = count;
+                        return ps;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
 
-				return pr;
-			}
-		}
+                return pr;
+            }
+        }
 
         public List<NamedKeyedModel> SurveyTemplateColumnTypesGet()
         {
@@ -1654,7 +1657,7 @@
                 var results = c.Query<NamedKeyedModel>(
                     SURVEYTEMPLATECOLUMNTYPE_GET,
                     commandType: CommandType.StoredProcedure);
-                    
+
                 return results.ToList();
             }
         }
@@ -1718,9 +1721,9 @@
         }
         #endregion
 
-		#region Project Collar
-		public Dto.PagedResultset<Collar> ProjectCollarGet(Dto.ProjectCollarRequest psr)
-		{
+        #region Project Collar
+        public Dto.PagedResultset<Collar> ProjectCollarGet(Dto.ProjectCollarRequest psr)
+        {
             var pr = new Dto.PagedResultset<Collar>
             {
                 DataRequest = psr,
@@ -1761,119 +1764,119 @@
                         splitOn: "Key").ToList();
                 return pr;
             }
-		}
-		
-		#endregion
+        }
 
-		#region Templates
+        #endregion
+
+        #region Templates
         public Dto.PagedResultset<Models.SurveyTemplate> SurveyTemplateSearch(Dto.PagedDataKeywordRequest request)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_from = request.StartRow,
-					p_to = request.RowCount,
-					p_sortBy = request.SortBy,
-					p_sortDirection = request.SortDirection,
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.RowCount,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
                     p_keywords = request.Keywords
-				};
+                };
 
-				var pr = new Dto.PagedResultset<SurveyTemplate> { DataRequest = request };
+                var pr = new Dto.PagedResultset<SurveyTemplate> { DataRequest = request };
 
-				pr.Data = c.Query<int, SurveyTemplate, SurveyTemplate>(
-					SURVEYTEMPLATE_SEARCH,
-					(count, ps) =>
-					{
-						pr.ResultCount = count;
-						return ps;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key").ToList();
+                pr.Data = c.Query<int, SurveyTemplate, SurveyTemplate>(
+                    SURVEYTEMPLATE_SEARCH,
+                    (count, ps) =>
+                    {
+                        pr.ResultCount = count;
+                        return ps;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
 
-				return pr;
-			}
-		}
+                return pr;
+            }
+        }
 
-		public IEnumerable<MappedSurveyTemplateColumn> GetSurveyTemplateColumnMappings(int observationUploadKey)
-	    {
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_observationUploadId = observationUploadKey,
-				};
+        public IEnumerable<MappedSurveyTemplateColumn> GetSurveyTemplateColumnMappings(int observationUploadKey)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_observationUploadId = observationUploadKey,
+                };
 
-				return c.Query<MappedSurveyTemplateColumn, SurveyTemplateColumn, SurveyTemplateColumnType, MappedSurveyTemplateColumn>(
-					SURVEYTEMPLATECOLUMNMAPPING_GET,
-					(mstc, stc, stct) =>
-					{
-						mstc.SurveyTemplateColumn = stc;
-						stc.ColumnType = stct;
-						return mstc;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key").ToList();
-			}
-	    }
+                return c.Query<MappedSurveyTemplateColumn, SurveyTemplateColumn, SurveyTemplateColumnType, MappedSurveyTemplateColumn>(
+                    SURVEYTEMPLATECOLUMNMAPPING_GET,
+                    (mstc, stc, stct) =>
+                    {
+                        mstc.SurveyTemplateColumn = stc;
+                        stc.ColumnType = stct;
+                        return mstc;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+            }
+        }
 
         public IEnumerable<SurveyTemplateColumn> GetSurveyTemplateColumns(int surveyTemplateId)
-	    {
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
                     p_surveyTemplateId = surveyTemplateId,
-				};
+                };
 
                 return c.Query<SurveyTemplateColumn, SurveyTemplateColumnType, SurveyTemplateColumn>(
                     SURVEYTEMPLATECOLUMNS_GET,
-					(stc, stct) =>
-					{
-						stc.ColumnType = stct;
+                    (stc, stct) =>
+                    {
+                        stc.ColumnType = stct;
                         return stc;
-					},
-					param,
-					commandType: CommandType.StoredProcedure,
-					splitOn: "Key").ToList();
-			}
-	    }
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+            }
+        }
 
-	    public void SaveSurveyTemplateColumnMappings(int observationUploadKey, IEnumerable<MappedSurveyTemplateColumn> mappings)
-	    {
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_observationUploadId = observationUploadKey,
-					p_templateColumnMappings = mappings.Where(m => m.ColumnIndex.HasValue).Select(m => new { n = m.SurveyTemplateColumn.Key, p = m.ColumnIndex.Value} ).AsTableValuedParameter("dbo.TwoIntTableType")
-				};
+        public void SaveSurveyTemplateColumnMappings(int observationUploadKey, IEnumerable<MappedSurveyTemplateColumn> mappings)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_observationUploadId = observationUploadKey,
+                    p_templateColumnMappings = mappings.Where(m => m.ColumnIndex.HasValue).Select(m => new { n = m.SurveyTemplateColumn.Key, p = m.ColumnIndex.Value }).AsTableValuedParameter("dbo.TwoIntTableType")
+                };
 
-				c.Execute(SURVEYTEMPLATECOLUMNMAPPING_SAVE, param, commandType: CommandType.StoredProcedure);
-			}
-	    }
+                c.Execute(SURVEYTEMPLATECOLUMNMAPPING_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 
-		public void SaveObservationData(int observationUploadKey, IEnumerable<Logic.ObservationData> data)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_observationUploadId = observationUploadKey,
-					p_observations = data.Select(m => new
-						                                  {
-															  ObservationUploadSurveyTemplateColumnMappingId = m.ColumnMappingId,
-															  RowIndex = m.RowIndex,
-															  Value = m.Value
-														  }).AsTableValuedParameter("dbo.ObservationTableType")
-				};
+        public void SaveObservationData(int observationUploadKey, IEnumerable<Logic.ObservationData> data)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_observationUploadId = observationUploadKey,
+                    p_observations = data.Select(m => new
+                                                          {
+                                                              ObservationUploadSurveyTemplateColumnMappingId = m.ColumnMappingId,
+                                                              RowIndex = m.RowIndex,
+                                                              Value = m.Value
+                                                          }).AsTableValuedParameter("dbo.ObservationTableType")
+                };
 
-				c.Execute(OBSERVATION_SAVE, param, commandType: CommandType.StoredProcedure);
-			}
-		}
-		#endregion
+                c.Execute(OBSERVATION_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion
 
         #region CollaredAnimals
         public int CollarCreate(string collarId)
@@ -1907,7 +1910,7 @@
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim(),
                     p_regionKey = sr.RegionKey,
                     p_needingReview = sr.NeedingReview,
-					p_activeOnly = sr.ActiveOnly
+                    p_activeOnly = sr.ActiveOnly
                 };
 
                 using (var q = c.QueryMultiple(COLLAREDANIMAL_SEARCH, param, commandType: CommandType.StoredProcedure))
@@ -1942,7 +1945,7 @@
             {
                 var param = new
                 {
-					p_collaredAnimalKey = collaredAnimalKey
+                    p_collaredAnimalKey = collaredAnimalKey
                 };
                 return c.Query<Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAREDANIMAL_GET,
                     (collar, project, type, region, status, dyn) =>
@@ -1953,7 +1956,7 @@
                         collar.CollarStatus = status ?? new CollarStatus();
 
 
-                        collar.ArgosProgram = dyn.ArgosProgramKey == null ? new ArgosProgram() : new ArgosProgram { Key = dyn.ArgosProgramKey, ProgramNumber = dyn.ArgosProgramNumber, ArgosUser =  new ArgosUser{ Key = dyn.ArgosUserKey, Name = dyn.ArgosUserName, Password = dyn.ArgosUserPassword }};
+                        collar.ArgosProgram = dyn.ArgosProgramKey == null ? new ArgosProgram() : new ArgosProgram { Key = dyn.ArgosProgramKey, ProgramNumber = dyn.ArgosProgramNumber, ArgosUser = new ArgosUser { Key = dyn.ArgosUserKey, Name = dyn.ArgosUserName, Password = dyn.ArgosUserPassword } };
 
 
                         collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
@@ -2021,8 +2024,8 @@
                     p_SignsOfPredation = collar.SignsOfPredation,
                     p_EvidenceOfChase = collar.EvidenceOfChase,
                     p_SignsOfScavengers = collar.SignsOfScavengers,
-	                p_SnowSinceDeath = collar.SnowSinceDeath,
-	                p_SignsOfHumans = collar.SignsOfHumans,
+                    p_SnowSinceDeath = collar.SnowSinceDeath,
+                    p_SignsOfHumans = collar.SignsOfHumans,
                     p_AnimalMortalityId = collar.AnimalMortality.Key == 0 ? null : (int?)collar.AnimalMortality.Key,
                     p_MortalityDate = collar.MortalityDate,
                     p_MortalityConfidenceId = collar.MortalityConfidence.Key == 0 ? null : (int?)collar.MortalityConfidence.Key,
@@ -2078,7 +2081,7 @@
                 return pagedResults;
             }
         }
- 
+
         public PagedResultset<CollarRegion> CollarRegionGet(CollarRegionRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2112,7 +2115,7 @@
                 return pagedResults;
             }
         }
-        
+
         public PagedResultset<CollarStatus> CollarStatusGet(CollarStatusRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2328,7 +2331,7 @@
                 return pagedResults;
             }
         }
-        
+
         public PagedResultset<HerdAssociationMethod> HerdAssociationMethodGet(PagedDataRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2360,7 +2363,7 @@
                 return pagedResults;
             }
         }
-        
+
         public PagedResultset<ConfidenceLevel> ConfidenceLevelGet(PagedDataRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2392,7 +2395,7 @@
                 return pagedResults;
             }
         }
-        
+
         public PagedResultset<BreedingStatus> BreedingStatusGet(PagedDataRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2424,7 +2427,7 @@
                 return pagedResults;
             }
         }
-        
+
         public PagedResultset<BreedingStatusMethod> BreedingStatusMethodGet(PagedDataRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2456,7 +2459,7 @@
                 return pagedResults;
             }
         }
-        
+
         public PagedResultset<AnimalSex> AnimalSexGet(PagedDataRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2569,18 +2572,18 @@
             }
         }
 
-		public void ArgosPassMerge(int collaredAnimalId, IEnumerable<ArgosSatellitePass> passes)
+        public void ArgosPassMerge(int collaredAnimalId, IEnumerable<ArgosSatellitePass> passes)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
                     p_argosPasses = passes.Select(p => new
-	                                                {
-		                                                p.Latitude,
-														p.Longitude,
-														LocationDate = p.Timestamp
-	                                                }).AsTableValuedParameter("dbo.ArgosPassTableType"),
+                                                    {
+                                                        p.Latitude,
+                                                        p.Longitude,
+                                                        LocationDate = p.Timestamp
+                                                    }).AsTableValuedParameter("dbo.ArgosPassTableType"),
                     p_collaredAnimalId = collaredAnimalId,
                 };
                 c.Query<int>(ARGOSPASS_MERGE, param, commandType: CommandType.StoredProcedure);
@@ -2603,8 +2606,8 @@
                     p_rowCount = apsr.RowCount,
                     p_collaredAnimalKey = apsr.CollaredAnimalId,
                     p_argosPassStatusFilter = apsr.StatusFilter,
-                    p_daysStart = (apsr.DaysFilter != null && apsr.DaysFilter >0)? (DateTime?)DateTime.Now.AddDays(-(double)apsr.DaysFilter): null,
-                    p_daysEnd = (apsr.DaysFilter != null && apsr.DaysFilter >0)? (DateTime?)DateTime.Now: null
+                    p_daysStart = (apsr.DaysFilter != null && apsr.DaysFilter > 0) ? (DateTime?)DateTime.Now.AddDays(-(double)apsr.DaysFilter) : null,
+                    p_daysEnd = (apsr.DaysFilter != null && apsr.DaysFilter > 0) ? (DateTime?)DateTime.Now : null
 
                 };
 
@@ -2684,32 +2687,32 @@
                 {
                     var person = q.Read<Person>().Single();
                     person.Projects = q.Read<SimpleProject>().ToList();
-					person.Roles = q.Read<Role>().ToList();
-                   
+                    person.Roles = q.Read<Role>().ToList();
+
                     return person;
                 }
             }
         }
 
-		public Person PersonGet(string username)
-		{
-			using (var c = NewWmisConnection)
-			{
-				var param = new
-				{
-					p_username = username
-				};
+        public Person PersonGet(string username)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_username = username
+                };
 
                 //TODO: Probably don't always want to create a new person each time? Good for testing..
-				using (var q = c.QueryMultiple(PERSON_CREATEANDGET, param, commandType: CommandType.StoredProcedure))
-				{
-					var user = q.Read<Person>().Single();
-					user.Projects = q.Read<SimpleProject>().ToList();
-					user.Roles = q.Read<Role>().ToList();
-					return user;
-				}
-			}
-		}
+                using (var q = c.QueryMultiple(PERSON_CREATEANDGET, param, commandType: CommandType.StoredProcedure))
+                {
+                    var user = q.Read<Person>().Single();
+                    user.Projects = q.Read<SimpleProject>().ToList();
+                    user.Roles = q.Read<Role>().ToList();
+                    return user;
+                }
+            }
+        }
 
         public void PersonUpdate(Person person)
         {
@@ -2718,10 +2721,10 @@
                 var param = new
                 {
                     p_PersonId = person.Key,
-	                p_Username = person.Username,
-	                p_Name = person.Name,
+                    p_Username = person.Username,
+                    p_Name = person.Name,
                     p_roleKeys = person.Roles.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
-	                p_projectKeys = person.Projects.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType")
+                    p_projectKeys = person.Projects.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType")
                 };
                 c.Execute(PERSON_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
@@ -2749,62 +2752,63 @@
                     Data = new List<Person>()
                 };
 
-				using (var q = c.QueryMultiple(PERSON_SEARCH, param, commandType: CommandType.StoredProcedure))
-				{
-					pagedResults.Data = q.Read<int,Person, Person>((count, p) =>{
-						pagedResults.ResultCount = count;
-						return p;
-					}, "Key").ToList();
+                using (var q = c.QueryMultiple(PERSON_SEARCH, param, commandType: CommandType.StoredProcedure))
+                {
+                    pagedResults.Data = q.Read<int, Person, Person>((count, p) =>
+                    {
+                        pagedResults.ResultCount = count;
+                        return p;
+                    }, "Key").ToList();
 
-					var userDict = pagedResults.Data.ToDictionary(x => x.Key);
-					var project = q.Read<PersonProject, SimpleProject, PersonProject>((pp, p) =>
-						{
-							pp.Project = p;
-							return pp;
-						}, "Key").ToList();
-					foreach (var p in project)
-					{
-						userDict[p.PersonKey].Projects.Add(p.Project);
-					}
-					var roles = q.Read<PersonRole, Role, PersonRole>((pr, r) =>
-						{
-							pr.Role = r;
-							return pr;
-						}, "Key").ToList();
-					foreach (var r in roles)
-					{
-						userDict[r.PersonKey].Roles.Add(r.Role);
-					}
-				}
+                    var userDict = pagedResults.Data.ToDictionary(x => x.Key);
+                    var project = q.Read<PersonProject, SimpleProject, PersonProject>((pp, p) =>
+                        {
+                            pp.Project = p;
+                            return pp;
+                        }, "Key").ToList();
+                    foreach (var p in project)
+                    {
+                        userDict[p.PersonKey].Projects.Add(p.Project);
+                    }
+                    var roles = q.Read<PersonRole, Role, PersonRole>((pr, r) =>
+                        {
+                            pr.Role = r;
+                            return pr;
+                        }, "Key").ToList();
+                    foreach (var r in roles)
+                    {
+                        userDict[r.PersonKey].Roles.Add(r.Role);
+                    }
+                }
 
                 return pagedResults;
             }
         }
-		#endregion
+        #endregion
 
-		#region Roles
-		internal PagedResultset<Role> UserRolesGet(Dto.PagedRoleRequest request)
-		{
-			using (var c = NewWmisConnection)
-			{
+        #region Roles
+        internal PagedResultset<Role> UserRolesGet(Dto.PagedRoleRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
 
-				var pagedResults = new PagedResultset<Role>
-				{
-					DataRequest = request,
-					ResultCount = 0,
-					Data = new List<Role>()
-				};
+                var pagedResults = new PagedResultset<Role>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<Role>()
+                };
 
-				pagedResults.Data = c.Query<Role>(ROLE_GET, commandType: CommandType.StoredProcedure).ToList();
-				pagedResults.ResultCount = pagedResults.Data.Count();
+                pagedResults.Data = c.Query<Role>(ROLE_GET, commandType: CommandType.StoredProcedure).ToList();
+                pagedResults.ResultCount = pagedResults.Data.Count();
 
-				return pagedResults;
-			}
-		}
-		#endregion
+                return pagedResults;
+            }
+        }
+        #endregion
 
-		#region Files
-		public PagedResultset<File> FileSearch(FileSearchRequest request)
+        #region Files
+        public PagedResultset<File> FileSearch(FileSearchRequest request)
         {
             using (var c = NewWmisConnection)
             {
@@ -2965,7 +2969,7 @@
                 return pagedResults;
             }
         }
-        
+
         public IEnumerable<Collaborator> ProjectCollaboratorsGet(int projectId)
         {
             using (var c = NewWmisConnection)
@@ -2985,18 +2989,11 @@
                 var param = new
                 {
                     p_projectId = request.ProjectId,
-                    p_collaboratorIds = request.CollaboratorIds.Select(id => new { n = id } ).AsTableValuedParameter("dbo.IntTableType"),
+                    p_collaboratorIds = request.CollaboratorIds.Select(id => new { n = id }).AsTableValuedParameter("dbo.IntTableType"),
                 };
                 c.Execute(PROJECTCOLLABORATORS_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
         }
-
-
-
-
-
-
-
 
         #endregion
 
@@ -3012,7 +3009,7 @@
                         p.ArgosUser = u;
                         return p;
                     },
-                    new {},
+                    new { },
                     commandType: CommandType.StoredProcedure,
                     splitOn: "Key");
             }
@@ -3052,8 +3049,6 @@
 
         #endregion
 
-        #endregion
-
         #region Site
         public PagedResultset<Site> SiteGet(SiteRequest request)
         {
@@ -3061,7 +3056,7 @@
             {
                 var param = new
                 {
-                    p_from = request.StartRow, 
+                    p_from = request.StartRow,
                     p_to = request.StartRow + request.RowCount - 1,
                     p_siteId = request.Key
                 };
@@ -3076,10 +3071,10 @@
                 var results = c.Query<dynamic, Site, Site>(
                     SITE_GET,
                     (d, record) =>
-                        {
-                            pagedResults.ResultCount = d.TotalRowCount;
-                            return record;
-                        },
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
                     param,
                     commandType: CommandType.StoredProcedure,
                     splitOn: "Key");
@@ -3105,14 +3100,106 @@
         }
         #endregion
 
+        #region Search
+        public PagedResultset<SearchResponse> Search(SearchRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_fromDate = request.FromDate,
+                    p_toDate = request.ToDate,
+                    p_speciesIds = request.SpeciesIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
+                    p_nwtSaraStatusIds = request.NWTSaraStatusIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
+                    p_fedStaraStatusIds = request.FederalSaraStatusIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
+                    p_rankStatusIds = request.GeneralRankStatusIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
+                    p_sarcAssessmentIds = request.NwtSarcAssessmentIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
+                    p_surveyTypeIds = request.SurveyTypeIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
+                    p_topLatitude = request.TopLatitude,
+                    p_topLongitude = request.TopLongitude,
+                    p_bottomLatitude = request.BottomLatitude,
+                    p_bottomLongitude = request.BottomLongitude
+                };
+
+                var pagedResults = new PagedResultset<SearchResponse>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<SearchResponse>()
+                };
+
+                var results = c.Query<dynamic, SearchResponse, SearchResponse>(
+                    GENERAL_SEARCH,
+                    (d, record) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return record;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                
+                return pagedResults;
+            }
+        }
+
+        #endregion Search
+
+        #region SaraStatus
+
+        public PagedResultset<SaraStatus> SaraStatusGet(SaraStatusRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection,
+                    p_statusRankId = request.Key,
+                    p_keywords = request.Keywords,
+                };
+
+                var pagedResults = new PagedResultset<SaraStatus>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<SaraStatus>()
+                };
+
+                var results = c.Query<dynamic, SaraStatus, SaraStatus>(STATUSRANK_GET,
+                    (d, t) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return t;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+        }
+        #endregion SaraStatus
+
         #region Helpers
         /// <summary>
-		/// Gets a new SQLConnection to the WMIS Database for the current environment
-		/// </summary>
-		private SqlConnection NewWmisConnection
-		{
-			get { return new SqlConnection(_connectionString); }
-		}
-		#endregion
+        /// Gets a new SQLConnection to the WMIS Database for the current environment
+        /// </summary>
+        private SqlConnection NewWmisConnection
+        {
+            get { return new SqlConnection(_connectionString); }
+        }
+        #endregion
+
+        #endregion Methods
     }
 }

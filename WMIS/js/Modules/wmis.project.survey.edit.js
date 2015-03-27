@@ -24,7 +24,8 @@ wmis.project.survey.edit = (function ($) {
 		self.observationData = ko.observableArray();
 		self.initializedMap = ko.observable(false);
 		self.projectId = self.survey.projectKey();
-	    self.projectHeaderDetail = "Project " + self.projectId;
+		self.projectHeaderDetail = "Project " + self.projectId;
+		self.projectName = ko.observable();
 
 		self.getDropDowns = function () {
 			wmis.global.getDropDownData(self.surveyTypes, "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false", function (result) { return result.data; });
@@ -234,7 +235,7 @@ wmis.project.survey.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json",
 			}).success(function (data) {
-				//self.projectName(data.name);
+				self.projectName(data.name);
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
@@ -418,7 +419,10 @@ wmis.project.survey.edit = (function ($) {
 	        self.getObservations();
 	    });
 
-		self.showObservationTab(isTemplateAssigned());
+	    self.showObservationTab(isTemplateAssigned());
+
+
+	    self.getProject();
 	}
 	
 	function ObservationDataPointViewModel(point, argosPassStatuses) {

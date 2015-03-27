@@ -214,6 +214,7 @@
     <Compile Include="ApiControllers\EcoregionApiController.cs" />
     <Compile Include="ApiControllers\ReferenceController.cs" />
     <Compile Include="ApiControllers\SettingsController.cs" />
+    <Compile Include="ApiControllers\SearchApiController.cs" />
     <Compile Include="ApiControllers\SiteApiController.cs" />
     <Compile Include="ApiControllers\StatusRankApiController.cs" />
     <Compile Include="ApiControllers\SurveyTemplateApiController.cs" />
@@ -255,9 +256,12 @@
     <Compile Include="Dto\CollaboratorCreateRequest.cs" />
     <Compile Include="Dto\PagedRoleRequest.cs" />
     <Compile Include="Dto\ProjectUsersSaveRequest.cs" />
+    <Compile Include="Dto\SearchResponse.cs" />
+    <Compile Include="Dto\SearchRequest.cs" />
     <Compile Include="Dto\SiteRequest.cs" />
     <Compile Include="Dto\SiteSaveRequest.cs" />
     <Compile Include="Dto\SpeciesTypeRequest.cs" />
+    <Compile Include="Dto\SaraStatusRequest.cs" />
     <Compile Include="Dto\SurveyTemplateColumnSaveRequest.cs" />
     <Compile Include="Dto\SurveyTemplateSaveRequest.cs" />
     <Compile Include="Dto\FileCreateRequest.cs" />

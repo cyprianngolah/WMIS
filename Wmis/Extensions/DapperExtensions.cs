@@ -9,6 +9,14 @@
     public static class DapperExtensions
     {
         /// <summary>
+        /// Wrapper class for passing IEnumerable<int> into a IntTableRow value parameter
+        /// </summary>
+        public class IntTableRow
+        {
+            public int n { get; set; }
+        }
+
+        /// <summary>
         /// Helper method to simplify creation of table valued parameters.
         /// </summary>
         /// <typeparam name="T">The object type mirroring the table type.</typeparam>

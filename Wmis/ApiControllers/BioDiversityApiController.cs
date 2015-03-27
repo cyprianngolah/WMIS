@@ -156,6 +156,41 @@
             return species;
         }
 
+        [HttpGet]
+        [Route("nwtSaraStatuses")]
+        public PagedResultset<SaraStatus> NwtSaraStatusGet([FromUri]SaraStatusRequest request)
+        {
+            return Repository.SaraStatusGet(request);
+        }
+
+        [HttpGet]
+        [Route("fedSaraStatuses")]
+        public PagedResultset<SaraStatus> FedSaraStatusGet([FromUri]SaraStatusRequest request)
+        {
+            return Repository.SaraStatusGet(request);
+        }
+
+        [HttpGet]
+        [Route("statusRanks")]
+        public PagedResultset<StatusRank> GeneralRankGet([FromUri]StatusRankRequest request)
+        {
+            return Repository.StatusRankGet(request);
+        }
+
+        [HttpGet]
+        [Route("nwtSarcAssessments")]
+        public PagedResultset<NwtSarcAssessment> NwtSarcAssessmentGet([FromUri]NwtSarcAssessmentRequest request)
+        {
+            return Repository.NwtSarcAssessmentGet(request);
+        }
+
+        [HttpGet]
+        [Route("surveyTypes")]
+        public PagedResultset<SurveyType> SurveyTypeGet([FromUri]SurveyTypeRequest request)
+        {
+            return Repository.SurveyTypeSearch(request);
+        }
+
         #region Synonym Various
 
 	    /// <summary>

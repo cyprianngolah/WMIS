@@ -37,10 +37,9 @@
 
 <div class="row">
     <div class="col-md-12 text-right">
-        <button class="btn btn-primary" style="margin-bottom: 10px;" data-bind="click: doSearch">Search</button>
+        <button id="searchButton" class="btn btn-primary" style="margin-bottom: 10px;">Search</button>
     </div>
 </div>
-
 
 <div class="well">
     <div class="row form-group">
@@ -52,7 +51,7 @@
         </div>
         <div class="col-sm-3">
             <div class="input-group date" data-bind="datePicker: fromDate">
-                <input type="text" class="form-control" readonly="readonly">
+                <input type="text" id="fromDate" class="form-control" readonly="readonly">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
             </div>
         </div>
@@ -61,7 +60,7 @@
         </div>
         <div class="col-sm-3">
             <div class="input-group date" data-bind="datePicker: toDate">
-                <input type="text" class="form-control" readonly="readonly">
+                <input type="text" id="toDate" class="form-control" readonly="readonly">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
             </div>
         </div>
@@ -71,17 +70,16 @@
             <label class="pull-right">Species:</label>
         </div>
         <div class="col-md-9">
-            <input type="text" class="form-control" />
+            <input type="hidden" class="form-control" id="speciesIds" name="speciesIds" data-bind="select2KeyValueTags: speciesOptions" />
         </div>
     </div>
-
-
+    
     <div class="row form-group">
         <div class="col-md-3">
             <label class="pull-right">NWT SARA Status:</label>
         </div>
         <div class="col-md-9">
-            <input type="text" class="form-control" />
+            <input type="hidden" class="form-control" id="nwtSaraIds" name="nwtSaraIds" data-bind="select2KeyValueTags: nwtSaraOptions" />
         </div>
     </div>
 
@@ -90,7 +88,7 @@
             <label class="pull-right">Federal SARA Status:</label>
         </div>
         <div class="col-md-9">
-            <input type="text" class="form-control" />
+            <input type="hidden" class="form-control" id="fedSaraIds" name="fedSaraIds" data-bind="select2KeyValueTags: fedSaraOptions" />
         </div>
     </div>
 
@@ -99,7 +97,7 @@
             <label class="pull-right">General Rank Status:</label>
         </div>
         <div class="col-md-9">
-            <input type="text" class="form-control" />
+            <input type="hidden" class="form-control" id="generalStatusIds" name="generalStatusIds" data-bind="select2KeyValueTags: rankOptions" />
         </div>
     </div>
 
@@ -108,7 +106,7 @@
             <label class="pull-right">NWT SARC Assessment:</label>
         </div>
         <div class="col-md-9">
-            <input type="text" class="form-control" />
+            <input type="hidden" class="form-control" id="nwtSarcIds" name="nwtSarcIds" data-bind="select2KeyValueTags: sarcOptions" />
         </div>
     </div>
 
@@ -117,7 +115,7 @@
             <label class="pull-right">Survey Types:</label>
         </div>
         <div class="col-md-9">
-            <input type="text" class="form-control" />
+            <input type="hidden" class="form-control" id="surveyTypeIds" name="surveyTypeIds" data-bind="select2KeyValueTags: surveyTypes" />
         </div>
     </div>
 
@@ -130,13 +128,13 @@
             <label class="pull-right">Latitude:</label>
         </div>
         <div class="col-md-3">
-            <input type="text" class="form-control" />
+            <input type="text" id="topLatitude" class="form-control" />
         </div>
         <div class="col-md-1">
             <label class="pull-right">Longitude:</label>
         </div>
         <div class="col-md-3">
-            <input type="text" class="form-control" />
+            <input type="text" id="topLongitude" class="form-control" />
         </div>
     </div>
 
@@ -148,13 +146,13 @@
             <label class="pull-right">Latitude:</label>
         </div>
         <div class="col-md-3">
-            <input type="text" class="form-control" />
+            <input type="text" id="bottomLatitude" class="form-control" />
         </div>
         <div class="col-md-1">
             <label class="pull-right">Longitude:</label>
         </div>
         <div class="col-md-3">
-            <input type="text" class="form-control" />
+            <input type="text" id="bottomLongitude" class="form-control" />
         </div>
     </div>
 </div>
@@ -168,22 +166,38 @@
     </div>
 </div>
 
+<div id="map-canvas1"></div>
 
-<div id="map-canvas"></div>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <a href="~/Project/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+            @if (Html.UserIsProjectCollarAdministrator())
+            {
+                <span>Edit</span>
+            }
+            else
+            {
+                <span>View</span>
+            }
+        </a>
 
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
-        <table id="search" class="table">
+        <table id="searchTable" class="table">
             <thead>
                 <tr>
                     <th>Project Id</th>
-                    <th>Name</th>
-                    <th>Lead Region</th>
-                    <th>Project Lead</th>
-                    <th>Status</th>
-                    <th>Status Date</th>
-                    <th>Start Date</th>
+                    <th>Species</th>
+                    <th>Date</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Survey Type</th>
+                    <th>Animal ID</th>
+                    <th>Herd</th>
+                    <th>Sex</th>
                 </tr>
             </thead>
         </table>
