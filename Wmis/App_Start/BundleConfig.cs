@@ -117,7 +117,8 @@
 
             #region Search
             bundles.Add(new ScriptBundle("~/bundles/search/index").Include(
-                "~/js/modules/wmis.search.index.js"));
+                        "~/js/wmis.mapping.js",
+                        "~/js/modules/wmis.search.index.js"));
             #endregion
             
             #region Admin Pages

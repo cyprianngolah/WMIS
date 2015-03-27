@@ -82,7 +82,7 @@ wmis.mapping = (function ($) {
                     });
                     existingMarkers = null;
                 }
-                if (points.length > 0) {
+                if (points && points.length > 0) {
                     if (!hideLineAndMarkers) {
                         existingPolyline = Polyline.loadPolyline(map, points);
                         existingMarkers = Markers.loadMarkers(map, points, reviewPassFunction);
@@ -128,6 +128,7 @@ wmis.mapping = (function ($) {
         function loadMarkers(map, passes, reviewPassFunction) {
             var markers = [];
             var startPass = passes[0];
+
             markers.push(createStopMarker(map, startPass));
 
             var middlePoints = passes.slice(1, -1);
@@ -215,6 +216,7 @@ wmis.mapping = (function ($) {
 
     function initialize(pointsObservable, selectedPointObservable, reviewPassFunction, passStatusFunction, mapElementId, hideLineAndMarkers) {
         options.mapElementId = mapElementId || options.mapElementId;
+
         if (typeof (passStatusFunction) != 'undefined' && passStatusFunction != null) {
             options.passStatusFunction = passStatusFunction;
         }

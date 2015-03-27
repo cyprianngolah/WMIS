@@ -78,10 +78,64 @@ wmis.search.index = (function ($) {
         });
     }
 
+
+    function setHighlightRowForKey(key, enable) {
+        var row = $("#searchTable").DataTable().rows(function (idx, data, node) {
+            return data.key == key;
+        });
+        if (enable) {
+            $(row.nodes()).addClass('info');
+        } else {
+            $(row.nodes()).removeClass('info');
+        }
+    }
+    
     function initialize(initOptions) {
         $.extend(options, initOptions);
+        
+        function SearchMapModel() {
+            var self = this;
 
-        initDataTable();
+            this.mapData = ko.observableArray();
+            this.mapSelected = ko.observable();
+
+            this.reviewPass = function (pass) {
+                self.mapSelected(pass);
+            };
+
+            // Handle highlighting the selected row
+            (function () {
+                var currentKey = null;
+                self.mapSelected.subscribe(function (newPass) {
+                    if (currentKey) {
+                        setHighlightRowForKey(currentKey, false);
+                        currentKey = null;
+                        $("#editButton").addClass('disabled');
+                    }
+                    if (newPass) {
+                        currentKey = newPass.key;
+                        setHighlightRowForKey(currentKey, true);
+
+                        if (newPass.key) {
+                            $("#editButton").removeClass('disabled');
+                            $("#editButton").prop("href", "/Project/Edit/" + newPass.key);
+                        }
+                    }
+                });
+            })();
+        };
+    
+        var mapModel = new SearchMapModel();
+
+        var mappingCallback = function (jsonData) {
+            mapModel.mapData(jsonData);
+        };
+
+        var rowSelectCallback = function (data) {
+            mapModel.mapSelected(data);
+        };
+
+        initDataTable(mappingCallback, rowSelectCallback);
 
         $("#searchButton").click(function () {
             searchTable.fnFilter();
@@ -89,9 +143,11 @@ wmis.search.index = (function ($) {
 
         var viewModel = new SearchModel();
         ko.applyBindings(viewModel);
+
+        wmis.mapping.initialize(mapModel.mapData, mapModel.mapSelected, mapModel.reviewPass, null, null, true);
     }
 
-    function initDataTable() {
+    function initDataTable(mappingCallback, rowSelectCallback) {
         var parameters;
 
         searchTable = $('#searchTable').dataTable({
@@ -165,6 +221,8 @@ wmis.search.index = (function ($) {
                     json.recordsTotal = json.resultCount;
                     json.recordsFiltered = json.resultCount;
                     callback(json);
+                    mappingCallback(json.data)
+
                 }).fail(wmis.global.ajaxErrorHandler);
             },
             "fnDrawCallback": function () {
@@ -176,6 +234,7 @@ wmis.search.index = (function ($) {
                     if ($(this).hasClass('info')) {
                         $(this).removeClass('info');
                         $("#editButton").addClass('disabled');
+                        rowSelectCallback(null);
                     } else {
                         searchTable.$('tr.info').removeClass('info');
                         $(this).addClass('info');
@@ -188,6 +247,8 @@ wmis.search.index = (function ($) {
                                 $("#editButton").removeClass('disabled');
                                 $("#editButton").prop("href", "/Project/Edit/" + data.key);
                             }
+
+                            rowSelectCallback(data);
                         }
                     }
                 });

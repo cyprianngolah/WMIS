@@ -19,19 +19,20 @@
 AS
 	SELECT 
 		COUNT(*) OVER() as TotalRowCount,
-		1 AS [Key],
-		'species' AS [Species],
-		CAST('2015-01-01' AS DateTime) AS [Date],
-		63.62884 as [Latitude],
-		-113.57977 as [Longitude],
-		'surveyType' AS [SurveyType],
+		j.[Key] AS [Key],
+		'Caribou' AS [Species],
+		j.LocationDate AS [Date],
+		j.Latitude as [Latitude],
+		j.Longitude as [Longitude],
+		'Habitat' AS [SurveyType],
 		'123' as [AnimalId],
-		'herd' as [Herd],
-		'sex' as [Sex]
+		'Bathurst' as [Herd],
+		'Male' as [Sex]
 	FROM
-		dbo.Species s
-	WHERE
-		s.NwtSarcAssessmentId IN (SELECT n from @p_speciesIds)
+		(SELECT TOP 1 * FROM dbo.Species WHERE NwtSarcAssessmentId IN (SELECT n from @p_speciesIds)) s,
+		(SELECT TOP 5 ArgosPassId AS [Key], latitude, longitude, [LocationDate]
+		FROM ArgosPasses
+		ORDER BY newid()) j
 GO
 
 GRANT EXECUTE ON [dbo].[General_Search] TO [WMISUser]

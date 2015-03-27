@@ -22,5 +22,7 @@ namespace Wmis.Dto
         public string Herd { get; set; }
 
         public string Sex { get; set; }
+
+        public int ArgosPassStatus { get; set; }
     }
 }
