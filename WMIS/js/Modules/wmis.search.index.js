@@ -27,7 +27,7 @@ wmis.search.index = (function ($) {
         this.speciesOptions({
             valueObservable: self.speciesIds,
             idProperty: 'key',
-            textFieldNames: ['name'],
+            textFieldNames: ['commonName'],
             url: '/api/biodiversity',
             placeholder: 'Species...'
         });
