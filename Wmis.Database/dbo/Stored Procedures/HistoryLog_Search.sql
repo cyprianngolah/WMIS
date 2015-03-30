@@ -5,7 +5,9 @@
 	@p_speciesId INT = NULL,
 	@p_projectId INT = NULL,
 	@p_surveyId INT = NULL,
-	@p_personId INT = NULL
+	@p_personId INT = NULL,
+	@p_changeBy NVARCHAR(50) = NULL,
+	@p_item NVARCHAR(100) = NULL
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
@@ -23,6 +25,8 @@ AS
 		AND (@p_projectId IS NULL OR h.ProjectId = @p_projectId)
 		AND (@p_surveyId IS NULL OR h.SurveyId = @p_surveyId)
 		AND (@p_personId IS NULL OR h.UserId = @p_personId)
+		AND (@p_changeBy IS NULL OR h.ChangeBy = @p_changeBy)
+		AND (@p_item IS NULL OR h.Item = @p_item)
 	ORDER BY
 		h.ChangeDate DESC
 	OFFSET 

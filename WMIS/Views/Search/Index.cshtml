@@ -42,24 +42,20 @@
     </div>
 </div>
 
-<div class="well">
+<div class="well form-horizontal" `>
     <div class="row form-group">
         <div class="col-md-2">
-            <label>Observations</label>
+            <label style="padding-top: 9px;">Observations</label>
         </div>
-        <div class="col-sm-1">
-            <label class="pull-right">From:</label>
-        </div>
-        <div class="col-sm-3">
+        <label class="col-md-1 control-label">From:</label>
+        <div class="col-md-3">
             <div class="input-group date" data-bind="datePicker: fromDate">
                 <input type="text" id="fromDate" class="form-control" readonly="readonly">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
             </div>
         </div>
-        <div class="col-sm-1">
-            <label class="pull-right">To:</label>
-        </div>
-        <div class="col-sm-3">
+        <label class="col-md-1 control-label">To:</label>
+        <div class="col-md-3">
             <div class="input-group date" data-bind="datePicker: toDate">
                 <input type="text" id="toDate" class="form-control" readonly="readonly">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -67,54 +63,42 @@
         </div>
     </div>
     <div class="row form-group">
-        <div class="col-md-3">
-            <label class="pull-right">Species:</label>
-        </div>
+        <label class="col-md-3 control-label">Species:</label>
         <div class="col-md-9">
             <input type="hidden" class="form-control" id="speciesIds" name="speciesIds" data-bind="select2KeyValueTags: speciesOptions" />
         </div>
     </div>
-    
+
     <div class="row form-group">
-        <div class="col-md-3">
-            <label class="pull-right">NWT SARA Status:</label>
-        </div>
+        <label class="col-md-3 control-label">NWT SARA Status:</label>
         <div class="col-md-9">
             <input type="hidden" class="form-control" id="nwtSaraIds" name="nwtSaraIds" data-bind="select2KeyValueTags: nwtSaraOptions" />
         </div>
     </div>
 
     <div class="row form-group">
-        <div class="col-md-3">
-            <label class="pull-right">Federal SARA Status:</label>
-        </div>
+        <label class="col-md-3 control-label">Federal SARA Status:</label>
         <div class="col-md-9">
             <input type="hidden" class="form-control" id="fedSaraIds" name="fedSaraIds" data-bind="select2KeyValueTags: fedSaraOptions" />
         </div>
     </div>
 
     <div class="row form-group">
-        <div class="col-md-3">
-            <label class="pull-right">General Rank Status:</label>
-        </div>
+        <label class="col-md-3 control-label">General Rank Status:</label>
         <div class="col-md-9">
             <input type="hidden" class="form-control" id="generalStatusIds" name="generalStatusIds" data-bind="select2KeyValueTags: rankOptions" />
         </div>
     </div>
 
     <div class="row form-group">
-        <div class="col-md-3">
-            <label class="pull-right">NWT SARC Assessment:</label>
-        </div>
+        <label class="col-md-3 control-label">NWT SARC Assessment:</label>
         <div class="col-md-9">
             <input type="hidden" class="form-control" id="nwtSarcIds" name="nwtSarcIds" data-bind="select2KeyValueTags: sarcOptions" />
         </div>
     </div>
 
     <div class="row form-group">
-        <div class="col-md-3">
-            <label class="pull-right">Survey Types:</label>
-        </div>
+        <label class="col-md-3 control-label">Survey Types:</label>
         <div class="col-md-9">
             <input type="hidden" class="form-control" id="surveyTypeIds" name="surveyTypeIds" data-bind="select2KeyValueTags: surveyTypes" />
         </div>
@@ -122,17 +106,13 @@
 
     <div class="row form-group">
         <div class="col-md-2">
-            <label>Top Left</label>
+            <label style="padding-top: 9px;">Top Left</label>
         </div>
-        <div class="col-md-1">
-            <label class="pull-right">Latitude:</label>
-        </div>
+        <label class="col-md-1 control-label">Latitude:</label>
         <div class="col-md-3">
             <input type="text" id="topLatitude" class="form-control" />
         </div>
-        <div class="col-md-1">
-            <label class="pull-right">Longitude:</label>
-        </div>
+        <label class="col-md-1 control-label">Longitude:</label>
         <div class="col-md-3">
             <input type="text" id="topLongitude" class="form-control" />
         </div>
@@ -140,17 +120,13 @@
 
     <div class="row form-group">
         <div class="col-md-2">
-            <label>Bottom Right</label>
+            <label style="padding-top: 9px;">Bottom Right</label>
         </div>
-        <div class="col-md-1">
-            <label class="pull-right">Latitude:</label>
-        </div>
+        <label class="col-md-1 control-label">Latitude:</label>
         <div class="col-md-3">
             <input type="text" id="bottomLatitude" class="form-control" />
         </div>
-        <div class="col-md-1">
-            <label class="pull-right">Longitude:</label>
-        </div>
+        <label class="col-md-1 control-label">Longitude:</label>
         <div class="col-md-3">
             <input type="text" id="bottomLongitude" class="form-control" />
         </div>

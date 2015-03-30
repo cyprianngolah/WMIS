@@ -8,6 +8,8 @@
     using Wmis.Auth;
     using Wmis.Dto;
     using Wmis.Models;
+    using System.Net;
+    using System;
 
     [RoutePrefix("api/project")]
     public class ProjectApiController : BaseApiController
@@ -45,10 +47,30 @@
 
         [HttpPut]
         [Route]
-        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public void Update(Models.Project p)
         {
-            Repository.ProjectUpdate(p);
+            var username = User.Identity.Name;
+            var repo = WebApi.ObjectFactory.Container.GetInstance<Models.WmisRepository>();
+            var person = repo.PersonGet(username);
+
+            // All administrators can see the sensitive data
+            if (person.Roles.Select(r => r.Name).Contains(WmisRoles.AdministratorProjects) || person.Projects.Select(pk => pk.Key).Contains(p.Key))
+            {
+                Repository.ProjectUpdate(p);
+                return;
+            }
+            else // if they created the project, they can see sensitve data
+            {
+                var historyItemForCreator = repo.HistoryLogSearch(new HistoryLogSearchRequest { Item = "Project Created", ChangeBy = username, Key = p.Key, Table = "ProjectHistory" }).Data;
+
+                if (historyItemForCreator.Count() > 0)
+                {
+                    Repository.ProjectUpdate(p);
+                    return;
+                }
+            }
+
+            throw new HttpResponseException(HttpStatusCode.Unauthorized);
         }
         #endregion
 
@@ -128,12 +150,12 @@
         public void UpdateProjectUsers(ProjectUsersSaveRequest usr)
         {
             var project = Repository.ProjectGet(usr.Key);
-            
-            if (project== null)
+
+            if (project == null)
                 return;
 
             var oldUsersIds = Repository.PersonSearch(new PersonRequest()).Data.Where(u => u.Projects.Select(p => p.Key).Contains(usr.Key)).Select(u => u.Key);
-            
+
             var toAdd = new List<int>();
             var toRemove = new List<int>();
 

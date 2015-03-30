@@ -163,14 +163,15 @@ wmis.project.edit = (function ($) {
         });
     }
 
-    function EditProjectViewModel(project, projectCollaborators) {
+    function EditProjectViewModel(project, projectCollaborators, userCanSeeSensitive) {
         var self = this;
         this.project = ko.mapper.fromJS(project);
 
         var hasCollars = (project.collarCount > 0) ? true : false;
         this.showCollarTab = ko.observable(hasCollars);
+        this.userCanSeeSensitive = userCanSeeSensitive;
 
-        this.showSurveyTab = ko.observable(!project.isSensitiveData);
+        this.showSurveyTab = ko.observable(!project.isSensitiveData || this.userCanSeeSensitive);
 
         this.statuses = ko.observableArray();
         this.regions = ko.observableArray();
@@ -245,9 +246,9 @@ wmis.project.edit = (function ($) {
                 }
 
             });
-            //TODO: Temp solution. Replace when users are tracked
+
             self.project.isSensitiveData.subscribe(function (newVal) {
-                self.showSurveyTab(!newVal);
+                self.showSurveyTab(!newVal || self.userCanSeeSensitive);
             });
         })();
     }
@@ -460,7 +461,7 @@ wmis.project.edit = (function ($) {
         });
 
         options.$surveyTab.on('shown.bs.tab', function (e) {
-            if (surveysTable == null) {
+            if (surveysTable == null && (viewModel.userCanSeeSensitive || !viewModel.project.isSensitiveData)) {
                 initSurveyDataTable(options.projectKey, viewModel);
             }
         });
@@ -500,7 +501,7 @@ wmis.project.edit = (function ($) {
 
         wmis.global.showWaitingScreen("Loading...");
         Q.all([projectPromise, projectCollaboratorsPromise]).spread(function (project, collaborators) {
-            var viewModel = new EditProjectViewModel(project, collaborators);
+            var viewModel = new EditProjectViewModel(project, collaborators, initOptions.canViewSensitive);
             loadDropDowns(viewModel);
             ko.applyBindings(viewModel);
             wmis.global.hideWaitingScreen();

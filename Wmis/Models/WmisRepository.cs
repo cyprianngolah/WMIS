@@ -2230,7 +2230,9 @@
                     p_speciesId = request.Table == "Biodiversity" ? request.Key : (int?)null,
                     p_projectId = request.Table == "ProjectHistory" ? request.Key : (int?)null,
                     p_surveyId = request.Table == "SurveyHistory" ? request.Key : (int?)null,
-                    p_personId = request.Table == "PersonHistory" ? request.Key : (int?)null
+                    p_personId = request.Table == "PersonHistory" ? request.Key : (int?)null,
+	                p_changeBy = request.ChangeBy,
+	                p_item = request.Item
                 };
 
                 var pagedResults = new PagedResultset<HistoryLog>

@@ -1,46 +1,47 @@
 ﻿@using Wmis.Extensions
 @{
-	ViewBag.Title = "Project";
-	ViewBag.SubTitle = "<span data-bind='with: project'><span data-bind='text: name'></span></span>";
+    ViewBag.Title = "Project";
+    ViewBag.SubTitle = "<span data-bind='with: project'><span data-bind='text: name'></span></span>";
 }
 
 @section TopRight{
-	<div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: project">
-		<span data-bind="with: status">Status: <span data-bind="text: name"></span><br /></span>
-		<span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment(lastUpdated(), moment.ISO_8601).format('L') : ''"></span></span>
-	</div>
+    <div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: project">
+        <span data-bind="with: status">Status: <span data-bind="text: name"></span><br /></span>
+        <span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment(lastUpdated(), moment.ISO_8601).format('L') : ''"></span></span>
+    </div>
 }
 
 @section Styles {
-	@Html.Raw(Styles.Render("~/bundles/datePickerCss"))
-	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
-	@Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datePickerCss"))
+    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
 @section Scripts{
-	@Html.Raw(Scripts.Render("~/bundles/datePicker"))
-	@Html.Raw(Scripts.Render("~/bundles/datatables"))
-	@Html.Raw(Scripts.Render("~/bundles/select2"))
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/project/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/datePicker"))
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/project/edit"))
     @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
 
-	<script>
+    <script>
         $(function () {
             wmis.project.edit.initialize({
-            	projectKey: @ViewBag.Key,
-            	
-            	$newSurveyButton: $("#newSurveyButton"),
-            	$editSurveyButton: $("#editSurveyButton"),
-            	$searchSurveysButton: $("#searchSurveysButton"),
-            	$surveyTab: $('a[href="#surveysTab"]'),
-            	$surveyTable: $("#surveys"),
-            	$collarTab: $('a[href="#collarsTab"]'),
-            	$collarTable: $("#collars")
+                projectKey: @ViewBag.Key,
+                canViewSensitive: @(ViewBag.CanViewSensitive ? "true" : "false"),
+
+                $newSurveyButton: $("#newSurveyButton"),
+                $editSurveyButton: $("#editSurveyButton"),
+                $searchSurveysButton: $("#searchSurveysButton"),
+                $surveyTab: $('a[href="#surveysTab"]'),
+                $surveyTable: $("#surveys"),
+                $collarTab: $('a[href="#collarsTab"]'),
+                $collarTable: $("#collars")
             });
             wmis.shared.historytab.initialize(@ViewBag.Key, 'ProjectHistory', 'historyTemplateTempDiv');
         });
-	</script>
+    </script>
 }
 
 @section Dialogs {
@@ -50,7 +51,7 @@
 <form role="form">
     <div class="row">
         <div class="col-md-12 text-right">
-            
+
             @if (Html.UserIsProjectCollarAdministrator())
             {
                 <button type="button" class="btn btn-default" data-bind="click: editAdministrators, enable: canSave">Edit Users</button>
@@ -65,7 +66,7 @@
                     <span>Back</span>
                 }
             </a>
-            @if (Html.UserIsProjectCollarAdministrator())
+            @if (Html.UserIsProjectCollarAdministrator() || ViewBag.CanViewSensitive)
             {
                 <button type="submit" class="btn btn-primary" data-bind="click: saveProject, enable: canSave">Save</button>
             }
@@ -94,7 +95,7 @@
                         <div class="col-md-7">
                             <input type="text" class="form-control" id="name" data-bind="value: name">
                         </div>
-                        
+
                         <label for="name" class="col-md-1 control-label">NWT WRP ID</label>
                         <div class="col-md-3">
                             <input type="number" class="form-control" id="name" data-bind="value: wildlifeResearchPermitId">
@@ -108,23 +109,29 @@
                             <select class="form-control" id="leadRegion" data-bind="options: $root.regions, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
                             <!-- /ko -->
                         </div>
-                        
+
                         <label for="projectLead" class="col-md-1 control-label">Project Lead</label>
                         <div class="col-md-3" data-bind="with: projectLead">
                             <!-- ko if: $root.projectLeads().length > 0 -->
-                            <select class="form-control" id="status" data-bind="options: $root.projectLeads, value: key, optionsText: 'text', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
+                            <select class="form-control" id="projectLead" data-bind="options: $root.projectLeads, value: key, optionsText: 'text', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
                             <!-- /ko -->
                         </div>
-                        
-                        <label for="name" class="col-md-1 control-label"></label>
-                        <div class="col-md-3">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="1" data-bind="checked: isSensitiveData">
-                                    Sensitive Data
-                                </label>
+                        @if (Html.UserIsProjectCollarAdministrator() || ViewBag.CanViewSensitive)
+                        {
+                            <label for="name" class="col-md-1 control-label"></label>
+                            <div class="col-md-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="1" data-bind="checked: isSensitiveData">
+                                        Sensitive Data
+                                    </label>
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <input type="hidden" data-bind="value: isSensitiveData">
+                        }
                     </div>
 
                     <div class="form-group">
@@ -217,23 +224,23 @@
                         <div class="col-md-2">
                             <select class="form-control" id="surveyTypeKey" data-bind="options: $root.surveyTypes, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: surveyFilterKey, select2: { }"></select>
                         </div>
-	                    <div class="col-md-9 text-right">
-								@if (Html.UserIsProjectCollarAdministrator())
-								{
-									<a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-								}
-							
-								<a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-								@if (Html.UserIsProjectCollarAdministrator())
-								{
-									<span>Edit</span>
-								}
-								else
-								{
-									<span>Open</span>
-								}
-							</a>
-	                    </div>
+                        <div class="col-md-9 text-right">
+                            @if (Html.UserIsProjectCollarAdministrator())
+                            {
+                                <a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+                            }
+
+                            <a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+                                @if (Html.UserIsProjectCollarAdministrator())
+                                {
+                                    <span>Edit</span>
+                                }
+                                else
+                                {
+                                    <span>Open</span>
+                                }
+                            </a>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -253,14 +260,14 @@
                         </div>
                     </div>
                 </div>
-				
+
                 <div class="tab-pane form-horizontal" id="collarsTab">
                     @*<div class="row">
-						<div class="col-md-12 text-right">
-							<a href="~/Project/NewCollar" id="newCollarButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-							<a href="~/Project/EditCollar" id="editCollarButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
-						</div>
-					</div>*@
+                            <div class="col-md-12 text-right">
+                                <a href="~/Project/NewCollar" id="newCollarButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+                                <a href="~/Project/EditCollar" id="editCollarButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
+                            </div>
+                        </div>*@
 
                     <div class="row">
                         <div class="col-md-12">

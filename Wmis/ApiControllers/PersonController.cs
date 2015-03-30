@@ -49,7 +49,7 @@ namespace Wmis.ApiControllers
 		[Route("projectLeads")]
 		public PagedResultset<Models.Person> GetProjectLeads()
 		{
-		    return Repository.PersonSearch(new PersonRequest() {ProjectLeadsOnly = true});
+            return Repository.PersonSearch(new PersonRequest { RoleName = Role.PROJECT_LEAD_ROLE });
 		}
 
         [HttpGet]

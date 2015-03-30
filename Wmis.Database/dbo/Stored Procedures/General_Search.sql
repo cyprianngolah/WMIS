@@ -29,7 +29,7 @@ AS
 		'Bathurst' as [Herd],
 		'Male' as [Sex]
 	FROM
-		(SELECT TOP 1 * FROM dbo.Species WHERE NwtSarcAssessmentId IN (SELECT n from @p_speciesIds)) s,
+		(SELECT TOP 1 * FROM dbo.Species WHERE SpeciesId IN (SELECT n from @p_speciesIds)) s,
 		(SELECT TOP 5 ArgosPassId AS [Key], latitude, longitude, [LocationDate]
 		FROM ArgosPasses
 		ORDER BY newid()) j
