@@ -8,7 +8,7 @@ AS
 		COUNT(*) OVER() AS ResultCount,
 		sp.SpeciesId as [Key],
 		sp.Name,
-		sp.CommonName
+		COALESCE(sp.CommonName, sp.Name) AS CommonName
 	FROM
 		dbo.Species sp
 	ORDER BY
