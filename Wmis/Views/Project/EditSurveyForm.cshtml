@@ -225,8 +225,6 @@
                         <table id="locationTable" class="table">
                             <thead>
                                 <tr>
-                                    <th>Observation Upload Key</th>
-                                    <th>Excel Row Index</th>
                                     <th>Timestamp</th>
                                     <th>Latitude</th>
                                     <th>Longitude</th>
@@ -241,8 +239,6 @@
                             <tbody>
                                 <!-- ko foreach: {data: $data.observationData, as: 'row'} -->
                                 <tr data-bind="passStatusHighlight: {row: row, selectedRow: $root.selectedPass}">
-                                    <td data-bind="text: observationUploadId"></td>
-                                    <td data-bind="text: rowIndex"></td>
                                     <td data-bind="text: timestamp"></td>
                                     <td data-bind="text: latitude"></td>
                                     <td data-bind="text: longitude"></td>
