@@ -270,7 +270,8 @@ wmis.project.survey.edit = (function ($) {
 
 				if (!self.observationsTableInitialized()) {
 					$('#locationTable').DataTable({
-						"pagingType": "bootstrap",
+					    "pagingType": "bootstrap",
+					    "iDisplayLength": 200,
 						"scrollX": true,
 						"dom": '<"top">rt<"bottom"ip><"clear">'
 					});
