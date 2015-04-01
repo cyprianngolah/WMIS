@@ -301,6 +301,7 @@
     <Build Include="dbo\Stored Procedures\Site_Save.sql" />
     <None Include="dbo\Fill\ArgosUsers.sql" />
     <Build Include="dbo\Stored Procedures\General_Search.sql" />
+    <None Include="dbo\Fill\COSEWICStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
