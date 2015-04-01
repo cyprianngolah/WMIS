@@ -8,7 +8,6 @@ AS
 	SELECT
 		COUNT(*) OVER() as TotalRowCount,
 		t.SiteId  as [Key],
-		t.ProjectId,
 		t.SiteNumber,
 		t.Name
 	FROM
