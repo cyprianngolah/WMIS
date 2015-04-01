@@ -43,6 +43,20 @@
             return View();
         }
 
+        public ActionResult NewSite(int key)
+        {
+            ViewBag.ProjectKey = key;
+
+            return View();
+        }
+
+        public ActionResult EditSite(int key)
+        {
+            ViewBag.ProjectKey = key;
+
+            return View();
+        }
+
         /// <summary>
         /// Determines whether the user can see the sensitive information for a project (if it has sensitive data)
         /// </summary>

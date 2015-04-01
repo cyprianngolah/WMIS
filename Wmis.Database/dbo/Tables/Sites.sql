@@ -3,5 +3,7 @@
 	[SiteId] INT   NOT NULL IDENTITY, 
     [SiteNumber] NVARCHAR(50) NULL, 
     [Name] NVARCHAR(50) NULL,
-	CONSTRAINT [PK_Site] PRIMARY KEY CLUSTERED ([SiteId])
+	[ProjectId] INT NOT NULL, 
+    CONSTRAINT [PK_Site] PRIMARY KEY CLUSTERED ([SiteId]),
+    CONSTRAINT [FK_Sites_Project] FOREIGN KEY ([ProjectId]) REFERENCES dbo.[Project]([ProjectId]) 
 )

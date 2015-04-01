@@ -80,6 +80,7 @@
                 <li data-bind="visible: showSurveyTab"><a href="#surveysTab" role="tab" data-toggle="tab">Surveys</a></li>
                 <li data-bind="visible: showCollarTab"><a href="#collarsTab" role="tab" data-toggle="tab">Collars</a></li>
                 <li><a href="#collaboratorsTab" role="tab" data-toggle="tab">Collaborators</a></li>
+                <li><a href="#sitesTab" role="tab" data-toggle="tab">Sites</a></li>
                 <li><a href="#history" role="tab" data-toggle="tab">History</a></li>
             </ul>
 
@@ -321,6 +322,46 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="sitesTab" class="tab-pane form-horizontal">
+                    
+
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            @if (Html.UserIsProjectCollarAdministrator())
+                            {
+                                <a href="~/Project/NewSite/@ViewBag.Key" id="newSiteButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+                            }
+                            <a href="~/Project/EditSite/@ViewBag.Key" id="editSiteButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+                                @if (Html.UserIsProjectCollarAdministrator())
+                                {
+                                    <span>Edit</span>
+                                }
+                                else
+                                {
+                                    <span>Open</span>
+                                }
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="sites" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Site Number</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
             </div>
         </div>
     </div>

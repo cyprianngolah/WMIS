@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Site";
+    ViewBag.SubTitle = "Edit";
+}
+
+@section CustomTitle {
+    <div class="h1 pull-left" style="margin:0;">
+        @*@ViewBag.Title
+            @if (!string.IsNullOrEmpty(@ViewBag.SubTitle)) {<small>@Html.Raw(ViewBag.SubTitle)</small>}*@
+
+        <ol class="breadcrumb">
+            <li><a href="#" data-bind="click: $root.navigateToProject, text: projectName"></a></li>
+            <li class="active">
+                Survey @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
+                {<small>@Html.Raw(ViewBag.SubTitle)</small>}
+            </li>
+        </ol>
+    </div>
+
+}
+
+@section TopRight{
+    <div class="h5 pull-right" style="text-align: right; margin:0;" data-bind="with: survey">
+        <span data-bind="with: targetSpecies">Target Species: <span data-bind="text: name"></span><br /></span>
+        <span data-bind="with: targetSpecies">Common Name: <span data-bind="text: commonName"></span></span>
+
+        @*<span class="h3" data-bind="with: projectName">Project: <a href="#" data-bind="click: $root.navigateToProject, text: $data"></a></span>*@
+    </div>
+}
+
+@section Styles {
+    <style>
+        .breadcrumb {
+            background-color: white;
+            border-radius: 4px;
+            list-style: outside none none;
+            margin-bottom: 0;
+            padding: 0 15px;
+        }
+
+            .breadcrumb > li + li::before {
+                content: "/ ";
+                padding: 0 5px;
+            }
+
+    </style>
+}
+
+@section Scripts{
+
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/project/site/edit"))
+    <script>
+        $(function() {
+            wmis.project.site.edit.initialize({
+                projectSurveyKey: @ViewBag.Key,
+                uploadObservationForm: $("#observationFileUploadForm"),
+                observationModal: $("#observationUploadModal"),
+                resumeObservationModal: $("resumeObservationUploadModal")
+            });
+        });
+    </script>
+}
+
+@{ Html.RenderPartial("EditSurveyForm"); }

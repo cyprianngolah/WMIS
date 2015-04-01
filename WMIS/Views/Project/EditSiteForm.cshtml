@@ -1,0 +1,34 @@
+﻿@using Wmis.Extensions
+
+<div class="row">
+    <div class="col-md-12 text-right">
+        <a class="btn btn-default" data-bind="click: $root.navigateToProject">
+            @if (Html.UserIsProjectCollarAdministrator())
+            {
+                <span>Cancel</span>
+            }
+            else
+            {
+                <span>Back</span>
+            }
+        </a>
+        @if (Html.UserIsProjectCollarAdministrator())
+        {
+            <button type="submit" class="btn btn-primary" data-bind="enable: canSave, click: save">Save</button>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form role="form">
+            <div class="form-group">
+                <label for="name">Site Number</label>
+                <input type="text" class="form-control" id="sitenumber" name="sitenumber" data-bind="value: siteNumber, valueUpdate: 'keyup'">
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
+            </div>
+        </form>
+    </div>
+</div>

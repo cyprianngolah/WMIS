@@ -1,0 +1,28 @@
+﻿@{
+	ViewBag.Title = "Site";
+	ViewBag.SubTitle = "New";
+}
+
+@section Styles {
+	@Html.Raw(Styles.Render("~/bundles/datePickerCss"))
+	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
+	@Html.Raw(Styles.Render("~/bundles/select2css"))
+}
+
+@section Scripts{
+	@Html.Raw(Scripts.Render("~/bundles/datePicker"))
+	@Html.Raw(Scripts.Render("~/bundles/datatables"))
+	@Html.Raw(Scripts.Render("~/bundles/select2"))
+	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/project/site/edit"))
+
+	<script>
+        $(function () {
+            wmis.project.site.edit.initialize({
+            	projectKey: @ViewBag.ProjectKey,
+            });
+        });
+	</script>
+}
+
+@{ Html.RenderPartial("EditSiteForm"); }
