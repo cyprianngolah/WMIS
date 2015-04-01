@@ -2,8 +2,8 @@
 
 MERGE INTO dbo.[CollarStates] as [Target]
 USING (VALUES
-	(1, 'Active'),
-	(2, 'Inactive'),
+	(1, 'On'),
+	(2, 'Off'),
 	(3, 'Unknown')
 )
 AS [Source] ([CollarStateId], [Name]) 
