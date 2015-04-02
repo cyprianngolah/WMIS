@@ -224,6 +224,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Auth\HangfireAuthorizationFilter.cs" />
+    <Compile Include="Auth\WmisAuthorizeAttribute.cs" />
     <Compile Include="Auth\WmisWebApiAuthorizeAttribute.cs" />
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
