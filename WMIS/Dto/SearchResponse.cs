@@ -1,12 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using Wmis.Models;
 using Wmis.Models.Base;
 
 namespace Wmis.Dto
 {
-    public class SearchResponse : KeyedModel
+    public class SearchResponse
     {
+		public string Key { get; set; }
+
+		public int RowKey { get; set; }
+
+		public int ProjectKey { get; set; }
+
         public string Species { get; set; }
 
         public DateTime Date { get; set; }

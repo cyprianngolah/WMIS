@@ -78,7 +78,6 @@ wmis.search.index = (function ($) {
         });
     }
 
-
     function setHighlightRowForKey(key, enable) {
         var row = $("#searchTable").DataTable().rows(function (idx, data, node) {
             return data.key == key;
@@ -118,7 +117,7 @@ wmis.search.index = (function ($) {
 
                         if (newPass.key) {
                             $("#editButton").removeClass('disabled');
-                            $("#editButton").prop("href", "/Project/Edit/" + newPass.key);
+                            $("#editButton").prop("href", "/Project/Edit/" + newPass.projectKey);
                         }
                     }
                 });
@@ -161,6 +160,7 @@ wmis.search.index = (function ($) {
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
 				{ "data": "key" },
+	            { "data": "projectKey" },
 				{ "data": "species" },
 				{
 				    "data": "date",
@@ -221,7 +221,7 @@ wmis.search.index = (function ($) {
                     json.recordsTotal = json.resultCount;
                     json.recordsFiltered = json.resultCount;
                     callback(json);
-                    mappingCallback(json.data)
+	                mappingCallback(json.data);
 
                 }).fail(wmis.global.ajaxErrorHandler);
             },
@@ -242,10 +242,9 @@ wmis.search.index = (function ($) {
                             // Get Data
                             var position = searchTable.fnGetPosition(this);
                             var data = searchTable.fnGetData(position);
-
-                            if (data.key) {
+                            if (data.projectKey) {
                                 $("#editButton").removeClass('disabled');
-                                $("#editButton").prop("href", "/Project/Edit/" + data.key);
+                                $("#editButton").prop("href", "/Project/Edit/" + data.projectKey);
                             }
 
                             rowSelectCallback(data);

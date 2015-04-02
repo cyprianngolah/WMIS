@@ -3117,7 +3117,7 @@
                     p_toDate = request.ToDate,
                     p_speciesIds = request.SpeciesIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
                     p_nwtSaraStatusIds = request.NWTSaraStatusIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
-                    p_fedStaraStatusIds = request.FederalSaraStatusIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
+                    p_fedSaraStatusIds = request.FederalSaraStatusIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
                     p_rankStatusIds = request.GeneralRankStatusIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
                     p_sarcAssessmentIds = request.NwtSarcAssessmentIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),
                     p_surveyTypeIds = request.SurveyTypeIds.Select(p => new DapperExtensions.IntTableRow { n = p }).AsTableValuedParameter<DapperExtensions.IntTableRow>("dbo.IntTableType"),

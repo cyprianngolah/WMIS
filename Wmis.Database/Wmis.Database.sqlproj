@@ -111,6 +111,7 @@
     <Folder Include="dbo\Tables" />
     <Folder Include="dbo\User Defined Types" />
     <Folder Include="dbo\Fill" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\WMISUser.sql" />
@@ -303,6 +304,7 @@
     <Build Include="dbo\Stored Procedures\General_Search.sql" />
     <None Include="dbo\Fill\COSEWICStatus.sql" />
     <Build Include="dbo\Stored Procedures\Site_Search.sql" />
+    <Build Include="dbo\Views\ConsolidatedAnimalData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

@@ -149,11 +149,11 @@
         <a href="~/Project/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
             @if (Html.UserIsProjectCollarAdministrator())
             {
-                <span>Edit</span>
+                <span>Edit Project</span>
             }
             else
             {
-                <span>View</span>
+                <span>View Project</span>
             }
         </a>
 
@@ -164,17 +164,18 @@
     <div class="col-md-12">
         <table id="searchTable" class="table">
             <thead>
-                <tr>
-                    <th>Project Id</th>
-                    <th>Species</th>
-                    <th>Date</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Survey Type</th>
-                    <th>Animal ID</th>
-                    <th>Herd</th>
-                    <th>Sex</th>
-                </tr>
+				<tr>
+					<th>Key</th>
+					<th>Project Key</th>
+					<th>Species</th>
+					<th>Date</th>
+					<th>Latitude</th>
+					<th>Longitude</th>
+					<th>Survey Type</th>
+					<th>Animal ID</th>
+					<th>Herd</th>
+					<th>Sex</th>
+				</tr>
             </thead>
         </table>
     </div>
