@@ -36,6 +36,11 @@
                 $searchSurveysButton: $("#searchSurveysButton"),
                 $surveyTab: $('a[href="#surveysTab"]'),
                 $surveyTable: $("#surveys"),
+
+                $siteTab: $('a[href="#sitesTab"]'),
+                $siteTable: $("#sitesTable"),
+                $editSiteButton: $("#editSiteButton"),
+
                 $collarTab: $('a[href="#collarsTab"]'),
                 $collarTable: $("#collars")
             });
@@ -347,9 +352,10 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <table id="sites" class="table">
+                            <table id="sitesTable" class="table">
                                 <thead>
                                     <tr>
+                                        <th>Site Id</th>
                                         <th>Site Number</th>
                                         <th>Name</th>
                                     </tr>
@@ -358,10 +364,7 @@
                         </div>
                     </div>
 
-
-
                 </div>
-
             </div>
         </div>
     </div>

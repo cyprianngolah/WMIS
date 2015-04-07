@@ -3060,7 +3060,8 @@
                 {
                     p_from = request.StartRow,
                     p_to = request.StartRow + request.RowCount - 1,
-                    p_siteId = request.Key
+                    p_siteId = request.Key,
+                    p_projectKey = request.ProjectKey
                 };
 
                 var pagedResults = new PagedResultset<Site>
@@ -3094,7 +3095,10 @@
                 {
                     p_siteId = request.Key,
                     p_siteNumber = request.SiteNumber,
-                    p_name = request.Name
+                    p_name = request.Name,
+                    p_projectKey = request.ProjectKey,
+                    p_latitude = request.Latitude,
+                    p_longitude = request.Longitude
                 };
 
                 c.Execute(SITE_SAVE, param, commandType: CommandType.StoredProcedure);

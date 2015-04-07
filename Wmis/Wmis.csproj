@@ -231,7 +231,6 @@
     <Compile Include="ApiControllers\ArgosApiController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\ArgosServiceController.cs" />
     <Compile Include="Controllers\SurveyTemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -519,10 +518,7 @@
     <Content Include="js\Modules\wmis.biodiversity.edit.synonyms.js" />
     <Content Include="js\Modules\wmis.project.editmodals.js" />
     <Content Include="js\Modules\wmis.project.site.edit.js" />
-    <Content Include="js\Modules\wmis.project.site.new.js" />
-    <Content Include="js\Modules\wmis.site.edit.js" />
     <Content Include="js\Modules\wmis.search.index.js" />
-    <Content Include="js\Modules\wmis.site.index.js" />
     <Content Include="js\Modules\wmis.surveytemplate.new.js" />
     <Content Include="js\Modules\wmis.surveytemplate.index.js" />
     <Content Include="js\Modules\wmis.surveytemplate.edit.js" />
@@ -803,10 +799,6 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\New.cshtml" />
     <Content Include="Views\Shared\HistoryTab.cshtml" />
-    <Content Include="Views\Site\Index.cshtml" />
-    <Content Include="Views\Site\Edit.cshtml" />
-    <Content Include="Views\Site\New.cshtml" />
-    <Content Include="Views\Site\EditForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

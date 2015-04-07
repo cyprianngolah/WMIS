@@ -45,14 +45,14 @@
 
         public ActionResult NewSite(int key)
         {
-            ViewBag.ProjectKey = key;
+            ViewBag.Key = key;
 
             return View();
         }
 
         public ActionResult EditSite(int key)
         {
-            ViewBag.ProjectKey = key;
+            ViewBag.Key = key;
 
             return View();
         }

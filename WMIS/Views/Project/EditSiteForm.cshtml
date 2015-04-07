@@ -18,16 +18,32 @@
         }
     </div>
 </div>
+
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <form role="form">
+            <div class="form-group" data-bind="visible: key() > 0">
+                <label for="siteId" class="control-label">Site Id*</label>
+                <input type="text" class="form-control" id="siteId" name="siteId" data-bind="value: key" disabled="disabled" readonly="readonly">
+            </div>
             <div class="form-group">
-                <label for="name">Site Number</label>
+                <label for="sitenumber" class="control-label">Site Number</label>
                 <input type="text" class="form-control" id="sitenumber" name="sitenumber" data-bind="value: siteNumber, valueUpdate: 'keyup'">
             </div>
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name" class="control-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
+            </div>
+            <div class="form-group">
+                <label for="latitude" class="control-label">Latitude <small class="error-text">*This must be a number between -90.0 and 90.0</small></label>
+                <input type="text" class="form-control" id="latitude" name="latitude" data-bind="value: latitude, valueUpdate: 'keyup'">
+            </div>
+            <div class="form-group">
+                <label for="longitude" class="control-label">Longitude <small class="error-text">*This must be a number between -180.0 and 180.0</small></label>
+                <input type="text" class="form-control" id="longitude" name="longitude" data-bind="value: longitude, valueUpdate: 'keyup'">
+            </div>
+            <div class="form-group" data-bind="visible: key() > 0">
+                <p>* Use this value in the SiteId column for Observation Uploads</p>
             </div>
         </form>
     </div>

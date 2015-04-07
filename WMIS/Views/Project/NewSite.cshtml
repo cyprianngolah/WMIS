@@ -1,28 +1,54 @@
 ﻿@{
-	ViewBag.Title = "Site";
-	ViewBag.SubTitle = "New";
+    ViewBag.Title = "Site";
+    ViewBag.SubTitle = "New";
+}
+
+@section CustomTitle {
+    <div class="h1 pull-left" style="margin:0;">
+        @*@ViewBag.Title
+            @if (!string.IsNullOrEmpty(@ViewBag.SubTitle)) {<small>@Html.Raw(ViewBag.SubTitle)</small>}*@
+
+        <ol class="breadcrumb">
+            <li><a href="#" data-bind="click: $root.navigateToProject, text: projectName"></a></li>
+            <li class="active">
+                Site @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
+                {<small>@Html.Raw(ViewBag.SubTitle)</small>}
+            </li>
+        </ol>
+    </div>
+
 }
 
 @section Styles {
-	@Html.Raw(Styles.Render("~/bundles/datePickerCss"))
-	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
-	@Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datePickerCss"))
+    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
+
+    <style>
+        .error-text {
+            display: none;
+        }
+
+        .has-error .error-text {
+            display: inline;
+        }
+    </style>
 }
 
 @section Scripts{
-	@Html.Raw(Scripts.Render("~/bundles/datePicker"))
-	@Html.Raw(Scripts.Render("~/bundles/datatables"))
-	@Html.Raw(Scripts.Render("~/bundles/select2"))
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/project/site/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/datePicker"))
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/project/site/edit"))
 
-	<script>
+    <script>
         $(function () {
             wmis.project.site.edit.initialize({
-            	projectKey: @ViewBag.ProjectKey,
+                projectKey: @ViewBag.Key,
             });
         });
-	</script>
+    </script>
 }
 
 @{ Html.RenderPartial("EditSiteForm"); }

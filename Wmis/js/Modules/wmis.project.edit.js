@@ -1,6 +1,6 @@
 ﻿wmis.project = wmis.project || {};
 wmis.project.edit = (function ($) {
-    var surveysTable = null, collarsTable = null;
+    var surveysTable = null, collarsTable = null, sitesTable = null;
 
     var options = {
         projectKey: null,
@@ -10,6 +10,8 @@ wmis.project.edit = (function ($) {
         $searchSurveysButton: $("#searchSurveysButton"),
         $surveyTab: $('a[href="#surveysTab"]'),
         $surveyTable: $("#surveys"),
+        $siteTab: $('#a[href="#sitesTab"]'),
+        $siteTable: $("#sitesTable"),
         $collarTab: $('a[href="#collarsTab"]'),
         $collarTable: $("#collars"),
         surveyFilter: "#surveyFilter"
@@ -379,6 +381,85 @@ wmis.project.edit = (function ($) {
         });
     }
 
+    function initSiteDataTable(projectKey, viewmodel) {
+        var parameters;
+        sitesTable = options.$siteTable.dataTable({
+            "iDisplayLength": 25,
+            "scrollX": true,
+            "bJQueryUI": true,
+            "bProcessing": true,
+            "serverSide": true,
+            "ajaxSource": "/api/project/" + projectKey + "/sites/",
+            "pagingType": "bootstrap",
+            "dom": '<"top">rt<"bottom"ip><"clear">',
+            "columns": [
+				{ "data": "key" },
+				{ "data": "siteNumber" },
+				{ "data": "name" }
+            ],
+            "fnServerData": function (source, data, callback, settings) {
+                var sortDirection = null;
+                var sortedColumnName = null;
+                if (settings.aaSorting.length > 0) {
+                    sortDirection = settings.aaSorting[0][1];
+                    var sortedColumnIndex = settings.aaSorting[0][0];
+                    sortedColumnName = settings.aoColumns[sortedColumnIndex].mData;
+                }
+
+                // Parameters that are passed during the request to the webservice
+                // We're doing some transforms here because I don't want to have to write
+                // DataTable specific logic into the Web Api
+                parameters = {
+                    // Data Tables parameter transforms
+                    startRow: settings.oAjaxData.iDisplayStart,
+                    rowCount: settings.oAjaxData.iDisplayLength,
+                    sortBy: sortedColumnName,
+                    sortDirection: sortDirection,
+                    i: settings.oAjaxData.sEcho,
+
+                    //Custom search data
+                    projectKey: options.projectKey
+                };
+
+                $.getJSON(source, parameters, function (json) {
+                    // On Success of the call, transform some of the data and call the specified callback
+                    // Transforms are to transform returned data into DataTable expected format so paging
+                    // will work properly.
+                    json.draw = parameters.i;
+                    json.recordsTotal = json.resultCount;
+                    json.recordsFiltered = json.resultCount;
+                    callback(json);
+                }).fail(wmis.global.ajaxErrorHandler);
+            },
+            "fnDrawCallback": function () {
+                options.$siteTable.$('tr.info').removeClass('info');
+                options.$editSiteButton.addClass('disabled');
+
+                options.$siteTable.find("tbody tr").click(function () {
+                    // Highlight selected row
+                    if ($(this).hasClass('info')) {
+                        $(this).removeClass('info');
+
+                        options.$editSiteButton.addClass('disabled');
+                    } else {
+                        options.$siteTable.$('tr.info').removeClass('info');
+                        $(this).addClass('info');
+                        if (options.$siteTable.$('tr.info').length) {
+                            // Get Data
+                            var position = sitesTable.fnGetPosition(this);
+                            var data = sitesTable.fnGetData(position);
+
+                            if (data.key) {
+                                options.$editSiteButton.removeClass('disabled');
+                                options.$editSiteButton.prop("href", "/Project/EditSite/" + data.key);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     function initCollarDataTable(projectKey, viewmodel) {
         var parameters;
         collarsTable = options.$collarTable.dataTable({
@@ -463,6 +544,12 @@ wmis.project.edit = (function ($) {
         options.$surveyTab.on('shown.bs.tab', function (e) {
             if (surveysTable == null && (viewModel.userCanSeeSensitive || !viewModel.project.isSensitiveData)) {
                 initSurveyDataTable(options.projectKey, viewModel);
+            }
+        });
+
+        options.$siteTab.on('shown.bs.tab', function (e) {
+            if (sitesTable == null) {
+                initSiteDataTable(options.projectKey, viewModel);
             }
         });
 

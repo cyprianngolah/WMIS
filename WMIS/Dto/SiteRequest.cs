@@ -10,5 +10,7 @@ namespace Wmis.Dto
         public int? Key { get; set; }
 
         public string Keywords { get; set; }
+
+        public int? ProjectKey { get; set; }
     }
 }

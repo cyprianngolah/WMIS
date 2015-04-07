@@ -4,18 +4,23 @@
 	@p_sortBy NVARCHAR(25) = NULL,
 	@p_sortDirection INT = NULL,
 	@p_siteId INT = NULL,
-	@p_keywords NVARCHAR(50) = NULL
+	@p_keywords NVARCHAR(50) = NULL,
+	@p_projectKey INT = NULL
 AS
 	SELECT
 		COUNT(*) OVER() as TotalRowCount,
 		t.SiteId  as [Key],
+		t.ProjectId AS [ProjectKey],
 		t.SiteNumber,
-		t.Name
+		t.Name,
+		t.Latitude,
+		t.Longitude
 	FROM
 		dbo.Sites t
 	WHERE
 		t.SiteId = ISNULL(@p_siteId, t.SiteId)
 		AND (@p_keywords IS NULL OR t.Name LIKE '%' + @p_keywords + '%')
+		AND (t.ProjectId = ISNULL(@p_projectKey, t.ProjectId))
 	ORDER BY
 		t.Name
 	OFFSET 

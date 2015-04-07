@@ -8,8 +8,11 @@ AS
 	SELECT
 		COUNT(*) OVER() as TotalRowCount,
 		t.SiteId  as [Key],
+		t.ProjectId AS [ProjectKey],
 		t.SiteNumber,
-		t.Name
+		t.Name,
+		t.Latitude,
+		t.Longitude
 	FROM
 		dbo.Sites t
 	WHERE

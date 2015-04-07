@@ -203,5 +203,16 @@
         }
 
         #endregion
+
+        #region Sites
+
+        [HttpGet]
+        [Route("{projectKey:int}/sites")]
+        public Dto.PagedResultset<Site> GetSites([FromUri]SiteRequest sr)
+        {
+            return Repository.SiteGet(sr);
+        }
+
+        #endregion
     }
 }

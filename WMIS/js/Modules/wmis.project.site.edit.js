@@ -13,8 +13,35 @@ wmis.project.site.edit = (function ($) {
 
         this.siteNumber = ko.observable("");
         this.name = ko.observable("");
+        this.latitude = ko.observable("");
+        this.longitude = ko.observable("");
+        this.projectName = ko.observable("");
+
         this.canSave = ko.computed(function () {
-            return ($.trim(self.name()) != "");
+            var showErrors = false;
+
+            if ($.trim(self.name()) == "")
+                showErrors = true;
+
+            var lat = $.trim(self.latitude());
+            var long = $.trim(self.longitude());
+
+            $(".form-group").removeClass("has-error");
+
+            if (lat == "" || long == "")
+                showErrors = true;
+
+            if ((lat != "" && !jQuery.isNumeric(lat)) || (Math.abs(lat) > 90)) {
+                $("#latitude").closest(".form-group").addClass("has-error");
+                showErrors = true;
+            }
+
+            if ((long != "" && !jQuery.isNumeric(long)) || (Math.abs(long) > 180)) {
+                $("#longitude").closest(".form-group").addClass("has-error");
+                showErrors = true;
+            }
+
+            return !showErrors;
         });
 
         this.get = function () {
@@ -23,7 +50,15 @@ wmis.project.site.edit = (function ($) {
                 if (json.data.length > 0) {
                     var d = json.data[0];
                     self.name(d.name);
+                    self.projectKey(d.projectKey);
                     self.siteNumber(d.siteNumber);
+                    self.latitude(d.latitude);
+                    self.longitude(d.longitude);
+
+                    if (self.projectName() == "")
+                    {
+                        self.getProject(self.projectKey());
+                    }
                 }
             }).fail(wmis.global.ajaxErrorHandler);
         };
@@ -42,6 +77,22 @@ wmis.project.site.edit = (function ($) {
                 wmis.global.hideWaitingScreen(waitingScreenId);
             }).fail(wmis.global.ajaxErrorHandler);
         };
+
+        this.navigateToProject = function () {
+            window.location.href = "/Project/Edit/" + self.projectKey() + "#sitesTab";
+        };
+
+        this.getProject = function (projKey) {
+            $.ajax({
+                url: "/api/Project/" + projKey,
+                type: "GET",
+                contentType: "application/json",
+                dataType: "json",
+            }).success(function (data) {
+                self.projectKey(data.key);
+                self.projectName(data.name);
+            }).fail(wmis.global.ajaxErrorHandler);
+        };
     }
 
     function initialize(initOptions) {
@@ -52,6 +103,10 @@ wmis.project.site.edit = (function ($) {
 
         if (viewModel.key() > 0) {
             viewModel.get();
+        }
+
+        if (viewModel.projectKey() > 0) {
+            viewModel.getProject(options.projectKey);
         }
     }
 
