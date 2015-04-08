@@ -23,7 +23,7 @@ AS
 	WHERE
 		(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
 		AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
-		AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp','SiteId'))
+		AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp', 'SiteId'))
 	ORDER BY
 		stc.[Order], stc.Name
 
@@ -45,7 +45,7 @@ AS
 					WHERE
 						(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
 						AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
-						AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp','SiteId'))
+						AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp', 'SiteId'))
 					ORDER BY	
 						stc.[Order]
 				) c
@@ -61,7 +61,7 @@ AS
 	IF(@cols IS NULL)
 	BEGIN
 		SET @query = N'SELECT
-							ou.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.ObservationRowStatusId, ors.Comment
+							ou.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.[SiteId], ors.ObservationRowStatusId, ors.Comment
 					FROM	
 						dbo.Survey s
 							INNER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
@@ -77,7 +77,7 @@ AS
 	BEGIN
 			SET @query = N'
 					SELECT 
-						ors.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.ObservationRowStatusId, ors.Comment, ' + @cols +
+						ors.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.[SiteId], ors.ObservationRowStatusId, ors.Comment, ' + @cols +
 					N'
 					FROM
 						dbo.ObservationRows ors

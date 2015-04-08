@@ -474,6 +474,7 @@ wmis.project.survey.edit = (function ($) {
 	    this.latitude = 'Latitude: ' + point.latitude;
 	    this.longitude = 'Longitude: ' + point.longitude;
 	    this.timestamp = 'Timestamp: ' + point.timestamp;
+	    this.siteId = 'Site Id: ' + point.siteId;
 	    this.observationUploadId = 'Upload Key: ' + point.observationUploadId;
 	    this.rowIndex = 'Excel Row: ' + point.rowIndex;
 	    this.comment = ko.observable(point.comment);

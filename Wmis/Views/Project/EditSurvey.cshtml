@@ -253,6 +253,7 @@
                                     <th>Timestamp</th>
                                     <th>Latitude</th>
                                     <th>Longitude</th>
+                                    <th>Site Id</th>
                                     <!-- ko foreach: $data.columns -->
                                     <th data-bind="text: name"></th>
                                     <!-- /ko -->
@@ -261,10 +262,11 @@
                             <tbody>
                                 <!-- ko foreach: {data: $data.observationData, as: 'd'} -->
                                 <tr>
-                                    <td data-bind="text: rowIndex"></td>
-                                    <td data-bind="text: timestamp"></td>
+                                    <td data-bind="text: rowIndex"></td> 
+                                    <td data-bind="dateText: timestamp, format: 'L'"></td>
                                     <td data-bind="text: latitude"></td>
                                     <td data-bind="text: longitude"></td>
+                                    <td data-bind="text: siteId"></td>
                                     <!-- ko foreach: {data: $parent.columns, as: 'c'} -->
                                     <td data-bind="text: $parent[c.jsName()]()"></td>
                                     <!-- /ko -->
@@ -301,7 +303,7 @@
                         </div>
                         <div class="form-group">
                             <span class="col-md-6" data-bind="text: timestamp"></span>
-
+                            <span class="col-md-6" data-bind="text: siteId"></span>
                         </div>
                         <div class="form-group">
                             <label for="argosPassStatus" class="col-md-3 control-label">Status</label>
