@@ -23,7 +23,7 @@ AS
 	WHERE
 		(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
 		AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
-		AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp'))
+		AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp','SiteId'))
 	ORDER BY
 		stc.[Order], stc.Name
 
@@ -45,7 +45,7 @@ AS
 					WHERE
 						(@p_surveyId IS NULL OR s.SurveyId = @p_surveyId)
 						AND (@p_observationUploadId IS NULL OR ou.ObservationUploadId = @p_observationUploadId)
-						AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp'))
+						AND (stc.Name NOT IN ('Latitude', 'Longitude', 'Timestamp','SiteId'))
 					ORDER BY	
 						stc.[Order]
 				) c

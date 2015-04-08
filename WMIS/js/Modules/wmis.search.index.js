@@ -150,7 +150,7 @@ wmis.search.index = (function ($) {
         var parameters;
 
         searchTable = $('#searchTable').dataTable({
-            "iDisplayLength": 20,
+            "iDisplayLength": 50,
             "scrollX": true,
             "bJQueryUI": true,
             "bProcessing": true,
