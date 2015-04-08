@@ -54,6 +54,10 @@ AS
 		AND (@p_bottomLongitude IS NULL OR d.Longitude <= @p_bottomLongitude)
 	ORDER BY
 		d.[Date] DESC
+	OFFSET 
+		@p_from ROWS
+	FETCH NEXT
+		(@p_to - @p_from) ROWS ONLY
 GO
 
 GRANT EXECUTE ON [dbo].[General_Search] TO [WMISUser]
