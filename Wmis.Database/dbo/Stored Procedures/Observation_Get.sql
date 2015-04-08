@@ -36,7 +36,7 @@ AS
 			FROM 
 				(
 					SELECT DISTINCT TOP 100 PERCENT
-						stc.Name, stc.[Order]
+						LOWER(REPLACE(stc.Name,' ','')) AS Name, stc.[Order]
 					FROM	
 						dbo.SurveyTemplateColumns stc 
 							INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId
@@ -89,7 +89,7 @@ AS
 									N'FROM
 										(
 											SELECT
-													s.SurveyId, oustcm.ObservationUploadId, ors.RowIndex, ors.ObservationRowId, ors.Latitude, ors.Longitude, ors.[Timestamp], ou.IsDeleted, stc.Name, o.Value
+													s.SurveyId, oustcm.ObservationUploadId, ors.RowIndex, ors.ObservationRowId, ors.Latitude, ors.Longitude, ors.[Timestamp], ou.IsDeleted, LOWER(REPLACE(stc.Name,'' '',''''))AS Name, o.Value
 											FROM	
 												dbo.SurveyTemplateColumns stc 
 													INNER JOIN dbo.SurveyTemplate st on st.SurveyTemplateId = stc.SurveyTemplateId

@@ -205,18 +205,6 @@ wmis.project.survey.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json"
 			}).success(function (data) {
-				// Dirty hack to deal with the fact that the Column Names are coming across title cased but in order to dynamically reference
-				// the columnar observation data, we need a pascal cased name. Really should be an computed property, but I don't know how to make that work
-				// and am running out of time. -JS
-				var appendedData = data;
-				for (var i = 0; i < appendedData.columns.length; i++) {
-					if (appendedData.columns[i].name == null) {
-						appendedData.columns[i].jsName = "";
-					} else {
-						appendedData.columns[i].jsName = appendedData.columns[i].name.charAt(0).toLowerCase() + appendedData.columns[i].name.slice(1);
-					}
-				}
-				// End Dirty Hack
 				ko.mapper.fromJS(data, "auto", self.observationConfirmationData);
 				self.currentModal("dataPreview");
 			}).always(function () {
@@ -247,19 +235,7 @@ wmis.project.survey.edit = (function ($) {
 				contentType: "application/json",
 				dataType: "json",
 			}).success(function (data) {
-				// Dirty hack to deal with the fact that the Column Names are coming across title cased but in order to dynamically reference
-				// the columnar observation data, we need a pascal cased name. Really should be an computed property, but I don't know how to make that work
-				// and am running out of time. -JS
-				var appendedData = data;
-				for (var i = 0; i < appendedData.columns.length; i++) {
-					if (appendedData.columns[i].name == null) {
-						appendedData.columns[i].jsName = "";
-					} else {
-						appendedData.columns[i].jsName = appendedData.columns[i].name.charAt(0).toLowerCase() + appendedData.columns[i].name.slice(1);
-					}
-				}
-				// End Dirty Hack
-				ko.mapper.fromJS(appendedData, "auto", self.observations);
+				ko.mapper.fromJS(data, "auto", self.observations);
 				self.observationData(self.observations().observationData());
 			    //initialize the map.*Map should be visible here or will cause error*
 				if (!self.initializedMap() && self.hasObservations()) {
