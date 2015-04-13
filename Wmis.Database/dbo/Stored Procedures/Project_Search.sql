@@ -12,7 +12,7 @@ AS
 	SELECT 
 		COUNT(*) OVER() AS ResultCount,
 		p.[ProjectId] AS [Key], 
-		p.[WildlifeResearchPermitId],
+		p.[WildlifeResearchPermitNumber],
 		p.[Name], 
 		p.[StatusDate], 
 		p.[StartDate], 

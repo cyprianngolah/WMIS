@@ -3,7 +3,7 @@
 AS
 	SELECT TOP 1
 		p.[ProjectId] AS [Key], 
-		p.[WildlifeResearchPermitId], 
+		p.[WildlifeResearchPermitNumber], 
 		p.[Name], 
 		p.[StatusDate], 
 		p.[StartDate], 

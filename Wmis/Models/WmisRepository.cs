@@ -1,15 +1,14 @@
 ﻿namespace Wmis.Models
 {
+    using Configuration;
+    using Dapper;
+    using Dto;
+    using Extensions;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
-    using Configuration;
-    using Dapper;
-    using Dto;
-    using Extensions;
-
     using Wmis.Argos.Entities;
     using Wmis.Models.Base;
 
@@ -19,6 +18,7 @@
     public class WmisRepository
     {
         #region Fields
+
         /// <summary>
         /// The Taxonomy Get stored procedure
         /// </summary>
@@ -324,9 +324,11 @@
         /// The Connection String to connect to the WMIS database for the current environment
         /// </summary>
         private readonly string _connectionString;
-        #endregion
+
+        #endregion Fields
 
         #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WmisRepository" /> class.
         /// </summary>
@@ -335,10 +337,13 @@
         {
             _connectionString = configuration.ConnectionStrings["WMIS"];
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Methods
+
         #region BioDiversity
+
         public Dto.PagedResultset<BioDiversity> BioDiversityGet(Dto.BioDiversitySearchRequest sr)
         {
             var pagedResultset = new Dto.PagedResultset<BioDiversity>
@@ -662,9 +667,10 @@
             }
         }
 
-        #endregion
+        #endregion BioDiversity
 
         #region Taxonomy
+
         /// <summary>
         /// Gets a list of Taxonomies
         /// </summary>
@@ -802,9 +808,11 @@
                 c.Execute(TAXONOMYSYNONYM_SAVEMANY, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion Taxonomy
 
         #region Ecoregion
+
         /// <summary>
         /// Gets a list of Eco-regions
         /// </summary>
@@ -863,9 +871,11 @@
                 c.Execute(ECOREGION_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion Ecoregion
 
         #region Ecozone
+
         /// <summary>
         /// Gets a list of Eco-zones
         /// </summary>
@@ -924,9 +934,11 @@
                 c.Execute(ECOZONE_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion Ecozone
 
         #region NwtSarcAssessment
+
         /// <summary>
         /// Gets a list of NWT SARC Assessments
         /// </summary>
@@ -985,9 +997,11 @@
                 c.Execute(NWTSARCASSESSMENT_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion NwtSarcAssessment
 
         #region ProtectedArea
+
         /// <summary>
         /// Gets a list of Protected Areas
         /// </summary>
@@ -1046,9 +1060,11 @@
                 c.Execute(PROTECTEDAREA_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion ProtectedArea
 
         #region CosewicStatus
+
         /// <summary>
         /// Gets a list of Cosewic Status
         /// </summary>
@@ -1107,9 +1123,11 @@
                 c.Execute(COSEWICSTATUS_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion CosewicStatus
 
         #region StatusRank
+
         /// <summary>
         /// Gets a list of Status Ranks
         /// </summary>
@@ -1168,9 +1186,11 @@
                 c.Execute(STATUSRANK_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion StatusRank
 
         #region References
+
         public Dto.PagedResultset<Reference> ReferencesGet(Dto.ReferenceRequest rr)
         {
             using (var c = NewWmisConnection)
@@ -1220,9 +1240,11 @@
                 c.Execute(REFERENCE_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion References
 
         #region Project
+
         public int ProjectCreate(string name, string createdBy)
         {
             using (var c = NewWmisConnection)
@@ -1243,7 +1265,7 @@
                 var param = new
                 {
                     p_projectId = project.Key,
-                    p_wildlifeResearchPermitId = project.WildlifeResearchPermitId,
+                    p_wildlifeResearchPermitNum = project.WildlifeResearchPermitNumber,
                     p_name = project.Name,
                     p_leadRegionId = project.LeadRegion.Key == 0 ? null : (int?)project.LeadRegion.Key,
                     p_projectStatusId = project.Status.Key == 0 ? null : (int?)project.Status.Key,
@@ -1320,9 +1342,11 @@
                 return pr;
             }
         }
-        #endregion
+
+        #endregion Project
 
         #region Project Status
+
         public Dto.PagedResultset<ProjectStatus> ProjectStatusSearch(Dto.ProjectStatusRequest sr)
         {
             using (var c = NewWmisConnection)
@@ -1353,9 +1377,11 @@
                 return pr;
             }
         }
-        #endregion
+
+        #endregion Project Status
 
         #region Lead Region
+
         public Dto.PagedResultset<LeadRegion> LeadRegionSearch(Dto.LeadRegionRequest sr)
         {
             using (var c = NewWmisConnection)
@@ -1386,9 +1412,11 @@
                 return pr;
             }
         }
-        #endregion
+
+        #endregion Lead Region
 
         #region Project Survey
+
         public Dto.PagedResultset<ProjectSurvey> ProjectSurveyGet(Dto.ProjectSurveyRequest psr)
         {
             using (var c = NewWmisConnection)
@@ -1484,9 +1512,11 @@
                 return c.Query<int>(SURVEY_SAVE, param, commandType: CommandType.StoredProcedure).Single();
             }
         }
-        #endregion
+
+        #endregion Project Survey
 
         #region Project Survey Observations
+
         public IEnumerable<ObservationUpload> GetObservationUploads(int? surveyKey = null, int? observationUploadId = null)
         {
             using (var c = NewWmisConnection)
@@ -1581,9 +1611,11 @@
                 c.Execute(OBSERVATIONROW_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion Project Survey Observations
 
         #region Species Types
+
         public Dto.PagedResultset<Models.SpeciesType> TargetSpeciesGet(Dto.SpeciesTypeRequest request)
         {
             using (var c = NewWmisConnection)
@@ -1617,9 +1649,11 @@
                 return pagedResults;
             }
         }
-        #endregion
+
+        #endregion Species Types
 
         #region Project Survey Type
+
         public Dto.PagedResultset<Models.SurveyType> SurveyTypeSearch(Dto.SurveyTypeRequest str)
         {
             using (var c = NewWmisConnection)
@@ -1719,9 +1753,11 @@
                 return c.Query<SurveyTemplate>(SURVEYTEMPLATE_GET, param, commandType: CommandType.StoredProcedure).Single();
             }
         }
-        #endregion
+
+        #endregion Project Survey Type
 
         #region Project Collar
+
         public Dto.PagedResultset<Collar> ProjectCollarGet(Dto.ProjectCollarRequest psr)
         {
             var pr = new Dto.PagedResultset<Collar>
@@ -1766,9 +1802,10 @@
             }
         }
 
-        #endregion
+        #endregion Project Collar
 
         #region Templates
+
         public Dto.PagedResultset<Models.SurveyTemplate> SurveyTemplateSearch(Dto.PagedDataKeywordRequest request)
         {
             using (var c = NewWmisConnection)
@@ -1876,9 +1913,11 @@
                 c.Execute(OBSERVATION_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion Templates
 
         #region CollaredAnimals
+
         public int CollarCreate(string collarId)
         {
             using (var c = NewWmisConnection)
@@ -1955,9 +1994,7 @@
                         collar.CollarRegion = region ?? new CollarRegion();
                         collar.CollarStatus = status ?? new CollarStatus();
 
-
                         collar.ArgosProgram = dyn.ArgosProgramKey == null ? new ArgosProgram() : new ArgosProgram { Key = dyn.ArgosProgramKey, ProgramNumber = dyn.ArgosProgramNumber, ArgosUser = new ArgosUser { Key = dyn.ArgosUserKey, Name = dyn.ArgosUserName, Password = dyn.ArgosUserPassword } };
-
 
                         collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
                         collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
@@ -2231,8 +2268,8 @@
                     p_projectId = request.Table == "ProjectHistory" ? request.Key : (int?)null,
                     p_surveyId = request.Table == "SurveyHistory" ? request.Key : (int?)null,
                     p_personId = request.Table == "PersonHistory" ? request.Key : (int?)null,
-	                p_changeBy = request.ChangeBy,
-	                p_item = request.Item
+                    p_changeBy = request.ChangeBy,
+                    p_item = request.Item
                 };
 
                 var pagedResults = new PagedResultset<HistoryLog>
@@ -2557,9 +2594,11 @@
                 return pagedResults;
             }
         }
-        #endregion
+
+        #endregion CollaredAnimals
 
         #region Argos Passes
+
         public void ArgosPassUpdate(int argosPassId, int argosPassStatusId, string comment)
         {
             using (var c = NewWmisConnection)
@@ -2610,7 +2649,6 @@
                     p_argosPassStatusFilter = apsr.StatusFilter,
                     p_daysStart = (apsr.DaysFilter != null && apsr.DaysFilter > 0) ? (DateTime?)DateTime.Now.AddDays(-(double)apsr.DaysFilter) : null,
                     p_daysEnd = (apsr.DaysFilter != null && apsr.DaysFilter > 0) ? (DateTime?)DateTime.Now : null
-
                 };
 
                 using (var q = c.QueryMultiple(ARGOSPASS_SEARCH, param, commandType: CommandType.StoredProcedure))
@@ -2660,9 +2698,11 @@
                 return pagedResults;
             }
         }
-        #endregion
+
+        #endregion Argos Passes
 
         #region Users
+
         public int PersonCreate(PersonNew person)
         {
             using (var c = NewWmisConnection)
@@ -2786,14 +2826,15 @@
                 return pagedResults;
             }
         }
-        #endregion
+
+        #endregion Users
 
         #region Roles
+
         internal PagedResultset<Role> UserRolesGet(Dto.PagedRoleRequest request)
         {
             using (var c = NewWmisConnection)
             {
-
                 var pagedResults = new PagedResultset<Role>
                 {
                     DataRequest = request,
@@ -2807,9 +2848,11 @@
                 return pagedResults;
             }
         }
-        #endregion
+
+        #endregion Roles
 
         #region Files
+
         public PagedResultset<File> FileSearch(FileSearchRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2892,9 +2935,10 @@
             }
         }
 
-        #endregion
+        #endregion Files
 
         #region Collaborators
+
         public int CollaboratorCreate(CollaboratorCreateRequest request)
         {
             using (var c = NewWmisConnection)
@@ -2997,7 +3041,7 @@
             }
         }
 
-        #endregion
+        #endregion Collaborators
 
         #region ArgosPrograms
 
@@ -3049,9 +3093,10 @@
             }
         }
 
-        #endregion
+        #endregion ArgosPrograms
 
         #region Site
+
         public PagedResultset<Site> SiteGet(SiteRequest request)
         {
             using (var c = NewWmisConnection)
@@ -3104,9 +3149,11 @@
                 c.Execute(SITE_SAVE, param, commandType: CommandType.StoredProcedure);
             }
         }
-        #endregion
+
+        #endregion Site
 
         #region Search
+
         public PagedResultset<SearchResponse> Search(SearchRequest request)
         {
             using (var c = NewWmisConnection)
@@ -3150,7 +3197,7 @@
                     splitOn: "Key");
 
                 pagedResults.Data = results.ToList();
-                
+
                 return pagedResults;
             }
         }
@@ -3194,9 +3241,11 @@
                 return pagedResults;
             }
         }
+
         #endregion SaraStatus
 
         #region Helpers
+
         /// <summary>
         /// Gets a new SQLConnection to the WMIS Database for the current environment
         /// </summary>
@@ -3204,7 +3253,8 @@
         {
             get { return new SqlConnection(_connectionString); }
         }
-        #endregion
+
+        #endregion Helpers
 
         #endregion Methods
     }

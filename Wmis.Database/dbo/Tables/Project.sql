@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[Project]
 (
 	[ProjectId] INT NOT NULL IDENTITY , 
-	[WildlifeResearchPermitId] INT NULL, 
     [Name] NVARCHAR(250) NOT NULL, 
     [LeadRegionId] INT NULL, 
     [ProjectStatusId] INT NULL, 
@@ -18,6 +17,7 @@
     [Results] NVARCHAR(MAX) NULL, 
     [TermsAndConditions] NVARCHAR(MAX) NULL, 
     [LastUpdated] DATETIME NOT NULL, 
+    [WildlifeResearchPermitNumber] NVARCHAR(250) NULL, 
     CONSTRAINT [PK_Project] PRIMARY KEY ([ProjectId]), 
     CONSTRAINT [FK_Project_LeadRegion] FOREIGN KEY ([LeadRegionId]) REFERENCES dbo.[LeadRegion]([LeadRegionId]), 
     CONSTRAINT [FK_Project_ProjectStatus] FOREIGN KEY ([ProjectStatusId]) REFERENCES dbo.[ProjectStatus]([ProjectStatusId]), 
