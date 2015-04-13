@@ -190,13 +190,15 @@ wmis.shared.filetab = (function($) {
         initializeFileTable();
         wireEditButtons();
         wireDeleteButtons();
+
+        $("#addFileButton").click(showNewFileModal);
     }
 
     function initialize(key, table, div) {
         options.parentTableKey = key;
         options.parentTableName = table;
         var viewModel = new FileManagementModel(key, table);
-
+        
         ko.renderTemplate(
             'fileManagementTemplate',
             viewModel,

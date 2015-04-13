@@ -63,6 +63,8 @@
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
     @Html.Raw(Scripts.Render("~/bundles/project/survey/edit"))
     @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
+    @Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
+
     <script>
         $(function() {
             wmis.project.survey.edit.initialize({
@@ -72,6 +74,7 @@
                 resumeObservationModal: $("resumeObservationUploadModal")
             });
             wmis.shared.historytab.initialize(@ViewBag.Key, 'SurveyHistory', 'historyTemplateTempDiv');
+            wmis.shared.filetab.initialize(@ViewBag.Key, 'Survey', 'fileTemplateTempDiv')
         });
     </script>
 }
@@ -79,6 +82,7 @@
 @section Dialogs {
     @{Html.RenderPartial("~/Views/Shared/Mapping.cshtml");}
     @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+    @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
 
     <div class="modal" data-backdrop="static" id="observationUploadModal" data-bind="showModal: currentModal() == 'upload', with: $root">
         <iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
@@ -262,7 +266,7 @@
                             <tbody>
                                 <!-- ko foreach: {data: $data.observationData, as: 'd'} -->
                                 <tr>
-                                    <td data-bind="text: rowIndex"></td> 
+                                    <td data-bind="text: rowIndex"></td>
                                     <td data-bind="dateText: timestamp, format: 'L'"></td>
                                     <td data-bind="text: latitude"></td>
                                     <td data-bind="text: longitude"></td>
