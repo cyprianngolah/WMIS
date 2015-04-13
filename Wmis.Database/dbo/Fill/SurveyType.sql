@@ -6,11 +6,14 @@ SET IDENTITY_INSERT [dbo].[SurveyType] ON;
 
 MERGE INTO dbo.[SurveyType] as [Target]
 USING (VALUES
-	(1, 'Detail'),
+	(1, 'Satellite Collar'),
 	(2, 'Count'),
 	(3, 'Tracks and Sign'),
 	(4, 'Habitat'),
-	(5, 'Site')
+	(5, 'Site'),
+	(6,'Necropsy'),
+	(7,'Capture'),
+	(8,'Random')
 )
 AS [Source] ([SurveyTypeId], [Name]) 
 ON [Target].[SurveyTypeId] = [source].[SurveyTypeId]
