@@ -1,29 +1,27 @@
 ﻿// ReSharper disable All
 namespace Wmis.ApiControllers
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
     using System.Web.Http;
-    using System.Web.Security;
-
     using Wmis.Auth;
     using Wmis.Configuration;
-	using Wmis.Dto;
+    using Wmis.Dto;
     using Wmis.Models;
 
     [RoutePrefix("api/person")]
-	public class PersonController : BaseApiController
+    public class PersonController : BaseApiController
     {
-		public PersonController(WebConfiguration config) 
-			: base(config)
-		{
-		}
+        public PersonController(WebConfiguration config)
+            : base(config)
+        {
+        }
 
         [HttpGet]
         [Route("{userId:int?}")]
         public Models.Person GetPerson(int userId)
         {
-	        return Repository.PersonGet(userId);
+            return Repository.PersonGet(userId);
         }
 
         [HttpGet]
@@ -32,9 +30,9 @@ namespace Wmis.ApiControllers
         {
             var users = Repository.PersonSearch(request);
             //TODO: For now Lena only wants to see Admin's. This should change but will do it for now
-			// How are you supposed to assign admins if you can't see a user?
-			//users.Data = users.Data.FindAll( x => x.Roles.Exists( y =>
-			//		y.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE || y.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
+            // How are you supposed to assign admins if you can't see a user?
+            //users.Data = users.Data.FindAll( x => x.Roles.Exists( y =>
+            //		y.Name == Role.ADMINISTRATOR_BIODIVERSITY_ROLE || y.Name == Role.ADMINISTRATOR_PROJECTS_ROLE));
             return users;
         }
 
@@ -45,12 +43,12 @@ namespace Wmis.ApiControllers
             return Repository.UserRolesGet(request);
         }
 
-		[HttpGet]
-		[Route("projectLeads")]
-		public PagedResultset<Models.Person> GetProjectLeads()
-		{
+        [HttpGet]
+        [Route("projectLeads")]
+        public PagedResultset<Models.Person> GetProjectLeads()
+        {
             return Repository.PersonSearch(new PersonRequest { RoleName = Role.PROJECT_LEAD_ROLE });
-		}
+        }
 
         [HttpGet]
         [Route("projectAdmins")]
@@ -63,22 +61,22 @@ namespace Wmis.ApiControllers
         [Route("projectUsers/{projectId:int}")]
         public PagedResultset<Models.Person> GetUsersForProject(int projectId)
         {
-            var users = Repository.PersonSearch(new PersonRequest()).Data.Where(u => u.Projects.Select(p => p.Key).Contains(projectId));
+            var users = Repository.PersonSearch(new PersonRequest { RowCount = Int32.MaxValue }).Data.Where(u => u.Projects.Select(p => p.Key).Contains(projectId));
             return new PagedResultset<Person> { Data = users.ToList(), ResultCount = users.Count() };
         }
 
         [HttpPost]
         [Route]
-		[WmisWebApiAuthorize(Roles = WmisRoles.AllRoles)]
-		public int Create([FromBody]Models.PersonNew un)
+        [WmisWebApiAuthorize(Roles = WmisRoles.AllRoles)]
+        public int Create([FromBody]Models.PersonNew un)
         {
             return Repository.PersonCreate(un);
         }
 
         [HttpPut]
         [Route]
-		[WmisWebApiAuthorize(Roles = WmisRoles.AllRoles)]
-		public void Update([FromBody]Models.Person u)
+        [WmisWebApiAuthorize(Roles = WmisRoles.AllRoles)]
+        public void Update([FromBody]Models.Person u)
         {
             Repository.PersonUpdate(u);
         }
