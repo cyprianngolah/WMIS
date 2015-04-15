@@ -150,10 +150,10 @@ wmis.collaredanimal.editmodals = (function ($) {
 
     function ReviewCollarDataPointModel(point, argosPassStatuses) {
         var self = this;
-        this.latitude = 'Latitude:' + point.latitude;
-        this.longitude = 'Longitude:' + point.longitude;
-        this.date = 'Date:' + point.locationDate;
-        this.acquiredTime = 'Acquired Time: ' + point.locationDate;
+        this.latitude = 'Latitude: ' + point.latitude;
+        this.longitude = 'Longitude: ' + point.longitude;
+        this.date = 'Date: ' + moment.utc(point.locationDate, moment.ISO_8601).local().format('L h:mm a');
+        this.acquiredTime = 'Acquired Time: ' + moment.utc(point.locationDate, moment.ISO_8601).local().format('L h:mm a');
         this.argosPassStatus = ko.observable({
             key: ko.observable(point.argosPassStatus.key),
             name: ko.observable(point.argosPassStatus.name)
