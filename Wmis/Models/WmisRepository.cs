@@ -1597,7 +1597,7 @@
             }
         }
 
-        public void ObservationRowUpdate(Models.ObservationRow observationRow)
+        public void ObservationRowUpdate(Models.ObservationRow observationRow, string updateBy)
         {
             using (var c = NewWmisConnection)
             {
@@ -1605,7 +1605,8 @@
                 {
                     p_observationRowId = observationRow.Key,
                     p_argosPassStatusId = observationRow.ArgosPassStatusId == 0 ? (int?)null : observationRow.ArgosPassStatusId,
-                    p_comment = observationRow.Comment
+                    p_comment = observationRow.Comment,
+                    p_updateBy = updateBy
                 };
 
                 c.Execute(OBSERVATIONROW_UPDATE, param, commandType: CommandType.StoredProcedure);
