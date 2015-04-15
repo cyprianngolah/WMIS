@@ -33,6 +33,7 @@ AS
 		s.[WindSpeed], 
 		s.[WindDirection], 
 		s.[WeatherComments], 
+		observationCount.ObsCount AS [ObservationCount],
 		s.[StartDate],
 		s.[LastUpdated],
 		s.[TargetSpeciesId] as [Key], 
@@ -47,6 +48,15 @@ AS
 			LEFT OUTER JOIN dbo.Species sp on s.TargetSpeciesId = sp.SpeciesId
 			LEFT OUTER JOIN dbo.SurveyType st on s.SurveyTypeId = st.SurveyTypeId
 			LEFT OUTER JOIN dbo.SurveyTemplate ste on s.SurveyTemplateId = ste.SurveyTemplateId
+			LEFT OUTER JOIN
+			(
+				SELECT obUp.SurveyId, COUNT(*) AS ObsCount
+				FROM 
+					dbo.ObservationRows obr
+					INNER JOIN dbo.ObservationUploads obUp on obr.ObservationUploadId = obUp.ObservationUploadId
+				GROUP BY obUp.SurveyId
+			
+			) observationCount ON (s.SurveyId = observationCount.SurveyId)
 	WHERE
 		s.[ProjectId] = @p_projectId
 		AND (
