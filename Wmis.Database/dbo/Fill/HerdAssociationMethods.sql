@@ -3,7 +3,8 @@
 MERGE INTO dbo.[HerdAssociationMethods] as [Target]
 USING (VALUES
 	(1, 'GIS Analysis'),
-	(2, 'Observed on the Calving Ground')
+	(2, 'Observed on the Calving Ground'),
+	(3, 'Deployment Target') 
 )
 AS [Source] ([HerdAssociationMethodId], [Name]) 
 ON [Target].[HerdAssociationMethodId] = [source].[HerdAssociationMethodId]
