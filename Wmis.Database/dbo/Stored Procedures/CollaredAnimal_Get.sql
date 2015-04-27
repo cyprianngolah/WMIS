@@ -1,8 +1,11 @@
 ﻿CREATE PROCEDURE [dbo].[CollaredAnimal_Get]
 	@p_collaredAnimalKey INT = NULL,
-	@p_projectId INT = NULL
+	@p_projectId INT = NULL,
+	@p_startRow int = 0,
+	@p_rowCount int = 25
 AS
 	SELECT
+		COUNT(*) OVER() AS ResultCount,
 		c.CollaredAnimalId as [Key],
 		c.CollarId,
 		c.SpeciesId,
@@ -105,6 +108,12 @@ AS
 	WHERE
 		(@p_collaredAnimalKey IS NULL OR c.CollaredAnimalId = @p_collaredAnimalKey)
 		AND (@p_projectId IS NULL OR c.ProjectId = @p_projectId)
+	ORDER BY
+		c.AnimalId
+	OFFSET 
+		@p_startRow ROWS
+	FETCH NEXT 
+		@p_rowCount ROWS ONLY
 
 RETURN 0
 GO

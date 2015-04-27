@@ -42,7 +42,9 @@ AS
 		c.CollarMalfunctionId as [CollarMalfunctionKey],
 		collarMalfunction.Name as [CollarMalfunctionName],
 		c.CollarStateId as [CollarStateKey],
-		collarState.Name as [CollarStateName]
+		collarState.Name as [CollarStateName],
+		c.HerdPopulationId as [HerdPopulationKey],
+		herdPopulation.Name as [HerdPopulationName]
 	FROM
 		dbo.CollaredAnimals c
 		LEFT OUTER JOIN dbo.CollarStatuses collarStatus on c.CollarStatusId = collarStatus.CollarStatusId
@@ -51,6 +53,7 @@ AS
 		LEFT OUTER JOIN dbo.CollarTypes collarType on c.CollarTypeId = collarType.CollarTypeId
 		LEFT OUTER JOIN dbo.CollarRegions collarRegion on c.CollarRegionId = collarRegion.CollarRegionId
 		LEFT OUTER JOIN dbo.Project project on c.ProjectId = project.ProjectId
+		LEFT OUTER JOIN dbo.HerdPopulations herdPopulation on c.HerdPopulationId = herdPopulation.HerdPopulationId
 	WHERE
 		(@p_regionKey IS NULL OR c.CollarRegionId = @p_regionKey) 
 		AND

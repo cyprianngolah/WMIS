@@ -519,7 +519,7 @@
             }
         }
 
-        public int BioDiversityCreate(BioDiversityNew bdn)
+        public int BioDiversityCreate(BioDiversityNew bdn, string createdBy)
         {
             using (var c = NewWmisConnection)
             {
@@ -527,7 +527,8 @@
                 {
                     p_name = bdn.Name,
                     p_subSpeciesName = bdn.SubSpeciesName,
-                    p_ecoType = bdn.EcoType
+                    p_ecoType = bdn.EcoType,
+                    p_createdBy = createdBy
                 };
                 return c.Query<int>(BIODIVERSITY_CREATE, param, commandType: CommandType.StoredProcedure).Single();
             }
@@ -1477,7 +1478,7 @@
             }
         }
 
-        public int ProjectSurveySave(Models.ProjectSurvey ps)
+        public int ProjectSurveySave(Models.ProjectSurvey ps, string editBy)
         {
             using (var c = NewWmisConnection)
             {
@@ -1506,7 +1507,8 @@
                     p_windSpeed = ps.WindSpeed,
                     p_windDirection = ps.WindDirection,
                     p_weatherComments = ps.WeatherComments,
-                    p_startDate = ps.StartDate
+                    p_startDate = ps.StartDate,
+                    p_createdBy = editBy
                 };
 
                 return c.Query<int>(SURVEY_SAVE, param, commandType: CommandType.StoredProcedure).Single();
@@ -1772,11 +1774,15 @@
             {
                 var param = new
                 {
-                    p_projectId = psr.ProjectKey
+                    p_projectId = psr.ProjectKey,
+                    p_startRow = psr.StartRow,
+	                p_rowCount = psr.RowCount
                 };
-                pr.Data = c.Query<Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAREDANIMAL_GET,
-                    (collar, project, type, region, status, dyn) =>
+
+                pr.Data = c.Query<int, Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAREDANIMAL_GET,
+                    (count, collar, project, type, region, status, dyn) =>
                     {
+                        pr.ResultCount = count;
                         collar.Project = project ?? new SimpleProject();
                         collar.CollarType = type ?? new CollarType();
                         collar.CollarRegion = region ?? new CollarRegion();
@@ -1799,6 +1805,7 @@
                         param,
                         commandType: CommandType.StoredProcedure,
                         splitOn: "Key").ToList();
+
                 return pr;
             }
         }
@@ -1919,13 +1926,14 @@
 
         #region CollaredAnimals
 
-        public int CollarCreate(string collarId)
+        public int CollarCreate(string collarId, string createdBy)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_collarId = collarId
+                    p_collarId = collarId,
+                    p_createdBy = createdBy
                 };
                 return c.Query<int>(COLLAREDANIMAL_CREATE, param, commandType: CommandType.StoredProcedure).Single();
             }
@@ -1963,7 +1971,6 @@
                         collar.CollarType = type ?? new CollarType();
                         collar.CollarRegion = region ?? new CollarRegion();
                         collar.CollarStatus = status ?? new CollarStatus();
-                        collar.ArgosProgram = dyn.P ?? new ArgosProgram();
 
                         collar.ArgosProgram = dyn.ArgosProgramKey == null ? new ArgosProgram() : new ArgosProgram { Key = dyn.ArgosProgramKey, ProgramNumber = dyn.ArgosProgramNumber, ArgosUser = new ArgosUser { Key = dyn.ArgosUserKey, Name = dyn.ArgosUserName, Password = dyn.ArgosUserPassword } };
 

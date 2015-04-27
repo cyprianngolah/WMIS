@@ -55,7 +55,7 @@
 		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity )]
         public int Create([FromBody]BioDiversityNew bdn)
 		{
-            return Repository.BioDiversityCreate(bdn);
+            return Repository.BioDiversityCreate(bdn, _user.Username);
 		}
 
 		[HttpPut]

@@ -12,9 +12,12 @@
 	[RoutePrefix("api/collar")]
 	public class CollarApiController : BaseApiController
     {
-        public CollarApiController(WebConfiguration config) 
+        private readonly Auth.WmisUser _user;
+
+        public CollarApiController(WebConfiguration config, Auth.WmisUser user) 
 			: base(config)
-		{
+        {
+            _user = user;
 		}
 
 		/// <summary>
@@ -40,7 +43,7 @@
 		[Route]
 		public int Create([FromBody]string name)
 		{
-			return Repository.CollarCreate(name);
+            return Repository.CollarCreate(name, _user.Username);
 		}
 
 		[HttpPut]

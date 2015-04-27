@@ -124,6 +124,12 @@ wmis.collaredanimal.edit = (function($) {
             });
         };
 
+        this.herdDateFormat = ko.computed(function () {
+            if (!self.collar() || !self.collar().herdAssociationDate())
+                return "";
+            return moment(self.collar().herdAssociationDate()).format("YYYY-MM-DD");
+        }, this.collar());
+        
         this.editBreedingStatus = function() {
             wmis.collaredanimal.editmodals.editBreedingStatus(self.dropdowns.breedingStatuses, self.dropdowns.breedingStatusMethods, self.dropdowns.confidenceLevels, function(result) {
                 self.collar().breedingStatus().key(result.breedingStatusKey);
@@ -133,6 +139,12 @@ wmis.collaredanimal.edit = (function($) {
             });
         }
 
+        this.breedingDateFormat = ko.computed(function () {
+            if (!self.collar() || !self.collar().breedingStatusDate())
+                return "";
+            return moment(self.collar().breedingStatusDate()).format("YYYY-MM-DD");
+        }, this.collar());
+        
         this.projectActions = new ProjectViewModel(this.collar);
         this.dropdowns = new DropdownViewModel();
 

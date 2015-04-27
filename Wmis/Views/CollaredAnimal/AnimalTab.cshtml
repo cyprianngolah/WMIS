@@ -79,7 +79,7 @@
         </div>
         <label for="herdAssociationDate" class="col-md-1 control-label">Effective Date</label>
         <div class="col-md-2">
-            <input class="form-control" id="herdAssociationDate" type="date" disabled data-bind="value: herdAssociationDate" />
+            <input class="form-control" id="herdAssociationDate" type="text" disabled data-bind="value: $root.herdDateFormat" />
         </div>
     </div>
     <div class="col-md-12 h4">
@@ -112,7 +112,7 @@
         </div>
         <label for="breedingStatusDate" class="col-md-1 control-label">Effective Date</label>
         <div class="col-md-2">
-            <input class="form-control" id="breedingStatusDate" type="date" disabled data-bind="value: breedingStatusDate" />
+            <input class="form-control" id="breedingStatusDate" type="text" disabled data-bind="value: $root.breedingDateFormat" />
         </div>
     </div>
     <div class="col-md-12 h4">

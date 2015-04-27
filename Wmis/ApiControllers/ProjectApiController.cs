@@ -94,7 +94,7 @@
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public int CreateSurvey(Models.ProjectSurvey pssr)
         {
-            return Repository.ProjectSurveySave(pssr);
+            return Repository.ProjectSurveySave(pssr, _user.Username);
         }
 
         [HttpPut]
@@ -102,7 +102,7 @@
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public void UpdateSurvey(Models.ProjectSurvey pssr)
         {
-            Repository.ProjectSurveySave(pssr);
+            Repository.ProjectSurveySave(pssr, _user.Username);
         }
         #endregion
 

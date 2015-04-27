@@ -22,7 +22,8 @@
 	@p_windSpeed NVARCHAR(MAX),
 	@p_windDirection NVARCHAR(MAX),
 	@p_weatherComments NVARCHAR(MAX),
-	@p_startDate DATE = NULL
+	@p_startDate DATE = NULL,
+	@p_createdBy NVARCHAR (50)
 AS
 	IF(@p_surveyId IS NULL)
 	BEGIN
@@ -82,6 +83,10 @@ AS
 		)
 
 		SELECT SCOPE_IDENTITY()
+		
+		--History Log - Survey Created
+		INSERT INTO HistoryLogs (SurveyId, Item, Value, ChangeBy) VALUES ((SELECT SCOPE_IDENTITY()), "Survey Created", GETUTCDATE(), @p_createdBy)
+
 	END
 	ELSE
 	BEGIN
