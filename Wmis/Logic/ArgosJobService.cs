@@ -92,7 +92,7 @@
                 return new List<ArgosSatellitePass>();
 
             var collars = _repository.CollarGet(new Dto.CollarSearchRequest { StartRow = 0, RowCount = Int32.MaxValue });
-            var legitCollars = collars.Data.Where(c => !string.IsNullOrEmpty(c.SubscriptionId.Trim()));
+            var legitCollars = collars.Data.Where(c => !string.IsNullOrEmpty(c.SubscriptionId));
 
             var data = _argosDataClient.RetrieveArgosDataForProgram(program.ProgramNumber, program.ArgosUser.Name, program.ArgosUser.Password);
 
