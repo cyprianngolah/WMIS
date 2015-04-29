@@ -1776,7 +1776,7 @@
                 {
                     p_projectId = psr.ProjectKey,
                     p_startRow = psr.StartRow,
-	                p_rowCount = psr.RowCount
+                    p_rowCount = psr.RowCount
                 };
 
                 pr.Data = c.Query<int, Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAREDANIMAL_GET,
@@ -1955,6 +1955,8 @@
                     p_rowCount = sr.RowCount,
                     p_sortBy = sr.SortBy,
                     p_sortDirection = sr.SortDirection,
+                    p_subSortBy = sr.SubSortBy,
+                    p_subSortDirection = sr.SubSortDirection,
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim(),
                     p_regionKey = sr.RegionKey,
                     p_needingReview = sr.NeedingReview,

@@ -4,6 +4,8 @@ CREATE PROCEDURE [dbo].[CollaredAnimal_Search]
 	@p_rowCount int = 25,
 	@p_sortBy NVARCHAR(25) = NULL,
 	@p_sortDirection NVARCHAR(3) = NULL,
+	@p_subSortBy NVARCHAR(25) = NULL,
+	@p_subSortDirection NVARCHAR(3) = NULL,
 	@p_keywords NVARCHAR(50) = NULL,
 	@p_regionKey int = NULL,
 	@p_needingReview BIT = 0,
@@ -85,18 +87,64 @@ AS
 			)
 		)
 	ORDER BY
-		CASE WHEN @p_sortBy = 'collarType.name' AND @p_sortDirection = '0'
-			THEN [collarType].Name END ASC,
-		CASE WHEN @p_sortBy = 'collarType.name' AND @p_sortDirection = '1'
-			THEN [collarType].Name END DESC,
-		CASE WHEN @p_sortBy = 'collarState.name' AND @p_sortDirection = '0'
-			THEN [collarState].Name END ASC,
-		CASE WHEN @p_sortBy = 'collarState.name' AND @p_sortDirection = '1'
-			THEN [collarState].Name END DESC,
-		CASE WHEN @p_sortBy = 'collarStatus.name' AND @p_sortDirection = '0'
-			THEN [collarStatus].Name END ASC,
-		CASE WHEN @p_sortBy = 'collarStatus.name' AND @p_sortDirection = '1'
-			THEN [collarStatus].Name END DESC
+	CASE WHEN @p_sortDirection = '0' THEN
+        CASE 
+           WHEN @p_sortBy = 'collarType.name' THEN [collarType].Name
+           WHEN @p_sortBy = 'collarState.name' THEN CAST([collarState].[CollarStateId] AS NVARCHAR)
+           WHEN @p_sortBy = 'collarId' THEN [collarId] 
+           WHEN @p_sortBy = 'collarStatus.name' THEN [collarStatus].Name 
+           WHEN @p_sortBy = 'vhfFrequency' THEN [VhfFrequency] 
+           WHEN @p_sortBy = 'animalId' THEN [AnimalId] 
+           WHEN @p_sortBy = 'herdPopulation.name' THEN [herdPopulation].Name
+           WHEN @p_sortBy = 'project.key' THEN CAST([project].ProjectId AS NVARCHAR)
+           WHEN @p_sortBy = 'project.name' THEN [project].Name 
+           WHEN @p_sortBy = 'inactiveDate' THEN CAST([InactiveDate] AS NVARCHAR)
+        END
+    END ASC
+    , CASE WHEN @p_sortDirection = '1' THEN
+        CASE 
+           WHEN @p_sortBy = 'collarType.name' THEN [collarType].Name
+           WHEN @p_sortBy = 'collarState.name' THEN CAST([collarState].[CollarStateId] AS NVARCHAR)
+           WHEN @p_sortBy = 'collarId' THEN [collarId] 
+           WHEN @p_sortBy = 'collarStatus.name' THEN [collarStatus].Name 
+           WHEN @p_sortBy = 'vhfFrequency' THEN [VhfFrequency] 
+           WHEN @p_sortBy = 'animalId' THEN [AnimalId] 
+           WHEN @p_sortBy = 'herdPopulation.name' THEN [herdPopulation].Name
+           WHEN @p_sortBy = 'project.key' THEN CAST([project].ProjectId AS NVARCHAR)
+           WHEN @p_sortBy = 'project.name' THEN [project].Name 
+           WHEN @p_sortBy = 'inactiveDate' THEN CAST([InactiveDate] AS NVARCHAR)
+        END
+    END DESC
+	,
+    CASE WHEN @p_subSortDirection = '0' THEN
+        CASE 
+           WHEN @p_subSortBy = 'collarType.name' THEN [collarType].Name
+           WHEN @p_subSortBy = 'collarState.name' THEN CAST([collarState].[CollarStateId] AS NVARCHAR)
+           WHEN @p_subSortBy = 'collarId' THEN [collarId] 
+           WHEN @p_subSortBy = 'collarStatus.name' THEN [collarStatus].Name 
+           WHEN @p_subSortBy = 'vhfFrequency' THEN [VhfFrequency] 
+           WHEN @p_subSortBy = 'animalId' THEN [AnimalId] 
+           WHEN @p_subSortBy = 'herdPopulation.name' THEN [herdPopulation].Name
+           WHEN @p_subSortBy = 'project.key' THEN CAST([project].ProjectId AS NVARCHAR)
+           WHEN @p_subSortBy = 'project.name' THEN [project].Name 
+           WHEN @p_subSortBy = 'inactiveDate' THEN CAST([InactiveDate] AS NVARCHAR)
+        END
+    END ASC
+    , CASE WHEN @p_subSortDirection = '1' THEN
+        CASE 
+           WHEN @p_subSortBy = 'collarType.name' THEN [collarType].Name
+           WHEN @p_subSortBy = 'collarState.name' THEN CAST([collarState].[CollarStateId] AS NVARCHAR)
+           WHEN @p_subSortBy = 'collarId' THEN [collarId] 
+           WHEN @p_subSortBy = 'collarStatus.name' THEN [collarStatus].Name 
+           WHEN @p_subSortBy = 'vhfFrequency' THEN [VhfFrequency] 
+           WHEN @p_subSortBy = 'animalId' THEN [AnimalId] 
+           WHEN @p_subSortBy = 'herdPopulation.name' THEN [herdPopulation].Name
+           WHEN @p_subSortBy = 'project.key' THEN CAST([project].ProjectId AS NVARCHAR)
+           WHEN @p_subSortBy = 'project.name' THEN [project].Name 
+           WHEN @p_subSortBy = 'inactiveDate' THEN CAST([InactiveDate] AS NVARCHAR)
+        END
+    END DESC
+
 	OFFSET 
 		@p_startRow ROWS
 	FETCH NEXT 
