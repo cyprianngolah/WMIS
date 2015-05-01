@@ -20,3 +20,7 @@ BEGIN
 
 	SET IDENTITY_INSERT [dbo].[CollarStates] OFF;
 END;
+
+UPDATE [dbo].[CollarStates] SET [Order] = 1;
+UPDATE [dbo].[CollarStates] SET [Order] = 2 WHERE [CollarStateId] = 2;
+UPDATE [dbo].[CollarStates] SET [Order] = 3 WHERE [CollarStateId] = 3;

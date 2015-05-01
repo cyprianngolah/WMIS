@@ -90,9 +90,9 @@ AS
 	CASE WHEN @p_sortDirection = '0' THEN
         CASE 
            WHEN @p_sortBy = 'collarType.name' THEN [collarType].Name
-           WHEN @p_sortBy = 'collarState.name' THEN CAST([collarState].[CollarStateId] AS NVARCHAR)
+           WHEN @p_sortBy = 'collarState.name' THEN CAST(COALESCE([collarState].[Order], '15') AS NVARCHAR)
            WHEN @p_sortBy = 'collarId' THEN [collarId] 
-           WHEN @p_sortBy = 'collarStatus.name' THEN [collarStatus].Name 
+           WHEN @p_sortBy = 'collarStatus.name' THEN [collarStatus].[Order] 
            WHEN @p_sortBy = 'vhfFrequency' THEN [VhfFrequency] 
            WHEN @p_sortBy = 'animalId' THEN [AnimalId] 
            WHEN @p_sortBy = 'herdPopulation.name' THEN [herdPopulation].Name
@@ -104,9 +104,9 @@ AS
     , CASE WHEN @p_sortDirection = '1' THEN
         CASE 
            WHEN @p_sortBy = 'collarType.name' THEN [collarType].Name
-           WHEN @p_sortBy = 'collarState.name' THEN CAST([collarState].[CollarStateId] AS NVARCHAR)
+           WHEN @p_sortBy = 'collarState.name' THEN CAST(COALESCE([collarState].[Order], '15') AS NVARCHAR)
            WHEN @p_sortBy = 'collarId' THEN [collarId] 
-           WHEN @p_sortBy = 'collarStatus.name' THEN [collarStatus].Name 
+           WHEN @p_sortBy = 'collarStatus.name' THEN [collarStatus].[Order] 
            WHEN @p_sortBy = 'vhfFrequency' THEN [VhfFrequency] 
            WHEN @p_sortBy = 'animalId' THEN [AnimalId] 
            WHEN @p_sortBy = 'herdPopulation.name' THEN [herdPopulation].Name
@@ -119,9 +119,9 @@ AS
     CASE WHEN @p_subSortDirection = '0' THEN
         CASE 
            WHEN @p_subSortBy = 'collarType.name' THEN [collarType].Name
-           WHEN @p_subSortBy = 'collarState.name' THEN CAST([collarState].[CollarStateId] AS NVARCHAR)
+           WHEN @p_subSortBy = 'collarState.name' THEN CAST(COALESCE([collarState].[Order], '15') AS NVARCHAR)
            WHEN @p_subSortBy = 'collarId' THEN [collarId] 
-           WHEN @p_subSortBy = 'collarStatus.name' THEN [collarStatus].Name 
+           WHEN @p_subSortBy = 'collarStatus.name' THEN [collarStatus].[Order] 
            WHEN @p_subSortBy = 'vhfFrequency' THEN [VhfFrequency] 
            WHEN @p_subSortBy = 'animalId' THEN [AnimalId] 
            WHEN @p_subSortBy = 'herdPopulation.name' THEN [herdPopulation].Name
@@ -133,9 +133,9 @@ AS
     , CASE WHEN @p_subSortDirection = '1' THEN
         CASE 
            WHEN @p_subSortBy = 'collarType.name' THEN [collarType].Name
-           WHEN @p_subSortBy = 'collarState.name' THEN CAST([collarState].[CollarStateId] AS NVARCHAR)
+           WHEN @p_subSortBy = 'collarState.name' THEN CAST(COALESCE([collarState].[Order], '15') AS NVARCHAR)
            WHEN @p_subSortBy = 'collarId' THEN [collarId] 
-           WHEN @p_subSortBy = 'collarStatus.name' THEN [collarStatus].Name 
+           WHEN @p_subSortBy = 'collarStatus.name' THEN [collarStatus].[Order] 
            WHEN @p_subSortBy = 'vhfFrequency' THEN [VhfFrequency] 
            WHEN @p_subSortBy = 'animalId' THEN [AnimalId] 
            WHEN @p_subSortBy = 'herdPopulation.name' THEN [herdPopulation].Name
