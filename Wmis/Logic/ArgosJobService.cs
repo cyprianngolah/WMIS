@@ -1,16 +1,14 @@
 ﻿namespace Wmis.Logic
 {
+    using DotSpatial.Topology;
+    using Hangfire;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
-    using Hangfire;
-
-    using NPOI.Util;
-
     using Wmis.Argos;
     using Wmis.Argos.Entities;
     using Wmis.Configuration;
+    using Wmis.Extensions;
     using Wmis.Models;
 
     public class ArgosJobService
@@ -52,7 +50,7 @@
         {
             var programs = _repository.ArgosProgramsGetAll(); //.Where(p => p.ArgosUser.Name  == "gunn");
 
-            foreach (var program in programs)
+            foreach (var program in programs.Take(1))
             {
                 BackgroundJob.Enqueue(() => GetArgosDataForProgram(program));
             }
@@ -103,7 +101,63 @@
                 _repository.ArgosPassMerge(collar.Key, passesForCollar);
             }
 
+            var badPassStatus = _repository.ArgosPassStatusGet(new Dto.PagedDataRequest()).Data.First(status => !status.IsRejected && status.Name.Contains("Error"));
+            var kmPerHour = 30;
+
+            foreach (var collar in legitCollars)
+            {
+                var passRows = _repository.ArgosPassGet(new Dto.ArgosPassSearchRequest { CollaredAnimalId = collar.Key, RowCount = 1000 }).Data.OrderBy(p => p.LocationDate);
+
+                if (passRows.Count() > 0)
+                {
+                    Coordinate lastCoord = null;
+                    DateTime lastLocationDate = passRows.First().LocationDate;
+
+                    foreach (var pass in passRows)
+                    {
+                        if (pass.ArgosPassStatus.IsRejected)
+                            continue;
+
+                        var myCoord = new Coordinate(pass.Longitude, pass.Latitude);
+
+                        if (lastCoord != null)
+                        {
+                            var distance = myCoord.KilometersTo(lastCoord);
+                            var span = pass.LocationDate.Subtract(lastLocationDate);
+                            var hours = span.TotalHours;
+                            var tolerance = Math.Min((hours + 1) * kmPerHour, 100);
+
+                            if (distance > tolerance)
+                            {
+                                var comment = pass.Comment;
+
+                                if (string.IsNullOrEmpty(comment))
+                                    comment += "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
+                                else if (!comment.Contains("Flagged during import"))
+                                    comment += Environment.NewLine + "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
+
+                                _repository.ArgosPassUpdate(pass.Key, badPassStatus.Key, comment);
+                            }
+                        }
+
+                        lastLocationDate = pass.LocationDate;
+                        lastCoord = myCoord;
+                    }
+                }
+            }
+
             return data;
+        }
+
+        private string FormatSpan(TimeSpan span)
+        {
+            if (span.TotalHours < 1)
+                return string.Format("{0} minutes", span.Minutes);
+
+            if (span.TotalDays < 1)
+                return string.Format("{0} hour(s)", span.Hours);
+
+            return string.Format("{0} days", Math.Round(span.TotalDays, 2));
         }
     }
 }
