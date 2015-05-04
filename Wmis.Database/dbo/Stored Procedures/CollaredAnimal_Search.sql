@@ -56,6 +56,9 @@ AS
 		LEFT OUTER JOIN dbo.CollarRegions collarRegion on c.CollarRegionId = collarRegion.CollarRegionId
 		LEFT OUTER JOIN dbo.Project project on c.ProjectId = project.ProjectId
 		LEFT OUTER JOIN dbo.HerdPopulations herdPopulation on c.HerdPopulationId = herdPopulation.HerdPopulationId
+		LEFT OUTER JOIN dbo.AnimalSexes sex ON c.AnimalSexId = sex.AnimalSexId
+		LEFT OUTER JOIN dbo.AnimalMortalities mort ON c.AnimalMortalityId = mort.AnimalMortalityId
+		LEFT OUTER JOIN dbo.ArgosPrograms program ON c.ArgosProgramId = program.ArgosProgramId
 	WHERE
 		(@p_regionKey IS NULL OR c.CollarRegionId = @p_regionKey) 
 		AND
@@ -67,6 +70,16 @@ AS
 			OR collarState.Name LIKE '%' + @p_keywords + '%'
 			OR collarStatus.Name LIKE '%' + @p_keywords + '%'
 			OR project.Name LIKE '%' + @p_keywords + '%'
+			OR c.AnimalId LIKE '%' + @p_keywords + '%'
+			OR c.SubscriptionId LIKE '%' + @p_keywords + '%'
+			OR c.Model LIKE '%' + @p_keywords + '%'
+			OR herdPopulation.Name LIKE '%' + @p_keywords + '%'
+			OR collarMalfunction.Name LIKE '%' + @p_keywords + '%'
+			OR c.VhfFrequency LIKE '%' + @p_keywords + '%'
+			OR c.JobNumber LIKE '%' + @p_keywords + '%'
+			OR sex.Name LIKE '%' + @p_keywords + '%'
+			OR mort.Name LIKE '%' + @p_keywords + '%'
+			OR program.ProgramNumber LIKE '%' + @p_keywords + '%'
 		)
 		AND 
 		(
