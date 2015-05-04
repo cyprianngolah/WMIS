@@ -50,7 +50,7 @@
         {
             var programs = _repository.ArgosProgramsGetAll(); //.Where(p => p.ArgosUser.Name  == "gunn");
 
-            foreach (var program in programs.Take(1))
+            foreach (var program in programs)
             {
                 BackgroundJob.Enqueue(() => GetArgosDataForProgram(program));
             }
