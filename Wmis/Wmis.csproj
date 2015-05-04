@@ -217,6 +217,7 @@
     <Compile Include="ApiControllers\SearchApiController.cs" />
     <Compile Include="ApiControllers\SiteApiController.cs" />
     <Compile Include="ApiControllers\StatusRankApiController.cs" />
+    <Compile Include="ApiControllers\HelpLinkApiController.cs" />
     <Compile Include="ApiControllers\SurveyTemplateApiController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Controllers\ArgosServiceController.cs" />
     <Compile Include="Controllers\SurveyTemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\CollaredAnimalController.cs" />
     <Compile Include="Controllers\BioDiversityController.cs" />
     <Compile Include="Controllers\EcoregionController.cs" />
@@ -250,11 +252,13 @@
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
     <Compile Include="Dto\Base\PagedResultset.cs" />
+    <Compile Include="Dto\HelpLinkSaveRequest.cs" />
     <Compile Include="Dto\ProjectCollaboratorsUpdateRequest.cs" />
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
     <Compile Include="Dto\CollaboratorCreateRequest.cs" />
     <Compile Include="Dto\PagedRoleRequest.cs" />
+    <Compile Include="Dto\HelpLinkRequest.cs" />
     <Compile Include="Dto\ProjectUsersSaveRequest.cs" />
     <Compile Include="Dto\SearchResponse.cs" />
     <Compile Include="Dto\SearchRequest.cs" />
@@ -311,6 +315,7 @@
     <Compile Include="Logic\ArgosJobService.cs" />
     <Compile Include="Models\ArgosProgram.cs" />
     <Compile Include="Models\ArgosUser.cs" />
+    <Compile Include="Models\HelpLink.cs" />
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />
     <Compile Include="Models\PersonRole.cs" />
@@ -520,6 +525,9 @@
     <Content Include="js\Modules\wmis.project.editmodals.js" />
     <Content Include="js\Modules\wmis.project.site.edit.js" />
     <Content Include="js\Modules\wmis.search.index.js" />
+    <Content Include="js\Modules\wmis.help.index.js" />
+    <Content Include="js\Modules\wmis.help.edit.js" />
+    <Content Include="js\Modules\wmis.help.new.js" />
     <Content Include="js\Modules\wmis.surveytemplate.new.js" />
     <Content Include="js\Modules\wmis.surveytemplate.index.js" />
     <Content Include="js\Modules\wmis.surveytemplate.edit.js" />
@@ -799,6 +807,10 @@
     <Content Include="Views\User\New.cshtml" />
     <Content Include="Views\Shared\HistoryTab.cshtml" />
     <Content Include="Views\Shared\FileTab.cshtml" />
+    <Content Include="Views\Help\Edit.cshtml" />
+    <Content Include="Views\Help\EditForm.cshtml" />
+    <Content Include="Views\Help\Index.cshtml" />
+    <Content Include="Views\Help\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

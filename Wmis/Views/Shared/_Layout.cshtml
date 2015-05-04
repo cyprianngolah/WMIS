@@ -29,22 +29,34 @@
                             @Html.MenuLink("Reports", "Index", "Reports")
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									@Html.MenuLink("Taxonomies", "Index", "Taxonomy")
-									@Html.MenuLink("Ecozones", "Index", "Ecozone")
-									@Html.MenuLink("Ecoregions", "Index", "Ecoregion")
+                                <ul class="dropdown-menu" role="menu">
+                                    @Html.MenuLink("Taxonomies", "Index", "Taxonomy")
+                                    @Html.MenuLink("Ecozones", "Index", "Ecozone")
+                                    @Html.MenuLink("Ecoregions", "Index", "Ecoregion")
                                     @Html.MenuLink("Protected Areas", "Index", "ProtectedArea")
                                     @Html.MenuLink("Ranks", "Index", "StatusRank")
                                     @Html.MenuLink("COSEWIC Status", "Index", "CosewicStatus")
-									@Html.MenuLink("NWT SARC Assessments", "Index", "NwtSarcAssessment")
-									@Html.MenuLink("References", "Index", "Reference")
-									@Html.MenuLink("Users", "Index", "User")
-									@Html.MenuLink("Survey Templates", "Index", "SurveyTemplate")
-									@Html.MenuLink("Argos Service", "Index", "ArgosService")
-									@*<li class="divider"></li>*@
-								</ul>
+                                    @Html.MenuLink("NWT SARC Assessments", "Index", "NwtSarcAssessment")
+                                    @Html.MenuLink("References", "Index", "Reference")
+                                    @Html.MenuLink("Users", "Index", "User")
+                                    @Html.MenuLink("Survey Templates", "Index", "SurveyTemplate")
+                                    @Html.MenuLink("Argos Service", "Index", "ArgosService")
+                                    @*<li class="divider"></li>*@
+                                    @Html.MenuLink("Help Links", "Index", "Help")
+                                </ul>
 							</li>
-                            @Html.MenuLink("Help", "Index", "")
+
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        @Html.HelpLinks()
+                                    }
+                                </ul>
+
+                            </li>
 						</ul>
 					</div>
 				</div>

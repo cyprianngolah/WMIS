@@ -1,0 +1,23 @@
+﻿@{
+	ViewBag.Title = "Help Link";
+	ViewBag.SubTitle = "Edit";
+}
+
+@section Styles {
+    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+}
+
+@section Scripts {
+	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/help/edit"))
+
+	<script type="text/javascript">
+		$(function() {
+		    wmis.help.edit.initialize({
+		        key: @ViewBag.Key
+			});
+		});
+	</script>
+}
+
+@{ Html.RenderPartial("EditForm"); }

@@ -305,6 +305,12 @@
     <None Include="dbo\Fill\COSEWICStatus.sql" />
     <Build Include="dbo\Stored Procedures\Site_Search.sql" />
     <Build Include="dbo\Views\ConsolidatedAnimalData.sql" />
+    <Build Include="dbo\Tables\HelpLink.sql" />
+    <Build Include="dbo\Stored Procedures\HelpLink_Get.sql" />
+    <Build Include="dbo\Stored Procedures\HelpLink_Create.sql" />
+    <Build Include="dbo\Stored Procedures\HelpLink_Search.sql" />
+    <Build Include="dbo\Stored Procedures\HelpLink_Update.sql" />
+    <Build Include="dbo\Stored Procedures\HelpLink_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

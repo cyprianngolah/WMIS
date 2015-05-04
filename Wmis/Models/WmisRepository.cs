@@ -315,6 +315,16 @@
 
         private const string GENERAL_SEARCH = "dbo.General_Search";
 
+        private const string HELPLINK_SEARCH = "dbo.HelpLink_Search";
+
+        private const string HELPLINK_GET = "dbo.HelpLink_Get";
+
+        private const string HELPLINK_CREATE = "dbo.HelpLink_Create";
+
+        private const string HELPLINK_UPDATE = "dbo.HelpLink_Update";
+
+        private const string HELPLINK_DELETE = "dbo.HelpLink_Delete";
+
         /// <summary>
         /// The ArgosProgram Get All stored procedure
         /// </summary>
@@ -3253,6 +3263,92 @@
         }
 
         #endregion SaraStatus
+
+
+        #region HelpLink
+
+        public Dto.PagedResultset<HelpLink> HelpLinkSearch(Dto.HelpLinkRequest sr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = sr.StartRow,
+                    p_to = sr.RowCount,
+                    p_sortBy = sr.SortBy,
+                    p_sortDirection = sr.SortDirection,
+                    p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
+                };
+
+                var pr = new Dto.PagedResultset<HelpLink> { DataRequest = sr };
+                pr.Data = c.Query<int, HelpLink, HelpLink>(
+                    HELPLINK_SEARCH,
+                    (count, hl) =>
+                    {
+                        pr.ResultCount = count;
+                        return hl;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+
+                return pr;
+            }
+        }
+
+        public HelpLink HelpLinkGet(int helpLinkId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_helpLinkId = helpLinkId
+                };
+                return c.Query<HelpLink>(HELPLINK_GET, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+
+        public int HelpLinkCreate(HelpLinkSaveRequest helpLink)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_name = helpLink.Name,
+                    p_targetUrl = helpLink.TargetUrl,
+                    p_ordinal = helpLink.Ordinal
+                };
+                return c.Execute(HELPLINK_CREATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public int HelpLinkUpdate(HelpLink helpLink)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_helpLinkId = helpLink.Key,
+                    p_name = helpLink.Name,
+                    p_targetUrl = helpLink.TargetUrl,
+                    p_ordinal = helpLink.Ordinal
+                };
+                return c.Execute(HELPLINK_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public int HelpLinkDelete(int helpLinkId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_helpLinkId = helpLinkId
+                };
+                return c.Execute(HELPLINK_DELETE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion HelpLink
 
         #region Helpers
 

@@ -1,0 +1,47 @@
+﻿@using Wmis.Extensions
+
+<div class="row">
+    <div class="col-md-12 text-right">
+
+
+        <a class="btn btn-default" data-bind="click: $root.navigateToProject">
+            @if (Html.UserInAnyAdministratorRole())
+            {
+                <span>Cancel</span>
+            }
+            else
+            {
+                <span>Back</span>
+            }
+        </a>
+        @if (Html.UserInAnyAdministratorRole())
+        {
+            <button type="submit" class="btn btn-primary" data-bind="enable: canSave, click: save">Save</button>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form role="form">
+            <div class="form-group">
+                <label for="siteId" class="control-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
+            </div>
+            <div class="form-group">
+                <label for="sitenumber" class="control-label">Target Url</label>
+                <input type="text" class="form-control" id="targetUrl" name="targetUrl" data-bind="value: targetUrl, valueUpdate: 'keyup'">
+            </div>
+            <div class="form-group">
+                <label for="name" class="control-label">Ordinal</label>
+                <input type="text" class="form-control" id="ordinal" name="ordinal" data-bind="value: ordinal, valueUpdate: 'keyup'">
+            </div>
+            @if (Html.UserInAnyAdministratorRole())
+            {
+                <div class="form-group">
+                    <button type="button" class="btn btn-danger pull-right" data-bind="click: doDelete">Delete</button>
+                </div>
+            }
+        </form>
+    </div>
+</div>
