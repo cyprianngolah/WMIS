@@ -51,6 +51,20 @@ wmis.argosservice.index = (function ($) {
 				wmis.global.hideWaitingScreen(waitingScreenId);
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
+
+		self.getAccessCollarFolder = function () {
+		    //var waitingScreenId = wmis.global.showWaitingScreen("Accessing Folder...");
+		    $.ajax({
+		        url: "/api/argos/accessCollarsFolder/",
+		        type: "POST",
+		        contentType: "application/json",
+		        dataType: "json"
+		    }).success(function (data) {
+		        alert("Job Completed: " + data);
+		    }).always(function () {
+		        //wmis.global.hideWaitingScreen(waitingScreenId);
+		    }).fail(wmis.global.ajaxErrorHandler);
+		};
 	}
 
 	function initialize(initOptions) {

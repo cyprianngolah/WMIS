@@ -10,6 +10,7 @@
     using System.IO.Compression;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Net.NetworkInformation;
     using System.Web.Http;
     using Wmis.ApiControllers;
     using Wmis.Argos.Entities;
@@ -56,6 +57,24 @@
         public void QueueJobs()
         {
             _argosJobService.EnqueueActiveCollars();
+        }
+
+        [HttpPost]
+        [Route("accessCollarsFolder")]
+        public string AccessCollarsFolder()
+        {
+            var collarsFolder = WebConfiguration.AppSettings["ProcessedArgosCollarsDirectory"];
+            var response = "Ping: ";
+
+            Ping ping = new Ping();
+            var server = collarsFolder.Split(';');
+            PingReply respoPingReply = ping.Send(server[0], 1000);
+            response += ((respoPingReply.Status == IPStatus.Success) + " Access: ");
+
+            var folder = @"\\" + server[0];
+            folder = Path.Combine(folder, server[1]);
+            response += Directory.Exists(folder);
+            return response;
         }
 
         [HttpGet]
