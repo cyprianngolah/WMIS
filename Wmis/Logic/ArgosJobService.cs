@@ -4,7 +4,10 @@
     using Hangfire;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Net.NetworkInformation;
+
     using Wmis.Argos;
     using Wmis.Argos.Entities;
     using Wmis.Configuration;
@@ -39,33 +42,39 @@
                     }
                     else
                     {
-                        BackgroundJob.Enqueue(() => EnqueueActiveCollars());
-                        RecurringJob.AddOrUpdate("TimeForArgosWebserviceToRun", () => EnqueueActiveCollars(), cronExpression);
+                        BackgroundJob.Enqueue(() => this.ProcessArgosCollars());
+                        RecurringJob.AddOrUpdate("TimeForArgosWebserviceToRun", () => this.ProcessArgosCollars(), cronExpression);
                     }
                 }
             }
         }
 
-        public void EnqueueActiveCollars()
+        public void ProcessArgosCollars()
         {
-            var programs = _repository.ArgosProgramsGetAll(); //.Where(p => p.ArgosUser.Name  == "gunn");
-
-            foreach (var program in programs)
+            var collarsFolder = _configuration.AppSettings["ProcessedArgosCollarsDirectory"];
+            var server = collarsFolder.Split(';');
+           
+            PingReply respoPingReply = new Ping().Send(server[0], 1000);
+            if (respoPingReply != null && respoPingReply.Status == IPStatus.Success)
             {
-                BackgroundJob.Enqueue(() => GetArgosDataForProgram(program));
+                var folder = @"\\" + server[0];
+                folder = Path.Combine(folder, server[1]);
+                if (Directory.Exists(folder))
+                {
+                    string[] files = Directory.GetFiles(folder);
+                    //TODO: Parse files and pass through converter
+                    return;
+                }
             }
+            throw new Exception("Can't access Argos Processed Files Folder: " + collarsFolder);
 
-            // This is the old code block that downloads a single collar at a time.
-            /*        
-		    var collars = _repository.CollarGet(new Dto.CollarSearchRequest { ActiveOnly = true, StartRow = 0, RowCount = Int32.MaxValue });
-			var legitCollars = collars.Data.Where(c => !string.IsNullOrEmpty(c.SubscriptionId.Trim()));
+            /* Old Code that Read Directly from the Argos Service into the DB */
+            //var programs = _repository.ArgosProgramsGetAll(); //.Where(p => p.ArgosUser.Name  == "gunn");
 
-			foreach (var c in legitCollars)
-			{
-                if(!string.IsNullOrEmpty(c.SubscriptionId))
-				    BackgroundJob.Enqueue(() => GetArgosDataForCollar(c.Key, c.SubscriptionId));
-			}
-            */
+            //foreach (var program in programs)
+            //{
+            //    BackgroundJob.Enqueue(() => GetArgosDataForProgram(program));
+            //}
         }
 
         [AutomaticRetry(Attempts = 1, LogEvents = true)]

@@ -56,25 +56,28 @@
         [Route("queueJobs")]
         public void QueueJobs()
         {
-            _argosJobService.EnqueueActiveCollars();
+            _argosJobService.ProcessArgosCollars();
         }
 
         [HttpPost]
         [Route("accessCollarsFolder")]
-        public string AccessCollarsFolder()
+        public bool AccessCollarsFolder()
         {
             var collarsFolder = WebConfiguration.AppSettings["ProcessedArgosCollarsDirectory"];
-            var response = "Ping: ";
 
             Ping ping = new Ping();
             var server = collarsFolder.Split(';');
             PingReply respoPingReply = ping.Send(server[0], 1000);
-            response += ((respoPingReply.Status == IPStatus.Success) + " Access: ");
-
-            var folder = @"\\" + server[0];
-            folder = Path.Combine(folder, server[1]);
-            response += Directory.Exists(folder);
-            return response;
+            if (respoPingReply.Status == IPStatus.Success)
+            {
+                var folder = @"\\" + server[0];
+                folder = Path.Combine(folder, server[1]);
+                if (Directory.Exists(folder))
+                {
+                    
+                }
+            }
+            return false;
         }
 
         [HttpGet]
