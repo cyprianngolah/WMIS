@@ -25,6 +25,15 @@
 		<BlockOnPossibleDataLoss>false</BlockOnPossibleDataLoss>
 	</PropertyGroup>
 
+	<!-- Michael Database -->
+	<PropertyGroup Condition="$(DatabaseTarget) == 'michael'">
+		<TargetServer>.\SQLSERVER2012</TargetServer>
+		<TargetDatabaseName>Wmis</TargetDatabaseName>
+		<TargetUserName>WMISUser</TargetUserName>
+		<TargetPassword>0rangeWMIS$!</TargetPassword>
+		<BlockOnPossibleDataLoss>false</BlockOnPossibleDataLoss>
+	</PropertyGroup>
+
 	<!-- Dev Database -->
 	<PropertyGroup Condition="$(DatabaseTarget) == 'dev'">
 		<TargetServer>YK53-VSQL01T\SQL1</TargetServer>
