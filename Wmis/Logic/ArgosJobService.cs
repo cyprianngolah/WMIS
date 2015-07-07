@@ -7,10 +7,10 @@
     using System.IO;
     using System.Linq;
     using System.Net.NetworkInformation;
-
     using Wmis.Argos;
     using Wmis.Argos.Entities;
     using Wmis.Configuration;
+    using Wmis.Dto;
     using Wmis.Extensions;
     using Wmis.Models;
 
@@ -42,7 +42,10 @@
                     }
                     else
                     {
-                        BackgroundJob.Enqueue(() => this.ProcessArgosCollars());
+                        BackgroundJob.Enqueue(() => LoadArgosProcessedFiles());
+
+
+                        //BackgroundJob.Enqueue(() => this.ProcessArgosCollars());
                         RecurringJob.AddOrUpdate("TimeForArgosWebserviceToRun", () => this.ProcessArgosCollars(), cronExpression);
                     }
                 }
@@ -158,6 +161,83 @@
             return data;
         }
 
+
+        [AutomaticRetry(Attempts = 1, LogEvents = true)]
+        public void LoadArgosProcessedFiles()
+        {
+            var collarConfig = _configuration.AppSettings["ProcessedArgosCollarsDirectory"];
+
+            var collarConfigParts = collarConfig.Split(';');
+            var folder = @"\\" + Path.Combine(collarConfigParts[0], collarConfigParts[1]);
+
+            var reader = new ArgosFileReader(folder);
+
+            var files = reader.ReadFiles();
+            
+            var goodOnes = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
+            var badOnes = files.Where(f => !string.IsNullOrEmpty(f.ErrorMessage));
+
+            var output = "";
+
+            foreach (var bad in badOnes)
+            {
+                output += bad.ErrorMessage + "<br/>";
+            }
+
+            // run good files through row parsing (business rules)
+
+            var invalidLocClass = new List<string> { "0", "1", "2", "3", "4", null, "" };
+
+            var passes = new List<ArgosPass>();
+
+            foreach (var good in goodOnes)
+            {
+                var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = good.CTN }).Data.FirstOrDefault();
+
+                if (collar == null)
+                    continue;
+
+                foreach (var row in good.Rows)
+                {
+                    if (!string.IsNullOrEmpty(row.Error))
+                        continue;
+
+                    if (!row.Timestamp.HasValue)
+                        continue;
+
+                    var p = new ArgosPass { CollaredAnimalId = collar.Key, LocationDate = row.Timestamp.Value };
+
+                    if (row.GpsFixAttempt == "Succeeded")
+                    {
+                        if (!row.GpsLatitude.HasValue || !row.GpsLongitude.HasValue)
+                            continue;
+
+                        if (row.GpsLatitude.Value < 0 || row.GpsLatitude.Value > 90 || row.GpsLongitude.Value < -180 || row.GpsLongitude.Value > 0)
+                            continue;
+
+                        p.Latitude = row.GpsLatitude.Value;
+                        p.Longitude = row.GpsLongitude.Value;
+                    }
+                    else if (!invalidLocClass.Contains(row.LocationClass))
+                    {
+                        if (!row.ArgosLatitude.HasValue || !row.ArgosLongitude.HasValue)
+                            continue;
+
+                        if (row.ArgosLatitude.Value < 0 || row.ArgosLatitude.Value > 90 || row.ArgosLongitude.Value < -180 || row.ArgosLongitude.Value > 0)
+                            continue;
+
+                        p.Latitude = row.ArgosLatitude.Value;
+                        p.Longitude = row.ArgosLongitude.Value;
+                    }
+
+                    passes.Add(p);
+                }
+            }
+
+            //return output + " Successfully read " + goodOnes.Count() + " files, " + badOnes.Count() + " had errors which created " + passes.Count() + " pass records for " + passes.Select(p => p.CollaredAnimalId).Distinct().Count() + " collars from " + goodOnes.SelectMany(g => g.Rows).Count() + " total rows";
+
+        }
+        
         private string FormatSpan(TimeSpan span)
         {
             if (span.TotalHours < 1)
