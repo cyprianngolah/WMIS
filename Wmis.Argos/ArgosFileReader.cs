@@ -47,7 +47,7 @@ namespace Wmis.Argos
         {
             var files = new List<ArgosOutputFile>();
 
-            var csvFiles = _directory.GetFiles(".csv");
+            var csvFiles = _directory.GetFiles("*.csv");
 
             foreach (var csv in csvFiles)
             {
@@ -134,9 +134,9 @@ namespace Wmis.Argos
                             detail.Mortality = csv.GetField<string>(headers.IndexOf("mortality"));
                         
                         if (headers.Contains("error"))
-                            detail.Mortality = csv.GetField<string>(headers.IndexOf("error"));
+                            detail.Error = csv.GetField<string>(headers.IndexOf("error"));
                                                 
-                        if (!outFile.Rows.Contains(detail))
+                        if (!outFile.Rows.Contains(detail) && string.IsNullOrEmpty(detail.Error))
                             outFile.Rows.Add(detail);
                     }
                 }

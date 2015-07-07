@@ -234,8 +234,7 @@
                 }
             }
 
-            //return output + " Successfully read " + goodOnes.Count() + " files, " + badOnes.Count() + " had errors which created " + passes.Count() + " pass records for " + passes.Select(p => p.CollaredAnimalId).Distinct().Count() + " collars from " + goodOnes.SelectMany(g => g.Rows).Count() + " total rows";
-
+            var outputinfo = " Successfully read " + goodOnes.Count() + " files, " + badOnes.Count() + " had errors which created " + passes.Count() + " pass records for " + passes.Select(p => p.CollaredAnimalId).Distinct().Count() + " collars from " + goodOnes.SelectMany(g => g.Rows).Count() + " total rows";
         }
         
         private string FormatSpan(TimeSpan span)
