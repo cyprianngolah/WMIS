@@ -330,6 +330,8 @@
         /// </summary>
         private const string ARGOSPROGRAMS_GETALL = "dbo.ArgosProgram_GetAll";
 
+        private const string ARGOSCOLLARDATA_MERGE = "dbo.ArgosCollarData_Merge";
+
         /// <summary>
         /// The Connection String to connect to the WMIS database for the current environment
         /// </summary>
@@ -3349,6 +3351,25 @@
             }
         }
         #endregion HelpLink
+
+
+        public void ArgosCollarDataMerge(int collaredAnimalId, IEnumerable<ArgosCollarData> passes)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_argosData = passes.Select(p => new
+                                                    {
+                                                        p.Date,
+                                                        ValueType = p.ValueType.GetDescription(),
+                                                        p.Value
+                                                    }).AsTableValuedParameter("dbo.ArgosCollarDataTableType"),
+                    p_collaredAnimalId = collaredAnimalId,
+                };
+                c.Query<int>(ARGOSCOLLARDATA_MERGE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
 
         #region Helpers
 

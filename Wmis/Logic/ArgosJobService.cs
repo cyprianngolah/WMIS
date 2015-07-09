@@ -44,7 +44,6 @@
                     {
                         BackgroundJob.Enqueue(() => LoadArgosProcessedFiles());
 
-
                         //BackgroundJob.Enqueue(() => this.ProcessArgosCollars());
                         RecurringJob.AddOrUpdate("TimeForArgosWebserviceToRun", () => this.ProcessArgosCollars(), cronExpression);
                     }
@@ -56,7 +55,7 @@
         {
             var collarsFolder = _configuration.AppSettings["ProcessedArgosCollarsDirectory"];
             var server = collarsFolder.Split(';');
-           
+
             PingReply respoPingReply = new Ping().Send(server[0], 1000);
             if (respoPingReply != null && respoPingReply.Status == IPStatus.Success)
             {
@@ -161,51 +160,49 @@
             return data;
         }
 
-
         [AutomaticRetry(Attempts = 1, LogEvents = true)]
         public void LoadArgosProcessedFiles()
         {
             var collarConfig = _configuration.AppSettings["ProcessedArgosCollarsDirectory"];
 
+            if (string.IsNullOrEmpty(collarConfig))
+                throw new ArgumentNullException("ProcessedArgosCollarsDirectory");
+
             var collarConfigParts = collarConfig.Split(';');
+
+            if (collarConfigParts.Length != 2 || string.IsNullOrEmpty(collarConfigParts[0]) || string.IsNullOrEmpty(collarConfigParts[1]))
+                throw new ArgumentOutOfRangeException("ProcessedArgosCollarsDirectory");
+
             var folder = @"\\" + Path.Combine(collarConfigParts[0], collarConfigParts[1]);
-
             var reader = new ArgosFileReader(folder);
-
             var files = reader.ReadFiles();
-            
-            var goodOnes = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
-            var badOnes = files.Where(f => !string.IsNullOrEmpty(f.ErrorMessage));
 
-            var output = "";
+            var goodOnes = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
+            //var badOnes = files.Where(f => !string.IsNullOrEmpty(f.ErrorMessage));
+
+            /*var output = "";
 
             foreach (var bad in badOnes)
             {
                 output += bad.ErrorMessage + "<br/>";
-            }
-
-            // run good files through row parsing (business rules)
+            }*/
 
             var invalidLocClass = new List<string> { "0", "1", "2", "3", "4", null, "" };
-
-            var passes = new List<ArgosPass>();
+            var locatedCollars = new List<Collar>();
 
             foreach (var good in goodOnes)
             {
-                var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = good.CTN }).Data.FirstOrDefault();
+                var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = good.CTN }).Data.FirstOrDefault(c => c.CollarId == good.CTN);
 
                 if (collar == null)
                     continue;
 
-                foreach (var row in good.Rows)
+                var passes = new List<ArgosSatellitePass>();
+                var dataRows = new List<ArgosCollarData>();
+
+                foreach (var row in good.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue))
                 {
-                    if (!string.IsNullOrEmpty(row.Error))
-                        continue;
-
-                    if (!row.Timestamp.HasValue)
-                        continue;
-
-                    var p = new ArgosPass { CollaredAnimalId = collar.Key, LocationDate = row.Timestamp.Value };
+                    var p = new ArgosSatellitePass { Timestamp = row.Timestamp.Value };
 
                     if (row.GpsFixAttempt == "Succeeded")
                     {
@@ -217,6 +214,7 @@
 
                         p.Latitude = row.GpsLatitude.Value;
                         p.Longitude = row.GpsLongitude.Value;
+                        passes.Add(p);
                     }
                     else if (!invalidLocClass.Contains(row.LocationClass))
                     {
@@ -228,15 +226,110 @@
 
                         p.Latitude = row.ArgosLatitude.Value;
                         p.Longitude = row.ArgosLongitude.Value;
+                        passes.Add(p);
                     }
+                    else
+                    {
+                        if (row.Temperature.HasValue)
+                        {
+                            var data = new ArgosCollarData
+                            {
+                                CollaredAnimalId = collar.Key,
+                                Date = row.Timestamp.Value,
+                                ValueType = ArgosCollarDataValueType.Temperature,
+                                Value = string.Format("{0}", row.Temperature.Value)
+                            };
 
-                    passes.Add(p);
+                            dataRows.Add(data);
+                        }
+
+                        if (!string.IsNullOrEmpty(row.LowVoltage))
+                        {
+                            var data = new ArgosCollarData
+                            {
+                                CollaredAnimalId = collar.Key,
+                                Date = row.Timestamp.Value,
+                                ValueType = ArgosCollarDataValueType.LowVoltage,
+                                Value = string.Format("{0}", row.LowVoltage.Trim())
+                            };
+
+                            dataRows.Add(data);
+                        }
+
+                        if (!string.IsNullOrEmpty(row.Mortality))
+                        {
+                            var data = new ArgosCollarData
+                            {
+                                CollaredAnimalId = collar.Key,
+                                Date = row.Timestamp.Value,
+                                ValueType = ArgosCollarDataValueType.Mortality,
+                                Value = string.Format("{0}", row.Mortality.Trim())
+                            };
+
+                            dataRows.Add(data);
+                        }
+                    }
                 }
+
+                _repository.ArgosCollarDataMerge(collar.Key, dataRows);
+                _repository.ArgosPassMerge(collar.Key, passes);
+
+                if (passes.Count() > 0)
+                    locatedCollars.Add(collar);
             }
 
-            var outputinfo = " Successfully read " + goodOnes.Count() + " files, " + badOnes.Count() + " had errors which created " + passes.Count() + " pass records for " + passes.Select(p => p.CollaredAnimalId).Distinct().Count() + " collars from " + goodOnes.SelectMany(g => g.Rows).Count() + " total rows";
+            if (locatedCollars.Count() > 0)
+                RunLocationChecks(locatedCollars);
         }
-        
+
+        private void RunLocationChecks(IEnumerable<Collar> collars)
+        {
+            var badPassStatus = _repository.ArgosPassStatusGet(new Dto.PagedDataRequest()).Data.First(status => !status.IsRejected && status.Name.Contains("Error"));
+            var kmPerHour = 30;
+
+            foreach (var collar in collars)
+            {
+                var passRows = _repository.ArgosPassGet(new Dto.ArgosPassSearchRequest { CollaredAnimalId = collar.Key, RowCount = 1000 }).Data.OrderBy(p => p.LocationDate);
+
+                if (passRows.Count() > 0)
+                {
+                    Coordinate lastCoord = null;
+                    DateTime lastLocationDate = passRows.First().LocationDate;
+
+                    foreach (var pass in passRows)
+                    {
+                        if (pass.ArgosPassStatus.IsRejected)
+                            continue;
+
+                        var myCoord = new Coordinate(pass.Longitude, pass.Latitude);
+
+                        if (lastCoord != null)
+                        {
+                            var distance = myCoord.KilometersTo(lastCoord);
+                            var span = pass.LocationDate.Subtract(lastLocationDate);
+                            var hours = span.TotalHours;
+                            var tolerance = Math.Min((hours + 1) * kmPerHour, 100);
+
+                            if (distance > tolerance)
+                            {
+                                var comment = pass.Comment;
+
+                                if (string.IsNullOrEmpty(comment))
+                                    comment += "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
+                                else if (!comment.Contains("Flagged during import"))
+                                    comment += Environment.NewLine + "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
+
+                                _repository.ArgosPassUpdate(pass.Key, badPassStatus.Key, comment);
+                            }
+                        }
+
+                        lastLocationDate = pass.LocationDate;
+                        lastCoord = myCoord;
+                    }
+                }
+            }
+        }
+
         private string FormatSpan(TimeSpan span)
         {
             if (span.TotalHours < 1)

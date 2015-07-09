@@ -309,10 +309,12 @@
     <Compile Include="Dto\SpeciesSynonymSaveRequest.cs" />
     <Compile Include="Dto\TaxonomySynonymRequest.cs" />
     <Compile Include="Extensions\DapperExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Extensions\MvcSecurityExtension.cs" />
     <Compile Include="Extensions\SpatialExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
+    <Compile Include="Models\ArgosCollarData.cs" />
     <Compile Include="Models\ArgosProgram.cs" />
     <Compile Include="Models\ArgosUser.cs" />
     <Compile Include="Models\HelpLink.cs" />

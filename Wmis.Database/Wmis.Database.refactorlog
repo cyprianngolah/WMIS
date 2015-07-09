@@ -189,4 +189,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="HelpLinkId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="0db32fe6-4043-4d07-a41b-2af001ee9aab" ChangeDateTime="07/08/2015 18:47:27">
+    <Property Name="ElementName" Value="[dbo].[ArgosCollarData].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ArgosCollarData]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ArgosCollarDataId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e4dac534-0e3a-49a6-ba51-7beb70ec3873" ChangeDateTime="07/08/2015 19:59:33">
+    <Property Name="ElementName" Value="[dbo].[ArgosCollarData].[CollarId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ArgosCollarData]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CollaredAnimalId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fa8b45f6-34d2-4bae-b512-2a23682d4e67" ChangeDateTime="07/09/2015 18:35:42">
+    <Property Name="ElementName" Value="[dbo].[ArgosCollarData].[ValueTypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ArgosCollarData]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ValueType" />
+  </Operation>
 </Operations>
