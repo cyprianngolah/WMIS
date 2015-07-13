@@ -314,6 +314,7 @@
     <Build Include="dbo\Tables\ArgosCollarData.sql" />
     <Build Include="dbo\Stored Procedures\ArgosCollarData_Merge.sql" />
     <Build Include="dbo\User Defined Types\ArgosCollarDataTableType.sql" />
+    <Build Include="dbo\Stored Procedures\CollaredAnimalWarning_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

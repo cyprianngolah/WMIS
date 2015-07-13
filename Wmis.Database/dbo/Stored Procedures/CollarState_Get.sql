@@ -16,7 +16,7 @@ AS
 		t.CollarStateId = ISNULL(@p_collarStateId, t.CollarStateId)
 		AND (@p_keywords IS NULL OR t.Name LIKE '%' + @p_keywords + '%')
 	ORDER BY
-		t.Name
+		t.[Order]
 	OFFSET 
 		@p_from ROWS
 	FETCH NEXT

@@ -85,10 +85,14 @@ AS
 		(
 			@p_needingReview = 0
 			OR 
-			(	
-				c.CollarStateId = 1 --Active
-				AND
-				c.CollarStatusId IN (2, 3, 14) --(Suspected Stationary, Stationary, Malfunctioning)
+			(
+				c.CollarStateId = 4
+				OR
+				( 	
+					c.CollarStateId = 1 --Active
+					AND
+					c.CollarStatusId IN (2, 3, 14) --(Suspected Stationary, Stationary, Malfunctioning)
+				)
 			)
 		)
 		AND 
@@ -96,7 +100,7 @@ AS
 			@p_activeOnly = 0
 			OR
 			(
-				c.CollarStateId = 1 --Active
+				c.CollarStateId IN (1,4) --Active
 			)
 		)
 	ORDER BY

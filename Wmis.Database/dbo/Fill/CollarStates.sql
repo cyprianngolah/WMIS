@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarStates] WHERE [CollarStateId] NOT IN (1,2,3) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarStates] WHERE [CollarStateId] NOT IN (1,2,3,4) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[CollarStates] other than what exists in the Fill Script.', 1; 
 END
@@ -10,7 +10,8 @@ BEGIN
 	USING (VALUES
 		(1, 'On'),
 		(2, 'Off'),
-		(3, 'Unknown')
+		(3, 'Unknown'),
+		(4, 'On - With Warnings')
 	)
 	AS [Source] ([CollarStateId], [Name]) 
 	ON [Target].[CollarStateId] = [source].[CollarStateId]
@@ -22,5 +23,6 @@ BEGIN
 END;
 
 UPDATE [dbo].[CollarStates] SET [Order] = 1;
-UPDATE [dbo].[CollarStates] SET [Order] = 2 WHERE [CollarStateId] = 2;
-UPDATE [dbo].[CollarStates] SET [Order] = 3 WHERE [CollarStateId] = 3;
+UPDATE [dbo].[CollarStates] SET [Order] = 2 WHERE [CollarStateId] = 4;
+UPDATE [dbo].[CollarStates] SET [Order] = 3 WHERE [CollarStateId] = 2;
+UPDATE [dbo].[CollarStates] SET [Order] = 4 WHERE [CollarStateId] = 3;

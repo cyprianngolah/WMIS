@@ -213,6 +213,7 @@
         /// The Collar Update stored procedure
         /// </summary>
         private const string COLLAREDANIMAL_UPDATE = "dbo.CollaredAnimal_Update";
+        private const string COLLAREDANIMALWARNING_UPDATE = "dbo.CollaredAnimalWarning_Update";
 
         /// <summary>
         /// The Collar Create stored procedure
@@ -2104,6 +2105,22 @@
                     p_BreedingStatusDate = collar.BreedingStatusDate
                 };
                 c.Execute(COLLAREDANIMAL_UPDATE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void CollarUpdateWarning(int collaredAnimalKey, int collarStateId, string item, string warning)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_ChangeBy = "Automated Process",
+                    p_CollaredAnimalId = collaredAnimalKey,
+                    p_CollarStateId = collarStateId,
+                    p_Item = item,
+                    p_Warning = warning
+                };
+                c.Execute(COLLAREDANIMALWARNING_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
         }
 
