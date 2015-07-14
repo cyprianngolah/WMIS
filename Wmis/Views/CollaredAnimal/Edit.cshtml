@@ -1,12 +1,12 @@
 ﻿@{
     ViewBag.Title = "Collared Animal";
-    ViewBag.SubTitle = "<span data-bind='with: collar'><span data-bind='text: name'></span></span>";
+    ViewBag.SubTitle = "<span data-bind='with: collar'><span data-bind='text: animalId'></span></span>";
 }
 
 @section TopRight{
     <div class="h4 pull-right" style="text-align: right; margin: 0;" data-bind="with: collar">
-        <span data-bind="with: collarState">Collar State: <strong><span data-bind="text: name"></span></strong><br /></span>
-        <span data-bind="with: collarRegion">Collar Region: <strong><span data-bind="text: name"></span></strong><br /></span>
+        <span data-bind="with: collarStatus">Collar Status: <strong><span data-bind="text: name"></span></strong><br /></span>
+        <span data-bind="with: animalStatus">Animal Status: <strong><span data-bind="text: name"></span></strong><br /></span>
         <span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
     </div>
 }
