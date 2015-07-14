@@ -177,22 +177,14 @@
             var reader = new ArgosFileReader(folder);
             var files = reader.ReadFiles();
 
-            var goodOnes = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
-            //var badOnes = files.Where(f => !string.IsNullOrEmpty(f.ErrorMessage));
+            var noErrorFiles = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
 
-            /*var output = "";
-
-            foreach (var bad in badOnes)
-            {
-                output += bad.ErrorMessage + "<br/>";
-            }*/
-
-            var invalidLocClass = new List<string> { "0", "1", "2", "3", "4", null, "" };
+            var invalidLocClass = new List<string> { "0", "1", "2", "3", null, "" };
             var locatedCollars = new List<Collar>();
 
-            foreach (var good in goodOnes)
+            foreach (var file in noErrorFiles)
             {
-                var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = good.CTN }).Data.FirstOrDefault(c => c.CollarId == good.CTN);
+                var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = file.CTN }).Data.FirstOrDefault(c => c.CollarId == file.CTN);
 
                 if (collar == null)
                     continue;
@@ -200,7 +192,7 @@
                 var passes = new List<ArgosSatellitePass>();
                 var dataRows = new List<ArgosCollarData>();
 
-                foreach (var row in good.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue))
+                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue))
                 {
                     var p = new ArgosSatellitePass { Timestamp = row.Timestamp.Value };
 
