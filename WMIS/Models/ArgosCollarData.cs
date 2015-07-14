@@ -20,7 +20,7 @@ namespace Wmis.Models
         [Description("Temperature")]
         Temperature,
 
-        [Description("LowVoltage")]
+        [Description("Low Voltage")]
         LowVoltage,
 
         [Description("Mortality")]
