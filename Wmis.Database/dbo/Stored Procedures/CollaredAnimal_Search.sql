@@ -86,12 +86,14 @@ AS
 			@p_needingReview = 0
 			OR 
 			(
-				c.CollarStateId = 4
+				c.CollarStateId = 4 -- On - With Warnings
 				OR
 				( 	
 					c.CollarStateId = 1 --Active
 					AND
-					c.CollarStatusId IN (2, 3, 14) --(Suspected Stationary, Stationary, Malfunctioning)
+					c.CollarStatusId IN (1,2, 3, 14) --(Deployed, Suspected Stationary, Stationary, Malfunctioning)
+					AND
+					NOT c.AnimalStatusId = 2 -- Status <> Dead
 				)
 			)
 		)
