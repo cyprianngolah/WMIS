@@ -53,7 +53,7 @@
 
         public void ProcessArgosCollars()
         {
-            var collarsFolder = _configuration.AppSettings["ProcessedArgosCollarsDirectory"];
+            var collarsFolder = _configuration.AppSettings["processedArgosCollarsDirectory"];
             var server = collarsFolder.Split(';');
 
             PingReply respoPingReply = new Ping().Send(server[0], 1000);
@@ -163,7 +163,7 @@
         [AutomaticRetry(Attempts = 1, LogEvents = true)]
         public void LoadArgosProcessedFiles()
         {
-            var collarConfig = _configuration.AppSettings["ProcessedArgosCollarsDirectory"];
+            var collarConfig = _configuration.AppSettings["processedArgosCollarsDirectory"];
 
             if (string.IsNullOrEmpty(collarConfig))
                 throw new ArgumentNullException("ProcessedArgosCollarsDirectory");
