@@ -29,7 +29,8 @@ AS
 		p.[LeadRegionId] AS [Key], 
 		lr.Name as Name,
 		p.[ProjectLeadId] AS [Key], 
-		pr.Name, 
+		pr.Name,
+		pr.JobTitle, 
 		pr.Email,
 		p.[ProjectStatusId] AS [Key],
 		ps.Name

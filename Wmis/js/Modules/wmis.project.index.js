@@ -49,7 +49,7 @@ wmis.project.index = (function ($) {
 				{ "data": "key" },
 				{ "data": "name" },
 				{ "data": "leadRegion.name" },
-				{ "data": "projectLead.name" },
+				{ "data": "projectLead.jobTitle" },
 				{ "data": "status.name" },
 				{
 					"data": "statusDate",
