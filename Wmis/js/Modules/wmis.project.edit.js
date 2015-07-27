@@ -169,6 +169,8 @@ wmis.project.edit = (function ($) {
         var self = this;
         this.project = ko.mapper.fromJS(project);
 
+        document.title = "WMIS - Project " + project.key;
+
         var hasCollars = (project.collarCount > 0) ? true : false;
         this.showCollarTab = ko.observable(hasCollars);
         this.userCanSeeSensitive = userCanSeeSensitive;

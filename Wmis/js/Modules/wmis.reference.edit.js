@@ -35,6 +35,8 @@ wmis.reference.edit = (function ($) {
 					self.publisher(d.publisher);
 					self.city(d.city);
 					self.location(d.location);
+
+				    document.title = "WMIS - Reference - " + d.title;
 				}
 			}).fail(wmis.global.ajaxErrorHandler);
 		};

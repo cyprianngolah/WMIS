@@ -15,7 +15,7 @@ wmis.collaredanimal.index = (function($) {
 
 		initDataTable();
 
-//		wmis.global.getDropDownData(self.collarRegions, "/api/collar/region?startRow=0&rowCount=500", function (result) { return result.data; });
+		document.title = "WMIS Collared Animal";
 
 		wmis.global.loadAndInitializeSelect2($(options.regionSelector), "/api/collar/region?startRow=0&rowCount=500", "Regions", true, "data");
 

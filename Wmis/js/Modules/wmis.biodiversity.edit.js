@@ -148,9 +148,11 @@ wmis.biodiversity.edit = (function ($) {
 			            return "You have unsaved changes, are you sure you want to continue without saving?";
 			        }
 			    });
-				self.dataLoaded(true);
+			    self.dataLoaded(true);
+                //Update the tab title
+			    document.title = "WMIS - Biodiversity - " + self.bd().commonName();
 			}).always(function () {
-				wmis.global.hideWaitingScreen();
+			    wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
@@ -241,7 +243,7 @@ wmis.biodiversity.edit = (function ($) {
 				dataType: "json",
 				data: JSON.stringify(ko.toJS(self.bd()))
 			}).success(function(lastUpdated) {
-				//window.location.href = "/biodiversity/";
+			    document.title = "WMIS - Biodiversity - " + self.bd().commonName();
 			    self.bd().lastUpdated(lastUpdated);
 			    self.dirtyFlag.reset();
 			}).always(function () {

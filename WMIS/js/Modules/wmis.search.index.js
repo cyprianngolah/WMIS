@@ -92,6 +92,7 @@ wmis.search.index = (function ($) {
     function initialize(initOptions) {
         $.extend(options, initOptions);
         
+        document.title = "WMIS Search";
         function SearchMapModel() {
             var self = this;
 

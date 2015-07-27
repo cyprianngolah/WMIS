@@ -63,7 +63,7 @@
 		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
 		public DateTime Update([FromBody]BioDiversity bd)
 		{
-            return Repository.BioDiversityUpdate(bd, "Unknown User");
+            return Repository.BioDiversityUpdate(bd, _user.Username);
 		}
 
 		[HttpGet]

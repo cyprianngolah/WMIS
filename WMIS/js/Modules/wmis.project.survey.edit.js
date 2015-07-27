@@ -27,6 +27,8 @@ wmis.project.survey.edit = (function ($) {
 		self.projectHeaderDetail = "Project " + self.projectId;
 		self.projectName = ko.observable();
 
+		document.title = "WMIS - Project " + self.projectId + "- Survey";
+
 		self.targetSpeciesOptions = targetSpeciesOptions;
 
 		self.getDropDowns = function () {
