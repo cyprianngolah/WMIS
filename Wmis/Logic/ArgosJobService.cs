@@ -286,6 +286,8 @@
             var badPassStatus = _repository.ArgosPassStatusGet(new Dto.PagedDataRequest()).Data.First(status => !status.IsRejected && status.Name.Contains("Error"));
             var kmPerHour = 30;
 
+            var collarWarningState = _repository.CollarStateGet(new CollarStateRequest { RowCount = 999 }).Data.FirstOrDefault(s => s.Name.Contains("With Warnings"));
+
             foreach (var collar in collars)
             {
                 var passRows = _repository.ArgosPassGet(new Dto.ArgosPassSearchRequest { CollaredAnimalId = collar.Key, RowCount = 1000 }).Data.OrderBy(p => p.LocationDate);
@@ -318,6 +320,8 @@
                                 else if (!comment.Contains("Flagged during import"))
                                     comment += Environment.NewLine + "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
 
+                                _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Location Status", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", pass.LocationDate, pass.LocationDate), badPassStatus.Name);
+
                                 _repository.ArgosPassUpdate(pass.Key, badPassStatus.Key, comment);
                             }
                         }
@@ -334,8 +338,8 @@
             var collarWarningState = _repository.CollarStateGet(new CollarStateRequest { RowCount = 999 }).Data.FirstOrDefault(s => s.Name.Contains("With Warnings"));
 
             // if the alert is already there, don't beat a dead horse (or caribou) 
-            if (collar.CollarState.Key == collarWarningState.Key)
-                return;
+            //  if (collar.CollarState.Key == collarWarningState.Key)
+            //      return;
 
             // these flags make sure you only receive one warning per day
             var hasVoltageAlert = false;
@@ -348,14 +352,14 @@
                     case ArgosCollarDataValueType.LowVoltage:
                         if (dataRow.Value.ToLower() == "yes" && !hasVoltageAlert)
                         {
-                            _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Collar Low Voltage", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date));
+                            _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Collar Low Voltage", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date), "Yes");
                             hasVoltageAlert = true;
                         }
                         break;
                     case ArgosCollarDataValueType.Mortality:
                         if (dataRow.Value.ToLower() == "yes" && !hasMortalityAlert)
                         {
-                            _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Animal Mortality", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date));
+                            _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Animal Mortality", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date), "Yes");
                             hasMortalityAlert = true;
                         }
                         break;

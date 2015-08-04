@@ -87,14 +87,8 @@ AS
 			OR 
 			(
 				c.CollarStateId = 4 -- On - With Warnings
-				OR
-				( 	
-					c.CollarStateId = 1 --Active
-					AND
-					c.CollarStatusId IN (1,2, 3, 14) --(Deployed, Suspected Stationary, Stationary, Malfunctioning)
-					AND
-					NOT c.AnimalStatusId = 2 -- Status <> Dead
-				)
+				And c.CollarStatusId IN (1,2, 3, 14) --(Deployed, Suspected Stationary, Stationary, Malfunctioning)
+				AND (NOT AnimalStatusId = 2 OR AnimalStatusId IS NULL) -- Status <> Dead
 			)
 		)
 		AND 

@@ -3,12 +3,29 @@
 	@p_CollarStateId INT = NULL,
 	@p_ChangeBy NVARCHAR(50),
 	@p_Item NVARCHAR(250),
-	@p_Warning NVARCHAR(250)
+	@p_Warning NVARCHAR(250),
+	@p_Value NVARCHAR(250)
 AS
 
-	INSERT INTO HistoryLogs (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Collar State", (SELECT Name from CollarStates where CollarStateId = @p_CollarStateId), @p_ChangeBy);
-	INSERT INTO HistoryLogs (CollaredAnimalId, Item, Value, Comment, ChangeBy) VALUES (@p_CollaredAnimalId, @p_Item, "Yes", @p_Warning, @p_ChangeBy);
+	--Collar State
+	IF EXISTS (SELECT 1 FROM dbo.CollaredAnimals WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND CollarStateId != @p_CollarStateId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Collar State", (SELECT Name from CollarStates where CollarStateId = @p_CollarStateId), @p_ChangeBy);
+	END
 
+	--Collar State
+	IF EXISTS (SELECT 1 FROM dbo.HistoryLogs WHERE
+		CollaredAnimalId = @p_CollaredAnimalId
+		AND Item = "Collar State"
+		AND Comment != @p_Warning
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (CollaredAnimalId, Item, Value, Comment, ChangeBy) VALUES (@p_CollaredAnimalId, @p_Item, @p_Value, @p_Warning, @p_ChangeBy);
+	END
+	
 	UPDATE
 		dbo.CollaredAnimals
 	SET

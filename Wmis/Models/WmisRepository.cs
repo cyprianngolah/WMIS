@@ -2108,7 +2108,7 @@
             }
         }
 
-        public void CollarUpdateWarning(int collaredAnimalKey, int collarStateId, string item, string warning)
+        public void CollarUpdateWarning(int collaredAnimalKey, int collarStateId, string item, string warning, string value)
         {
             using (var c = NewWmisConnection)
             {
@@ -2118,7 +2118,8 @@
                     p_CollaredAnimalId = collaredAnimalKey,
                     p_CollarStateId = collarStateId,
                     p_Item = item,
-                    p_Warning = warning
+                    p_Warning = warning,
+                    p_Value = value
                 };
                 c.Execute(COLLAREDANIMALWARNING_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
