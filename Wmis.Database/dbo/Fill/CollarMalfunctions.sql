@@ -13,7 +13,9 @@ BEGIN
 		(3, 'GPS failure'),
 		(4, 'Slipped collar'),
 		(5, 'Battery failure'),
-		(6, 'Unknown')
+		(6, 'Unknown'),
+		(7, 'Intermittent'),
+		(8, 'Transmission Failure')
 	)
 	AS [Source] ([CollarMalfunctionId], [Name]) 
 	ON [Target].[CollarMalfunctionId] = [source].[CollarMalfunctionId]
