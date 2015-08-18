@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarMalfunctions] WHERE [CollarMalfunctionId] NOT IN (1,2,3,4,5,6) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarMalfunctions] WHERE [CollarMalfunctionId] NOT IN (1,2,3,4,5,6,7,8) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[CollarMalfunctions] other than what exists in the Fill Script.', 1; 
 END
