@@ -355,7 +355,7 @@ AS
 	ON (T.EcozoneId = S.n AND T.SpeciesId = @p_SpeciesId) 
 	WHEN NOT MATCHED BY TARGET 
 		THEN INSERT(SpeciesId, EcozoneId) VALUES(@p_SpeciesId, s.n)
-	WHEN NOT MATCHED BY SOURCE
+	WHEN NOT MATCHED BY SOURCE And T.SpeciesId = @p_SpeciesId
 		THEN DELETE; 
 
 	-- Ecoregions
@@ -364,7 +364,7 @@ AS
 	ON (T.EcoregionId = S.n AND T.SpeciesId = @p_SpeciesId) 
 	WHEN NOT MATCHED BY TARGET 
 		THEN INSERT(SpeciesId, EcoregionId) VALUES(@p_SpeciesId, s.n)
-	WHEN NOT MATCHED BY SOURCE
+	WHEN NOT MATCHED BY SOURCE And T.SpeciesId = @p_SpeciesId
 		THEN DELETE; 
 
 	-- Protected Areas
@@ -373,7 +373,7 @@ AS
 	ON (T.ProtectedAreaId = S.n AND T.SpeciesId = @p_SpeciesId) 
 	WHEN NOT MATCHED BY TARGET 
 		THEN INSERT(SpeciesId, ProtectedAreaId) VALUES(@p_SpeciesId, s.n)
-	WHEN NOT MATCHED BY SOURCE
+	WHEN NOT MATCHED BY SOURCE And T.SpeciesId = @p_SpeciesId
 		THEN DELETE; 
 
 	-- Populations
@@ -382,7 +382,7 @@ AS
 	ON (T.Name = S.Name AND T.SpeciesId = @p_SpeciesId) 
 	WHEN NOT MATCHED BY TARGET 
 		THEN INSERT(SpeciesId, Name) VALUES (@p_SpeciesId, s.Name)
-	WHEN NOT MATCHED BY SOURCE
+	WHEN NOT MATCHED BY SOURCE And T.SpeciesId = @p_SpeciesId
 		THEN DELETE; 
 
 	-- References
@@ -391,7 +391,7 @@ AS
 	ON (T.ReferenceCategoryId = S.n AND T.ReferenceId = S.p AND T.SpeciesId = @p_SpeciesId) 
 	WHEN NOT MATCHED BY TARGET 
 		THEN INSERT(SpeciesId, ReferenceId, ReferenceCategoryId) VALUES(@p_SpeciesId, s.p, s.n)
-	WHEN NOT MATCHED BY SOURCE
+	WHEN NOT MATCHED BY SOURCE And T.SpeciesId = @p_SpeciesId
 		THEN DELETE; 
 
 	SELECT 
