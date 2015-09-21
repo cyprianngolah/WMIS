@@ -6,6 +6,7 @@
 	[Longitude]				FLOAT       NOT NULL,
 	[LocationDate]			DATETIME    NOT NULL,
 	[ArgosPassStatusId]		INT			NULL,
+	[LocationClass]			NVARCHAR(50) NULL,
 	[Comment] NVARCHAR(MAX) NULL, 
     CONSTRAINT [PK_ArgosPasses] PRIMARY KEY CLUSTERED ([ArgosPassId]),
 	CONSTRAINT [FK_ArgosPasses_CollaredAnimals] FOREIGN KEY ([CollaredAnimalId]) REFERENCES [dbo].[CollaredAnimals] ([CollaredAnimalId]),

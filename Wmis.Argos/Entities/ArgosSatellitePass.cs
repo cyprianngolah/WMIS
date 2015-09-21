@@ -11,5 +11,7 @@
 		public DateTime Timestamp { get; set; }
 
         public int PlatformId { get; set; }
+
+        public string LocationClass { get; set; }
 	}
 }

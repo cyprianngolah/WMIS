@@ -40,6 +40,8 @@ namespace Wmis.Argos.Entities
         public string Mortality { get; set; }
         public string LowVoltage { get; set; }
 
+        public static string GPS_LOCATION_CLASS = "G";
+
         public string Combine
         {
             get

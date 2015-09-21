@@ -2663,7 +2663,8 @@
                                                     {
                                                         p.Latitude,
                                                         p.Longitude,
-                                                        LocationDate = p.Timestamp
+                                                        LocationDate = p.Timestamp,
+                                                        p.LocationClass
                                                     }).AsTableValuedParameter("dbo.ArgosPassTableType"),
                     p_collaredAnimalId = collaredAnimalId,
                 };

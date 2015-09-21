@@ -16,6 +16,8 @@
 
         public ArgosPassStatus ArgosPassStatus { get; set; }
 
+        public string LocationClass { get; set; }
+
         public string Comment { get; set; }
 	}
 }

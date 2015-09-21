@@ -101,7 +101,8 @@
                 myPoints.DataTable.Columns.Add(new DataColumn("ID", typeof(int)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Latitude", typeof(double)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Longitude", typeof(double)));
-                myPoints.DataTable.Columns.Add(new DataColumn("Date", typeof(DateTime)));
+                myPoints.DataTable.Columns.Add(new DataColumn("Location Class", typeof(string)));
+                myPoints.DataTable.Columns.Add(new DataColumn("Date", typeof(string)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Time", typeof(string)));
                 myPoints.DataTable.Columns.Add(new DataColumn("AnimalID", typeof(string)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Status", typeof(string)));
@@ -116,7 +117,8 @@
                     feature.DataRow["ID"] = pass.Key;
                     feature.DataRow["Latitude"] = pass.Latitude;
                     feature.DataRow["Longitude"] = pass.Longitude;
-                    feature.DataRow["Date"] = pass.LocationDate;
+                    feature.DataRow["Location Class"] = pass.LocationClass;
+                    feature.DataRow["Date"] = pass.LocationDate.ToString("yyyy-mm-dd HH:MM");
                     feature.DataRow["Time"] = pass.LocationDate.TimeOfDay;
                     feature.DataRow["AnimalID"] = animal.AnimalId;
                     feature.DataRow["Status"] = pass.ArgosPassStatus.Name;

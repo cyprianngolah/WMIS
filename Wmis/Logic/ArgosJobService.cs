@@ -179,7 +179,7 @@
 
             var noErrorFiles = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
 
-            var invalidLocClass = new List<string> { "0", "1", "2", "3", null, "" };
+            var validLocClasses = new List<string> { "0", "1", "2", "3"};
             var locatedCollars = new List<Collar>();
 
             foreach (var file in noErrorFiles)
@@ -206,10 +206,12 @@
 
                         p.Latitude = row.GpsLatitude.Value;
                         p.Longitude = row.GpsLongitude.Value;
+                        p.LocationClass = ArgosOutputFileRow.GPS_LOCATION_CLASS;
                         passes.Add(p);
                     }
-                    else if (!invalidLocClass.Contains(row.LocationClass))
+                    else if (validLocClasses.Contains(row.LocationClass))
                     {
+
                         if (!row.ArgosLatitude.HasValue || !row.ArgosLongitude.HasValue)
                             continue;
 
@@ -218,6 +220,7 @@
 
                         p.Latitude = row.ArgosLatitude.Value;
                         p.Longitude = row.ArgosLongitude.Value;
+                        p.LocationClass = row.LocationClass;
                         passes.Add(p);
                     }
                     else
