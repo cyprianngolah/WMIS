@@ -43,26 +43,29 @@ wmis.collaredanimal.index = (function($) {
 			"dom": '<"top">rt<"bottom"ip><"clear">',
             "order": [[2,'asc'],[3, 'asc']],
 			"columns": [
-				{ "data": "collarId" },
-				{ "data": "collarType.name" },
+				{ "data": "animalId" },
+				{ "data": "subscriptionId" },
+                { "data": "key" },
                 { "data": "collarState.name" },
                 { "data": "collarStatus.name" },
-                { "data": "vhfFrequency" },
-                { "data": "animalId" },
-                { "data": "herdPopulation.name" },
-				{ "data": "project.key" },
-				{ "data": "project.name" },
-			    {
-			         "data": "inactiveDate",
-				    "render": function (data, type, row) {
-				        var date = moment.utc(data, moment.ISO_8601).local();
+                {
+                    "data": "inactiveDate",
+                    "render": function (data, type, row) {
+                        var date = moment.utc(data, moment.ISO_8601).local();
                         if (date.isValid()) {
                             return date.format('L h:mm a');
                         } else {
                             return '';
                         }
-				    }
-				}
+                    }
+                },
+                { "data": "animalStatus.name" },
+                { "data": "vhfFrequency" },
+                { "data": "animalSex.name" },
+                { "data": "herdPopulation.name" },
+			    { "data": "collarType.name" },
+				{ "data": "project.key" },
+				{ "data": "project.name" }
 			],
 			"fnServerData": function (source, data, callback, settings) {
 				var sortDirection = null;

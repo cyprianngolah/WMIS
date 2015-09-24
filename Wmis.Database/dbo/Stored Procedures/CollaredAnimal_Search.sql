@@ -46,7 +46,11 @@ AS
 		c.CollarStateId as [CollarStateKey],
 		collarState.Name as [CollarStateName],
 		c.HerdPopulationId as [HerdPopulationKey],
-		herdPopulation.Name as [HerdPopulationName]
+		herdPopulation.Name as [HerdPopulationName],
+		c.AnimalSexId as [AnimalSexKey],
+		sex.Name as [AnimalSexName],
+		c.AnimalStatusId as [AnimalStatusKey],
+		animalStatus.Name as [AnimalStatusName]
 	FROM
 		dbo.CollaredAnimals c
 		LEFT OUTER JOIN dbo.CollarStatuses collarStatus on c.CollarStatusId = collarStatus.CollarStatusId
@@ -59,6 +63,7 @@ AS
 		LEFT OUTER JOIN dbo.AnimalSexes sex ON c.AnimalSexId = sex.AnimalSexId
 		LEFT OUTER JOIN dbo.AnimalMortalities mort ON c.AnimalMortalityId = mort.AnimalMortalityId
 		LEFT OUTER JOIN dbo.ArgosPrograms program ON c.ArgosProgramId = program.ArgosProgramId
+		LEFT OUTER JOIN dbo.AnimalStatuses animalStatus ON c.AnimalStatusId = animalStatus.AnimalStatusId
 	WHERE
 		(@p_regionKey IS NULL OR c.CollarRegionId = @p_regionKey) 
 		AND
@@ -88,7 +93,7 @@ AS
 			(
 				c.CollarStateId = 4 -- On - With Warnings
 				And c.CollarStatusId IN (1,2, 3, 14) --(Deployed, Suspected Stationary, Stationary, Malfunctioning)
-				AND (NOT AnimalStatusId = 2 OR AnimalStatusId IS NULL) -- Status <> Dead
+				AND (NOT c.AnimalStatusId = 2 OR c.AnimalStatusId IS NULL) -- Status <> Dead
 			)
 		)
 		AND 
