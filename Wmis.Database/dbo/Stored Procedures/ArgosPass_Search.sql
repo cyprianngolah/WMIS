@@ -4,7 +4,8 @@
 	@p_collaredAnimalKey INT,
 	@p_argosPassStatusFilter INT = null,
 	@p_daysStart DateTime = null,
-	@p_daysEnd DateTime = null
+	@p_daysEnd DateTime = null,
+	@p_showGpsOnly BIT = 0
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
@@ -25,6 +26,14 @@ AS
 		ap.CollaredAnimalId = @p_collaredAnimalKey
 		AND (@p_argosPassStatusFilter IS NULL OR argosPassStatus.isRejected = @p_argosPassStatusFilter)
 		AND (@p_daysStart IS NULL OR ap.LocationDate >= @p_daysStart)
+		AND
+		(
+			@p_showGpsOnly IS NULL
+			OR 
+			(
+				ap.LocationClass = 'G'
+			)
+		)
 	ORDER BY
 		ap.LocationDate DESC
 	OFFSET 

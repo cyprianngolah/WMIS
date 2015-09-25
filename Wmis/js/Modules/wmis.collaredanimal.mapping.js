@@ -43,6 +43,8 @@ wmis.collaredanimal.mapping = (function ($) {
         this.statusFilterKey = ko.observable(-1);
         this.daysFilterKey = ko.observable(-1);
 
+        this.showGpsOnly = ko.observable();
+
         this.statusFilterOptions = [
             { key: -1, name: 'All' },
             { key: 0, name: 'Warnings' },
@@ -57,7 +59,7 @@ wmis.collaredanimal.mapping = (function ($) {
         ];
 
         wmis.global.getDropDownData(self.passStatuses, "/api/argos/passStatuses?startRow=0&rowCount=500", function (result) { return result.data; });
-        
+
         this.reviewPass = function(pass) {
             self.selectedPass(pass);
             wmis.collaredanimal.editmodals.reviewCollarDataPoint(
@@ -168,6 +170,10 @@ wmis.collaredanimal.mapping = (function ($) {
                 //Check Days Filter
                 var daysFilterValue = locationTableModel.daysFilterKey();
                 if (daysFilterValue >= 0) parameters.daysFilter = daysFilterValue;
+                //Check GPS Filter
+                var showGpsOnlyValue = locationTableModel.showGpsOnly();
+                if (showGpsOnlyValue) parameters.showGpsOnly = showGpsOnlyValue;
+               
 
                 $.getJSON("/api/argos/passes", parameters, function (json) {
                     locationTableModel.argosPasses(json.data);
@@ -193,6 +199,10 @@ wmis.collaredanimal.mapping = (function ($) {
         });
 
         locationTableModel.daysFilterKey.subscribe(function () {
+            $("#locationTable").DataTable().ajax.reload();
+        });
+        // GPS Checkbox Clicked
+        locationTableModel.showGpsOnly.subscribe(function() {
             $("#locationTable").DataTable().ajax.reload();
         });
     }

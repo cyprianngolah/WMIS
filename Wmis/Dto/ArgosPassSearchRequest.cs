@@ -10,5 +10,7 @@
         public int? StatusFilter { get; set; }
 
         public int? DaysFilter { get; set; }
+
+        public bool? ShowGpsOnly { get; set; }
 	}
 }

@@ -2691,7 +2691,8 @@
                     p_collaredAnimalKey = apsr.CollaredAnimalId,
                     p_argosPassStatusFilter = apsr.StatusFilter,
                     p_daysStart = (apsr.DaysFilter != null && apsr.DaysFilter > 0) ? (DateTime?)DateTime.Now.AddDays(-(double)apsr.DaysFilter) : null,
-                    p_daysEnd = (apsr.DaysFilter != null && apsr.DaysFilter > 0) ? (DateTime?)DateTime.Now : null
+                    p_daysEnd = (apsr.DaysFilter != null && apsr.DaysFilter > 0) ? (DateTime?)DateTime.Now : null,
+                    p_showGpsOnly = apsr.ShowGpsOnly
                 };
 
                 using (var q = c.QueryMultiple(ARGOSPASS_SEARCH, param, commandType: CommandType.StoredProcedure))
