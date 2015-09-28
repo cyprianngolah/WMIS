@@ -126,7 +126,6 @@ wmis.shared.filetab = (function($) {
             context: this,
             template: 'editFileTemplate'
         }).fail(function() {
-            console.log("Modal cancelled");
         }).done(saveEditedFile);
     }
 
@@ -155,7 +154,6 @@ wmis.shared.filetab = (function($) {
             context: this,
             template: 'editFileTemplate'
         }).fail(function() {
-            console.log("Modal cancelled");
         }).done(saveNewFile);
     }
 
@@ -190,8 +188,6 @@ wmis.shared.filetab = (function($) {
         initializeFileTable();
         wireEditButtons();
         wireDeleteButtons();
-
-        $("#addFileButton").click(showNewFileModal);
     }
 
     function initialize(key, table, div) {
