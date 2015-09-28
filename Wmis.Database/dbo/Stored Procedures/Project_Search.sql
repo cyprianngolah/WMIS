@@ -49,7 +49,34 @@ AS
 			OR p.[Name] LIKE '%' + @p_keywords + '%' 
 		)
 	ORDER BY
-		p.ProjectId
+		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '0'
+			THEN p.[ProjectId] END ASC,
+		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '1'
+			THEN p.[ProjectId] END DESC,
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '0'
+			THEN p.[Name] END ASC,
+		CASE WHEN @p_sortBy = 'name' AND @p_sortDirection = '1'
+			THEN p.[Name] END DESC,
+		CASE WHEN @p_sortBy = 'leadRegion.name' AND @p_sortDirection = '0'
+			THEN lr.Name END ASC,
+		CASE WHEN @p_sortBy = 'leadRegion.name' AND @p_sortDirection = '1'
+			THEN lr.Name END DESC,
+		CASE WHEN @p_sortBy = 'projectLead.jobTitle' AND @p_sortDirection = '0'
+			THEN pr.JobTitle END ASC,
+		CASE WHEN @p_sortBy = 'projectLead.jobTitle' AND @p_sortDirection = '1'
+			THEN pr.JobTitle END DESC,
+		CASE WHEN @p_sortBy = 'status.name' AND @p_sortDirection = '0'
+			THEN ps.Name END ASC,
+		CASE WHEN @p_sortBy = 'status.name' AND @p_sortDirection = '1'
+			THEN ps.Name END DESC,
+		CASE WHEN @p_sortBy = 'statusDate' AND @p_sortDirection = '0'
+			THEN p.[StatusDate] END ASC,
+		CASE WHEN @p_sortBy = 'statusDate' AND @p_sortDirection = '1'
+			THEN p.[StatusDate] END DESC,
+		CASE WHEN @p_sortBy = 'startDate' AND @p_sortDirection = '0'
+			THEN p.[StartDate] END ASC,
+		CASE WHEN @p_sortBy = 'startDate' AND @p_sortDirection = '1'
+			THEN p.[StartDate] END DESC
 	OFFSET 
 		@p_startRow ROWS
 	FETCH NEXT 
