@@ -24,6 +24,9 @@ namespace Wmis.Models
         LowVoltage,
 
         [Description("Mortality")]
-        Mortality
+        Mortality,
+
+        [Description("Repitition Count")]
+        RepititionCount
     }
 }

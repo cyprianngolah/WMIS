@@ -126,9 +126,12 @@ namespace Wmis.Argos
                                                 
                         if (headers.Contains("temperature"))
                             detail.Temperature = csv.GetField<double?>(headers.IndexOf("temperature"));
-                        
+
                         if (headers.Contains("low voltage"))
                             detail.LowVoltage = csv.GetField<string>(headers.IndexOf("low voltage"));
+
+                        if (headers.Contains("Repetition Count"))
+                            detail.RepititionCount = csv.GetField<int?>(headers.IndexOf("Repetition Count"));
 
                         if (headers.Contains("mortality"))
                             detail.Mortality = csv.GetField<string>(headers.IndexOf("mortality"));

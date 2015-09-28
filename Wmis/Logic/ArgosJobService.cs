@@ -69,14 +69,6 @@
                 }
             }
             throw new Exception("Can't access Argos Processed Files Folder: " + collarsFolder);
-
-            /* Old Code that Read Directly from the Argos Service into the DB */
-            //var programs = _repository.ArgosProgramsGetAll(); //.Where(p => p.ArgosUser.Name  == "gunn");
-
-            //foreach (var program in programs)
-            //{
-            //    BackgroundJob.Enqueue(() => GetArgosDataForProgram(program));
-            //}
         }
 
         [AutomaticRetry(Attempts = 1, LogEvents = true)]
@@ -233,6 +225,19 @@
                                 Date = row.Timestamp.Value,
                                 ValueType = ArgosCollarDataValueType.Temperature,
                                 Value = string.Format("{0}", row.Temperature.Value)
+                            };
+
+                            dataRows.Add(data);
+                        }
+
+                        if (row.RepititionCount.HasValue)
+                        {
+                            var data = new ArgosCollarData
+                            {
+                                CollaredAnimalId = collar.Key,
+                                Date = row.Timestamp.Value,
+                                ValueType = ArgosCollarDataValueType.RepititionCount,
+                                Value = string.Format("{0}", row.RepititionCount)
                             };
 
                             dataRows.Add(data);
