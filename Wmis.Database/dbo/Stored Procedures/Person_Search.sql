@@ -22,7 +22,7 @@ AS
 		dbo.Person p
 	WHERE
 		p.PersonId = ISNULL(@p_personId, P.PersonId)
-		AND (@p_keywords IS NULL OR p.Name LIKE '%' + @p_keywords + '%' OR p.Email LIKE '%' + @p_keywords + '%')
+		AND (@p_keywords IS NULL OR p.Name LIKE '%' + @p_keywords + '%')
 		AND (
 			@p_roleName IS NULL OR EXISTS (
 				SELECT 
