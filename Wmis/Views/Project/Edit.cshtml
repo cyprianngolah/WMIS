@@ -226,8 +226,8 @@
 
                 <div class="tab-pane form-horizontal" id="surveysTab">
                     <div class="row">
-                        <label for="projectSurveyType" class="col-md-1 control-label">Survey Type</label>
-                        <div class="col-md-2">
+                        <label for="projectSurveyType" class="control-label col-md-1">Survey Type</label>
+                        <div class="col-md-2" style="text-align: left">
                             <select class="form-control" id="surveyTypeKey" data-bind="options: $root.surveyTypes, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: surveyFilterKey, select2: { }"></select>
                         </div>
                         <div class="col-md-9 text-right">
@@ -268,13 +268,6 @@
                 </div>
 
                 <div class="tab-pane form-horizontal" id="collarsTab">
-                    @*<div class="row">
-                            <div class="col-md-12 text-right">
-                                <a href="~/Project/NewCollar" id="newCollarButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-                                <a href="~/Project/EditCollar" id="editCollarButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Edit</a>
-                            </div>
-                        </div>*@
-
                     <div class="row">
                         <div class="col-md-12">
                             <table id="collars" class="table">

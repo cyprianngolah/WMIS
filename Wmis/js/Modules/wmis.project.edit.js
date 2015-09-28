@@ -301,6 +301,7 @@ wmis.project.edit = (function ($) {
 				},
 				{
 				    "data": "targetSpecies",
+                    "name": "commonName",
 				    "render": function (data, type, row) {
 				        if (typeof (data) != 'undefined' && data != null) {
 				            return data.commonName;
@@ -318,7 +319,10 @@ wmis.project.edit = (function ($) {
 				            return "";
 				    }
 				},
-				{ "data": "observationCount" },
+                {
+                    "data": "observationCount",
+                    "sortable": false
+                }
             ],
             "fnServerData": function (source, data, callback, settings) {
                 var sortDirection = null;

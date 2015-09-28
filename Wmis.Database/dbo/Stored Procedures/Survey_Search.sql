@@ -68,7 +68,26 @@ AS
 			OR s.[Description] LIKE '%' + @p_keywords + '%' 
 		)
 	ORDER BY
-		s.[SurveyId]
+		CASE WHEN @p_sortBy = 'surveyType' AND @p_sortDirection = '0'
+			THEN st.[Name] END ASC,
+		CASE WHEN @p_sortBy = 'surveyType' AND @p_sortDirection = '1'
+			THEN st.[Name] END DESC,
+		CASE WHEN @p_sortBy = 'template' AND @p_sortDirection = '0'
+			THEN ste.[Name] END ASC,
+		CASE WHEN @p_sortBy = 'template' AND @p_sortDirection = '1'
+			THEN ste.[Name] END DESC,
+		CASE WHEN @p_sortBy = 'targetSpecies' AND @p_sortDirection = '0'
+			THEN sp.[Name] END ASC,
+		CASE WHEN @p_sortBy = 'targetSpecies' AND @p_sortDirection = '1'
+			THEN sp.[Name] END DESC,
+		CASE WHEN @p_sortBy = 'commonName' AND @p_sortDirection = '0'
+			THEN sp.[CommonName] END ASC,
+		CASE WHEN @p_sortBy = 'commonName' AND @p_sortDirection = '1'
+			THEN sp.[CommonName] END DESC,
+		CASE WHEN @p_sortBy = 'startDate' AND @p_sortDirection = '0'
+			THEN s.[StartDate] END ASC,
+		CASE WHEN @p_sortBy = 'startDate' AND @p_sortDirection = '1'
+			THEN s.[StartDate] END DESC
 	OFFSET 
 		@p_startRow ROWS
 	FETCH NEXT 

@@ -17,21 +17,22 @@
 	        <input class="form-control" id="synonyms" type="hidden" data-bind="select2Tags: {tags: [], val: synonyms}" />
 	    </div>
 
-		<div class="text-right">
-			@if (Html.UserIsBiodiversityAdministrator())
-			{
-				<button type="submit" class="btn btn-primary" data-bind="click: saveTaxonomy, enabled: canSave">Save</button>
-			}
-			<a href="/Taxonomy/Index" class="btn btn-default">
-				@if (Html.UserIsBiodiversityAdministrator())
-				{
-					<span>Cancel</span>
-				}
-				else
-				{
-					<span>Back</span>
-				}
-			</a>
-		</div>
+	    <div class="text-right">
+            <a href="/Taxonomy/Index" class="btn btn-default">
+                @if (Html.UserIsBiodiversityAdministrator())
+                {
+                    <span>Cancel</span>
+                }
+                else
+                {
+                    <span>Back</span>
+                }
+            </a>
+	        @if (Html.UserIsBiodiversityAdministrator())
+	        {
+	            <button type="submit" class="btn btn-primary" data-bind="click: saveTaxonomy, enabled: canSave">Save</button>
+	        }
+
+	    </div>
 	</form>
 </div>
