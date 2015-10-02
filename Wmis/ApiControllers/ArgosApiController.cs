@@ -59,27 +59,6 @@
             _argosJobService.ProcessArgosCollars();
         }
 
-        [HttpPost]
-        [Route("accessCollarsFolder")]
-        public bool AccessCollarsFolder()
-        {
-            var collarsFolder = WebConfiguration.AppSettings["ProcessedArgosCollarsDirectory"];
-
-            Ping ping = new Ping();
-            var server = collarsFolder.Split(';');
-            PingReply respoPingReply = ping.Send(server[0], 1000);
-            if (respoPingReply.Status == IPStatus.Success)
-            {
-                var folder = @"\\" + server[0];
-                folder = Path.Combine(folder, server[1]);
-                if (Directory.Exists(folder))
-                {
-                    
-                }
-            }
-            return false;
-        }
-
         [HttpGet]
         [Route("passes")]
         public Dto.PagedResultset<ArgosPass> PassesForCollar([FromUri]ArgosPassSearchRequest apsr)
