@@ -105,63 +105,117 @@ AS
 			)
 		)
 	ORDER BY
-	CASE WHEN @p_sortDirection = '0' THEN
-        CASE 
-           WHEN @p_sortBy = 'collarType.name' THEN [collarType].Name
-           WHEN @p_sortBy = 'collarState.name' THEN CAST(COALESCE([collarState].[Order], '15') AS NVARCHAR)
-           WHEN @p_sortBy = 'collarId' THEN [collarId] 
-           WHEN @p_sortBy = 'collarStatus.name' THEN [collarStatus].[Order] 
-           WHEN @p_sortBy = 'vhfFrequency' THEN [VhfFrequency] 
-           WHEN @p_sortBy = 'animalId' THEN [AnimalId] 
-           WHEN @p_sortBy = 'herdPopulation.name' THEN [herdPopulation].Name
-           WHEN @p_sortBy = 'project.key' THEN CAST([project].ProjectId AS NVARCHAR)
-           WHEN @p_sortBy = 'project.name' THEN [project].Name 
-           WHEN @p_sortBy = 'inactiveDate' THEN CAST([InactiveDate] AS NVARCHAR)
-        END
-    END ASC
-    , CASE WHEN @p_sortDirection = '1' THEN
-        CASE 
-           WHEN @p_sortBy = 'collarType.name' THEN [collarType].Name
-           WHEN @p_sortBy = 'collarState.name' THEN CAST(COALESCE([collarState].[Order], '15') AS NVARCHAR)
-           WHEN @p_sortBy = 'collarId' THEN [collarId] 
-           WHEN @p_sortBy = 'collarStatus.name' THEN [collarStatus].[Order] 
-           WHEN @p_sortBy = 'vhfFrequency' THEN [VhfFrequency] 
-           WHEN @p_sortBy = 'animalId' THEN [AnimalId] 
-           WHEN @p_sortBy = 'herdPopulation.name' THEN [herdPopulation].Name
-           WHEN @p_sortBy = 'project.key' THEN CAST([project].ProjectId AS NVARCHAR)
-           WHEN @p_sortBy = 'project.name' THEN [project].Name 
-           WHEN @p_sortBy = 'inactiveDate' THEN CAST([InactiveDate] AS NVARCHAR)
-        END
-    END DESC
+		CASE WHEN @p_sortBy = 'collarType.name' AND @p_sortDirection = '0'
+			THEN [collarType].Name END ASC,
+		CASE WHEN @p_sortBy = 'collarType.name' AND @p_sortDirection = '1'
+			THEN [collarType].Name END DESC,
+		CASE WHEN @p_sortBy = 'collarState.name' AND @p_sortDirection = '0'
+			THEN [collarState].[Order] END ASC,
+		CASE WHEN @p_sortBy = 'collarState.name' AND @p_sortDirection = '1'
+			THEN [collarState].[Order] END DESC,
+		CASE WHEN @p_sortBy = 'collarId' AND @p_sortDirection = '0'
+			THEN [collarId] END ASC,
+		CASE WHEN @p_sortBy = 'collarId' AND @p_sortDirection = '1'
+			THEN [collarId] END DESC,
+		CASE WHEN @p_sortBy = 'collarStatus.name' AND @p_sortDirection = '0'
+			THEN [collarStatus].[Order] END ASC,
+		CASE WHEN @p_sortBy = 'collarStatus.name' AND @p_sortDirection = '1'
+			THEN [collarStatus].[Order] END DESC,
+		CASE WHEN @p_sortBy = 'vhfFrequency' AND @p_sortDirection = '0'
+			THEN [VhfFrequency] END ASC,
+		CASE WHEN @p_sortBy = 'vhfFrequency' AND @p_sortDirection = '1'
+			THEN [VhfFrequency] END DESC,
+		CASE WHEN @p_sortBy = 'animalId' AND @p_sortDirection = '0'
+			THEN [AnimalId] END ASC,
+		CASE WHEN @p_sortBy = 'animalId' AND @p_sortDirection = '1'
+			THEN [AnimalId] END DESC,
+		CASE WHEN @p_sortBy = 'herdPopulation.name' AND @p_sortDirection = '0'
+			THEN [herdPopulation].Name END ASC,
+		CASE WHEN @p_sortBy = 'herdPopulation.name' AND @p_sortDirection = '1'
+			THEN [herdPopulation].Name END DESC,
+		CASE WHEN @p_sortBy = 'project.key' AND @p_sortDirection = '0'
+			THEN [project].ProjectId END ASC,
+		CASE WHEN @p_sortBy = 'project.key' AND @p_sortDirection = '1'
+			THEN [project].ProjectId END DESC,
+		CASE WHEN @p_sortBy = 'project.name' AND @p_sortDirection = '0'
+			THEN [project].Name  END ASC,
+		CASE WHEN @p_sortBy = 'project.name' AND @p_sortDirection = '1'
+			THEN [project].Name  END DESC,
+		CASE WHEN @p_sortBy = 'inactiveDate' AND @p_sortDirection = '0'
+			THEN [InactiveDate] END ASC,
+		CASE WHEN @p_sortBy = 'inactiveDate' AND @p_sortDirection = '1'
+			THEN [InactiveDate] END DESC,
+		CASE WHEN @p_sortBy = 'subscriptionId' AND @p_sortDirection = '0'
+			THEN [SubscriptionId] END ASC,
+		CASE WHEN @p_sortBy = 'subscriptionId' AND @p_sortDirection = '1'
+			THEN [SubscriptionId] END DESC,
+		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '0'
+			THEN c.CollaredAnimalId END ASC,
+		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '1'
+			THEN c.CollaredAnimalId END DESC,
+		CASE WHEN @p_sortBy = 'animalStatus.name' AND @p_sortDirection = '0'
+			THEN [animalStatus].Name END ASC,
+		CASE WHEN @p_sortBy = 'animalStatus.name' AND @p_sortDirection = '1'
+			THEN [animalStatus].Name END DESC,
+		CASE WHEN @p_sortBy = 'animalSex.name' AND @p_sortDirection = '0'
+			THEN [sex].Name END ASC,
+		CASE WHEN @p_sortBy = 'animalSex.name' AND @p_sortDirection = '1'
+			THEN [sex].Name END DESC
+
 	,
-    CASE WHEN @p_subSortDirection = '0' THEN
-        CASE 
-           WHEN @p_subSortBy = 'collarType.name' THEN [collarType].Name
-           WHEN @p_subSortBy = 'collarState.name' THEN CAST(COALESCE([collarState].[Order], '15') AS NVARCHAR)
-           WHEN @p_subSortBy = 'collarId' THEN [collarId] 
-           WHEN @p_subSortBy = 'collarStatus.name' THEN [collarStatus].[Order] 
-           WHEN @p_subSortBy = 'vhfFrequency' THEN [VhfFrequency] 
-           WHEN @p_subSortBy = 'animalId' THEN [AnimalId] 
-           WHEN @p_subSortBy = 'herdPopulation.name' THEN [herdPopulation].Name
-           WHEN @p_subSortBy = 'project.key' THEN CAST([project].ProjectId AS NVARCHAR)
-           WHEN @p_subSortBy = 'project.name' THEN [project].Name 
-           WHEN @p_subSortBy = 'inactiveDate' THEN CAST([InactiveDate] AS NVARCHAR)
-        END
-    END ASC
-    , CASE WHEN @p_subSortDirection = '1' THEN
-        CASE 
-           WHEN @p_subSortBy = 'collarType.name' THEN [collarType].Name
-           WHEN @p_subSortBy = 'collarState.name' THEN CAST(COALESCE([collarState].[Order], '15') AS NVARCHAR)
-           WHEN @p_subSortBy = 'collarId' THEN [collarId] 
-           WHEN @p_subSortBy = 'collarStatus.name' THEN [collarStatus].[Order] 
-           WHEN @p_subSortBy = 'vhfFrequency' THEN [VhfFrequency] 
-           WHEN @p_subSortBy = 'animalId' THEN [AnimalId] 
-           WHEN @p_subSortBy = 'herdPopulation.name' THEN [herdPopulation].Name
-           WHEN @p_subSortBy = 'project.key' THEN CAST([project].ProjectId AS NVARCHAR)
-           WHEN @p_subSortBy = 'project.name' THEN [project].Name 
-           WHEN @p_subSortBy = 'inactiveDate' THEN CAST([InactiveDate] AS NVARCHAR)
-        END
-    END DESC
+		CASE WHEN @p_subSortBy = 'collarType.name' AND @p_subSortDirection = '0'
+			THEN [collarType].Name END ASC,
+		CASE WHEN @p_subSortBy = 'collarType.name' AND @p_subSortDirection = '1'
+			THEN [collarType].Name END DESC,
+		CASE WHEN @p_subSortBy = 'collarState.name' AND @p_subSortDirection = '0'
+			THEN [collarState].[Order] END ASC,
+		CASE WHEN @p_subSortBy = 'collarState.name' AND @p_subSortDirection = '1'
+			THEN [collarState].[Order] END DESC,
+		CASE WHEN @p_subSortBy = 'collarId' AND @p_subSortDirection = '0'
+			THEN [collarId] END ASC,
+		CASE WHEN @p_subSortBy = 'collarId' AND @p_subSortDirection = '1'
+			THEN [collarId] END DESC,
+		CASE WHEN @p_subSortBy = 'collarStatus.name' AND @p_subSortDirection = '0'
+			THEN [collarStatus].[Order] END ASC,
+		CASE WHEN @p_subSortBy = 'collarStatus.name' AND @p_subSortDirection = '1'
+			THEN [collarStatus].[Order] END DESC,
+		CASE WHEN @p_subSortBy = 'vhfFrequency' AND @p_subSortDirection = '0'
+			THEN [VhfFrequency] END ASC,
+		CASE WHEN @p_subSortBy = 'vhfFrequency' AND @p_subSortDirection = '1'
+			THEN [VhfFrequency] END DESC,
+		CASE WHEN @p_subSortBy = 'animalId' AND @p_subSortDirection = '0'
+			THEN [AnimalId] END ASC,
+		CASE WHEN @p_subSortBy = 'animalId' AND @p_subSortDirection = '1'
+			THEN [AnimalId] END DESC,
+		CASE WHEN @p_subSortBy = 'herdPopulation.name' AND @p_subSortDirection = '0'
+			THEN [herdPopulation].Name END ASC,
+		CASE WHEN @p_subSortBy = 'herdPopulation.name' AND @p_subSortDirection = '1'
+			THEN [herdPopulation].Name END DESC,
+		CASE WHEN @p_subSortBy = 'project.key' AND @p_subSortDirection = '0'
+			THEN [project].ProjectId END ASC,
+		CASE WHEN @p_subSortBy = 'project.key' AND @p_subSortDirection = '1'
+			THEN [project].ProjectId END DESC,
+		CASE WHEN @p_subSortBy = 'project.name' AND @p_subSortDirection = '0'
+			THEN [project].Name  END ASC,
+		CASE WHEN @p_subSortBy = 'project.name' AND @p_subSortDirection = '1'
+			THEN [project].Name  END DESC,
+		CASE WHEN @p_subSortBy = 'inactiveDate' AND @p_subSortDirection = '0'
+			THEN [InactiveDate] END ASC,
+		CASE WHEN @p_subSortBy = 'inactiveDate' AND @p_subSortDirection = '1'
+			THEN [InactiveDate] END DESC,
+		CASE WHEN @p_subSortBy = 'subscriptionId' AND @p_subSortDirection = '0'
+			THEN [SubscriptionId] END ASC,
+		CASE WHEN @p_subSortBy = 'subscriptionId' AND @p_subSortDirection = '1'
+			THEN [SubscriptionId] END DESC,
+		CASE WHEN @p_subSortBy = 'key' AND @p_subSortDirection = '0'
+			THEN c.CollaredAnimalId END ASC,
+		CASE WHEN @p_subSortBy = 'key' AND @p_subSortDirection = '1'
+			THEN c.CollaredAnimalId END DESC,
+		CASE WHEN @p_subSortBy = 'animalStatus.name' AND @p_subSortDirection = '0'
+			THEN [sex].Name END ASC,
+		CASE WHEN @p_subSortBy = 'animalStatus.name' AND @p_subSortDirection = '1'
+			THEN [sex].Name END DESC
+
 
 	OFFSET 
 		@p_startRow ROWS
