@@ -15,7 +15,8 @@ BEGIN
 		(5, 'Site'),
 		(6,'Necropsy'),
 		(7,'Capture'),
-		(8,'Random')
+		(8,'Random'),
+		(9,'Collar Locations')
 	)
 	AS [Source] ([SurveyTypeId], [Name]) 
 	ON [Target].[SurveyTypeId] = [source].[SurveyTypeId]
