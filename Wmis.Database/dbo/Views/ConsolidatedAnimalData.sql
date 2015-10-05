@@ -4,7 +4,7 @@ SELECT
 	'C' + CAST(ap.ArgosPassId AS NVARCHAR(10)) AS [Key],
 	ap.ArgosPassId AS [RowKey], 
 	p.ProjectId as [ProjectId],
-	NULL AS [SurveyId],
+	9 AS [SurveyId],
 	s.SpeciesId,
 	ap.LocationDate AS [Date], 
 	ap.Latitude, 

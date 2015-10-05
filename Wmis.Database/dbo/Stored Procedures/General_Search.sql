@@ -36,9 +36,9 @@ AS
 		d.[Sex]
 	FROM
 		[dbo].[ConsolidatedAnimalData] d
-			LEFT OUTER JOIN dbo.[Survey] AS s ON (d.SurveyId = s.SurveyId)
-			LEFT OUTER JOIN dbo.[SurveyType] AS st ON (s.SurveyTypeId = st.SurveyTypeId)
-			INNER JOIN dbo.[Species] AS sp ON (sp.SpeciesId = d.SpeciesId)
+			JOIN dbo.[Survey] AS s ON (d.SurveyId = s.SurveyId)
+			JOIN dbo.[SurveyType] AS st ON (s.SurveyTypeId = st.SurveyTypeId)
+			JOIN dbo.[Species] AS sp ON (sp.SpeciesId = d.SpeciesId)
 	WHERE
 		(s.TargetSpeciesId IN (SELECT n FROM @p_speciesIds) OR 0 = (SELECT COUNT(*) FROM @p_speciesIds))
 		AND (st.SurveyTypeId IN (SELECT n FROM @p_surveyTypeIds) OR 0 = (SELECT COUNT(*) FROM @p_surveyTypeIds))
