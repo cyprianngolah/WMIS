@@ -13,7 +13,8 @@ BEGIN
 		(3, 'Harvested'),
 		(4, 'Wolf'),
 		(5, 'Predator (Other than wolf)'),
-		(6, 'Unknown')
+		(6, 'Unknown'),
+		(7, 'Capture Related')
 	)
 	AS [Source] ([AnimalMortalityId], [Name]) 
 	ON [Target].[AnimalMortalityId] = [source].[AnimalMortalityId]
