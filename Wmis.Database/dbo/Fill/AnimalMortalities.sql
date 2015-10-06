@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[AnimalMortalities] WHERE [AnimalMortalityId] NOT IN (1,2,3,4,5,6) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[AnimalMortalities] WHERE [AnimalMortalityId] NOT IN (1,2,3,4,5,6,7) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[AnimalMortalities] other than what exists in the Fill Script.', 1; 
 END
