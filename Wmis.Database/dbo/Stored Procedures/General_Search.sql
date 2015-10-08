@@ -1,11 +1,5 @@
-﻿USE [Wmis]
-GO
-/****** Object:  StoredProcedure [dbo].[General_Search]    Script Date: 10/8/2015 1:04:14 PM ******/
-SET ANSI_NULLS OFF
-GO
-SET QUOTED_IDENTIFIER OFF
-GO
-ALTER PROCEDURE [dbo].[General_Search] 
+﻿
+CREATE PROCEDURE [dbo].[General_Search] 
 	@p_from INT = 0,
 	@p_to INT = 50,
 	@p_sortBy NVARCHAR(25) = NULL,

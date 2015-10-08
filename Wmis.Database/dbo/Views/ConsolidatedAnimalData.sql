@@ -4,16 +4,6 @@ GO
 /****** Object:  View [dbo].[ConsolidatedAnimalData]    Script Date: 10/8/2015 1:03:35 PM ******/
 DROP VIEW [dbo].[ConsolidatedAnimalData]
 GO
-
-/****** Object:  View [dbo].[ConsolidatedAnimalData]    Script Date: 10/8/2015 1:03:35 PM ******/
-SET ANSI_NULLS OFF
-GO
-
-SET QUOTED_IDENTIFIER OFF
-GO
-
-
-
 CREATE VIEW [dbo].[ConsolidatedAnimalData]
 AS
 SELECT 
@@ -59,5 +49,8 @@ FROM
 WHERE
 	up.ObservationUploadStatusId = 4
 
-
 GO
+
+GRANT SELECT ON [dbo].[ConsolidatedAnimalData] TO [WMISUser]
+GO
+
