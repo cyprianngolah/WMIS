@@ -1,15 +1,31 @@
-﻿CREATE VIEW [dbo].[ConsolidatedAnimalData]
+﻿USE [Wmis]
+GO
+
+/****** Object:  View [dbo].[ConsolidatedAnimalData]    Script Date: 10/8/2015 1:03:35 PM ******/
+DROP VIEW [dbo].[ConsolidatedAnimalData]
+GO
+
+/****** Object:  View [dbo].[ConsolidatedAnimalData]    Script Date: 10/8/2015 1:03:35 PM ******/
+SET ANSI_NULLS OFF
+GO
+
+SET QUOTED_IDENTIFIER OFF
+GO
+
+
+
+CREATE VIEW [dbo].[ConsolidatedAnimalData]
 AS
 SELECT 
 	'C' + CAST(ap.ArgosPassId AS NVARCHAR(10)) AS [Key],
 	ap.ArgosPassId AS [RowKey], 
 	p.ProjectId as [ProjectId],
-	9 AS [SurveyId],
+	NULL AS [SurveyId],
 	s.SpeciesId,
 	ap.LocationDate AS [Date], 
 	ap.Latitude, 
 	ap.Longitude, 
-	'Argos' as [SurveyType], 
+	9 as [SurveyTypeId], 
 	ca.CollaredAnimalId as [AnimalId], 
 	ca.HerdPopulationId as [Herd], 
 	asex.[Name] as [Sex]
@@ -29,7 +45,7 @@ SELECT
 	ob.[Timestamp] AS [Date], 
 	ob.[Latitude] as [Latitude], 
 	ob.[Longitude] as [Longitude], 
-	st.Name AS [SurveyType], 
+	st.SurveyTypeId as [SurveyTypeId], 
 	NULL as [AnimalId], 
 	NULL as [Herd],
 	NULL as [Sex]
@@ -42,7 +58,6 @@ FROM
 		INNER JOIN dbo.[ObservationRows] AS ob ON (ob.ObservationUploadId = up.ObservationUploadId)
 WHERE
 	up.ObservationUploadStatusId = 4
-GO
 
-GRANT SELECT ON [dbo].[ConsolidatedAnimalData] TO [WMISUser]
+
 GO

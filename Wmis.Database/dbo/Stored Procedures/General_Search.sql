@@ -1,4 +1,11 @@
-﻿CREATE PROCEDURE [dbo].[General_Search] 
+﻿USE [Wmis]
+GO
+/****** Object:  StoredProcedure [dbo].[General_Search]    Script Date: 10/8/2015 1:04:14 PM ******/
+SET ANSI_NULLS OFF
+GO
+SET QUOTED_IDENTIFIER OFF
+GO
+ALTER PROCEDURE [dbo].[General_Search] 
 	@p_from INT = 0,
 	@p_to INT = 50,
 	@p_sortBy NVARCHAR(25) = NULL,
@@ -30,17 +37,16 @@ AS
 		d.[Date] AS [Date],
 		d.[Latitude] as [Latitude],
 		d.[Longitude] as [Longitude],
-		d.[SurveyType],
+		d.[SurveyTypeId],
 		d.[AnimalId],
 		d.[Herd],
 		d.[Sex]
 	FROM
 		[dbo].[ConsolidatedAnimalData] d
-			JOIN dbo.[Survey] AS s ON (d.SurveyId = s.SurveyId)
-			JOIN dbo.[SurveyType] AS st ON (s.SurveyTypeId = st.SurveyTypeId)
-			JOIN dbo.[Species] AS sp ON (sp.SpeciesId = d.SpeciesId)
+		INNER JOIN dbo.[Species] AS sp ON (sp.SpeciesId = d.SpeciesId)
+		INNER JOIN dbo.[SurveyType] AS st ON (st.SurveyTypeId = d.SurveyTypeId)
 	WHERE
-		(s.TargetSpeciesId IN (SELECT n FROM @p_speciesIds) OR 0 = (SELECT COUNT(*) FROM @p_speciesIds))
+		(d.SpeciesId IN (SELECT n FROM @p_speciesIds) OR 0 = (SELECT COUNT(*) FROM @p_speciesIds))
 		AND (st.SurveyTypeId IN (SELECT n FROM @p_surveyTypeIds) OR 0 = (SELECT COUNT(*) FROM @p_surveyTypeIds))
 		AND (sp.NWTStatusRankId IN (SELECT n FROM @p_nwtSaraStatusIds) OR 0 = (SELECT COUNT(*) FROM @p_nwtSaraStatusIds)) 
 		AND (sp.SARAStatusId IN (SELECT n FROM @p_fedSaraStatusIds) OR 0 = (SELECT COUNT(*) FROM @p_fedSaraStatusIds))
@@ -58,7 +64,3 @@ AS
 		@p_from ROWS
 	FETCH NEXT
 		(@p_to - @p_from) ROWS ONLY
-GO
-
-GRANT EXECUTE ON [dbo].[General_Search] TO [WMISUser]
-GO
