@@ -1,10 +1,4 @@
-﻿USE [Wmis]
-GO
-
-/****** Object:  View [dbo].[ConsolidatedAnimalData]    Script Date: 10/8/2015 1:03:35 PM ******/
-DROP VIEW [dbo].[ConsolidatedAnimalData]
-GO
-CREATE VIEW [dbo].[ConsolidatedAnimalData]
+﻿CREATE VIEW [dbo].[ConsolidatedAnimalData]
 AS
 SELECT 
 	'C' + CAST(ap.ArgosPassId AS NVARCHAR(10)) AS [Key],
