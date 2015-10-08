@@ -188,6 +188,8 @@ wmis.shared.filetab = (function($) {
         initializeFileTable();
         wireEditButtons();
         wireDeleteButtons();
+
+        $("#addFileButton").click(showNewFileModal);
     }
 
     function initialize(key, table, div) {
