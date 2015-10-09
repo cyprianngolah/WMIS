@@ -156,8 +156,8 @@ wmis.search.index = (function ($) {
             "bJQueryUI": true,
             "bProcessing": true,
             "serverSide": true,
-            "ajaxSource": "/api/search",
             "pagingType": "bootstrap",
+            "iDeferLoading": 57,
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
 				{ "data": "key" },
@@ -179,7 +179,8 @@ wmis.search.index = (function ($) {
 				{ "data": "herd" },
 				{ "data": "sex" }
             ],
-            "fnServerData": function (source, data, callback, settings) {
+            searching: true,
+            "ajax": function (data, callback, settings) {
                 var sortDirection = null;
                 var sortedColumnName = null;
                 if (settings.aaSorting.length > 0) {
@@ -214,7 +215,7 @@ wmis.search.index = (function ($) {
                     bottomLongitude: $(options.bottomLongitudeSelector).val()
                 };
 
-                $.getJSON(source, parameters, function (json) {
+                $.getJSON("/api/search", parameters, function (json) {
                     // On Success of the call, transform some of the data and call the specified callback
                     // Transforms are to transform returned data into DataTable expected format so paging
                     // will work properly.
@@ -226,7 +227,11 @@ wmis.search.index = (function ($) {
 
                 }).fail(wmis.global.ajaxErrorHandler);
             },
-            "fnDrawCallback": function () {
+            "fnDrawCallback": function (oSettings) {
+                if (oSettings.aiDisplay.length == 0) {
+                    return;
+                }
+
                 searchTable.$('tr.info').removeClass('info');
                 $("#editButton").addClass('disabled');
 
