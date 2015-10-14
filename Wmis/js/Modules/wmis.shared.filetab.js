@@ -146,7 +146,8 @@ wmis.shared.filetab = (function($) {
         });
     }
     
-    function showNewFileModal() {
+    function showNewFileModal(e) {
+        e.preventDefault();
         var viewModel = new EditFileModel({});
 
         return wmis.global.showModal({
@@ -154,7 +155,7 @@ wmis.shared.filetab = (function($) {
             context: this,
             template: 'editFileTemplate'
         }).fail(function() {
-        }).done(saveNewFile);
+        });
     }
 
     function saveNewFile(file) {
