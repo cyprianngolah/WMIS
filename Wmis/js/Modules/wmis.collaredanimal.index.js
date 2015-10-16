@@ -41,7 +41,7 @@ wmis.collaredanimal.index = (function($) {
 			"ajaxSource": "/api/collar/",
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
-            "order": [[2,'asc'],[3, 'asc']],
+            "order": [[3,'asc'],[4, 'asc']],
 			"columns": [
 				{ "data": "animalId" },
 				{ "data": "subscriptionId" },
