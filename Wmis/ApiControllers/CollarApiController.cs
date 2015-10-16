@@ -50,8 +50,7 @@
 		[Route]
 		public void Update([FromBody]Collar collar)
 		{
-            // TODO pass actual username once authentication is implemented
-			Repository.CollarUpdate(collar, "Unknown User");
+            Repository.CollarUpdate(collar, _user.Username);
 		}
 
         [HttpGet]
