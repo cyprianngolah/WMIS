@@ -155,7 +155,7 @@ wmis.shared.filetab = (function($) {
             context: this,
             template: 'editFileTemplate'
         }).fail(function() {
-        });
+        }).done(saveNewFile);
     }
 
     function saveNewFile(file) {
