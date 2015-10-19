@@ -109,7 +109,7 @@ wmis.surveytemplate.edit = (function ($) {
 	                data: JSON.stringify(newColumnData)
 	            }).success(function (surveyTemplateColumnId) {
 	                newColumnData.key = surveyTemplateColumnId;
-	                self.columns.push(newColumnData);
+	                self.columns.push(ko.mapper.fromJS(newColumnData));
 	                self.sortColumns();
 	            }).always(function () {
 	                wmis.global.hideWaitingScreen();
