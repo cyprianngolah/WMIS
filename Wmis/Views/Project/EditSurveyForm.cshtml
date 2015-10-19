@@ -238,7 +238,7 @@
                             </thead>
                             <tbody>
                                 <!-- ko foreach: {data: $data.observationData, as: 'row'} -->
-                                <tr data-bind="passStatusHighlight: {row: row, selectedRow: $root.selectedPass}">
+                                <tr data-bind="passStatusHighlight: {row: row, selectedRow: $root.selectedPass}, click: $root.selectRow">
                                     <td data-bind="dateText: timestamp, format:'L h:mm a'"></td>
                                     <td data-bind="text: latitude"></td>
                                     <td data-bind="text: longitude"></td>
@@ -247,7 +247,7 @@
                                     <!-- ko foreach: {data: $parent.columns, as: 'c'} -->
                                     <td data-bind="text: $parent[c.jsName()]()"></td>
                                     <!-- /ko -->
-                                    <td data-bind="click: $root.reviewObservation"><span class="glyphicon glyphicon-edit"></span></td>
+                                    <td data-bind="click: $root.reviewObservation, clickBubble: false"><span class="glyphicon glyphicon-edit"></span></td>
                                 </tr>
                                 <!-- /ko -->
                             </tbody>

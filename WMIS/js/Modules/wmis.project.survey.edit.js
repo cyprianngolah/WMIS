@@ -218,6 +218,11 @@ wmis.project.survey.edit = (function ($) {
 			self.currentModal("");
 		};
 
+        self.selectRow = function(rowData) {
+            var selectedPass = ko.mapper.toJS(rowData);
+            self.selectedPass(selectedPass);
+        }
+
 		// Logic
 		self.getProject = function() {
 			$.ajax({
