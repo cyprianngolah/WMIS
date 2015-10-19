@@ -40,7 +40,7 @@ wmis.collaredanimal.editmodals = (function ($) {
             template: 'editBreedingStatusTemplate'
         }).done(callback)
         .fail(function () {
-            console.log("Modal cancelled");
+            
         });
     }
 

@@ -60,6 +60,10 @@ wmis.collaredanimal.mapping = (function ($) {
 
         wmis.global.getDropDownData(self.passStatuses, "/api/argos/passStatuses?startRow=0&rowCount=500", function (result) { return result.data; });
 
+        this.highlightPass = function(pass) {
+            self.selectedPass(pass);
+        }
+
         this.reviewPass = function(pass) {
             self.selectedPass(pass);
             wmis.collaredanimal.editmodals.reviewCollarDataPoint(
@@ -194,6 +198,13 @@ wmis.collaredanimal.mapping = (function ($) {
             locationTableModel.reviewPass(rowData);
         });
 
+        $("#locationTable").on('click', 'td', function (event) {
+            //TODO: Get jonah to review cause this feels kinda like a hack
+            var row_clicked = $(event.target).closest('tr');
+            var rowData = $("#locationTable").DataTable().row(row_clicked).data();
+            locationTableModel.highlightPass(rowData);
+        });
+
         locationTableModel.statusFilterKey.subscribe(function () {
             $("#locationTable").DataTable().ajax.reload();
         });
@@ -211,7 +222,7 @@ wmis.collaredanimal.mapping = (function ($) {
     function initializeMap(collaredAnimalId) {
         options.collaredAnimalId = collaredAnimalId;
         var locationTableModel = new LocationTableModel();
-        wmis.mapping.initialize(locationTableModel.argosPasses, locationTableModel.selectedPass, locationTableModel.reviewPass, null, false);
+        wmis.mapping.initialize(locationTableModel.argosPasses, locationTableModel.selectedPass, locationTableModel.highlightPass, null, false);
         
         loadPassesTable(locationTableModel);
 	}
