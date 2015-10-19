@@ -38,29 +38,14 @@
                        
 	                    <div class="form-group">
 		                    <label for="firstName" class="col-md-1 control-label">Name</label>
-		                    <div class="col-md-3">
-			                    <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
-		                    </div>
+	                        <div class="col-md-3">
+	                            <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
+	                        </div>
+                            <label for="jobTitle" class="col-md-1 control-label">Job Title</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="jobtitle" name="jobtitle" data-bind="value: jobTitle, valueUpdate: 'keyup'">
+                            </div>
 	                    </div>
-
-	                    @*<div class="form-group">
-		                    <div class="col-md-4">
-			                    <div class="checkbox">
-				                    <label>
-					                    <input type="checkbox" value="1" data-bind="checked: hasAdministratorProjectRole ">
-					                    Administrator Projects
-				                    </label>
-			                    </div>
-		                    </div>
-		                    <div class="col-md-3">
-			                    <div class="checkbox">
-				                    <label>
-					                    <input type="checkbox" value="1" data-bind="checked: hasAdministratorBiodiversityRole">
-					                    Administrator Biodiversity
-				                    </label>
-			                    </div>
-		                    </div>
-	                    </div>*@
 						
 						<div class="form-group">
 							<label for="roles" class="col-md-1 control-label">Roles(s)</label>
@@ -89,11 +74,6 @@
                             </div>
                             <!-- /ko-->
                         </div>
-
-                        @*<div class="text-right">
-                        <button type="submit" class="btn btn-primary" data-bind="click: save, enabled: canSave">Save</button>
-                        <a href="/User/Index" class="btn btn-default">Cancel</a>
-                    </div>*@
                     </form>
                 </div>
 
