@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[AnimalMortalities] WHERE [AnimalMortalityId] NOT IN (1,2,3,4,5,6,7) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[AnimalMortalities] WHERE [AnimalMortalityId] NOT IN (1,2,3,4,5,6,7,8) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[AnimalMortalities] other than what exists in the Fill Script.', 1; 
 END
@@ -12,9 +12,10 @@ BEGIN
 		(2, 'Disease'),
 		(3, 'Harvested'),
 		(4, 'Wolf'),
-		(5, 'Predator (Other than wolf)'),
+		(5, 'Predator (Other than wolf/bear)'),
 		(6, 'Unknown'),
-		(7, 'Capture Related')
+		(7, 'Capture Related'),
+		(8, 'Bear')
 	)
 	AS [Source] ([AnimalMortalityId], [Name]) 
 	ON [Target].[AnimalMortalityId] = [source].[AnimalMortalityId]
