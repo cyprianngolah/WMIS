@@ -30,13 +30,18 @@ wmis.surveytemplate.edit = (function ($) {
             return !!self.columnData.name() && !!self.columnData.columnType().key();
         });
 
-        this.save = function () {
-            self.modal.close(ko.mapper.toJS(self.columnData));
-        };
+	    this.save = function() {
+	        var col = ko.mapper.toJS(self.columnData);
+	        var result = $.grep(self.columnTypeOptions, function (e) { return e.key == self.columnData.columnType().key(); });
+	        col.columnType.name = result[0].name;
+	        self.modal.close(col);
+	    };
 
-        this.cancel = function () {
+	    this.cancel = function () {
             self.modal.close();
-        };
+	    };
+
+
     }
 
 	function columnSortCompareFunction(left, right) {
@@ -109,6 +114,7 @@ wmis.surveytemplate.edit = (function ($) {
 	                data: JSON.stringify(newColumnData)
 	            }).success(function (surveyTemplateColumnId) {
 	                newColumnData.key = surveyTemplateColumnId;
+                    
 	                self.columns.push(ko.mapper.fromJS(newColumnData));
 	                self.sortColumns();
 	            }).always(function () {
