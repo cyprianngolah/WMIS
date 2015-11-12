@@ -97,7 +97,7 @@
                     feature.DataRow["Latitude"] = pass.Latitude;
                     feature.DataRow["Longitude"] = pass.Longitude;
                     feature.DataRow["LC"] = pass.LocationClass;
-                    feature.DataRow["Date"] = pass.LocationDate.ToString("yyyy-mm-dd HH:mm");
+                    feature.DataRow["Date"] = pass.LocationDate.ToString("yyyy-MM-dd HH:mm");
                     feature.DataRow["Time"] = pass.LocationDate.TimeOfDay;
                     feature.DataRow["AnimalID"] = animal.AnimalId;
                     feature.DataRow["Status"] = pass.ArgosPassStatus.Name;
