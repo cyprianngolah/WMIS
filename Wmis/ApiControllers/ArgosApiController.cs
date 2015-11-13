@@ -81,7 +81,7 @@
                 myPoints.DataTable.Columns.Add(new DataColumn("Latitude", typeof(double)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Longitude", typeof(double)));
                 myPoints.DataTable.Columns.Add(new DataColumn("LC", typeof(string)));
-                myPoints.DataTable.Columns.Add(new DataColumn("Date", typeof(string)));
+                myPoints.DataTable.Columns.Add(new DataColumn("Date", typeof(DateTime)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Time", typeof(string)));
                 myPoints.DataTable.Columns.Add(new DataColumn("AnimalID", typeof(string)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Status", typeof(string)));
