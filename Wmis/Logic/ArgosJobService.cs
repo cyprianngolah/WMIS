@@ -184,7 +184,7 @@
                 var passes = new List<ArgosSatellitePass>();
                 var dataRows = new List<ArgosCollarData>();
 
-                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue))
+                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue && r.Timestamp <= DateTime.Now))
                 {
                     var p = new ArgosSatellitePass { Timestamp = row.Timestamp.Value };
 
