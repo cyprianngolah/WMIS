@@ -70,7 +70,7 @@ wmis.reference.index = (function ($) {
 					i: settings.oAjaxData.sEcho,
 
 					// Custom search data
-					searchString: $("#keywords").val()
+					keywords: $("#keywords").val()
 				};
 
 				$.getJSON(source, parameters, function (json) {
