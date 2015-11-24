@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarStatuses] WHERE [CollarStatusId] NOT IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarStatuses] WHERE [CollarStatusId] NOT IN (1,2,3,4,6,9,10,11,12,13,14,15) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[CollarStatuses] other than what exists in the Fill Script.', 1; 
 END
@@ -9,13 +9,10 @@ BEGIN
 	MERGE INTO [dbo].[CollarStatuses] as [Target]
 	USING (VALUES
 		(1, 'Deployed', 'Active on an animal'),
-		(2, 'Suspected Stationary', 'Based on review and quality checking of data'),
+		(2, 'Watching', 'Based on review and quality checking of data'),
 		(3, 'Stationary', 'In the field retrievability unknown'),
 		(4, 'Irretrievable', 'In the field active, determined not retrievable'),
-		(5, 'Found', 'Collar found in the field'),
-		(6, 'Lost', 'In the field not retrievable no longer active'),
-		(7, 'Released – VHF Active', 'In the field, possibly retrievable'),
-		(8, 'Released – VHF Inactive', 'In the field not retrievable no longer active'),
+		(6, 'Lost', 'In the field, unable to locate'),
 		(9, 'Retrieved', 'On the shelf not yet assessed for refurbish/retire'),
 		(10, 'To Be Refurbished', 'On the shelf assessed as a candidate for refurbishing'),
 		(11, 'Being Refurbished', 'Offsite for refurbishing'),
@@ -37,10 +34,7 @@ UPDATE [dbo].[CollarStatuses] SET [Order] = 1 WHERE [CollarStatusId] = 4;
 UPDATE [dbo].[CollarStatuses] SET [Order] = 2 WHERE [CollarStatusId] = 2;
 UPDATE [dbo].[CollarStatuses] SET [Order] = 3 WHERE [CollarStatusId] = 1;
 UPDATE [dbo].[CollarStatuses] SET [Order] = 4 WHERE [CollarStatusId] = 7;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 5 WHERE [CollarStatusId] = 20;
 UPDATE [dbo].[CollarStatuses] SET [Order] = 6 WHERE [CollarStatusId] = 6;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 7 WHERE [CollarStatusId] = 21;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 8 WHERE [CollarStatusId] = 22;
 UPDATE [dbo].[CollarStatuses] SET [Order] = 9 WHERE [CollarStatusId] = 8;
 UPDATE [dbo].[CollarStatuses] SET [Order] = 10 WHERE [CollarStatusId] = 10;
 UPDATE [dbo].[CollarStatuses] SET [Order] = 11 WHERE [CollarStatusId] = 11;
