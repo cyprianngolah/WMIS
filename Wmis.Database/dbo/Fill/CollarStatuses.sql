@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarStatuses] WHERE [CollarStatusId] NOT IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarStatuses] WHERE [CollarStatusId] NOT IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[CollarStatuses] other than what exists in the Fill Script.', 1; 
 END
@@ -21,7 +21,8 @@ BEGIN
 		(11, 'Being Refurbished', 'Offsite for refurbishing'),
 		(12, 'Decommissioned', 'On the shelf not worth refurbishing'),
 		(13, 'As New', 'In storage ready to be deployed'),
-		(14, 'Malfunctioning', 'Collar malfunctioning')
+		(14, 'Malfunctioning', 'Collar malfunctioning'),
+		(15, 'Released', 'Collar released on schedule')
 	)
 	AS [Source] ([CollarStatusId], [Name], [Description]) 
 	ON [Target].[CollarStatusId] = [source].[CollarStatusId]
@@ -32,17 +33,18 @@ BEGIN
 	SET IDENTITY_INSERT [dbo].[CollarStatuses] OFF;
 END;
 
-UPDATE [dbo].[CollarStatuses] SET [Order] = 1 WHERE [CollarStatusId] = 2;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 2 WHERE [CollarStatusId] = 3;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 3 WHERE [CollarStatusId] = 14;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 4 WHERE [CollarStatusId] = 6;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 5 WHERE [CollarStatusId] = 7;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 6 WHERE [CollarStatusId] = 8;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 7 WHERE [CollarStatusId] = 5;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 8 WHERE [CollarStatusId] = 4;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 9 WHERE [CollarStatusId] = 1;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 10 WHERE [CollarStatusId] = 9;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 11 WHERE [CollarStatusId] = 10;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 12 WHERE [CollarStatusId] = 11;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 13 WHERE [CollarStatusId] = 12;
-UPDATE [dbo].[CollarStatuses] SET [Order] = 14 WHERE [CollarStatusId] = 13;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 1 WHERE [CollarStatusId] = 4;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 2 WHERE [CollarStatusId] = 2;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 3 WHERE [CollarStatusId] = 1;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 4 WHERE [CollarStatusId] = 7;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 5 WHERE [CollarStatusId] = 20;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 6 WHERE [CollarStatusId] = 6;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 7 WHERE [CollarStatusId] = 21;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 8 WHERE [CollarStatusId] = 22;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 9 WHERE [CollarStatusId] = 8;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 10 WHERE [CollarStatusId] = 10;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 11 WHERE [CollarStatusId] = 11;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 12 WHERE [CollarStatusId] = 12;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 13 WHERE [CollarStatusId] = 9;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 14 WHERE [CollarStatusId] = 3;
+UPDATE [dbo].[CollarStatuses] SET [Order] = 15 WHERE [CollarStatusId] = 5;
