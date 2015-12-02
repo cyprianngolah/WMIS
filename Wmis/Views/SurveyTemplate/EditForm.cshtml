@@ -26,13 +26,13 @@
                             <input type="text" class="form-control" id="order" data-bind="value: order">
                         </div>
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <div class="col-md-offset-3 col-md-10">
                             <label class="control-label">
                                 <input type="checkbox" data-bind="checked: isRequired" /> Required
                             </label>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
@@ -105,8 +105,16 @@
                     <td data-bind="with: columnType"><span data-bind="text: name"></span></td>
                     <td data-bind="text: $root.requiredColumnFormatter(isRequired)"></td>
                     <!-- ko if: $root.columnsCanBeEdited -->
-                    <td data-bind="click: $root.editColumn"><span class="glyphicon glyphicon-edit"></span></td>
-                    <td data-bind="click: $root.removeColumn"><span class="glyphicon glyphicon-remove"></span></td>
+                    <td>
+                        <div data-bind="visible: !isRequired()">
+                            <span data-bind="click: $root.editColumn" class="glyphicon glyphicon-edit"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div data-bind="visible: !isRequired()">
+                            <span data-bind="click: $root.removeColumn" class="glyphicon glyphicon-remove"></span>
+                        </div>
+                    </td>
                     <!-- /ko -->
                 </tr>
             </tbody>
