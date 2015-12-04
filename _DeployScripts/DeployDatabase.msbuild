@@ -54,7 +54,7 @@
 
 	<!-- Prod Database -->
 	<PropertyGroup Condition="$(DatabaseTarget) == 'prod'">
-		<TargetServer>YK00-VSQL02P\sql1</TargetServer>
+		<TargetServer>YK00-VSQL02p, 5478</TargetServer>
 		<TargetDatabaseName>Wmis-Prod</TargetDatabaseName>
 		<TargetUserName>WMISUser</TargetUserName>
 		<TargetPassword>0rangeWMIS$!</TargetPassword>
