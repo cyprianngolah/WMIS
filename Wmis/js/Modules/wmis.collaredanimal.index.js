@@ -51,7 +51,7 @@ wmis.collaredanimal.index = (function($) {
                 {
                     "data": "inactiveDate",
                     "render": function (data, type, row) {
-                        var date = moment.utc(data, moment.ISO_8601).local();
+                        var date = moment.utc(data, moment.ISO_8601)
                         if (date.isValid()) {
                             return date.format('L h:mm a');
                         } else {
