@@ -2,6 +2,7 @@
 	@p_PersonId INT,
 	@p_Username	NVARCHAR(50),
 	@p_Name NVARCHAR(50),
+	@p_JobTitle NVARCHAR(50),
 	@p_roleKeys [IntTableType] READONLY,
 	@p_projectKeys [IntTableType] READONLY
 AS
@@ -9,7 +10,8 @@ AS
 		dbo.Person 
 	SET
 		Username = @p_Username, 
-		Name  = @p_Name
+		Name  = @p_Name,
+		JobTitle = @p_JobTitle
 	WHERE 
 		PersonId = @p_PersonId
 
