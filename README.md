@@ -21,7 +21,7 @@
   - From within IIS Manager, right click the Sites folder and click 'Add Website'
   - Site name: WMIS
   - Application pool: WMIS
-  - Physical path: <path to your source code directory>
+  - Physical path: <path to your source code directory, the WMIS folder, not the git root>
   - Binding: http, All unassigned, port 80 
   - Host name: wmis.local
   - (Windows Auth) Add the following Registry Information:
