@@ -2666,7 +2666,8 @@
                                                         p.Latitude,
                                                         p.Longitude,
                                                         LocationDate = p.Timestamp,
-                                                        p.LocationClass
+                                                        p.LocationClass,
+                                                        p.CepRadius
                                                     }).AsTableValuedParameter("dbo.ArgosPassTableType"),
                     p_collaredAnimalId = collaredAnimalId,
                 };

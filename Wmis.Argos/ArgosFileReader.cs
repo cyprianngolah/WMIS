@@ -7,11 +7,11 @@ using Wmis.Argos.Entities;
 
 namespace Wmis.Argos
 {
-    public class ArgosFileReader
+    public class TelonicsFileReader
     {
         private DirectoryInfo _directory;
 
-        public ArgosFileReader(string folderPath)
+        public TelonicsFileReader(string folderPath)
         {
             _directory = new DirectoryInfo(folderPath);
 
@@ -37,15 +37,15 @@ namespace Wmis.Argos
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("Unable to read files from the directory.");
+                throw new Exception("Unable to read files from the directory.", e);
             }
         }
 
-        public IEnumerable<ArgosOutputFile> ReadFiles()
+        public IEnumerable<TelonicsOutputFile> ReadFiles()
         {
-            var files = new List<ArgosOutputFile>();
+            var files = new List<TelonicsOutputFile>();
 
             var csvFiles = _directory.GetFiles("*.csv");
 
@@ -59,9 +59,9 @@ namespace Wmis.Argos
             return files;
         }
 
-        private ArgosOutputFile ParseFile(FileInfo file)
+        private TelonicsOutputFile ParseFile(FileInfo file)
         {
-            ArgosOutputFile outFile = new ArgosOutputFile();
+            TelonicsOutputFile outFile = new TelonicsOutputFile();
 
             using (var fs = file.OpenRead())
             {
@@ -84,6 +84,9 @@ namespace Wmis.Argos
 
                         switch (title)
                         {
+                            case "data source":
+                                outFile.DataSource = value;
+                                break;
                             case "ctn":
                                 outFile.CTN = value;
                                 break;
@@ -98,54 +101,110 @@ namespace Wmis.Argos
 
                     while (csv.Read())
                     {
-                        var detail = new ArgosOutputFileRow();
+                        TelonicsOutputFileRow detail = null;
+                        if (outFile.DataSource == "Argos")
+                        {
+                            detail = ReadArgosFileRow(csv, headers);
+                        } else if (outFile.DataSource == "Iridium") {
+                            detail = ReadIridiumFileRow(csv, headers);
+                        }                              
 
-                        if (headers.Contains("acquisition time"))
-                            detail.Timestamp = csv.GetField<DateTime>(headers.IndexOf("acquisition time"));
-
-                        if (headers.Contains("argos location class"))
-                            detail.LocationClass = csv.GetField<string>(headers.IndexOf("argos location class"));
-
-                        if (headers.Contains("argos latitude"))
-                            detail.ArgosLatitude = csv.GetField<double?>(headers.IndexOf("argos latitude"));
-                        
-                        if (headers.Contains("argos longitude"))
-                            detail.ArgosLongitude = csv.GetField<double?>(headers.IndexOf("argos longitude"));
-                        
-                        if (headers.Contains("argos altitude"))
-                            detail.ArgosAltitude = csv.GetField<double?>(headers.IndexOf("argos altitude"));
-
-                        if (headers.Contains("gps fix attempt"))
-                            detail.GpsFixAttempt = csv.GetField<string>(headers.IndexOf("gps fix attempt"));
-                                                
-                        if (headers.Contains("gps latitude"))
-                            detail.GpsLatitude = csv.GetField<double?>(headers.IndexOf("gps latitude"));
-                                                
-                        if (headers.Contains("gps longitude"))
-                            detail.GpsLongitude = csv.GetField<double?>(headers.IndexOf("gps longitude"));
-                                                
-                        if (headers.Contains("temperature"))
-                            detail.Temperature = csv.GetField<double?>(headers.IndexOf("temperature"));
-
-                        if (headers.Contains("low voltage"))
-                            detail.LowVoltage = csv.GetField<string>(headers.IndexOf("low voltage"));
-
-                        if (headers.Contains("Repetition Count"))
-                            detail.RepititionCount = csv.GetField<int?>(headers.IndexOf("Repetition Count"));
-
-                        if (headers.Contains("mortality"))
-                            detail.Mortality = csv.GetField<string>(headers.IndexOf("mortality"));
-                        
-                        if (headers.Contains("error"))
-                            detail.Error = csv.GetField<string>(headers.IndexOf("error"));
-                                                
-                        if (!outFile.Rows.Contains(detail) && string.IsNullOrEmpty(detail.Error))
+                        if (detail != null && !outFile.Rows.Contains(detail) && string.IsNullOrEmpty(detail.Error))
                             outFile.Rows.Add(detail);
                     }
                 }
             }
 
             return outFile;
+        }
+
+        private static ArgosOutputFileRow ReadArgosFileRow(CsvReader csv, List<string> headers)
+        {
+            var detail = new ArgosOutputFileRow();
+
+            if (headers.Contains("acquisition time"))
+                detail.Timestamp = csv.GetField<DateTime>(headers.IndexOf("acquisition time"));
+
+            if (headers.Contains("argos location class"))
+                detail.LocationClass = csv.GetField<string>(headers.IndexOf("argos location class"));
+
+            if (headers.Contains("argos latitude"))
+                detail.ArgosLatitude = csv.GetField<double?>(headers.IndexOf("argos latitude"));
+
+            if (headers.Contains("argos longitude"))
+                detail.ArgosLongitude = csv.GetField<double?>(headers.IndexOf("argos longitude"));
+
+            if (headers.Contains("argos altitude"))
+                detail.ArgosAltitude = csv.GetField<double?>(headers.IndexOf("argos altitude"));
+
+            if (headers.Contains("gps fix attempt"))
+                detail.GpsFixAttempt = csv.GetField<string>(headers.IndexOf("gps fix attempt"));
+
+            if (headers.Contains("gps latitude"))
+                detail.GpsLatitude = csv.GetField<double?>(headers.IndexOf("gps latitude"));
+
+            if (headers.Contains("gps longitude"))
+                detail.GpsLongitude = csv.GetField<double?>(headers.IndexOf("gps longitude"));
+
+            if (headers.Contains("temperature"))
+                detail.Temperature = csv.GetField<double?>(headers.IndexOf("temperature"));
+
+            if (headers.Contains("low voltage"))
+                detail.LowVoltage = csv.GetField<string>(headers.IndexOf("low voltage"));
+
+            if (headers.Contains("Repetition Count"))
+                detail.RepititionCount = csv.GetField<int?>(headers.IndexOf("Repetition Count"));
+
+            if (headers.Contains("mortality"))
+                detail.Mortality = csv.GetField<string>(headers.IndexOf("mortality"));
+
+            if (headers.Contains("error"))
+                detail.Error = csv.GetField<string>(headers.IndexOf("error"));
+
+            return detail;
+        }
+
+        private static IridiumOutputFileRow ReadIridiumFileRow(CsvReader csv, List<string> headers)
+        {
+            var detail = new IridiumOutputFileRow();
+
+            if (headers.Contains("acquisition time"))
+                detail.Timestamp = csv.GetField<DateTime>(headers.IndexOf("acquisition time"));
+
+            if (headers.Contains("iridium cep radius"))
+                detail.IridiumCepRadius = csv.GetField<string>(headers.IndexOf("iridium cep radius"));
+
+            if (headers.Contains("iridium latitude"))
+                detail.IridiumLatitude = csv.GetField<double?>(headers.IndexOf("iridium latitude"));
+
+            if (headers.Contains("iridium longitude"))
+                detail.IridiumLongitude = csv.GetField<double?>(headers.IndexOf("iridium longitude"));
+
+            if (headers.Contains("gps fix attempt"))
+                detail.GpsFixAttempt = csv.GetField<string>(headers.IndexOf("gps fix attempt"));
+
+            if (headers.Contains("gps latitude"))
+                detail.GpsLatitude = csv.GetField<double?>(headers.IndexOf("gps latitude"));
+
+            if (headers.Contains("gps longitude"))
+                detail.GpsLongitude = csv.GetField<double?>(headers.IndexOf("gps longitude"));
+
+            if (headers.Contains("temperature"))
+                detail.Temperature = csv.GetField<double?>(headers.IndexOf("temperature"));
+
+            if (headers.Contains("low voltage"))
+                detail.LowVoltage = csv.GetField<string>(headers.IndexOf("low voltage"));
+
+            if (headers.Contains("Repetition Count"))
+                detail.RepititionCount = csv.GetField<int?>(headers.IndexOf("Repetition Count"));
+
+            if (headers.Contains("mortality"))
+                detail.Mortality = csv.GetField<string>(headers.IndexOf("mortality"));
+
+            if (headers.Contains("error"))
+                detail.Error = csv.GetField<string>(headers.IndexOf("error"));
+
+            return detail;
         }
     }
 }

@@ -15,6 +15,7 @@ AS
 		ap.Longitude,
 		ap.LocationDate,
 		ap.LocationClass,
+		ap.CepRadius,
 		ap.Comment,
 		argosPassStatus.ArgosPassStatusId as [Key],
 		argosPassStatus.Name,

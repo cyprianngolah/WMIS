@@ -148,6 +148,7 @@ wmis.collaredanimal.mapping = (function ($) {
                 { "data": "latitude" },
                 { "data": "longitude" },
                 { "data": "locationClass" },
+                { "data": "cepRadius" },
                 { "data": "argosPassStatus.name" },
                 { "data": "comment" },
                 {

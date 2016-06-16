@@ -43,7 +43,7 @@
                     else
                     {
                         BackgroundJob.Enqueue(() => LoadArgosProcessedFiles());
-
+                       
                         //BackgroundJob.Enqueue(() => this.ProcessArgosCollars());
                         RecurringJob.AddOrUpdate("TimeForArgosWebserviceToRun", () => this.ProcessArgosCollars(), cronExpression);
                     }
@@ -166,7 +166,7 @@
                 throw new ArgumentOutOfRangeException("ProcessedArgosCollarsDirectory");
 
             var folder = @"\\" + Path.Combine(collarConfigParts[0], collarConfigParts[1]);
-            var reader = new ArgosFileReader(folder);
+            var reader = new TelonicsFileReader(folder);
             var files = reader.ReadFiles();
 
             var noErrorFiles = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
@@ -186,6 +186,8 @@
 
                 foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue && r.Timestamp <= DateTime.Now))
                 {
+                    IridiumOutputFileRow rowAsIridium = row as IridiumOutputFileRow;
+                    ArgosOutputFileRow rowAsArgos = row as ArgosOutputFileRow;
                     var p = new ArgosSatellitePass { Timestamp = row.Timestamp.Value };
 
                     if (row.GpsFixAttempt == "Succeeded")
@@ -201,18 +203,32 @@
                         p.LocationClass = ArgosOutputFileRow.GPS_LOCATION_CLASS;
                         passes.Add(p);
                     }
-                    else if (validLocClasses.Contains(row.LocationClass))
+                    else if (rowAsArgos != null && validLocClasses.Contains(rowAsArgos.LocationClass))
                     {
 
-                        if (!row.ArgosLatitude.HasValue || !row.ArgosLongitude.HasValue)
+                        if (!rowAsArgos.ArgosLatitude.HasValue || !rowAsArgos.ArgosLongitude.HasValue)
                             continue;
 
-                        if (row.ArgosLatitude.Value < 0 || row.ArgosLatitude.Value > 90 || row.ArgosLongitude.Value < -180 || row.ArgosLongitude.Value > 0)
+                        if (rowAsArgos.ArgosLatitude.Value < 0 || rowAsArgos.ArgosLatitude.Value > 90 || rowAsArgos.ArgosLongitude.Value < -180 || rowAsArgos.ArgosLongitude.Value > 0)
                             continue;
 
-                        p.Latitude = row.ArgosLatitude.Value;
-                        p.Longitude = row.ArgosLongitude.Value;
-                        p.LocationClass = row.LocationClass;
+                        p.Latitude = rowAsArgos.ArgosLatitude.Value;
+                        p.Longitude = rowAsArgos.ArgosLongitude.Value;
+                        p.LocationClass = rowAsArgos.LocationClass;
+                        passes.Add(p);
+                    }
+                    else if (rowAsIridium != null && rowAsIridium.IridiumLatitude != null)
+                    {
+
+                        if (!rowAsIridium.IridiumLatitude.HasValue || !rowAsIridium.IridiumLongitude.HasValue)
+                            continue;
+
+                        if (rowAsIridium.IridiumLatitude.Value < 0 || rowAsIridium.IridiumLatitude.Value > 90 || rowAsIridium.IridiumLongitude.Value < -180 || rowAsIridium.IridiumLongitude.Value > 0)
+                            continue;
+
+                        p.Latitude = rowAsIridium.IridiumLatitude.Value;
+                        p.Longitude = rowAsIridium.IridiumLongitude.Value;
+                        p.CepRadius = rowAsIridium.IridiumCepRadius;
                         passes.Add(p);
                     }
                     else

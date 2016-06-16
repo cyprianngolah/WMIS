@@ -7,7 +7,7 @@ AS
 	USING @p_argosPasses AS S
 	ON (T.CollaredAnimalId = @p_collaredAnimalId AND T.LocationDate = S.LocationDate) 
 	WHEN NOT MATCHED BY TARGET 
-		THEN INSERT(CollaredAnimalId, Latitude, Longitude, LocationDate, LocationClass) VALUES (@p_collaredAnimalId, S.Latitude, S.Longitude, S.LocationDate, S.LocationClass);
+		THEN INSERT(CollaredAnimalId, Latitude, Longitude, LocationDate, LocationClass, CepRadius) VALUES (@p_collaredAnimalId, S.Latitude, S.Longitude, S.LocationDate, S.LocationClass, S.CepRadius);
 
 RETURN 0
 GO

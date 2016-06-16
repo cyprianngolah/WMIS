@@ -18,6 +18,8 @@
 
         public string LocationClass { get; set; }
 
+        public string CepRadius { get; set; }
+
         public string Comment { get; set; }
 	}
 }

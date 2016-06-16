@@ -53,6 +53,13 @@
         }
 
         [HttpPost]
+        [Route("execute")]
+        public void ExecuteJob()
+        {
+            _argosJobService.LoadArgosProcessedFiles();
+        }
+
+        [HttpPost]
         [Route("queueJobs")]
         public void QueueJobs()
         {
@@ -97,6 +104,7 @@
                     feature.DataRow["Latitude"] = pass.Latitude;
                     feature.DataRow["Longitude"] = pass.Longitude;
                     feature.DataRow["LC"] = pass.LocationClass;
+                    feature.DataRow["CepRadius"] = pass.CepRadius;
                     feature.DataRow["Date"] = pass.LocationDate.ToString("yyyy-MM-dd HH:mm");
                     feature.DataRow["DateSerial"] = pass.LocationDate.ToOADate();
                     feature.DataRow["AnimalID"] = animal.AnimalId;

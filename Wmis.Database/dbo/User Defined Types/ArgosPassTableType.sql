@@ -3,7 +3,8 @@
 	[Latitude]      FLOAT       NOT NULL,
 	[Longitude]     FLOAT       NOT NULL,
 	[LocationDate]  DATETIME    NOT NULL,
-	[LocationClass] NVARCHAR(50)
+	[LocationClass] NVARCHAR(50),
+	[CepRadius] NVARCHAR(50)
 )
 GO
 

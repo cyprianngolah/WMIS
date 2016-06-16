@@ -37,6 +37,21 @@ wmis.argosservice.index = (function ($) {
 				wmis.global.hideWaitingScreen(waitingScreenId);
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
+
+
+		self.runArgosFileLoad = function () {
+		    var waitingScreenId = wmis.global.showWaitingScreen("Running Job...");
+		    $.ajax({
+		        url: "/api/argos/execute/",
+		        type: "POST",
+		        contentType: "application/json",
+		        dataType: "json"
+		    }).success(function () {
+		        alert("Job executed.");
+		    }).always(function () {
+		        wmis.global.hideWaitingScreen(waitingScreenId);
+		    }).fail(wmis.global.ajaxErrorHandler);
+		};
 		
 		self.getCollarData = function () {
 			var waitingScreenId = wmis.global.showWaitingScreen("Scheduling Jobs...");

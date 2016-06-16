@@ -12,10 +12,16 @@
 #### Getting Started ####
 
 ##### Setup / update a local database #####
+- Used mixed authentication mode
   - From within Visual Studio, right click the WMIS.Database project and click 'Publish'.
   - Click 'Edit' to specify a connection string to your local SQL Server 2012 instance.
   - In the 'Connect to database' section, provide a database name such as 'WMIS' and click 'OK'
   - Click 'Publish'
+  - Set the WMISUser's permissions
+  - Set the WMIS users passwords
+  - Setup WMIS/Environments/environment.<name>.config file
+  - Setup Web.config HostEnvironmentMap
+  - Note: Hangfire can obscure database connectivity issues, disable it with comments if you are having issues connecting
 
 ##### Configure IIS #####
   - From within IIS Manager, right click the Sites folder and click 'Add Website'
