@@ -226,9 +226,20 @@
                         if (rowAsIridium.IridiumLatitude.Value < 0 || rowAsIridium.IridiumLatitude.Value > 90 || rowAsIridium.IridiumLongitude.Value < -180 || rowAsIridium.IridiumLongitude.Value > 0)
                             continue;
 
+                        
+                        //Allow CEP less than or equal to 5 *email June 24th Bonnie
+                        int radius;
+                        if (rowAsIridium.IridiumCepRadius != null
+                            && int.TryParse(rowAsIridium.IridiumCepRadius, out radius))
+                        {
+                            if(radius <= 5)
+                                p.CepRadius = rowAsIridium.IridiumCepRadius;
+                        }
+
+
                         p.Latitude = rowAsIridium.IridiumLatitude.Value;
                         p.Longitude = rowAsIridium.IridiumLongitude.Value;
-                        p.CepRadius = rowAsIridium.IridiumCepRadius;
+                       
                         passes.Add(p);
                     }
                     else
