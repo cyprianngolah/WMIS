@@ -2810,6 +2810,7 @@
                     p_PersonId = person.Key,
                     p_Username = person.Username,
                     p_Name = person.Name,
+                    p_JobTitle = person.JobTitle,
                     p_roleKeys = person.Roles.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType"),
                     p_projectKeys = person.Projects.Select(i => new { n = i.Key }).AsTableValuedParameter("dbo.IntTableType")
                 };
