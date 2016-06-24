@@ -37,7 +37,7 @@ AS
 		INSERT INTO 
 			dbo.SurveyTemplateColumns (SurveyTemplateId, IsRequired, Name, SurveyTemplateColumnTypeId, [Order])
 		VALUES
-			(@newRowId, 1, 'SiteId', (SELECT [SurveyTemplateColumnTypeId] FROM dbo.SurveyTemplateColumnTypes WHERE [Name] = 'Numeric'), 3);
+			(@newRowId, 0, 'SiteId', (SELECT [SurveyTemplateColumnTypeId] FROM dbo.SurveyTemplateColumnTypes WHERE [Name] = 'Numeric'), 3);
 
 		SELECT @newRowId;
 	END

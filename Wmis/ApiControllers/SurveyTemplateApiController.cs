@@ -12,9 +12,12 @@
     [RoutePrefix("api/surveytemplate")]
 	public class SurveyTemplateApiController : BaseApiController
     {
-		public SurveyTemplateApiController(WebConfiguration config)
+        private readonly Auth.WmisUser _user;
+
+        public SurveyTemplateApiController(WebConfiguration config, Auth.WmisUser user)
 			: base(config)
 		{
+            _user = user;
 		}
 
 		[HttpGet]
@@ -50,7 +53,7 @@
 		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public int Create([FromBody]SurveyTemplateSaveRequest request)
         {
-            return Repository.SurveyTemplateSave(request, "Unknown User");
+            return Repository.SurveyTemplateSave(request, _user.Username);
         }
         
         [HttpPost]
