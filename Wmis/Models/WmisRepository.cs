@@ -1720,7 +1720,8 @@
                 {
                     p_surveyTemplateId = request.SurveyTemplateId == 0 ? null : request.SurveyTemplateId,
                     p_name = request.Name,
-                    p_createdBy = createdBy
+                    //p_createdBy = createdBy
+                    p_createdBy = "james"
                 };
 
                 return c.Query<int>(SURVEYTEMPLATE_SAVE, param, commandType: CommandType.StoredProcedure).Single();

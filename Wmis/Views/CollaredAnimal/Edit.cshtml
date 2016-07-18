@@ -29,7 +29,8 @@
 }
 
 @section Scripts{
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>*@
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM&callback=initMap" type="text/javascript"></script>
     @Html.Raw(Scripts.Render("~/bundles/datePicker"))
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
