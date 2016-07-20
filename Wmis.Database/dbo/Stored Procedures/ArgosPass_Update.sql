@@ -8,7 +8,8 @@ AS
 		dbo.ArgosPasses
 	SET
 		ArgosPassStatusId = @p_ArgosPassStatusId,
-		Comment = @p_Comment
+		Comment = @p_Comment,
+		ManualQA = 1
 	WHERE
 		ArgosPassId = @p_ArgosPassId
 

@@ -337,6 +337,9 @@
                         if (pass.ArgosPassStatus.IsRejected)
                             continue;
 
+                        if (pass.ManualQA == true) 
+                            continue;
+
                         var myCoord = new Coordinate(pass.Longitude, pass.Latitude);
 
                         if (lastCoord != null)

@@ -21,5 +21,7 @@
         public string CepRadius { get; set; }
 
         public string Comment { get; set; }
+
+        public bool? ManualQA { get; set; }
 	}
 }
