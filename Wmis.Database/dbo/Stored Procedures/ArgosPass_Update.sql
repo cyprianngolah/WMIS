@@ -9,7 +9,7 @@ AS
 	SET
 		ArgosPassStatusId = @p_ArgosPassStatusId,
 		Comment = @p_Comment,
-		ManualQA = 1
+		ManualQA = 'true'
 	WHERE
 		ArgosPassId = @p_ArgosPassId
 
