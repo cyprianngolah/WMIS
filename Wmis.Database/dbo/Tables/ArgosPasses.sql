@@ -9,6 +9,7 @@
 	[LocationClass]			NVARCHAR(50) NULL,
 	[CepRadius]				NVARCHAR(50) NULL,
 	[Comment] NVARCHAR(MAX) NULL, 
+    [ManualQA] BIT NULL, 
     CONSTRAINT [PK_ArgosPasses] PRIMARY KEY CLUSTERED ([ArgosPassId]),
 	CONSTRAINT [FK_ArgosPasses_CollaredAnimals] FOREIGN KEY ([CollaredAnimalId]) REFERENCES [dbo].[CollaredAnimals] ([CollaredAnimalId]),
 	CONSTRAINT [FK_ArgosPasses_ArgosPassStatuses] FOREIGN KEY ([ArgosPassStatusId]) REFERENCES [dbo].[ArgosPassStatuses] ([ArgosPassStatusId])
