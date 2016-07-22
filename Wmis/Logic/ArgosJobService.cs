@@ -43,9 +43,7 @@
                     else
                     {
                         BackgroundJob.Enqueue(() => LoadArgosProcessedFiles());
-                       
-                        //BackgroundJob.Enqueue(() => this.ProcessArgosCollars());
-                        RecurringJob.AddOrUpdate("TimeForArgosWebserviceToRun", () => this.ProcessArgosCollars(), cronExpression);
+                        RecurringJob.AddOrUpdate("TimeForArgosLoadToRun", () => this.LoadArgosProcessedFiles(), cronExpression);
                     }
                 }
             }
