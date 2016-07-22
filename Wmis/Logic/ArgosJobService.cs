@@ -351,14 +351,14 @@
                             {
                                 var comment = pass.Comment;
 
-                                if (string.IsNullOrEmpty(comment))
-                                    comment += "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
-                                else if (!comment.Contains("Flagged during import"))
-                                    comment += Environment.NewLine + "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
+                                //if (string.IsNullOrEmpty(comment))
+                                //    comment += "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
+                                //else if (!comment.Contains("Flagged during import"))
+                                //    comment += Environment.NewLine + "Flagged during import: " + Math.Round(distance, 2) + " km traveled in " + FormatSpan(span);
 
-                                _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Location Status", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", pass.LocationDate, pass.LocationDate), badPassStatus.Name);
+                                //_repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Location Status", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", pass.LocationDate, pass.LocationDate), badPassStatus.Name);
 
-                                _repository.ArgosPassUpdate(pass.Key, badPassStatus.Key, comment);
+                                //_repository.ArgosPassUpdate(pass.Key, badPassStatus.Key, comment);
                             }
                         }
 
