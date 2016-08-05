@@ -181,21 +181,19 @@
 		}
 
 		private IWorkbook GetWorkbook(string fileName)
-		{
-			using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+		{	
+           
+			var fileInfo = new FileInfo(fileName);
+			switch (fileInfo.Extension)
 			{
-				var fileInfo = new FileInfo(fileName);
-				if (fileInfo.Extension == ".xls")
-				{
-					return new HSSFWorkbook(fs);
-				}
-				if (fileInfo.Extension == ".xlsx")
-				{
-					return new XSSFWorkbook(fs);
-				}
-
-				throw new ArgumentException("Specified file is not a valid Excel document.");
+			    case ".xls":
+			        return WorkbookFactory.Create(fileName);
+			    case ".xlsx":
+			        return WorkbookFactory.Create(fileName);
 			}
+
+		    throw new ArgumentException("Specified file is not a valid Excel document.");
+			
 		}
 
 		private int GetMaxColumnWidthInASheet(ISheet sheet, int? rowCount = int.MaxValue)
