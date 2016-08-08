@@ -43,7 +43,7 @@ wmis.collaredanimal.mapping = (function ($) {
         this.statusFilterKey = ko.observable(-1);
         this.daysFilterKey = ko.observable(-1);
 
-        this.showGpsOnly = ko.observable();
+        this.showGpsOnly = ko.observable(true);
 
         this.statusFilterOptions = [
             { key: -1, name: 'All' },
