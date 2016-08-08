@@ -109,7 +109,7 @@ wmis.mapping = (function ($) {
         }
 
         function getHoverMessage(pass) {
-            return pass.latitude + ", " + pass.longitude;
+            return moment.utc(pass.locationDate, moment.ISO_8601).local().format('L h:mm a');
         }
 
         function createStartMarker(map, pass) {
@@ -117,7 +117,7 @@ wmis.mapping = (function ($) {
         }
 
         function createStopMarker(map, pass) {
-            return createMarker(pass, "Stop" + getHoverMessage(pass), "/content/images/maps-symbol-blank-stop.png");
+            return createMarker(pass, "Stop: " + getHoverMessage(pass), "/content/images/maps-symbol-blank-stop.png");
         }
 
         function createMiddleMarker(map, pass, imageUrl) {
