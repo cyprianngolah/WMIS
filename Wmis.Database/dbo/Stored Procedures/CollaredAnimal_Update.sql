@@ -128,6 +128,7 @@ AS
 	)
 	BEGIN
 		INSERT INTO HistoryLogs (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Animal Herd", (SELECT Name from HerdPopulations where HerdPopulationId = @p_HerdPopulationId) + ' (' + (SELECT CONVERT(char(10),  @p_HerdAssociationDate, 101)) + ')', @p_ChangeBy)
+		INSERT INTO CollaredAnimalHerdAssociationHistory (HerdPopulationId, HerdAssociationConfidenceLevelId, HerdAssociationMethodId, HerdAssociationDate, UserId) VALUES (@p_HerdPopulationId, @p_HerdAssociationConfidenceLevelId, @p_HerdAssociationMethodId, @p_HerdAssociationDate, @p_ChangeBy)
 	END
 
 	--Animal Breeding

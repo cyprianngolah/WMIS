@@ -1606,7 +1606,7 @@
                             return stc;
                         },
                             splitOn: "key"),
-                        ObservationData = q.Read()
+                        ObservationData = q.Read().Take(1000) //Temp fix
                     };
                 }
             }
@@ -2012,34 +2012,40 @@
                 {
                     p_collaredAnimalKey = collaredAnimalKey
                 };
-                return c.Query<Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(COLLAREDANIMAL_GET,
-                    (collar, project, type, region, status, dyn) =>
-                    {
-                        collar.Project = project ?? new SimpleProject();
-                        collar.CollarType = type ?? new CollarType();
-                        collar.CollarRegion = region ?? new CollarRegion();
-                        collar.CollarStatus = status ?? new CollarStatus();
 
-                        collar.ArgosProgram = dyn.ArgosProgramKey == null ? new ArgosProgram() : new ArgosProgram { Key = dyn.ArgosProgramKey, ProgramNumber = dyn.ArgosProgramNumber, ArgosUser = new ArgosUser { Key = dyn.ArgosUserKey, Name = dyn.ArgosUserName, Password = dyn.ArgosUserPassword } };
+                
+                using (var q = c.QueryMultiple(COLLAREDANIMAL_GET, param, commandType: CommandType.StoredProcedure))
+                {
+                    var collars = q.Read<Collar, SimpleProject, CollarType, CollarRegion, CollarStatus, dynamic, Collar>(
+                        (collar, project, type, region, status, dyn) =>
+                            {
+                                collar.Project = project ?? new SimpleProject();
+                                collar.CollarType = type ?? new CollarType();
+                                collar.CollarRegion = region ?? new CollarRegion();
+                                collar.CollarStatus = status ?? new CollarStatus();
 
-                        collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
-                        collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
-                        collar.AnimalStatus = dyn.AnimalStatusKey == null ? new AnimalStatus() : new AnimalStatus { Key = dyn.AnimalStatusKey, Name = dyn.AnimalStatusName };
-                        collar.AgeClass = dyn.AgeClassKey == null ? new AgeClass() : new AgeClass { Key = dyn.AgeClassKey, Name = dyn.AgeClassName };
-                        collar.AnimalSex = dyn.AnimalSexKey == null ? new AnimalSex() : new AnimalSex { Key = dyn.AnimalSexKey, Name = dyn.AnimalSexName };
-                        collar.AnimalMortality = dyn.AnimalMortalityKey == null ? new AnimalMortality() : new AnimalMortality { Key = dyn.AnimalMortalityKey, Name = dyn.AnimalMortalityName };
-                        collar.MortalityConfidence = dyn.MortalityConfidenceKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.MortalityConfidenceKey, Name = dyn.MortalityConfidenceName };
-                        collar.HerdPopulation = dyn.HerdPopulationKey == null ? new HerdPopulation() : new HerdPopulation { Key = dyn.HerdPopulationKey, Name = dyn.HerdPopulationName };
-                        collar.HerdAssociationConfidenceLevel = dyn.HerdAssociationConfidenceLevelKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.HerdAssociationConfidenceLevelKey, Name = dyn.HerdAssociationConfidenceLevelName };
-                        collar.HerdAssociationMethod = dyn.HerdAssociationMethodKey == null ? new HerdAssociationMethod() : new HerdAssociationMethod { Key = dyn.HerdAssociationMethodKey, Name = dyn.HerdAssociationMethodName };
-                        collar.BreedingStatus = dyn.BreedingStatusKey == null ? new BreedingStatus() : new BreedingStatus { Key = dyn.BreedingStatusKey, Name = dyn.BreedingStatusName };
-                        collar.BreedingStatusConfidenceLevel = dyn.BreedingStatusConfidenceLevelKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.BreedingStatusConfidenceLevelKey, Name = dyn.BreedingStatusConfidenceLevelName };
-                        collar.BreedingStatusMethod = dyn.BreedingStatusMethodKey == null ? new BreedingStatusMethod() : new BreedingStatusMethod { Key = dyn.BreedingStatusMethodKey, Name = dyn.BreedingStatusMethodName };
-                        return collar;
-                    },
-                        param,
-                        commandType: CommandType.StoredProcedure,
-                        splitOn: "Key").ToList().First();
+                                collar.ArgosProgram = dyn.ArgosProgramKey == null ? new ArgosProgram() : new ArgosProgram { Key = dyn.ArgosProgramKey, ProgramNumber = dyn.ArgosProgramNumber, ArgosUser = new ArgosUser { Key = dyn.ArgosUserKey, Name = dyn.ArgosUserName, Password = dyn.ArgosUserPassword } };
+
+                                collar.CollarMalfunction = dyn.CollarMalfunctionKey == null ? new CollarMalfunction() : new CollarMalfunction { Key = dyn.CollarMalfunctionKey, Name = dyn.CollarMalfunctionName };
+                                collar.CollarState = dyn.CollarStateKey == null ? new CollarState() : new CollarState { Key = dyn.CollarStateKey, Name = dyn.CollarStateName };
+                                collar.AnimalStatus = dyn.AnimalStatusKey == null ? new AnimalStatus() : new AnimalStatus { Key = dyn.AnimalStatusKey, Name = dyn.AnimalStatusName };
+                                collar.AgeClass = dyn.AgeClassKey == null ? new AgeClass() : new AgeClass { Key = dyn.AgeClassKey, Name = dyn.AgeClassName };
+                                collar.AnimalSex = dyn.AnimalSexKey == null ? new AnimalSex() : new AnimalSex { Key = dyn.AnimalSexKey, Name = dyn.AnimalSexName };
+                                collar.AnimalMortality = dyn.AnimalMortalityKey == null ? new AnimalMortality() : new AnimalMortality { Key = dyn.AnimalMortalityKey, Name = dyn.AnimalMortalityName };
+                                collar.MortalityConfidence = dyn.MortalityConfidenceKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.MortalityConfidenceKey, Name = dyn.MortalityConfidenceName };
+                                collar.HerdPopulation = dyn.HerdPopulationKey == null ? new HerdPopulation() : new HerdPopulation { Key = dyn.HerdPopulationKey, Name = dyn.HerdPopulationName };
+                                collar.HerdAssociationConfidenceLevel = dyn.HerdAssociationConfidenceLevelKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.HerdAssociationConfidenceLevelKey, Name = dyn.HerdAssociationConfidenceLevelName };
+                                collar.HerdAssociationMethod = dyn.HerdAssociationMethodKey == null ? new HerdAssociationMethod() : new HerdAssociationMethod { Key = dyn.HerdAssociationMethodKey, Name = dyn.HerdAssociationMethodName };
+                                collar.BreedingStatus = dyn.BreedingStatusKey == null ? new BreedingStatus() : new BreedingStatus { Key = dyn.BreedingStatusKey, Name = dyn.BreedingStatusName };
+                                collar.BreedingStatusConfidenceLevel = dyn.BreedingStatusConfidenceLevelKey == null ? new ConfidenceLevel() : new ConfidenceLevel { Key = dyn.BreedingStatusConfidenceLevelKey, Name = dyn.BreedingStatusConfidenceLevelName };
+                                collar.BreedingStatusMethod = dyn.BreedingStatusMethodKey == null ? new BreedingStatusMethod() : new BreedingStatusMethod { Key = dyn.BreedingStatusMethodKey, Name = dyn.BreedingStatusMethodName };
+                                return collar;
+                            },
+                                "Key").ToList().First();
+                    collars.DeploymentHerd = q.Read<string>().FirstOrDefault();
+
+                    return collars;
+                }
             }
         }
 
