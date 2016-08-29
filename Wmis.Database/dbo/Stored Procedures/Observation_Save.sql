@@ -6,12 +6,12 @@ AS
 	-- This is a bit weird because we actually take the Latitude, Longitude and Timestamp columns directly into the ObservationRow table
 	-- and then leave any remaining data as values that go into Observation
 	-- Get the ObservationUploadSurveyTemplateColumnMappingIds for Latitude, Longitude and Timestamp
-	DECLARE @v_latitude INT, @v_longitude INT, @v_timestamp INT, @v_siteId INT, @v_projectId INT;
+	DECLARE @v_latitude INT, @v_longitude INT, @v_timestamp INT, @v_projectId INT;
+	
 	SELECT
 		@v_latitude = CASE WHEN stc.Name = 'Latitude' THEN oustcm.ObservationUploadSurveyTemplateColumnMappingId ELSE @v_latitude END,
 		@v_longitude = CASE WHEN stc.Name = 'Longitude' THEN oustcm.ObservationUploadSurveyTemplateColumnMappingId ELSE @v_longitude END,
-		@v_timestamp = CASE WHEN stc.Name = 'Timestamp' THEN oustcm.ObservationUploadSurveyTemplateColumnMappingId ELSE @v_timestamp END,
-		@v_siteId = CASE WHEN stc.Name = 'SiteId' THEN oustcm.ObservationUploadSurveyTemplateColumnMappingId ELSE @v_siteId END
+		@v_timestamp = CASE WHEN stc.Name = 'Timestamp' THEN oustcm.ObservationUploadSurveyTemplateColumnMappingId ELSE @v_timestamp END
 	FROM
 		dbo.ObservationUploadSurveyTemplateColumnMappings oustcm
 			INNER JOIN dbo.SurveyTemplateColumns stc on oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
@@ -19,25 +19,25 @@ AS
 		oustcm.ObservationUploadId = @p_observationUploadId
 		
 	-- Check that the sites in the data are sites associated with the current project
-	SELECT @v_projectId = ProjectId
-	FROM dbo.[Survey] s
-		INNER JOIN dbo.[ObservationUploads] u ON u.SurveyId = s.SurveyId
-	WHERE u.ObservationUploadId = @p_observationUploadId;
+	--SELECT @v_projectId = ProjectId
+	--FROM dbo.[Survey] s
+	--	INNER JOIN dbo.[ObservationUploads] u ON u.SurveyId = s.SurveyId
+	--WHERE u.ObservationUploadId = @p_observationUploadId;
 
-	IF EXISTS (
-		SELECT o.Value
-		FROM 
-			@p_observations o
-			INNER JOIN dbo.ObservationUploadSurveyTemplateColumnMappings oustcm on o.ObservationUploadSurveyTemplateColumnMappingId = oustcm.ObservationUploadSurveyTemplateColumnMappingId
-			INNER JOIN dbo.SurveyTemplateColumns stc on oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
-		WHERE
-			oustcm.ObservationUploadId = @p_observationUploadId
-			AND o.ObservationUploadSurveyTemplateColumnMappingId = @v_siteId
-			AND o.Value NOT IN (SELECT CAST(SiteId AS NVARCHAR(50)) FROM dbo.[Sites] s WHERE s.ProjectId = @v_projectId)
-	) 
-	BEGIN	
-		RAISERROR('Error: Sites found in upload which are not associated with this Project', 11,1)
-	END
+	--IF EXISTS (
+	--	SELECT o.Value
+	--	FROM 
+	--		@p_observations o
+	--		INNER JOIN dbo.ObservationUploadSurveyTemplateColumnMappings oustcm on o.ObservationUploadSurveyTemplateColumnMappingId = oustcm.ObservationUploadSurveyTemplateColumnMappingId
+	--		INNER JOIN dbo.SurveyTemplateColumns stc on oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
+	--	WHERE
+	--		oustcm.ObservationUploadId = @p_observationUploadId
+	--		AND o.ObservationUploadSurveyTemplateColumnMappingId = @v_siteId
+	--		AND o.Value NOT IN (SELECT CAST(SiteId AS NVARCHAR(50)) FROM dbo.[Sites] s WHERE s.ProjectId = @v_projectId)
+	--) 
+	--BEGIN	
+	--	RAISERROR('Error: Sites found in upload which are not associated with this Project', 11,1)
+	--END
 
 	-- Merge the Observation Records
 	;WITH AffectedMappings as 
@@ -53,7 +53,7 @@ AS
 	USING 
 	(
 		SELECT 
-			ObservationUploadId, RowIndex, [Latitude], [Longitude], [Timestamp], [SiteId]
+			ObservationUploadId, RowIndex, [Latitude], [Longitude], [Timestamp]
 		FROM
 			(
 				SELECT
@@ -64,12 +64,12 @@ AS
 						INNER JOIN dbo.SurveyTemplateColumns stc on oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
 				WHERE
 					oustcm.ObservationUploadId = @p_observationUploadId
-					AND o.ObservationUploadSurveyTemplateColumnMappingId IN (@v_latitude, @v_longitude, @v_timestamp, @v_siteId)
+					AND o.ObservationUploadSurveyTemplateColumnMappingId IN (@v_latitude, @v_longitude, @v_timestamp)
 			) as pvt
 		PIVOT
 		(
 			MAX(Value)
-			FOR Name IN (Latitude, Longitude, Timestamp, SiteId)
+			FOR Name IN (Latitude, Longitude, Timestamp)
 		) AS p
 	) AS S
 	ON 
@@ -78,14 +78,13 @@ AS
 		AND T.[RowIndex] = S.[RowIndex]
 	) 
 	WHEN NOT MATCHED BY TARGET 
-		THEN INSERT([ObservationUploadId], [RowIndex], [Latitude], [Longitude], [Timestamp], [SiteId], [ObservationRowStatusId]) 
-		VALUES(s.ObservationUploadId, s.[RowIndex], s.[Latitude], s.[Longitude], s.[Timestamp], s.[SiteId], null)
+		THEN INSERT([ObservationUploadId], [RowIndex], [Latitude], [Longitude], [Timestamp],[ObservationRowStatusId]) 
+		VALUES(s.ObservationUploadId, s.[RowIndex], s.[Latitude], s.[Longitude], s.[Timestamp], null)
 	WHEN MATCHED
 		THEN UPDATE SET 
 			[Latitude] = s.[Latitude], 
 			[Longitude] = s.[Longitude], 
-			[Timestamp] = s.[Timestamp],
-			[SiteId] = s.[SiteId]
+			[Timestamp] = s.[Timestamp]
 	WHEN NOT MATCHED BY SOURCE
 		THEN DELETE; 
 
@@ -112,7 +111,7 @@ AS
 				INNER JOIN dbo.SurveyTemplateColumns stc on oustcm.SurveyTemplateColumnId = stc.SurveyTemplateColumnId
 		WHERE
 			oustcm.ObservationUploadId = @p_observationUploadId
-			AND o.ObservationUploadSurveyTemplateColumnMappingId NOT IN (@v_latitude, @v_longitude, @v_timestamp, @v_siteId)
+			AND o.ObservationUploadSurveyTemplateColumnMappingId NOT IN (@v_latitude, @v_longitude, @v_timestamp)
 	) AS S
 	ON 
 	(	

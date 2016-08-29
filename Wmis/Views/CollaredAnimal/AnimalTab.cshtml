@@ -46,8 +46,9 @@
         <div class="col-md-1"></div>
         <label for="estimatedBirthYearBy" class="col-md-2 control-label">Estimated Year of Birth By</label>
         <div class="col-md-2">
-            <input class="form-control" id="estimatedBirthYearBy" type="text" data-bind="value: estimatedYearOfBirthBy" />
+            <input class="form-control" id="estimatedBirthYearBy" type="text" data-bind="value: estimatedYearOfBirthBy"/>
         </div>
+
     </div>
     <div class="col-md-12 h4">
         <div class="row">
@@ -79,7 +80,11 @@
         </div>
         <label for="herdAssociationDate" class="col-md-1 control-label">Effective Date</label>
         <div class="col-md-2">
-            <input class="form-control" id="herdAssociationDate" type="text" disabled data-bind="value: $root.herdDateFormat" />
+            <input class="form-control" id="herdAssociationDate" type="text" disabled data-bind="value: $root.herdDateFormat"/>
+        </div>
+        <label for="herdAssociationDeploymnetHerd" class="col-md-1 control-label">Deployment Herd</label>
+        <div class="col-md-2">
+            <input class="form-control" id="herdAssociationDeploymnetHerd" type="text" disabled data-bind="value: deploymentHerd" />
         </div>
     </div>
     <div class="col-md-12 h4">

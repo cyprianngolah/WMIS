@@ -115,6 +115,12 @@ AS
 	FETCH NEXT 
 		@p_rowCount ROWS ONLY
 
+
+	-- Get the Deploymnet Herd Population 
+	--BEGIN
+	Select hp.Name from HerdPopulations hp where hp.HerdPopulationId = (select top(1) HerdPopulationId from CollaredAnimalHerdAssociationHistory where CollaredAnimalId = @p_collaredAnimalKey order by HerdAssociationDate Asc )
+	--END 
+
 RETURN 0
 GO
 
