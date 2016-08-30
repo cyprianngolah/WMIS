@@ -112,6 +112,7 @@
     <Folder Include="dbo\User Defined Types" />
     <Folder Include="dbo\Fill" />
     <Folder Include="dbo\Views" />
+    <Folder Include="dbo\Indexes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\WMISUser.sql" />
@@ -329,6 +330,7 @@
     <Build Include="dbo\Stored Procedures\ArgosProgram_GetAll.sql" />
     <Build Include="dbo\Tables\ArgosUsers.sql" />
     <Build Include="dbo\Tables\ArgosPrograms.sql" />
+    <Build Include="dbo\Indexes\ObservationsRowId.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\Project_Create.sql" />

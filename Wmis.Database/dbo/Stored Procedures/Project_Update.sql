@@ -15,9 +15,29 @@
 	@p_methods NVARCHAR(MAX) = NULL,
 	@p_comments NVARCHAR(MAX) = NULL,
 	@p_results NVARCHAR(MAX) = NULL,
-	@p_termsAndConditions NVARCHAR(MAX) = NULL
-
+	@p_termsAndConditions NVARCHAR(MAX) = NULL,
+	@p_ChangeBy NVARCHAR(50) = NULL
 AS
+	--Terms and Conditions
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_termsAndConditions IS NOT NULL
+		AND TermsAndConditions != @p_termsAndConditions
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Terms and Condition",@p_termsAndConditions, @p_ChangeBy)
+	END
+
+	--Project Status
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_projectStatusId IS NOT NULL
+		AND ProjectStatusId != @p_projectStatusId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Project Status",(Select Name from ProjectStatus where ProjectStatusId = @p_projectStatusId), @p_ChangeBy)
+	END
+
 	UPDATE
 		dbo.Project
 	SET
@@ -40,6 +60,9 @@ AS
 		LastUpdated = GETUTCDATE()
 	WHERE
 		ProjectId = @p_projectId
+
+RETURN 0
+GO
 
 GRANT EXECUTE ON [dbo].[Project_Update] TO [WMISUser]
 GO

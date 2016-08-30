@@ -1272,7 +1272,7 @@
             }
         }
 
-        public void ProjectUpdate(Models.Project project)
+        public void ProjectUpdate(Models.Project project, string changedBy)
         {
             using (var c = NewWmisConnection)
             {
@@ -1294,7 +1294,8 @@
                     p_methods = project.Methods,
                     p_comments = project.Comments,
                     p_results = project.Results,
-                    p_termsAndConditions = project.TermsAndConditions
+                    p_termsAndConditions = project.TermsAndConditions,
+                    p_ChangeBy = changedBy
                 };
                 c.Execute(PROJECT_UPDATE, param, commandType: CommandType.StoredProcedure);
             }

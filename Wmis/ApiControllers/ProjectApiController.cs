@@ -42,32 +42,28 @@
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public int Create([FromBody]string name)
         {
-            return Repository.ProjectCreate(name, _user.Username);
+            return Repository.ProjectCreate(name, this._user.Username);
         }
 
         [HttpPut]
         [Route]
         public void Update(Models.Project p)
         {
-            var username = User.Identity.Name;
             var repo = WebApi.ObjectFactory.Container.GetInstance<Models.WmisRepository>();
-            var person = repo.PersonGet(username);
+            var person = repo.PersonGet(_user.Name);
 
             // All administrators can see the sensitive data
             if (person.Roles.Select(r => r.Name).Contains(WmisRoles.AdministratorProjects) || person.Projects.Select(pk => pk.Key).Contains(p.Key))
             {
-                Repository.ProjectUpdate(p);
+                Repository.ProjectUpdate(p, "");
                 return;
             }
-            else // if they created the project, they can see sensitve data
-            {
-                var historyItemForCreator = repo.HistoryLogSearch(new HistoryLogSearchRequest { Item = "Project Created", ChangeBy = username, Key = p.Key, Table = "ProjectHistory" }).Data;
+            var historyItemForCreator = repo.HistoryLogSearch(new HistoryLogSearchRequest { Item = "Project Created", ChangeBy = this._user.Username, Key = p.Key, Table = "ProjectHistory" }).Data;
 
-                if (historyItemForCreator.Count() > 0)
-                {
-                    Repository.ProjectUpdate(p);
-                    return;
-                }
+            if (historyItemForCreator.Any())
+            {
+                this.Repository.ProjectUpdate(p, "");
+                return;
             }
 
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
