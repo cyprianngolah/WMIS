@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
     ViewBag.Title = "Collared Animal";
     ViewBag.SubTitle = "<span data-bind='with: collar'><span data-bind='text: animalId'></span></span>";
 }
@@ -60,8 +61,21 @@
 <form role="form">
     <div class="row">
         <div class="col-md-12 text-right">
-            <a href="/CollaredAnimal/" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-primary" data-bind="click: saveCollar, enable: canSave">Save</button>
+
+            <a href="/CollaredAnimal/" class="btn btn-default">
+                @if (Html.UserIsProjectCollarAdministrator())
+                {
+                    <span>Cancel</span>
+                }
+                else
+                {
+                    <span>Back</span>
+                }
+            </a>
+            @if (Html.UserIsProjectCollarAdministrator())
+            {
+                <button type="submit" class="btn btn-primary" data-bind="click: saveCollar, enable: canSave">Save</button>
+            }
         </div>
     </div>
 
