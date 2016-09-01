@@ -18,6 +18,137 @@
 	@p_termsAndConditions NVARCHAR(MAX) = NULL,
 	@p_ChangeBy NVARCHAR(50) = NULL
 AS
+	
+	--Project Name
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_name IS NOT NULL
+		AND Name != @p_name
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Project Name",@p_name, @p_ChangeBy)
+	END
+
+	--NWT WRP ID
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_wildlifeResearchPermitNum IS NOT NULL
+		AND WildlifeResearchPermitNumber != @p_wildlifeResearchPermitNum
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "NWT WRP ID",@p_wildlifeResearchPermitNum, @p_ChangeBy)
+	END
+
+	--Lead Region
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_leadRegionId IS NOT NULL
+		AND LeadRegionId != @p_leadRegionId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Lead Region",(select Name from LeadRegion where LeadRegionId = @p_leadRegionId), @p_ChangeBy)
+	END
+
+	--Projcet Lead
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_projectLeadId IS NOT NULL
+		AND ProjectLeadId != @p_projectLeadId
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Project Lead",(Select Name from Person where PersonId = @p_projectLeadId), @p_ChangeBy)
+	END
+
+	--Project Status Date
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_statusDate IS NOT NULL
+		AND StatusDate != @p_statusDate
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Project Status Date",@p_statusDate, @p_ChangeBy)
+	END
+
+	--Start Date
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_startDate IS NOT NULL
+		AND StartDate != @p_startDate
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Start Date",@p_startDate, @p_ChangeBy)
+	END
+
+	--End Date
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_endDate IS NOT NULL
+		AND EndDate != @p_endDate
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "End Date",@p_endDate, @p_ChangeBy)
+	END
+
+	--Description
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_description IS NOT NULL
+		AND [Description] != @p_description
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Description",@p_description, @p_ChangeBy)
+	END
+
+	--Objectives
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_objectives IS NOT NULL
+		AND Objectives != @p_objectives
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Objectives",@p_objectives, @p_ChangeBy)
+	END
+
+	--Study Area
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_studyArea IS NOT NULL
+		AND StudyArea != @p_studyArea
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Study Area",@p_studyArea, @p_ChangeBy)
+	END
+
+	--Methods
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_methods IS NOT NULL
+		AND Methods != @p_methods
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Methods",@p_methods, @p_ChangeBy)
+	END
+
+	--Comments
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_comments IS NOT NULL
+		AND Comments != @p_comments
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Comments",@p_comments, @p_ChangeBy)
+	END
+
+	--Results
+	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
+		ProjectId = @p_projectId
+		AND @p_results IS NOT NULL
+		AND Results != @p_results
+	)
+	BEGIN
+		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Results",@p_results, @p_ChangeBy)
+	END
+
 	--Terms and Conditions
 	IF EXISTS (SELECT 1 FROM dbo.Project WHERE
 		ProjectId = @p_projectId
@@ -37,6 +168,8 @@ AS
 	BEGIN
 		INSERT INTO HistoryLogs (ProjectId, Item, Value, ChangeBy) VALUES (@p_projectId, "Project Status",(Select Name from ProjectStatus where ProjectStatusId = @p_projectStatusId), @p_ChangeBy)
 	END
+
+
 
 	UPDATE
 		dbo.Project
