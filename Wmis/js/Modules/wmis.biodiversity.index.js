@@ -56,7 +56,7 @@ wmis.biodiversity.index = (function($) {
 				    "data": "lastUpdated",
 				    "render": function (data, type, row) {
 				    	if (typeof (data) != 'undefined' && data != null)
-				    		return moment.utc(data, moment.ISO_8601).format('L');
+				    		return moment(data, moment.ISO_8601).format('L');
 				    	else
 				    		return "";
 				    }
