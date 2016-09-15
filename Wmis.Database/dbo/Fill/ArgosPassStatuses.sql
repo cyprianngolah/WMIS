@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[ArgosPassStatuses] WHERE [ArgosPassStatusId] NOT IN (1,2,3,4,5,6,7,8,9) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[ArgosPassStatuses] WHERE [ArgosPassStatusId] NOT IN (1,2,3,4,5,6,7,8,9,10) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[ArgosPassStatuses] other than what exists in the Fill Script.', 1; 
 END
@@ -17,7 +17,7 @@ BEGIN
 		(7, 'Warning - Possibly Stationary', 0),
 		(8, 'Good(without Warnings or Rejections)', 0),
 		(9, 'Reject - Mortality', 1),
-		(10, 'Reject - Released Collar', 1)
+		(10, 'Reject – Released Collar', 1)
 	)
 	AS [Source] ([ArgosPassStatusId], [Name], [isRejected]) 
 	ON [Target].[ArgosPassStatusId] = [source].[ArgosPassStatusId]
