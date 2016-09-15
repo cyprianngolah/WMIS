@@ -141,7 +141,7 @@ wmis.collaredanimal.mapping = (function ($) {
                 {
                     "data": "locationDate",
                     "render": function(data, type, row) {
-                        var date = moment.utc(data, moment.ISO_8601).local().format('L h:mm a');
+                        var date = moment(data, moment.ISO_8601).local().format('L h:mm a');
                         return date;
                     }
                 },
