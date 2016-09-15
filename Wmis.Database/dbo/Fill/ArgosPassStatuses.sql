@@ -16,7 +16,8 @@ BEGIN
 		(6, 'Warning - Unexpected Reports', 0),
 		(7, 'Warning - Possibly Stationary', 0),
 		(8, 'Good(without Warnings or Rejections)', 0),
-		(9, 'Reject - Mortality', 1)
+		(9, 'Reject - Mortality', 1),
+		(10, 'Reject - Released Collar', 1)
 	)
 	AS [Source] ([ArgosPassStatusId], [Name], [isRejected]) 
 	ON [Target].[ArgosPassStatusId] = [source].[ArgosPassStatusId]
