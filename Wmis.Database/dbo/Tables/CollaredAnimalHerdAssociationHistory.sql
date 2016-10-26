@@ -5,7 +5,7 @@
     [HerdAssociationConfidenceLevelId] INT NULL, 
     [HerdAssociationMethodId] INT NULL, 
     [HerdAssociationDate] DATETIME NULL, 
-    [UserId] INT NULL, 
+    [UserId] NVARCHAR(50) NULL, 
     [CollaredAnimalId] INT NULL, 
     CONSTRAINT [PK_CollaredHerdId] PRIMARY KEY CLUSTERED ([CollaredAnimalHerdId]),
 	CONSTRAINT [FK_CollaredAnimalHerdHistory_ConfidenceLevels_HerdAssociation] FOREIGN KEY ([HerdAssociationConfidenceLevelId]) REFERENCES [dbo].[ConfidenceLevels] ([ConfidenceLevelId]),
