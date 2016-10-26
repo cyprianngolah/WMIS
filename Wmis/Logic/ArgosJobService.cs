@@ -388,7 +388,7 @@
                     case ArgosCollarDataValueType.LowVoltage:
                         if (dataRow.Value.ToLower() == "yes" && !hasVoltageAlert)
                         {
-                            _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Collar Low Voltage", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date), "Yes");
+                            _repository.CollarUpdateWarning(collar.Key, collar.CollarState.Key, "Collar Low Voltage", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date), "Yes");
                             hasVoltageAlert = true;
                         }
                         break;
