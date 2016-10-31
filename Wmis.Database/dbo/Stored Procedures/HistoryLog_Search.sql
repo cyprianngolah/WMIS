@@ -7,7 +7,8 @@
 	@p_surveyId INT = NULL,
 	@p_personId INT = NULL,
 	@p_changeBy NVARCHAR(50) = NULL,
-	@p_item NVARCHAR(100) = NULL
+	@p_item NVARCHAR(100) = NULL,
+	@p_filter NVARCHAR(100) = NULL
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
@@ -27,6 +28,7 @@ AS
 		AND (@p_personId IS NULL OR h.UserId = @p_personId)
 		AND (@p_changeBy IS NULL OR h.ChangeBy = @p_changeBy)
 		AND (@p_item IS NULL OR h.Item = @p_item)
+		AND (@p_filter IS NULL OR h.Item = @p_filter)
 	ORDER BY
 		h.ChangeDate DESC
 	OFFSET 

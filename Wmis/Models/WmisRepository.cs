@@ -2319,7 +2319,8 @@
                     p_surveyId = request.Table == "SurveyHistory" ? request.Key : (int?)null,
                     p_personId = request.Table == "PersonHistory" ? request.Key : (int?)null,
                     p_changeBy = request.ChangeBy,
-                    p_item = request.Item
+                    p_item = request.Item,
+                    p_filter = request.Filter
                 };
 
                 var pagedResults = new PagedResultset<HistoryLog>

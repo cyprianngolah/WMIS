@@ -7,7 +7,17 @@ wmis.shared.historytab = (function($) {
 
     var historyTableSelector = "#historyLogTable";
     
-    function initializeHistoryTable() {
+    function HistoryModel() {
+        var self = this;
+        this.historyFilterOptions = ko.observableArray([""]);
+        this.historyOptionSelection = ko.observable("");
+
+        this.historyOptionSelection.subscribe(function () {
+            $(historyTableSelector).DataTable().ajax.reload();
+        });
+    }
+
+    function initializeHistoryTable(historyModel) {
         $(historyTableSelector).DataTable({
             "iDisplayLength": 25,
             "ordering": false,
@@ -46,6 +56,11 @@ wmis.shared.historytab = (function($) {
                     table: options.parentTableName,
                     key: options.parentTableKey
                 };
+
+                //Check Filter
+                var filterValue = historyModel.historyOptionSelection();
+                if (filterValue) parameters.filter = filterValue;
+
                 $.getJSON("/api/history", parameters, function (json) {
                     var result = {
                         data: json.data,
@@ -56,7 +71,17 @@ wmis.shared.historytab = (function($) {
                     callback(result);
                 });
             },
-        });    
+            initComplete: function (settings, json) {
+                var data = $.unique(this.api().column(1).data().toArray()).sort();
+                $.each(data, function (index, value) {
+                    historyModel.historyFilterOptions.push(value);
+                });
+            }
+        });
+
+        historyModel.historyFilterOptions.subscribe(function () {
+            $(historyTableSelector).DataTable().ajax.reload();
+        });
     }
 
     function wireEditButtons() {
@@ -117,20 +142,24 @@ wmis.shared.historytab = (function($) {
         }).done(saveEditedHistory);
     }
 
-    function afterRender() {
-        initializeHistoryTable();
+    function afterRender(viewmodel) {
+        initializeHistoryTable(viewmodel);
         wireEditButtons();
     }
 
     function initialize(key, table, div) {
         options.parentTableKey = key;
         options.parentTableName = table;
-        var viewModel = {};
+        var viewModel = new HistoryModel();
 
         ko.renderTemplate(
             'historyManagementTemplate',
             viewModel,
-            { afterRender: afterRender },
+            {
+                afterRender: function () {
+                    afterRender(viewModel);
+                }
+            },
             document.getElementById(div),
             "replaceNode"
         );

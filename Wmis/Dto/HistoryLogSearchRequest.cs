@@ -7,5 +7,7 @@
         public string Item { get; set; }
 
         public string ChangeBy { get; set; }
+
+        public string Filter { get; set; }
     }
 }
