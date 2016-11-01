@@ -14,7 +14,7 @@
 				return false;
 
 			var claims = identity.FindAll(ClaimTypes.Role) ?? new List<Claim>();
-			return claims.Any(c => c.Value.Equals(role, System.StringComparison.InvariantCultureIgnoreCase));
+            return claims.Any(c => c.Value.Equals(role, System.StringComparison.InvariantCultureIgnoreCase));
 		}
 
 		public static bool UserInAnyAdministratorRole(this HtmlHelper htmlHelper)
@@ -30,7 +30,7 @@
 
 		public static bool UserIsProjectCollarAdministrator(this HtmlHelper htmlHelper)
 		{
-			return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorProjects);
+			return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorCollaredAnimals);
 		}
 	}
 }

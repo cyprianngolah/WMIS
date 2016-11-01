@@ -10,7 +10,8 @@ BEGIN
 	USING (VALUES
 		(1, 'Project Lead'),
 		(2, 'Administrator Biodiversity'),
-		(3, 'Administrator Projects')
+		(3, 'Administrator Projects'),
+		(4, 'Administrator CollaredAnimals')
 	)
 	AS [Source] ([RoleId], [Name]) 
 	ON [Target].[RoleId] = [source].[RoleId]

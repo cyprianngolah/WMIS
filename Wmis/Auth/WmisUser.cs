@@ -11,6 +11,8 @@
 			
 		public const string AdministratorProjects = "Administrator Projects";
 
+        public const string AdministratorCollaredAnimals = "Administrator CollaredAnimals";
+
 		public const string AllRoles = "Administrator Biodiversity,Administrator Projects";
 	}
 
@@ -54,7 +56,7 @@
 			get
 			{
 				var nameClaim = _identity.FindFirst(ClaimTypes.Name);
-				return nameClaim == null ? null : nameClaim.Value;
+                return nameClaim == null ? null : nameClaim.Value;
 			}
 		}
 
