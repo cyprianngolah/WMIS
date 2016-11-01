@@ -253,6 +253,7 @@
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
     <Compile Include="Dto\Base\PagedResultset.cs" />
     <Compile Include="Dto\HelpLinkSaveRequest.cs" />
+    <Compile Include="Dto\HistoricFilterTypeRequest.cs" />
     <Compile Include="Dto\ProjectCollaboratorsUpdateRequest.cs" />
     <Compile Include="Dto\BioDiversityDecisionRequest.cs" />
     <Compile Include="Dto\ArgosPassSearchRequest.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="Models\ArgosProgram.cs" />
     <Compile Include="Models\ArgosUser.cs" />
     <Compile Include="Models\HelpLink.cs" />
+    <Compile Include="Models\HistoricTypesFilter.cs" />
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />
     <Compile Include="Models\PersonRole.cs" />

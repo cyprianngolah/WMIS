@@ -259,8 +259,7 @@
 
         private const string HISTORYLOG_SAVE = "dbo.HistoryLog_Save";
 
-        //TODO: not being used? Cleanup..
-        //private const string ARGOSPASS_CREATE = "dbo.ArgosPass_Create";
+        private const string HISTORICTYPE_GET = "dbo.HistoryType_Search";
 
         private const string ARGOSPASS_MERGE = "dbo.ArgosPass_Merge";
 
@@ -3385,6 +3384,24 @@
         }
         #endregion HelpLink
 
+
+        #region History
+        public IEnumerable<HistoricTypesFilter> HistoricFilerTypesSearch(HistoricFilterTypeRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_projectId = request.ProjectId,
+                    p_speciesId = request.SpeciesId,
+                    p_collaredAnimalId = request.CollaredAnimalId,
+                };
+
+                var items = c.Query<HistoricTypesFilter>(HISTORICTYPE_GET, param, commandType: CommandType.StoredProcedure).ToList();
+                return items;
+            }
+        }
+        #endregion
 
         public void ArgosCollarDataMerge(int collaredAnimalId, IEnumerable<ArgosCollarData> passes)
         {

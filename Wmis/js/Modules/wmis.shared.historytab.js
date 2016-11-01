@@ -18,6 +18,7 @@ wmis.shared.historytab = (function($) {
     }
 
     function initializeHistoryTable(historyModel) {
+
         $(historyTableSelector).DataTable({
             "iDisplayLength": 25,
             "ordering": false,
@@ -72,10 +73,10 @@ wmis.shared.historytab = (function($) {
                 });
             },
             initComplete: function (settings, json) {
-                var data = $.unique(this.api().column(1).data().toArray()).sort();
-                $.each(data, function (index, value) {
-                    historyModel.historyFilterOptions.push(value);
-                });
+                //var data = $.unique(this.api().column(1).data().toArray()).sort();
+                //$.each(data, function (index, value) {
+                //    historyModel.historyFilterOptions.push(value);
+                //});
             }
         });
 
@@ -90,6 +91,14 @@ wmis.shared.historytab = (function($) {
             var rowData = $(historyTableSelector).DataTable().row(rowIndex).data();
             editHistoryComment(rowData);
         });
+    }
+
+    function populateHistoryFilters(viewmodel) {
+        $.getJSON("/api/history/filterTypes?parentTableKey=" + options.parentTableKey + "&parentTableName=" + options.parentTableName, {}, function (json) {
+            $.each(json, function (index, value) {
+                viewmodel.historyFilterOptions.push(value.item);
+            });
+        }).fail(wmis.global.ajaxErrorHandler);
     }
     
     function saveEditedHistory(history) {
@@ -145,6 +154,7 @@ wmis.shared.historytab = (function($) {
     function afterRender(viewmodel) {
         initializeHistoryTable(viewmodel);
         wireEditButtons();
+        populateHistoryFilters(viewmodel);
     }
 
     function initialize(key, table, div) {

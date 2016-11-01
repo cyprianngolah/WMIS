@@ -1,5 +1,6 @@
 ﻿namespace Wmis.ApiControllers
 {
+    using System.Collections.Generic;
     using System.Web.Http;
 	using Configuration;
 	using Dto;
@@ -33,6 +34,13 @@
         public void Update([FromBody]HistoryLog historyLog)
         {
             Repository.HistoryLogSave(historyLog);
+        }
+
+        [HttpGet]
+        [Route("filterTypes")]
+        public IEnumerable<Models.HistoricTypesFilter> GetHistoricTypeFilters([FromUri]Dto.HistoricFilterTypeRequest hftp)
+        {
+            return Repository.HistoricFilerTypesSearch(hftp ?? new HistoricFilterTypeRequest());
         }
     }
 }
