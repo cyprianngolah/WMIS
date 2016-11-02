@@ -13,7 +13,7 @@
 
         public const string AdministratorCollaredAnimals = "Administrator CollaredAnimals";
 
-		public const string AllRoles = "Administrator Biodiversity,Administrator Projects";
+        public const string AllRoles = "Administrator Biodiversity,Administrator Projects,Administrator CollaredAnimals";
 	}
 
 	public class WmisClaimTypes
