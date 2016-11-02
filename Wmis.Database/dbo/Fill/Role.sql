@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[Role] WHERE [RoleId] NOT IN (1,2,3) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[Role] WHERE [RoleId] NOT IN (1,2,3,4) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[Role] other than what exists in the Fill Script.', 1; 
 END
