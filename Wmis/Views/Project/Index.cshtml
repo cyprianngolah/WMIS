@@ -33,12 +33,12 @@
 
 <div class="row">
 	<div class="col-md-12 text-right">
-		@if (Html.UserIsProjectCollarAdministrator())
+		@if (Html.UserIsProjectAdministrator())
 		{
 			<a href="~/Project/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
 		}
 		<a href="~/Project/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-			@if (Html.UserIsProjectCollarAdministrator())
+			@if (Html.UserIsProjectAdministrator())
 			{
 				<span>Edit</span>
 			}

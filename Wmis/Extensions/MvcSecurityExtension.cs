@@ -32,5 +32,10 @@
 		{
 			return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorCollaredAnimals);
 		}
+
+        public static bool UserIsProjectAdministrator(this HtmlHelper htmlHelper)
+        {
+            return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorProjects);
+        }
 	}
 }
