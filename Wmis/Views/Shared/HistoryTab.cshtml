@@ -1,4 +1,5 @@
-﻿<script id="editHistoryCommentTemplate" type="text/html">
+﻿@using Wmis.Extensions
+<script id="editHistoryCommentTemplate" type="text/html">
     <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -42,12 +43,15 @@
 </script>
 
 <script id="historyManagementTemplate" type="text/html">
-    <div class="row">
-        @*<label for="historyFilter" class="control-label col-md-1">Filter</label>
-        <div class="col-md-2" style="text-align: left">
-            <select class="form-control" id="historyFilter" name="historyFilter" data-bind="options: historyFilterOptions, value: historyOptionSelection"></select>
-        </div>*@
-    </div>
+    @if (@ViewBag.Title != "Project")
+    {
+        <div class="row">
+            <label for="historyFilter" class="control-label col-md-1">Filter</label>
+            <div class="col-md-2" style="text-align: left">
+                <select class="form-control" id="historyFilter" data-bind="options: historyFilterOptions, value: historyOptionSelection"></select>
+            </div>
+        </div>
+    }
     <div class="col-md-12">
         <table id="historyLogTable" class="table">
             <thead>
