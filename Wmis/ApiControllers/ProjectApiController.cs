@@ -66,7 +66,7 @@
                 return;
             }
 
-            throw new HttpResponseException(new FileHttpResponseMessage("User: "+this._user.Name));
+            throw new HttpResponseException(new FileHttpResponseMessage("User: "+this._user.Name ?? "Not Defined"));
         }
         #endregion
 
