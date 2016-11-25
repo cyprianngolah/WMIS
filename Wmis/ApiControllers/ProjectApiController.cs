@@ -66,7 +66,7 @@
                 return;
             }
 
-            throw new HttpResponseException(HttpStatusCode.MovedPermanently);
+            throw new HttpResponseException(new FileHttpResponseMessage("User: "+this._user.Name));
         }
         #endregion
 
