@@ -50,7 +50,7 @@
         public void Update(Models.Project p)
         {
             var repo = WebApi.ObjectFactory.Container.GetInstance<Models.WmisRepository>();
-            var person = repo.PersonGet(_user.Name);
+            var person = repo.PersonGet(_user.Username);
 
             // All administrators can see the sensitive data
             if (person.Roles.Select(r => r.Name).Contains(WmisRoles.AdministratorProjects) || person.Projects.Select(pk => pk.Key).Contains(p.Key))
