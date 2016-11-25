@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12 text-right">
         <a class="btn btn-default" data-bind="click: $root.navigateToProject">
-            @if (Html.UserIsProjectCollarAdministrator())
+            @if (Html.UserIsProjectAdministrator())
             {
                 <span>Cancel</span>
             }
@@ -12,7 +12,7 @@
                 <span>Back</span>
             }
         </a>
-        @if (Html.UserIsProjectCollarAdministrator())
+        @if (Html.UserIsProjectAdministrator())
         {
             <button type="submit" class="btn btn-primary" data-bind="enable: canSave, click: save">Save</button>
         }

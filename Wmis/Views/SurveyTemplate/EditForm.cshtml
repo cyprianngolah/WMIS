@@ -45,7 +45,7 @@
 
 <div class="text-right">
     <a href="/SurveyTemplate" class="btn btn-default">
-        @if (Html.UserIsProjectCollarAdministrator())
+        @if (Html.UserIsProjectAdministrator())
         {
             <span>Cancel</span>
         }
@@ -54,7 +54,7 @@
             <span>Back</span>
         }
     </a>
-    @if (Html.UserIsProjectCollarAdministrator())
+    @if (Html.UserIsProjectAdministrator())
     {
         <button type="submit" class="btn btn-primary" data-bind="click: saveSurveyTemplate, enabled: canSave">Save</button>
     }

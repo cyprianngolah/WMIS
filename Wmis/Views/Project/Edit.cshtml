@@ -122,7 +122,7 @@
                             <select class="form-control" id="projectLead" data-bind="options: $root.projectLeads, value: key, optionsText: 'text', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
                             <!-- /ko -->
                         </div>
-                        @if (Html.UserIsProjectCollarAdministrator() || ViewBag.CanViewSensitive)
+                        @if (Html.UserIsProjectAdministrator() || ViewBag.CanViewSensitive)
                         {
                             <label for="name" class="col-md-1 control-label"></label>
                             <div class="col-md-3">
@@ -231,13 +231,13 @@
                             <select class="form-control" id="surveyTypeKey" data-bind="options: $root.surveyTypes, value: key, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: surveyFilterKey, select2: { }"></select>
                         </div>
                         <div class="col-md-9 text-right">
-                            @if (Html.UserIsProjectCollarAdministrator())
+                            @if (Html.UserIsProjectAdministrator())
                             {
                                 <a href="~/Project/NewSurvey/@ViewBag.Key" id="newSurveyButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
                             }
 
                             <a href="~/Project/EditSurvey/@ViewBag.Key" id="editSurveyButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-                                @if (Html.UserIsProjectCollarAdministrator())
+                                @if (Html.UserIsProjectAdministrator())
                                 {
                                     <span>Edit</span>
                                 }
@@ -325,12 +325,12 @@
 
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            @if (Html.UserIsProjectCollarAdministrator())
+                            @if (Html.UserIsProjectAdministrator())
                             {
                                 <a href="~/Project/NewSite/@ViewBag.Key" id="newSiteButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
                             }
                             <a href="~/Project/EditSite/@ViewBag.Key" id="editSiteButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-                                @if (Html.UserIsProjectCollarAdministrator())
+                                @if (Html.UserIsProjectAdministrator())
                                 {
                                     <span>Edit</span>
                                 }
