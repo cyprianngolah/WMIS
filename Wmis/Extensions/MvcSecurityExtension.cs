@@ -11,7 +11,7 @@
 		{
 			var identity = htmlHelper.ViewContext.HttpContext.User.Identity as ClaimsIdentity;
 			if (identity == null)
-				return false;
+				return true;
 
 			var claims = identity.FindAll(ClaimTypes.Role) ?? new List<Claim>();
             return claims.Any(c => c.Value.Equals(role, System.StringComparison.InvariantCultureIgnoreCase));
