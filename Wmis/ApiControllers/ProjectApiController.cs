@@ -66,7 +66,7 @@
                 return;
             }
 
-            throw new Exception("User: "+ this._user.Name);
+            throw new HttpResponseException(HttpStatusCode.Unauthorized);
         }
         #endregion
 
