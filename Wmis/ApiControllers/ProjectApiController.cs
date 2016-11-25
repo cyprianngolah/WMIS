@@ -66,7 +66,7 @@
                 return;
             }
 
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            throw new HttpResponseException(HttpStatusCode.MovedPermanently);
         }
         #endregion
 
