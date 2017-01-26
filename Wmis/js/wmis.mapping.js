@@ -109,7 +109,7 @@ wmis.mapping = (function ($) {
         }
 
         function getHoverMessage(pass) {
-            return moment.utc(pass.locationDate, moment.ISO_8601).local().format('L h:mm a');
+            return moment(pass.locationDate, moment.ISO_8601).local().format('L h:mm a');
         }
 
         function createStartMarker(map, pass) {

@@ -57,7 +57,7 @@ wmis.project.index = (function ($) {
 					"data": "statusDate",
 					"render": function (data, type, row) {
 						if (typeof (data) != 'undefined' && data != null)
-							return moment.utc(data, moment.ISO_8601).format('L');
+							return moment(data, moment.ISO_8601).format('L');
 						else
 							return "";
 					}
@@ -66,7 +66,7 @@ wmis.project.index = (function ($) {
 					"data": "startDate",
 					"render": function (data, type, row) {
 						if (typeof (data) != 'undefined' && data != null)
-							return moment.utc(data, moment.ISO_8601).format('L');
+							return moment(data, moment.ISO_8601).format('L');
 						else
 							return "";
 					}

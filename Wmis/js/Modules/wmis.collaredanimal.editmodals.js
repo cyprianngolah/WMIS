@@ -152,8 +152,8 @@ wmis.collaredanimal.editmodals = (function ($) {
         var self = this;
         this.latitude = 'Latitude: ' + point.latitude;
         this.longitude = 'Longitude: ' + point.longitude;
-        this.date = 'Date: ' + moment.utc(point.locationDate, moment.ISO_8601).local().format('L h:mm a');
-        this.acquiredTime = 'Acquired Time: ' + moment.utc(point.locationDate, moment.ISO_8601).local().format('L h:mm a');
+        this.date = 'Date: ' + moment(point.locationDate, moment.ISO_8601).local().format('L h:mm a');
+        this.acquiredTime = 'Acquired Time: ' + moment(point.locationDate, moment.ISO_8601).local().format('L h:mm a');
         this.argosPassStatus = ko.observable({
             key: ko.observable(point.argosPassStatus.key),
             name: ko.observable(point.argosPassStatus.name)

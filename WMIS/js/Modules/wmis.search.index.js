@@ -167,7 +167,7 @@ wmis.search.index = (function ($) {
 				    "data": "date",
 				    "render": function (data, type, row) {
 				        if (typeof (data) != 'undefined' && data != null)
-				            return moment.utc(data, moment.ISO_8601).format('LLL');
+				            return moment(data, moment.ISO_8601).format('LLL');
 				        else
 				            return "";
 				    }
