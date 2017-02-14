@@ -31,6 +31,20 @@ wmis.biodiversity.index = (function($) {
 		$(options.searchButtonSelector).click(function () {
 			bioDiversityTable.fnFilter();
 		});
+
+		$(options.groupSelector).change(function () {
+		    bioDiversityTable.fnFilter();
+		    wmis.global.loadAndInitializeSelect2($(options.orderSelector), "/api/taxonomy/order/", "Order");
+		});
+
+		$(options.orderSelector).change(function () {
+		    bioDiversityTable.fnFilter();
+		});
+
+		$(options.familySelector).change(function () {
+		    bioDiversityTable.fnFilter();
+		});
+
 	}
 	
 	function initDataTable() {
