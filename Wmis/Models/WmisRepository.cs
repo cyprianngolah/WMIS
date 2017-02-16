@@ -356,9 +356,9 @@
 
         #region BioDiversity
 
-        public Dto.PagedResultset<BioDiversity> BioDiversityGet(Dto.BioDiversitySearchRequest sr)
+        public Dto.BiodiversityPagedResultset BioDiversityGet(Dto.BioDiversitySearchRequest sr)
         {
-            var pagedResultset = new Dto.PagedResultset<BioDiversity>
+            var pagedResultset = new Dto.BiodiversityPagedResultset
             {
                 DataRequest = sr,
                 ResultCount = 0
@@ -388,54 +388,17 @@
                     BiodiversitySearchFilters bs = new BiodiversitySearchFilters();
                     foreach (var item in items.Where(item => item.GroupId != null))
                     {
-                       
-                        bs.Groups.Add(new TaxonomyTuple()
-                                          {
-                                              Id = item.GroupId,
-                                              Name = item.GroupName
-                                          });
-                        if (item.OrderId != null)
-                        {
-                            bs.Orders.Add(new TaxonomyTuple()
-                            {
-                                Id = item.OrderId,
-                                Name = item.OrderName
-                            });  
-                        }
 
+                        bs.Groups.Add(new TaxonomyTuple(item.GroupId, item.GroupName));
+                        
+                        if (item.OrderId != null)  
+                            bs.Orders.Add(new TaxonomyTuple(item.OrderId, item.OrderName));
+                        
                         if (item.FamilyId != null)
-                        {
-                            bs.Families.Add(new TaxonomyTuple()
-                            {
-                                Id = item.FamilyId,
-                                Name = item.FamilyName
-                            });
-                        }
+                            bs.Families.Add(new TaxonomyTuple(item.FamilyId, item.FamilyName));
                       
                     }
-
-                    //var items = q.Read<dynamic, dynamic, dynamic, dynamic, dynamic, dynamic, dynamic, BiodiversitySearchFilters>(
-                    //    (rc, groupId, groupName, orderId, orderName, familyId, familyName) =>
-                    //        {
-                    //            BiodiversitySearchFilters bs = new BiodiversitySearchFilters();
-                    //            bs.Groups.Add(new Taxonomy()
-                    //                              {
-                    //                                  Key = groupId,
-                    //                                  Name = groupName
-                    //                              });
-                    //            bs.Orders.Add(new Taxonomy()
-                    //                              {
-                    //                                  Key = orderId,
-                    //                                  Name = orderName
-                    //                              });
-                    //            bs.Families.Add(new Taxonomy()
-                    //            {
-                    //                Key = familyId,
-                    //                Name = familyName
-                    //            });
-                    //            return bs;
-                    //        }
-                    // );
+                    pagedResultset.Filters = bs;
 
                     pagedResultset.Data = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, dynamic, BioDiversity>(
                     (bd, saraStatus, nwtStatusRank, status, cs, dyn) =>

@@ -31,7 +31,7 @@
 		/// <returns>The paged data for BioDiversity</returns>
 		[HttpGet]
 		[Route]
-		public PagedResultset<BioDiversity> Get([FromUri]BioDiversitySearchRequest searchRequestParameters)
+        public BiodiversityPagedResultset Get([FromUri]BioDiversitySearchRequest searchRequestParameters)
 		{
 			return Repository.BioDiversityGet(searchRequestParameters);
 		}

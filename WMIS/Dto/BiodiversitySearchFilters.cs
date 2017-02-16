@@ -25,16 +25,21 @@
 
     public class TaxonomyTuple : IEquatable<TaxonomyTuple>
     {
-        public int Id { get; set; }
+        public int Key { get; set; }
 
         public string Name { get; set; }
 
+        public TaxonomyTuple(int key, string name)
+        {
+            this.Key = key;
+            this.Name = name;
+        }
         // override object.Equals
         public bool Equals(TaxonomyTuple other)
         {
             if (other == null) return false;
 
-            return this.Id == other.Id && this.Name.Equals(other.Name);
+            return this.Key == other.Key && this.Name.Equals(other.Name);
         }
 
         // override object.GetHashCode

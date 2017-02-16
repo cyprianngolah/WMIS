@@ -252,6 +252,7 @@
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
     <Compile Include="Dto\Base\PagedResultset.cs" />
+    <Compile Include="Dto\BiodiversityPagedResultset.cs" />
     <Compile Include="Dto\BiodiversitySearchFilters.cs" />
     <Compile Include="Dto\HelpLinkSaveRequest.cs" />
     <Compile Include="Dto\HistoricFilterTypeRequest.cs" />
