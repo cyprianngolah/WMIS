@@ -17,9 +17,9 @@ wmis.biodiversity.index = (function($) {
 
 		initDataTable();
 		
-		//wmis.global.loadAndInitializeSelect2($(options.groupSelector), "/api/taxonomy/group/", "Group");
-		//wmis.global.loadAndInitializeSelect2($(options.orderSelector), "/api/taxonomy/order/", "Order");
-		//wmis.global.loadAndInitializeSelect2($(options.familySelector), "/api/taxonomy/family/", "Family");
+		wmis.global.loadAndInitializeSelect2($(options.groupSelector), "/api/taxonomy/group/", "Group");
+		wmis.global.loadAndInitializeSelect2($(options.orderSelector), "/api/taxonomy/order/", "Order");
+		wmis.global.loadAndInitializeSelect2($(options.familySelector), "/api/taxonomy/family/", "Family");
 
 		document.title = "WMIS Biodiversity";
 		$(options.keywordsSelector).keyup(function (e) {
@@ -111,16 +111,17 @@ wmis.biodiversity.index = (function($) {
 					json.recordsTotal = json.resultCount;
 					json.recordsFiltered = json.resultCount;
 					
+                    
 
-					if (json.filters.groups.length > 1) {
+					if (parameters.groupKey.length == 0) {
 				        wmis.global.appendDataToSelect(json.filters.groups, $(options.groupSelector));
 					}
 
-					if (json.filters.orders.length > 1) {
+					if (parameters.orderKey.length == 0) {
 				        wmis.global.appendDataToSelect(json.filters.orders, $(options.orderSelector));
 				    }
 
-				    if (json.filters.families.length > 1) {
+					if (parameters.familyKey.length == 0) {
 				        wmis.global.appendDataToSelect(json.filters.families, $(options.familySelector));
 				    }
 
