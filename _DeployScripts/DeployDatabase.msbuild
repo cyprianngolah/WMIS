@@ -5,7 +5,7 @@
 		<!-- Tooling Locations-->
 		<IDETools>$(VS100COMNTOOLS)..\IDE\</IDETools>
 		<MsTestExe>$(IDETools)MSTest.exe</MsTestExe>
-		<SqlPackageExe>C:\Program Files (x86)\Microsoft SQL Server\110\DAC\bin\sqlpackage.exe</SqlPackageExe>
+		<SqlPackageExe>C:\Program Files (x86)\Microsoft SQL Server\130\DAC\bin\sqlpackage.exe</SqlPackageExe>
 
 		<!-- The default Compile configuration (i.e. Debug/Release) the build will use if none specified-->
 		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
