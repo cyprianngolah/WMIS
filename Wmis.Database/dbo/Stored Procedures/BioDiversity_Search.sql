@@ -98,7 +98,13 @@ AS
 
 	
 	SELECT 
-		COUNT(*) OVER() AS ResultCount
+		distinct COUNT(*) OVER() AS ResultCount,
+		[group].TaxonomyId as GroupId,
+		[group].Name as GroupName,
+		[order].TaxonomyId as OrderId,
+		[order].Name as OrderName,
+		family.TaxonomyId as FamilyId,
+		family.Name as FamilyName
 	FROM 
 		dbo.Species s
 			LEFT OUTER JOIN dbo.Taxonomy [order] on s.OrderTaxonomyId = [order].TaxonomyId AND [order].TaxonomyGroupId = 6
@@ -279,7 +285,3 @@ AS
 	DROP TABLE #SpeciesTemp;
 
 RETURN 0
-GO
-
-GRANT EXECUTE ON [dbo].[BioDiversity_Search] TO [WMISUser]
-GO
