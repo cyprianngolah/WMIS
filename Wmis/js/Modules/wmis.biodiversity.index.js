@@ -33,8 +33,13 @@ wmis.biodiversity.index = (function($) {
 		});
 
 		$(options.groupSelector).change(function () {
+		    $(options.orderSelector).val("");
+		    $(options.orderSelector).trigger("change");
+
+		    $(options.familySelector).val("");
+		    $(options.familySelector).trigger("change");
+
 		    bioDiversityTable.fnFilter();
-		    wmis.global.loadAndInitializeSelect2($(options.orderSelector), "/api/taxonomy/order/", "Order");
 		});
 
 		$(options.orderSelector).change(function () {
@@ -117,11 +122,11 @@ wmis.biodiversity.index = (function($) {
 				        wmis.global.appendDataToSelect(json.filters.groups, $(options.groupSelector));
 					}
 
-					if (parameters.orderKey.length == 0) {
-				        wmis.global.appendDataToSelect(json.filters.orders, $(options.orderSelector));
+					if (parameters.orderKey == null ||  parameters.orderKey.length == 0) {
+					    wmis.global.appendDataToSelect(json.filters.orders, $(options.orderSelector));
 				    }
 
-					if (parameters.familyKey.length == 0) {
+					if (parameters.familyKey == null || parameters.familyKey.length == 0) {
 				        wmis.global.appendDataToSelect(json.filters.families, $(options.familySelector));
 				    }
 
