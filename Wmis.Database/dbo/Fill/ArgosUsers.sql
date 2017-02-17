@@ -12,7 +12,8 @@ BEGIN
 	USING (VALUES
 		(1, 'gunn', 'northter'),
 		(2, 'sahtu', 'gisewo'),
-		(3, 'nagyjohn', 'bluenose')
+		(3, 'nagyjohn', 'bluenose'),
+		(4, 'LarterNic', 'gareno')
 	)
 	AS [Source] ([ArgosUserId], [Name], [Password]) 
 	ON [Target].[ArgosUserId] = [source].[ArgosUserId]
@@ -41,7 +42,8 @@ BEGIN
 		(4, 2, '12803'),
 		(5, 2, '22803'),
 		(6, 3, '1572'),
-		(7, 3, '10572')
+		(7, 3, '10572'),
+		(8, 4, '2814')
 	)
 	AS [Source] ([ArgosProgramId], [ArgosUserId], [ProgramNumber]) 
 	ON [Target].[ArgosProgramId] = [source].[ArgosProgramId]
