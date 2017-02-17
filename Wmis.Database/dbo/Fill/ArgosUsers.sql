@@ -1,6 +1,6 @@
 ﻿-- Insert the values into the Argos Users table. These are not managed in the front-end
 
-IF EXISTS ( SELECT * FROM  [dbo].[ArgosUsers] WHERE [ArgosUserId] NOT IN (1,2,3) )
+IF EXISTS ( SELECT * FROM  [dbo].[ArgosUsers] WHERE [ArgosUserId] NOT IN (1,2,3,4) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[ArgosUsers] other than what exists in the Fill Script.', 1; 
 END
@@ -26,7 +26,7 @@ END;
 GO
 
 -- Insert the values into the Argos Programs table. These are not managed in the front-end
-IF EXISTS ( SELECT * FROM  [dbo].[ArgosPrograms] WHERE [ArgosProgramId] NOT IN (1,2,3,4,5,6,7) )
+IF EXISTS ( SELECT * FROM  [dbo].[ArgosPrograms] WHERE [ArgosProgramId] NOT IN (1,2,3,4,5,6,7,8) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[ArgosPrograms] other than what exists in the Fill Script.', 1; 
 END
