@@ -1,4 +1,4 @@
-﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarStatuses] WHERE [CollarStatusId] NOT IN (1,2,3,4,6,9,10,11,12,13,14,15) )
+﻿IF EXISTS ( SELECT * FROM  [dbo].[CollarStatuses] WHERE [CollarStatusId] NOT IN (1,2,3,4,6,9,10,11,12,13,14,15, 18) )
 BEGIN
 	; THROW 51000, 'Records found in [dbo].[CollarStatuses] other than what exists in the Fill Script.', 1; 
 END
@@ -19,7 +19,8 @@ BEGIN
 		(12, 'Decommissioned', 'On the shelf not worth refurbishing'),
 		(13, 'As New', 'In storage ready to be deployed'),
 		(14, 'Malfunctioning', 'Collar malfunctioning'),
-		(15, 'Released', 'Collar released on schedule')
+		(15, 'Released', 'Collar released on schedule'),
+		(18, 'Refurbished', 'Unit has been refurbished')
 	)
 	AS [Source] ([CollarStatusId], [Name], [Description]) 
 	ON [Target].[CollarStatusId] = [source].[CollarStatusId]
