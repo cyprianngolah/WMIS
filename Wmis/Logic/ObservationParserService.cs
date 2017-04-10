@@ -167,7 +167,10 @@
 								case CellType.Numeric:
 									value = DateUtil.IsCellDateFormatted(cell) ? cell.DateCellValue.ToString() : cell.NumericCellValue.ToString();
 									break;
-								default:
+								case CellType.Formula:
+							        value = this.GetFormulaEvaluatedValue(cell);
+							        break;
+                                default:
 									value = string.Empty;
 									break;
 							}
@@ -195,6 +198,18 @@
 		    throw new ArgumentException("Specified file is not a valid Excel document.");
 			
 		}
+
+	    private string GetFormulaEvaluatedValue(ICell cell)
+	    {
+            switch (cell.CachedFormulaResultType)
+            {
+                case CellType.Numeric:
+                    return cell.NumericCellValue.ToString();
+                case CellType.String:
+                    return cell.StringCellValue;
+            }
+            throw new ArgumentException("Cell formula does not evaluate to a known value.");
+	    }
 
 		private int GetMaxColumnWidthInASheet(ISheet sheet, int? rowCount = int.MaxValue)
 		{
