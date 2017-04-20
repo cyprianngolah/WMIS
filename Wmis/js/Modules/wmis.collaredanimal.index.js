@@ -53,7 +53,7 @@ wmis.collaredanimal.index = (function($) {
                     "render": function (data, type, row) {
                         var date = moment(data, moment.ISO_8601)
                         if (date.isValid()) {
-                            return date.format('L h:mm a');
+                            return date.format('L');
                         } else {
                             return '';
                         }
