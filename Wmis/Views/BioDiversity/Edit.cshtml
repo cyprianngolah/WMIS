@@ -1,9 +1,9 @@
 ﻿@using Wmis.Extensions
 @{
     ViewBag.Title = "Biodiversity";
-    ViewBag.SubTitle = @"<span data-bind='with: bd'>
-            <span class='speciesNameText' data-bind='text: name'></span>
-            <span class='speciesNameText' data-bind='text: subSpeciesName'></span>
+    ViewBag.SubTitle = @"<span data-bind='with: bd'><br>
+            <span class='speciesNameText' data-bind='text: commonName'></span>
+            (<span class='speciesNameText' data-bind='text: name'></span>)
             <span data-bind='text: ecoType'></span>
         </span>";
 }
