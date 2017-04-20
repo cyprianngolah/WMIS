@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Taxonomy_Get]
 	@p_from INT = 0,
-	@p_to INT = 500,
+	@p_to INT = 2000,
 	@p_sortBy NVARCHAR(25) = NULL,
 	@p_sortDirection INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL,
