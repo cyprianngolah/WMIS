@@ -1296,6 +1296,7 @@
                     p_projectId = project.Key,
                     p_wildlifeResearchPermitNum = project.WildlifeResearchPermitNumber,
                     p_name = project.Name,
+                    p_projectNumber = project.ProjectNumber,
                     p_leadRegionId = project.LeadRegion.Key == 0 ? null : (int?)project.LeadRegion.Key,
                     p_projectStatusId = project.Status.Key == 0 ? null : (int?)project.Status.Key,
                     p_statusDate = project.StatusDate,
@@ -1351,6 +1352,7 @@
                     p_projectLeadId = sr.ProjectLead,
                     p_projectStatusId = sr.ProjectStatus,
                     p_leadRegionId = sr.Region,
+                    p_projectNumber = sr.ProjectNumber,
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
                 };
 
@@ -1362,7 +1364,7 @@
                         pr.ResultCount = count;
                         p.LeadRegion = lr ?? new LeadRegion();
                         p.ProjectLead = lead ?? new Person();
-                        p.Status = status ?? new ProjectStatus();
+                        p.Status = status ?? new ProjectStatus(); 
                         return p;
                     },
                     param,
@@ -1654,8 +1656,8 @@
             {
                 var param = new
                 {
-                    //p_from = request.StartRow,
-                    //p_to = request.StartRow + request.RowCount - 1,
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
                     //p_sortBy = request.SortBy,
                     //p_sortDirection = request.SortDirection,
                 };

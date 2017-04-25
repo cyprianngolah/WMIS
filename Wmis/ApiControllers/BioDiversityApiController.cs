@@ -150,9 +150,9 @@
 
         [HttpGet]
         [Route("species")]
-        public Dto.PagedResultset<Models.SpeciesType> SpeciesGet(Dto.SpeciesTypeRequest psr)
+        public Dto.PagedResultset<Models.SpeciesType> SpeciesGet([FromUri]Dto.SpeciesTypeRequest psr)
         {
-            var species = Repository.TargetSpeciesGet(new SpeciesTypeRequest());
+            var species = Repository.TargetSpeciesGet(psr);
             return species;
         }
 

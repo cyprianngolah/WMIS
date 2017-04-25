@@ -7,28 +7,51 @@ wmis.collaredanimal.index = (function($) {
 		keywordsSelector: "#keywords",
 		collarSelector: "#collar",
 	    regionSelector: "#region",
-	    needingReviewSelector: "#needingReview"
+	    needingReviewSelector: "#needingReview",
+	    speciesSelector: "#targetSpecies"
 	};
 
-	function initialize(initOptions) {
-		$.extend(options, initOptions);
-
-		initDataTable();
-
-		document.title = "WMIS Collared Animal";
-
-		wmis.global.loadAndInitializeSelect2($(options.regionSelector), "/api/collar/region?startRow=0&rowCount=500", "Regions", true, "data");
-
-		$(options.keywordsSelector).keyup(function (e) {
-			if (e.keyCode == 13) {
-				collarTable.fnFilter();
-			}
-		});
-
-		$(options.searchButtonSelector).click(function () {
-			collarTable.fnFilter();
-		});
-	}
+	var targetSpeciesOptions = {
+	    ajax: {
+	        url: "/api/biodiversity",
+	        placeholder: "Target Species",
+	        dataType: "json",
+	        data: function (term, page) {
+	            return {
+	                searchString: term,
+	                startRow: (page - 1) * 25,
+	                rowCount: 25
+	            };
+	        },
+	        results: function (result, page, query) {
+	            var results = _.map(result.data, function (record) {
+	                return {
+	                    id: record.key,
+	                    text: record.name + (record.commonName ? ' - ' + record.commonName : '')
+	                };
+	            });
+	            return {
+	                results: results
+	            };
+	        }
+	    },
+	    initSelection: function (element, callback) {
+	        // the input tag has a value attribute preloaded that points to a preselected repository's id
+	        // this function resolves that id attribute to an object that select2 can render
+	        // using its formatResult renderer - that way the repository name is shown preselected
+	        var id = $(element).val();
+	        if (id !== "") {
+	            $.ajax("/api/biodiversity/" + id, {
+	                dataType: "json"
+	            }).done(function (data) {
+	                callback({
+	                    id: data.key,
+	                    text: data.name + (data.commonName ? ' - ' + data.commonName : '')
+	                });
+	            });
+	        }
+	    },
+	};
 	
 	function initDataTable() {
 		var parameters;
@@ -138,6 +161,54 @@ wmis.collaredanimal.index = (function($) {
 				});
 			}
 		});
+	}
+
+	function initSpeciesDropdown() {
+	    $(options.speciesSelector).select2({
+	        placeholder: "Species"
+	    });
+	    $.ajax({
+	        url: "/api/biodiversity/species?startRow=0&rowCount=7000",
+	        dataType: "json",
+	        type: "GET",
+	        xhrFields: {
+	            withCredentials: true
+	        }
+	    }).done(function (result) {
+	        $(options.speciesSelector).empty();
+	     
+	        $(options.speciesSelector).append("<option value=''>All Species</option>");
+	        $.each(result.data, function (index, value) {
+	            var textval = value.name + (value.commonName ? ' - ' + value.commonName : '');
+	            $(options.speciesSelector).append($("<option></option>").attr("value", value.key).text(textval));
+	        });
+	    }).fail(wmis.global.ajaxErrorHandler);
+
+	    
+	}
+
+
+	function initialize(initOptions) {
+	    $.extend(options, initOptions);
+
+	    initDataTable();
+	    initSpeciesDropdown();
+
+	    document.title = "WMIS Collared Animal";
+
+	    this.targetSpeciesOptions = targetSpeciesOptions;
+	    wmis.global.loadAndInitializeSelect2($(options.regionSelector), "/api/collar/region?startRow=0&rowCount=500", "Regions", true, "data");
+	    
+
+	    $(options.keywordsSelector).keyup(function (e) {
+	        if (e.keyCode == 13) {
+	            collarTable.fnFilter();
+	        }
+	    });
+
+	    $(options.searchButtonSelector).click(function () {
+	        collarTable.fnFilter();
+	    });
 	}
 
 	return {

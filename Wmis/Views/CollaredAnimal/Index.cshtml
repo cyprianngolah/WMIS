@@ -52,9 +52,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-1"></div>
-
-				    <div class="col-md-3">
+				    <div class="col-md-2">
 				        <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
 				            <label class="sr-only" for="group">Region</label>
 				            <select class="form-control" id="region" name="region">
@@ -63,10 +61,20 @@
 				        </div>
 				    </div>
                     
-                    <div class="col-md-1"></div>
-                    
+
+                    <div class="col-md-3">
+                        <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                            <label class="sr-only" for="targetSpecies">Species</label>
+                            <select class="form-control" id="targetSpecies" name="targetSpecies">
+                                <option value="">All Species</option>
+                            </select>
+                            @*<input class="form-control" id="targetSpecies" name="targetSpecies" data-bind="value: speciesId, select2: targetSpeciesOptions" />*@
+                        </div>
+                    </div>
+				    <div class="col-md-1"></div>
+
 				    <label class="sr-only" for="keywords">Keywords</label>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
                             <div class="input-group">
                                 <input type="text" id="keywords" class="form-control" placeholder="Keywords" />
