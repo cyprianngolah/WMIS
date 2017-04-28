@@ -5,6 +5,7 @@ AS
 		p.[ProjectId] AS [Key], 
 		p.[WildlifeResearchPermitNumber], 
 		p.[Name], 
+		p.[ProjectNumber],
 		p.[StatusDate], 
 		p.[StartDate], 
 		p.[EndDate], 

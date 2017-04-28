@@ -11,7 +11,8 @@ AS
 	
 	SELECT 
 		COUNT(*) OVER() AS ResultCount,
-		p.[ProjectId] AS [Key], 
+		p.[ProjectId] AS [Key],
+		p.[ProjectNumber], 
 		p.[WildlifeResearchPermitNumber],
 		p.[Name], 
 		p.[StatusDate], 
@@ -45,7 +46,8 @@ AS
 		AND (@p_leadRegionId IS NULL OR p.[LeadRegionId] = @p_leadRegionId)
 		AND (
 			@p_keywords IS NULL
-			OR p.[ProjectId] LIKE '%' + @p_keywords + '%' 
+			OR p.[ProjectId] LIKE '%' + @p_keywords + '%'
+			OR p.[ProjectNumber] LIKE '%' + @p_keywords + '%' 
 			OR p.[Name] LIKE '%' + @p_keywords + '%' 
 		)
 	ORDER BY

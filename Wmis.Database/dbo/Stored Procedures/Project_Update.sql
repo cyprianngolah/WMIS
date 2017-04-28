@@ -2,6 +2,7 @@
 	@p_projectId INT,
 	@p_wildlifeResearchPermitNum NVARCHAR(250),
 	@p_name NVARCHAR(250) = NULL,
+	@p_projectNumber NVARCHAR(50) = NULL,
 	@p_leadRegionId INT = NULL,
 	@p_projectStatusId INT = NULL,
 	@p_statusDate DATE = NULL,
@@ -175,6 +176,7 @@ AS
 		dbo.Project
 	SET
 		Name = @p_name,
+		ProjectNumber = @p_projectNumber,
 		WildlifeResearchPermitNumber = @p_wildlifeResearchPermitNum,
 		LeadRegionId = @p_leadRegionId,
 		ProjectStatusId = @p_projectStatusId,

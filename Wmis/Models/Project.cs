@@ -7,6 +7,8 @@
     {
         public string Name { get; set; }
 
+        public string ProjectNumber { get; set; }
+
         public string WildlifeResearchPermitNumber { get; set; }
 
         public LeadRegion LeadRegion { get; set; }

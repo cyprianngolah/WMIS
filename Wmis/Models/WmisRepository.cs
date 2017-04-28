@@ -1352,7 +1352,6 @@
                     p_projectLeadId = sr.ProjectLead,
                     p_projectStatusId = sr.ProjectStatus,
                     p_leadRegionId = sr.Region,
-                    p_projectNumber = sr.ProjectNumber,
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
                 };
 

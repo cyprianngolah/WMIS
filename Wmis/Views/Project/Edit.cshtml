@@ -102,9 +102,9 @@
                             <input type="text" class="form-control" id="name" data-bind="value: name">
                         </div>
 
-                        <label for="name" class="col-md-1 control-label">NWT WRP ID</label>
+                        <label for="projectNumber" class="col-md-1 control-label">Project Number</label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" id="name" data-bind="value: wildlifeResearchPermitNumber">
+                            <input type="text" class="form-control" id="projectNumber" data-bind="value: projectNumber">
                         </div>
                     </div>
 
@@ -122,22 +122,10 @@
                             <select class="form-control" id="projectLead" data-bind="options: $root.projectLeads, value: key, optionsText: 'text', optionsValue: 'key', optionsCaption: '', select2: { }"></select>
                             <!-- /ko -->
                         </div>
-                        @if (Html.UserIsProjectAdministrator() || ViewBag.CanViewSensitive)
-                        {
-                            <label for="name" class="col-md-1 control-label"></label>
-                            <div class="col-md-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="1" data-bind="checked: isSensitiveData">
-                                        Sensitive Data
-                                    </label>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <input type="hidden" data-bind="value: isSensitiveData">
-                        }
+                        <label for="name" class="col-md-1 control-label">NWT WRP ID</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="name" data-bind="value: wildlifeResearchPermitNumber">
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -154,6 +142,22 @@
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </div>
+                        @if (Html.UserIsProjectAdministrator() || ViewBag.CanViewSensitive)
+                        {
+                            <label for="name" class="col-md-1 control-label"></label>
+                            <div class="col-md-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="1" data-bind="checked: isSensitiveData">
+                                        Sensitive Data
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <input type="hidden" data-bind="value: isSensitiveData">
+                        }
                     </div>
 
                     <div class="form-group">

@@ -48,7 +48,7 @@ wmis.project.index = (function ($) {
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
-				{ "data": "key" },
+				{ "data": "projectNumber" },
 				{ "data": "name" },
 				{ "data": "leadRegion.name" },
 				{ "data": "projectLead.jobTitle" },

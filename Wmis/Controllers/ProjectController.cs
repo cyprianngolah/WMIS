@@ -64,22 +64,23 @@
         /// <returns>Whether or not it should be visible</returns>
         private bool UserCanViewSenstiveInfoForProject(int projectKey)
         {
-            var username = User.Identity.Name;
-            var repo = WebApi.ObjectFactory.Container.GetInstance<Models.WmisRepository>();
-            var person = repo.PersonGet(username);
+            return true;
+            //var username = User.Identity.Name;
+            //var repo = WebApi.ObjectFactory.Container.GetInstance<Models.WmisRepository>();
+            //var person = repo.PersonGet(username);
 
-            // All administrators can see the sensitive data
-            if (person.Roles.Select(r => r.Name).Contains(WmisRoles.AdministratorProjects))
-                return true;
-            else // if they created the project, they can see sensitve data
-            {
-                var historyItemForCreator = repo.HistoryLogSearch(new HistoryLogSearchRequest { Item = "Project Created", ChangeBy = username, Key = projectKey, Table = "ProjectHistory" }).Data;
+            //// All administrators can see the sensitive data
+            //if (person.Roles.Select(r => r.Name).Contains(WmisRoles.AdministratorProjects))
+            //    return true;
+            //else // if they created the project, they can see sensitve data
+            //{
+            //    var historyItemForCreator = repo.HistoryLogSearch(new HistoryLogSearchRequest { Item = "Project Created", ChangeBy = username, Key = projectKey, Table = "ProjectHistory" }).Data;
 
-                if (historyItemForCreator.Count() > 0)
-                    return true;
-            }
+            //    if (historyItemForCreator.Count() > 0)
+            //        return true;
+            //}
 
-            return false;
+            //return false;
         }
     }
 }

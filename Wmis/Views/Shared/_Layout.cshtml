@@ -24,12 +24,10 @@
 						<ul class="nav navbar-nav">
                             @Html.MenuLink("Projects", "Index", "Project")
 							@Html.MenuLink("Collar", "Index", "CollaredAnimal")
-                            @Html.MenuLink("Biodiversity", "Index", "BioDiversity")
-                            @Html.MenuLink("Search", "Index", "Search")
-                            @Html.MenuLink("Reports", "Index", "Reports")
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Biodiversity<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
+                                    @Html.MenuLink("Species", "Index", "BioDiversity")
                                     @Html.MenuLink("Taxonomies", "Index", "Taxonomy")
                                     @Html.MenuLink("Ecozones", "Index", "Ecozone")
                                     @Html.MenuLink("Ecoregions", "Index", "Ecoregion")
@@ -38,6 +36,13 @@
                                     @Html.MenuLink("COSEWIC Status", "Index", "CosewicStatus")
                                     @Html.MenuLink("NWT SARC Assessments", "Index", "NwtSarcAssessment")
                                     @Html.MenuLink("References", "Index", "Reference")
+                                </ul>
+                            </li>
+                            @Html.MenuLink("Search", "Index", "Search")
+                            @Html.MenuLink("Reports", "Index", "Reports")
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
                                     @if (Html.UserInAnyAdministratorRole())
                                     {
                                         @Html.MenuLink("Users", "Index", "User")
@@ -50,8 +55,6 @@
                                     @Html.MenuLink("Help Links", "Index", "Help")
                                 </ul>
 							</li>
-
-
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">

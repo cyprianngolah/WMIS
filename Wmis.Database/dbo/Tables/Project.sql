@@ -2,6 +2,7 @@
 (
 	[ProjectId] INT NOT NULL IDENTITY , 
     [Name] NVARCHAR(250) NOT NULL, 
+	[ProjectNumber] NVARCHAR(250) NOT NULL, 
     [LeadRegionId] INT NULL, 
     [ProjectStatusId] INT NULL, 
     [StatusDate] DATE NULL, 
