@@ -1991,7 +1991,8 @@
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords.Trim(),
                     p_regionKey = sr.RegionKey,
                     p_needingReview = sr.NeedingReview,
-                    p_activeOnly = sr.ActiveOnly
+                    p_activeOnly = sr.ActiveOnly,
+                    p_speciesKey = sr.SpeciesKey
                 };
 
                 using (var q = c.QueryMultiple(COLLAREDANIMAL_SEARCH, param, commandType: CommandType.StoredProcedure))

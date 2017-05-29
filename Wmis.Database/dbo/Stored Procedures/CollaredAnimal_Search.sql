@@ -9,7 +9,8 @@ CREATE PROCEDURE [dbo].[CollaredAnimal_Search]
 	@p_keywords NVARCHAR(50) = NULL,
 	@p_regionKey int = NULL,
 	@p_needingReview BIT = 0,
-	@p_activeOnly BIT = 0
+	@p_activeOnly BIT = 0,
+	@p_speciesKey int = NULL
 AS
 	SELECT
 		COUNT(*) OVER() AS ResultCount,
@@ -66,6 +67,8 @@ AS
 		LEFT OUTER JOIN dbo.AnimalStatuses animalStatus ON c.AnimalStatusId = animalStatus.AnimalStatusId
 	WHERE
 		(@p_regionKey IS NULL OR c.CollarRegionId = @p_regionKey) 
+		AND
+		(@p_speciesKey IS NULL OR c.SpeciesId = @p_speciesKey) 
 		AND
 		(
 			@p_keywords IS NULL 

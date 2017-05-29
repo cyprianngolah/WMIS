@@ -9,6 +9,8 @@
 
 		public int? RegionKey { get; set; }
 
+        public int? SpeciesKey { get; set; }
+
         public bool NeedingReview { get; set; }
 
 		public bool ActiveOnly { get; set; }

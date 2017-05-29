@@ -121,8 +121,9 @@ wmis.collaredanimal.index = (function($) {
 
 					// Custom search data
 					keywords: $(options.keywordsSelector).val(),
-				    regionKey: $(options.regionSelector).val(),
-				    needingReview: $(options.needingReviewSelector).is(':checked'),
+					regionKey: $(options.regionSelector).val(),
+					speciesKey: $(options.speciesSelector).val(),
+				    needingReview: $(options.needingReviewSelector).is(':checked')
 				};
 
 				$.getJSON(source, parameters, function (json) {
