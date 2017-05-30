@@ -87,6 +87,52 @@ namespace Wmis.Argos.Entities
             return Combine.GetHashCode();
         }
     }
+
+    /// <summary>
+    /// Represents a row in the processed .csv file
+    /// </summary>
+    public class GlobalOutputFileRow : TelonicsOutputFileRow
+    {
+        public DateTime? Timestamp { get; set; }
+        public string Error { get; set; }
+
+        public DateTime? GpsFixTime { get; set; }
+        public string GpsFixAttempt { get; set; }
+        public double? GpsLatitude { get; set; }
+        public double? GpsLongitude { get; set; }
+
+        public double? Temperature { get; set; }
+        public string Mortality { get; set; }
+        public string LowVoltage { get; set; }
+        public int? RepititionCount { get; set; }
+
+        public static string GPS_LOCATION_CLASS = "G";
+
+        public string Combine
+        {
+            get
+            {
+                return string.Format("{0:yyyy-MM-dd-HH:mm:ss}={3}-{4}", (Timestamp.HasValue ? Timestamp : DateTime.Now), GpsLatitude ?? 0.0, GpsLongitude ?? 0.0);
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (!(obj is GlobalOutputFileRow))
+                return false;
+
+            var other = obj as GlobalOutputFileRow;
+
+            return Combine.Equals(other.Combine);
+        }
+
+        public override int GetHashCode()
+        {
+            return Combine.GetHashCode();
+        }
+    }
     
     /// <summary>
     /// Represents a row in the processed .csv file

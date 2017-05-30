@@ -107,8 +107,11 @@ namespace Wmis.Argos
                             detail = ReadArgosFileRow(csv, headers);
                         } else if (outFile.DataSource == "Iridium") {
                             detail = ReadIridiumFileRow(csv, headers);
-                        }                              
-
+                        }
+                        else if (outFile.DataSource == "Globalstar")
+                        {
+                            detail = ReadGlobalFileRow(csv, headers);
+                        }  
                         if (detail != null && !outFile.Rows.Contains(detail) && string.IsNullOrEmpty(detail.Error))
                             outFile.Rows.Add(detail);
                     }
@@ -137,6 +140,43 @@ namespace Wmis.Argos
             if (headers.Contains("argos altitude"))
                 detail.ArgosAltitude = csv.GetField<double?>(headers.IndexOf("argos altitude"));
 
+            if (headers.Contains("gps fix attempt"))
+                detail.GpsFixAttempt = csv.GetField<string>(headers.IndexOf("gps fix attempt"));
+
+            if (headers.Contains("gps latitude"))
+                detail.GpsLatitude = csv.GetField<double?>(headers.IndexOf("gps latitude"));
+
+            if (headers.Contains("gps longitude"))
+                detail.GpsLongitude = csv.GetField<double?>(headers.IndexOf("gps longitude"));
+
+            if (headers.Contains("temperature"))
+                detail.Temperature = csv.GetField<double?>(headers.IndexOf("temperature"));
+
+            if (headers.Contains("low voltage"))
+                detail.LowVoltage = csv.GetField<string>(headers.IndexOf("low voltage"));
+
+            if (headers.Contains("Repetition Count"))
+                detail.RepititionCount = csv.GetField<int?>(headers.IndexOf("Repetition Count"));
+
+            if (headers.Contains("mortality"))
+                detail.Mortality = csv.GetField<string>(headers.IndexOf("mortality"));
+
+            if (headers.Contains("error"))
+                detail.Error = csv.GetField<string>(headers.IndexOf("error"));
+
+            return detail;
+        }
+
+        private static GlobalOutputFileRow ReadGlobalFileRow(CsvReader csv, List<string> headers)
+        {
+            var detail = new GlobalOutputFileRow();
+
+            if (headers.Contains("acquisition time"))
+                detail.Timestamp = csv.GetField<DateTime>(headers.IndexOf("acquisition time"));
+            
+            if (headers.Contains("gps fix time"))
+                detail.GpsFixTime = csv.GetField<DateTime>(headers.IndexOf("gps fix time"));
+            
             if (headers.Contains("gps fix attempt"))
                 detail.GpsFixAttempt = csv.GetField<string>(headers.IndexOf("gps fix attempt"));
 
