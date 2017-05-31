@@ -112,7 +112,7 @@ namespace Wmis.Argos.Entities
         {
             get
             {
-                return string.Format("{0:yyyy-MM-dd-HH:mm:ss}={3}-{4}", (Timestamp.HasValue ? Timestamp : DateTime.Now), GpsLatitude ?? 0.0, GpsLongitude ?? 0.0);
+                return string.Format("{0:yyyy-MM-dd-HH:mm:ss}={1}-{2}", (Timestamp.HasValue ? Timestamp : DateTime.Now), GpsLatitude ?? 0.0, GpsLongitude ?? 0.0);
             }
         }
 
