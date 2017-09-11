@@ -3442,7 +3442,16 @@
                                                     }).AsTableValuedParameter("dbo.ArgosCollarDataTableType"),
                     p_collaredAnimalId = collaredAnimalId,
                 };
-                c.Query<int>(ARGOSCOLLARDATA_MERGE, param, commandType: CommandType.StoredProcedure);
+                try
+                {
+                    c.Query<int>(ARGOSCOLLARDATA_MERGE, param, commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception e)
+                {
+
+                    throw new ArgumentException(e.Message + " AnimalID: " + collaredAnimalId, e.InnerException + " ColalrID Inner: " + collaredAnimalId);
+                }
+               
             }
         }
 
