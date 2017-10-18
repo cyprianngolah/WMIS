@@ -9,7 +9,7 @@ CREATE PROCEDURE [dbo].[BioDiversity_Search]
 	@p_familyKey INT = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
-	/*
+		/*
 	EXEC [dbo].[BioDiversity_Search]
 	*/
 
@@ -91,10 +91,7 @@ AS
 			THEN s.LastUpdated END ASC,
 		CASE WHEN @p_sortBy = 'lastUpdated' AND @p_sortDirection = '1'
 			THEN s.LastUpdated END DESC
-	OFFSET 
-		@p_startRow ROWS
-	FETCH NEXT 
-		@p_rowCount ROWS ONLY
+
 
 	
 	SELECT 
@@ -122,7 +119,7 @@ AS
 			OR s.SubSpeciesName LIKE '%' + @p_keywords + '%'
 			OR s.ELCODE LIKE '%' + @p_keywords + '%'
 			OR [synonyms].hasSynonym = 1
-		) 
+		)
 
 	SELECT 
 		s.SpeciesId as [Key],
@@ -272,6 +269,10 @@ AS
 			THEN s.LastUpdated END ASC,
 		CASE WHEN @p_sortBy = 'lastUpdated' AND @p_sortDirection = '1'
 			THEN s.LastUpdated END DESC
+	OFFSET 
+		@p_startRow ROWS
+	FETCH NEXT 
+		@p_rowCount ROWS ONLY
 
 	SELECT
 		sp.SpeciesId as [Key],

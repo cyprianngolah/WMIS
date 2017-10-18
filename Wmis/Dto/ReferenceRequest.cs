@@ -4,6 +4,8 @@
 	{
 		public int? ReferenceKey { get; set; }
 
+	    public int? YearFilter { get; set; }
+
 		public string Keywords { get; set; }
 	}
 }

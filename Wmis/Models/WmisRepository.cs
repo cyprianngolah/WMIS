@@ -9,6 +9,9 @@
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
+
+    using NPOI.SS.Formula.Functions;
+
     using Wmis.Argos.Entities;
     using Wmis.Models.Base;
 
@@ -143,6 +146,11 @@
         /// Create/Update References stored procedure
         /// </summary>
         private const string REFERENCE_SAVE = "dbo.Reference_Save";
+
+        /// <summary>
+        /// Create/Update References stored procedure
+        /// </summary>
+        private const string REFERENCE_YEAR_FILTER = "dbo.ReferenceYears_Get";
 
         /// <summary>
         /// The Status Rank Save stored procedure
@@ -390,7 +398,7 @@
                     {
 
                         bs.Groups.Add(new TaxonomyTuple(item.GroupId, item.GroupName));
-                        
+                        pagedResultset.ResultCount = item.ResultCount;
                         if (item.OrderId != null)  
                             bs.Orders.Add(new TaxonomyTuple(item.OrderId, item.OrderName));
                         
@@ -400,7 +408,7 @@
                     }
                     pagedResultset.Filters = bs;
 
-                    pagedResultset.Data = q.Read<BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, dynamic, BioDiversity>(
+                    pagedResultset.Data = q.Read< BioDiversity, SaraStatus, NwtStatusRank, StatusRank, CosewicStatus, dynamic, BioDiversity>(
                     (bd, saraStatus, nwtStatusRank, status, cs, dyn) =>
                     {
                         bd.SaraStatus = saraStatus ?? new SaraStatus();
@@ -1220,7 +1228,16 @@
 
         #region References
 
-        public Dto.PagedResultset<Reference> ReferencesGet(Dto.ReferenceRequest rr)
+        public IEnumerable<ReferenceYear> GetReferenceYears()
+        {
+            using (var c = NewWmisConnection)
+            {
+                var years =  c.Query<int>(REFERENCE_YEAR_FILTER, commandType: CommandType.StoredProcedure).ToList();
+                return years.Select(x => new ReferenceYear(x)).ToList();
+            }
+        }
+
+        public Dto.PagedResultset<Reference> ReferencesSearch(Dto.ReferenceRequest rr)
         {
             using (var c = NewWmisConnection)
             {
@@ -1229,7 +1246,10 @@
                     p_referenceId = rr.ReferenceKey,
                     p_startRow = rr.StartRow,
                     p_rowCount = rr.RowCount,
-                    p_searchString = rr.Keywords
+                    p_sortBy = rr.SortBy,
+                    p_sortDirection = rr.SortDirection,
+                    p_searchString = rr.Keywords,
+                    p_yearFilter = rr.YearFilter
                 };
 
                 var pagedResults = new Dto.PagedResultset<Reference> { DataRequest = rr };

@@ -28,42 +28,49 @@
 
 <div class="well" style="margin-bottom: 0px;">
 	<div class="row">
-		<div class="col-md-12">
-			<div class="form-horizontal center">
-				<label class="sr-only" for="keywords">Keywords</label>
-				<div class="col-md-12">
-					<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-						<div class="input-group">
-							<input type="text" id="keywords" class="form-control" placeholder="Keywords" />
-							<span class="input-group-btn">
+	    <div class="col-md-12">
+	        <div class="form-horizontal center">
+                <div class="col-md-4">
+                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                        <label class="sr-only" for="yearFilter">Year</label>
+                        <select class="form-control" id="yearFilter" name="yearFilter">
+                            <option value="">Year</option>
+                        </select>
+                    </div>
+                </div>
+	            
+	            <div class="col-md-8">
+	                <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+	                    <div class="input-group">
+                            <label class="sr-only" for="keywords">Keywords</label>
+	                        <input type="text" id="keywords" class="form-control" placeholder="Keywords"/>
+	                        <span class="input-group-btn">
 								<button class="btn btn-default" type="button" id="searchButton">Search</button>
 							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 	</div>
 </div>
 
 
 <div class="row">
-	<div class="col-md-12">
-		<table id="reference" class="table">
-			<thead>
-				<tr>
-					<th>Key</th>
-					<th>Code</th>
-					<th>Author</th>
-					<th>Year</th>
-					<th>Title</th>
-					<th>Edition Publication Organization</th>
-					<th>Volume Page</th>
-					<th>Publisher</th>
-					<th>City</th>
-					<th>Location</th>
-				</tr>
-			</thead>
-		</table>
-	</div>
+    <table id="reference" class="table">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Code</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Title</th>
+                <th>Edition Publication Organization</th>
+                <th>Volume Page</th>
+                <th>Publisher</th>
+                <th>City</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+    </table>
 </div>

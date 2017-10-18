@@ -318,6 +318,7 @@
     <Build Include="dbo\Stored Procedures\CollaredAnimalWarning_Update.sql" />
     <Build Include="dbo\Tables\CollaredAnimalHerdAssociationHistory.sql" />
     <Build Include="dbo\Stored Procedures\HistoricType_Search.sql" />
+    <Build Include="dbo\Stored Procedures\ReferenceYears_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

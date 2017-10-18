@@ -325,6 +325,7 @@
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />
     <Compile Include="Models\PersonRole.cs" />
+    <Compile Include="Models\ReferenceYear.cs" />
     <Compile Include="Models\Site.cs" />
     <Compile Include="Models\SpeciesType.cs" />
     <Compile Include="WebApi\ObjectFactory.cs" />

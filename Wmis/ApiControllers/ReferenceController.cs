@@ -1,10 +1,12 @@
 ﻿namespace Wmis.ApiControllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Web.Http;
 	using Configuration;
 	using Models;
 
-	[RoutePrefix("api/references")]
+    [RoutePrefix("api/references")]
 	public class ReferenceController : BaseApiController
     {
 		public ReferenceController(WebConfiguration config) 
@@ -16,7 +18,7 @@
 		[Route]
 		public Dto.PagedResultset<Reference> GetReferences([FromUri]Dto.ReferenceRequest rr)
 		{
-			return Repository.ReferencesGet(rr);
+			return Repository.ReferencesSearch(rr);
 		}
 
 		[HttpPost]
@@ -25,5 +27,12 @@
 		{
 			Repository.ReferenceSave(r);
 		}
+
+        [HttpGet]
+        [Route("years")]
+        public IEnumerable<Models.ReferenceYear> GetReferenceYears()
+        {
+            return Repository.GetReferenceYears();
+        }
     }
 }
