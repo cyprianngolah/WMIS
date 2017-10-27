@@ -83,10 +83,10 @@ AS
 			THEN s.SubSpeciesName END ASC,
 		CASE WHEN @p_sortBy = 'subSpeciesName' AND @p_sortDirection = '1'
 			THEN s.SubSpeciesName END DESC,
-		CASE WHEN @p_sortBy = 'ecoType' AND @p_sortDirection = '0'
-			THEN s.EcoType END ASC,
-		CASE WHEN @p_sortBy = 'ecoType' AND @p_sortDirection = '1'
-			THEN s.EcoType END DESC,
+		CASE WHEN @p_sortBy = 'statusRank.name' AND @p_sortDirection = '0'
+			THEN statusRank.Name END ASC,
+		CASE WHEN @p_sortBy = 'statusRank.name' AND @p_sortDirection = '1'
+			THEN statusRank.Name END DESC,
 		CASE WHEN @p_sortBy = 'lastUpdated' AND @p_sortDirection = '0'
 			THEN s.LastUpdated END ASC,
 		CASE WHEN @p_sortBy = 'lastUpdated' AND @p_sortDirection = '1'

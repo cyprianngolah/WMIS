@@ -70,7 +70,7 @@ wmis.biodiversity.index = (function($) {
 				{ "data": "commonName" },
 				{ "data": "name" },
 				{ "data": "subSpeciesName" },
-				{ "data": "ecoType" },
+				{ "data": "statusRank.name" },
 				{
 				    "data": "lastUpdated",
 				    "render": function (data, type, row) {
