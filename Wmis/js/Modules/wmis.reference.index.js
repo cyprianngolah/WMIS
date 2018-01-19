@@ -95,7 +95,7 @@ wmis.reference.index = (function ($) {
 		$.extend(options, initOptions);
 
 
-		wmis.global.loadAndInitializeSelect2($(options.yearSelector), "api/references/years", "Years");
+		wmis.global.loadAndInitializeSelect2($(options.yearSelector), "/api/references/years", "Years");
 		initDataTable();
 
 		$("#keywords").keyup(function(e) {
