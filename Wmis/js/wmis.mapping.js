@@ -15,7 +15,11 @@ wmis.mapping = (function ($) {
         4: '/content/images/maps-symbol-blank-yellow.png', //Warning - Fast Mover
         5: '/content/images/maps-symbol-blank-yellow.png', //Warning - Suspected Error
         6: '/content/images/maps-symbol-blank-yellow.png', //Warning - Unexpected Reports
-        7: '/content/images/maps-symbol-blank-yellow.png' //Warning - Possibly Stationary
+        7: '/content/images/maps-symbol-blank-yellow.png', //Warning - Possibly Stationary
+        8: '/content/images/maps-symbol-blank-yellow.png', //Good  - Without Warnings or rejections
+        9: '/content/images/maps-symbol-x-red.png', //Reject - Unusual Mortality
+        10: '/content/images/maps-symbol-x-red.png', //Reject - Released Collar
+        11:'/content/images/maps-symbol-x-red.png' //Reject - Invalid
     };
 
     var argosPassStatusToIsRejected = {
@@ -26,7 +30,11 @@ wmis.mapping = (function ($) {
         4: false, //Warning - Fast Mover
         5: false, //Warning - Suspected Error
         6: false, //Warning - Unexpected Reports
-        7: false //Warning - Possibly Stationary
+        7: false, //Warning - Possibly Stationary
+        8: false, //Good  - Without Warnings or rejections
+        9: true, //Reject - Mortality
+        10: true, //Reject - Released Collar
+        11: true //Reject - Invalid
     };
 
     var selectedArgosPassImage = '/content/images/maps-symbol-blank-green.png';
