@@ -76,5 +76,7 @@
 		public string IucnStatus { get; set; }
 
 		public string GRank { get; set; }
+
+        public string CommonName { get; set; }
 	}
 }

@@ -75,6 +75,7 @@
 			{
 				Key = bioDiversity.Key,
                 Name = bioDiversity.Name,
+                CommonName = bioDiversity.CommonName,
                 SubSpeciesName = bioDiversity.SubSpeciesName,
                 EcoType = bioDiversity.EcoType,
 				LastUpdated = bioDiversity.LastUpdated,
@@ -135,7 +136,7 @@
 			bioDiversity.ThreatsDescription = request.ThreatsDescription;
 			bioDiversity.IntrinsicVulnerabilityScore = request.IntrinsicVulnerabilityScore;
 			bioDiversity.IntrinsicVulnerabilityDescription = request.IntrinsicVulnerabilityDescription;
-			bioDiversity.NwtStatusRank = request.NwtStatusRank;
+			bioDiversity.StatusRank = request.StatusRank;
 			bioDiversity.SRank = request.SRank;
 			bioDiversity.StatusRankDescription = request.StatusRankDescription;
 			bioDiversity.DecisionProcessDescription = request.DecisionProcessDescription;

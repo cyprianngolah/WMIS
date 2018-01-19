@@ -1,11 +1,10 @@
 ﻿@using Wmis.Extensions
 @{
     ViewBag.Title = "Biodiversity Decision";
-    ViewBag.SubTitle =
-        @"<span data-bind='with: model'>
-            <span class='speciesNameText' data-bind='text: name'></span>
-            <span class='speciesNameText' data-bind='text: subSpeciesName'></span>
-            <span data-bind='text: ecoType'></span></span>
+    ViewBag.SubTitle = @"<span data-bind='with: model'><br>
+            <span data-bind='text: commonName'></span>
+            (<span class='speciesNameText' data-bind='text: name'></span>)
+            <span data-bind='text: ecoType'></span>
         </span>";
 }
 
@@ -218,9 +217,9 @@
         </div>
 
         <div class="form-group statusGroup">
-            <label for="nwtStatusRank" class="col-md-1 control-label">NWT Status Rank</label>
-            <div class="col-md-2" data-bind="with: nwtStatusRank">
-                <select class="form-control" id="nwtStatusRank" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <label for="StatusRank" class="col-md-1 control-label">Rank</label>
+            <div class="col-md-2" data-bind="with: statusRank">
+                <select class="form-control" id="StatusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
             </div>
             <label for="sRank" class="col-md-1 control-label">S Rank</label>
             <div class="col-md-2">
