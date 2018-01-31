@@ -19,7 +19,7 @@
 
     <style>
         #map-canvas {
-            height: 500px;
+            height: 600px;
             width: 100%;
         }
 
@@ -106,38 +106,45 @@
                 @{ Html.RenderPartial("CollarTab"); }
 
                 <div class="tab-pane form-horizontal" id="locations">
-                    <div id="map-canvas"></div>
-                    <div id="map-legend">
-                        <ul class="clearfix">
-                            <li>Legend</li>
-                            <li style="background: url(/content/images/maps-symbol-blank-start.png) no-repeat center left; padding-left: 38px;">Starting location</li>
-                            <li style="background: url(/content/images/maps-symbol-blank-red.png) no-repeat center left">Location - No warnings</li>
-                            <li style="background: url(/content/images/maps-symbol-x-red.png) no-repeat center left">Rejected location</li>
-                            <li style="background: url(/content/images/maps-symbol-blank-yellow.png) no-repeat center left">Warning location</li>
-                            <li style="background: url(/content/images/maps-symbol-blank-stop.png) no-repeat center left">Last location</li>
-                            <li style="background: url(/content/images/maps-symbol-line.png) no-repeat center left">Line goes from Starting location through each point up to the Last location</li>
-                        </ul>
-                        <hr style="clear: left"/>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div id="map-canvas"></div>
+                            <div id="map-legend">
+                                <ul class="clearfix">
+                                    <li>Legend</li>
+                                    <li style="background: url(/content/images/maps-symbol-blank-start.png) no-repeat center left; padding-left: 38px;">Starting location</li>
+                                    <li style="background: url(/content/images/maps-symbol-blank-red.png) no-repeat center left">Location - No warnings</li>
+                                    <li style="background: url(/content/images/maps-symbol-x-red.png) no-repeat center left">Rejected location</li>
+                                    <li style="background: url(/content/images/maps-symbol-blank-yellow.png) no-repeat center left">Warning location</li>
+                                    <li style="background: url(/content/images/maps-symbol-blank-stop.png) no-repeat center left">Last location</li>
+                                    <li style="background: url(/content/images/maps-symbol-line.png) no-repeat center left">Line goes from Starting location through each point up to the Last location</li>
+                                </ul>
+                                <hr style="clear: left"/>
+                            </div>
+
+                            <br/>
+                        </div>
+                        <div class="col-lg-6">
+                            <div id="locationTableFilter"></div>
+                        
+
+                            <table id="locationTable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Latitude</th>
+                                        <th>Longitude</th>
+                                        <th>Location Class</th>
+                                        <th>CEP Radius</th>
+                                        <th>Status</th>
+                                        <th>Comment</th>
+                                        <th>Review</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
-
-                    <br/>
-                    <div id="locationTableFilter"></div>
-                    <table id="locationTable" class="table">
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
-                            <th>Location Class</th>
-                            <th>CEP Radius</th>
-                            <th>Status</th>
-                            <th>Comment</th>
-                            <th>Review</th>
-                        </tr>
-                        </thead>
-                    </table>
                 </div>
-
                 <div id="files" class="tab-pane form-horizontal">
                     <div id="fileTemplateTempDiv"></div>
                 </div>
@@ -145,7 +152,6 @@
                 <div id="history" class="tab-pane form-horizontal">
                     <div id="historyTemplateTempDiv"></div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -16,6 +16,12 @@
   padding: 50px 0 130px;
 }
 
+@media (min-width: 1200px) {
+    .container {
+        width: 95%;
+    }
+}
+
 .footer {
   height: 120px;
 }
