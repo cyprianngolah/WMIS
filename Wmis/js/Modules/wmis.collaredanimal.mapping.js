@@ -107,7 +107,7 @@ wmis.collaredanimal.mapping = (function ($) {
         }
 
         this.downloadShapeFile = function () {
-            window.open("/api/argos/passesShapeFile?startRow=0&rowCount=500&collaredAnimalId=" + options.collaredAnimalId, '_self');
+            window.open("/api/argos/passesShapeFile?startRow=0&rowCount=20000&collaredAnimalId=" + options.collaredAnimalId, '_self');
         }
     }
 
