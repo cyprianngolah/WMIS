@@ -12,6 +12,10 @@
     using System.Net.Http.Headers;
     using System.Net.NetworkInformation;
     using System.Web.Http;
+
+    using SharpKml.Dom;
+    using SharpKml.Engine;
+
     using Wmis.ApiControllers;
     using Wmis.Argos.Entities;
     using Wmis.Configuration;
@@ -151,6 +155,72 @@
 
                 return response;
             }
+        }
+
+        [HttpGet]
+        [Route("passesKmlFile")]
+        public HttpResponseMessage PassesForCollar3([FromUri]ArgosPassSearchRequest apsr)
+        {
+            var passes = Repository.ArgosPassGet(apsr).Data;
+            var animal = Repository.CollarGet(apsr.CollaredAnimalId);
+
+            Document document = new Document();
+            foreach (var pass in passes)
+            {
+                var point = new SharpKml.Dom.Point();
+                point.Coordinate = new SharpKml.Base.Vector(pass.Latitude, pass.Longitude);
+                Placemark placemark = new Placemark();
+                placemark.Geometry = point;
+                placemark.Name = pass.ArgosPassStatus.Name;
+
+                document.AddFeature(placemark);
+            }
+
+            Kml root = new Kml();
+            root.Feature = document;
+
+            KmlFile file = KmlFile.Create(root,false);
+
+            var baseFileName = animal.AnimalId ?? ("KMLAnimal_" + animal.Key);
+            var baseDirectory = @"C:\Users\Public\WMIS_KML\";
+            var directoryName = Path.Combine(baseDirectory, baseFileName);
+
+            string ShapeFileName = Path.Combine(directoryName, baseFileName + ".kml");
+
+            using (var stream = System.IO.File.Create(ShapeFileName))
+            {
+                file.Save(stream);
+            }
+
+            string ZipPath = Path.Combine(baseDirectory, baseFileName + ".zip");
+
+            var zipFile = new FileInfo(ZipPath);
+
+            if (zipFile.Exists)
+                zipFile.Delete();
+
+            ZipFile.CreateFromDirectory(directoryName, ZipPath);
+
+            var response = new FileHttpResponseMessage(ZipPath);
+
+            using (var stream = new FileStream(ZipPath, FileMode.Open))
+            {
+                var bytes = new byte[stream.Length];
+
+                stream.Read(bytes, 0, bytes.Length);
+                response.Content = new ByteArrayContent(bytes);
+            }
+
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = baseFileName + ".zip"
+            };
+
+            zipFile.Delete();
+            new DirectoryInfo(directoryName).Delete(true);
+
+            return response;
         }
 
         [HttpPost]

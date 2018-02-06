@@ -110,6 +110,10 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="SharpKml, Version=3.0.0.0, Culture=neutral, PublicKeyToken=9bb853c026a5c0ac, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpKml.Core.3.0.0\lib\portable45-net45+win8+wpa81\SharpKml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
