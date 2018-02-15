@@ -187,17 +187,23 @@
 
             string ShapeFileName = Path.Combine(directoryName, baseFileName + ".kml");
 
+            if (!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
+                
+
+            using (var stream = System.IO.File.Create(ShapeFileName))
+            {
+                file.Save(stream);
+            }
+
             string ZipPath = Path.Combine(baseDirectory, baseFileName + ".zip");
 
             var zipFile = new FileInfo(ZipPath);
 
             if (zipFile.Exists)
                 zipFile.Delete();
-
-            using (var stream = System.IO.File.Create(ShapeFileName))
-            {
-                file.Save(stream);
-            }
 
             ZipFile.CreateFromDirectory(directoryName, ZipPath);
 
