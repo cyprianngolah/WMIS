@@ -203,7 +203,7 @@
 
             var response = new FileHttpResponseMessage(ZipPath);
 
-            using (var stream = new FileStream(ZipPath, FileMode.Open))
+            using (var stream = new FileStream(ZipPath, FileMode.OpenOrCreate))
             {
                 var bytes = new byte[stream.Length];
 
