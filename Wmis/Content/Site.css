@@ -17,9 +17,12 @@
 }
 
 @media (min-width: 1200px) {
-    .container {
-        width: 95%;
-    }
+   #locations {
+           margin-left: calc(-45vw + 585px);
+   }
+   #locations .row {
+       width: 90vw;
+   }
 }
 
 .footer {
