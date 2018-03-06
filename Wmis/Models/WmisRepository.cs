@@ -704,6 +704,19 @@
             }
         }
 
+        public int AddSpeciesUpload(string originalFileName, string filePath)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_originalFileName = originalFileName,
+                    p_filePath = filePath
+                };
+                return c.Query<int>(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
+
         #endregion BioDiversity
 
         #region Taxonomy

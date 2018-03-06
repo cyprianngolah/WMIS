@@ -18,6 +18,16 @@
             return View();
         }
 
+        /// <summary>
+        /// Gets the Species Bulk Upload Page
+        /// </summary>
+        /// <returns>Species Bulk Upload Page</returns>
+        //[WmisMvcAuthorize(Roles = "AdministratorBiodiversity")]
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
 		/// <summary>
 		/// Gets the New BioDiversity Page
 		/// </summary>

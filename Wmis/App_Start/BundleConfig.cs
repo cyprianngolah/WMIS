@@ -79,6 +79,10 @@
 
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/decision/edit").Include(
 			"~/js/modules/wmis.biodiversity.decision.edit.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/biodiversity/upload").Include(
+            "~/js/modules/wmis.biodiversity.upload.js",
+            "~/js/wmis.knockout.js"));
 			#endregion
 
             #region Collared Animal

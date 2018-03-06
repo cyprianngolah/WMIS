@@ -321,6 +321,7 @@
     <Compile Include="Extensions\MvcSecurityExtension.cs" />
     <Compile Include="Extensions\SpatialExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
+    <Compile Include="Logic\SpeciesParserService.cs" />
     <Compile Include="Models\ArgosCollarData.cs" />
     <Compile Include="Models\ArgosProgram.cs" />
     <Compile Include="Models\ArgosUser.cs" />
@@ -587,6 +588,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="js\Modules\wmis.biodiversity.upload.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />
@@ -822,6 +824,7 @@
     <Content Include="Views\Help\EditForm.cshtml" />
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Help\New.cshtml" />
+    <Content Include="Views\BioDiversity\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

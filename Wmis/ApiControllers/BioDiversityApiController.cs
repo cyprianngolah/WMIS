@@ -2,21 +2,30 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
-    using System.Web.Http;
+	using System.Net;
+	using System.Net.Http;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Web.Http;
 	using Configuration;
 	using Dto;
 	using Models;
 
 	using Wmis.Auth;
+	using Wmis.Logic;
+	using Wmis.WebApi;
 
-	/// <summary>
+    /// <summary>
 	/// Bio Diversity API Controller
 	/// </summary>
 	[RoutePrefix("api/biodiversity")]
 	public class BioDiversityController : BaseApiController
     {
         private readonly Auth.WmisUser _user;
+        public const string SpeciesUploadErrorString = "speciesUploadError";
+        public const string SpeciesUploadString = "speciesUpload";
 
         public BioDiversityController(WebConfiguration config, Auth.WmisUser user) 
 			: base(config)
@@ -221,5 +230,57 @@
             Repository.SpeciesSynonymSaveMany(sssr.SpeciesId, sssr.SpeciesSynonymTypeId, sssr.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
         }
         #endregion
+
+        [HttpPost]
+        [Route("upload")]
+        [IFrameProgressExceptionHandler(SpeciesUploadErrorString)]
+        public async Task<HttpResponseMessage> Upload()
+        {
+            // Save the File to a Temporary path (generally C:/Temp
+            var uploadPath = Path.Combine(Path.GetTempPath(), "WMIS");
+            if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
+            var streamProvider = new MultipartFormDataStreamProvider(uploadPath);
+            await Request.Content.ReadAsMultipartAsync(streamProvider);
+
+            FileInfo tempFile = null;
+            try
+            {
+                // Move the file to a location specified in the ObservationFileSaveDirectory AppSetting
+                var destinationFolder = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
+
+                var tempFileData = streamProvider.FileData.First();
+                tempFile = new FileInfo(tempFileData.LocalFileName);
+                var originalFile = new FileInfo(tempFileData.Headers.ContentDisposition.FileName.Replace("\"", ""));
+                if (!originalFile.Extension.Contains("xls"))
+                {
+                    throw new ObservationUploadException("Invalid File Extension. Observation Upload only supports .xls or .xlsx extensions.");
+                }
+                var destinationFile = String.Concat(Guid.NewGuid(), originalFile.Extension);
+                var destinationFilePath = Path.Combine(destinationFolder, destinationFile);
+                System.IO.File.Copy(tempFileData.LocalFileName, destinationFilePath);
+
+                // Save New Species to database
+                //var observationUploadKey = Repository.AddSpeciesUpload(originalFile.Name, destinationFilePath);
+                var data = new SpeciesParserService().GetFirstRows(10, destinationFilePath);
+                // Send the Response back
+                var pageBuilder = new StringBuilder();
+                pageBuilder.Append("<html><head></head>");
+                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}', '*');</script></body></html>", SpeciesUploadString));
+                return Request.CreateResponse(HttpStatusCode.OK, pageBuilder.ToString(), new PlainTextFormatter());
+            }
+            finally
+            {
+                if (tempFile != null && tempFile.Exists)
+                {
+                    try
+                    {
+                        tempFile.Delete();
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
     }
 }
