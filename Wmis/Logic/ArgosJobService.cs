@@ -204,7 +204,7 @@
                     else if (rowAsArgos != null && validLocClasses.Contains(rowAsArgos.LocationClass))
                     {
 
-                        if (!rowAsArgos.ArgosLatitude.HasValue || !rowAsArgos.ArgosLongitude.HasValue)
+                        if (!rowAsArgos.ArgosLatitude.HasValue || !rowAsArgos.ArgosLongitude.HasValue || !rowAsArgos.Timestamp.HasValue)
                             continue;
 
                         if (rowAsArgos.ArgosLatitude.Value < 0 || rowAsArgos.ArgosLatitude.Value > 90 || rowAsArgos.ArgosLongitude.Value < -180 || rowAsArgos.ArgosLongitude.Value > 0)
