@@ -182,7 +182,7 @@
                 var passes = new List<ArgosSatellitePass>();
                 var dataRows = new List<ArgosCollarData>();
 
-                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue && r.Timestamp <= DateTime.Now))
+                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue && r.Timestamp <= DateTime.Now && r.Timestamp > DateTime.MinValue))
                 {
                     IridiumOutputFileRow rowAsIridium = row as IridiumOutputFileRow;
                     ArgosOutputFileRow rowAsArgos = row as ArgosOutputFileRow;
