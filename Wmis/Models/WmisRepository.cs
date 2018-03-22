@@ -1303,6 +1303,30 @@
             }
         }
 
+        public void SaveBulkReferences( IEnumerable<Logic.ReferenceRow> data)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_references = data.Select(m => new
+                    {
+                        Code = m.CellValues[0],
+                        Author = m.CellValues[0],
+                        Year = m.CellValues[0],
+                        Title = m.CellValues[0],
+                        EditionPublicationOrganization = m.CellValues[0],
+                        VolumPage = m.CellValues[0],
+                        Publisher = m.CellValues[0],
+                        City = m.CellValues[0],
+                        Location = m.CellValues[0],
+                    }).AsTableValuedParameter("dbo.ReferenceTableType")
+                };
+
+                c.Execute(OBSERVATION_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
         #endregion References
 
         #region Project

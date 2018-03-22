@@ -42,11 +42,19 @@
                     }
                     else
                     {
-                        BackgroundJob.Enqueue(() => LoadArgosProcessedFiles());
-                        RecurringJob.AddOrUpdate("TimeForArgosLoadToRun", () => this.LoadArgosProcessedFiles(), cronExpression);
+                        BackgroundJob.Enqueue(() => ProcessCollarFiles());
+                        RecurringJob.AddOrUpdate("TimeForCollarLoadToRun", () => this.ProcessCollarFiles(), cronExpression);
                     }
                 }
             }
+        }
+
+        [AutomaticRetry(Attempts = 1, LogEvents = true)]
+        public void ProcessCollarFiles()
+        {
+            this.LoadLotekProcessedFiles();
+            this.LoadArgosProcessedFiles();
+
         }
 
         public void ProcessArgosCollars()
@@ -150,7 +158,51 @@
             return data;
         }
 
-        [AutomaticRetry(Attempts = 1, LogEvents = true)]
+        public void LoadLotekProcessedFiles()
+        {
+            var collarConfig = _configuration.AppSettings["processedLotekCollarsDirectory"];
+
+            if (string.IsNullOrEmpty(collarConfig))
+                throw new ArgumentNullException("processedLotekCollarsDirectory");
+
+            var collarConfigParts = collarConfig.Split(';');
+
+            if (collarConfigParts.Length != 2 || string.IsNullOrEmpty(collarConfigParts[0]) || string.IsNullOrEmpty(collarConfigParts[1]))
+                throw new ArgumentOutOfRangeException("processedLotekCollarsDirectory");
+            var folder = @"\\" + Path.Combine(collarConfigParts[0], collarConfigParts[1]);
+
+            var reader = new LotekFileReader(folder);
+            var files = reader.ReadFiles();
+
+            var noErrorFiles = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
+
+            foreach (var file in noErrorFiles)
+            {
+                var collerId = file.Rows.First().DeviceId;
+                var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = collerId }).Data.FirstOrDefault(c => c.CollarId == collerId);
+
+                if (collar == null)
+                    continue;
+
+                var passes = new List<ArgosSatellitePass>();
+               
+
+                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.TimestampGMT.HasValue && r.TimestampGMT <= DateTime.Now && r.TimestampGMT > DateTime.MinValue))
+                {
+
+                    if (row.Latitude.HasValue && row.Longitude.HasValue)
+                    {
+                        var p = new ArgosSatellitePass { Timestamp = row.TimestampGMT.Value };
+                        p.Latitude = row.Latitude.Value;
+                        p.Longitude = row.Longitude.Value;
+                        p.LocationClass = ArgosOutputFileRow.GPS_LOCATION_CLASS;
+                        passes.Add(p);
+                    }
+                }
+                _repository.ArgosPassMerge(collar.Key, passes);
+            }
+        }
+
         public void LoadArgosProcessedFiles()
         {
             var collarConfig = _configuration.AppSettings["processedArgosCollarsDirectory"];

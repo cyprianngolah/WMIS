@@ -48,8 +48,10 @@
     <Compile Include="ArgosData.cs" />
     <Compile Include="ArgosDataClient.cs" />
     <Compile Include="ArgosFileReader.cs" />
+    <Compile Include="Entities\LotekOutputFile.cs" />
     <Compile Include="Entities\TelonicsOutputFile.cs" />
     <Compile Include="Entities\ArgosSatellitePass.cs" />
+    <Compile Include="LotekFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ArgosService\Reference.cs">
       <AutoGen>True</AutoGen>

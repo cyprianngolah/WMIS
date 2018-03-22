@@ -24,8 +24,8 @@
 	public class BioDiversityController : BaseApiController
     {
         private readonly Auth.WmisUser _user;
-        public const string SpeciesUploadErrorString = "speciesUploadError";
-        public const string SpeciesUploadString = "speciesUpload";
+        public const string ReferenceUploadErrorString = "referenceUploadError";
+        public const string ReferenceUploadString = "referenceUpload";
 
         public BioDiversityController(WebConfiguration config, Auth.WmisUser user) 
 			: base(config)
@@ -233,7 +233,7 @@
 
         [HttpPost]
         [Route("upload")]
-        [IFrameProgressExceptionHandler(SpeciesUploadErrorString)]
+        [IFrameProgressExceptionHandler(ReferenceUploadErrorString)]
         public async Task<HttpResponseMessage> Upload()
         {
             // Save the File to a Temporary path (generally C:/Temp
@@ -261,11 +261,11 @@
 
                 // Save New Species to database
                 //var observationUploadKey = Repository.AddSpeciesUpload(originalFile.Name, destinationFilePath);
-                var data = new SpeciesParserService().GetFirstRows(10, destinationFilePath);
+                var data = new ReferenceParserService().GetFirstRows(10, destinationFilePath);
                 // Send the Response back
                 var pageBuilder = new StringBuilder();
                 pageBuilder.Append("<html><head></head>");
-                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}', '*');</script></body></html>", SpeciesUploadString));
+                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}', '*');</script></body></html>", ReferenceUploadErrorString));
                 return Request.CreateResponse(HttpStatusCode.OK, pageBuilder.ToString(), new PlainTextFormatter());
             }
             finally

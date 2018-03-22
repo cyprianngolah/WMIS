@@ -319,6 +319,7 @@
     <Build Include="dbo\Tables\CollaredAnimalHerdAssociationHistory.sql" />
     <Build Include="dbo\Stored Procedures\HistoricType_Search.sql" />
     <Build Include="dbo\Stored Procedures\ReferenceYears_Get.sql" />
+    <Build Include="dbo\User Defined Types\ReferenceTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

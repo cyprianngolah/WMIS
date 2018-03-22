@@ -321,6 +321,7 @@
     <Compile Include="Extensions\MvcSecurityExtension.cs" />
     <Compile Include="Extensions\SpatialExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
+    <Compile Include="Logic\ReferenceParserService.cs" />
     <Compile Include="Logic\SpeciesParserService.cs" />
     <Compile Include="Models\ArgosCollarData.cs" />
     <Compile Include="Models\ArgosProgram.cs" />
