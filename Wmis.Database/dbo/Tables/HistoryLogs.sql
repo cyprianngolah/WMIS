@@ -4,7 +4,7 @@
 	[CollaredAnimalId]  INT             NULL,
 	[SpeciesId]		INT             NULL,
 	[Item]				NVARCHAR (MAX)  NOT NULL,
-	[Value]				NVARCHAR (MAX)  NOT NULL,
+	[Value]				NVARCHAR (MAX)  NULL,
 	[ChangeBy]			NVARCHAR (50)  NOT NULL,
 	[ChangeDate]        DATETIME        NOT NULL DEFAULT GETUTCDATE(),
 	[Comment]           NVARCHAR (MAX)  NULL,
