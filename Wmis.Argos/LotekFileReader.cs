@@ -78,7 +78,7 @@ namespace Wmis.Argos
                     if (csv.FieldHeaders.Length > 0)
                     {
                         headers = csv.FieldHeaders.Select(t => t.ToLower().Trim()).ToList();
-                        throw new Exception("Headers :" + string.Join("",headers));
+                       
                     }
 
                     while (csv.Read())
@@ -88,6 +88,7 @@ namespace Wmis.Argos
                      
                         if (detail != null && !outFile.Rows.Contains(detail) && string.IsNullOrEmpty(detail.Error))
                             outFile.Rows.Add(detail);
+                        throw new Exception("Read first row; device id: " + detail.DeviceId);
                     }
                 }
             }
