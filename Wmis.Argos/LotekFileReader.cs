@@ -88,8 +88,9 @@ namespace Wmis.Argos
                      
                         if (detail != null && !outFile.Rows.Contains(detail) && string.IsNullOrEmpty(detail.Error))
                             outFile.Rows.Add(detail);
-                        throw new Exception("Read first row; device id: " + detail.DeviceId);
+                        
                     }
+                    throw new Exception("Finished! total rows: " + outFile.Rows.Count);
                 }
             }
 
