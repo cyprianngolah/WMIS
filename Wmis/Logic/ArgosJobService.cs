@@ -199,7 +199,8 @@
                         passes.Add(p);
                     }
                 }
-                _repository.ArgosPassMerge(collar.Key, passes);
+
+                //_repository.ArgosPassMerge(collar.Key, passes);
             }
         }
 
