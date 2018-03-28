@@ -199,7 +199,7 @@
                         passes.Add(p);
                     }
                 }
-
+                throw new ArgumentException("SAVING the following Collar ID: " +collar.Key +" with the following number of passes: "+ passes.Count);
                 //_repository.ArgosPassMerge(collar.Key, passes);
             }
         }
@@ -436,24 +436,31 @@
 
             foreach (var dataRow in dataRows.Where(r => r.Value.ToLower() == "yes" && (r.ValueType == ArgosCollarDataValueType.Mortality || r.ValueType == ArgosCollarDataValueType.LowVoltage)).OrderBy(r => r.Date))
             {
-                switch (dataRow.ValueType)
+                try
                 {
-                    case ArgosCollarDataValueType.LowVoltage:
-                        if (dataRow.Value.ToLower() == "yes" && !hasVoltageAlert)
-                        {
-                            _repository.CollarUpdateWarning(collar.Key, collar.CollarState.Key, "Collar Low Voltage", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date), "Yes");
-                            hasVoltageAlert = true;
-                        }
-                        break;
-                    case ArgosCollarDataValueType.Mortality:
-                        if (dataRow.Value.ToLower() == "yes" && !hasMortalityAlert)
-                        {
-                            _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Animal Mortality", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date), "Yes");
-                            hasMortalityAlert = true;
-                        }
-                        break;
-                    default:
-                        break;
+                    switch (dataRow.ValueType)
+                    {
+                        case ArgosCollarDataValueType.LowVoltage:
+                            if (dataRow.Value.ToLower() == "yes" && !hasVoltageAlert)
+                            {
+                                _repository.CollarUpdateWarning(collar.Key, collar.CollarState.Key, "Collar Low Voltage", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date), "Yes");
+                                hasVoltageAlert = true;
+                            }
+                            break;
+                        case ArgosCollarDataValueType.Mortality:
+                            if (dataRow.Value.ToLower() == "yes" && !hasMortalityAlert)
+                            {
+                                _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Animal Mortality", string.Format("Value reportered on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", dataRow.Date, dataRow.Date), "Yes");
+                                hasMortalityAlert = true;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch(Exception e)
+                {
+                    throw new Exception("Error on CollarID : " + collar.Key + " Collar state is: " + collar.CollarState);
                 }
             }
         }
