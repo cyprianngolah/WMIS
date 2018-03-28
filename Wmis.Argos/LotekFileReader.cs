@@ -67,7 +67,7 @@ namespace Wmis.Argos
         private LotekOutputFile ParseFile(FileInfo file)
         {
             LotekOutputFile outFile = new LotekOutputFile();
-            throw new Exception("Reading File: " + file.Name +" with path: " +file.FullName);
+            
             using (var fs = file.OpenRead())
             {
                 using (var csv = new CsvReader(new StreamReader(fs)))
@@ -78,6 +78,7 @@ namespace Wmis.Argos
                     if (csv.FieldHeaders.Length > 0)
                     {
                         headers = csv.FieldHeaders.Select(t => t.ToLower().Trim()).ToList();
+                        throw new Exception("Headers :" + headers.ToString());
                     }
 
                     while (csv.Read())
