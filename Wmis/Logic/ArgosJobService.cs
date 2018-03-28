@@ -202,6 +202,7 @@
                 throw new ArgumentException("SAVING the following Collar ID: " +collar.Key +" with the following number of passes: "+ passes.Count);
                 //_repository.ArgosPassMerge(collar.Key, passes);
             }
+            throw new ArgumentException("Not files read in and passes saved.");
         }
 
         public void LoadArgosProcessedFiles()
