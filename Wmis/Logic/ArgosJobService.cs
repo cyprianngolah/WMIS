@@ -458,7 +458,7 @@
                             break;
                     }
                 }
-                catch(Exception e)
+                catch(Exception)
                 {
                     throw new Exception("Error on CollarID : " + collar.Key + " Collar state is: " + collar.CollarState);
                 }
