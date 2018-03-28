@@ -52,15 +52,15 @@ namespace Wmis.Argos
             var files = new List<LotekOutputFile>();
 
             var csvFiles = _directory.GetFiles("*.csv");
+            throw new ArgumentNullException("Total Files being read: " +csvFiles.Count());
+            //foreach (var csv in csvFiles)
+            //{
+            //    var outFile = ParseFile(csv);
 
-            foreach (var csv in csvFiles)
-            {
-                var outFile = ParseFile(csv);
+            //    files.Add(outFile);
+            //}
 
-                files.Add(outFile);
-            }
-
-            return files;
+            //return files;
         }
 
         private LotekOutputFile ParseFile(FileInfo file)
