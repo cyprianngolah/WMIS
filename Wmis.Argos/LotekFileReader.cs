@@ -78,7 +78,7 @@ namespace Wmis.Argos
                     if (csv.FieldHeaders.Length > 0)
                     {
                         headers = csv.FieldHeaders.Select(t => t.ToLower().Trim()).ToList();
-                        throw new Exception("Headers :" + headers.ToString());
+                        throw new Exception("Headers :" + string.Join("",headers));
                     }
 
                     while (csv.Read())
@@ -94,7 +94,7 @@ namespace Wmis.Argos
 
             return outFile;
         }
-        private static LotekOutputFileRow ReadLotekFileRow(CsvReader csv, List<string> headers)
+        private LotekOutputFileRow ReadLotekFileRow(CsvReader csv, List<string> headers)
         {
             var detail = new LotekOutputFileRow();
 
