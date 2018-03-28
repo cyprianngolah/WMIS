@@ -52,7 +52,7 @@
         [AutomaticRetry(Attempts = 1, LogEvents = true)]
         public void ProcessCollarFiles()
         {
-            this.LoadLotekProcessedFiles();
+            //this.LoadLotekProcessedFiles();
             this.LoadArgosProcessedFiles();
 
         }
