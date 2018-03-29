@@ -182,27 +182,27 @@
 
                 
                 var collerId = file.Rows.First().DeviceId;
-                throw new ArgumentException("We have rows for collar: " + collerId + "; number of rows: " + file.Rows.Count);
-                //var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = collerId }).Data.FirstOrDefault(c => c.CollarId == collerId);
+               // throw new ArgumentException("We have rows for collar: " + collerId + "; number of rows: " + file.Rows.Count);
+                var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = collerId }).Data.FirstOrDefault(c => c.CollarId == collerId);
 
-                //if (collar == null)
-                //    continue;
+                if (collar == null)
+                    continue;
 
-                //var passes = new List<ArgosSatellitePass>();
+                var passes = new List<ArgosSatellitePass>();
 
-                //foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.TimestampGMT.HasValue && r.TimestampGMT <= DateTime.Now && r.TimestampGMT > DateTime.MinValue))
-                //{
+                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.TimestampGMT.HasValue && r.TimestampGMT <= DateTime.Now && r.TimestampGMT > DateTime.MinValue))
+                {
 
-                //    if (row.Latitude.HasValue && row.Longitude.HasValue)
-                //    {
-                //        var p = new ArgosSatellitePass { Timestamp = row.TimestampGMT.Value };
-                //        p.Latitude = row.Latitude.Value;
-                //        p.Longitude = row.Longitude.Value;
-                //        p.LocationClass = ArgosOutputFileRow.GPS_LOCATION_CLASS;
-                //        passes.Add(p);
-                //    }
-                //}
-                //_repository.ArgosPassMerge(collar.Key, passes);
+                    if (row.Latitude.HasValue && row.Longitude.HasValue)
+                    {
+                        var p = new ArgosSatellitePass { Timestamp = row.TimestampGMT.Value };
+                        p.Latitude = row.Latitude.Value;
+                        p.Longitude = row.Longitude.Value;
+                        p.LocationClass = ArgosOutputFileRow.GPS_LOCATION_CLASS;
+                        passes.Add(p);
+                    }
+                }
+                _repository.ArgosPassMerge(collar.Key, passes);
             }
         }
 
