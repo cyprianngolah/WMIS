@@ -52,9 +52,8 @@
         [AutomaticRetry(Attempts = 1, LogEvents = true)]
         public void ProcessCollarFiles()
         {
-            //this.LoadLotekProcessedFiles();
             this.LoadArgosProcessedFiles();
-
+            this.LoadLotekProcessedFiles();
         }
 
         public void ProcessArgosCollars()
@@ -174,36 +173,32 @@
             var reader = new LotekFileReader(folder);
             var files = reader.ReadFiles();
 
-            throw new ArgumentNullException("Files Read in ");
-            //var noErrorFiles = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
+            var noErrorFiles = files.Where(f => string.IsNullOrEmpty(f.ErrorMessage));
 
-            //foreach (var file in noErrorFiles)
-            //{
-            //    var collerId = file.Rows.First().DeviceId;
-            //    var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = collerId }).Data.FirstOrDefault(c => c.CollarId == collerId);
+            foreach (var file in noErrorFiles)
+            {
+                var collerId = file.Rows.First().DeviceId;
+                var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = collerId }).Data.FirstOrDefault(c => c.CollarId == collerId);
 
-            //    if (collar == null)
-            //        continue;
+                if (collar == null)
+                    continue;
 
-            //    var passes = new List<ArgosSatellitePass>();
-               
+                var passes = new List<ArgosSatellitePass>();
 
-            //    foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.TimestampGMT.HasValue && r.TimestampGMT <= DateTime.Now && r.TimestampGMT > DateTime.MinValue))
-            //    {
+                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.TimestampGMT.HasValue && r.TimestampGMT <= DateTime.Now && r.TimestampGMT > DateTime.MinValue))
+                {
 
-            //        if (row.Latitude.HasValue && row.Longitude.HasValue)
-            //        {
-            //            var p = new ArgosSatellitePass { Timestamp = row.TimestampGMT.Value };
-            //            p.Latitude = row.Latitude.Value;
-            //            p.Longitude = row.Longitude.Value;
-            //            p.LocationClass = ArgosOutputFileRow.GPS_LOCATION_CLASS;
-            //            passes.Add(p);
-            //        }
-            //    }
-            //    throw new ArgumentException("SAVING the following Collar ID: " +collar.Key +" with the following number of passes: "+ passes.Count);
-            //    //_repository.ArgosPassMerge(collar.Key, passes);
-            //}
-            //throw new ArgumentException("Not files read in and passes saved.");
+                    if (row.Latitude.HasValue && row.Longitude.HasValue)
+                    {
+                        var p = new ArgosSatellitePass { Timestamp = row.TimestampGMT.Value };
+                        p.Latitude = row.Latitude.Value;
+                        p.Longitude = row.Longitude.Value;
+                        p.LocationClass = ArgosOutputFileRow.GPS_LOCATION_CLASS;
+                        passes.Add(p);
+                    }
+                }
+                _repository.ArgosPassMerge(collar.Key, passes);
+            }
         }
 
         public void LoadArgosProcessedFiles()

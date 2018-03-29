@@ -58,7 +58,6 @@ namespace Wmis.Argos
                 var outFile = ParseFile(csv);
 
                 files.Add(outFile);
-                break;
             }
 
             return files;
@@ -77,8 +76,7 @@ namespace Wmis.Argos
                     csv.Read();
                     if (csv.FieldHeaders.Length > 0)
                     {
-                        headers = csv.FieldHeaders.Select(t => t.ToLower().Trim()).ToList();
-                       
+                        headers = csv.FieldHeaders.Select(t => t.ToLower().Trim()).ToList();  
                     }
 
                     while (csv.Read())
@@ -86,11 +84,9 @@ namespace Wmis.Argos
                         LotekOutputFileRow detail = null;
                         detail = ReadLotekFileRow(csv, headers);
                      
-                        if (detail != null && !outFile.Rows.Contains(detail) && string.IsNullOrEmpty(detail.Error))
-                            outFile.Rows.Add(detail);
-                        
+                        if (detail != null && !outFile.Rows.Contains(detail) && (detail.Latitude > 0 && detail.Longitude > 0))
+                            outFile.Rows.Add(detail);   
                     }
-                    throw new Exception("Finished! total rows: " + outFile.Rows.Count);
                 }
             }
 
@@ -101,7 +97,7 @@ namespace Wmis.Argos
             var detail = new LotekOutputFileRow();
 
             if (headers.Contains("device id"))
-                detail.DeviceId = csv.GetField<string>(headers.IndexOf("device id"));
+                detail.DeviceId = csv.GetField<string>(headers.IndexOf("device id")).Trim();
 
             if (headers.Contains("date & time [gmt]"))
                 detail.TimestampGMT = DateTime.FromOADate(csv.GetField<double>(headers.IndexOf("date & time [gmt]")));
@@ -116,10 +112,7 @@ namespace Wmis.Argos
                 detail.Altitude = csv.GetField<double?>(headers.IndexOf("altitude"));
 
             if (headers.Contains("fix status"))
-                detail.FixStatus = csv.GetField<string>(headers.IndexOf("fix status"));
-
-            if (headers.Contains("error"))
-                detail.Error = csv.GetField<string>(headers.IndexOf("error"));
+                detail.FixStatus = csv.GetField<string>(headers.IndexOf("fix status")).Trim();
 
             return detail;
         }
