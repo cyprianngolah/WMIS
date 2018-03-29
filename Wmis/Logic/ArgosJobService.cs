@@ -180,9 +180,7 @@
                 if(file.Rows.Count == 0)
                     continue;
 
-                
                 var collerId = file.Rows.First().DeviceId;
-               // throw new ArgumentException("We have rows for collar: " + collerId + "; number of rows: " + file.Rows.Count);
                 var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = collerId }).Data.FirstOrDefault(c => c.CollarId == collerId);
 
                 if (collar == null)
