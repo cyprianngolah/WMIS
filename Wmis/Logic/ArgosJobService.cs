@@ -177,6 +177,9 @@
 
             foreach (var file in noErrorFiles)
             {
+                if(file.Rows.Count == 0)
+                    continue;
+
                 var collerId = file.Rows.First().DeviceId;
                 var collar = _repository.CollarGet(new CollarSearchRequest { Keywords = collerId }).Data.FirstOrDefault(c => c.CollarId == collerId);
 
