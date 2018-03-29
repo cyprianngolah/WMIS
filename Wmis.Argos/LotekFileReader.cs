@@ -84,7 +84,7 @@ namespace Wmis.Argos
                         LotekOutputFileRow detail = null;
                         detail = ReadLotekFileRow(csv, headers);
                      
-                        if (detail != null && !outFile.Rows.Contains(detail) && (detail.Latitude > 0 && detail.Longitude > 0))
+                        //if (detail != null && !outFile.Rows.Contains(detail) && (detail.Latitude > 0 && detail.Longitude > 0))
                             outFile.Rows.Add(detail);   
                     }
                 }
