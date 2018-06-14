@@ -60,8 +60,8 @@
         [Route("execute")]
         public void ExecuteJob()
         {
-            //_argosJobService.LoadArgosProcessedFiles();
-            _argosJobService.LoadLotekProcessedFiles();
+            _argosJobService.LoadArgosProcessedFiles();
+            //_argosJobService.LoadLotekProcessedFiles();
         }
 
         [HttpPost]
