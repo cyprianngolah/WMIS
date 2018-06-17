@@ -8,7 +8,8 @@
 	using System.Net.Http;
 	using System.Text;
 	using System.Threading.Tasks;
-	using System.Web.Http;
+    using System.Net.Http.Headers;
+    using System.Web.Http;
 	using Configuration;
 	using Dto;
 	using Models;
@@ -24,8 +25,8 @@
 	public class BioDiversityController : BaseApiController
     {
         private readonly Auth.WmisUser _user;
-        public const string ReferenceUploadErrorString = "referenceUploadError";
-        public const string ReferenceUploadString = "referenceUpload";
+        public const string BiodiversityBulkUploadErrorString = "BiodiversityBulkUploadError";
+        public const string BiodiversityBulkUploadString = "BiodiversityBulkUpload";
 
         public BioDiversityController(WebConfiguration config, Auth.WmisUser user) 
 			: base(config)
@@ -233,9 +234,10 @@
 
         [HttpPost]
         [Route("upload")]
-        [IFrameProgressExceptionHandler(ReferenceUploadErrorString)]
+        [IFrameProgressExceptionHandler(BiodiversityBulkUploadErrorString)]
         public async Task<HttpResponseMessage> Upload()
         {
+
             // Save the File to a Temporary path (generally C:/Temp
             var uploadPath = Path.Combine(Path.GetTempPath(), "WMIS");
             if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
@@ -255,18 +257,25 @@
                 {
                     throw new ObservationUploadException("Invalid File Extension. Observation Upload only supports .xls or .xlsx extensions.");
                 }
+                // perform another validation to check if the file uploaded is the correct template
+                
                 var destinationFile = String.Concat(Guid.NewGuid(), originalFile.Extension);
                 var destinationFilePath = Path.Combine(destinationFolder, destinationFile);
                 System.IO.File.Copy(tempFileData.LocalFileName, destinationFilePath);
 
-                // Save New Species to database
-                //var observationUploadKey = Repository.AddSpeciesUpload(originalFile.Name, destinationFilePath);
-                var data = new ReferenceParserService().GetFirstRows(10, destinationFilePath);
-                // Send the Response back
+                // save the uploaded process to database
+                Repository.AddBulkUpload(originalFile.Name, destinationFilePath, "Species", destinationFile);
+                
+                // now merge the data to the database
+                var data = new BiodiversityBulkUploaderService().GetData(destinationFilePath, 1);
+                Repository.BulkInsertSpecies(data);
+
+                // send the response back to EventListener
                 var pageBuilder = new StringBuilder();
                 pageBuilder.Append("<html><head></head>");
-                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}', '*');</script></body></html>", ReferenceUploadErrorString));
+                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:{1}', '*');</script></body></html>", BiodiversityBulkUploadString));
                 return Request.CreateResponse(HttpStatusCode.OK, pageBuilder.ToString(), new PlainTextFormatter());
+
             }
             finally
             {
@@ -282,5 +291,47 @@
                 }
             }
         }
+
+        [HttpGet]
+        [Route("uploads/download")]
+        public HttpResponseMessage DownloadFile([FromUri] string fileName)
+        {
+            /* var destinationFile = fileName;
+             var destinationFolder = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
+             var downloadPath = Path.Combine(destinationFolder, destinationFile);
+              var response = new FileHttpResponseMessage(downloadPath);
+              response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+              {
+                  FileName = destinationFile
+              };
+
+            return response;*/
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                string filePath = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
+                string fullPath = Path.Combine(filePath, fileName);
+                if (System.IO.File.Exists(fullPath))
+                {
+                    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                    var fileStream = new FileStream(fullPath, FileMode.Open);
+                    response.Content = new StreamContent(fileStream);
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                    response.Content.Headers.ContentDisposition.FileName = fileName;
+                    return response;
+                }
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.NotFound);
+        }
+
+        [HttpGet]
+        [Route("uploads")]
+        public Dto.PagedResultset<Models.BulkUploads> GetBulkUploads([FromUri]Dto.PagedDataKeywordRequest str)
+        {
+            return Repository.BiodiversityBulkUploadsGet(str ?? new Dto.PagedDataKeywordRequest());
+        }
+
+
     }
 }

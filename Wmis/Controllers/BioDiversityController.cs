@@ -15,7 +15,6 @@
 		/// <returns>The results</returns>
 		public ActionResult Index()
         {
-   
             return View();
         }
 

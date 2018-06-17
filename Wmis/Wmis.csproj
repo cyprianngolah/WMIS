@@ -321,11 +321,13 @@
     <Compile Include="Extensions\MvcSecurityExtension.cs" />
     <Compile Include="Extensions\SpatialExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
+    <Compile Include="Logic\BiodiversityBulkUploaderService.cs" />
     <Compile Include="Logic\ReferenceParserService.cs" />
     <Compile Include="Logic\SpeciesParserService.cs" />
     <Compile Include="Models\ArgosCollarData.cs" />
     <Compile Include="Models\ArgosProgram.cs" />
     <Compile Include="Models\ArgosUser.cs" />
+    <Compile Include="Models\BulkUploads.cs" />
     <Compile Include="Models\HelpLink.cs" />
     <Compile Include="Models\HistoricTypesFilter.cs" />
     <Compile Include="Models\ObservationRow.cs" />
@@ -594,6 +596,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Files\BiodiversityBulkUploadTemplate.xlsx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />
