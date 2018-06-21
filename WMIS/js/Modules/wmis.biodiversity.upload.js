@@ -21,7 +21,13 @@ wmis.biodiversity.upload = (function ($) {
         };
 
         self.uploadObservationFile = function () {
+            wmis.global.showWaitingScreen("Uploading... Please wait");
             options.uploadSpeciesForm.submit();
+        };
+
+        self.downloadSelectedFile = function () {
+            //wmis.global.showWaitingScreen("Downloading...");
+            window.open("/api/biodiversity/uploads/download?fileName=" + selectedFile, '_blank');
         };
     }
 
@@ -42,6 +48,10 @@ wmis.biodiversity.upload = (function ($) {
                 var message = event.data.replace("observationUploadError:", "");
                 viewModel.showMessageModal(message);
             }
+            if (event.data.indexOf("FileDownloadError:") == 0) {
+                var message = event.data.replace("FileDownloadError:", "");
+                viewModel.showMessageModal(message);
+            }
             else if (event.data.indexOf("BiodiversityBulkUpload") == 0) {
                 viewModel.hideUploadModal();
                 // add redirection or function to fetch uploads (for now just redirect back to the upload page)
@@ -49,6 +59,8 @@ wmis.biodiversity.upload = (function ($) {
             }
         }, false);
     }
+
+    
 
     function initialize(initOptions) {
         $.extend(options, initOptions);
@@ -83,12 +95,13 @@ wmis.biodiversity.upload = (function ($) {
                         var date = moment(data, moment.ISO_8601).local().format('L h:mm a');
                         return date;
                     }
-                },
-                { "data": "filePath" }
+                }
+                //{ "data": "filePath" }
             ],
-            "rowCallback": function (row, data, index) {
-                $('td:eq(3)', row).html('<a href="/api/biodiversity/uploads/download?fileName='+data.fileName+'">Download file</a>');
-            },
+            //"rowCallback": function (row, data, index) {
+                //$('td:eq(3)', row).html('<a href="/api/biodiversity/uploads/download?fileName='+data.fileName+'">Download file</a>');
+             //   $('td:eq(3)', row).html('<a href="javascript:downloadFile()">Download file</a>');
+            //},
             "fnServerData": function (source, data, callback, settings) {
                 var sortDirection = null;
                 var sortedColumnName = null;
@@ -140,8 +153,8 @@ wmis.biodiversity.upload = (function ($) {
                             var data = bulkUploadDataTable.fnGetData(position);
 
                             if (data.key) {
-                                //$("#downloadSelectedButton").removeClass('disabled');
-                                //selectedFile = data.fileName;
+                                $("#downloadSelectedButton").removeClass('disabled');
+                                selectedFile = data.fileName;
                                 //console.log(selectedFile);
                                 //$("#downloadSelectedButton").prop("href", "/api/biodiversity//Edit/" + data.key);
                             }

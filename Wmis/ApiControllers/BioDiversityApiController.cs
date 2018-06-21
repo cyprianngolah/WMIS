@@ -27,6 +27,7 @@
         private readonly Auth.WmisUser _user;
         public const string BiodiversityBulkUploadErrorString = "BiodiversityBulkUploadError";
         public const string BiodiversityBulkUploadString = "BiodiversityBulkUpload";
+        public const string DownloadErrorString = "FileDownloadError";
 
         public BioDiversityController(WebConfiguration config, Auth.WmisUser user) 
 			: base(config)
@@ -235,6 +236,7 @@
         [HttpPost]
         [Route("upload")]
         [IFrameProgressExceptionHandler(BiodiversityBulkUploadErrorString)]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public async Task<HttpResponseMessage> Upload()
         {
 
@@ -262,7 +264,7 @@
                 var destinationFile = String.Concat(Guid.NewGuid(), originalFile.Extension);
                 var destinationFilePath = Path.Combine(destinationFolder, destinationFile);
                 System.IO.File.Copy(tempFileData.LocalFileName, destinationFilePath);
-
+                
                 // save the uploaded process to database
                 Repository.AddBulkUpload(originalFile.Name, destinationFilePath, "Species", destinationFile);
                 
@@ -292,38 +294,63 @@
             }
         }
 
+        
         [HttpGet]
         [Route("uploads/download")]
+        [IFrameProgressExceptionHandler(DownloadErrorString)]
         public HttpResponseMessage DownloadFile([FromUri] string fileName)
         {
-            /* var destinationFile = fileName;
-             var destinationFolder = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
-             var downloadPath = Path.Combine(destinationFolder, destinationFile);
-              var response = new FileHttpResponseMessage(downloadPath);
-              response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-              {
-                  FileName = destinationFile
-              };
 
-            return response;*/
             if (!string.IsNullOrEmpty(fileName))
             {
+                
                 string filePath = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
                 string fullPath = Path.Combine(filePath, fileName);
+
+                if (!System.IO.File.Exists(fullPath))
+                {
+
+                    return new HttpResponseMessage()
+                    {
+                        Content = new StringContent(
+                            "<h3>File seems to be missing or unavailable at this time. Try again later or contact WMIS support.</h3>", Encoding.UTF8, "text/html"
+                        )
+                    };
+                    //throw new HttpResponseException(HttpStatusCode.Moved);
+                }
+                
+
                 if (System.IO.File.Exists(fullPath))
                 {
-                    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-                    var fileStream = new FileStream(fullPath, FileMode.Open);
-                    response.Content = new StreamContent(fileStream);
+                    var newFile = String.Concat(DateTime.Now.ToString("yyyyMMddHHmmss"), fileName);
+                    var newFilePath = Path.Combine(filePath, newFile);
+
+                    System.IO.File.Copy(fullPath, newFilePath);
+
+                    var response = new FileHttpResponseMessage(newFilePath);
+                    using (var stream = new FileStream(newFilePath, FileMode.Open))
+                    {
+                        var bytes = new byte[stream.Length];
+                        stream.Read(bytes, 0, bytes.Length);
+                        response.Content = new ByteArrayContent(bytes);
+                    }
+
                     response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                    response.Content.Headers.ContentDisposition.FileName = fileName;
+                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = newFile
+                    };
+
                     return response;
                 }
+                
             }
 
             return new HttpResponseMessage(HttpStatusCode.NotFound);
+
         }
+
+       
 
         [HttpGet]
         [Route("uploads")]

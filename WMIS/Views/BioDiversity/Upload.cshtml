@@ -52,11 +52,13 @@
 
 <div class="row h4">
     <div class="col-md-12 text-right">
-        <a href="~/Content/Files/BiodiversityBulkUploadTemplate.xlsx" target="_blank" type="button" class="btn btn-warning pull-left">Download Upload Template</a>
+        <span class="pull-left">
+            <a href="~/Content/Files/BiodiversityBulkUploadTemplate.xlsx" target="_blank" type="button" class="btn btn-warning">Download Upload Template</a>
+            <button type="button" id="downloadSelectedButton" class="btn btn-default disabled" data-bind="click: downloadSelectedFile">Download Selected File</button>
+        </span>
+
         <button type="button" class="btn btn-success" data-bind="click: showUploadModal">Bulk Upload Species</button>
-        <!----
-        <button type="button" id="downloadSelectedButton" class="btn btn-success disabled">Download Selected File</button>
-        -->
+        
     </div>
 </div>
 
@@ -69,7 +71,6 @@
                     <th>Uploaded File</th>
                     <th>Upload Type</th>
                     <th>Date Created</th>
-                    <th>Download</th>
                 </tr>
             </thead>
         </table>
