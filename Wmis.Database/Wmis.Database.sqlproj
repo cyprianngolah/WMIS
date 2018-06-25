@@ -320,10 +320,17 @@
     <Build Include="dbo\Stored Procedures\HistoricType_Search.sql" />
     <Build Include="dbo\Stored Procedures\ReferenceYears_Get.sql" />
     <Build Include="dbo\User Defined Types\ReferenceTableType.sql" />
+    <Build Include="dbo\Tables\Copy of AgeClasses.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
     <None Include="Wmis.PreDeployment.sql" />
+    <None Include="dbo\Tables\BulkUploads.sql" />
+    <None Include="dbo\Stored Procedures\Biodiversity_Delete.sql" />
+    <None Include="dbo\Stored Procedures\BiodiversityBulkSpecies_Merge.sql" />
+    <None Include="dbo\Stored Procedures\BiodiversityBulkUpload_Get.sql" />
+    <None Include="dbo\Stored Procedures\BiodiversityBulkUpload_Update.sql" />
+    <None Include="dbo\User Defined Types\BulkSpeciesUploadTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Fill\ProjectStatus.sql" />

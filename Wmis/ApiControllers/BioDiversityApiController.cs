@@ -360,5 +360,14 @@
         }
 
 
+        [HttpDelete]
+        [Route("species/{speciesId:int}/delete")]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
+        public void DeleteSpecies(int speciesId)
+        {
+            Repository.BiodiversityDelete(speciesId);
+        }
+
+
     }
 }

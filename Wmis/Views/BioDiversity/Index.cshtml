@@ -11,6 +11,7 @@
 @section Scripts {
 	@Html.Raw(Scripts.Render("~/bundles/datatables"))
 	@Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
 	@Html.Raw(Scripts.Render("~/bundles/biodiversity/index"))
 
 	<script type="text/javascript">
@@ -21,9 +22,15 @@
 }
 
     <div class="row">
+        <div id="deleteErrorAlert" class="alert alert-warning fade in alert-dismissible hidden">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span id="deleteError">Message here</span>
+        </div>
+
 		<div class="col-md-12 text-right">
 			@if (Html.UserIsBiodiversityAdministrator())
-			{
+            {
+                <button data-bind="click: removeSpecies" id="deleteSpeciesButton" class="btn btn-default pull-left disabled" style="margin-bottom: 10px;">Delete Selected</button>
 				<a href="/BioDiversity/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
                 <a href="/BioDiversity/Upload" class="btn btn-default" style="margin-bottom: 10px;">Bulk Upload</a>
 			}

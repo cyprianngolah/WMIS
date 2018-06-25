@@ -1,6 +1,8 @@
 ﻿wmis.biodiversity = wmis.biodiversity || {};
 wmis.biodiversity.index = (function($) {
-	var bioDiversityTable;
+    var bioDiversityTable;
+    var selectedSpecies;
+
 	var options = {
 		searchButtonSelector: "#searchButton",
 		editButtonSelector: "#editButton",
@@ -9,8 +11,41 @@ wmis.biodiversity.index = (function($) {
 		orderSelector: "#order",
 		familySelector: "#family",
 		keywordsSelector: "#keywords",
-		biodiversitySelector: "#biodiversity",
-	};
+        biodiversitySelector: "#biodiversity",
+        deleteButtonSelector: "#deleteSpeciesButton"
+    };
+
+
+    function BiodiversityModel() {
+        var self = this;
+
+        self.removeSpecies = function () {
+            
+            if (selectedSpecies) {
+                var result = confirm("Sure you want to delete this species? Note that if the species is linked to any Survey data or has references, it will not be deleted! You can contact WMIS support in such cases.");
+                if (result) {
+
+                    wmis.global.showWaitingScreen("Deleting...");
+
+                    $.ajax({
+                        url: "/api/biodiversity/species/" + selectedSpecies +"/delete/",
+                        type: "DELETE",
+                    }).success(function () {
+                        window.location.href = "/Biodiversity";
+                    }).always(function () {
+                        wmis.global.hideWaitingScreen();
+                    }).fail(function (f) {
+                        console.log(f)
+                        $('#deleteErrorAlert').removeClass('hidden');
+                        $('#deleteError').text(f.responseJSON.exceptionMessage);
+                        //wmis.global.ajaxErrorHandler(f);
+                    });
+                }
+            }
+            
+        };
+    }
+    
 
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
@@ -48,7 +83,11 @@ wmis.biodiversity.index = (function($) {
 
 		$(options.familySelector).change(function () {
 		    bioDiversityTable.fnFilter();
-		});
+        });
+
+        // add biodiversity model to bind to click events
+        var model = new BiodiversityModel();
+        ko.applyBindings(model);
 
 	}
 	
@@ -152,11 +191,14 @@ wmis.biodiversity.index = (function($) {
 							var position = bioDiversityTable.fnGetPosition(this);
 							var data = bioDiversityTable.fnGetData(position);
 
-							if (data.key) {
+                            if (data.key) {
+                                selectedSpecies = data.key
+
 								$(options.editButtonSelector).removeClass('disabled');
 								$(options.editButtonSelector).prop("href", "/BioDiversity/Edit/" + data.key + "?commonName=" + data.commonName);
 								$(options.decisionButtonSelector).removeClass('disabled');
-								$(options.decisionButtonSelector).prop("href", "/BioDiversity/Decision/" + data.key);
+                                $(options.decisionButtonSelector).prop("href", "/BioDiversity/Decision/" + data.key);
+                                $(options.deleteButtonSelector).removeClass('disabled btn-default').addClass('btn-danger');
 							}
 						}
 					}

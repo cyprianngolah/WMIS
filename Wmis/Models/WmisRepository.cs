@@ -64,6 +64,7 @@
         private const string BIODIVERSITYBULKSPECIES_MERGE = "dbo.BiodiversityBulkSpecies_Merge";
         private const string BIODIVERSITYBULKUPLOAD_GET = "dbo.BiodiversityBulkUpload_Get";
 
+        private const string BIODIVERSITY_DELETE = "dbo.Biodiversity_Delete";
         /// <summary>
         /// The Taxonomy Synonym Get stored procedure
         /// </summary>
@@ -711,18 +712,6 @@
             }
         }
 
-        /*public int AddSpeciesUpload(string originalFileName, string filePath)
-        {
-            using (var c = NewWmisConnection)
-            {
-                var param = new
-                {
-                    p_originalFileName = originalFileName,
-                    p_filePath = filePath
-                };
-                return c.Query<int>(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            }
-        }*/
         /// <summary>
         /// Add Species upload to database including saving the uploaded file to the server
         /// </summary>
@@ -814,7 +803,24 @@
             }
 
         }
-        
+
+        /// <summary>
+        /// Delete duplicate Species record. This will check for any constraint violation and only delete if there is none.
+        /// </summary>
+        /// <param name="speciesId"></param>
+        public void BiodiversityDelete(int speciesId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_speciesId = speciesId
+                };
+
+                c.Execute(BIODIVERSITY_DELETE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
 
         #endregion BioDiversity
 
