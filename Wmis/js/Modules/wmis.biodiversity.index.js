@@ -1,7 +1,8 @@
 ﻿wmis.biodiversity = wmis.biodiversity || {};
 wmis.biodiversity.index = (function($) {
     var bioDiversityTable;
-    var selectedSpecies;
+    // species that is currently selected. Will be passed on to the delete process
+    var selectedSpecies; 
 
 	var options = {
 		searchButtonSelector: "#searchButton",
