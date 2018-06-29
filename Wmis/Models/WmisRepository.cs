@@ -58,6 +58,14 @@
         private const string BIODIVERSITY_UPDATE = "dbo.BioDiversity_Update";
 
         /// <summary>
+        /// Biodiversity Bulk Upload File -- added by Neba
+        /// </summary>
+        private const string BIODIVERSITYBULKUPLOAD_UPDATE = "dbo.BiodiversityBulkUpload_Update";
+        private const string BIODIVERSITYBULKSPECIES_MERGE = "dbo.BiodiversityBulkSpecies_Merge";
+        private const string BIODIVERSITYBULKUPLOAD_GET = "dbo.BiodiversityBulkUpload_Get";
+
+        private const string BIODIVERSITY_DELETE = "dbo.Biodiversity_Delete";
+        /// <summary>
         /// The Taxonomy Synonym Get stored procedure
         /// </summary>
         private const string TAXONOMYSYNONYM_GET = "dbo.TaxonomySynonym_Get";
@@ -704,18 +712,115 @@
             }
         }
 
-        public int AddSpeciesUpload(string originalFileName, string filePath)
+        /// <summary>
+        /// Add Species upload to database including saving the uploaded file to the server
+        /// </summary>
+        /// <param name="originalFileName"></param>
+        /// <param name="filePath"></param>
+        /// <param name="uploadType"></param>
+        /// <returns></returns>
+        public int AddBulkUpload(string originalFileName, string filePath, string uploadType, string fileName)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
                     p_originalFileName = originalFileName,
-                    p_filePath = filePath
+                    p_filePath = filePath,
+                    p_fileName = fileName,
+                    p_uploadType = uploadType
                 };
-                return c.Query<int>(OBSERVATIONUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return c.Query<int>(BIODIVERSITYBULKUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
+
+        /// <summary>
+        /// Merge uploaded data to Species and Taxonomy tables in database
+        /// </summary>
+        /// <param name="speciesList"></param>
+        public void BulkInsertSpecies(IEnumerable<Logic.SpeciesData> speciesList)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_speciesList = speciesList.Select(m => new
+                    {
+                        Group = String.IsNullOrEmpty(m.Group) ? null : m.Group.Trim(),
+                        Kingdon = String.IsNullOrEmpty(m.Kingdom) ? null : m.Kingdom.Trim(),
+                        Phyllum = String.IsNullOrEmpty(m.Phylum) ? null : m.Phylum.Trim(),
+                        Class = String.IsNullOrEmpty(m.Class) ? null : m.Class.Trim(),
+                        Order = String.IsNullOrEmpty(m.Order) ? null : m.Order.Trim(),
+                        Family = m.Family.Trim(),
+                        Name = m.Name.Trim(),
+                        CommonName = String.IsNullOrEmpty(m.CommonName) ? null : m.CommonName.Trim(),
+                        ELCode = String.IsNullOrEmpty(m.ELCode) ? null : m.ELCode.Trim(),
+                    }).AsTableValuedParameter("dbo.BulkSpeciesUploadTableType")
+                };
+
+                c.Execute(BIODIVERSITYBULKSPECIES_MERGE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        /// <summary>
+        /// Get all bulk uploads
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        
+        public Dto.PagedResultset<BulkUploads> BiodiversityBulkUploadsGet(PagedDataRequest request)
+        {
+     
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection
+                };
+
+                var pagedResults = new PagedResultset<BulkUploads>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<BulkUploads>()
+                };
+
+                var results = c.Query<dynamic, BulkUploads, BulkUploads>(BIODIVERSITYBULKUPLOAD_GET,
+                    (d, records) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return records;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+
+        }
+
+        /// <summary>
+        /// Delete duplicate Species record. This will check for any constraint violation and only delete if there is none.
+        /// </summary>
+        /// <param name="speciesId"></param>
+        public void BiodiversityDelete(int speciesId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_speciesId = speciesId
+                };
+
+                c.Execute(BIODIVERSITY_DELETE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
 
         #endregion BioDiversity
 

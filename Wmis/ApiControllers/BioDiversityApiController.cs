@@ -8,7 +8,8 @@
 	using System.Net.Http;
 	using System.Text;
 	using System.Threading.Tasks;
-	using System.Web.Http;
+    using System.Net.Http.Headers;
+    using System.Web.Http;
 	using Configuration;
 	using Dto;
 	using Models;
@@ -24,8 +25,9 @@
 	public class BioDiversityController : BaseApiController
     {
         private readonly Auth.WmisUser _user;
-        public const string ReferenceUploadErrorString = "referenceUploadError";
-        public const string ReferenceUploadString = "referenceUpload";
+        public const string BiodiversityBulkUploadErrorString = "BiodiversityBulkUploadError";
+        public const string BiodiversityBulkUploadString = "BiodiversityBulkUpload";
+        public const string DownloadErrorString = "FileDownloadError";
 
         public BioDiversityController(WebConfiguration config, Auth.WmisUser user) 
 			: base(config)
@@ -233,9 +235,11 @@
 
         [HttpPost]
         [Route("upload")]
-        [IFrameProgressExceptionHandler(ReferenceUploadErrorString)]
+        [IFrameProgressExceptionHandler(BiodiversityBulkUploadErrorString)]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public async Task<HttpResponseMessage> Upload()
         {
+
             // Save the File to a Temporary path (generally C:/Temp
             var uploadPath = Path.Combine(Path.GetTempPath(), "WMIS");
             if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
@@ -255,18 +259,25 @@
                 {
                     throw new ObservationUploadException("Invalid File Extension. Observation Upload only supports .xls or .xlsx extensions.");
                 }
+                // perform another validation to check if the file uploaded is the correct template
+                
                 var destinationFile = String.Concat(Guid.NewGuid(), originalFile.Extension);
                 var destinationFilePath = Path.Combine(destinationFolder, destinationFile);
                 System.IO.File.Copy(tempFileData.LocalFileName, destinationFilePath);
+                
+                // save the uploaded process to database
+                Repository.AddBulkUpload(originalFile.Name, destinationFilePath, "Species", destinationFile);
+                
+                // now merge the data to the database
+                var data = new BiodiversityBulkUploaderService().GetData(destinationFilePath, 1);
+                Repository.BulkInsertSpecies(data);
 
-                // Save New Species to database
-                //var observationUploadKey = Repository.AddSpeciesUpload(originalFile.Name, destinationFilePath);
-                var data = new ReferenceParserService().GetFirstRows(10, destinationFilePath);
-                // Send the Response back
+                // send the response back to EventListener
                 var pageBuilder = new StringBuilder();
                 pageBuilder.Append("<html><head></head>");
-                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}', '*');</script></body></html>", ReferenceUploadErrorString));
+                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:{1}', '*');</script></body></html>", BiodiversityBulkUploadString));
                 return Request.CreateResponse(HttpStatusCode.OK, pageBuilder.ToString(), new PlainTextFormatter());
+
             }
             finally
             {
@@ -282,5 +293,81 @@
                 }
             }
         }
+
+        
+        [HttpGet]
+        [Route("uploads/download")]
+        [IFrameProgressExceptionHandler(DownloadErrorString)]
+        public HttpResponseMessage DownloadFile([FromUri] string fileName)
+        {
+
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                
+                string filePath = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
+                string fullPath = Path.Combine(filePath, fileName);
+
+                if (!System.IO.File.Exists(fullPath))
+                {
+
+                    return new HttpResponseMessage()
+                    {
+                        Content = new StringContent(
+                            "<h3>File seems to be missing or unavailable at this time. Try again later or contact WMIS support.</h3>", Encoding.UTF8, "text/html"
+                        )
+                    };
+                    //throw new HttpResponseException(HttpStatusCode.Moved);
+                }
+                
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    var newFile = String.Concat(DateTime.Now.ToString("yyyyMMddHHmmss"), fileName);
+                    var newFilePath = Path.Combine(filePath, newFile);
+
+                    System.IO.File.Copy(fullPath, newFilePath);
+
+                    var response = new FileHttpResponseMessage(newFilePath);
+                    using (var stream = new FileStream(newFilePath, FileMode.Open))
+                    {
+                        var bytes = new byte[stream.Length];
+                        stream.Read(bytes, 0, bytes.Length);
+                        response.Content = new ByteArrayContent(bytes);
+                    }
+
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = newFile
+                    };
+
+                    return response;
+                }
+                
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.NotFound);
+
+        }
+
+       
+
+        [HttpGet]
+        [Route("uploads")]
+        public Dto.PagedResultset<Models.BulkUploads> GetBulkUploads([FromUri]Dto.PagedDataKeywordRequest str)
+        {
+            return Repository.BiodiversityBulkUploadsGet(str ?? new Dto.PagedDataKeywordRequest());
+        }
+
+
+        [HttpDelete]
+        [Route("species/{speciesId:int}/delete")]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
+        public void DeleteSpecies(int speciesId)
+        {
+            Repository.BiodiversityDelete(speciesId);
+        }
+
+
     }
 }
