@@ -3611,7 +3611,7 @@
                 catch (Exception e)
                 {
 
-                    throw new ArgumentException(e.Message + " AnimalID: " + collaredAnimalId, e.InnerException + " ColalrID Inner: " + collaredAnimalId);
+                    throw new ArgumentException(e.Message + " AnimalID: " + collaredAnimalId, e.InnerException + " CollaredAnimalID Inner: " + collaredAnimalId);
                 }
                
             }

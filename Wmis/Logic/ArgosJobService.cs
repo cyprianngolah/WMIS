@@ -53,7 +53,7 @@
         public void ProcessCollarFiles()
         {
             this.LoadArgosProcessedFiles();
-            this.LoadLotekProcessedFiles();
+            //this.LoadLotekProcessedFiles();
         }
 
         public void ProcessArgosCollars()
@@ -376,7 +376,8 @@
 
             foreach (var collar in collars)
             {
-                var passRows = _repository.ArgosPassGet(new Dto.ArgosPassSearchRequest { CollaredAnimalId = collar.Key, RowCount = 1000 }).Data.OrderBy(p => p.LocationDate);
+                // add ShowGPSOnly = true to only return rows with location class =  'G'. Also reduce the number of rows returned from 1000 to 20
+                var passRows = _repository.ArgosPassGet(new Dto.ArgosPassSearchRequest { CollaredAnimalId = collar.Key, ShowGpsOnly = true, RowCount = 20 }).Data.OrderBy(p => p.LocationDate);
 
                 if (passRows.Count() > 0)
                 {
