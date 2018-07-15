@@ -53,7 +53,7 @@
         public void ProcessCollarFiles()
         {
             this.LoadArgosProcessedFiles();
-            //this.LoadLotekProcessedFiles();
+            //this.LoadLotekProcessedFiles(); Do not load Lotek Files
         }
 
         public void ProcessArgosCollars()
