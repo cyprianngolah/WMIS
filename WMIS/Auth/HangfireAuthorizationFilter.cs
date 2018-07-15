@@ -10,7 +10,8 @@
 		{
 			var context = new OwinContext(owinEnvironment);
 
-			return context.Authentication.User.Identity.IsAuthenticated;
+            return context.Authentication.User.Identity.IsAuthenticated;
+            //return true;
 		}
 	}
 }

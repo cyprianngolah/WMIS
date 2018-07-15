@@ -20,7 +20,7 @@ namespace Wmis
 			var configuration = container.GetInstance<Wmis.Configuration.WebConfiguration>();
 
 			app.UseHangfire(config =>
-				{
+			{
 					// Make the Container available to the Activated Jobs
 					config.UseStructureMapActivator(container);
 
@@ -39,7 +39,7 @@ namespace Wmis
 					});
 
 					config.UseServer();
-				});
+			});
 
 			var jobService = container.GetInstance<ArgosJobService>();
 			jobService.ScheduleArgos();
