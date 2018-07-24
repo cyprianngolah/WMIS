@@ -418,7 +418,7 @@
 
                             // Neba: add another logic to check if difference in days from last location is > 5
                             var daysDifference = span.TotalDays;
-
+                            /*
                             if (daysDifference > 5)
                             {
                                 var comment = pass.Comment;
@@ -430,7 +430,7 @@
                                 _repository.CollarUpdateWarning(collar.Key, collarWarningState.Key, "Location Status", string.Format("Value reported on {0:MM/dd/yyyy} at {1:h:mm:ss tt}", pass.LocationDate, pass.LocationDate), badPassStatus.Name);
 
                                 _repository.ArgosPassUpdate(pass.Key, badPassStatus.Key, comment);
-                            }
+                            }*/
                         }
 
                         lastLocationDate = pass.LocationDate;
