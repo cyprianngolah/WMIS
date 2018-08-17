@@ -15,7 +15,7 @@ wmis.collaredanimal.index = (function($) {
     options.$downloadButton.on("click", function () {
         var keywords = $(options.keywordsSelector).val()
         var region = $(options.region).val()
-        var needingReview = $(options.needingReviewSelector).val()
+        var needingReview = $(options.needingReviewSelector).is(':checked')
         var species = $(options.speciesSelector).val()
         
         var url = `api/collar/download/?startRow=0&rowCount=20000&sortBy=collarStatus.name&sortDirection=asc&subSortBy=&subSortDirection=&i=5&keywords=${keywords}&regionKey=${region}&speciesKey=${species}&needingReview=${needingReview}`
