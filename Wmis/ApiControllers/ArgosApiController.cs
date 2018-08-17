@@ -246,12 +246,13 @@
             header.CreateCell(0).SetCellValue("AnimalId");
             header.CreateCell(1).SetCellValue("ArgosPassId");
             header.CreateCell(2).SetCellValue("LocationDate");
-            header.CreateCell(3).SetCellValue("Latitude");
-            header.CreateCell(4).SetCellValue("Longitude");
-            header.CreateCell(5).SetCellValue("Location Class");
-            header.CreateCell(6).SetCellValue("CEP Radius");
-            header.CreateCell(7).SetCellValue("Status");
-            header.CreateCell(8).SetCellValue("Comment");
+            header.CreateCell(3).SetCellValue("SerialDate");
+            header.CreateCell(4).SetCellValue("Latitude");
+            header.CreateCell(5).SetCellValue("Longitude");
+            header.CreateCell(6).SetCellValue("Location Class");
+            header.CreateCell(7).SetCellValue("CEP Radius");
+            header.CreateCell(8).SetCellValue("Status");
+            header.CreateCell(9).SetCellValue("Comment");
 
             var rowIndex = 1;
 
@@ -261,12 +262,13 @@
                 row.CreateCell(0).SetCellValue(animal.AnimalId);
                 row.CreateCell(1).SetCellValue(data.Key);
                 row.CreateCell(2).SetCellValue(data.LocationDate.ToString());
-                row.CreateCell(3).SetCellValue(data.Latitude);
-                row.CreateCell(4).SetCellValue(data.Longitude);
-                row.CreateCell(5).SetCellValue(data.LocationClass);
-                row.CreateCell(6).SetCellValue(data.CepRadius);
-                row.CreateCell(7).SetCellValue(data.ArgosPassStatus.Name);
-                row.CreateCell(8).SetCellValue(data.Comment);
+                row.CreateCell(3).SetCellValue(data.LocationDate);
+                row.CreateCell(4).SetCellValue(data.Latitude);
+                row.CreateCell(5).SetCellValue(data.Longitude);
+                row.CreateCell(6).SetCellValue(data.LocationClass);
+                row.CreateCell(7).SetCellValue(data.CepRadius);
+                row.CreateCell(8).SetCellValue(data.ArgosPassStatus.Name);
+                row.CreateCell(9).SetCellValue(data.Comment);
                 
                 rowIndex++;
             }
