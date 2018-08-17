@@ -15,24 +15,25 @@
 
 	<script type="text/javascript">
 		$(function() {
-			wmis.project.index.initialize({
-				$newButton: $("#newButton"),
-				$editButton: $("#editButton"),
+            wmis.project.index.initialize({
+                $newButton: $("#newButton"),
+                $editButton: $("#editButton"),
 
-				$projectLead: $("#projectLead"),
-				$projectStatus: $("#projectStatus"),
-				$region: $("#region"),
-				$keywords: $("#keywords"),
-				$searchButton: $("#searchButton"),
+                $projectLead: $("#projectLead"),
+                $projectStatus: $("#projectStatus"),
+                $region: $("#region"),
+                $keywords: $("#keywords"),
+                $searchButton: $("#searchButton"),
 
-				$table: $("#projects"),
-			});
+                $table: $("#projects")
+            });
 		});
 	</script>
 }
 
 <div class="row">
 	<div class="col-md-12 text-right">
+
 		@if (Html.UserIsProjectAdministrator())
 		{
 			<a href="~/Project/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
@@ -47,6 +48,8 @@
 				<span>View</span>
 			}
 		</a>
+
+        <button id="downloadButton" class="btn btn-default" style="margin-bottom: 10px;">Download</button>
 	</div>
 </div>
 

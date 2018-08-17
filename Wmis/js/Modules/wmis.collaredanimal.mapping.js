@@ -113,6 +113,10 @@ wmis.collaredanimal.mapping = (function ($) {
         this.downloadKmlFile = function () {
             window.open("/api/argos/passesKmlFile?startRow=0&rowCount=20000&collaredAnimalId=" + options.collaredAnimalId, '_self');
         }
+        // export as excel
+        this.downloadExcelFile = function () {
+            window.open("/api/argos/passesExcelFile?startRow=0&rowCount=200000&collaredAnimalId=" + options.collaredAnimalId, '_self');
+        }
     }
 
     function loadPassesTable(locationTableModel) {

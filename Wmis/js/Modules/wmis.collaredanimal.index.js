@@ -8,8 +8,20 @@ wmis.collaredanimal.index = (function($) {
 		collarSelector: "#collar",
 	    regionSelector: "#region",
 	    needingReviewSelector: "#needingReview",
-	    speciesSelector: "#targetSpecies"
+        speciesSelector: "#targetSpecies",
+        $downloadButton: $("#downloadButton")
 	};
+
+    options.$downloadButton.on("click", function () {
+        var keywords = $(options.keywordsSelector).val()
+        var region = $(options.region).val()
+        var needingReview = $(options.needingReviewSelector).val()
+        var species = $(options.speciesSelector).val()
+        
+        var url = `api/collar/download/?startRow=0&rowCount=20000&sortBy=collarStatus.name&sortDirection=asc&subSortBy=&subSortDirection=&i=5&keywords=${keywords}&regionKey=${region}&speciesKey=${species}&needingReview=${needingReview}`
+
+        window.open(url, '_blank');
+    });
 
 	var targetSpeciesOptions = {
 	    ajax: {

@@ -22,6 +22,8 @@
     using Wmis.Dto;
     using Wmis.Logic;
     using Wmis.Models;
+    using NPOI.HSSF.UserModel;
+    using System.Net;
 
     [RoutePrefix("api/argos")]
     public class ArgosApiController : BaseApiController
@@ -229,6 +231,79 @@
 
             return response;
         }
+
+        [HttpGet]
+        [Route("passesExcelFile")]
+        public HttpResponseMessage DownloadCollaredAnimals([FromUri]ArgosPassSearchRequest apsr)
+        {
+            var passes = Repository.ArgosPassGet(apsr);
+            var animal = Repository.CollarGet(apsr.CollaredAnimalId);
+            
+            var workbook = new HSSFWorkbook();
+            var sheet = workbook.CreateSheet("Location Data");
+
+            var header = sheet.CreateRow(0);
+            header.CreateCell(0).SetCellValue("AnimalId");
+            header.CreateCell(1).SetCellValue("ArgosPassId");
+            header.CreateCell(2).SetCellValue("LocationDate");
+            header.CreateCell(3).SetCellValue("Latitude");
+            header.CreateCell(4).SetCellValue("Longitude");
+            header.CreateCell(5).SetCellValue("Location Class");
+            header.CreateCell(6).SetCellValue("CEP Radius");
+            header.CreateCell(7).SetCellValue("Status");
+            header.CreateCell(8).SetCellValue("Comment");
+
+            var rowIndex = 1;
+
+            foreach (var data in passes.Data)
+            {
+                var row = sheet.CreateRow(rowIndex);
+                row.CreateCell(0).SetCellValue(animal.AnimalId);
+                row.CreateCell(1).SetCellValue(data.Key);
+                row.CreateCell(2).SetCellValue(data.LocationDate.ToString());
+                row.CreateCell(3).SetCellValue(data.Latitude);
+                row.CreateCell(4).SetCellValue(data.Longitude);
+                row.CreateCell(5).SetCellValue(data.LocationClass);
+                row.CreateCell(6).SetCellValue(data.CepRadius);
+                row.CreateCell(7).SetCellValue(data.ArgosPassStatus.Name);
+                row.CreateCell(8).SetCellValue(data.Comment);
+                
+                rowIndex++;
+            }
+
+            var directoryName = Path.Combine(Path.GetTempPath(), "WMIS");
+            string strFile = "ArgosPasses_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls";
+            string fullPath = Path.Combine(directoryName, strFile);
+
+            if (!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
+
+            using (var fileStream = System.IO.File.Create(fullPath))
+            {
+                workbook.Write(fileStream);
+            }
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                response.Content = new StreamContent(stream);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = strFile
+                };
+
+                return response;
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.NotFound);
+
+
+        }
+
 
         [HttpPost]
         [Route("run/{collaredAnimalId:int?}")]
