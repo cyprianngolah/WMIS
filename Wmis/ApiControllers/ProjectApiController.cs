@@ -4,6 +4,10 @@
     using System.Linq;
     using System.Web.Http;
     using Configuration;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.IO;
+    using NPOI.HSSF.UserModel;
 
     using Wmis.Auth;
     using Wmis.Dto;
@@ -28,6 +32,79 @@
         public Dto.PagedResultset<Models.Project> SearchProjects([FromUri]Dto.ProjectRequest pr)
         {
             return Repository.ProjectSearch(pr);
+        }
+
+        [HttpGet]
+        [Route("download")]
+        public HttpResponseMessage DownloadProjects([FromUri]ProjectRequest pr)
+        {
+            var lstData = Repository.ProjectDownload(pr);
+
+            var workbook = new HSSFWorkbook();
+            var sheet = workbook.CreateSheet("Projects");
+
+            var header = sheet.CreateRow(0);
+            header.CreateCell(0).SetCellValue("Project Number");
+            header.CreateCell(1).SetCellValue("Title");
+            header.CreateCell(2).SetCellValue("Region");
+            header.CreateCell(3).SetCellValue("Project Lead");
+            header.CreateCell(4).SetCellValue("Start Date");
+            header.CreateCell(5).SetCellValue("Last Updated");
+            header.CreateCell(6).SetCellValue("Status");
+            header.CreateCell(7).SetCellValue("Description");
+            header.CreateCell(8).SetCellValue("Methods");
+            header.CreateCell(9).SetCellValue("Collar Count");
+
+            var rowIndex = 1;
+
+            foreach(var data in lstData.Data)
+            {
+                var row = sheet.CreateRow(rowIndex);
+                row.CreateCell(0).SetCellValue(data.ProjectNumber);
+                row.CreateCell(1).SetCellValue(data.Name);
+                row.CreateCell(2).SetCellValue(data.LeadRegion.Name);
+                row.CreateCell(3).SetCellValue(data.ProjectLead.Name);
+                row.CreateCell(4).SetCellValue(data.StartDate.ToString());
+                row.CreateCell(5).SetCellValue(data.LastUpdated.ToString());
+                row.CreateCell(6).SetCellValue(data.Status.Name);
+                row.CreateCell(7).SetCellValue(data.Description);
+                row.CreateCell(8).SetCellValue(data.Methods);
+                row.CreateCell(9).SetCellValue(data.CollarCount);
+
+                rowIndex++;
+            }
+
+            var directoryName = Path.Combine(Path.GetTempPath(), "WMIS");
+            string strFile = "Projects_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls";
+            string fullPath = Path.Combine(directoryName, strFile);
+
+            if(!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
+
+            using (var fileStream = System.IO.File.Create(fullPath))
+            {
+                workbook.Write(fileStream);
+            }
+
+            if(System.IO.File.Exists(fullPath))
+            {
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                response.Content = new StreamContent(stream);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = strFile
+                };
+
+                return response;
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.NotFound);
+            
+
         }
 
         [HttpGet]
@@ -76,6 +153,80 @@
         public Dto.PagedResultset<Models.ProjectSurvey> GetSurveys([FromUri]Dto.ProjectSurveyRequest psr)
         {
             return Repository.ProjectSurveyGet(psr);
+        }
+
+        [HttpGet]
+        [Route("{projectKey:int}/surveys/download")]
+        public HttpResponseMessage DownloadSurveys([FromUri]ProjectSurveyRequest psr)
+        {
+            var lstData = Repository.ProjectSurveyGet(psr);
+
+
+            var workbook = new HSSFWorkbook();
+            var sheet = workbook.CreateSheet("Surveys");
+
+            var header = sheet.CreateRow(0);
+            header.CreateCell(0).SetCellValue("Survey Type");
+            header.CreateCell(1).SetCellValue("Target Species");
+            header.CreateCell(2).SetCellValue("Common Name");
+            header.CreateCell(3).SetCellValue("Start Date");
+            header.CreateCell(4).SetCellValue("Last Updated");
+            header.CreateCell(5).SetCellValue("No. of Observations");
+            header.CreateCell(6).SetCellValue("Description");
+            header.CreateCell(7).SetCellValue("Method");
+            header.CreateCell(8).SetCellValue("Project ID");
+            header.CreateCell(9).SetCellValue("Survey Template");
+
+            var rowIndex = 1;
+
+            foreach (var data in lstData.Data)
+            {
+                var row = sheet.CreateRow(rowIndex);
+                row.CreateCell(0).SetCellValue(data.SurveyType.Name);
+                row.CreateCell(1).SetCellValue(data.TargetSpecies.Name);
+                row.CreateCell(2).SetCellValue(data.TargetSpecies.CommonName);
+                row.CreateCell(3).SetCellValue(data.StartDate.ToString());
+                row.CreateCell(4).SetCellValue(data.LastUpdated.ToString());
+                row.CreateCell(5).SetCellValue(data.ObservationCount);
+                row.CreateCell(6).SetCellValue(data.Description);
+                row.CreateCell(7).SetCellValue(data.Method);
+                row.CreateCell(8).SetCellValue(data.ProjectKey);
+                row.CreateCell(9).SetCellValue(data.Template.Name);
+
+                rowIndex++;
+            }
+
+            var directoryName = Path.Combine(Path.GetTempPath(), "WMIS");
+            string strFile = "Surveys_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls";
+            string fullPath = Path.Combine(directoryName, strFile);
+
+            if (!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
+
+            using (var fileStream = System.IO.File.Create(fullPath))
+            {
+                workbook.Write(fileStream);
+            }
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                response.Content = new StreamContent(stream);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = strFile
+                };
+
+                return response;
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.NotFound);
+
+
         }
 
         [HttpGet]

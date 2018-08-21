@@ -1536,6 +1536,41 @@
             }
         }
 
+        public PagedResultset<Project> ProjectDownload(ProjectRequest sr)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = 0,
+                    p_rowCount = 1000,
+                    p_sortBy = "projectNumber",
+                    p_sortDirection = "asc",
+                    p_projectLeadId = sr.ProjectLead,
+                    p_projectStatusId = sr.ProjectStatus,
+                    p_leadRegionId = sr.Region,
+                    p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
+                };
+
+                var pr = new Dto.PagedResultset<Project> { DataRequest = sr };
+                pr.Data = c.Query<int, Project, LeadRegion, Person, ProjectStatus, Project>(
+                    PROJECT_SEARCH,
+                    (count, p, lr, lead, status) =>
+                    {
+                        pr.ResultCount = count;
+                        p.LeadRegion = lr ?? new LeadRegion();
+                        p.ProjectLead = lead ?? new Person();
+                        p.Status = status ?? new ProjectStatus();
+                        return p;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+
+                return pr;
+            }
+        }
+
         #endregion Project
 
         #region Project Status
@@ -1643,7 +1678,7 @@
                 return pr;
             }
         }
-
+        
         public ProjectSurvey ProjectSurveyGet(int surveyKey)
         {
             using (var c = NewWmisConnection)

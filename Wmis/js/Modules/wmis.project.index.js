@@ -3,7 +3,8 @@ wmis.project.index = (function ($) {
 	var dataTable;
 	var options = {
 		$newButton: $("#newButton"),
-		$editButton: $("#editButton"),
+        $editButton: $("#editButton"),
+        $downloadButton: $("#downloadButton"),
 		
 		$projectLead: $("#projectLead"),
 		$projectStatus: $("#projectStatus"),
@@ -13,6 +14,18 @@ wmis.project.index = (function ($) {
 
 		$table: $("#projects"),
 	};
+
+    options.$downloadButton.on("click", function () {
+        var keywords = options.$keywords.val()
+        var pLead = options.$projectLead.val()
+        var pStatus = options.$projectStatus.val()
+        var region = options.$region.val()
+        var url = `/api/project/download/?projectLead=${pLead}&projectStatus=${pStatus}&region=${region}&keywords=${keywords}`
+
+        window.open(url, '_blank');
+    });
+
+
 
 	function initialize(initOptions) {
 		$.extend(options, initOptions);
@@ -46,7 +59,7 @@ wmis.project.index = (function ($) {
 			"serverSide": true,
 			"ajaxSource": "/api/project/",
 			"pagingType": "bootstrap",
-			"dom": '<"top">rt<"bottom"ip><"clear">',
+            "dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
 				{ "data": "projectNumber" },
 				{ "data": "name" },
@@ -80,7 +93,7 @@ wmis.project.index = (function ($) {
 					var sortedColumnIndex = settings.aaSorting[0][0];
 					sortedColumnName = settings.aoColumns[sortedColumnIndex].mData;
 				}
-
+                
 				// Parameters that are passed during the request to the webservice
 				// We're doing some transforms here because I don't want to have to write
 				// DataTable specific logic into the Web Api
@@ -96,7 +109,7 @@ wmis.project.index = (function ($) {
 					projectLead: options.$projectLead.val(),
 					projectStatus: options.$projectStatus.val(),
 					region: options.$region.val(),
-					keywords: options.$keywords.val()
+                    keywords: options.$keywords.val()
 				};
 
 				$.getJSON(source, parameters, function (json) {
@@ -107,7 +120,8 @@ wmis.project.index = (function ($) {
 					json.recordsTotal = json.resultCount;
 					json.recordsFiltered = json.resultCount;
 					callback(json);
-				}).fail(wmis.global.ajaxErrorHandler);
+                }).fail(wmis.global.ajaxErrorHandler);
+
 			},
 			"fnDrawCallback": function () {
 				options.$table.$('tr.info').removeClass('info');
@@ -135,7 +149,8 @@ wmis.project.index = (function ($) {
 					}
 				});
 			}
-		});
+        });
+        
 	}
 
 	return {

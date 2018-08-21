@@ -14,9 +14,11 @@ wmis.project.edit = (function ($) {
         $siteTable: $("#sitesTable"),
         $collarTab: $('a[href="#collarsTab"]'),
         $collarTable: $("#collars"),
-        surveyFilter: "#surveyFilter"
-    };
+        surveyFilter: "#surveyFilter",
 
+        $downloadButton: $("#downloadButton")
+    };
+    
     function selectCollaborator(currentCollaboratorIds, callback) {
         var viewModel = new SelectCollaboratorModel(currentCollaboratorIds);
 
@@ -604,6 +606,15 @@ wmis.project.edit = (function ($) {
         }).done();
 
     }
+
+
+    options.$downloadButton.on("click", function (e) {
+        e.preventDefault()
+        var surveyTypeId = $("#surveyTypeKey").val()
+        
+        var url = `/api/project/${options.projectKey}/surveys/download/?startRow=0&rowCount=1000&sortBy=surveyType&sortDirection=asc&surveyTypeKey=${surveyTypeId}`
+        window.open(url, '_blank');
+    });
 
     return {
         initialize: initialize
