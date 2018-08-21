@@ -51,19 +51,18 @@
             var header = sheet.CreateRow(0);
             header.CreateCell(0).SetCellValue("Animal ID");
             header.CreateCell(1).SetCellValue("PTT");
-            header.CreateCell(2).SetCellValue("CTN");
-            header.CreateCell(3).SetCellValue("Collar State");
-            header.CreateCell(4).SetCellValue("Collar Status");
-            header.CreateCell(5).SetCellValue("Inactive Date");
-            header.CreateCell(6).SetCellValue("Animal Status");
-            header.CreateCell(7).SetCellValue("VHF Frequency");
-            header.CreateCell(8).SetCellValue("Sex");
-            header.CreateCell(9).SetCellValue("Herd");
-            header.CreateCell(10).SetCellValue("Collar Type");
-            header.CreateCell(11).SetCellValue("Region");
-            header.CreateCell(12).SetCellValue("Job Number");
-            header.CreateCell(13).SetCellValue("PTT Returned to CLS");
-            header.CreateCell(14).SetCellValue("Comments");
+            header.CreateCell(2).SetCellValue("Collar State");
+            header.CreateCell(3).SetCellValue("Collar Status");
+            header.CreateCell(4).SetCellValue("Inactive Date");
+            header.CreateCell(5).SetCellValue("Animal Status");
+            header.CreateCell(6).SetCellValue("VHF Frequency");
+            header.CreateCell(7).SetCellValue("Sex");
+            header.CreateCell(8).SetCellValue("Herd");
+            header.CreateCell(9).SetCellValue("Collar Type");
+            header.CreateCell(10).SetCellValue("Region");
+            header.CreateCell(11).SetCellValue("Job Number");
+            header.CreateCell(12).SetCellValue("PTT Returned to CLS");
+            header.CreateCell(13).SetCellValue("Comments");
 
             var rowIndex = 1;
 
@@ -72,19 +71,18 @@
                 var row = sheet.CreateRow(rowIndex);
                 row.CreateCell(0).SetCellValue(data.AnimalId);
                 row.CreateCell(1).SetCellValue(data.SubscriptionId);
-                row.CreateCell(2).SetCellValue(data.Key);
-                row.CreateCell(3).SetCellValue(data.CollarState.Name);
-                row.CreateCell(4).SetCellValue(data.CollarStatus.Name);
-                row.CreateCell(5).SetCellValue(data.InactiveDate.ToString());
-                row.CreateCell(6).SetCellValue(data.AnimalStatus.Name);
-                row.CreateCell(7).SetCellValue(data.VhfFrequency);
-                row.CreateCell(8).SetCellValue(data.AnimalSex.Name);
-                row.CreateCell(9).SetCellValue(data.HerdPopulation.Name);
-                row.CreateCell(10).SetCellValue(data.CollarType.Name);
-                row.CreateCell(11).SetCellValue(data.CollarRegion.Name);
-                row.CreateCell(12).SetCellValue(data.JobNumber);
-                row.CreateCell(13).SetCellValue(data.HasPttBeenReturned);
-                row.CreateCell(14).SetCellValue(data.Comments);
+                row.CreateCell(2).SetCellValue(data.CollarState.Name);
+                row.CreateCell(3).SetCellValue(data.CollarStatus.Name);
+                row.CreateCell(4).SetCellValue(data.InactiveDate.ToString());
+                row.CreateCell(5).SetCellValue(data.AnimalStatus.Name);
+                row.CreateCell(6).SetCellValue(data.VhfFrequency);
+                row.CreateCell(7).SetCellValue(data.AnimalSex.Name);
+                row.CreateCell(8).SetCellValue(data.HerdPopulation.Name);
+                row.CreateCell(9).SetCellValue(data.CollarType.Name);
+                row.CreateCell(10).SetCellValue(data.CollarRegion.Name);
+                row.CreateCell(11).SetCellValue(data.JobNumber);
+                row.CreateCell(12).SetCellValue(data.HasPttBeenReturned);
+                row.CreateCell(13).SetCellValue(data.Comments);
 
                 rowIndex++;
             }

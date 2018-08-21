@@ -80,7 +80,7 @@ wmis.collaredanimal.index = (function($) {
 			"columns": [
 				{ "data": "animalId" },
 				{ "data": "subscriptionId" },
-                { "data": "key" },
+                //{ "data": "key" },
                 { "data": "collarState.name" },
                 { "data": "collarStatus.name" },
                 {
@@ -98,9 +98,9 @@ wmis.collaredanimal.index = (function($) {
                 { "data": "vhfFrequency" },
                 { "data": "animalSex.name" },
                 { "data": "herdPopulation.name" },
-			    { "data": "collarType.name" },
-				{ "data": "project.key" },
-				{ "data": "project.name" }
+			    { "data": "collarType.name" }
+				//{ "data": "project.key" },
+				//{ "data": "project.name" }
 			],
 			"fnServerData": function (source, data, callback, settings) {
 				var sortDirection = null;

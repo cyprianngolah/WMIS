@@ -240,6 +240,7 @@
             var animal = Repository.CollarGet(apsr.CollaredAnimalId);
             
             var workbook = new HSSFWorkbook();
+
             var sheet = workbook.CreateSheet("Location Data");
 
             var header = sheet.CreateRow(0);
@@ -253,6 +254,7 @@
             header.CreateCell(7).SetCellValue("CEP Radius");
             header.CreateCell(8).SetCellValue("Status");
             header.CreateCell(9).SetCellValue("Comment");
+            
 
             var rowIndex = 1;
 
