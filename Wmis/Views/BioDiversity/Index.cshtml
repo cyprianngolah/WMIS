@@ -28,6 +28,7 @@
         </div>
 
 		<div class="col-md-12 text-right">
+            <button id="downloadButton" class="btn btn-default" style="margin-bottom: 10px;">Download</button>
 			@if (Html.UserIsBiodiversityAdministrator())
             {
                 <button data-bind="click: removeSpecies" id="deleteSpeciesButton" class="btn btn-default pull-left disabled" style="margin-bottom: 10px;">Delete Selected</button>
@@ -45,6 +46,7 @@
 				}
 			</a>
 			<a href="/BioDiversity/Decision" id="decisionButton" class="btn btn-default disabled" style="margin-bottom: 10px;">Decision</a>
+            
 		</div>
 	</div>
 
@@ -98,7 +100,7 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<table id="biodiversity" class="table">
+			<table id="biodiversity" class="table table-condensed table-striped table-hover">
 				<thead>
 					<tr>
 						<th>Group</th>
