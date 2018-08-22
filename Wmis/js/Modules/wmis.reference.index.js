@@ -2,8 +2,20 @@
 wmis.reference.index = (function ($) {
 	var referenceTable;
 	var options = {
-	    yearSelector: "#yearFilter"
+        yearSelector: "#yearFilter",
+        keywordsSelector: "#keywords",
+        downloadButtonSelector: "#downloadButton"
 	};
+
+    $(options.downloadButtonSelector).on("click", function () {
+        // Custom search data
+        yearFilter = $(options.yearSelector).val(),
+        keywords = $(options.keywordsSelector).val()
+
+        var url = `api/references/download/?startRow=0&rowCount=100000&sortBy=key&sortDirection=asc&keywords=${keywords}&yearFilter=${yearFilter}`
+
+        window.open(url, '_blank');
+    });
 
 	function initDataTable() {
 	    var parameters;

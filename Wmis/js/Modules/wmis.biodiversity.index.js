@@ -13,8 +13,21 @@ wmis.biodiversity.index = (function($) {
 		familySelector: "#family",
 		keywordsSelector: "#keywords",
         biodiversitySelector: "#biodiversity",
-        deleteButtonSelector: "#deleteSpeciesButton"
+        deleteButtonSelector: "#deleteSpeciesButton",
+        downloadButtonSelector: "#downloadButton"
     };
+
+    $(options.downloadButtonSelector).on("click", function () {
+        // Custom search data
+        groupKey = $(options.groupSelector).val(),
+        orderKey = $(options.orderSelector).val(),
+        familyKey = $(options.familySelector).val(),
+        keywords = $(options.keywordsSelector).val()
+
+        var url = `api/biodiversity/download/?startRow=0&rowCount=100000&sortBy=name&sortDirection=asc&keywords=${keywords}&familyKey=${familyKey}&groupKey=${groupKey}&orderKey=${orderKey}`
+
+        window.open(url, '_blank');
+    });
 
 
     function BiodiversityModel() {
@@ -36,7 +49,6 @@ wmis.biodiversity.index = (function($) {
                     }).always(function () {
                         wmis.global.hideWaitingScreen();
                     }).fail(function (f) {
-                        console.log(f)
                         $('#deleteErrorAlert').removeClass('hidden');
                         $('#deleteError').text(f.responseJSON.exceptionMessage);
                         //wmis.global.ajaxErrorHandler(f);
