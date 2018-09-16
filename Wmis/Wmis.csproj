@@ -597,6 +597,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Files\BiodiversityBulkUploadTemplate.xlsx" />
+    <Content Include="Environments\environment.laptop.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />

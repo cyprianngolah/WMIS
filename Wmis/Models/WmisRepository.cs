@@ -1935,7 +1935,8 @@
                     p_surveyTemplateId = request.SurveyTemplateId == 0 ? null : request.SurveyTemplateId,
                     p_name = request.Name,
                     //p_createdBy = createdBy
-                    p_createdBy = "james"
+                    //p_createdBy = "james"
+                    p_createdBy = Environment.UserName
                 };
 
                 return c.Query<int>(SURVEYTEMPLATE_SAVE, param, commandType: CommandType.StoredProcedure).Single();
@@ -3419,7 +3420,19 @@
                     p_name = request.Name,
                     p_projectKey = request.ProjectKey,
                     p_latitude = request.Latitude,
-                    p_longitude = request.Longitude
+                    p_longitude = request.Longitude,
+                    p_dateEstablished = request.DateEstablished,
+                    p_aspect = request.Aspect,
+                    p_cliffHeight = request.CliffHeight,
+                    p_comments = request.Comments,
+                    p_habitat = request.Habitat,
+                    p_initialObserver = request.InitialObserver,
+                    p_map = request.Map,
+                    p_nearestCommunity = request.NearestCommunity,
+                    p_nestHeight = request.NestHeight,
+                    p_nestType = request.NestType,
+                    p_reference = request.Reference,
+                    p_reliability = request.Reliability
                 };
 
                 c.Execute(SITE_SAVE, param, commandType: CommandType.StoredProcedure);

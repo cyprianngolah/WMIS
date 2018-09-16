@@ -14,7 +14,19 @@ AS
 		t.SiteNumber,
 		t.Name,
 		t.Latitude,
-		t.Longitude
+		t.Longitude,
+		t.DateEstablished,
+		t.Aspect,
+		t.CliffHeight,
+		t.Comments,
+		t.Habitat,
+		t.InitialObserver,
+		t.Map,
+		t.NearestCommunity,
+		t.NestHeight,
+		t.NestType,
+		t.Reference,
+		t.Reliability
 	FROM
 		dbo.Sites t
 	WHERE

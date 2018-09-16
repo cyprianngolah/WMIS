@@ -1,50 +1,136 @@
 ﻿@using Wmis.Extensions
 
-<div class="row">
-    <div class="col-md-12 text-right">
-        <a class="btn btn-default" data-bind="click: $root.navigateToProject">
+@section Styles {
+    @Html.Raw(Styles.Render("~/bundles/datePickerCss"))
+}
+@section Scripts{
+    @Html.Raw(Scripts.Render("~/bundles/datePicker"))
+}
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a class="btn btn-default" data-bind="click: $root.navigateToProject">
+                @if (Html.UserIsProjectAdministrator())
+                {
+                    <span>Cancel</span>
+                }
+                else
+                {
+                    <span>Back</span>
+                }
+            </a>
             @if (Html.UserIsProjectAdministrator())
             {
-                <span>Cancel</span>
+                <button type="submit" class="btn btn-primary" data-bind="enable: canSave, click: save">Save</button>
             }
-            else
-            {
-                <span>Back</span>
-            }
-        </a>
-        @if (Html.UserIsProjectAdministrator())
-        {
-            <button type="submit" class="btn btn-primary" data-bind="enable: canSave, click: save">Save</button>
-        }
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <form role="form">
-            <div class="form-group" data-bind="visible: key() > 0">
-                <label for="siteId" class="control-label">Site Id*</label>
-                <input type="text" class="form-control" id="siteId" name="siteId" data-bind="value: key" disabled="disabled" readonly="readonly">
-            </div>
-            <div class="form-group">
-                <label for="sitenumber" class="control-label">Site Number</label>
-                <input type="text" class="form-control" id="sitenumber" name="sitenumber" data-bind="value: siteNumber, valueUpdate: 'keyup'">
-            </div>
-            <div class="form-group">
-                <label for="name" class="control-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
-            </div>
-            <div class="form-group">
-                <label for="latitude" class="control-label">Latitude <small class="error-text">*This must be a number between -90.0 and 90.0</small></label>
-                <input type="text" class="form-control" id="latitude" name="latitude" data-bind="value: latitude, valueUpdate: 'keyup'">
-            </div>
-            <div class="form-group">
-                <label for="longitude" class="control-label">Longitude <small class="error-text">*This must be a number between -180.0 and 180.0</small></label>
-                <input type="text" class="form-control" id="longitude" name="longitude" data-bind="value: longitude, valueUpdate: 'keyup'">
-            </div>
-            <div class="form-group" data-bind="visible: key() > 0">
-                <p>* Use this value in the SiteId column for Observation Uploads</p>
-            </div>
-        </form>
+    <div class="rowx clearfix" style="margin-top:15px;">
+        <div class="col-md-12x">
+            <form role="form">
+
+                <div class="form-group row">
+                    <label for="sitenumber" class="col-md-1 control-label text-right">Site Number</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="sitenumber" name="sitenumber" data-bind="value: siteNumber, valueUpdate: 'keyup'">
+                    </div>
+
+                    <label for="name" class="col-md-1 control-label text-right">Name</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="latitude" class="col-md-1 control-label text-right">Latitude <small class="error-text">*This must be a number between -90.0 and 90.0</small></label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="latitude" name="latitude" data-bind="value: latitude, valueUpdate: 'keyup'">
+                    </div>
+
+                    <label for="longitude" class="col-md-1 control-label text-right">Longitude <small class="error-text">*This must be a number between -90.0 and 90.0</small></label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="longitude" name="longitude" data-bind="value: longitude, valueUpdate: 'keyup'">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="dateEstablished" class="col-md-1 control-label text-right">Date Established</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="dateEstablished" name="dateEstablished" data-bind="value: dateEstablished, valueUpdate: 'keyup'">
+                    </div>
+
+                    <label for="aspect" class="col-md-1 control-label text-right">Aspect</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="aspect" name="aspect" data-bind="value: aspect, valueUpdate: 'keyup'">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="cliffHeight" class="col-md-1 control-label text-right">Cliff Height</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="cliffHeight" name="cliffHeight" data-bind="value: cliffHeight, valueUpdate: 'keyup'">
+                    </div>
+
+                    <label for="habitat" class="col-md-1 control-label text-right">Habitat</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="habitat" name="habitat" data-bind="value: habitat, valueUpdate: 'keyup'">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="initialObserver" class="col-md-1 control-label text-right">Initial Observer</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="initialObserver" name="initialObserver" data-bind="value: initialObserver, valueUpdate: 'keyup'">
+                    </div>
+
+                    <label for="map" class="col-md-1 control-label text-right">Map</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="map" name="map" data-bind="value: map, valueUpdate: 'keyup'">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="nearestCommunity" class="col-md-1 control-label text-right">Nearest Community</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="nearestCommunity" name="nearestCommunity" data-bind="value: nearestCommunity, valueUpdate: 'keyup'">
+                    </div>
+
+                    <label for="nestHeight" class="col-md-1 control-label text-right">Nest Height</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="nestHeight" name="nestHeight" data-bind="value: nestHeight, valueUpdate: 'keyup'">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="nestType" class="col-md-1 control-label text-right">Nest Type</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="nestType" name="nestType" data-bind="value: nestType, valueUpdate: 'keyup'">
+                    </div>
+
+                    <label for="reference" class="col-md-1 control-label text-right">Reference</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="reference" name="reference" data-bind="value: reference, valueUpdate: 'keyup'">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="name" class="col-md-1 control-label text-right">Reliability</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="reliability" name="reliability" data-bind="value: reliability, valueUpdate: 'keyup'">
+                    </div>
+
+                    <label for="name" class="col-md-1 control-label text-right">Comments</label>
+                    <div class="col-md-5">
+                        <textarea rows="3" id="comments" name="comments" class="form-control" data-bind="value: comments, valueUpdate: 'keyup'"></textarea>
+                    </div>
+                </div>
+
+                    <!-------------------------------------->
+                    <!--
+    <div class="form-group" data-bind="visible: key() > 0">
+        <p>* Use this value in the SiteId column for Observation Uploads</p>
     </div>
-</div>
+    -->
+</form>
+        </div>
+    </div>
