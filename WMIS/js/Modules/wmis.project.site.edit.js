@@ -16,6 +16,18 @@ wmis.project.site.edit = (function ($) {
         this.latitude = ko.observable("");
         this.longitude = ko.observable("");
         this.projectName = ko.observable("");
+        this.dateEstablished = ko.observable("");
+        this.aspect = ko.observable("");
+        this.cliffHeight = ko.observable("");
+        this.comments = ko.observable("");
+        this.habitat = ko.observable("");
+        this.initialObserver = ko.observable("");
+        this.map = ko.observable("");
+        this.nearestCommunity = ko.observable("");
+        this.nestHeight = ko.observable("");
+        this.nestType = ko.observable("");
+        this.reference = ko.observable("");
+        this.reliability = ko.observable("");
 
         this.canSave = ko.computed(function () {
             var showErrors = false;
@@ -41,6 +53,7 @@ wmis.project.site.edit = (function ($) {
                 showErrors = true;
             }
 
+
             return !showErrors;
         });
 
@@ -54,6 +67,18 @@ wmis.project.site.edit = (function ($) {
                     self.siteNumber(d.siteNumber);
                     self.latitude(d.latitude);
                     self.longitude(d.longitude);
+                    self.dateEstablished(d.dateEstablished);
+                    self.aspect(d.aspect);
+                    self.cliffHeight(d.cliffHeight);
+                    self.comments(d.comments);
+                    self.habitat(d.habitat);
+                    self.initialObserver(d.initialObserver);
+                    self.map(d.map);
+                    self.nearestCommunity(d.nearestCommunity);
+                    self.nestHeight(d.nestHeight);
+                    self.nestType(d.nestType);
+                    self.reference(d.reference);
+                    self.reliability(d.reliability);
 
                     if (self.projectName() == "")
                     {

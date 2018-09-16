@@ -401,9 +401,19 @@ wmis.project.edit = (function ($) {
             "pagingType": "bootstrap",
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
-				{ "data": "key" },
 				{ "data": "siteNumber" },
-				{ "data": "name" }
+                { "data": "name" },
+                { "data": "latitude" },
+                { "data": "longitude"},
+                {
+                    "data": "dateEstablished",
+                    "render": function (data, type, row) {
+                        if (typeof (data) != 'undefined' && data != null)
+                            return moment(data, moment.ISO_8601).format('L');
+                        else
+                            return "";
+                    }
+                }
             ],
             "fnServerData": function (source, data, callback, settings) {
                 var sortDirection = null;
