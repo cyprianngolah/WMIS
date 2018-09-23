@@ -149,6 +149,7 @@ wmis.collaredanimal.editmodals = (function ($) {
     }
 
     function ReviewCollarDataPointModel(point, argosPassStatuses) {
+        
         var self = this;
         this.latitude = 'Latitude: ' + point.latitude;
         this.longitude = 'Longitude: ' + point.longitude;
@@ -160,6 +161,10 @@ wmis.collaredanimal.editmodals = (function ($) {
         });
         this.comment = ko.observable(point.comment);
         this.argosPassStatuses = argosPassStatuses;
+        this.isLastValidLocation = point.comment == 'Last valid location';
+
+        console.log(this.isLastValidLocation);
+
         this.saveAllowed = ko.observable(true);
         this.save = function () {
             self.modal.close({

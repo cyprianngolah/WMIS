@@ -9,7 +9,7 @@
 		@RenderSection("Styles", false)
 	</head>
 	<body>
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row clearfix">
 				<div class="navbar navbar-inverse navbar-fixed-top">
 					<div class="navbar-header">
@@ -21,9 +21,9 @@
 						@Html.ActionLink("WMIS", "Index", "Home", null, new { @class = "navbar-brand" })
 					</div>
 					<div class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav">
                             @Html.MenuLink("Projects", "Index", "Project")
-							@Html.MenuLink("Collar", "Index", "CollaredAnimal")
+                            @Html.MenuLink("Collar", "Index", "CollaredAnimal")
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Biodiversity<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -39,10 +39,10 @@
                                     @Html.MenuLink("Biodiversity Bulk Upload", "Upload", "BioDiversity")
                                 </ul>
                             </li>
-                            @Html.MenuLink("Search", "Index", "Search")
+                            @*@Html.MenuLink("Search", "Index", "Search")*@
                             @Html.MenuLink("Reports", "Index", "Reports")
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     @if (Html.UserInAnyAdministratorRole())
                                     {
@@ -55,18 +55,19 @@
                                     }
                                     @Html.MenuLink("Help Links", "Index", "Help")
                                 </ul>
-							</li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    @if (Request.IsAuthenticated)
-                                    {
-                                        @Html.HelpLinks()
-                                    }
-                                </ul>
-
                             </li>
-						</ul>
+                            @*<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            @Html.HelpLinks()
+                                        }
+                                    </ul>
+
+                                </li>*@
+
+                        </ul>
 					</div>
 				</div>
 			</div>

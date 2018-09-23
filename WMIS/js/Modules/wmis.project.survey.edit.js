@@ -452,7 +452,9 @@ wmis.project.survey.edit = (function ($) {
 	    },
 	};
 
-	function ObservationDataPointViewModel(point, argosPassStatuses) {
+    function ObservationDataPointViewModel(point, argosPassStatuses) {
+        console.log(point);
+
 	    var self = this;
 	    this.latitude = 'Latitude: ' + point.latitude;
 	    this.longitude = 'Longitude: ' + point.longitude;
@@ -488,9 +490,12 @@ wmis.project.survey.edit = (function ($) {
 	    }
 	};
 
-	function reviewObservationDataPoint(observationDataPoint, passStatuses, callback, alwaysCallback) {
-	    var viewModel = new ObservationDataPointViewModel(observationDataPoint, passStatuses);
+    function reviewObservationDataPoint(observationDataPoint, passStatuses, callback, alwaysCallback) {
 
+        //console.log(observationDataPoint);
+
+	    var viewModel = new ObservationDataPointViewModel(observationDataPoint, passStatuses);
+        
 	    wmis.global.showModal({
 	        viewModel: viewModel,
 	        context: this,
