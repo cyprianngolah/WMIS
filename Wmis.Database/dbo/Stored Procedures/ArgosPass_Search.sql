@@ -18,6 +18,7 @@ AS
 		ap.CepRadius,
 		ap.Comment,
 		ap.ManualQA,
+		ap.IsLastValidLocation,
 		argosPassStatus.ArgosPassStatusId as [Key],
 		argosPassStatus.Name,
 		argosPassStatus.isRejected

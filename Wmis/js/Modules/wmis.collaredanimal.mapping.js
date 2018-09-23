@@ -14,7 +14,8 @@ wmis.collaredanimal.mapping = (function ($) {
             data: JSON.stringify({
                 argosPassId: pass.argosPassId,
                 argosPassStatusId: pass.argosPassStatusId,
-                comment: pass.comment
+                comment: pass.comment,
+                isLastValidLocation: pass.isLastValidLocation
             })
         }).done(function() {
             $("#locationTable").DataTable().ajax.reload(null, false);
@@ -64,12 +65,13 @@ wmis.collaredanimal.mapping = (function ($) {
             self.selectedPass(pass);
         }
 
-        this.reviewPass = function(pass) {
+        this.reviewPass = function (pass) {
             self.selectedPass(pass);
+            
             wmis.collaredanimal.editmodals.reviewCollarDataPoint(
                 pass,
                 self.passStatuses,
-                function(updatedPass) {
+                function (updatedPass) {
                     saveArgosPass(updatedPass);
                 },
                 function() {
@@ -159,6 +161,12 @@ wmis.collaredanimal.mapping = (function ($) {
                 { "data": "latitude" },
                 { "data": "longitude" },
                 { "data": "locationClass" },
+                {
+                    "data": "isLastValidLocation",
+                    render: function (data, type, row) {
+                        return data ? 'Yes' : '';
+                    }
+                },
                 { "data": "cepRadius" },
                 { "data": "argosPassStatus.name" },
                 { "data": "comment" },

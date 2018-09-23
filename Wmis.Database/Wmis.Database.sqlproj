@@ -320,6 +320,8 @@
     <Build Include="dbo\Stored Procedures\HistoricType_Search.sql" />
     <Build Include="dbo\Stored Procedures\ReferenceYears_Get.sql" />
     <Build Include="dbo\User Defined Types\ReferenceTableType.sql" />
+    <Build Include="dbo\Stored Procedures\ArgosPassFlag_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Gabs_ArgosPass_RejectLocationsAfterInactiveDate.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
