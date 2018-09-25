@@ -320,6 +320,17 @@
     <Build Include="dbo\Stored Procedures\HistoricType_Search.sql" />
     <Build Include="dbo\Stored Procedures\ReferenceYears_Get.sql" />
     <Build Include="dbo\User Defined Types\ReferenceTableType.sql" />
+    <Build Include="dbo\Stored Procedures\ArgosPassFlag_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Gabs_ArgosPass_RejectLocationsAfterInactiveDate.sql" />
+    <Build Include="dbo\Stored Procedures\Gabs_ArgosPass_BatchUpdate.sql" />
+    <Build Include="dbo\User Defined Types\Gabs_BatchRejectTableType.sql" />
+    <Build Include="dbo\User Defined Types\Gabs_AnimalIdTableType.sql" />
+    <Build Include="dbo\User Defined Types\Gabs_VectronicsArgosPassTableType.sql" />
+    <Build Include="dbo\Stored Procedures\Gabs_ArgosPass_RejectExactDuplicates.sql" />
+    <Build Include="dbo\Stored Procedures\Gabs_ArgosPass_RejectPreDeploymentLocations.sql" />
+    <Build Include="dbo\Stored Procedures\Gabs_InsertVectronicsData.sql" />
+    <Build Include="dbo\Tables\CollaredAnimalBreedingStatusHistory.sql" />
+    <Build Include="dbo\Views\vwCollaredAnimalsAndHerds.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
@@ -340,6 +351,7 @@
     <Build Include="dbo\Tables\ArgosUsers.sql" />
     <Build Include="dbo\Tables\ArgosPrograms.sql" />
     <Build Include="dbo\Indexes\ObservationsRowId.sql" />
+    <Build Include="dbo\Stored Procedures\Gabs_ResetAnimalHerdToNull.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Stored Procedures\Project_Create.sql" />

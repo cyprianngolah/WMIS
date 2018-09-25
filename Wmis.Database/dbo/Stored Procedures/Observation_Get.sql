@@ -60,12 +60,17 @@ AS
 	
 	IF(@cols IS NULL)
 	BEGIN
-		SET @query = N'SELECT
-							ou.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.[SiteId], ors.ObservationRowStatusId, ors.Comment
+		SET @query = N'
+					;WITH SitesTable AS(
+						SELECT SiteId, SiteNumber FROM Sites
+					)
+					SELECT 
+							ou.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.[DBSiteId], s.SiteNumber as SiteId, ors.ObservationRowStatusId, ors.Comment
 					FROM	
 						dbo.Survey s
 							INNER JOIN dbo.ObservationUploads ou on ou.SurveyId = s.SurveyId
 							INNER JOIN dbo.ObservationRows ors on ors.ObservationUploadId = ou.ObservationUploadId
+							LEFT OUTER JOIN SitesTable s on ors.siteId = s.SiteId
 					WHERE
 						(' + @surveyId + ' IS NULL OR s.SurveyId = ' + @surveyId + ')
 						AND (' + @observationUploadId + ' IS NULL OR ou.ObservationUploadId = ' + @observationUploadId + ')
@@ -76,12 +81,16 @@ AS
 	ELSE
 	BEGIN
 			SET @query = N'
-					SELECT 
-						ors.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.[SiteId], ors.ObservationRowStatusId, ors.Comment, ' + @cols +
+					;WITH SitesTable AS(
+						SELECT SiteId, SiteNumber FROM Sites
+					)
+					SELECT
+						ors.ObservationUploadId, ors.RowIndex, ors.ObservationRowId as [Key], ors.Latitude, ors.Longitude, ors.[Timestamp], ors.[SiteId] as DBSiteId, s.SiteNumber as SiteId, ors.ObservationRowStatusId, ors.Comment, ' + @cols +
 					N'
 					FROM
 						dbo.ObservationRows ors
 							INNER JOIN dbo.ObservationUploads ou on ou.ObservationUploadId = ors.ObservationUploadId
+							LEFT OUTER JOIN SitesTable s on ors.siteId = s.SiteId
 							LEFT OUTER JOIN 
 								(
 									SELECT 

@@ -23,5 +23,7 @@
         public string Comment { get; set; }
 
         public bool? ManualQA { get; set; }
+
+        public bool? IsLastValidLocation { get; set; }
 	}
 }

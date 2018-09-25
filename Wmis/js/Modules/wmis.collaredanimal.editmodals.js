@@ -149,6 +149,9 @@ wmis.collaredanimal.editmodals = (function ($) {
     }
 
     function ReviewCollarDataPointModel(point, argosPassStatuses) {
+
+        //console.log(point);
+
         var self = this;
         this.latitude = 'Latitude: ' + point.latitude;
         this.longitude = 'Longitude: ' + point.longitude;
@@ -160,12 +163,17 @@ wmis.collaredanimal.editmodals = (function ($) {
         });
         this.comment = ko.observable(point.comment);
         this.argosPassStatuses = argosPassStatuses;
+        this.isLastValidLocation = ko.observable(point.isLastValidLocation);
+
+        
+
         this.saveAllowed = ko.observable(true);
         this.save = function () {
             self.modal.close({
                 argosPassId: point.key,
                 argosPassStatusId: self.argosPassStatus().key(),
-                comment: self.comment()
+                comment: self.comment(),
+                isLastValidLocation: self.isLastValidLocation()
             });
         }
         this.clearStatus = function () {

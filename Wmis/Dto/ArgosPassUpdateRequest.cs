@@ -7,5 +7,7 @@
         public int ArgosPassStatusId { get; set; }
 
         public string Comment { get; set; }
+
+        public bool? IsLastValidLocation { get; set; }
     }
 }

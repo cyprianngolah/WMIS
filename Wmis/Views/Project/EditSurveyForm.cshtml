@@ -228,7 +228,8 @@
                                     <th>Timestamp</th>
                                     <th>Latitude</th>
                                     <th>Longitude</th>
-                                    <th>Status</th>
+                                    <th>SiteNumber</th>
+                                    @*<th>Status</th>*@
                                     <th>Comment</th>
                                     <!-- ko foreach: $data.columns -->
                                     <th data-bind="text: name"></th>
@@ -242,7 +243,8 @@
                                     <td data-bind="dateText: timestamp, format:'L h:mm a'"></td>
                                     <td data-bind="text: latitude"></td>
                                     <td data-bind="text: longitude"></td>
-                                    <td data-bind="passStatus: observationRowStatusId"></td>
+                                    <td data-bind="text: siteId"></td>
+                                    @*<td data-bind="passStatus: observationRowStatusId"></td>*@
                                     <td data-bind="text: comment"></td>
                                     <!-- ko foreach: {data: $parent.columns, as: 'c'} -->
                                     <td data-bind="text: $parent[c.jsName()]()"></td>

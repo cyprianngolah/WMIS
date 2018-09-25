@@ -2271,7 +2271,7 @@
             {
                 var param = new
                 {
-                    p_ChangeBy = changeBy,
+                    p_ChangeBy = changeBy, //!= null ? changeBy : " ",
                     p_CollaredAnimalId = collar.Key,
                     p_CollarId = collar.CollarId,
                     p_SpeciesId = collar.SpeciesId,
@@ -2865,15 +2865,18 @@
 
         #region Argos Passes
 
-        public void ArgosPassUpdate(int argosPassId, int argosPassStatusId, string comment)
+        public void ArgosPassUpdate(int argosPassId, int argosPassStatusId, string comment, bool? isLastValidLocation=null)
         {
+           
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
                     p_ArgosPassId = argosPassId,
                     p_ArgosPassStatusId = argosPassStatusId == 0 ? null : (int?)argosPassStatusId,
-                    p_Comment = comment
+                    p_Comment = comment,
+                    //p_IsLastValidLocation = isLastValidLocation == true ? 1 : 0
+                    p_IsLastValidLocation = isLastValidLocation ?? null
                 };
                 c.Query<int>(ARGOSPASS_UPDATE, param, commandType: CommandType.StoredProcedure);
             }
@@ -2901,7 +2904,7 @@
                 }
                 catch (Exception e)
                 {
-                    throw new ArgumentException(e.Message + " AnimalID: " + collaredAnimalId, e.InnerException + " ColalrID Inner: " + collaredAnimalId);
+                    throw new ArgumentException(e.Message + " AnimalID: " + collaredAnimalId, e.InnerException + " CollarID Inner: " + collaredAnimalId);
                 }
             }
         }
