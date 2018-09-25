@@ -138,6 +138,7 @@ AS
 	)
 	BEGIN
 		INSERT INTO HistoryLogs (CollaredAnimalId, Item, Value, ChangeBy) VALUES (@p_CollaredAnimalId, "Animal Breeding", (SELECT Name from BreedingStatuses where BreedingStatusId = @p_BreedingStatusId) + ' (' + (SELECT CONVERT(char(10),  @p_BreedingStatusDate, 101)) + ')', @p_ChangeBy)
+		INSERT INTO CollaredAnimalBreedingStatusHistory(BreedingStatusId, BreedingStatusConfidenceLevelId, BreedingStatusMethodId, BreedingStatusEffectiveDate, UserId, CollaredAnimalId) VALUES(@p_BreedingStatusId, @p_BreedingStatusConfidenceLevelId, @p_BreedingStatusMethodId, @p_BreedingStatusDate, @p_ChangeBy, @p_CollaredAnimalId)
 	END
 
 	--Argos Program

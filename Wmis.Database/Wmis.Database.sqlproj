@@ -329,6 +329,8 @@
     <Build Include="dbo\Stored Procedures\Gabs_ArgosPass_RejectExactDuplicates.sql" />
     <Build Include="dbo\Stored Procedures\Gabs_ArgosPass_RejectPreDeploymentLocations.sql" />
     <Build Include="dbo\Stored Procedures\Gabs_InsertVectronicsData.sql" />
+    <Build Include="dbo\Tables\CollaredAnimalBreedingStatusHistory.sql" />
+    <Build Include="dbo\Views\vwCollaredAnimalsAndHerds.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

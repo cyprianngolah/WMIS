@@ -2271,7 +2271,7 @@
             {
                 var param = new
                 {
-                    p_ChangeBy = changeBy,
+                    p_ChangeBy = changeBy, //!= null ? changeBy : " ",
                     p_CollaredAnimalId = collar.Key,
                     p_CollarId = collar.CollarId,
                     p_SpeciesId = collar.SpeciesId,
