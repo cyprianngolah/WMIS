@@ -89,6 +89,7 @@
 
             using (var myPoints = new FeatureSet(FeatureType.Point))
             {
+                
                 myPoints.Projection = KnownCoordinateSystems.Geographic.World.WGS1984;
 
                 myPoints.DataTable.Columns.Add(new DataColumn("ID", typeof(int)));
@@ -99,26 +100,32 @@
                 myPoints.DataTable.Columns.Add(new DataColumn("Date", typeof(string)));
                 myPoints.DataTable.Columns.Add(new DataColumn("DateSerial", typeof(double)));
                 myPoints.DataTable.Columns.Add(new DataColumn("AnimalID", typeof(string)));
+                myPoints.DataTable.Columns.Add(new DataColumn("PTTId", typeof(string)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Status", typeof(string)));
                 myPoints.DataTable.Columns.Add(new DataColumn("Comment", typeof(string)));
 
                 foreach (var pass in passes)
                 {
-                    var coord = new Coordinate(pass.Longitude, pass.Latitude);
-                    var newPoint = new DotSpatial.Topology.Point(coord);
-                    var feature = myPoints.AddFeature(newPoint);
-                    feature.DataRow.BeginEdit();
-                    feature.DataRow["ID"] = pass.Key;
-                    feature.DataRow["Latitude"] = pass.Latitude;
-                    feature.DataRow["Longitude"] = pass.Longitude;
-                    feature.DataRow["LC"] = pass.LocationClass;
-                    feature.DataRow["CepRadius"] = pass.CepRadius;
-                    feature.DataRow["Date"] = pass.LocationDate.ToString("yyyy-MM-dd HH:mm");
-                    feature.DataRow["DateSerial"] = pass.LocationDate.ToOADate();
-                    feature.DataRow["AnimalID"] = animal.AnimalId;
-                    feature.DataRow["Status"] = pass.ArgosPassStatus.Name;
-                    feature.DataRow["Comment"] = pass.Comment;
-                    feature.DataRow.EndEdit();
+                    if(pass.ArgosPassStatus.IsRejected != true) { 
+
+                        var coord = new Coordinate(pass.Longitude, pass.Latitude);
+                        var newPoint = new DotSpatial.Topology.Point(coord);
+                        var feature = myPoints.AddFeature(newPoint);
+                        feature.DataRow.BeginEdit();
+                        feature.DataRow["ID"] = pass.Key;
+                        feature.DataRow["Latitude"] = pass.Latitude;
+                        feature.DataRow["Longitude"] = pass.Longitude;
+                        feature.DataRow["LC"] = pass.LocationClass;
+                        feature.DataRow["CepRadius"] = pass.CepRadius;
+                        feature.DataRow["Date"] = pass.LocationDate.ToString("yyyy-MM-dd HH:mm");
+                        feature.DataRow["DateSerial"] = pass.LocationDate.ToOADate();
+                        feature.DataRow["AnimalID"] = animal.AnimalId;
+                        feature.DataRow["PTTId"] = animal.SubscriptionId;
+                        feature.DataRow["Status"] = pass.ArgosPassStatus.Name;
+                        feature.DataRow["Comment"] = pass.Comment;
+
+                        feature.DataRow.EndEdit();
+                    }
                 }
 
                 var baseFileName = animal.AnimalId ?? ("Animal_" + animal.Key);

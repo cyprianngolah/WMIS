@@ -24,6 +24,7 @@ AS
 									FROM ArgosPasses
 									WHERE ArgosPassId = @p_ArgosPassId
 								)
+			WHERE CollaredAnimalId = (SELECT collaredAnimalId FROM ArgosPasses WHERE ArgosPassId = @p_ArgosPassId)
 		END
 
 	-- Update the ArgosPass	
