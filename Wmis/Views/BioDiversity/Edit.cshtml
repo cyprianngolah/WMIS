@@ -68,57 +68,57 @@
 	@{ Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml"); }
 }
 
-<form role="form">
-	<div class="row">
-		<div class="col-md-12 text-right">
-			<a href="/BioDiversity/" class="btn btn-default">
-				@if (Html.UserIsBiodiversityAdministrator())
-				{
-					<span>Cancel</span>
-				}
-				else
-				{
-					<span>Back</span>
-				}
-			</a>
-			@if (Html.UserIsBiodiversityAdministrator())
-			{		
-				<button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: canSave">Save</button>
-			}
-		</div>
-	</div>
+    <form role="form">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a href="/BioDiversity/" class="btn btn-default">
+                    @if (Html.UserIsBiodiversityAdministrator())
+                    {
+                        <span>Cancel</span>
+                    }
+                    else
+                    {
+                        <span>Back</span>
+                    }
+                </a>
+                @if (Html.UserIsBiodiversityAdministrator())
+                {
+                    <button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: canSave">Save</button>
+                }
+            </div>
+        </div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<ul class="nav nav-tabs" role="tablist">
-				<li class="active"><a href="#general" role="tab" data-toggle="tab" class="colouredTab generalTab">General</a></li>
-				<li><a href="#reproduction" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Reproduction</a></li>
-				<li><a href="#distribution" role="tab" data-toggle="tab" class="colouredTab distributionTab">Distribution</a></li>
-				<li><a href="#abundance" role="tab" data-toggle="tab" class="colouredTab abundanceTab">Abundance</a></li>
-                <li><a href="#trends" role="tab" data-toggle="tab" class="colouredTab trendsTab">Trends</a></li>
-                <li><a href="#threats" role="tab" data-toggle="tab" class="colouredTab threatsTab">Threats</a></li>
-				<li><a href="#status" role="tab" data-toggle="tab" class="colouredTab statusTab">Status</a></li>
-			    <li><a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Links</a></li>
-                <li><a href="#history" role="tab" data-toggle="tab" class="colouredTab historyTab">History</a></li>
-			</ul>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#general" role="tab" data-toggle="tab" class="colouredTab generalTab">General</a></li>
+                    <li><a href="#reproduction" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Reproduction</a></li>
+                    <li><a href="#distribution" role="tab" data-toggle="tab" class="colouredTab distributionTab">Distribution</a></li>
+                    <li><a href="#abundance" role="tab" data-toggle="tab" class="colouredTab abundanceTab">Abundance</a></li>
+                    <li><a href="#trends" role="tab" data-toggle="tab" class="colouredTab trendsTab">Trends</a></li>
+                    <li><a href="#threats" role="tab" data-toggle="tab" class="colouredTab threatsTab">Threats</a></li>
+                    <li><a href="#status" role="tab" data-toggle="tab" class="colouredTab statusTab">Status</a></li>
+                    <li><a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Links</a></li>
+                    <li><a href="#history" role="tab" data-toggle="tab" class="colouredTab historyTab">History</a></li>
+                </ul>
 
-			<!-- Tab panes -->
-		    <div class="tab-content" style="margin-top:10px;">
-		        @{Html.RenderPartial("GeneralTab");}				
-		        @{Html.RenderPartial("ReproductionTab");}				
-		        @{Html.RenderPartial("DistributionTab");}				
-		        @{Html.RenderPartial("AbundanceTab");}				
-		        @{Html.RenderPartial("TrendsTab");}			
-		        @{Html.RenderPartial("ThreatsTab");}				
-		        @{Html.RenderPartial("StatusTab");}					
-                <div id="files" class="tab-pane form-horizontal">
-                    <div id="fileTemplateTempDiv"></div>
-                </div>	
-                <div id="history" class="tab-pane form-horizontal">
-                    <div id="historyTemplateTempDiv"></div>
+                <!-- Tab panes -->
+                <div class="tab-content" style="margin-top:10px;">
+                    @{Html.RenderPartial("GeneralTab");}
+                    @{Html.RenderPartial("ReproductionTab");}
+                    @{Html.RenderPartial("DistributionTab");}
+                    @{Html.RenderPartial("AbundanceTab");}
+                    @{Html.RenderPartial("TrendsTab");}
+                    @{Html.RenderPartial("ThreatsTab");}
+                    @{Html.RenderPartial("StatusTab");}
+                    <div id="files" class="tab-pane form-horizontal">
+                        <div id="fileTemplateTempDiv"></div>
+                    </div>
+                    <div id="history" class="tab-pane form-horizontal">
+                        <div id="historyTemplateTempDiv"></div>
+                    </div>
+
                 </div>
-
-		    </div>
-		</div>
-	</div>
-</form>
+            </div>
+        </div>
+    </form>

@@ -30,7 +30,7 @@ wmis.biodiversity.new = (function($) {
 				type: "POST",
 				contentType: "application/json",
 				data: JSON.stringify(ko.toJS(self.bd())),
-			}).success(function(biodiversityKey) {
+            }).success(function (biodiversityKey) {
 				window.location.href = "/Biodiversity/Edit/" + biodiversityKey;
 			}).always(function () {
 				wmis.global.hideWaitingScreen(waitingScreenId);

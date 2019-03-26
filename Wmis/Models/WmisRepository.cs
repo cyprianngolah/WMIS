@@ -14,6 +14,7 @@
 
     using Wmis.Argos.Entities;
     using Wmis.Models.Base;
+    using Wmis.Dto.WMISTools;
 
     /// <summary>
     /// WMIS Repository for SQL
@@ -349,6 +350,18 @@
         private const string ARGOSCOLLARDATA_MERGE = "dbo.ArgosCollarData_Merge";
 
         /// <summary>
+        /// WMIS Tools
+        /// </summary>
+        private const string TOOLS_ARGOSPASS_BATCH_REJECT = "dbo.Tools_ArgosPass_BatchReject";
+        private const string TOOLS_RESET_HERD_POPULATION = "dbo.Tools_ResetAnimalHerdToNull";
+        private const string TOOLS_REJECT_PREDEPLOYMENT_LOCATIONS = "dbo.Tools_ArgosPass_RejectPreDeploymentLocations";
+        private const string TOOLS_REJECT_EXACT_DUPLICATES = "dbo.Tools_ArgosPass_RejectExactDuplicates";
+        private const string TOOLS_REJECT_AFTER_INACTIVE_DATE = "dbo.Tools_ArgosPass_RejectLocationsAfterInactiveDate";
+        private const string TOOLS_MERGE_POST_RETRIEVAL_DATA = "dbo.Tools_Merge_Downloaded_Data";
+        private const string TOOLS_LOAD_VECTRONICS_DATA = "dbo.Tools_InsertVectronicsData";
+        private const string TOOLS_LOAD_LOTEK_DATA = "dbo.Tools_InsertLotekData";
+
+        /// <summary>
         /// The Connection String to connect to the WMIS database for the current environment
         /// </summary>
         private readonly string _connectionString;
@@ -369,6 +382,136 @@
         #endregion Constructors
 
         #region Methods
+
+        #region WMISTools
+
+        public int RejectLocationsAfterInactiveDate()
+        {
+            using (var c = NewWmisConnection)
+            {
+                return c.Query<int>(TOOLS_REJECT_AFTER_INACTIVE_DATE, new { }, commandType: CommandType.StoredProcedure).SingleOrDefault();
+            }
+        }
+
+        public int RejectPredeploymentLocations()
+        {
+            using (var c = NewWmisConnection)
+            {
+                return c.Query<int>(TOOLS_REJECT_PREDEPLOYMENT_LOCATIONS, new { }, commandType: CommandType.StoredProcedure).SingleOrDefault();
+            }
+        }
+
+        public int RejectExactDuplicateLocations()
+        {
+            using (var c = NewWmisConnection)
+            {
+                return c.Query<int>(TOOLS_REJECT_EXACT_DUPLICATES, new { }, commandType: CommandType.StoredProcedure).SingleOrDefault();
+            }
+        }
+
+        public void LoadLotekData(IEnumerable<ToolsLotekData> request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_data = request.Select(m => new
+                    {
+                        CollarId = m.DeviceId,
+                        Latitude = m.Latitude ?? 9999,
+                        Longitude = m.Longitude ?? 9999,
+                        LocationDate = (DateTime)m.LocationDate,
+                        LocationClass = m.LocationClass
+                    }).AsTableValuedParameter("dbo.Gabs_LotekIridiumPassTableType")
+                };
+
+                c.Execute(TOOLS_LOAD_LOTEK_DATA, param, commandType: CommandType.StoredProcedure);
+
+            }
+        }
+
+        public void LoadVectronicsData(IEnumerable<VectronicsDataRequest> request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_list = request.Select(m => new
+                    {
+                        AnimalId = m.AnimalId,
+                        Latitude = m.Latitude,
+                        Longitude = m.Longitude,
+                        LocationDate = (DateTime)m.LocationDate,
+                        LocationClass = m.LocationClass
+                    }).AsTableValuedParameter("dbo.Gabs_VectronicsArgosPassTableType")
+                };
+
+                c.Execute(TOOLS_LOAD_VECTRONICS_DATA, param, commandType: CommandType.StoredProcedure);
+
+            }
+        }
+
+        public void BatchReject(IEnumerable<ToolsBatchRejectRequest> request)
+        {
+
+
+            using (var c = NewWmisConnection)
+            {
+
+                var param = new
+                {
+                    
+                    p_list = request.Select(m => new {
+                        AnimalId = m.AnimalId,
+                        LastValidLocationDate = DateTime.Parse(m.LastValidLocationDate),
+                        RejectReasonId = m.RejectReasonId
+                    }).AsTableValuedParameter("dbo.Gabs_BatchRejectTableType")
+                };
+
+                c.Execute(TOOLS_ARGOSPASS_BATCH_REJECT, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void ResetHerdPopulation(IEnumerable<ToolsResetHerdPopulationRequest> request)
+        {
+            using (var c = NewWmisConnection)
+            {
+
+                var param = new
+                {
+                    p_list = request.Select(m => new {
+                        AnimalId = m.AnimalId
+                    }).AsTableValuedParameter("dbo.Gabs_AnimalIdTableType")
+                };
+
+                c.Execute(TOOLS_RESET_HERD_POPULATION, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void LoadPostRetrievalData(IEnumerable<ToolsCollarData> request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_data = request.Select(m => new
+                    {
+                        CTN = m.CTN ?? "NA",
+                        Timestamp = (DateTime)m.Timestamp,
+                        GpsLatitude = m.GpsLatitude ?? 9999, // in the unlikely case of a NoData
+                        GpsLongitude = m.GpsLongitude ?? 9999,
+                        GpsFixAttempt = m.GpsFixAttempt,
+                        PredeploymentData = m.PredeploymentData,
+                        Mortality = m.Mortality,
+                        LocationClass = "G"
+                    }).AsTableValuedParameter("dbo.DownloadedArgosPassTableType")
+                };
+                c.Execute(TOOLS_MERGE_POST_RETRIEVAL_DATA, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion
+
+
 
         #region BioDiversity
 

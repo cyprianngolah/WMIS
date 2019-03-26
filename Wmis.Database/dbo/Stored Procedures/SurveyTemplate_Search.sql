@@ -20,10 +20,14 @@ AS
 		AND (@p_keywords IS NULL OR st.Name LIKE '%' + @p_keywords + '%')
 	ORDER BY
 		st.Name
+	--OFFSET 
+	--	@p_from ROWS
+	--FETCH NEXT
+	--	(@p_to - @p_from) ROWS ONLY
 	OFFSET 
 		@p_from ROWS
-	FETCH NEXT
-		(@p_to - @p_from) ROWS ONLY
+	FETCH NEXT 
+		@p_to ROWS ONLY
 
 GO
 

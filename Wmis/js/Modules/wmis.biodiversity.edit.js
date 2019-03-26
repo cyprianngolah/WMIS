@@ -95,19 +95,19 @@ wmis.biodiversity.edit = (function ($) {
 
 	function EditBioDiversityViewModel() {
 		var self = this;
-		this.bd = ko.observable();
+        this.bd = ko.observable();
 		this.kingdom = ko.observableArray();
 		this.phylum = ko.observableArray();
-		this.subPhylum = ko.observableArray();
+        this.subPhylum = ko.observableArray();
 		this.class = ko.observableArray();
 		this.subClass = ko.observableArray();
 		this.order = ko.observableArray();
 		this.subOrder = ko.observableArray();
 		this.infraOrder = ko.observableArray();
 		this.superFamily = ko.observableArray();
-		this.family = ko.observableArray();
 		this.subFamily = ko.observableArray();
-		this.group = ko.observableArray();
+        this.group = ko.observableArray();
+        this.family = ko.observableArray();
 		this.ecozones = ko.observableArray();
 		this.selectedEcozoneKeys = ko.observableArray();
 		this.ecoregions = ko.observableArray();
@@ -120,39 +120,46 @@ wmis.biodiversity.edit = (function ($) {
 		this.dataLoaded = ko.observable(false);
 
         // This className observable is used because binding to bd.class doesn't work properly due to it being a reserved keyword
-	    this.className = ko.observable();
+        this.className = ko.observable();
+        this.familyKey = ko.observable();
         
 	    _.each(speciesSynonymsMapping, function(synonymType) {
 	        self[synonymType] = ko.observableArray();
 	    });
-
+        
 		this.getBioDiversity = function (key) {
 			wmis.global.showWaitingScreen("Loading...");
 			var url = "/api/BioDiversity/" + key;
 
-			$.getJSON(url, {}, function (json) {
-				ko.mapper.fromJS(json, "auto", self.bd);
+            $.getJSON(url, {}, function (json) {
 
-				self.convertToArrayOfKeys(self.bd().ecozones, self.selectedEcozoneKeys);
-				self.convertToArrayOfKeys(self.bd().ecoregions, self.selectedEcoregionKeys);
-				self.convertToArrayOfKeys(self.bd().protectedAreas, self.selectedProtectedAreaKeys);
-				if (typeof(self.bd().class) == 'undefined') {
-					self.bd().class = ko.computed(function() {
-						return self.className();
-					});
-				}
-				self.className(self.bd().class());
-				self.dirtyFlag = wmis.global.dirtyFlagFor(ko, self.bd);
-			    $(window).bind('beforeunload', function() {
-			        if (self.dirtyFlag.isDirty()) {
-			            return "You have unsaved changes, are you sure you want to continue without saving?";
-			        }
-			    });
-			    self.dataLoaded(true);
-                //Update the tab title
-			    document.title = "WMIS - Biodiversity - " + self.bd().commonName();
-			}).always(function () {
-			    wmis.global.hideWaitingScreen();
+                setTimeout(() => {
+				    ko.mapper.fromJS(json, "auto", self.bd);
+				    self.convertToArrayOfKeys(self.bd().ecozones, self.selectedEcozoneKeys);
+				    self.convertToArrayOfKeys(self.bd().ecoregions, self.selectedEcoregionKeys);
+				    self.convertToArrayOfKeys(self.bd().protectedAreas, self.selectedProtectedAreaKeys);
+				    if (typeof(self.bd().class) == 'undefined') {
+					    self.bd().class = ko.computed(function() {
+						    return self.className();
+					    });
+				    }
+				    self.className(self.bd().class());
+				    self.dirtyFlag = wmis.global.dirtyFlagFor(ko, self.bd);
+			        $(window).bind('beforeunload', function() {
+			            if (self.dirtyFlag.isDirty()) {
+			                return "You have unsaved changes, are you sure you want to continue without saving?";
+			            }
+                    });
+                
+			        self.dataLoaded(true);
+                    //Update the tab title
+                    document.title = "WMIS - Biodiversity - " + self.bd().commonName();
+                }, 2000)
+            }).always(function () {
+                setTimeout(() => {
+                    wmis.global.hideWaitingScreen();
+                }, 2500)
+			    
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
@@ -200,7 +207,7 @@ wmis.biodiversity.edit = (function ($) {
 					}
 				}
 			}
-			destination(selectedObjects);
+            destination(selectedObjects);
 		};
 
 		this.getDropDowns = function() {
@@ -229,9 +236,10 @@ wmis.biodiversity.edit = (function ($) {
 			return self.dataLoaded() && self.bd() != null && typeof(self.bd().name) == "function" && $.trim(self.bd().name()) != "";
 		}, this.bd());
 
-		this.saveBioDiversity = function() {
-			wmis.global.showWaitingScreen("Saving...");
+        this.saveBioDiversity = function () {
 
+			wmis.global.showWaitingScreen("Saving...");
+            
 			self.getObjectsFromKeys(self.ecozones, self.selectedEcozoneKeys, self.bd().ecozones);
 			self.getObjectsFromKeys(self.ecoregions, self.selectedEcoregionKeys, self.bd().ecoregions);
 			self.getObjectsFromKeys(self.protectedAreas, self.selectedProtectedAreaKeys, self.bd().protectedAreas);
@@ -249,6 +257,7 @@ wmis.biodiversity.edit = (function ($) {
 			}).always(function () {
 				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
+            
 		};
 	}
 

@@ -323,6 +323,7 @@
 		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
 		public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request)
 		{
+           
 			var bioDiversity = Repository.BioDiversityGet(request.Key);
 			bioDiversity.RangeExtentScore = request.RangeExtentScore;
 			bioDiversity.RangeExtentDescription = request.RangeExtentDescription;
