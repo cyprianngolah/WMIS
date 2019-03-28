@@ -50,7 +50,7 @@ new Vue({
                     this.busy = false
                     this.fileChosen = false
                     setTimeout(() => {
-                        window.location.href = "/WMISTools/LotekIridiumDataProcessing";
+                        window.location.href = "/tools/LotekIridiumDataProcessing";
                     }, 4000)
                 }).catch(error => {
                     console.log(error.response)

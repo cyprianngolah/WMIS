@@ -871,12 +871,12 @@
     <Content Include="Views\Help\New.cshtml" />
     <Content Include="Views\BioDiversity\Upload.cshtml" />
     <Content Include="Scripts\knockout.validation.min.js.map" />
-    <Content Include="Views\WmisTools\BatchReject.cshtml" />
-    <Content Include="Views\WmisTools\OtherCleanup.cshtml" />
-    <Content Include="Views\WmisTools\ResetHerdPopulation.cshtml" />
-    <Content Include="Views\WmisTools\PostRetrievalDataProcessing.cshtml" />
-    <Content Include="Views\WmisTools\LotekIridiumDataProcessing.cshtml" />
-    <Content Include="Views\WmisTools\VectronicsDataProcessing.cshtml" />
+    <Content Include="Views\Tools\BatchReject.cshtml" />
+    <Content Include="Views\Tools\LotekIridiumDataProcessing.cshtml" />
+    <Content Include="Views\Tools\OtherCleanup.cshtml" />
+    <Content Include="Views\Tools\PostRetrievalDataProcessing.cshtml" />
+    <Content Include="Views\Tools\ResetHerdPopulation.cshtml" />
+    <Content Include="Views\Tools\VectronicsDataProcessing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

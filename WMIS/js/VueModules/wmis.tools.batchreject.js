@@ -99,7 +99,7 @@ new Vue({
                     this.message.class = "success"
                     this.busy = false
                     setTimeout(() => {
-                        window.location.href = "/WMISTools/BatchReject";
+                        window.location.href = "/tools/BatchReject";
                     },3000)
                 }).catch(error => {
                     console.log(error.response)

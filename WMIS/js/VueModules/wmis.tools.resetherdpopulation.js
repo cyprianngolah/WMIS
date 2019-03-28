@@ -32,7 +32,7 @@ new Vue({
                     this.message.class = "success"
                     this.busy = false
                     setTimeout(() => {
-                        window.location.href = "/WMISTools/resetHerdPopulation";
+                        window.location.href = "/tools/resetHerdPopulation";
                     }, 4000)
                 }).catch(error => {
                     console.log(error.response)
