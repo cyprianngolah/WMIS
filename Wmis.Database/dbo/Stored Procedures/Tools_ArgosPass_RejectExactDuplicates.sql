@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Gabs_ArgosPass_RejectExactDuplicates]
+﻿CREATE PROCEDURE [dbo].[Tools_ArgosPass_RejectExactDuplicates]
 AS
 	;WITH cte AS(
 		SELECT	argosPassId, 
@@ -38,10 +38,12 @@ AS
 			OR ap.ArgosPassStatusId IS NULL
 		)
 	AND duplicates.rn > 1;
+
+	SELECT @@ROWCOUNT
 RETURN 0
 
 GO
 
-GRANT EXECUTE ON [dbo].[Gabs_ArgosPass_RejectExactDuplicates] TO [WMISUser]
+GRANT EXECUTE ON [dbo].[Tools_ArgosPass_RejectExactDuplicates] TO [WMISUser]
 
 GO

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Gabs_ArgosPass_RejectPreDeploymentLocations]
+﻿CREATE PROCEDURE [dbo].[Tools_ArgosPass_RejectPreDeploymentLocations]
 AS
 	UPDATE ap
 	SET ap.ArgosPassStatusId = 11, -- this is the ID for Reject - Invalid status
@@ -17,9 +17,11 @@ AS
 		OR ap.ArgosPassStatusId IS NULL
 	)
 	AND ap.LocationDate < ca.DeploymentDate;
+
+	SELECT @@ROWCOUNT
 RETURN 0
 
 GO
 
-GRANT EXECUTE ON [dbo].[Gabs_ArgosPass_RejectPreDeploymentLocations] TO [WMISUser]
+GRANT EXECUTE ON [dbo].[Tools_ArgosPass_RejectPreDeploymentLocations] TO [WMISUser]
 GO

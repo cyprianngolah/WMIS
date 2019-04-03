@@ -1,0 +1,96 @@
+﻿@using Wmis.Extensions
+@{
+    ViewBag.Title = "PROCESS LOTEK IRIDIUM DATA";
+}
+
+@section TopRight{
+    <div class="h4 pull-right" style="text-align: right; margin:0;">
+        WMIS Tools
+    </div>
+}
+
+@section Styles {
+    @Html.Raw(Styles.Render("~/bundles/tabs"))
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+}
+
+@section Scripts{
+    @Html.Raw(Scripts.Render("~/Scripts/xlsx.full.min.js"))
+    @Html.Raw(Scripts.Render("~/bundles/vue"))
+    @Html.Raw(Scripts.Render("~/bundles/tools/lotekiridiumdataprocessing"))
+}
+
+<!-- Tabs Style1 Start -->
+<section class="sec-spacer row" id="app">
+    <div v-cloak>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="tc-tab-desc">
+                    This tool loads Lotek Iridium data to the WMIS database.
+                    Download the data from the Lotek Web Portal in a single CSV file, 
+                    browse the file, preview the data and simply click on "Load Data" to 
+                    load the data to WMIS.
+                </p>
+                <hr />
+            </div>
+
+            <div class="col-md-12" v-if="message && message.text">
+                <div :class="`alert alert-${message.class} fade in alert-dismissible`">
+                    {{ message.text }}
+                </div>
+            </div>
+
+            <div class="col-md-12 text-center" v-if="busy">
+                <i class="fa fa-cog fa-spin"></i> Busy. Please wait...
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="batchUploadFile">Browse CSV File</label>
+                    <input type="file" id="downloadedFile" ref="downloadedFile" accept=".csv" @@change="handleFileUpload()">
+                    <p class="help-block">Only .csv files are supported.</p>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <button class="btn btn-danger" @@click.prevent="uploadFile()" v-if="!showTable && fileChosen">
+                    Upload File
+                </button>
+                <button class="btn btn-success" v-on:click="runProcess()" :disabled="busy" v-if="showTable">
+                    Load Data to WMIS
+                </button>
+            </div>
+        </div>
+
+        <template v-if="showTable">
+            <div class="row clearfix" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <div class="wellx" style="max-height: 500px; overflow-y: auto; overflow-x: auto;">
+                        <table class="table table-condensed table-striped table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <td>CollarId</td>
+                                    <td>Timestamp</td>
+                                    <td>Latitude</td>
+                                    <td>Longitude</td>
+                                    <td>Location Class</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr v-for="item in data">
+                                    <td>{{ item.deviceId }}</td>
+                                    <td>{{ item.locationDate }}</td>
+                                    <td>{{ item.latitude }}</td>
+                                    <td>{{ item.longitude }}</td>
+                                    <td>{{ item.locationClass }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</section>

@@ -48,6 +48,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CsvHelper.2.13.2.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.26\lib\net45\Dapper.dll</HintPath>
     </Reference>
@@ -202,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\BaseApiController.cs" />
+    <Compile Include="ApiControllers\ToolsApiController.cs" />
     <Compile Include="ApiControllers\FileHttpResponseMessage.cs" />
     <Compile Include="ApiControllers\HistoryLogApiController.cs" />
     <Compile Include="ApiControllers\CollarApiController.cs" />
@@ -252,6 +257,7 @@
     <Compile Include="Controllers\ProtectedAreaController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Dto\Base\PagedDataKeyedKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
@@ -315,6 +321,12 @@
     <Compile Include="Dto\SpeciesSynonymRequest.cs" />
     <Compile Include="Dto\SpeciesSynonymSaveRequest.cs" />
     <Compile Include="Dto\TaxonomySynonymRequest.cs" />
+    <Compile Include="Dto\WMISToolsRequests.cs" />
+    <Compile Include="Dto\WMISTools\ToolsCollarData.cs" />
+    <Compile Include="Dto\WMISTools\ToolsFileReader.cs" />
+    <Compile Include="Dto\WMISTools\ToolsLotekFileReader.cs" />
+    <Compile Include="Dto\WMISTools\ToolsLotekOutputFile.cs" />
+    <Compile Include="Dto\WMISTools\ToolsTelonicsOutputFile.cs" />
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
@@ -501,7 +513,9 @@
     <Content Include="Content\images\maps-symbol-blank-yellow.png" />
     <Content Include="Content\images\maps-symbol-line.png" />
     <Content Include="Content\images\maps-symbol-x-red.png" />
+    <Content Include="Content\jquery.smartmenus.bootstrap.min.css" />
     <Content Include="Content\select2-bootstrap.css" />
+    <Content Include="Content\tabs.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -577,6 +591,11 @@
     <Content Include="js\Modules\wmis.reference.edit.js" />
     <Content Include="js\Modules\wmis.taxonomy.edit.js" />
     <Content Include="js\Modules\wmis.reference.index.js" />
+    <Content Include="js\VueModules\wmis.tools.batchreject.js" />
+    <Content Include="js\VueModules\wmis.tools.postretrievaldataprocessing.js" />
+    <Content Include="js\VueModules\wmis.tools.resetherdpopulation.js" />
+    <Content Include="js\VueModules\wmis.tools.lotekiridiumdataprocessing.js" />
+    <Content Include="js\VueModules\wmis.tools.vectronicsdataprocessing.js" />
     <Content Include="js\wmis.js" />
     <Content Include="js\Modules\wmis.biodiversity.index.js" />
     <Content Include="js\Modules\wmis.taxonomy.index.js" />
@@ -601,9 +620,13 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Environments\environment.cyprian.config" />
+    <Content Include="js\VueModules\wmis.tools.othercleanup.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />
+    <Content Include="Scripts\axios.js" />
+    <Content Include="Scripts\axios.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables-1.10.3\buttons.bootstrap.min.js" />
@@ -685,9 +708,13 @@
     <Content Include="Scripts\datepicker\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery.smartmenus.bootstrap.min.js" />
+    <Content Include="Scripts\jquery.smartmenus.min.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
     <Content Include="Scripts\knockout.mapper.js" />
+    <Content Include="Scripts\knockout.validation.js" />
+    <Content Include="Scripts\knockout.validation.min.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
@@ -695,6 +722,7 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\q.js" />
     <Content Include="Scripts\q.min.js" />
+    <Content Include="Scripts\require.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_ar.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_az.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_bg.js" />
@@ -745,6 +773,9 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Scripts\vue.js" />
+    <Content Include="Scripts\vue.min.js" />
+    <Content Include="Scripts\xlsx.full.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\SurveyTemplate\Edit.cshtml" />
     <Content Include="Views\SurveyTemplate\EditForm.cshtml" />
@@ -839,6 +870,13 @@
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Help\New.cshtml" />
     <Content Include="Views\BioDiversity\Upload.cshtml" />
+    <Content Include="Scripts\knockout.validation.min.js.map" />
+    <Content Include="Views\Tools\BatchReject.cshtml" />
+    <Content Include="Views\Tools\LotekIridiumDataProcessing.cshtml" />
+    <Content Include="Views\Tools\OtherCleanup.cshtml" />
+    <Content Include="Views\Tools\PostRetrievalDataProcessing.cshtml" />
+    <Content Include="Views\Tools\ResetHerdPopulation.cshtml" />
+    <Content Include="Views\Tools\VectronicsDataProcessing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

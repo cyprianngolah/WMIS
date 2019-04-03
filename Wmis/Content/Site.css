@@ -221,3 +221,26 @@ tr.highlightPassRow {
 h1, .h1 {
     font-size: 25px;
 }
+
+[v-cloak]{
+    display: none;
+}
+
+.wrap-text {
+    white-space: normal !important;
+}
+
+.font-normal {
+    font-weight: normal !important;
+    text-shadow: none !important;
+}
+
+.d-flex{
+    display: flex;
+}
+.align-items-center{
+    align-items: center;
+}
+.font-16 {
+    font-size: 16px !important;
+}

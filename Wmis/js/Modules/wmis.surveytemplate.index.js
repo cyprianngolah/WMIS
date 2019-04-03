@@ -71,7 +71,7 @@ wmis.surveytemplate.index = (function ($) {
 					// Custom search data
 					keywords: $("#keywords").val()
 				};
-
+                console.log(parameters)
 				$.getJSON(source, parameters, function (json) {
 					// On Success of the call, transform some of the data and call the specified callback
 					// Transforms are to transform returned data into DataTable expected format so paging

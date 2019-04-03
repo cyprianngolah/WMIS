@@ -1,26 +1,26 @@
 ﻿@using Wmis.Extensions
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>WMIS</title>
-		@Styles.Render("~/bundles/css")
-		@RenderSection("Styles", false)
-	</head>
-	<body>
-		<div class="container">
-			<div class="row clearfix">
-				<div class="navbar navbar-inverse navbar-fixed-top">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						@Html.ActionLink("WMIS", "Index", "Home", null, new { @class = "navbar-brand" })
-					</div>
-					<div class="navbar-collapse collapse">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WMIS</title>
+    @Styles.Render("~/bundles/css")
+    @RenderSection("Styles", false)
+</head>
+<body>
+    <div id="wmis-app" class="container">
+        <div class="row clearfix">
+                <div class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("WMIS", "Index", "Home", null, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             @Html.MenuLink("Projects", "Index", "Project")
                             @Html.MenuLink("Collar", "Index", "CollaredAnimal")
@@ -52,92 +52,110 @@
                                     {
                                         @Html.MenuLink("Survey Templates", "Index", "SurveyTemplate")
                                         @Html.MenuLink("Argos Service", "Index", "ArgosService")
+                                        <li>
+                                            <a href="#">WMIS Tools <span class="caret"></span></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li class="dropdown-header">DATA CLEANUP</li>
+                                                @Html.MenuLink("Batch Reject", "batchreject", "tools")
+                                                @Html.MenuLink("Other Cleanup Tools", "othercleanup", "tools")
+                                                <li role="separator" class="divider"></li>
+                                                <li class="dropdown-header">DATA UPLOAD</li>
+                                                @Html.MenuLink("Lotek Iridium", "lotekiridiumdataprocessing", "tools")
+                                                @Html.MenuLink("Vectronics Data", "vectronicsdataprocessing", "tools")
+                                                @Html.MenuLink("Post-Retrieval Data", "postretrievaldataprocessing", "tools")
+                                                <li role="separator" class="divider"></li>
+                                                <li class="dropdown-header">OTHER</li>
+                                                @Html.MenuLink("Reset Herd Population", "resetherdpopulation", "tools")
+
+                                            </ul>
+                                        </li>
                                     }
                                     @Html.MenuLink("Help Links", "Index", "Help")
                                 </ul>
                             </li>
                             @*<li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        @if (Request.IsAuthenticated)
-                                        {
-                                            @Html.HelpLinks()
-                                        }
-                                    </ul>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            @if (Request.IsAuthenticated)
+                            {
+                                @Html.HelpLinks()
+                            }
+                        </ul>
 
-                                </li>*@
+                    </li>*@
 
                         </ul>
-					</div>
-				</div>
-			</div>
-		</div>
+                    </div>
+                </div>
+        </div>
+    </div>
 
-		<div class="container wrap">
-			<div class="row clearfix">
-				
-			
-					@if (!string.IsNullOrEmpty(ViewBag.Title))
-					{
-						<div class="page-header">
-							@if (IsSectionDefined("CustomTitle")) {
-								@RenderSection("CustomTitle", false);
-							}
-							else
-							{
-								<div class="h1 pull-left" style="margin:0;">
-									@ViewBag.Title @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
-												   {<small>@Html.Raw(ViewBag.SubTitle)</small>}
-								</div>
-							}
+    <div class="container wrap">
+        <div class="row clearfix">
 
-							@RenderSection("TopRight", false)
 
-							<div style="clear:both;"></div>
-						</div>
-					}
+            @if (!string.IsNullOrEmpty(ViewBag.Title))
+            {
+                <div class="page-header">
+                    @if (IsSectionDefined("CustomTitle"))
+                    {
+                        @RenderSection("CustomTitle", false);
+                    }
+                    else
+                    {
+                        <div class="h1 pull-left" style="margin:0;">
+                            @ViewBag.Title @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
+                            {<small>@Html.Raw(ViewBag.SubTitle)</small>}
+                        </div>
+                    }
 
-			</div>
+                    @RenderSection("TopRight", false)
 
-		    <div class="row clearfix">
-		        <div class="col-md-12">
-		            @RenderBody()
-		        </div>
-		    </div>
-            
-            @RenderSection("Dialogs", false)
-		</div>
+                    <div style="clear:both;"></div>
+                </div>
+            }
 
-		<div class="container-fluid footer">
-			<hr style="margin-top: 5px; margin-bottom: 5px;" />
-			<img src="~/Content/images/GNWT–ENR2C.jpg" style="height: 100px; padding-left: 10px;" />
-			@*<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" style="min-height: 0;">
-				<img src="~/Content/images/GNWT–ENR2C.jpg" style="height: 100px; padding-top: 10px; border-bottom-width: 0px; padding-bottom: 10px; padding-left: 10px;" />
-				<hr style="margin-top: 5px; margin-bottom: 5px;" />
-				<p style="margin:10px;">&copy; @DateTime.Now.Year - WMIS</p>
-			</nav>*@
-		</div>
-		
-		<div class="modal" id="waitingModal" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					@*<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title">Modal title</h4>
-					</div>*@
-					<div class="modal-body">
-						<p>One fine body&hellip;</p>
-					</div>
-					@*<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>*@
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-	    
-		@RenderSection("Templates", false)    
-		@Scripts.Render("~/bundles/base")
-		@RenderSection("Scripts", false)
-	</body>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-md-12">
+                @RenderBody()
+            </div>
+        </div>
+
+        @RenderSection("Dialogs", false)
+    </div>
+
+    <div class="container-fluid footer">
+        <hr style="margin-top: 5px; margin-bottom: 5px;" />
+        <img src="~/Content/images/GNWT–ENR2C.jpg" style="height: 100px; padding-left: 10px;" />
+        @*<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" style="min-height: 0;">
+                <img src="~/Content/images/GNWT–ENR2C.jpg" style="height: 100px; padding-top: 10px; border-bottom-width: 0px; padding-bottom: 10px; padding-left: 10px;" />
+                <hr style="margin-top: 5px; margin-bottom: 5px;" />
+                <p style="margin:10px;">&copy; @DateTime.Now.Year - WMIS</p>
+            </nav>*@
+    </div>
+
+    <div class="modal" id="waitingModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @*<div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>*@
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>*@
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    @RenderSection("Templates", false)
+    @Scripts.Render("~/bundles/base")
+    @RenderSection("Scripts", false)
+</body>
 </html>

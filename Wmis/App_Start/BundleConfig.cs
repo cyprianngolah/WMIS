@@ -23,7 +23,9 @@
 			bundles.Add(new ScriptBundle("~/bundles/base").Include(
 						"~/Scripts/jquery-{version}.js",
 						"~/Scripts/bootstrap.js",
-						"~/Scripts/respond.js",
+                        "~/Scripts/jquery.smartmenus.min.js",
+                        "~/Scripts/jquery.smartmenus.bootstrap.min.js",
+                        "~/Scripts/respond.js",
 						"~/Scripts/modernizr-*",
 						"~/Scripts/moment.js",
 						"~/Scripts/underscore.js",
@@ -34,8 +36,12 @@
 						"~/Scripts/knockout-*",
 						"~/Scripts/knockout.mapper.js",
 						"~/js/wmis.knockout.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/vue").Include(
+                        "~/Scripts/axios.js",
+                        "~/Scripts/vue.min.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/datePicker").Include(
+            bundles.Add(new ScriptBundle("~/bundles/datePicker").Include(
 						"~/Scripts/datepicker/bootstrap-datepicker.js"));		
 
 			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
@@ -50,7 +56,8 @@
 			//////////////////////////////////////////////////////////////////////
 			bundles.Add(new StyleBundle("~/bundles/css").Include(
 						"~/Content/bootstrap-cerulean.css",
-						"~/Content/site.css"));
+						"~/Content/site.css",
+                        "~/Content/jquery.smartmenus.bootstrap.min.css"));
 
 			bundles.Add(new StyleBundle("~/bundles/datePickerCss").Include(
 						"~/content/datepicker3.css"));
@@ -63,11 +70,14 @@
 						"~/content/datatables-1.10.3/css/jquery.dataTables.css",
 						"~/content/datatables-1.10.3/css/dataTables.bootstrap.css"));
 
-			//////////////////////////////////////////////////////////////////////
-			// Module Script Bundles
-			//////////////////////////////////////////////////////////////////////
-			#region Biodiversity
-			bundles.Add(new ScriptBundle("~/bundles/biodiversity/index").Include(
+            bundles.Add(new StyleBundle("~/bundles/tabs").Include(
+                        "~/content/tabs.css"));
+
+            //////////////////////////////////////////////////////////////////////
+            // Module Script Bundles
+            //////////////////////////////////////////////////////////////////////
+            #region Biodiversity
+            bundles.Add(new ScriptBundle("~/bundles/biodiversity/index").Include(
 						"~/js/modules/wmis.biodiversity.index.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/new").Include(
@@ -83,7 +93,30 @@
             bundles.Add(new ScriptBundle("~/bundles/biodiversity/upload").Include(
             "~/js/modules/wmis.biodiversity.upload.js",
             "~/js/wmis.knockout.js"));
-			#endregion
+            #endregion
+
+            #region WMIS  Tools
+
+            bundles.Add(new ScriptBundle("~/bundles/tools/batchreject").Include(
+                    "~/js/vuemodules/wmis.tools.batchreject.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/tools/othercleanup").Include(
+                    "~/js/vuemodules/wmis.tools.othercleanup.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/tools/resetherdpopulation").Include(
+                    "~/js/vuemodules/wmis.tools.resetherdpopulation.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/tools/postretrievaldataprocessing").Include(
+                    "~/js/vuemodules/wmis.tools.postretrievaldataprocessing.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/tools/vectronicsdataprocessing").Include(
+                    "~/js/vuemodules/wmis.tools.vectronicsdataprocessing.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/tools/lotekiridiumdataprocessing").Include(
+                    "~/js/vuemodules/wmis.tools.lotekiridiumdataprocessing.js"));
+
+            #endregion
+
 
             #region Collared Animal
             bundles.Add(new ScriptBundle("~/bundles/collaredanimal/index").Include(

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Gabs_ArgosPass_RejectLocationsAfterInactiveDate]	
+﻿CREATE PROCEDURE [dbo].[Tools_ArgosPass_RejectLocationsAfterInactiveDate]	
 AS
 	DECLARE @RejectDates TABLE(
 		CollaredAnimalId INT,
@@ -57,10 +57,12 @@ AS
 			)
 			OR ap.ArgosPassStatusId IS NULL
 		)
-	AND ap.LocationDate > LastValidLocationdate
+	AND ap.LocationDate > LastValidLocationdate;
+
+	SELECT @@ROWCOUNT
 RETURN 0
 
 GO
 
-GRANT EXECUTE ON [dbo].[Gabs_ArgosPass_RejectLocationsAfterInactiveDate] TO [WMISUser]
+GRANT EXECUTE ON [dbo].[Tools_ArgosPass_RejectLocationsAfterInactiveDate] TO [WMISUser]
 GO

@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[Gabs_ArgosPass_BatchUpdate]
-	@List AS [dbo].[Gabs_BatchRejectTableType] READONLY
+﻿CREATE PROCEDURE [dbo].[Tools_ArgosPass_BatchUpdate]
+	@p_list AS [dbo].[Gabs_BatchRejectTableType] READONLY
 AS
 	SET NOCOUNT ON;
 	
@@ -15,7 +15,7 @@ AS
 				l.LastValidLocationDate,
 				l.RejectReasonId
 		FROM	collaredAnimals ca
-		INNER JOIN @List l
+		INNER JOIN @p_list l
 			ON(ca.AnimalId = l.AnimalId)
 
 	UPDATE ap
@@ -34,5 +34,5 @@ RETURN 1
 
 GO
 
-GRANT EXECUTE ON [dbo].[Gabs_ArgosPass_BatchUpdate] TO [WMISUser]
+GRANT EXECUTE ON [dbo].[Tools_ArgosPass_BatchUpdate] TO [WMISUser]
 GO
