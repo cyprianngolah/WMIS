@@ -47,6 +47,7 @@ build/
 *.log
 *.scc
 *.jfm
+*.vs
 
 # Visual C++ cache files
 ipch/

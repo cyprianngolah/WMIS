@@ -15,6 +15,7 @@ WITH herdAssignmentHistory AS(
 		ON(hh.HerdPopulationId = hp.HerdPopulationId)
 	LEFT JOIN HerdAssociationMethods am
 		ON(hh.HerdAssociationMethodId = am.HerdAssociationMethodId)
+
 )
 ,DeploymentHerds AS(
 	SELECT	ha.collaredAnimalId,
