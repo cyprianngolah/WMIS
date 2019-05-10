@@ -1,8 +1,9 @@
-﻿
+﻿/**/
 
 
 new Vue({
     el: "#app",
+    name: "ResetHerd",
     data: {
         busy: false,
         message: {
@@ -22,7 +23,7 @@ new Vue({
     },
 
     methods: {
-        runProcess() {
+        runProcess: function() {
             this.busy = true;
             this.message.text = ''
             this.message.class = ''
@@ -42,7 +43,7 @@ new Vue({
                 })
         },
 
-        generatePreview() {
+        generatePreview: function() {
             if (this.selections.animalIdCol) {
                 this.showTable = true
                 var finalData = [];
@@ -57,14 +58,14 @@ new Vue({
             }
         },
 
-        sheetChanged() {
+        sheetChanged: function() {
             const ws = this.wb.Sheets[this.selections.sheet]
             this.get_header_row(ws)
             this.sheetData = XLSX.utils.sheet_to_json(ws)
             this.generatePreview()
         },
 
-        get_header_row(sheet) {
+        get_header_row: function(sheet) {
             var headers = [], range = XLSX.utils.decode_range(sheet['!ref']);
             var C, R = range.s.r; /* start in the first row */
             for (C = range.s.c; C <= range.e.c; ++C) { /* walk every column in the range */
@@ -76,7 +77,7 @@ new Vue({
             this.headers = headers;
         },
 
-        handleDrop(e){
+        handleDrop: function(e){
             this.busy = true;
             this.wb = {};
             this.sheets = [];

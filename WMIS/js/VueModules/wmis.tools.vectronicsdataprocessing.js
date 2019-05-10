@@ -1,6 +1,7 @@
 ﻿
 new Vue({
     el: "#app",
+    name: "VectronicLoad",
     data: {
         busy: false,
         message: {
@@ -25,7 +26,7 @@ new Vue({
     },
     
     methods: {
-        handleDrop(e) {
+        handleDrop: function(e) {
             this.busy = true;
             this.wb = {};
             this.sheets = [];
@@ -47,14 +48,14 @@ new Vue({
             reader.readAsBinaryString(file);
         },
 
-        sheetChanged() {
+        sheetChanged: function() {
             const ws = this.wb.Sheets[this.selections.sheet]
             this.get_header_row(ws)
             this.sheetData = XLSX.utils.sheet_to_json(ws)
             this.generatePreview()
         },
 
-        generatePreview() {
+        generatePreview: function() {
             if (this.selections.animalIdCol
                 && this.selections.latitudeCol
                 && this.selections.longitudeCol
@@ -78,7 +79,7 @@ new Vue({
             }
         },
 
-        get_header_row(sheet) {
+        get_header_row: function(sheet) {
             var headers = [], range = XLSX.utils.decode_range(sheet['!ref']);
             var C, R = range.s.r; /* start in the first row */
             for (C = range.s.c; C <= range.e.c; ++C) { /* walk every column in the range */
@@ -90,7 +91,7 @@ new Vue({
             this.headers = headers;
         },
 
-        loadData() {
+        loadData: function() {
             this.busy = true;
             this.message.text = ''
             this.message.class = ''
@@ -109,9 +110,5 @@ new Vue({
                     this.busy = false;
                 })
         }
-    },
-
-    mounted() {
-
     }
 })
