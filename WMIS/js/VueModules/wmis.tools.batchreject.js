@@ -1,14 +1,7 @@
-﻿
-
-
-const Comp = Vue.component('BiodiversityEdit', {
-    mounted() {
-        //console.log("Hello World")
-    }
-});
-
+﻿/* */
 new Vue({
     el: "#app",
+    name: "BatchReject",
     data: {
         busy: false,
         message: {
@@ -29,14 +22,12 @@ new Vue({
         }
     },
 
-    components: { Comp },
-
     methods: {
-        handleDrop(e) {
+        handleDrop: function(e) {
             this.busy = true;
             this.wb = {};
             this.sheets = [];
-            var file = e.target.files[0]
+            var file = e.target.files[0];
             var reader = new FileReader();
 
             reader.onload = (e) => {
@@ -53,14 +44,14 @@ new Vue({
             reader.readAsBinaryString(file);
         },
 
-        sheetChanged() {
+        sheetChanged: function() {
             const ws = this.wb.Sheets[this.selections.sheet]
             this.get_header_row(ws)
             this.sheetData = XLSX.utils.sheet_to_json(ws)
             this.generatePreview()
         },
 
-        generatePreview() {
+        generatePreview: function() {
             if (this.selections.animalIdCol && this.selections.lastValidCol && this.selections.rejectReasonCol) {
                 this.showTable = true
                 var finalData = [];
@@ -77,7 +68,7 @@ new Vue({
             }
         },
 
-        get_header_row(sheet) {
+        get_header_row: function(sheet) {
             var headers = [], range = XLSX.utils.decode_range(sheet['!ref']);
             var C, R = range.s.r; /* start in the first row */
             for(C = range.s.c; C <= range.e.c; ++C) { /* walk every column in the range */
@@ -89,7 +80,7 @@ new Vue({
             this.headers = headers;
         },
 
-        runBatchReject() {
+        runBatchReject: function() {
             this.busy = true;
             this.message.text = ''
             this.message.class = ''
@@ -108,9 +99,5 @@ new Vue({
                     this.busy = false;
                 })
         }
-    },
-
-    mounted() {
-
     }
 })

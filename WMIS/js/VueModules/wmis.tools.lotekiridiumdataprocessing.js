@@ -1,6 +1,7 @@
 ﻿
 new Vue({
     el: "#app",
+    name: "LoadLotekIridium",
     data: {
         busy: false,
         message: {
@@ -14,12 +15,12 @@ new Vue({
     },
 
     methods: {
-        handleFileUpload() {
+        handleFileUpload: function() {
             this.file = this.$refs.downloadedFile.files[0];
             this.fileChosen = true;
         },
 
-        uploadFile() {
+        uploadFile: function() {
             this.busy = true;
             let formData = new FormData();
             formData.append('file', this.file);
@@ -39,7 +40,7 @@ new Vue({
                 })
         },
 
-        runProcess() {
+        runProcess: function() {
             this.busy = true;
             this.message.text = '';
             this.message.class = '';
