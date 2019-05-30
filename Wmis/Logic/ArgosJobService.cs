@@ -246,7 +246,7 @@
                         if (!row.GpsLatitude.HasValue || !row.GpsLongitude.HasValue)
                             continue;
 
-                        if (row.GpsLatitude.Value < 55 || row.GpsLatitude.Value > 90 || row.GpsLongitude.Value < -140 || row.GpsLongitude.Value > -100)
+                        if (row.GpsLatitude.Value < 0 || row.GpsLatitude.Value > 90 || row.GpsLongitude.Value < -180 || row.GpsLongitude.Value > 0)
                             continue;
 
                         p.Latitude = row.GpsLatitude.Value;
@@ -260,7 +260,7 @@
                         if (!rowAsArgos.ArgosLatitude.HasValue || !rowAsArgos.ArgosLongitude.HasValue || !rowAsArgos.Timestamp.HasValue)
                             continue;
 
-                        if (rowAsArgos.ArgosLatitude.Value < 55 || rowAsArgos.ArgosLatitude.Value > 90 || rowAsArgos.ArgosLongitude.Value < -140 || rowAsArgos.ArgosLongitude.Value > -100)
+                        if (rowAsArgos.ArgosLatitude.Value < 0 || rowAsArgos.ArgosLatitude.Value > 90 || rowAsArgos.ArgosLongitude.Value < -180 || rowAsArgos.ArgosLongitude.Value > 0)
                             continue;
 
                         p.Latitude = rowAsArgos.ArgosLatitude.Value;
@@ -274,7 +274,7 @@
                         if (!rowAsIridium.IridiumLatitude.HasValue || !rowAsIridium.IridiumLongitude.HasValue)
                             continue;
 
-                        if (rowAsIridium.IridiumLatitude.Value < 55 || rowAsIridium.IridiumLatitude.Value > 90 || rowAsIridium.IridiumLongitude.Value < -140 || rowAsIridium.IridiumLongitude.Value > -100)
+                        if (rowAsIridium.IridiumLatitude.Value < 0 || rowAsIridium.IridiumLatitude.Value > 90 || rowAsIridium.IridiumLongitude.Value < -180 || rowAsIridium.IridiumLongitude.Value > 0)
                             continue;
 
                         
