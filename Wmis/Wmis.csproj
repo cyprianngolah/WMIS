@@ -332,7 +332,9 @@
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Extensions\MvcSecurityExtension.cs" />
     <Compile Include="Extensions\SpatialExtensions.cs" />
-    <Compile Include="Logic\ArgosJobService.cs" />
+    <Compile Include="..\..\..\..\WMIS\ArgosJobService.cs">
+      <Link>Logic\ArgosJobService.cs</Link>
+    </Compile>
     <Compile Include="Logic\BiodiversityBulkUploaderService.cs" />
     <Compile Include="Logic\ReferenceParserService.cs" />
     <Compile Include="Logic\SpeciesParserService.cs" />
@@ -877,6 +879,8 @@
     <Content Include="Views\Tools\PostRetrievalDataProcessing.cshtml" />
     <Content Include="Views\Tools\ResetHerdPopulation.cshtml" />
     <Content Include="Views\Tools\VectronicsDataProcessing.cshtml" />
+    <Content Include="Views\Tools\ManualDataAdd1.cshtml" />
+    <Content Include="Views\Tools\AddDataManually.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

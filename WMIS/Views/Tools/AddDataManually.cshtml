@@ -1,12 +1,13 @@
-﻿@using Wmis.Extensions
+﻿
+@using Wmis.Extensions
 @{
-    ViewBag.Title = "PROCESS POST-RETRIEVAL DATA";
+    ViewBag.Title = "ADD DATA MANUALLY";
 }
 
 @section TopRight{
-    <div class="h4 pull-right" style="text-align: right; margin:0;">
-        WMIS Tools
-    </div>
+<div class="h4 pull-right" style="text-align: right; margin:0;">
+    WMIS Tools
+</div>
 }
 
 @section Styles {
@@ -17,18 +18,16 @@
 @section Scripts{
     @Html.Raw(Scripts.Render("~/Scripts/xlsx.full.min.js"))
     @Html.Raw(Scripts.Render("~/bundles/vue"))
-    @Html.Raw(Scripts.Render("~/bundles/tools/postretrievaldataprocessing"))
+    @Html.Raw(Scripts.Render("~/bundles/tools/adddatamanually"))
 }
 
-<!-- Tabs Style1 Start -->
 <section class="sec-spacer row" id="app">
-     <div v-cloak>
+   <div>
         <div class="row">
             <div class="col-md-12">
                 <p class="tc-tab-desc">
-                    Use this to load Telonics (Argos and Iridium) data downloaded from the collar after retrieval to the 
-                    WMIS database. 
-                    Browse and select the downloaded CSV file, and then click on "Preview Data". 
+                    Use this to load Telonics (Argos and Iridium) data manually into the WMIS database.
+                    Browse and select the downloaded CSV file, and then click on "Preview Data".
                     Then click on "Load Data". This tool only inserts records that are not already in the database, so there will be no data duplication.
                 </p>
                 <hr />

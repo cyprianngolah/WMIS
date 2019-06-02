@@ -141,6 +141,13 @@
         }
 
         [HttpPost]
+        [Route("loadDataManually")]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
+        public void LoadDataManually([FromBody] IEnumerable<ToolsCollarData> request)
+        {
+            Repository.LoadDataManually(request);
+        }
+        [HttpPost]
         [Route("lotek/upload")]
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public async Task<IEnumerable<ToolsLotekData>> UploadLotekFile()
