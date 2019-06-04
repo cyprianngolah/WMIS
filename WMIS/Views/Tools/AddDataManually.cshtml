@@ -1,5 +1,4 @@
-﻿
-@using Wmis.Extensions
+﻿@using Wmis.Extensions
 @{
     ViewBag.Title = "ADD DATA MANUALLY";
 }
@@ -15,15 +14,23 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 }
 
+<style>
+    [v-cloak] {
+        display: none
+    }
+</style>
+
 @section Scripts{
     @Html.Raw(Scripts.Render("~/Scripts/xlsx.full.min.js"))
     @Html.Raw(Scripts.Render("~/bundles/vue"))
     @Html.Raw(Scripts.Render("~/bundles/tools/adddatamanually"))
 }
 
+<!-- Tabs Style1 Start -->
 <section class="sec-spacer row" id="app">
-   <div>
+   <div >
         <div class="row">
+
             <div class="col-md-12">
                 <p class="tc-tab-desc">
                     Use this to load Telonics (Argos and Iridium) data manually into the WMIS database.

@@ -879,7 +879,6 @@
     <Content Include="Views\Tools\PostRetrievalDataProcessing.cshtml" />
     <Content Include="Views\Tools\ResetHerdPopulation.cshtml" />
     <Content Include="Views\Tools\VectronicsDataProcessing.cshtml" />
-    <Content Include="Views\Tools\ManualDataAdd1.cshtml" />
     <Content Include="Views\Tools\AddDataManually.cshtml" />
   </ItemGroup>
   <ItemGroup>
