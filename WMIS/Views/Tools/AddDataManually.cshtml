@@ -40,7 +40,7 @@
                 <hr />
             </div>
 
-            <div class="col-md-12" v-if="message && message.text">
+            <div v-cloak class="col-md-12" v-if="message && message.text">
                 <div :class="`alert alert-${message.class} fade in alert-dismissible`">
                     {{ message.text }}
                 </div>
@@ -59,7 +59,7 @@
                     <p class="help-block">Only .csv files are supported.</p>
                 </div>
             </div>
-            <div class="col-md-6 text-right">
+            <div v-cloak class="col-md-6 text-right">
                 <button class="btn btn-danger" @@click.prevent="uploadFile()" v-if="!showTable && fileChosen">
                     Upload File
                 </button>
