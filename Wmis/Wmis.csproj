@@ -332,9 +332,7 @@
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Extensions\MvcSecurityExtension.cs" />
     <Compile Include="Extensions\SpatialExtensions.cs" />
-    <Compile Include="..\..\..\..\WMIS\ArgosJobService.cs">
-      <Link>Logic\ArgosJobService.cs</Link>
-    </Compile>
+    <Compile Include="Logic\ArgosJobService.cs" />
     <Compile Include="Logic\BiodiversityBulkUploaderService.cs" />
     <Compile Include="Logic\ReferenceParserService.cs" />
     <Compile Include="Logic\SpeciesParserService.cs" />
