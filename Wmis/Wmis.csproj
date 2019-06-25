@@ -591,6 +591,7 @@
     <Content Include="js\Modules\wmis.reference.edit.js" />
     <Content Include="js\Modules\wmis.taxonomy.edit.js" />
     <Content Include="js\Modules\wmis.reference.index.js" />
+    <Content Include="js\VueModules\wmis.tools.adddatamanually.js" />
     <Content Include="js\VueModules\wmis.tools.batchreject.js" />
     <Content Include="js\VueModules\wmis.tools.postretrievaldataprocessing.js" />
     <Content Include="js\VueModules\wmis.tools.resetherdpopulation.js" />

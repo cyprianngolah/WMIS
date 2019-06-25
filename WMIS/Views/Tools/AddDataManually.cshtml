@@ -13,7 +13,7 @@
     @Html.Raw(Styles.Render("~/bundles/tabs"))
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 }
-
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <style>
     [v-cloak] {
         display: none
@@ -28,7 +28,7 @@
 
 <!-- Tabs Style1 Start -->
 <section class="sec-spacer row" id="app">
-   <div >
+   <div ></div>
         <div class="row">
 
             <div class="col-md-12">
@@ -59,7 +59,7 @@
                     <p class="help-block">Only .csv files are supported.</p>
                 </div>
             </div>
-            <div v-cloak class="col-md-6 text-right">
+            <div class="col-md-6 text-right">
                 <button class="btn btn-danger" @@click.prevent="uploadFile()" v-if="!showTable && fileChosen">
                     Upload File
                 </button>

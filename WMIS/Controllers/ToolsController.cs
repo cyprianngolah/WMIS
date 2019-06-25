@@ -28,15 +28,12 @@ namespace Wmis.Controllers
             return View();
         }
 
-        public ActionResult manualdataadd()
-        {
-            return View();
-        }
-
         public ActionResult AddDataManually()
         {
             return View();
         }
+
+     
         public ActionResult LotekIridiumDataProcessing()
         {
             return View();
