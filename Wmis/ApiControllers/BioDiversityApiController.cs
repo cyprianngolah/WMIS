@@ -65,13 +65,14 @@
             var sheet = workbook.CreateSheet("Species");
 
             var header = sheet.CreateRow(0);
+
             header.CreateCell(0).SetCellValue("Group");
             header.CreateCell(1).SetCellValue("Kingdom");
-            header.CreateCell(2).SetCellValue("Order");
             header.CreateCell(3).SetCellValue("Phylum");
-            header.CreateCell(4).SetCellValue("SubPhylum");
             header.CreateCell(5).SetCellValue("Class");
+            header.CreateCell(2).SetCellValue("Order");
             header.CreateCell(6).SetCellValue("Family");
+            header.CreateCell(4).SetCellValue("SubPhylum");
             header.CreateCell(7).SetCellValue("Common Name");
             header.CreateCell(8).SetCellValue("Name");
             header.CreateCell(9).SetCellValue("Status Rank");
@@ -140,11 +141,11 @@
                 var row = sheet.CreateRow(rowIndex);
                 row.CreateCell(0).SetCellValue(data.Group.Name);
                 row.CreateCell(1).SetCellValue(data.Kingdom.Name);
-                row.CreateCell(2).SetCellValue(data.Order.Name);
                 row.CreateCell(3).SetCellValue(data.Phylum.Name);
-                row.CreateCell(4).SetCellValue(data.SubPhylum.Name);
                 row.CreateCell(5).SetCellValue(data.Class.Name);
+                row.CreateCell(2).SetCellValue(data.Order.Name);
                 row.CreateCell(6).SetCellValue(data.Family.Name);
+                row.CreateCell(4).SetCellValue(data.SubPhylum.Name);
                 row.CreateCell(7).SetCellValue(data.CommonName);
                 row.CreateCell(8).SetCellValue(data.Name);
                 row.CreateCell(9).SetCellValue(data.StatusRank.Name);
