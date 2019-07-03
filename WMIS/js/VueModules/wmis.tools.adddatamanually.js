@@ -1,5 +1,6 @@
 ﻿new Vue({
     el: "#app",
+   // mounted(){console.log("Hello Boy")},
     data: {
         busy: false,
         message: {

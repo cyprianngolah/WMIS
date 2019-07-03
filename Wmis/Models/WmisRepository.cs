@@ -939,6 +939,14 @@
                         Name = m.Name.Trim(),
                         CommonName = String.IsNullOrEmpty(m.CommonName) ? null : m.CommonName.Trim(),
                         ELCode = String.IsNullOrEmpty(m.ELCode) ? null : m.ELCode.Trim(),
+                        RangeExtentScore = String.IsNullOrEmpty(m.RangeExtentScore) ? null : m.RangeExtentScore.Trim(),
+                        RangeExtentDescription = String.IsNullOrEmpty(m.RangeExtentDescription) ? null : m.RangeExtentDescription.Trim(),
+                        NumberOfOccurencesScore = String.IsNullOrEmpty(m.NumberOfOccurencesScore) ? null : m.NumberOfOccurencesScore.Trim(),
+                        NumberOfOccurencesDescription = String.IsNullOrEmpty(m.NumberOfOccurencesDescription) ? null : m.NumberOfOccurencesDescription.Trim(),
+                        StatusRankId = String.IsNullOrEmpty(m.StatusRankId) ? null : m.StatusRankId.Trim(),
+                        StatusRankDescription = String.IsNullOrEmpty(m.StatusRankDescription) ? null : m.StatusRankDescription.Trim(),
+                        SRank = String.IsNullOrEmpty(m.SRank) ? null : m.SRank.Trim(),
+                        DecisionProcessDescription = String.IsNullOrEmpty(m.DecisionProcessDescription) ? null : m.DecisionProcessDescription.Trim(),
                     }).AsTableValuedParameter("dbo.BulkSpeciesUploadTableType")
                 };
 
