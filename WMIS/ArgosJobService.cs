@@ -1,4 +1,4 @@
-namespace Wmis.Logic
+﻿namespace Wmis.Logic
 {
     using DotSpatial.Topology;
     using Hangfire;

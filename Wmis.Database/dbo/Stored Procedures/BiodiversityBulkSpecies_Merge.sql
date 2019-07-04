@@ -51,7 +51,15 @@ AS
 				g.TaxonomyId AS GroupTaxonomyId,
 				sl.Name,
 				sl.CommonName,
-				sl.ELCode
+				sl.ELCode,
+				s1.RangeExtentScore,
+				s1.RangeExtentDescription,
+				s1.NumberOfOccurencesScore,
+				s1.NumberOfOccurencesDescription,
+				s1.StatusRankId,
+				s1.StatusRankDescription,
+				s1.SRank,
+				s1.DecisionProcessDescription
 		FROM @p_speciesList sl
 		LEFT JOIN (SELECT * FROM Taxonomy WHERE TaxonomyGroupId = @family_tax_group_id) AS f ON(sl.Family = f.Name)
 		LEFT JOIN (SELECT * FROM Taxonomy WHERE TaxonomyGroupId = @order_tax_group_id) AS o ON(sl.[Order] = o.Name)
@@ -68,7 +76,7 @@ AS
 		--AND T.ELCODE = S.ELCode
 	)
 	WHEN NOT MATCHED BY TARGET THEN
-		INSERT(Name, CommonName, ELCode, FamilyTaxonomyId, GroupTaxonomyId, KingdomTaxonomyId, PhylumTaxonomyId, ClassTaxonomyId, OrderTaxonomyId)
-		VALUES(S.Name, S.CommonName, S.ELCode, S.FamilyTaxonomyId, S.GroupTaxonomyId, S.KingdomTaxonomyId, S.PhylumTaxonomyId, S.ClassTaxonomyId, S.OrderTaxonomyId);
+		INSERT(Name, CommonName, ELCode, FamilyTaxonomyId, GroupTaxonomyId, KingdomTaxonomyId, PhylumTaxonomyId, ClassTaxonomyId, OrderTaxonomyId,RangeExtentScore,RangeExtentDescription,NumberOfOccurencesScore,NumberOfOccurencesDescription,StatusRankId,StatusRankDescription,SRank,DecisionProcessDescription)
+		VALUES(S.Name, S.CommonName, S.ELCode, S.FamilyTaxonomyId, S.GroupTaxonomyId, S.KingdomTaxonomyId, S.PhylumTaxonomyId, S.ClassTaxonomyId, S.OrderTaxonomyId,S.RangeExtentScore,S.RangeExtentDescription,S.NumberOfOccurencesScore,S.NumberOfOccurencesDescription,S.StatusRankId,S.StatusRankDescription,S.SRank,S.DecisionProcessDescription);
 
 RETURN 0

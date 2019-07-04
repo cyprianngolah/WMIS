@@ -23,6 +23,15 @@ namespace Wmis.Logic
         public string Name { get; set; }
         public string CommonName { get; set; }
         public string ELCode { get; set; }
+        public string RangeExtentScore { get; set; }
+        public string RangeExtentDescription { get; set; }
+        public string NumberOfOccurencesScore { get; set; }
+        public string NumberOfOccurencesDescription { get; set; }
+        public string StatusRankId { get; set; }
+        public string StatusRankDescription { get; set; }
+        public string SRank { get; set; }
+        public string DecisionProcessDescription { get; set; }
+
     }
 
 
@@ -51,6 +60,14 @@ namespace Wmis.Logic
                     string vName = row.GetCell(6) == null ? string.Empty : row.GetCell(6).StringCellValue; ;
                     string vCommonName = row.GetCell(7) == null ? string.Empty : row.GetCell(7).StringCellValue; ;
                     string vELCode = row.GetCell(8) == null ? string.Empty : row.GetCell(8).StringCellValue; ;
+                    string vRangeExtentScore = row.GetCell(9) == null ? string.Empty : row.GetCell(9).StringCellValue; ;
+                    string vRangeExtentDescription = row.GetCell(10) == null ? string.Empty : row.GetCell(10).StringCellValue; ;
+                    string vNumberOfOccurencesScore = row.GetCell(11) == null ? string.Empty : row.GetCell(11).StringCellValue; ;
+                    string vNumberOfOccurencesDescription = row.GetCell(12) == null ? string.Empty : row.GetCell(12).StringCellValue; ;
+                    string vStatusRankId = row.GetCell(13) == null ? string.Empty : row.GetCell(13).StringCellValue; ;
+                    string vStatusRankDescription = row.GetCell(14) == null ? string.Empty : row.GetCell(14).StringCellValue; ;
+                    string vSRank = row.GetCell(15) == null ? string.Empty : row.GetCell(15).StringCellValue; ;
+                    string vDecisionProcessDescription = row.GetCell(16) == null ? string.Empty : row.GetCell(16).StringCellValue; ;
 
                     datas.Add(new SpeciesData
                     {
@@ -63,7 +80,15 @@ namespace Wmis.Logic
                         Family = vFamily,
                         Name = vName,
                         CommonName = vCommonName,
-                        ELCode = vELCode
+                        ELCode = vELCode,
+                        RangeExtentScore = vRangeExtentScore,
+                        RangeExtentDescription = vRangeExtentDescription,
+                        NumberOfOccurencesScore = vNumberOfOccurencesScore,
+                        NumberOfOccurencesDescription = vNumberOfOccurencesDescription,
+                        StatusRankId = vStatusRankId,
+                        StatusRankDescription = vStatusRankDescription,
+                        SRank = vSRank,
+                        DecisionProcessDescription = vDecisionProcessDescription
                     });
 
                 }

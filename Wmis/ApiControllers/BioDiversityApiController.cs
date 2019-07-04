@@ -1,22 +1,22 @@
 ﻿namespace Wmis.ApiControllers
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Net;
-	using System.Net.Http;
-	using System.Text;
-	using System.Threading.Tasks;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
     using System.Net.Http.Headers;
     using System.Web.Http;
-	using Configuration;
-	using Dto;
-	using Models;
+    using Configuration;
+    using Dto;
+    using Models;
 
     using Wmis.Auth;
-	using Wmis.Logic;
-	using Wmis.WebApi;
+    using Wmis.Logic;
+    using Wmis.WebApi;
     using NPOI.HSSF.UserModel;
 
 
@@ -24,30 +24,30 @@
 	/// Bio Diversity API Controller
 	/// </summary>
 	[RoutePrefix("api/biodiversity")]
-	public class BioDiversityController : BaseApiController
+    public class BioDiversityController : BaseApiController
     {
         private readonly Auth.WmisUser _user;
         public const string BiodiversityBulkUploadErrorString = "BiodiversityBulkUploadError";
         public const string BiodiversityBulkUploadString = "BiodiversityBulkUpload";
         public const string DownloadErrorString = "FileDownloadError";
 
-        public BioDiversityController(WebConfiguration config, Auth.WmisUser user) 
-			: base(config)
-		{
+        public BioDiversityController(WebConfiguration config, Auth.WmisUser user)
+            : base(config)
+        {
             _user = user;
-		}
+        }
 
-		/// <summary>
-		/// Gets the list of BioDiversity information based on the searchRequestParameters
-		/// </summary>
-		/// <param name="searchRequestParameters">The parameters used when searching for BioDiversity data</param>
-		/// <returns>The paged data for BioDiversity</returns>
-		[HttpGet]
-		[Route]
+        /// <summary>
+        /// Gets the list of BioDiversity information based on the searchRequestParameters
+        /// </summary>
+        /// <param name="searchRequestParameters">The parameters used when searching for BioDiversity data</param>
+        /// <returns>The paged data for BioDiversity</returns>
+        [HttpGet]
+        [Route]
         public BiodiversityPagedResultset Get([FromUri]BioDiversitySearchRequest searchRequestParameters)
-		{
-			return Repository.BioDiversityGet(searchRequestParameters);
-		}
+        {
+            return Repository.BioDiversityGet(searchRequestParameters);
+        }
 
         /// <summary>
         /// Download list of Species depending on the filters passed to the diaplay list
@@ -65,6 +65,7 @@
             var sheet = workbook.CreateSheet("Species");
 
             var header = sheet.CreateRow(0);
+
             header.CreateCell(0).SetCellValue("Group");
             header.CreateCell(1).SetCellValue("Kingdom");
             header.CreateCell(2).SetCellValue("Order");
@@ -242,119 +243,119 @@
 
 
 
-		[HttpGet]
-		[Route("{bioDiversityKey:int?}")]
-		public BioDiversity Get(int bioDiversityKey)
-		{
-			return Repository.BioDiversityGet(bioDiversityKey);
-		}
+        [HttpGet]
+        [Route("{bioDiversityKey:int?}")]
+        public BioDiversity Get(int bioDiversityKey)
+        {
+            return Repository.BioDiversityGet(bioDiversityKey);
+        }
 
-		[HttpGet]
-		[Route("all")]
-		public IEnumerable<BioDiversity> Get()
-		{
-			return Repository.BioDiversityGetAll();
-		}
+        [HttpGet]
+        [Route("all")]
+        public IEnumerable<BioDiversity> Get()
+        {
+            return Repository.BioDiversityGetAll();
+        }
 
-		[HttpPost]
-		[Route]
-		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity )]
+        [HttpPost]
+        [Route]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public int Create([FromBody]BioDiversityNew bdn)
-		{
+        {
             return Repository.BioDiversityCreate(bdn, _user.Username);
-		}
+        }
 
-		[HttpPut]
-		[Route]
-		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
-		public DateTime Update([FromBody]BioDiversity bd)
-		{
+        [HttpPut]
+        [Route]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
+        public DateTime Update([FromBody]BioDiversity bd)
+        {
             return Repository.BioDiversityUpdate(bd, _user.Username);
-		}
+        }
 
-		[HttpGet]
-		[Route("decision/{bioDiversityKey:int?}")]
-		public BioDiversityDecisionRequest BioDiversityDecisionGet(int bioDiversityKey)
-		{
-			var bioDiversity = Repository.BioDiversityGet(bioDiversityKey);
-			return new BioDiversityDecisionRequest
-			{
-				Key = bioDiversity.Key,
+        [HttpGet]
+        [Route("decision/{bioDiversityKey:int?}")]
+        public BioDiversityDecisionRequest BioDiversityDecisionGet(int bioDiversityKey)
+        {
+            var bioDiversity = Repository.BioDiversityGet(bioDiversityKey);
+            return new BioDiversityDecisionRequest
+            {
+                Key = bioDiversity.Key,
                 Name = bioDiversity.Name,
                 CommonName = bioDiversity.CommonName,
                 SubSpeciesName = bioDiversity.SubSpeciesName,
                 EcoType = bioDiversity.EcoType,
-				LastUpdated = bioDiversity.LastUpdated,
-				RangeExtentScore = bioDiversity.RangeExtentScore,
-				RangeExtentDescription = bioDiversity.RangeExtentDescription,
-				AreaOfOccupancyScore = bioDiversity.AreaOfOccupancyScore,
-				AreaOfOccupancyDescription = bioDiversity.AreaOfOccupancyDescription,
-				PopulationSizeScore = bioDiversity.PopulationSizeScore,
-				PopulationSizeDescription = bioDiversity.PopulationSizeDescription,
-				NumberOfOccurencesScore = bioDiversity.NumberOfOccurencesScore,
-				NumberOfOccurencesDescription = bioDiversity.NumberOfOccurencesDescription,
-				EnvironmentalSpecificityScore = bioDiversity.EnvironmentalSpecificityScore,
-				EnvironmentalSpecificityDescription = bioDiversity.EnvironmentalSpecificityDescription,
-				ShortTermTrendsScore = bioDiversity.ShortTermTrendsScore,
-				ShortTermTrendsDescription = bioDiversity.ShortTermTrendsDescription,
-				LongTermTrendsScore = bioDiversity.LongTermTrendsScore,
-				LongTermTrendsDescription = bioDiversity.LongTermTrendsDescription,
-				ThreatsScore = bioDiversity.ThreatsScore,
-				ThreatsDescription = bioDiversity.ThreatsDescription,
-				IntrinsicVulnerabilityScore = bioDiversity.IntrinsicVulnerabilityScore,
-				IntrinsicVulnerabilityDescription = bioDiversity.IntrinsicVulnerabilityDescription,
-				NwtStatusRank = bioDiversity.NwtStatusRank,
-				SRank = bioDiversity.SRank,
-				StatusRank = bioDiversity.StatusRank,
-				StatusRankDescription = bioDiversity.StatusRankDescription,
-				DecisionProcessDescription = bioDiversity.DecisionProcessDescription,
+                LastUpdated = bioDiversity.LastUpdated,
+                RangeExtentScore = bioDiversity.RangeExtentScore,
+                RangeExtentDescription = bioDiversity.RangeExtentDescription,
+                AreaOfOccupancyScore = bioDiversity.AreaOfOccupancyScore,
+                AreaOfOccupancyDescription = bioDiversity.AreaOfOccupancyDescription,
+                PopulationSizeScore = bioDiversity.PopulationSizeScore,
+                PopulationSizeDescription = bioDiversity.PopulationSizeDescription,
+                NumberOfOccurencesScore = bioDiversity.NumberOfOccurencesScore,
+                NumberOfOccurencesDescription = bioDiversity.NumberOfOccurencesDescription,
+                EnvironmentalSpecificityScore = bioDiversity.EnvironmentalSpecificityScore,
+                EnvironmentalSpecificityDescription = bioDiversity.EnvironmentalSpecificityDescription,
+                ShortTermTrendsScore = bioDiversity.ShortTermTrendsScore,
+                ShortTermTrendsDescription = bioDiversity.ShortTermTrendsDescription,
+                LongTermTrendsScore = bioDiversity.LongTermTrendsScore,
+                LongTermTrendsDescription = bioDiversity.LongTermTrendsDescription,
+                ThreatsScore = bioDiversity.ThreatsScore,
+                ThreatsDescription = bioDiversity.ThreatsDescription,
+                IntrinsicVulnerabilityScore = bioDiversity.IntrinsicVulnerabilityScore,
+                IntrinsicVulnerabilityDescription = bioDiversity.IntrinsicVulnerabilityDescription,
+                NwtStatusRank = bioDiversity.NwtStatusRank,
+                SRank = bioDiversity.SRank,
+                StatusRank = bioDiversity.StatusRank,
+                StatusRankDescription = bioDiversity.StatusRankDescription,
+                DecisionProcessDescription = bioDiversity.DecisionProcessDescription,
                 NwtSarcAssessment = bioDiversity.NwtSarcAssessment,
-				CosewicStatus = bioDiversity.CosewicStatus,
-				NRank = bioDiversity.NRank,
-				SaraStatus = bioDiversity.SaraStatus,
-				IucnStatus = bioDiversity.IucnStatus,
-				GRank = bioDiversity.GRank,
+                CosewicStatus = bioDiversity.CosewicStatus,
+                NRank = bioDiversity.NRank,
+                SaraStatus = bioDiversity.SaraStatus,
+                IucnStatus = bioDiversity.IucnStatus,
+                GRank = bioDiversity.GRank,
                 Populations = bioDiversity.Populations
-			};
-		}
+            };
+        }
 
-		[HttpPut]
-		[Route("decision")]
-		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
-		public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request)
-		{
-           
-			var bioDiversity = Repository.BioDiversityGet(request.Key);
-			bioDiversity.RangeExtentScore = request.RangeExtentScore;
-			bioDiversity.RangeExtentDescription = request.RangeExtentDescription;
-			bioDiversity.AreaOfOccupancyScore = request.AreaOfOccupancyScore;
-			bioDiversity.AreaOfOccupancyDescription = request.AreaOfOccupancyDescription;
-			bioDiversity.PopulationSizeScore = request.PopulationSizeScore;
-			bioDiversity.PopulationSizeDescription = request.PopulationSizeDescription;
-			bioDiversity.NumberOfOccurencesScore = request.NumberOfOccurencesScore;
-			bioDiversity.NumberOfOccurencesDescription = request.NumberOfOccurencesDescription;
-			bioDiversity.EnvironmentalSpecificityScore = request.EnvironmentalSpecificityScore;
-			bioDiversity.EnvironmentalSpecificityDescription = request.EnvironmentalSpecificityDescription;
-			bioDiversity.ShortTermTrendsScore = request.ShortTermTrendsScore;
-			bioDiversity.ShortTermTrendsDescription = request.ShortTermTrendsDescription;
-			bioDiversity.LongTermTrendsScore = request.LongTermTrendsScore;
-			bioDiversity.LongTermTrendsDescription = request.LongTermTrendsDescription;
-			bioDiversity.ThreatsScore = request.ThreatsScore;
-			bioDiversity.ThreatsDescription = request.ThreatsDescription;
-			bioDiversity.IntrinsicVulnerabilityScore = request.IntrinsicVulnerabilityScore;
-			bioDiversity.IntrinsicVulnerabilityDescription = request.IntrinsicVulnerabilityDescription;
-			bioDiversity.StatusRank = request.StatusRank;
-			bioDiversity.SRank = request.SRank;
-			bioDiversity.StatusRankDescription = request.StatusRankDescription;
-			bioDiversity.DecisionProcessDescription = request.DecisionProcessDescription;
+        [HttpPut]
+        [Route("decision")]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
+        public void BioDiversityDecisionUpdate([FromBody]BioDiversityDecisionRequest request)
+        {
+
+            var bioDiversity = Repository.BioDiversityGet(request.Key);
+            bioDiversity.RangeExtentScore = request.RangeExtentScore;
+            bioDiversity.RangeExtentDescription = request.RangeExtentDescription;
+            bioDiversity.AreaOfOccupancyScore = request.AreaOfOccupancyScore;
+            bioDiversity.AreaOfOccupancyDescription = request.AreaOfOccupancyDescription;
+            bioDiversity.PopulationSizeScore = request.PopulationSizeScore;
+            bioDiversity.PopulationSizeDescription = request.PopulationSizeDescription;
+            bioDiversity.NumberOfOccurencesScore = request.NumberOfOccurencesScore;
+            bioDiversity.NumberOfOccurencesDescription = request.NumberOfOccurencesDescription;
+            bioDiversity.EnvironmentalSpecificityScore = request.EnvironmentalSpecificityScore;
+            bioDiversity.EnvironmentalSpecificityDescription = request.EnvironmentalSpecificityDescription;
+            bioDiversity.ShortTermTrendsScore = request.ShortTermTrendsScore;
+            bioDiversity.ShortTermTrendsDescription = request.ShortTermTrendsDescription;
+            bioDiversity.LongTermTrendsScore = request.LongTermTrendsScore;
+            bioDiversity.LongTermTrendsDescription = request.LongTermTrendsDescription;
+            bioDiversity.ThreatsScore = request.ThreatsScore;
+            bioDiversity.ThreatsDescription = request.ThreatsDescription;
+            bioDiversity.IntrinsicVulnerabilityScore = request.IntrinsicVulnerabilityScore;
+            bioDiversity.IntrinsicVulnerabilityDescription = request.IntrinsicVulnerabilityDescription;
+            bioDiversity.StatusRank = request.StatusRank;
+            bioDiversity.SRank = request.SRank;
+            bioDiversity.StatusRankDescription = request.StatusRankDescription;
+            bioDiversity.DecisionProcessDescription = request.DecisionProcessDescription;
             bioDiversity.NwtSarcAssessment = request.NwtSarcAssessment;
-			bioDiversity.CosewicStatus = request.CosewicStatus;
-			bioDiversity.NRank = request.NRank;
-			bioDiversity.SaraStatus = request.SaraStatus;
-			bioDiversity.IucnStatus = request.IucnStatus;
-			bioDiversity.GRank = request.GRank;
-			Repository.BioDiversityUpdate(bioDiversity, _user.Username);
-		}
+            bioDiversity.CosewicStatus = request.CosewicStatus;
+            bioDiversity.NRank = request.NRank;
+            bioDiversity.SaraStatus = request.SaraStatus;
+            bioDiversity.IucnStatus = request.IucnStatus;
+            bioDiversity.GRank = request.GRank;
+            Repository.BioDiversityUpdate(bioDiversity, _user.Username);
+        }
 
         [HttpGet]
         [Route("species")]
@@ -401,20 +402,20 @@
 
         #region Synonym Various
 
-	    /// <summary>
-	    /// Gets the SpeciesSynonyms for the given Species
-	    /// </summary>
-	    /// <param name="speciesKey">Species to retrieve</param>
-	    /// <returns>The list of matching TaxonomySynonyms</returns>
-	    [HttpGet]
-	    [Route("synonym/{speciesKey:int}")]
-	    public SpeciesSynonymRequest GetSynonyms(int speciesKey)
-	    {
-	        var speciesSynonyms = Repository.SpeciesSynonymGet(speciesKey);
-	        var synonymsDictionary = speciesSynonyms.GroupBy(s => s.SpeciesSynonymTypeId)
-	            .ToDictionary(g => g.Key, g => g.ToList().Select(s => s.Name));
-	        return new SpeciesSynonymRequest { SpeciesId = speciesKey, SynonymsDictionary = synonymsDictionary };
-	    }
+        /// <summary>
+        /// Gets the SpeciesSynonyms for the given Species
+        /// </summary>
+        /// <param name="speciesKey">Species to retrieve</param>
+        /// <returns>The list of matching TaxonomySynonyms</returns>
+        [HttpGet]
+        [Route("synonym/{speciesKey:int}")]
+        public SpeciesSynonymRequest GetSynonyms(int speciesKey)
+        {
+            var speciesSynonyms = Repository.SpeciesSynonymGet(speciesKey);
+            var synonymsDictionary = speciesSynonyms.GroupBy(s => s.SpeciesSynonymTypeId)
+                .ToDictionary(g => g.Key, g => g.ToList().Select(s => s.Name));
+            return new SpeciesSynonymRequest { SpeciesId = speciesKey, SynonymsDictionary = synonymsDictionary };
+        }
 
         /// <summary>
         /// Save synonyms for a Species / Species Synonym Type
@@ -422,7 +423,7 @@
         /// <param name="sssr">Synonyms to save</param>
         [HttpPost]
         [Route("synonym/save")]
-		[WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorBiodiversity)]
         public void SaveSynonyms([FromBody]Dto.SpeciesSynonymSaveRequest sssr)
         {
             Repository.SpeciesSynonymSaveMany(sssr.SpeciesId, sssr.SpeciesSynonymTypeId, sssr.Synonyms.Where(i => !string.IsNullOrWhiteSpace(i)));
@@ -456,14 +457,14 @@
                     throw new ObservationUploadException("Invalid File Extension. Observation Upload only supports .xls or .xlsx extensions.");
                 }
                 // perform another validation to check if the file uploaded is the correct template
-                
+
                 var destinationFile = String.Concat(Guid.NewGuid(), originalFile.Extension);
                 var destinationFilePath = Path.Combine(destinationFolder, destinationFile);
                 System.IO.File.Copy(tempFileData.LocalFileName, destinationFilePath);
-                
+
                 // save the uploaded process to database
                 Repository.AddBulkUpload(originalFile.Name, destinationFilePath, "Species", destinationFile);
-                
+
                 // now merge the data to the database
                 var data = new BiodiversityBulkUploaderService().GetData(destinationFilePath, 1);
                 Repository.BulkInsertSpecies(data);
@@ -490,7 +491,7 @@
             }
         }
 
-        
+
         [HttpGet]
         [Route("uploads/download")]
         [IFrameProgressExceptionHandler(DownloadErrorString)]
@@ -499,7 +500,7 @@
 
             if (!string.IsNullOrEmpty(fileName))
             {
-                
+
                 string filePath = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
                 string fullPath = Path.Combine(filePath, fileName);
 
@@ -514,7 +515,7 @@
                     };
                     //throw new HttpResponseException(HttpStatusCode.Moved);
                 }
-                
+
 
                 if (System.IO.File.Exists(fullPath))
                 {
@@ -539,14 +540,14 @@
 
                     return response;
                 }
-                
+
             }
 
             return new HttpResponseMessage(HttpStatusCode.NotFound);
 
         }
 
-       
+
 
         [HttpGet]
         [Route("uploads")]
