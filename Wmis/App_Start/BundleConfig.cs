@@ -114,6 +114,8 @@
 
             bundles.Add(new ScriptBundle("~/bundles/tools/lotekiridiumdataprocessing").Include(
                     "~/js/vuemodules/wmis.tools.lotekiridiumdataprocessing.js"));
+            bundles.Add(new ScriptBundle("~/bundles/tools/AddDataManually").Include(
+                    "~/js/vuemodules/wmis.tools.adddatamanually.js"));
 
             #endregion
 

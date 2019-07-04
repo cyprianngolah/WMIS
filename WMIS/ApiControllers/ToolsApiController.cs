@@ -47,7 +47,7 @@
         [HttpPost]
         [Route("resetHerdPopulation")]
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
-        public void BatchReject([FromBody] IEnumerable<ToolsResetHerdPopulationRequest> request)
+        public void ResetHerdPopulation([FromBody] IEnumerable<ToolsResetHerdPopulationRequest> request)
         {
             Repository.ResetHerdPopulation(request);
         }
@@ -69,7 +69,7 @@
         }
 
         [HttpGet]
-        [Route("rejectAfterInactiveDate")]
+        [Route("rejectLocationsAfterInactiveDate")]
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
         public int RejectLocationsAfterInactiveDate()
         {
@@ -140,6 +140,15 @@
             Repository.LoadPostRetrievalData(request);
         }
 
+        [HttpPost]
+        [Route("loadDataManually")]
+        [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
+        public void LoadDataManually([FromBody] IEnumerable<ToolsCollarData> request)
+        {
+            Repository.LoadDataManually(request);
+        }
+
+       
         [HttpPost]
         [Route("lotek/upload")]
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]

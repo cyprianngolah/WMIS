@@ -352,14 +352,33 @@
         /// <summary>
         /// WMIS Tools
         /// </summary>
-        private const string TOOLS_ARGOSPASS_BATCH_REJECT = "dbo.Tools_ArgosPass_BatchReject";
+        private const string TOOLS_ARGOSPASS_BATCH_REJECT = "dbo.Tools_ArgosPass_BatchUpdate";
         private const string TOOLS_RESET_HERD_POPULATION = "dbo.Tools_ResetAnimalHerdToNull";
         private const string TOOLS_REJECT_PREDEPLOYMENT_LOCATIONS = "dbo.Tools_ArgosPass_RejectPreDeploymentLocations";
         private const string TOOLS_REJECT_EXACT_DUPLICATES = "dbo.Tools_ArgosPass_RejectExactDuplicates";
         private const string TOOLS_REJECT_AFTER_INACTIVE_DATE = "dbo.Tools_ArgosPass_RejectLocationsAfterInactiveDate";
         private const string TOOLS_MERGE_POST_RETRIEVAL_DATA = "dbo.Tools_Merge_Downloaded_Data";
+        private const string TOOLS_MERGE_MANUAL_DATA_ADD = "dbo.Tools_Merge_Downloaded_Data_Manual";
+
         private const string TOOLS_LOAD_VECTRONICS_DATA = "dbo.Tools_InsertVectronicsData";
         private const string TOOLS_LOAD_LOTEK_DATA = "dbo.Tools_InsertLotekData";
+
+
+        /*////////
+        /// <summary>
+        /// WMIS Tools
+        /// </summary>
+        private const string TOOLS_ARGOSPASS_BATCH_REJECT = "dbo.Tools_ArgosPass_BatchReject";--- change stored procedure
+        private const string TOOLS_RESET_HERD_POPULATION = "dbo.Tools_ResetAnimalHerdToNull";
+        private const string TOOLS_REJECT_PREDEPLOYMENT_LOCATIONS = "dbo.Tools_ArgosPass_RejectPreDeploymentLocations";
+        private const string TOOLS_REJECT_EXACT_DUPLICATES = "dbo.Tools_ArgosPass_RejectExactDuplicates";
+        private const string TOOLS_REJECT_AFTER_INACTIVE_DATE = "dbo.Tools_ArgosPass_RejectLocationsAfterInactiveDate";
+        private const string TOOLS_MERGE_POST_RETRIEVAL_DATA = "dbo.Tools_Merge_Downloaded_Data";
+        private const string TOOLS_MERGE_MANUAL_DATA_ADD = "dbo.Tools_Merge_Downloaded_Data"; ---added chnage
+
+        private const string TOOLS_LOAD_VECTRONICS_DATA = "dbo.Tools_InsertVectronicsData";
+        private const string TOOLS_LOAD_LOTEK_DATA = "dbo.Tools_InsertLotekData";
+        /////// */
 
         /// <summary>
         /// The Connection String to connect to the WMIS database for the current environment
@@ -507,6 +526,28 @@
                     }).AsTableValuedParameter("dbo.DownloadedArgosPassTableType")
                 };
                 c.Execute(TOOLS_MERGE_POST_RETRIEVAL_DATA, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void LoadDataManually(IEnumerable<ToolsCollarData> request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_data = request.Select(m => new
+                    {
+                        CTN = m.CTN ?? "NA",
+                        Timestamp = (DateTime)m.Timestamp,
+                        GpsLatitude = m.GpsLatitude ?? 9999, // in the unlikely case of a NoData
+                        GpsLongitude = m.GpsLongitude ?? 9999,
+                        GpsFixAttempt = m.GpsFixAttempt,
+                        PredeploymentData = m.PredeploymentData,
+                        Mortality = m.Mortality,
+                        LocationClass = "G"
+                    }).AsTableValuedParameter("dbo.DownloadedArgosPassTableType")
+                };
+                c.Execute(TOOLS_MERGE_MANUAL_DATA_ADD, param, commandType: CommandType.StoredProcedure);
             }
         }
         #endregion
@@ -898,6 +939,14 @@
                         Name = m.Name.Trim(),
                         CommonName = String.IsNullOrEmpty(m.CommonName) ? null : m.CommonName.Trim(),
                         ELCode = String.IsNullOrEmpty(m.ELCode) ? null : m.ELCode.Trim(),
+                        RangeExtentScore = String.IsNullOrEmpty(m.RangeExtentScore) ? null : m.RangeExtentScore.Trim(),
+                        RangeExtentDescription = String.IsNullOrEmpty(m.RangeExtentDescription) ? null : m.RangeExtentDescription.Trim(),
+                        NumberOfOccurencesScore = String.IsNullOrEmpty(m.NumberOfOccurencesScore) ? null : m.NumberOfOccurencesScore.Trim(),
+                        NumberOfOccurencesDescription = String.IsNullOrEmpty(m.NumberOfOccurencesDescription) ? null : m.NumberOfOccurencesDescription.Trim(),
+                        StatusRankId = String.IsNullOrEmpty(m.StatusRankId) ? null : m.StatusRankId.Trim(),
+                        StatusRankDescription = String.IsNullOrEmpty(m.StatusRankDescription) ? null : m.StatusRankDescription.Trim(),
+                        SRank = String.IsNullOrEmpty(m.SRank) ? null : m.SRank.Trim(),
+                        DecisionProcessDescription = String.IsNullOrEmpty(m.DecisionProcessDescription) ? null : m.DecisionProcessDescription.Trim(),
                     }).AsTableValuedParameter("dbo.BulkSpeciesUploadTableType")
                 };
 
