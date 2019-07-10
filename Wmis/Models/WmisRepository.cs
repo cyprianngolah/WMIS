@@ -408,7 +408,7 @@
         {
             using (var c = NewWmisConnection)
             {
-                return c.Query<int>(TOOLS_REJECT_AFTER_INACTIVE_DATE, new { }, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                return c.Query<int>(TOOLS_REJECT_AFTER_INACTIVE_DATE, new { }, commandTimeout:120,  commandType: CommandType.StoredProcedure).SingleOrDefault();
             }
         }
 

@@ -16,6 +16,8 @@
 
         public const string ADMINISTRATOR_PROJECTS_ROLE = "Administrator Projects";
 
-		public string Name { get; set; }
+        public const string WMIS_ADMINISTRATOR_ROLE = "WMIS Administrator";
+
+        public string Name { get; set; }
 	}
 }
