@@ -14,7 +14,9 @@
         public const string AdministratorCollaredAnimals = "Administrator CollaredAnimals";
 
         public const string AllRoles = "Administrator Biodiversity,Administrator Projects,Administrator CollaredAnimals";
-	}
+
+        public const string WMISAdministrator = "WMIS Administrator";
+    }
 
 	public class WmisClaimTypes
 	{
