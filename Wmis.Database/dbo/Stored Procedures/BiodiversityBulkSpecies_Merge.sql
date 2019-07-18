@@ -19,7 +19,6 @@ AS
 	DECLARE @family_tax_group_id int;
 	SET @family_tax_group_id = (SELECT TOP(1) TaxonomyGroupId FROM TaxonomyGroups WHERE NAME = 'Family');
 
-
 	-- Get all the Taxonomy groups and insert if they do not yet exist on the taxonomy table
 	;WITH CTE AS(
 		SELECT DISTINCT @group_tax_group_id TaxGroupId, [Group] Name FROM @p_speciesList WHERE [Group] IS NOT NULL

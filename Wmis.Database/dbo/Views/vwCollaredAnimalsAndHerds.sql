@@ -45,7 +45,7 @@ SELECT DISTINCT TOP 100 PERCENT aah.CollaredAnimalId, ca.AnimalId, reg.name Regi
 	ca.MortalityDate, ca.MortalityLatitude, ca.MortalityLongitude, am.name MortalityCause, cstate.name CollarState, 
 	cstatus.name CollarStatus, ca.Model, ca.VhfFrequency, ctype.name CollarType, p.name Project, ca.CollarId, ca.JobNumber, 
 	aprog.ProgramNumber, cmal.name Malfunction, CASE WHEN ca.HasPttBeenReturned = 1 THEN 'Yes' ELSE 'No' END ReturnedToCLS,
-	ca.DropOffDate, ca.EstimatedDropOff, ca.Comments,
+	ca.DropOffDate, ca.EstimatedDropOff, ca.Comments,ca.BodyCondition, ca.CarcassPosition, ca.CarcassComments, ca.SignsOfPredation,
 	BreedingStatus = STUFF((
 			SELECT (' > ' + bs.[Name] + ' (' + CONVERT(VARCHAR, sh.BreedingStatusEffectiveDate) + ')')
 			FROM BreedingStatuses bs 
