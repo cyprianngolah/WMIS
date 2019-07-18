@@ -467,6 +467,8 @@
 
                 // now merge the data to the database
                 var data = new BiodiversityBulkUploaderService().GetData(destinationFilePath, 1);
+                //Test to see if it reached here
+               // System.Web.HttpContext.Current.Response.Write("Data is about to be inserted");
                 Repository.BulkInsertSpecies(data);
 
                 // send the response back to EventListener
