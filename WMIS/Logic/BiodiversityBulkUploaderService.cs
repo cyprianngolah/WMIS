@@ -27,7 +27,7 @@ namespace Wmis.Logic
         public string RangeExtentDescription { get; set; }
         public string NumberOfOccurencesScore { get; set; }
         public string NumberOfOccurencesDescription { get; set; }
-        public int StatusRankId { get; set; }
+        public string StatusRankId { get; set; }
         public string StatusRankDescription { get; set; }
         public string SRank { get; set; }
         public string DecisionProcessDescription { get; set; }
@@ -64,8 +64,8 @@ namespace Wmis.Logic
                     string vRangeExtentDescription = row.GetCell(10) == null ? string.Empty : row.GetCell(10).StringCellValue; ;
                     string vNumberOfOccurencesScore = row.GetCell(11) == null ? string.Empty : row.GetCell(11).StringCellValue; ;
                     string vNumberOfOccurencesDescription = row.GetCell(12) == null ? string.Empty : row.GetCell(12).StringCellValue; ;
-                    int vStatusRankId = (int)row.GetCell(13).NumericCellValue; ;
-                    //    string vStatusRankId = row.GetCell(13) == null ? string.Empty : row.GetCell(13).StringCellValue; ;
+                   // int vStatusRankId = (int)row.GetCell(13).NumericCellValue; ;
+                    string vStatusRankId = row.GetCell(13) == null ? string.Empty : row.GetCell(13).StringCellValue; ;
                     string vStatusRankDescription = row.GetCell(14) == null ? string.Empty : row.GetCell(14).StringCellValue; ;
                     string vSRank = row.GetCell(15) == null ? string.Empty : row.GetCell(15).StringCellValue; ;
                     string vDecisionProcessDescription = row.GetCell(16) == null ? string.Empty : row.GetCell(16).StringCellValue; ;
