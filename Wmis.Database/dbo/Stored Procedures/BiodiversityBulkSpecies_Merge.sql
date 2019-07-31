@@ -18,6 +18,8 @@ AS
 
 	DECLARE @family_tax_group_id int;
 	SET @family_tax_group_id = (SELECT TOP(1) TaxonomyGroupId FROM TaxonomyGroups WHERE NAME = 'Family');
+	--Testing to see if output
+	SELECT * INTO MyDummyTable FROM @p_speciesList;
 
 	-- Get all the Taxonomy groups and insert if they do not yet exist on the taxonomy table
 	;WITH CTE AS(
@@ -75,7 +77,7 @@ AS
 		--AND T.ELCODE = S.ELCode
 	)
 	WHEN NOT MATCHED BY TARGET THEN
-		INSERT(Name, CommonName, ELCode, FamilyTaxonomyId, GroupTaxonomyId, KingdomTaxonomyId, PhylumTaxonomyId, ClassTaxonomyId, OrderTaxonomyId,RangeExtentScore,RangeExtentDescription,NumberOfOccurencesScore,NumberOfOccurencesDescription,StatusRankId,StatusRankDescription,SRank,DecisionProcessDescription)
-		VALUES(S.Name, S.CommonName, S.ELCode, S.FamilyTaxonomyId, S.GroupTaxonomyId, S.KingdomTaxonomyId, S.PhylumTaxonomyId, S.ClassTaxonomyId, S.OrderTaxonomyId,S.RangeExtentScore,S.RangeExtentDescription,S.NumberOfOccurencesScore,S.NumberOfOccurencesDescription,S.StatusRankId,S.StatusRankDescription,S.SRank,S.DecisionProcessDescription);
+		INSERT(Name, CommonName, ELCode, FamilyTaxonomyId, GroupTaxonomyId, KingdomTaxonomyId, PhylumTaxonomyId, ClassTaxonomyId, OrderTaxonomyId,RangeExtentScore,RangeExtentDescription,NumberOfOccurencesScore,NumberOfOccurencesDescription,StatusRankDescription,SRank,DecisionProcessDescription)
+		VALUES(S.Name, S.CommonName, S.ELCode, S.FamilyTaxonomyId, S.GroupTaxonomyId, S.KingdomTaxonomyId, S.PhylumTaxonomyId, S.ClassTaxonomyId, S.OrderTaxonomyId,S.RangeExtentScore,S.RangeExtentDescription,S.NumberOfOccurencesScore,S.NumberOfOccurencesDescription,S.StatusRankDescription,S.SRank,S.DecisionProcessDescription);
 
 RETURN 0
