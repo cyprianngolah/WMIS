@@ -12,7 +12,7 @@
 	[RangeExtentDescription] [varchar](max) NULL,
 	[NumberOfOccurencesScore] [varchar](200) NULL,
 	[NumberOfOccurencesDescription] [varchar](max) NULL,
-	[StatusRankId] [varchar](200) NULL,
+	[StatusRankId] [int] NULL,
 	[StatusRankDescription] [varchar](max) NULL,
 	[SRank] [varchar](200) NULL,
 	[DecisionProcessDescription] [varchar](max) NULL
