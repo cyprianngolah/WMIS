@@ -20,21 +20,17 @@ wmis.biodiversity.decision.edit = (function ($) {
 			wmis.global.getDropDownData(self.cosewicStatus, "/api/cosewicstatus?startRow=0&rowCount=500", function (json) { return json.data; });
 			wmis.global.getDropDownData(self.nwtSarcAssessment, "/api/nwtsarcassessment?startRow=0&rowCount=500", function (result) { return result.data; });
 
-            $.getJSON("/api/BioDiversity/Decision/" + key, {}, function (json) {
-                setTimeout(() => {
-			            ko.mapper.fromJS(json, "auto", self.model);
-			            self.dirtyFlag = wmis.global.dirtyFlagFor(ko, self.model);
-			             $(window).bind('beforeunload', function() {
-			                if (self.dirtyFlag.isDirty()) {
-			                    return "You have unsaved changes, are you sure you want to continue without saving?";
-			                }
-			            });
-                    self.dataLoaded(true);
-                }, 2000)
-            }).always(function () {
-                setTimeout(() => {
-                    wmis.global.hideWaitingScreen();
-                }, 2500)
+			$.getJSON("/api/BioDiversity/Decision/" + key, {}, function (json) {
+			    ko.mapper.fromJS(json, "auto", self.model);
+			    self.dirtyFlag = wmis.global.dirtyFlagFor(ko, self.model);
+			    $(window).bind('beforeunload', function() {
+			        if (self.dirtyFlag.isDirty()) {
+			            return "You have unsaved changes, are you sure you want to continue without saving?";
+			        }
+			    });
+				self.dataLoaded(true);
+			}).always(function () {
+				wmis.global.hideWaitingScreen();
 			}).fail(wmis.global.ajaxErrorHandler);
 		};
 
