@@ -20,7 +20,7 @@ AS
 	SET @family_tax_group_id = (SELECT TOP(1) TaxonomyGroupId FROM TaxonomyGroups WHERE NAME = 'Family');
 	--Testing to see if output
 	-- SELECT * INTO MyDummyTable FROM @p_speciesList;
-	--End Test
+	--End Testing to see if data procedure was reached
 	-- Get all the Taxonomy groups and insert if they do not yet exist on the taxonomy table
 	;WITH CTE AS(
 		SELECT DISTINCT @group_tax_group_id TaxGroupId, [Group] Name FROM @p_speciesList WHERE [Group] IS NOT NULL
