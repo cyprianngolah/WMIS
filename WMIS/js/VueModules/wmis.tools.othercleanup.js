@@ -3,6 +3,7 @@
 
 new Vue({
     el: "#app",
+    name: "OtherCleanup",
     data: {
         busy: false,
         message: {
@@ -12,7 +13,7 @@ new Vue({
     },
     
     methods: {
-        rejectPredeploymentLocations() {
+        rejectPredeploymentLocations: function() {
             this.busy=true
             axios.get(`/api/tools/rejectPreDeployment`)
                 .then(response => {
@@ -33,7 +34,7 @@ new Vue({
                 })
         },
 
-        rejectExactDuplicates() {
+        rejectExactDuplicates: function() {
             this.busy = true
             axios.get(`/api/tools/rejectDuplicates`)
                 .then(response => {
@@ -54,7 +55,7 @@ new Vue({
                 })
         },
 
-        rejectPostInactiveDate() {
+        rejectPostInactiveDate: function() {
             this.busy = true
             axios.get(`/api/tools/rejectLocationsAfterInactiveDate`)
                 .then(response => {
@@ -74,9 +75,5 @@ new Vue({
                     this.message.class = 'danger'
                 })
         }
-    },
-
-    mounted() {
-        
     }
 })
