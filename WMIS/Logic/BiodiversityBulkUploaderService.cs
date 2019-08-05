@@ -27,7 +27,7 @@ namespace Wmis.Logic
         public string RangeExtentDescription { get; set; }
         public string NumberOfOccurencesScore { get; set; }
         public string NumberOfOccurencesDescription { get; set; }
-        public int StatusRankId { get; set; }
+        public int StatusRankId { get; set; } //take integer status rank id
         public string StatusRankDescription { get; set; }
         public string SRank { get; set; }
         public string DecisionProcessDescription { get; set; }
