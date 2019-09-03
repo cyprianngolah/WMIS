@@ -24,6 +24,8 @@
 	    
         public string Model { get; set; }
 
+        public string Geofencing { get; set; }
+
         public CollarStatus CollarStatus { get; set; }
 
         public CollarMalfunction CollarMalfunction { get; set; }

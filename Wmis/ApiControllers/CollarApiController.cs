@@ -62,7 +62,8 @@
             header.CreateCell(10).SetCellValue("Region");
             header.CreateCell(11).SetCellValue("Job Number");
             header.CreateCell(12).SetCellValue("PTT Returned to CLS");
-            header.CreateCell(13).SetCellValue("Comments");
+            header.CreateCell(13).SetCellValue("Geofencing");
+            header.CreateCell(14).SetCellValue("Comments");
 
             var rowIndex = 1;
 
@@ -82,7 +83,8 @@
                 row.CreateCell(10).SetCellValue(data.CollarRegion.Name);
                 row.CreateCell(11).SetCellValue(data.JobNumber);
                 row.CreateCell(12).SetCellValue(data.HasPttBeenReturned);
-                row.CreateCell(13).SetCellValue(data.Comments);
+                row.CreateCell(13).SetCellValue(data.Geofencing);
+                row.CreateCell(14).SetCellValue(data.Comments);
 
                 rowIndex++;
             }
