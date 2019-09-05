@@ -43,7 +43,7 @@ SELECT DISTINCT TOP 100 PERCENT aah.CollaredAnimalId, ca.AnimalId, reg.name Regi
 	DATEPART(yyyy, b.AssignedHerdAssociationDate) DeploymentYear, CONVERT(DATE, b.AssignedHerdAssociationDate) DeploymentDate, hp.Name CurrentHerd, 
 	CONVERT(DATE, ca.HerdAssociationDate) HerdAssociationDate, aah.HerdSwitch, astatus.name AnimalStatus, ca.InactiveDate, 
 	ca.MortalityDate, ca.MortalityLatitude, ca.MortalityLongitude, am.name MortalityCause, cstate.name CollarState, 
-	cstatus.name CollarStatus, ca.Model, ca.VhfFrequency, ctype.name CollarType, p.name Project, ca.CollarId, ca.JobNumber, 
+	cstatus.name CollarStatus, ca.Model, ca.Geofencing, ca.VhfFrequency, ctype.name CollarType, p.name Project, ca.CollarId, ca.JobNumber, 
 	aprog.ProgramNumber, cmal.name Malfunction, CASE WHEN ca.HasPttBeenReturned = 1 THEN 'Yes' ELSE 'No' END ReturnedToCLS,
 	ca.DropOffDate, ca.EstimatedDropOff, ca.Comments,ca.BodyCondition, ca.CarcassPosition, ca.CarcassComments, ca.SignsOfPredation,
 	BreedingStatus = STUFF((

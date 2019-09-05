@@ -14,6 +14,7 @@ AS
 		c.JobNumber,
 		c.HasPttBeenReturned,
 		c.Model,
+		c.Geofencing,
 		c.InactiveDate,
 		c.DeploymentDate,
 		c.Size,

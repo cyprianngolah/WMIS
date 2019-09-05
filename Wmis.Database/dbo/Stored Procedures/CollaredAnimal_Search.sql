@@ -21,6 +21,7 @@ AS
 		c.VhfFrequency,
 		c.JobNumber,
 		c.Model,
+		c.Geofencing,
 		c.InactiveDate,
 		c.Size,
 		c.BeltingColour,
@@ -81,6 +82,7 @@ AS
 			OR c.AnimalId LIKE '%' + @p_keywords + '%'
 			OR c.SubscriptionId LIKE '%' + @p_keywords + '%'
 			OR c.Model LIKE '%' + @p_keywords + '%'
+			OR c.Geofencing LIKE '%' + @p_keywords + '%'
 			OR herdPopulation.Name LIKE '%' + @p_keywords + '%'
 			OR collarMalfunction.Name LIKE '%' + @p_keywords + '%'
 			OR c.VhfFrequency LIKE '%' + @p_keywords + '%'
