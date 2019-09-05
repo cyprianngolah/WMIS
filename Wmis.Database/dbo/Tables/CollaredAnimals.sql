@@ -61,6 +61,7 @@
 	[SignsOfHumans]						BIT				    NULL,
 	[LastUpdated]						DATETIME		    NOT NULL DEFAULT GETUTCDATE(),
 	[ArgosProgramId]					INT					NULL, 
+    [Geofencing]						NVARCHAR(50) NULL, 
     CONSTRAINT [PK_CollaredAnimals] PRIMARY KEY CLUSTERED ([CollaredAnimalId]),
 	CONSTRAINT [FK_CollaredAnimals_CollarMalfunctions] FOREIGN KEY ([CollarMalfunctionId]) REFERENCES [dbo].[CollarMalfunctions] ([CollarMalfunctionId]),
 	CONSTRAINT [FK_CollaredAnimals_CollarStates] FOREIGN KEY ([CollarStateId]) REFERENCES [dbo].[CollarStates] ([CollarStateId]),
