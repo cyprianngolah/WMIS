@@ -68,10 +68,10 @@
 
             header.CreateCell(0).SetCellValue("Group");
             header.CreateCell(1).SetCellValue("Kingdom");
-            header.CreateCell(2).SetCellValue("Order");
-            header.CreateCell(3).SetCellValue("Phylum");
-            header.CreateCell(4).SetCellValue("SubPhylum");
-            header.CreateCell(5).SetCellValue("Class");
+            header.CreateCell(2).SetCellValue("Phylum");
+            header.CreateCell(3).SetCellValue("SubPhylum");
+            header.CreateCell(4).SetCellValue("Class");
+            header.CreateCell(5).SetCellValue("Order");
             header.CreateCell(6).SetCellValue("Family");
             header.CreateCell(7).SetCellValue("Common Name");
             header.CreateCell(8).SetCellValue("Name");
@@ -141,10 +141,10 @@
                 var row = sheet.CreateRow(rowIndex);
                 row.CreateCell(0).SetCellValue(data.Group.Name);
                 row.CreateCell(1).SetCellValue(data.Kingdom.Name);
-                row.CreateCell(2).SetCellValue(data.Order.Name);
-                row.CreateCell(3).SetCellValue(data.Phylum.Name);
-                row.CreateCell(4).SetCellValue(data.SubPhylum.Name);
-                row.CreateCell(5).SetCellValue(data.Class.Name);
+                row.CreateCell(2).SetCellValue(data.Phylum.Name);
+                row.CreateCell(3).SetCellValue(data.SubPhylum.Name);
+                row.CreateCell(4).SetCellValue(data.Class.Name);
+                row.CreateCell(5).SetCellValue(data.Order.Name);
                 row.CreateCell(6).SetCellValue(data.Family.Name);
                 row.CreateCell(7).SetCellValue(data.CommonName);
                 row.CreateCell(8).SetCellValue(data.Name);
@@ -474,7 +474,7 @@
                 // send the response back to EventListener
                 var pageBuilder = new StringBuilder();
                 pageBuilder.Append("<html><head></head>");
-                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:{1}', '*');</script></body></html>", BiodiversityBulkUploadString));
+                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:{{1}}', '*');</script></body></html>", BiodiversityBulkUploadString));
                 return Request.CreateResponse(HttpStatusCode.OK, pageBuilder.ToString(), new PlainTextFormatter());
 
             }
