@@ -119,7 +119,7 @@ wmis.biodiversity.index = (function($) {
                 { "data": "group.name" },
                 { "data": "kingdom.name" },
                 { "data": "phylum.name" },
-                { "data": "subPhylum.name" },
+               // { "data": "subPhylum.name" },
                 { "data": "class.name" },
 				{ "data": "order.name" },
 				{ "data": "family.name" },
