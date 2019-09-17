@@ -10,6 +10,9 @@
 		/// <summary>
 		/// Gets or sets the Name value
 		/// </summary>
+        /// 
+        public int SpeciesId { get; set; }
+
 		public string Name { get; set; }
 
 		/// <summary>
