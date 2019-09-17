@@ -609,7 +609,7 @@
                         bd.CosewicStatus = cs ?? new CosewicStatus();
                         bd.Kingdom = dyn.KingdomKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.KingdomKey, Name = dyn.KingdomName };
                         bd.Phylum = dyn.PhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.PhylumKey, Name = dyn.PhylumName };
-                      //  bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };
+                      //  bd.SubPhylum = dyn.SubPhylumKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubPhylumKey, Name = dyn.SubPhylumName };    
                         bd.Class = dyn.ClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.ClassKey, Name = dyn.ClassName };
                         bd.SubClass = dyn.SubClassKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.SubClassKey, Name = dyn.SubClassName };
                         bd.Order = dyn.OrderKey == null ? new Taxonomy() : new Taxonomy { Key = dyn.OrderKey, Name = dyn.OrderName };
