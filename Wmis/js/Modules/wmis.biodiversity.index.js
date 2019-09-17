@@ -116,7 +116,11 @@ wmis.biodiversity.index = (function($) {
 			"pagingType": "bootstrap",
 			"dom": '<"top">rt<"bottom"ip><"clear">',
 			"columns": [
-				{ "data": "group.name" },
+                { "data": "group.name" },
+                { "data": "kingdom.name" },
+                { "data": "phylum.name" },
+                { "data": "subPhylum.name" },
+                { "data": "class.name" },
 				{ "data": "order.name" },
 				{ "data": "family.name" },
 				{ "data": "commonName" },
