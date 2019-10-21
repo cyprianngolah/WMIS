@@ -210,4 +210,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ValueType" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="002909ad-b5d7-430a-9e5e-185cf2123673" ChangeDateTime="10/17/2019 17:25:48">
+    <Property Name="ElementName" Value="[dbo].[CollaredAnimals].[CollarReleasedOnTime]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CollaredAnimals]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReleasedOnTime" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="46f86c85-2aa5-406e-9a4a-f3a1c47cffc9" ChangeDateTime="10/17/2019 17:40:20">
+    <Property Name="ElementName" Value="[dbo].[CollaredAnimals].[ReleasedOnTime]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CollaredAnimals]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReleasedOnSchedule" />
+  </Operation>
 </Operations>

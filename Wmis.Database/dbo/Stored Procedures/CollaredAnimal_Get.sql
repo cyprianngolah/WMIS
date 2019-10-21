@@ -15,6 +15,8 @@ AS
 		c.HasPttBeenReturned,
 		c.Model,
 		c.Geofencing,
+		c.ReleasedOnSchedule,
+		c.ProgrammingSpec,
 		c.InactiveDate,
 		c.DeploymentDate,
 		c.Size,

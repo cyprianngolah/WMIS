@@ -2474,6 +2474,8 @@
                     p_HasPttBeenReturned = collar.HasPttBeenReturned,
                     p_Model = collar.Model,
                     p_Geofencing = collar.Geofencing,
+                    p_ReleasedOnSchedule = collar.ReleasedOnSchedule,
+                    p_ProgrammingSpec = collar.ProgrammingSpec,
                     p_InactiveDate = collar.InactiveDate,
                     p_DeploymentDate = collar.DeploymentDate,
                     p_Size = collar.Size,
