@@ -106,6 +106,14 @@
     </div>
 
     <div class="form-group">
+        <label for="releasedOnSchedule" class="col-md-1 control-label">Released on schedule?</label>
+        <div class="col-md-2">
+            <input id="releasedOnSchedule" type="checkbox"  data-bind="checked: releasedOnSchedule"/>
+        </div>
+
+    </div>
+
+    <div class="form-group">
         <label for="comments" class="col-md-1 control-label">Comments</label>
         <div class="col-md-11">
             <textarea rows="4" name="comments" class="form-control" data-bind="value: comments"></textarea>
@@ -113,59 +121,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Project</div>
-                <div class="col-md-8 text-right">
-                    <button class="btn btn-default" data-bind="visible: !$root.projectActions.projectData(), click: $root.projectActions.assignProject">Assign Project</button>
-                    <button class="btn btn-default" data-bind="visible: $root.projectActions.projectData, click: $root.projectActions.assignProject">Assign New Project</button>
-                    <button class="btn btn-default" data-bind="visible: $root.projectActions.projectData, click: $root.projectActions.unassignProject">Unassign Project</button>
-                </div>
-            </div>
-            <hr />
-        </div>
-
-        <div class="form-group" data-bind="with: $root.projectActions.projectData">
-            <div class="col-md-12">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <td>Project ID</td>
-                            <td>Name</td>
-                            <td>Lead Region</td>
-                            <td>Project Lead</td>
-                            <td>Status</td>
-                            <td>Status Date</td>
-                            <td>Start Date</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-bind="text: key"></td>
-                            <td data-bind="text: name"></td>
-                            <td data-bind="with: leadRegion">
-                                <!-- ko if: key != 0 -->
-                                <span data-bind="text: name"></span>
-                                <!-- /ko -->
-                            </td>
-                            <td data-bind="with: projectLead">
-                                <!-- ko if: key != 0 -->
-                                <span data-bind="text: name"></span>
-                                <!-- /ko -->
-                            </td>
-                            <td data-bind="with: status">
-                                <!-- ko if: key != 0 -->
-                                <span data-bind="text: name"></span>
-                                <!-- /ko -->
-                            </td>
-                            <td data-bind="dateText: statusDate"></td>
-                            <td data-bind="dateText: startDate"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+   
         <div class="form-group">
             <label for="size" class="col-md-1 control-label">Collar Size</label>
             <div class="col-md-3">
@@ -184,65 +140,37 @@
         </div>
 
         <div class="form-group">
-            <label for="dropOffDate" class="col-md-2 control-label">Drop-off Date</label>
-            <div class="col-md-2">
-                <div class="input-group date" data-bind="datePicker: dropOffDate">
-                    <input type="text" class="form-control" readonly="readonly">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-                @*<input class="form-control" id="dropOffDate" type="date" data-bind="value: dropOffDate" />*@
-            </div>
-
-            <label for="estimatedDropOff" class="col-md-2 control-label">Est. Dropoff</label>
+            <label for="estimatedDropOff" class="col-md-2 control-label">Programmed Dropoff</label>
             <div class="col-md-2">
                 <div class="input-group date" data-bind="datePicker: estimatedDropOff">
                     <input type="text" class="form-control" readonly="readonly">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
-                @*<input class="form-control" id="estimatedDropOff" type="date" data-bind="value: estimatedDropOff" />*@
             </div>
-        </div>
-
-        <div class="form-group">
-            <label for="estimatedGpsFailure" class="col-md-2 control-label">Est. GPS Failure</label>
-            <div class="col-md-2">
-                <div class="input-group date" data-bind="datePicker: estimatedGpsFailure">
-                    <input type="text" class="form-control" readonly="readonly">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-                @*<input class="form-control" id="estimatedGpsFailure" type="date" data-bind="value: estimatedGpsFailure" />*@
-            </div>
-
-            <label for="estimatedGpsBatteryEnd" class="col-md-2 control-label">Est. GPS Battery End</label>
+  
+            <label for="estimatedGpsBatteryEnd" class="col-md-2 control-label">GPS Battery End</label>
             <div class="col-md-2">
                 <div class="input-group date" data-bind="datePicker: estimatedGpsBatteryEnd">
                     <input type="text" class="form-control" readonly="readonly">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
-                @*<input class="form-control" id="estimatedGpsBatteryEnd" type="date" data-bind="value: estimatedGpsBatteryEnd" />*@
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="estimatedVhfFailure" class="col-md-2 control-label">Estimated VHF Failure</label>
-            <div class="col-md-2">
-                <div class="input-group date" data-bind="datePicker: estimatedVhfFailure">
-                    <input type="text" class="form-control" readonly="readonly">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-                @*<input class="form-control" id="estimatedVhfFailure" type="date" data-bind="value: estimatedVhfFailure" />*@
             </div>
 
-            <label for="estimatedVhfBatteryEnd" class="col-md-2 control-label">Est. VHF Battery End</label>
+            <label for="estimatedVhfBatteryEnd" class="col-md-2 control-label">VHF Battery End</label>
             <div class="col-md-2">
                 <div class="input-group date" data-bind="datePicker: estimatedVhfBatteryEnd">
                     <input type="text" class="form-control" readonly="readonly">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
-                @*<input class="form-control" id="estimatedVhfBatteryEnd" type="date" data-bind="value: estimatedVhfBatteryEnd" />*@
             </div>
         </div>
     </div>
 
+    <div class="form-group">
+        <label for="programmingSpec" class="col-md-1 control-label">Programming Specifications</label>
+        <div class="col-md-11">
+            <textarea name="programmingSpec" class="form-control" data-bind="value: programmingSpec"></textarea>
+        </div>
+    </div>
 
 </div>

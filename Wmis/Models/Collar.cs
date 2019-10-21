@@ -26,6 +26,10 @@
 
         public string Geofencing { get; set; }
 
+        public bool ReleasedOnSchedule { get; set; }
+
+        public string ProgrammingSpec { get; set; }
+
         public CollarStatus CollarStatus { get; set; }
 
         public CollarMalfunction CollarMalfunction { get; set; }
