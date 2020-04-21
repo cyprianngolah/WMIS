@@ -258,6 +258,7 @@
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
     <Compile Include="Controllers\ToolsController.cs" />
+    <Compile Include="Controllers\WildlifeDiseaseController.cs" />
     <Compile Include="Dto\Base\PagedDataKeyedKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
@@ -591,6 +592,7 @@
     <Content Include="js\Modules\wmis.reference.edit.js" />
     <Content Include="js\Modules\wmis.taxonomy.edit.js" />
     <Content Include="js\Modules\wmis.reference.index.js" />
+    <Content Include="js\Modules\wmis.wildlifedisease.index.js" />
     <Content Include="js\VueModules\wmis.tools.adddatamanually.js" />
     <Content Include="js\VueModules\wmis.tools.batchreject.js" />
     <Content Include="js\VueModules\wmis.tools.postretrievaldataprocessing.js" />
@@ -598,7 +600,6 @@
     <Content Include="js\VueModules\wmis.tools.lotekiridiumdataprocessing.js" />
     <Content Include="js\VueModules\wmis.tools.vectronicsdataprocessing.js" />
     <Content Include="js\wmis.js" />
-    <Content Include="js\Modules\wmis.biodiversity.index.js" />
     <Content Include="js\Modules\wmis.taxonomy.index.js" />
     <Content Include="js\Modules\wmis.project.edit.js" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.responsive.scss" />
@@ -879,6 +880,9 @@
     <Content Include="Views\Tools\ResetHerdPopulation.cshtml" />
     <Content Include="Views\Tools\VectronicsDataProcessing.cshtml" />
     <Content Include="Views\Tools\AddDataManually.cshtml" />
+    <Content Include="Views\WildlifeDisease\WildlifeDiseaseIndex.cshtml" />
+    <Content Include="Views\WildlifeDisease\WolfNecropsyIndex.cshtml" />
+    <Content Include="Views\WildlifeDisease\RabiesTestIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
