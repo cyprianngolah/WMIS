@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[NWT_Wildlife_Rabies_Tests]
+(
+	[Id] INT NOT NULL PRIMARY KEY,
+	[DateReceived] [datetime] NULL,
+	[DataStatus] [nvarchar](20) NULL,
+	[Year] [nvarchar](10) NULL,
+	[Laboratory] [nvarchar](50) NULL,
+	[LaboratoryID] [nvarchar](50) NULL,
+	[LabComment] [nvarchar](500) NULL,
+	[Program] [nvarchar](50) NULL,
+	[Submitter] [nvarchar](50) NULL,
+	[SubmitterComment] [nvarchar](500) NULL,
+	[Community] [nvarchar](50) NULL,
+	[Region] [nvarchar](50) NULL,
+	[GeographicLocation] [nvarchar](50) NULL,
+	[Species] [nvarchar](50) NULL,
+	[SampleID] [nvarchar](50) NULL,
+	[SampleCondition] [nvarchar](200) NULL,
+	[Test Date] [datetime] NULL,
+	[TestPerfomed] [nvarchar](50) NULL,
+	[TestResult] [nvarchar](20) NULL,
+	[ResultComment] [nvarchar](500) NULL,
+	[Latitude] [float] NULL,
+	[Longitude] [float] NULL,
+	[AnimalContact] [nvarchar](10) NULL,
+	[HumanContact] [nvarchar](10) NULL,
+	[Comments] [nvarchar](500) NULL
+)
