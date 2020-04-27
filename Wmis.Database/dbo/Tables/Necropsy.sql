@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Necropsy]
 (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[NecropsyRowNumberID] INT IDENTITY(1,1) NOT NULL,
 	[NecropsyId] [nvarchar](30) NOT NULL,
 	[CommonName] [nvarchar](30) NULL,
 	[SpeciesId] [int] NULL,

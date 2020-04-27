@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[NWT_Wildlife_Rabies_Tests]
 (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[RabiesRowNumberID] INT IDENTITY(1,1) NOT NULL, 
 	[DateReceived] [datetime] NULL,
 	[DataStatus] [nvarchar](20) NULL,
 	[Year] [nvarchar](10) NULL,

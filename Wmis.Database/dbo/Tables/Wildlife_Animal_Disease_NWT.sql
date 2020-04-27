@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Wildlife_Animal_Disease_NWT]
 (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[DiseaseRowNumberID] INT IDENTITY(1,1) NOT NULL,
 	[CaseNumber] [nvarchar](50) NULL,
 	[NecropsyNumber] [nvarchar](50) NULL,
 	[DateCollected] [datetime] NULL,
