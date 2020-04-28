@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Table1]
+﻿CREATE TABLE [dbo].[Necropsy]
 (
 	[NecropsyRowNum] INT IDENTITY (1,1) NOT NULL, 
 	[NecropsyId] [nvarchar](30) NOT NULL,
