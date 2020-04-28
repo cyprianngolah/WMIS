@@ -343,6 +343,7 @@
     <Compile Include="Models\BulkUploads.cs" />
     <Compile Include="Models\HelpLink.cs" />
     <Compile Include="Models\HistoricTypesFilter.cs" />
+    <Compile Include="Models\WolfNecropsy.cs" />
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />
     <Compile Include="Models\PersonRole.cs" />

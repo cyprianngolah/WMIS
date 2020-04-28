@@ -331,7 +331,7 @@
     <Build Include="dbo\Stored Procedures\Gabs_InsertVectronicsData.sql" />
     <Build Include="dbo\Tables\CollaredAnimalBreedingStatusHistory.sql" />
     <Build Include="dbo\Views\vwCollaredAnimalsAndHerds.sql" />
-    <Build Include="dbo\Tables\Necropsy.sql" />
+    <Build Include="dbo\Tables\WolfNecropsy.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />
