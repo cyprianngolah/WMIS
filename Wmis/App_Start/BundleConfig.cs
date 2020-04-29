@@ -254,7 +254,13 @@
             bundles.Add(new ScriptBundle("~/bundles/help/edit").Include(
                         "~/js/modules/wmis.help.edit.js"));
 
-			#endregion
-		}
-	}
+            #endregion
+
+            #region WolfNecropsies
+            bundles.Add(new ScriptBundle("~/bundles/wildlifeDisease/wolfnecropsyindex").Include(
+                        "~/js/modules/wmis.wildlifeDisease.wolfnecropsyindex.js"));
+
+            #endregion
+        }
+    }
 }

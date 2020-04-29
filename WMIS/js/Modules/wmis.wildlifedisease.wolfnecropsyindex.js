@@ -12,7 +12,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
         $keywords: $("#keywords"),
         $searchButton: $("#searchButton"),
 
-        $table: $("#projects"),
+        $table: $("#wolfnecropsies"),
     };
 
     options.$downloadButton.on("click", function () {
