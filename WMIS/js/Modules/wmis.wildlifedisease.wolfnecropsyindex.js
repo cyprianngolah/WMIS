@@ -75,7 +75,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
                 { "data": "location },
                 { "data": "generalcomments" },
                 { "data": "submitter" },
-              
+
             ],
             "fnServerData": function (source, data, callback, settings) {
                 var sortDirection = null;
