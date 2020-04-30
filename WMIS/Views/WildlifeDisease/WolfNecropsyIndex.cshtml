@@ -14,34 +14,34 @@
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/WildlifeDisease/WolfNecropsyIndex"))
- @*
-    <script type="text/javascript">
-        $(function () {
-            wmis.wolfnecropsy.index.initialize({
-                $newButton: $("#newButton"),  
-                $editButton: $("#editButton"),
+ 
+<script type="text/javascript">
+    $(function () {
+        wmis.wildlifeDisease.wolfnecropsyindex.initialize({
+            $newButton: $("#newButton"),
+            $editButton: $("#editButton"),
 
-                $projectLead: $("#projectLead"),
-                $projectStatus: $("#projectStatus"),
-                $region: $("#region"),
-                $keywords: $("#keywords"),  
-                $searchButton: $("#searchButton"),
+            $necropsyID: $("#necropsyID"),
+            $species: $("#name"),
+            $location: $("#location"),
+            $keywords: $("#keywords"),
+            $searchButton: $("#searchButton"),
 
-                $table: $("#WolfNecropsies")
-            });
+            $table: $("#WolfNecropsies")
         });
-    </script> *@
+    });
+</script>
 }
 
 <div class="row">
     <div class="col-md-12 text-right">
 
-        @if (Html.UserIsProjectAdministrator())
+        @if (Html.UserIsWildlifeDiseaseAdministrator())
         {
             <a href="~/Project/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
         }
         <a href="~/Project/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-            @if (Html.UserIsProjectAdministrator())
+            @if (Html.UserIsWildlifeDiseaseAdministrator())
             {
                 <span>View</span>
             }

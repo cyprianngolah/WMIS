@@ -73,7 +73,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
                 },
                 { "data": "name" },
                 { "data": "location },
-                { "data": "pgeneralcomments" },
+                { "data": "generalcomments" },
                 { "data": "submitter" },
               
             ],
