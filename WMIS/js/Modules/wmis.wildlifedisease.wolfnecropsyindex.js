@@ -20,7 +20,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
         var pnecropsyid = options.$necropsyid.val()
         var pname = options.$name.val()
         var location = options.$location.val()
-        var url = `/api/wildlifedisease/download/?necropsyid=${pnecropsyid}&name=${pname}&location=${location}&keywords=${keywords}`
+        var url = `/api/wolfnecropsy/download/?necropsyid=${pnecropsyid}&name=${pname}&location=${location}&keywords=${keywords}`
 
         window.open(url, '_blank');
     });
