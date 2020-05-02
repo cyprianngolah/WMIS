@@ -12,7 +12,7 @@
         public string Sex { get; set; }
         public string Location { get; set; }
         public int GridCell { get; set; }
-        public DateTime? DateRecieved { get; set; }
+        public DateTime? DateReceived { get; set; }
         public DateTime? DateKilled { get; set; }
         public string AgeClass { get; set; }
         public float AgeEstimated { get; set; }

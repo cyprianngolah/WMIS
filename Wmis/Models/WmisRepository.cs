@@ -3918,7 +3918,7 @@
                     p_Sex = WolfNecropsy.Sex,
                     p_location = WolfNecropsy.Location,
                     p_GridCell = WolfNecropsy.GridCell,
-                    p_DateReceived = WolfNecropsy.DateRecieved,
+                    p_DateReceived = WolfNecropsy.DateReceived,
                     p_DateKilled = WolfNecropsy.DateKilled,
                     p_AgeClass = WolfNecropsy.AgeClass,
                     p_AgeEstimated = WolfNecropsy.AgeEstimated,
@@ -4001,6 +4001,100 @@
             }
         }
 
+
+        public WolfNecropsy WolfNecropsyGet(int wolfnecropsyKey)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_necropsyId = wolfnecropsyKey
+                };
+                return c.Query<WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy>(WolfNecropsy_GET,
+                    (p, id, sp, loc) =>
+                    {
+                        p.NecropsyId = id.NecropsyId;
+                        p.CommonName = sp.CommonName;
+                        p.Location = loc.Location; 
+                        return p;
+                    },
+                        param,
+                        commandType: CommandType.StoredProcedure,
+                        splitOn: "Key").Single();
+                        
+            }
+        }
+        
+
+        public Dto.PagedResultset<WolfNecropsy> WolfnecropsySearch(Dto.WolfNecropsyRequest sr)
+        {
+             using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = sr.StartRow,
+                    p_rowCount = sr.RowCount,
+                    p_sortBy = sr.SortBy,
+                    p_sortDirection = sr.SortDirection,
+                    p_necropsyId = sr.necropsyId,
+                    p_name = sr.name,
+                    p_location = sr.location,
+                    p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
+                };
+
+                var pr = new Dto.PagedResultset< WolfNecropsy> { DataRequest = sr };
+                pr.Data = c.Query<int, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy>(
+                    WolfNecropsy_SEARCH,
+                    (count, p, id, sp, loc) =>
+                    {
+                        pr.ResultCount = count;
+                        p.NecropsyId = id.NecropsyId;
+                        p.CommonName = sp.CommonName; 
+                        p.Location = loc.Location;
+                        return p;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+
+                return pr;
+            }
+        }
+
+        public PagedResultset<WolfNecropsy> WolfNecropsyDownload(WolfNecropsyRequest sr)
+        {
+            using (var c = NewWmisConnection)
+            {
+             var param = new
+                {
+                    p_startRow = 0,
+                    p_rowCount = 1000,
+                    p_sortBy = "NecropsyID",
+                    p_sortDirection = "asc",
+                    p_necropsyId = sr.necropsyId,
+                    p_name = sr.name,
+                    p_location = sr.location,
+                    p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
+                };
+
+                var pr = new Dto.PagedResultset<WolfNecropsy> { DataRequest = sr };
+                pr.Data = c.Query<int, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy>(
+                    WolfNecropsy_SEARCH,
+                    (count, p,id,sp,loc) =>
+                    {
+                        pr.ResultCount = count;
+                        p.NecropsyId = id.NecropsyId;
+                        p.CommonName = sp.CommonName;
+                        p.Location = loc.Location;
+                        return p;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+
+                return pr; 
+            }
+        } 
         #endregion WolfNecropsy
 
         #endregion Methods

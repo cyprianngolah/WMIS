@@ -6,9 +6,9 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
         $editButton: $("#editButton"),
         $downloadButton: $("#downloadButton"),
 
-        $projectLead: $("#projectLead"),
-        $projectStatus: $("#projectStatus"),
-        $region: $("#region"),
+        $necropsId: $("#necropsyId"),
+        $name: $("#name"),
+        $location: $("#location"),
         $keywords: $("#keywords"),
         $searchButton: $("#searchButton"),
 
@@ -17,10 +17,10 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
 
     options.$downloadButton.on("click", function () {
         var keywords = options.$keywords.val()
-        var pLead = options.$projectLead.val()
-        var pStatus = options.$projectStatus.val()
-        var region = options.$region.val()
-        var url = `/api/project/download/?projectLead=${pLead}&projectStatus=${pStatus}&region=${region}&keywords=${keywords}`
+        var pnecropsyid = options.$necropsyid.val()
+        var pname = options.$name.val()
+        var location = options.$location.val()
+        var url = `/api/wildlifedisease/download/?necropsyid=${pnecropsyid}&name=${pname}&location=${location}&keywords=${keywords}`
 
         window.open(url, '_blank');
     });
@@ -57,7 +57,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
             "bJQueryUI": true,
             "bProcessing": true,
             "serverSide": true,
-            "ajaxSource": "/api/wildlifedisease/",
+            "ajaxSource": "/api/wolfnecropsy/",
             "pagingType": "bootstrap",
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
