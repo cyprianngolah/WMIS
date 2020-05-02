@@ -15,7 +15,7 @@
     using System.Net;
     using System;
 
-    [RoutePrefix("api/WolfNecropsy")]
+    [RoutePrefix("api/wolfnecropsy")]
     public class WolfNecropsyApiController : BaseApiController
     {
         private readonly Auth.WmisUser _user;

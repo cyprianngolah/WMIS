@@ -34,9 +34,9 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
 
         document.title = "Wolf Necropsy";
 
-        wmis.global.loadAndInitializeSelect2(options.$projectLead, "/api/person/projectLeads/", "Project Lead", true, "data");
-        wmis.global.loadAndInitializeSelect2(options.$projectStatus, "/api/project/statuses/", "Project Status", true, "data");
-        wmis.global.loadAndInitializeSelect2(options.$region, "/api/leadregion?startRow=0&rowCount=500", "Ecoregion", true, "data");
+        wmis.global.loadAndInitializeSelect2(options.$necropsyid, "/api/wolfnecropsy/", "Necropsy ID", true, "data");
+        wmis.global.loadAndInitializeSelect2(options.$name, "/api/wolfnecropsy/wolfnecropsy.name/", "Species", true, "data");
+        wmis.global.loadAndInitializeSelect2(options.$location, "/api/wolfnecropsy/wolfnecropsy.location", "Location", true, "data");
 
         options.$keywords.keyup(function (e) {
             if (e.keyCode == 13) {
@@ -137,7 +137,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
 
                             if (data.key) {
                                 options.$editButton.removeClass('disabled');
-                                options.$editButton.prop("href", "/Project/Edit/" + data.key);
+                                options.$editButton.prop("href", "/WolNecropsy/Edit/" + data.key);
                             }
                         }
                     }
