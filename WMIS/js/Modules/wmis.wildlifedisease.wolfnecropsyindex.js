@@ -2,7 +2,7 @@
 wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
     var dataTable;
     var options = {
-    /*    $newButton: $("#newButton"),
+        $newButton: $("#newButton"),
         $editButton: $("#editButton"),
         $downloadButton: $("#downloadButton"),
 
@@ -10,17 +10,17 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
         $name: $("#name"),
         $location: $("#location"),
         $keywords: $("#keywords"),
-        $searchButton: $("#searchButton"), ...*/
+        $searchButton: $("#searchButton"), 
 
         $table: $("#wolfnecropsies"),
     };
 
     options.$downloadButton.on("click", function () {
-     /*   var keywords = options.$keywords.val()
+        var keywords = options.$keywords.val()
         var pnecropsyid = options.$necropsyid.val()
         var pname = options.$name.val()
         var location = options.$location.val()
-        var url = `/api/wolfnecropsy/download/?necropsyid=${pnecropsyid}&name=${pname}&location=${location}&keywords=${keywords}`*/
+        var url = `/api/wolfnecropsy/download/?necropsyid=${pnecropsyid}&name=${pname}&location=${location}&keywords=${keywords}`
 
         window.open(url, '_blank');
     });
