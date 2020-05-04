@@ -1,5 +1,5 @@
 ﻿wmis.wildlifedisease = wmis.wildlifedisease || {};
-wmis.wildlifedisease.animalnedropsyindex = (function ($) {
+wmis.wildlifedisease.animalnecropsyindex = (function ($) {
     var dataTable;
     var options = {
         /*    $newButton: $("#newButton"),
