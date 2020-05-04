@@ -261,9 +261,8 @@
             bundles.Add(new ScriptBundle("~/bundles/wildlifeDisease/wolfnecropsyindex").Include(
                         "~/js/modules/wmis.wildlifeDisease.wolfnecropsyindex.js"));
 
-            #region WolfNecropsies
             bundles.Add(new ScriptBundle("~/bundles/wildlifeDisease/animalnecropsyindex").Include(
-                        "~/js/modules/wmis.wildlifeDisease.animalnecropsyindex.js"));
+            "~/js/modules/wmis.wildlifeDisease.animalnecropsyindex.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/wildlifeDisease/newnecropsyindex").Include(
                        "~/js/modules/wmis.wildlifeDisease.newnecropsyindex.js"));
