@@ -261,7 +261,7 @@
             bundles.Add(new ScriptBundle("~/bundles/wildlifeDisease/wolfnecropsyindex").Include(
                         "~/js/modules/wmis.wildlifeDisease.wolfnecropsyindex.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/wildlifeDisease/animalnecropsyindex").Include(
+            bundles.Add(new ScriptBundle("~/bundles/wildlifeDisease/animalnecropsyIndex").Include(
             "~/js/modules/wmis.wildlifeDisease.animalnecropsyindex.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/wildlifeDisease/newnecropsyindex").Include(
