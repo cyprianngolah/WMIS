@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Animal Necropsy";
 }
-
 @section Styles {
     @Html.Raw(Styles.Render("~/bundles/content/datatables"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
@@ -13,7 +12,21 @@
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/WildlifeDisease/AnimalNecropsyIndex"))
 
-   
+    <script type="text/javascript">
+        $(function () {
+            wmis.wildlifedisease.animalnecropsyindex.initialize({
+                $newButton: $("#newButton"),
+                $editButton: $("#editButton"),
+
+                $necropsyId: $("#necropsyId"),
+                $commonname: $("#commonname"),
+                $location: $("#location"),
+                $keywords: $("#keywords"),
+                $searchButton: $("#searchButton"),
+
+                $table: $("WolfNecropsies")
+            });
+        });
     </script>
 }
 
