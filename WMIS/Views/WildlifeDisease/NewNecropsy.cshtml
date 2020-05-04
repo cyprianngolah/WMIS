@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "WildlifeDisease";
+    ViewBag.SubTitle = "New";
+}
+
+@section Scripts {
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/WildlifeDisease/NewNecropsyIndex"))
+
+    <script type="text/javascript">
+		$(function() {
+			wmis.WildlifeDisease.new.initialize();
+		});
+    </script>
+}
+
+<div class="col-md-6">
+    <form role="form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" data-bind="value: name, valueUpdate: 'keyup'" />
+        </div>
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: saveEnabled">Save</button>
+            <a href="/WildlifeDisease/AnimalNecropsyIndex" class="btn btn-default">Cancel</a>
+        </div>
+    </form>
+</div>

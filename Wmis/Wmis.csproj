@@ -596,6 +596,7 @@
     <Content Include="js\Modules\wmis.reference.edit.js" />
     <Content Include="js\Modules\wmis.taxonomy.edit.js" />
     <Content Include="js\Modules\wmis.reference.index.js" />
+    <Content Include="js\Modules\wmis.wildlifedisease.animalnecropsyindex.js" />
     <Content Include="js\Modules\wmis.wildlifedisease.wolfnecropsyindex.js" />
     <Content Include="js\VueModules\wmis.tools.adddatamanually.js" />
     <Content Include="js\VueModules\wmis.tools.batchreject.js" />
@@ -887,6 +888,8 @@
     <Content Include="Views\WildlifeDisease\WildlifeDiseaseIndex.cshtml" />
     <Content Include="Views\WildlifeDisease\WolfNecropsyIndex.cshtml" />
     <Content Include="Views\WildlifeDisease\RabiesTestIndex.cshtml" />
+    <None Include="Views\WildlifeDisease\AnimalNecropsyIndex.cshtml" />
+    <Content Include="Views\WildlifeDisease\NewNecropsy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

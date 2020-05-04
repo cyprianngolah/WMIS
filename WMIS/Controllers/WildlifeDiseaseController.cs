@@ -26,5 +26,16 @@ namespace Wmis.Controllers
             return View();
         }
 
+        // GET: Animal Necropsy
+        public ActionResult AnimalNecropsyIndex()
+        {
+            return View();
+        }
+
+        // GET: New Necropsy
+        public ActionResult NewNecropsyIndex()
+        {
+            return View();
+        }
     }
 }

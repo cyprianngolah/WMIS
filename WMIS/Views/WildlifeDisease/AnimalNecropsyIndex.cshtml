@@ -1,8 +1,6 @@
-﻿
-
-@using Wmis.Extensions
+﻿@using Wmis.Extensions
 @{
-    ViewBag.Title = "Wolf Necropsy";
+    ViewBag.Title = "Animal Necropsy";
 }
 
 @section Styles {
@@ -13,24 +11,10 @@
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/WildlifeDisease/WolfNecropsyIndex"))
- 
-<script type="text/javascript">
-    $(function () {
-       wmis.wildlifeDisease.wolfnecropsyindex.initialize({
-          /*  $newButton: $("#newButton"),
-            $editButton: $("#editButton"),
+    @Html.Raw(Scripts.Render("~/bundles/WildlifeDisease/AnimalNecropsyIndex"))
 
-            $necropsyID: $("#necropsyID"),
-            $species: $("#name"),
-            $location: $("#location"),
-            $keywords: $("#keywords"),
-            $searchButton: $("#searchButton"), */
-
-            $table: $("#WolfNecropsies")
-        });
-    });
-</script>
+   
+    </script>
 }
 
 <div class="row">
@@ -59,33 +43,31 @@
     <div class="row">
         <div class="col-md-12">
             <form class="form-horizontal center" role="form">
+
+
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                        <div class="input-group">
-                            <input type="text" id="NecropsyId" class="form-control" placeholder="NecropsyId" />
-                        </div>
+                        <label class="sr-only" for="projectLead">NecropsyID</label>&nbsp;
+                        <input id="NecropsyId" type="text" class="form-control" placeholder="NecropsyID" />
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                        <label class="sr-only" for="CommonName">Species</label>&nbsp;
+                        <input id="Species" type="text" class="form-control" placeholder="CommonName" />
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                        <label class="sr-only" for="projectStatus">Name</label>
-                        <select class="form-control" id="projectStatus" name="projectStatus">
-                            <option value="">Name</option>
-                        </select>
+                        <label class="sr-only" for="region">Location</label>&nbsp;
+                        <input id="Location" type="text" class="form-control" placeholder="Location" />
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                        <label class="sr-only" for="region">Location</label>
-                        <select class="form-control" id="region" name="region">
-                            <option value="">Location</option>
-                        </select>
-                    </div>
-                </div>
 
-       
                 <label class="sr-only" for="keywords">Keywords</label>
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
@@ -101,8 +83,6 @@
         </div>
     </div>
 </div>
-
-
 <div class="row">
     <div class="col-md-12">
         <table id="WolfNecropsies" class="table table-striped table-condensed table-hover">
