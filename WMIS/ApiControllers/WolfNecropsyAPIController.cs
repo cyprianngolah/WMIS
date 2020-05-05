@@ -29,14 +29,14 @@
         #region WolfNecropsies
         [HttpGet]
         [Route]
-        public Dto.PagedResultset<Models.WolfNecropsy> SearchWolfNecropsys([FromUri]Dto.WolfNecropsyRequest pr)
+        public Dto.PagedResultset<Models.WolfNecropsy> SearchWolfNecropsy([FromUri]Dto.WolfNecropsyRequest pr)
         {
             return Repository.WolfnecropsySearch(pr);
         }
 
         [HttpGet]
         [Route("download")]
-        public HttpResponseMessage DownloadWolfNecropsys([FromUri]WolfNecropsyRequest pr)
+        public HttpResponseMessage DownloadWolfNecropsy([FromUri]WolfNecropsyRequest pr)
         {
             var lstData = Repository.WolfNecropsyDownload(pr);
 

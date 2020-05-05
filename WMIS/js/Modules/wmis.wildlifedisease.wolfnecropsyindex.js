@@ -61,7 +61,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
             "pagingType": "bootstrap",
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
-                { "data": "necropsyID" },
+                { "data": "necropsyid" },
                 {
                     "data": "necropsyDate",
                     "render": function (data, type, row) {
@@ -71,7 +71,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
                             return "";
                     }
                 },
-                { "data": "name" },
+                { "data": "commonname" },
                 { "data": "location },
                 { "data": "generalcomments" },
                 { "data": "submitter" },
@@ -98,11 +98,9 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
                     i: settings.oAjaxData.sEcho,
 
                     // Custom search data
-                    necropsyID: options.$necropsyID.val(),
-                    necropsyDate: options.$necropsyDate.val(),
-                    species: options.$name.val(),
+                    necropsyid: options.$necropsyid.val(),
+                    commonnamespecies: options.$commonname.val(),
                     location: options.$location.val(),
-                    generalcomments: options.$generalcomments.val(),
                     keywords: options.$keywords.val()
                 };
 
@@ -137,7 +135,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
 
                             if (data.key) {
                                 options.$editButton.removeClass('disabled');
-                                options.$editButton.prop("href", "/WolNecropsy/Edit/" + data.key);
+                              /*  options.$editButton.prop("href", "/WolNecropsy/Edit/" + data.key); */
                             }
                         }
                     }

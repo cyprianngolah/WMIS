@@ -4037,7 +4037,7 @@
                     p_sortBy = sr.SortBy,
                     p_sortDirection = sr.SortDirection,
                     p_necropsyId = sr.necropsyId,
-                    p_name = sr.name,
+                    p_commonname = sr.commonname,
                     p_location = sr.location,
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
                 };
@@ -4072,7 +4072,7 @@
                     p_sortBy = "NecropsyID",
                     p_sortDirection = "asc",
                     p_necropsyId = sr.necropsyId,
-                    p_name = sr.name,
+                    p_commonname = sr.commonname,
                     p_location = sr.location,
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
                 };

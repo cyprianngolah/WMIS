@@ -14,3 +14,7 @@ AS
 
 RETURN 0
 
+Go
+
+GRANT EXECUTE ON [dbo].[WolfNecropsy_Create] TO [WMISUser]
+GO

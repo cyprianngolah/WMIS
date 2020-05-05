@@ -180,3 +180,6 @@ LastUpdated = GETUTCDATE()
 	WHERE
 		NecropsyId = @p_necropsyId
 RETURN 0
+
+GRANT EXECUTE ON [dbo].[WolfNecropsy_Update] TO [WMISUser]
+GO

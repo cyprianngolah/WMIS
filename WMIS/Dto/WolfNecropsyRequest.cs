@@ -9,7 +9,7 @@ namespace Wmis.Dto
     {
         public int? necropsyId{ get; set; }
 
-        public int? name { get; set; }
+        public int? commonname { get; set; }
 
         public int? location { get; set; }
 
