@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿
 
 namespace Wmis.Controllers
 {
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Web.Mvc;
+    using Wmis.Auth;
+    using Wmis.Dto;
+    using Wmis.Models;
+
     public class WildlifeDiseaseController : Controller
     {
         // GET: WildlifeDisease
