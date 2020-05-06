@@ -1,7 +1,8 @@
 ﻿@using Wmis.Extensions
 @{
-    ViewBag.Title = "Animal Necropsy";
+    ViewBag.Title = "Projects";
 }
+
 @section Styles {
     @Html.Raw(Styles.Render("~/bundles/content/datatables"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
@@ -10,21 +11,21 @@
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/WildlifeDisease/AnimalNecropsyIndex"))
+    @Html.Raw(Scripts.Render("~/bundles/project/index"))
 
     <script type="text/javascript">
         $(function () {
-            wmis.wildlifedisease.animalnecropsyindex.initialize({
+            wmis.project.index.initialize({
                 $newButton: $("#newButton"),
                 $editButton: $("#editButton"),
 
-                $necropsyId: $("#necropsyId"), 
-                $commonname: $("#commonname"),
-                $location: $("#location"),
+                $projectLead: $("#projectLead"),
+                $projectStatus: $("#projectStatus"),
+                $region: $("#region"),
                 $keywords: $("#keywords"),
                 $searchButton: $("#searchButton"),
 
-                $table: $("WolfNecropsies")
+                $table: $("#projects")
             });
         });
     </script>
@@ -33,12 +34,12 @@
 <div class="row">
     <div class="col-md-12 text-right">
 
-        @if (Html.UserIsWildlifeDiseaseAdministrator())
+        @if (Html.UserIsProjectAdministrator())
         {
             <a href="~/Project/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
         }
         <a href="~/Project/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-            @if (Html.UserIsWildlifeDiseaseAdministrator())
+            @if (Html.UserIsProjectAdministrator())
             {
                 <span>View</span>
             }
@@ -56,30 +57,32 @@
     <div class="row">
         <div class="col-md-12">
             <form class="form-horizontal center" role="form">
-
-
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                        <label class="sr-only" for="projectLead">NecropsyID</label>&nbsp;
-                        <input id="NecropsyId" type="text" class="form-control" placeholder="NecropsyID" />
-                    </div>
-                </div>
-
-
-                <div class="col-md-3">
-                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                        <label class="sr-only" for="CommonName">Species</label>&nbsp;
-                        <input id="Species" type="text" class="form-control" placeholder="CommonName" />
+                        <label class="sr-only" for="projectLead">Project Lead</label>
+                        <select class="form-control" id="projectLead" name="projectLead">
+                            <option value="">Project Lead</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                        <label class="sr-only" for="region">Location</label>&nbsp;
-                        <input id="Location" type="text" class="form-control" placeholder="Location" />
+                        <label class="sr-only" for="projectStatus">Project Status</label>
+                        <select class="form-control" id="projectStatus" name="projectStatus">
+                            <option value="">Project Status</option>
+                        </select>
                     </div>
                 </div>
 
+                <div class="col-md-3">
+                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                        <label class="sr-only" for="region">Region</label>
+                        <select class="form-control" id="region" name="region">
+                            <option value="">All Regions</option>
+                        </select>
+                    </div>
+                </div>
 
                 <label class="sr-only" for="keywords">Keywords</label>
                 <div class="col-md-3">
@@ -96,17 +99,20 @@
         </div>
     </div>
 </div>
+
+
 <div class="row">
     <div class="col-md-12">
-        <table id="WolfNecropsies" class="table table-striped table-condensed table-hover">
+        <table id="projects" class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
-                    <th>NecropsyID</th>
-                    <th>NecropsyDate</th>
-                    <th>Species</th>
-                    <th>Location</th>
-                    <th>GeneralComments</th>
-                    <th>Submitter</th>
+                    <th>Project Number</th>
+                    <th>Name</th>
+                    <th>Lead Region</th>
+                    <th>Project Lead</th>
+                    <th>Status</th>
+                    <th>Status Date</th>
+                    <th>Start Date</th>
                 </tr>
             </thead>
         </table>
