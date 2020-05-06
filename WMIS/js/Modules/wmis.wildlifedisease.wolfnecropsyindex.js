@@ -72,7 +72,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
                     }
                 },
                 { "data": "commonname" },
-                { "data": "location },
+                { "data": "location" },
                 { "data": "generalcomments" },
                 { "data": "submitter" },
 
@@ -135,7 +135,7 @@ wmis.wildlifedisease.wolfnecropsyindex = (function ($) {
 
                             if (data.key) {
                                 options.$editButton.removeClass('disabled');
-                              /*  options.$editButton.prop("href", "/WolNecropsy/Edit/" + data.key); */
+                                options.$editButton.prop("href", "/WolNecropsy/Edit/" + data.key);
                             }
                         }
                     }
