@@ -1,5 +1,5 @@
-﻿wmis.wildlifedisease = wmis.wildlifedisease || {};
-wmis.wildlifedisease.index = (function ($) {
+﻿wmis.project = wmis.project || {};
+wmis.project.index = (function ($) {
 	var dataTable;
 	var options = {
 		$newButton: $("#newButton"),
