@@ -85,5 +85,6 @@
 	[OtherSamplesComments] [nvarchar](max) NULL,
 	[SamplesComments] [nvarchar](max) NULL,
 	[GeneralComments] [nvarchar](max) NULL, 
-    [LastUpdated] DATETIME NULL
+    [LastUpdated] DATETIME NULL, 
+    [CaseId] INT NOT NULL IDENTITY
 )

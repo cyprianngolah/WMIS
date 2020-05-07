@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[WolfNecropsy_Get]
-	@p_necropsyId INT
+	@p_caseId INT
 AS
 	SELECT TOP 1
 	p.NecropsyId,
@@ -94,7 +94,7 @@ AS
 		dbo.WolfNecropsy p
 			
 	WHERE
-		p.NecropsyId =  @p_necropsyId
+		p.CaseId =  @p_caseId
 
 RETURN 0
 

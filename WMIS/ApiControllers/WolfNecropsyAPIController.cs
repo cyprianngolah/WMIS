@@ -53,7 +53,7 @@
             header.CreateCell(6).SetCellValue("DateReceived");
             header.CreateCell(7).SetCellValue("DateKilled");
             header.CreateCell(8).SetCellValue("AgeClass");
-            header.CreateCell(9).SetCellValue("CAgeEstimated");
+            header.CreateCell(9).SetCellValue("AgeEstimated");
 
             var rowIndex = 1;
 
