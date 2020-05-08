@@ -14,6 +14,11 @@
             return View();
         }
 
+        public ActionResult Index1()
+        {
+            return View();
+        }
+
         public ActionResult New()
         {
             return View();

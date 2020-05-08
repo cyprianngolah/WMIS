@@ -558,6 +558,7 @@
     <Content Include="js\Modules\wmis.biodiversity.index.js" />
     <Content Include="js\Modules\wmis.project.editmodals.js" />
     <Content Include="js\Modules\wmis.project.index.js" />
+    <Content Include="js\Modules\wmis.project.index1.js" />
     <Content Include="js\Modules\wmis.project.site.edit.js" />
     <Content Include="js\Modules\wmis.search.index.js" />
     <Content Include="js\Modules\wmis.help.index.js" />
@@ -784,6 +785,7 @@
     <Content Include="Scripts\vue.min.js" />
     <Content Include="Scripts\xlsx.full.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\SurveyTemplate\Edit.cshtml" />
     <Content Include="Views\SurveyTemplate\EditForm.cshtml" />
     <Content Include="Views\SurveyTemplate\Index.cshtml" />
@@ -847,7 +849,6 @@
     <Content Include="Views\NwtSarcAssessment\EditForm.cshtml" />
     <Content Include="Views\NwtSarcAssessment\Index.cshtml" />
     <Content Include="Views\NwtSarcAssessment\New.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\New.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\EditSurvey.cshtml" />
@@ -888,6 +889,7 @@
     <Content Include="Views\WildlifeDisease\WildlifeDiseaseIndex.cshtml" />
     <Content Include="Views\WildlifeDisease\WolfNecropsyIndex.cshtml" />
     <Content Include="Views\WildlifeDisease\RabiesTestIndex.cshtml" />
+    <Content Include="Views\Project\Index1.cshtml" />
     <None Include="Views\WildlifeDisease\AnimalNecropsyIndex.cshtml" />
     <Content Include="Views\WildlifeDisease\NewNecropsy.cshtml" />
   </ItemGroup>
