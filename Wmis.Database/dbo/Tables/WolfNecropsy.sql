@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[WolfNecropsy]
 (
+	[CaseId] INT NOT NULL IDENTITY,
 	[NecropsyId] [nvarchar](30) NOT NULL,
 	[CommonName] [nvarchar](30) NULL,
 	[SpeciesId] [int] NULL,
@@ -86,5 +87,4 @@
 	[SamplesComments] [nvarchar](max) NULL,
 	[GeneralComments] [nvarchar](max) NULL, 
     [LastUpdated] DATETIME NULL, 
-    [CaseId] INT NOT NULL IDENTITY
 )

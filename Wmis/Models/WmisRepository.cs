@@ -4008,7 +4008,7 @@
             {
                 var param = new
                 {
-                    p_necropsyId = wolfnecropsyKey
+                    p_caseId = wolfnecropsyKey
                 };
                 return c.Query<WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy>(WolfNecropsy_GET,
                     (p, id, sp, loc) =>
