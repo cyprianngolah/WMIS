@@ -11,12 +11,12 @@
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/project/index"))
+  @*  @Html.Raw(Scripts.Render("~/bundles/project/index")) *@
 
     <script type="text/javascript">
         $(function () {
             wmis.project.index.initialize({
-                $newButton: $("#newButton"),
+               $newButton: $("#newButton"),
                 $editButton: $("#editButton"),
 
                 $projectLead: $("#projectLead"),
