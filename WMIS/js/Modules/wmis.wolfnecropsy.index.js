@@ -7,7 +7,7 @@ wmis.wolfnecropsy.index = (function ($) {
         $downloadButton: $("#downloadButton"),
 
         $necropsId: $("#necropsyId"),
-        $name: $("#name"),
+        $commonname: $("#commonname"),
         $location: $("#location"),
         $keywords: $("#keywords"),
         $searchButton: $("#searchButton"), 
@@ -18,7 +18,7 @@ wmis.wolfnecropsy.index = (function ($) {
     options.$downloadButton.on("click", function () {
         var keywords = options.$keywords.val()
         var pnecropsyid = options.$necropsyid.val()
-        var pname = options.$name.val()
+        var pname = options.$commonname.val()
         var location = options.$location.val()
         var url = `/api/wolfnecropsy/download/?necropsyid=${pnecropsyid}&name=${pname}&location=${location}&keywords=${keywords}`
 
@@ -99,7 +99,7 @@ wmis.wolfnecropsy.index = (function ($) {
 
                     // Custom search data
                     necropsyid: options.$necropsyid.val(),
-                    commonnamespecies: options.$commonname.val(),
+                    commonname: options.$commonname.val(),
                     location: options.$location.val(),
                     keywords: options.$keywords.val()
                 };
