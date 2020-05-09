@@ -9,7 +9,7 @@ namespace Wmis.Controllers
     using Wmis.Dto;
     using Wmis.Models;
 
-    public class WildlifeDiseaseController : Controller
+    public class WolfNecropsy : Controller
     {
         // GET: WildlifeDisease
         public ActionResult WildlifeDiseaseIndex()
@@ -18,7 +18,7 @@ namespace Wmis.Controllers
         }
 
         // GET: WolfNecropsyIndex
-        public ActionResult WolfNecropsyIndex()
+        public ActionResult Index()
         {
             return View();
         }
