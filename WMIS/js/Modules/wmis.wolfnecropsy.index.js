@@ -6,7 +6,7 @@ wmis.wolfnecropsy.index = (function ($) {
         $editButton: $("#editButton"),
         $downloadButton: $("#downloadButton"),
 
-        $necropsId: $("#necropsyId"),
+        $necropsyId: $("#necropsyId"),
         $commonname: $("#commonname"),
         $location: $("#location"),
         $keywords: $("#keywords"),
@@ -61,7 +61,7 @@ wmis.wolfnecropsy.index = (function ($) {
             "pagingType": "bootstrap",
             "dom": '<"top">rt<"bottom"ip><"clear">',
             "columns": [
-                { "data": "necropsyid" },
+                { "data": "necropsyId" },
                 {
                     "data": "necropsyDate",
                     "render": function (data, type, row) {
@@ -103,6 +103,9 @@ wmis.wolfnecropsy.index = (function ($) {
                     location: options.$location.val(),
                     keywords: options.$keywords.val()
                 };
+                <script>
+                    window.alert("It got here");
+                </script>
 
                 $.getJSON(source, parameters, function (json) {
                     // On Success of the call, transform some of the data and call the specified callback
