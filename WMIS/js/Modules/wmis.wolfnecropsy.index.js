@@ -103,9 +103,6 @@ wmis.wolfnecropsy.index = (function ($) {
                     location: options.$location.val(),
                     keywords: options.$keywords.val()
                 };
-                <script>
-                    window.alert("It got here");
-                </script>
 
                 $.getJSON(source, parameters, function (json) {
                     // On Success of the call, transform some of the data and call the specified callback
