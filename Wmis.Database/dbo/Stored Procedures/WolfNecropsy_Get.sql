@@ -2,6 +2,7 @@
 	@p_caseId INT
 AS
 	SELECT TOP 1
+	p.CaseId AS [Key], 
 	p.NecropsyId,
 	p.CommonName,
 	p.SpeciesId,

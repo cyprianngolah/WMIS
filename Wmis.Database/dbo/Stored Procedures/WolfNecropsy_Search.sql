@@ -11,7 +11,8 @@ AS
 	
 	SELECT 
 		COUNT(*) OVER() AS ResultCount,
-       p.[NecropsyId] AS [Key]
+	   p.[CaseId] AS [Key]
+      ,p.[NecropsyId]
       ,p.[CommonName]
       ,p.[SpeciesId]
       ,p.[NecropsyDate]
