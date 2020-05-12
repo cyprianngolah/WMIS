@@ -16,13 +16,13 @@ wmis.wolfnecropsy.index = (function ($) {
     };
 
     options.$downloadButton.on("click", function () {
-        var keywords = options.$keywords.val()
+     /*   var keywords = options.$keywords.val()
         var pnecropsyid = options.$necropsyid.val()
         var pname = options.$commonname.val()
         var location = options.$location.val()
         var url = `/api/wolfnecropsy/download/?necropsyid=${pnecropsyid}&name=${pname}&location=${location}&keywords=${keywords}`
 
-        window.open(url, '_blank');
+        window.open(url, '_blank'); */
     });
 
 
@@ -34,9 +34,9 @@ wmis.wolfnecropsy.index = (function ($) {
 
         document.title = "Wolf Necropsy";
 
-        wmis.global.loadAndInitializeSelect2(options.$necropsyid, "/api/wolfnecropsy/", "Necropsy ID", true, "data");
+      /*  wmis.global.loadAndInitializeSelect2(options.$necropsyid, "/api/wolfnecropsy/", "Necropsy ID", true, "data");
         wmis.global.loadAndInitializeSelect2(options.$commonname, "/api/wolfnecropsy/", "Common Name", true, "data");
-        wmis.global.loadAndInitializeSelect2(options.$location, "/api/wolfnecropsy/", "Location", true, "data");
+        wmis.global.loadAndInitializeSelect2(options.$location, "/api/wolfnecropsy/", "Location", true, "data"); */
 
         options.$keywords.keyup(function (e) {
             if (e.keyCode == 13) {
@@ -96,12 +96,12 @@ wmis.wolfnecropsy.index = (function ($) {
                     sortBy: sortedColumnName,
                     sortDirection: sortDirection,
                     i: settings.oAjaxData.sEcho,
-
-                   /* // Custom search data
+/*
+                   // Custom search data
                     necropsyid: options.$necropsyid.val(),
                     commonname: options.$commonname.val(),
                     location: options.$location.val(),
-                    keywords: options.$keywords.val() */
+                    keywords: options.$keywords.val()  */ 
                 };
 
                 $.getJSON(source, parameters, function (json) {
