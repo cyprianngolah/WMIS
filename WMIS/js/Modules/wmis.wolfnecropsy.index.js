@@ -97,11 +97,11 @@ wmis.wolfnecropsy.index = (function ($) {
                     sortDirection: sortDirection,
                     i: settings.oAjaxData.sEcho,
 
-                    // Custom search data
+                   /* // Custom search data
                     necropsyid: options.$necropsyid.val(),
                     commonname: options.$commonname.val(),
                     location: options.$location.val(),
-                    keywords: options.$keywords.val()
+                    keywords: options.$keywords.val() */
                 };
 
                 $.getJSON(source, parameters, function (json) {
