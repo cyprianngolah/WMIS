@@ -4043,14 +4043,14 @@
                 };
 
                 var pr = new Dto.PagedResultset< WolfNecropsy> { DataRequest = sr };
-                pr.Data = c.Query<int, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy>(
+                pr.Data = c.Query<int, WolfNecropsy, string, string, string, WolfNecropsy>(
                     WolfNecropsy_SEARCH,
                     (count, p, id, sp, loc) =>
                     {
                         pr.ResultCount = count;
-                        p.NecropsyId = id.NecropsyId;
-                        p.CommonName = sp.CommonName; 
-                        p.Location = loc.Location;
+                        p.NecropsyId = id;
+                        p.CommonName = sp;
+                        p.Location = loc;
                         return p;
                     },
                     param,
@@ -4078,14 +4078,14 @@
                 };
 
                 var pr = new Dto.PagedResultset<WolfNecropsy> { DataRequest = sr };
-                pr.Data = c.Query<int, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy>(
+                pr.Data = c.Query<int, WolfNecropsy, string, string, string, WolfNecropsy>(
                     WolfNecropsy_SEARCH,
                     (count, p,id,sp,loc) =>
                     {
                         pr.ResultCount = count;
-                        p.NecropsyId = id.NecropsyId;
-                        p.CommonName = sp.CommonName;
-                        p.Location = loc.Location;
+                        p.NecropsyId = id;
+                        p.CommonName = sp;
+                        p.Location = loc;
                         return p;
                     },
                     param,
