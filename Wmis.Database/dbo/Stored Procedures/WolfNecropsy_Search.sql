@@ -3,9 +3,9 @@
 	@p_rowCount int = 25,
 	@p_sortBy NVARCHAR(25) = NULL,
 	@p_sortDirection NVARCHAR(3) = NULL,
-	@p_necropsyId INT = NULL,
-	@p_commonname INT = NULL,
-	@p_locaction INT = NULL,
+	@p_necropsyId NVARCHAR(30) = NULL,
+	@p_commonname NVARCHAR(30) = NULL,
+	@p_locaction NVARCHAR(50) = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	
