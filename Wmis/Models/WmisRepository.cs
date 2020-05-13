@@ -4034,8 +4034,8 @@
                 {
                     p_startRow = sr.StartRow,
                     p_rowCount = sr.RowCount,
-                    p_sortBy = sr.SortBy,
-                    p_sortDirection = sr.SortDirection,
+                    p_sortBy = "NecropsyId", //sr.SortBy,
+                    p_sortDirection = "ASC", //sr.SortDirection,
                     p_necropsyId = sr.necropsyId,
                     p_commonname = sr.commonname,
                     p_location = sr.location,
@@ -4045,12 +4045,12 @@
                 var pr = new Dto.PagedResultset< WolfNecropsy> { DataRequest = sr };
                 pr.Data = c.Query<int, WolfNecropsy, string, string, string, WolfNecropsy>(
                     WolfNecropsy_SEARCH,
-                    (count, p, id, sp, loc) =>
+                    (count, p, necropsyid, commonname, location) =>
                     {
                         pr.ResultCount = count;
-                        p.NecropsyId = id ?? null;
-                        p.CommonName = sp ?? null;
-                        p.Location = loc ?? null;
+                        p.NecropsyId = necropsyid ?? null;
+                        p.CommonName = commonname ?? null;
+                        p.Location = location ?? null;
                         return p;
                     },
                     param,
@@ -4080,12 +4080,13 @@
                 var pr = new Dto.PagedResultset<WolfNecropsy> { DataRequest = sr };
                 pr.Data = c.Query<int, WolfNecropsy, string, string, string, WolfNecropsy>(
                     WolfNecropsy_SEARCH,
-                    (count, p,id,sp,loc) =>
+                    (count, p,necropsyid,commonname, location) =>
                     {
+       
                         pr.ResultCount = count;
-                        p.NecropsyId = id ?? null;
-                        p.CommonName = sp ?? null;
-                        p.Location = loc ?? null;
+                        p.NecropsyId = necropsyid ?? null;
+                        p.CommonName = commonname ?? null;
+                        p.Location = location ?? null;
                         return p;
                     },
                     param,
