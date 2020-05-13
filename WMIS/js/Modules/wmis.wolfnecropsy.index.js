@@ -7,7 +7,7 @@ wmis.wolfnecropsy.index = (function ($) {
         $downloadButton: $("#downloadButton"),
 
         $necropsyId: $("#necropsyId"),
-        $commonname: $("#commonname"),
+        $commonName: $("#commonName"),
         $location: $("#location"),
         $keywords: $("#keywords"),
         $searchButton: $("#searchButton"), 
@@ -17,9 +17,10 @@ wmis.wolfnecropsy.index = (function ($) {
 
     options.$downloadButton.on("click", function () {
         var keywords = options.$keywords.val()
-        var pnecropsyid = options.$necropsyid.val()
-        var pname = options.$co$location.val()
-        var url = `/api/wolfnecropsy/download/?necropsyid=${pnecropsyid}&name=${pname}&location=${location}&keywords=${keywords}`
+        var pnecropsyId = options.$necropsyId.val()
+        var pcommonName = options.$commonName()
+        var plocation = options.$location.val()
+        var url = `/api/wolfnecropsy/download/?necropsyId=${pnecropsyId}&comonName=${pcommonName}&location=${plocation}&keywords=${keywords}`
 
         window.open(url, '_blank'); 
     });
@@ -33,8 +34,8 @@ wmis.wolfnecropsy.index = (function ($) {
 
         document.title = "Wolf Necropsy";
 
-        wmis.global.loadAndInitializeSelect2(options.$necropsyid, "/api/wolfnecropsy/", "Necropsy ID", true, "data");
-        wmis.global.loadAndInitializeSelect2(options.$commonname, "/api/wolfnecropsy/", "Common Name", true, "data");
+        wmis.global.loadAndInitializeSelect2(options.$necropsyId, "/api/wolfnecropsy/", "NecropsyID", true, "data");
+        wmis.global.loadAndInitializeSelect2(options.$commonName, "/api/wolfnecropsy/", "CommonName", true, "data");
         wmis.global.loadAndInitializeSelect2(options.$location, "/api/wolfnecropsy/", "Location", true, "data"); 
 
         options.$keywords.keyup(function (e) {
@@ -70,9 +71,9 @@ wmis.wolfnecropsy.index = (function ($) {
                             return "";
                     }
                 },
-                { "data": "commonname" },
+                { "data": "commonName" },
                 { "data": "location" },
-                { "data": "generalcomments" },
+                { "data": "generalComments" },
                 { "data": "submitter" },
 
             ],
@@ -97,8 +98,8 @@ wmis.wolfnecropsy.index = (function ($) {
                     i: settings.oAjaxData.sEcho,
 
                    // Custom search data
-                    necropsyid: options.$necropsyid.val(),
-                    commonname: options.$commonname.val(),
+                    necropsyId: options.$necropsyId.val(),
+                    commonName: options.$commonName.val(),
                     location: options.$location.val(),
                     keywords: options.$keywords.val()  
                 };

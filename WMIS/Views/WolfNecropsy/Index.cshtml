@@ -18,8 +18,8 @@
             wmis.wolfnecropsy.index.initialize({
                 $newButton: $("#newButton"),
                 $editButton: $("#editButton"),
-                $necropsyID: $("#necropsyID"),
-                $species: $("#commonname"),
+                $necropsyId: $("#necropsyId"),
+                $commoName: $("#commonName"),
                 $location: $("#location"),
                 $keywords: $("#keywords"),
                 $searchButton: $("#searchButton"),
@@ -35,16 +35,16 @@
 
         @if (Html.UserIsWildlifeDiseaseAdministrator())
         {
-            <a href="~/Project/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+            <a href="~/WolfNecropsy/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
         }
-        <a href="~/Project/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+        <a href="~/WolfNecropsy/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
             @if (Html.UserIsWildlifeDiseaseAdministrator())
             {
                 <span>View</span>
             }
             else
             {
-                <span>View</span>
+                <span id="View">View</span>
             }
         </a>
 
@@ -59,7 +59,7 @@
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
                         <div class="input-group">
-                            <input type="text" id="NecropsyId" class="form-control" placeholder="NecropsyId" />
+                            <input type="text" id="necropsyId" class="form-control" placeholder="necropsyId" />
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
                         <div class="input-group">
-                            <input id="CommonName" type="text" class="form-control" placeholder="CommonName" />
+                            <input id="commonName" type="text" class="form-control" placeholder="commonName" />
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
                         <div class="input-group">
-                            <input id="Location" type="text" class="form-control" placeholder="Location" />
+                            <input id="location" type="text" class="form-control" placeholder="location" />
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                 <div class="col-md-3">
                     <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
                         <div class="input-group">
-                            <input type="text" id="keywords" class="form-control" placeholder="Keywords" />
+                            <input type="text" id="keywords" class="form-control" placeholder="keywords" />
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" id="searchButton">Search</button>
                             </span>
