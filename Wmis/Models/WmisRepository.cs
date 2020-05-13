@@ -4048,9 +4048,9 @@
                     (count, p, id, sp, loc) =>
                     {
                         pr.ResultCount = count;
-                        p.NecropsyId = id;
-                        p.CommonName = sp;
-                        p.Location = loc;
+                        p.NecropsyId = id ?? null;
+                        p.CommonName = sp ?? null;
+                        p.Location = loc ?? null;
                         return p;
                     },
                     param,
@@ -4083,9 +4083,9 @@
                     (count, p,id,sp,loc) =>
                     {
                         pr.ResultCount = count;
-                        p.NecropsyId = id;
-                        p.CommonName = sp;
-                        p.Location = loc;
+                        p.NecropsyId = id ?? null;
+                        p.CommonName = sp ?? null;
+                        p.Location = loc ?? null;
                         return p;
                     },
                     param,
