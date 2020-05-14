@@ -4034,8 +4034,8 @@
                 {
                     p_startRow = sr.StartRow,
                     p_rowCount = sr.RowCount,
-                    p_sortBy = "NecropsyId", //sr.SortBy,
-                    p_sortDirection = "ASC", //sr.SortDirection,
+                    p_sortBy = sr.SortBy,
+                    p_sortDirection = sr.SortDirection,
                     p_necropsyId = sr.necropsyId,
                     p_commonname = sr.commonname,
                     p_location = sr.location,
@@ -4048,9 +4048,9 @@
                     (count, p, necropsyid, commonname, location) =>
                     {
                         pr.ResultCount = count;
-                        p.NecropsyId = necropsyid ?? null;
-                        p.CommonName = commonname ?? null;
-                        p.Location = location ?? null;
+                        p.NecropsyId = necropsyid;
+                        p.CommonName = commonname;
+                        p.Location = location;
                         return p;
                     },
                     param,
