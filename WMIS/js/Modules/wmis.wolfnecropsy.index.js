@@ -33,10 +33,10 @@ wmis.wolfnecropsy.index = (function ($) {
         initDataTable();
 
         document.title = "Wolf Necropsy";
-        /*
+
         wmis.global.loadAndInitializeSelect2(options.$necropsyId, "/api/wolfnecropsy/", "NecropsyID", true, "data");
         wmis.global.loadAndInitializeSelect2(options.$commonName, "/api/wolfnecropsy/", "CommonName", true, "data");
-        wmis.global.loadAndInitializeSelect2(options.$location, "/api/wolfnecropsy/", "Location", true, "data"); */
+        wmis.global.loadAndInitializeSelect2(options.$location, "/api/wolfnecropsy/", "Location", true, "data"); 
 
         options.$keywords.keyup(function (e) {
             if (e.keyCode == 13) {
