@@ -27,6 +27,28 @@
                 $table: $("#WolfNecropsies")
             });
         });
+
+        /* Initialize textboxes */
+        $(".necropsyId").select2({
+            data: {
+                id: "",
+                text: ""
+            }
+        });
+        $(".commonName").select2({
+            data: {
+                id: "",
+                text: ""
+            }
+        });
+        $(".location").select2({
+            data: {
+                id: "",
+                text: ""
+            }
+        });
+
+
     </script>
 }
 
