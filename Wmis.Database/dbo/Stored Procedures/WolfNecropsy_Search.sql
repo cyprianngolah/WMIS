@@ -106,10 +106,17 @@ AS
 		AND (@p_commonname IS NULL OR p.[commonname] = @p_commonname)
 		AND (@p_locaction IS NULL OR p.[Location] = @p_locaction)
 		AND (
-			@p_keywords IS NULL
+
+			/*@p_keywords IS NULL
 			OR p.[NecropsyId] LIKE '%' + @p_keywords + '%'
 			OR p.[commonname] LIKE '%' + @p_keywords + '%' 
 			OR p.[Location] LIKE '%' + @p_keywords + '%' 
+			*/
+
+			@p_keywords IS NULL
+			OR p.[NecropsyId] LIKE '%'+IsNull(p.[NecropsyId],@p_keywords)
+			OR p.[CommonName] LIKE '%'+IsNull(p.[CommonName],@p_keywords)
+			OR p.[Location] LIKE '%'+IsNull(p.[Location],@p_keywords)
 		)
 	ORDER BY
 		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '0'
