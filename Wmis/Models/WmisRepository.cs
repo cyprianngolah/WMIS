@@ -4069,7 +4069,7 @@
                 {
                     p_startRow = 0,
                     p_rowCount = 1000,
-                    p_sortBy = "NecropsyID",
+                    p_sortBy = "CaseId",
                     p_sortDirection = "asc",
                     p_necropsyId = sr.necropsyId,
                     p_commonname = sr.commonname,
