@@ -4042,7 +4042,21 @@
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
                 };
 
-                var pr = new Dto.PagedResultset< WolfNecropsy> { DataRequest = sr };
+                var pagedResults = new Dto.PagedResultset<WolfNecropsy> { DataRequest = sr };
+                pagedResults.Data = c.Query<int, WolfNecropsy, WolfNecropsy>(WolfNecropsy_SEARCH,
+                    (count, r) =>
+                    {
+                        pagedResults.ResultCount = count;
+                        return r;
+                    },
+                    param,
+                    commandType:
+                    CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+
+                return pagedResults;
+
+              /*  var pr = new Dto.PagedResultset< WolfNecropsy> { DataRequest = sr };
                 pr.Data = c.Query<int, WolfNecropsy, string, string, string, WolfNecropsy>(
                     WolfNecropsy_SEARCH,
                     (count, p, necropsyid, commonname, location) =>
@@ -4057,7 +4071,7 @@
                     commandType: CommandType.StoredProcedure,
                     splitOn: "Key").ToList();
 
-                return pr;
+                return pr; */
             }
         }
 
@@ -4077,6 +4091,20 @@
                     p_keywords = string.IsNullOrWhiteSpace(sr.Keywords) ? null : sr.Keywords
                 };
 
+                var pagedResults = new Dto.PagedResultset<WolfNecropsy> { DataRequest = sr };
+                pagedResults.Data = c.Query<int, WolfNecropsy, WolfNecropsy>(WolfNecropsy_SEARCH,
+                    (count, r) =>
+                    {
+                        pagedResults.ResultCount = count;
+                        return r;
+                    },
+                    param,
+                    commandType:
+                    CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+
+                return pagedResults;
+                /*
                 var pr = new Dto.PagedResultset<WolfNecropsy> { DataRequest = sr };
                 pr.Data = c.Query<int, WolfNecropsy, string, string, string, WolfNecropsy>(
                     WolfNecropsy_SEARCH,
@@ -4093,7 +4121,7 @@
                     commandType: CommandType.StoredProcedure,
                     splitOn: "Key").ToList();
 
-                return pr; 
+                return pr; */
             }
         } 
         #endregion WolfNecropsy
