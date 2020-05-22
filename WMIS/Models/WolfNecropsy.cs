@@ -5,7 +5,7 @@
 
     public class WolfNecropsy : KeyedModel
     {
-        public int CaseId { get; set; }
+       // public int CaseId { get; set; }
         public string NecropsyId { get; set; }
         public string CommonName { get; set; }
         public int SpeciesId { get; set; }

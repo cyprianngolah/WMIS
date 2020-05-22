@@ -5,7 +5,7 @@
 	@p_sortDirection NVARCHAR(3) = NULL,
 	@p_necropsyId NVARCHAR(30) = NULL,
 	@p_commonname NVARCHAR(30) = NULL,
-	@p_locaction NVARCHAR(50) = NULL,
+	@p_location NVARCHAR(50) = NULL,
 	@p_keywords NVARCHAR(50) = NULL
 AS
 	
@@ -104,7 +104,7 @@ AS
 	WHERE
 		(@p_necropsyId IS NULL OR p.[necropsyId] = @p_necropsyId)
 		AND (@p_commonname IS NULL OR p.[commonname] = @p_commonname)
-		AND (@p_locaction IS NULL OR p.[Location] = @p_locaction)
+		AND (@p_location IS NULL OR p.[Location] = @p_location)
 		AND (
 
 			/*@p_keywords IS NULL
