@@ -5,7 +5,6 @@
 
     public class WolfNecropsy : KeyedModel
     {
-       // public int CaseId { get; set; }
         public string NecropsyId { get; set; }
         public string CommonName { get; set; }
         public int SpeciesId { get; set; }
@@ -37,6 +36,7 @@
         public float TotalRank_Ext {get;set;}
         public bool Tongue { get; set; }
         public bool HairCollected { get; set; }
+        public bool SkullCollected { get; set; }
         public bool HindLegMuscle_StableIsotopes { get; set; }
         public bool HindLegMuscle_Contaminants { get; set; }
         public bool Femur { get; set; }
