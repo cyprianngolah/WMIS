@@ -18,7 +18,7 @@ wmis.wolfnecropsy.index = (function ($) {
     options.$downloadButton.on("click", function () {
         var keywords = options.$keywords.val()
         var pnecropsyId = options.$necropsyId.val()
-        var pcommonName = options.$commonName().val()
+        var pcommonName = options.$commonName.val()
         var plocation = options.$location.val()
         var url = `/api/wolfnecropsy/download/?necropsyId=${pnecropsyId}&comonName=${pcommonName}&location=${plocation}&keywords=${keywords}`
 
