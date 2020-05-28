@@ -375,7 +375,9 @@
 
         private const string WolfNecropsy_SEARCH = "dbo.WolfNecropsy_Search";
 
-
+        ///Save /////
+        //
+        private const string WolfNecropsy_SAVE = "dbo.WolfNecropsy_Save";
 
 
         /*////////
@@ -4056,22 +4058,7 @@
 
                 return pagedResults;
 
-              /*  var pr = new Dto.PagedResultset< WolfNecropsy> { DataRequest = sr };
-                pr.Data = c.Query<int, WolfNecropsy, string, string, string, WolfNecropsy>(
-                    WolfNecropsy_SEARCH,
-                    (count, p, necropsyid, commonname, location) =>
-                    {
-                        pr.ResultCount = count;
-                        p.NecropsyId = necropsyid;
-                        p.CommonName = commonname;
-                        p.Location = location;
-                        return p;
-                    },
-                    param,
-                    commandType: CommandType.StoredProcedure,
-                    splitOn: "Key").ToList();
-
-                return pr; */
+  
             }
         }
 
@@ -4104,26 +4091,111 @@
                     splitOn: "Key").ToList();
 
                 return pagedResults;
-                /*
-                var pr = new Dto.PagedResultset<WolfNecropsy> { DataRequest = sr };
-                pr.Data = c.Query<int, WolfNecropsy, string, string, string, WolfNecropsy>(
-                    WolfNecropsy_SEARCH,
-                    (count, p,necropsyid,commonname, location) =>
-                    {
-       
-                        pr.ResultCount = count;
-                        p.NecropsyId = necropsyid ?? null;
-                        p.CommonName = commonname ?? null;
-                        p.Location = location ?? null;
-                        return p;
-                    },
-                    param,
-                    commandType: CommandType.StoredProcedure,
-                    splitOn: "Key").ToList();
 
-                return pr; */
             }
-        } 
+        }
+        /* ///////    */
+
+        public void WolfNecropsySave(Models.WolfNecropsy r)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_CaseId = r.Key == 0 ? null : (int?)r.Key,
+                    p_necropsyid = r.NecropsyId,
+                    p_commonname = r.CommonName,
+                    p_speciesid = r.SpeciesId,
+                    p_necropsydate = r.NecropsyDate,
+                    p_sex = r.Sex,
+                    p_location = r.Location,
+                    p_gridcell = r.GridCell,
+                    p_datereceived = r.DateReceived,
+                    p_datekilled = r.DateKilled,
+                    p_ageclass = r.AgeClass,
+                    p_ageestimated = r.AgeEstimated,
+                    p_submitter = r.Submitter,
+                    p_contactinfo = r.ContactInfo,
+                    p_regionid = r.RegionId,
+                    p_methodkilled = r.MethodKilled,
+                    p_injuries = r.Injuries,
+                    p_tagcomments = r.TagComments,
+                    p_tagrecheck = r.TagReCheck,
+                    p_bodywt_unskinned = r.BodyWt_unskinned,
+                    p_neckgirth_unsk = r.NeckGirth_unsk,
+                    p_chestgirth_unsk = r.ChestGirth_unsk,
+                    p_contour_nose_tail = r.Contour_Nose_Tail,
+                    p_tail_length = r.Tail_Length,
+                    p_bodywt_skinned = r.BodyWt_skinned,
+                    p_peltwt = r.PeltWt,
+                    p_neckgirth_sk = r.NeckGirth_sk,
+                    p_chestgirth_sk = r.ChestGirth_sk,
+                    p_rumpfat = r.RumpFat,
+                    p_totalrank_ext = r.TotalRank_Ext,
+                    p_tongue = r.Tongue,
+                    p_haircollected = r.HairCollected,
+                    p_skullcollected = r.SkullCollected,
+                    p_hindlegmuscle_stableisotopes = r.HindLegMuscle_StableIsotopes,
+                    p_hindlegmuscle_contaminants = r.HindLegMuscle_Contaminants,
+                    p_femur = r.Femur,
+                    p_feces = r.Feces,
+                    p_diaphragm = r.Diaphragm,
+                    p_lung = r.Lung,
+                    p_liver_dna = r.Liver_DNA,
+                    p_liver_sia = r.Liver_SIA,
+                    p_liver_contam = r.Liver_Contam,
+                    p_spleen = r.Spleen,
+                    p_kidneyl = r.KidneyL,
+                    p_kidneyl_wt = r.KidneyL_wt,
+                    p_kidneyr = r.KidneyR,
+                    p_kidneyr_wt = r.KidneyR_wt,
+                    p_blood_tabs = r.Blood_tabs,
+                    p_blood_tubes = r.Blood_tubes,
+                    p_stomach = r.Stomach,
+                    p_stomachcont = r.StomachCont,
+                    p_stomach_full = r.Stomach_Full,
+                    p_stomach_empty = r.Stomach_Empty,
+                    p_stomachcont_wt = r.StomachCont_wt,
+                    p_stomachcontentdesc = r.StomachContentDesc,
+                    p_intestinaltract = r.IntestinalTract,
+                    p_uterinescars = r.UterineScars,
+                    p_uterus = r.Uterus,
+                    p_ovaries = r.Ovaries,
+                    p_lymphnodes = r.LymphNodes,
+                    p_others = r.Others,
+                    p_internalrank = r.InternalRank,
+                    p_peltcolor = r.PeltColor,
+                    p_backfat = r.BackFat,
+                    p_sternumfat = r.SternumFat,
+                    p_inguinalfat = r.InguinalFat,
+                    p_incentive = r.Incentive,
+                    p_incentiveamt = r.IncentiveAmt,
+                    p_conflict = r.Conflict,
+                    p_groupsize = r.GroupSize,
+                    p_packid = r.PackId,
+                    p_xiphoid = r.Xiphoid,
+                    p_personnel = r.Personnel,
+                    p_pictures = r.Pictures,
+                    p_speciescomments = r.SpeciesComments,
+                    p_taginjurycomments = r.TagInjuryComments,
+                    p_injurycomments = r.InjuryComments,
+                    p_examinjurycomments = r.ExamInjuryComments,
+                    p_examcomments = r.ExamComments,
+                    p_picturescomments = r.PicturesComments,
+                    p_measurementscomments = r.MeasurementsComments,
+                    p_missingpartscomments = r.MissingPartsComments,
+                    p_stomachcontents = r.StomachContents,
+                    p_othersamplescomments = r.OtherSamplesComments,
+                    p_samplescomments = r.SamplesComments,
+                    p_generalComments = r.GeneralComments
+                
+                };
+
+                c.Execute(WolfNecropsy_SAVE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+///////
         #endregion WolfNecropsy
 
         #endregion Methods

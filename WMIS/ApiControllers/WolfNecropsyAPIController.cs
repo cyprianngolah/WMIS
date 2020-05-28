@@ -290,7 +290,15 @@
             }
 
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
-        } 
+        }
+
+
+        [HttpPost]
+        [Route]
+        public void SaveWolfNecropsy(Models.WolfNecropsy r)
+        {
+            Repository.WolfNecropsySave(r);
+        }
         #endregion
     }
 }

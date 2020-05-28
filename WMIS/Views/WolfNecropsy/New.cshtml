@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "WolfNecropsy";
+    ViewBag.SubTitle = "New";
+}
+
+@section Scripts {
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/wolfnecropsy/edit"))
+
+    <script type="text/javascript">
+		$(function() {
+			wmis.wolfnecropsy.edit.initialize();
+		});
+    </script>
+}
+
+@{ Html.RenderPartial("EditForm"); }<h2>New</h2>
+
