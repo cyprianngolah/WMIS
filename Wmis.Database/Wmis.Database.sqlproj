@@ -331,6 +331,11 @@
     <Build Include="dbo\Stored Procedures\Gabs_InsertVectronicsData.sql" />
     <Build Include="dbo\Tables\CollaredAnimalBreedingStatusHistory.sql" />
     <Build Include="dbo\Views\vwCollaredAnimalsAndHerds.sql" />
+    <Build Include="dbo\Tables\WolfNecropsy.sql" />
+    <Build Include="dbo\Stored Procedures\WolfNecropsy_Create.sql" />
+    <Build Include="dbo\Stored Procedures\WolfNecropsy_Update.sql" />
+    <Build Include="dbo\Stored Procedures\WolfNecropsy_Get.sql" />
+    <Build Include="dbo\Stored Procedures\WolfNecropsy_Search.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

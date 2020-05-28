@@ -1,0 +1,117 @@
+﻿@using Wmis.Extensions
+@{
+    ViewBag.Title = "Wolf Necropsy";
+}
+
+@section Styles {
+    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
+}
+
+@section Scripts {
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/WolfNecropsy/Index"))
+
+    <script type="text/javascript">
+        $(function () {
+            wmis.wolfnecropsy.index.initialize({
+                $newButton: $("#newButton"),
+                $editButton: $("#editButton"),
+                $necropsyId: $("#necropsyId"),
+                $commoName: $("#commonName"),
+                $location: $("#location"),
+                $keywords: $("#keywords"),
+                $searchButton: $("#searchButton"),
+
+                $table: $("#WolfNecropsies")
+            });
+        });
+
+       
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12 text-right">
+
+        @if (Html.UserIsWildlifeDiseaseAdministrator())
+        {
+            <a href="~/WolfNecropsy/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
+        }
+        <a href="~/WolfNecropsy/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
+            @if (Html.UserIsWildlifeDiseaseAdministrator())
+            {
+                <span>View</span>
+            }
+            else
+            {
+                <span id="View">View</span>
+            }
+        </a>
+
+        <button id="downloadButton" class="btn btn-default" style="margin-bottom: 10px;">Download</button>
+    </div>
+</div>
+
+<div class="well" style="margin-bottom: 0;">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal center" role="form">
+                <div class="col-md-3">
+                   <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                        <div class="input-group">
+                            <input type="text" id="necropsyId" class="form-control" placeholder="necropsyId" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                        <div class="input-group">
+                            <input id="commonName" type="text" class="form-control" placeholder="commonName" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                        <div class="input-group">
+                            <input id="location" type="text" class="form-control" placeholder="location" />
+                        </div>
+                    </div>
+                </div>
+
+                <label class="sr-only" for="keywords">Keywords</label>
+                <div class="col-md-3">
+                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
+                        <div class="input-group">
+                            <input type="text" id="keywords" class="form-control" placeholder="keywords" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id="searchButton">Search</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="WolfNecropsies" class="table table-striped table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>NecropsyID</th>
+                    <th>NecropsyDate</th>
+                    <th>Species</th>
+                    <th>Location</th>
+                    <th>GeneralComments</th>
+                    <th>Submitter</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

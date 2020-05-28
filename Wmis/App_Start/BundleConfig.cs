@@ -114,6 +114,7 @@
 
             bundles.Add(new ScriptBundle("~/bundles/tools/lotekiridiumdataprocessing").Include(
                     "~/js/vuemodules/wmis.tools.lotekiridiumdataprocessing.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/tools/AddDataManually").Include(
                     "~/js/vuemodules/wmis.tools.adddatamanually.js"));
 
@@ -254,7 +255,16 @@
             bundles.Add(new ScriptBundle("~/bundles/help/edit").Include(
                         "~/js/modules/wmis.help.edit.js"));
 
-			#endregion
-		}
-	}
+            #endregion
+
+            #region WolfNecropsies
+            bundles.Add(new ScriptBundle("~/bundles/wolfnecropsy/index").Include(
+                        "~/js/modules/wmis.wolfnecropsy.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/wolfnecropsy/edit").Include(
+                        "~/js/modules/wmis.wolfnecropsy.edit.js"));
+
+            #endregion
+        }
+    }
 }

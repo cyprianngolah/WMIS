@@ -15,7 +15,7 @@
 	[InactiveDate]						DATETIME			NULL,
 	[DeploymentDate]					DATETIME			NULL,
 	[ProjectId]							INT					NULL,
-	[Size]								NVARCHAR (50)		NULL,
+	[Size]								NVARCHAR (100)		NULL,
 	[BeltingColour]						NVARCHAR (50)		NULL,
 	[FirmwareVersion]					NVARCHAR (MAX)		NULL,
 	[Comments]							NVARCHAR (MAX)		NULL,

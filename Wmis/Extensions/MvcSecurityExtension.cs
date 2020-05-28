@@ -49,5 +49,10 @@
         {
             return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorProjects);
         }
-	}
+
+        public static bool UserIsWildlifeDiseaseAdministrator(this HtmlHelper htmlHelper)
+        {
+            return UserHasRole(htmlHelper, Auth.WmisRoles.WMISDiseaseAdministrator);
+        }
+    }
 }
