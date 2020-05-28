@@ -9,12 +9,12 @@
 	[CommonName] [varchar](200) NULL,
 	[ELCode] [varchar](200) NULL,
 	[RangeExtentScore] [varchar](200) NULL,
-	[RangeExtentDescription] [varchar](200) NULL,
+	[RangeExtentDescription] [varchar](max) NULL,
 	[NumberOfOccurencesScore] [varchar](200) NULL,
-	[NumberOfOccurencesDescription] [varchar](200) NULL,
-	[StatusRankId] [varchar](200) NULL,
-	[StatusRankDescription] [varchar](200) NULL,
+	[NumberOfOccurencesDescription] [varchar](max) NULL,
+	[StatusRankId] [int] NULL,
+	[StatusRankDescription] [varchar](max) NULL,
 	[SRank] [varchar](200) NULL,
-	[DecisionProcessDescription] [varchar](200) NULL
+	[DecisionProcessDescription] [varchar](max) NULL
 )
 GO

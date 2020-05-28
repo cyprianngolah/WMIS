@@ -57,7 +57,7 @@ new Vue({
 
         rejectPostInactiveDate: function() {
             this.busy = true
-            axios.get(`/api/tools/rejectAfterInactiveDate`)
+            axios.get(`/api/tools/rejectLocationsAfterInactiveDate`)
                 .then(response => {
                     var cnt = response.data
                     this.message.text = 'Process completed successfully. Number of rows affected: ' + cnt;

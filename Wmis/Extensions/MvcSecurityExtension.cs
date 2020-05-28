@@ -21,10 +21,21 @@
 		public static bool UserInAnyAdministratorRole(this HtmlHelper htmlHelper)
 		{
 			return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorBiodiversity) || 
-				UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorProjects);
+				UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorProjects) ||
+                UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorCollaredAnimals);
 		}
 
-		public static bool UserIsBiodiversityAdministrator(this HtmlHelper htmlHelper)
+        // New role for only WMIS administrators
+        public static bool UserIsWMISAdministrator(this HtmlHelper htmlHelper)
+        {
+            return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorBiodiversity) & UserHasRole(htmlHelper, Auth.WmisRoles.WMISAdministrator) ||
+                   UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorProjects) & UserHasRole(htmlHelper, Auth.WmisRoles.WMISAdministrator) ||
+                   UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorCollaredAnimals) & UserHasRole(htmlHelper, Auth.WmisRoles.WMISAdministrator) ||
+                   UserHasRole(htmlHelper, Auth.WmisRoles.AllRoles) & UserHasRole(htmlHelper, Auth.WmisRoles.WMISAdministrator) ||
+                   UserHasRole(htmlHelper, Auth.WmisRoles.WMISAdministrator);
+        }
+
+        public static bool UserIsBiodiversityAdministrator(this HtmlHelper htmlHelper)
 		{
 			return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorBiodiversity);
 		}
@@ -38,5 +49,10 @@
         {
             return UserHasRole(htmlHelper, Auth.WmisRoles.AdministratorProjects);
         }
-	}
+
+        public static bool UserIsWildlifeDiseaseAdministrator(this HtmlHelper htmlHelper)
+        {
+            return UserHasRole(htmlHelper, Auth.WmisRoles.WMISDiseaseAdministrator);
+        }
+    }
 }

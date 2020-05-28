@@ -229,6 +229,7 @@
     <Compile Include="ApiControllers\HelpLinkApiController.cs" />
     <Compile Include="ApiControllers\SurveyTemplateApiController.cs" />
     <Compile Include="ApiControllers\TaxonomyApiController.cs" />
+    <Compile Include="ApiControllers\WolfNecropsyAPIController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\TaxonomyController.cs" />
     <Compile Include="Controllers\ToolsController.cs" />
+    <Compile Include="Controllers\WolfNecropsyController.cs" />
     <Compile Include="Dto\Base\PagedDataKeyedKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataKeywordRequest.cs" />
     <Compile Include="Dto\Base\PagedDataRequest.cs" />
@@ -327,6 +329,7 @@
     <Compile Include="Dto\WMISTools\ToolsLotekFileReader.cs" />
     <Compile Include="Dto\WMISTools\ToolsLotekOutputFile.cs" />
     <Compile Include="Dto\WMISTools\ToolsTelonicsOutputFile.cs" />
+    <Compile Include="Dto\WolfNecropsyRequest.cs" />
     <Compile Include="Extensions\DapperExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
@@ -342,6 +345,7 @@
     <Compile Include="Models\BulkUploads.cs" />
     <Compile Include="Models\HelpLink.cs" />
     <Compile Include="Models\HistoricTypesFilter.cs" />
+    <Compile Include="Models\WolfNecropsy.cs" />
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />
     <Compile Include="Models\PersonRole.cs" />
@@ -551,7 +555,9 @@
     </Content>
     <Content Include="js\Modules\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\Modules\wmis.biodiversity.edit.synonyms.js" />
+    <Content Include="js\Modules\wmis.biodiversity.index.js" />
     <Content Include="js\Modules\wmis.project.editmodals.js" />
+    <Content Include="js\Modules\wmis.project.index.js" />
     <Content Include="js\Modules\wmis.project.site.edit.js" />
     <Content Include="js\Modules\wmis.search.index.js" />
     <Content Include="js\Modules\wmis.help.index.js" />
@@ -577,7 +583,6 @@
     <Content Include="js\Modules\wmis.nwtsarcassessment.index.js" />
     <Content Include="js\Modules\wmis.project.survey.new.js" />
     <Content Include="js\Modules\wmis.project.survey.edit.js" />
-    <Content Include="js\Modules\wmis.project.index.js" />
     <Content Include="js\Modules\wmis.project.new.js" />
     <Content Include="js\Modules\wmis.statusrank.edit.js" />
     <Content Include="js\Modules\wmis.cosewicstatus.index.js" />
@@ -591,6 +596,8 @@
     <Content Include="js\Modules\wmis.reference.edit.js" />
     <Content Include="js\Modules\wmis.taxonomy.edit.js" />
     <Content Include="js\Modules\wmis.reference.index.js" />
+    <Content Include="js\Modules\wmis.wolfnecropsy.edit.js" />
+    <Content Include="js\Modules\wmis.wolfnecropsy.index.js" />
     <Content Include="js\VueModules\wmis.tools.adddatamanually.js" />
     <Content Include="js\VueModules\wmis.tools.batchreject.js" />
     <Content Include="js\VueModules\wmis.tools.postretrievaldataprocessing.js" />
@@ -598,7 +605,6 @@
     <Content Include="js\VueModules\wmis.tools.lotekiridiumdataprocessing.js" />
     <Content Include="js\VueModules\wmis.tools.vectronicsdataprocessing.js" />
     <Content Include="js\wmis.js" />
-    <Content Include="js\Modules\wmis.biodiversity.index.js" />
     <Content Include="js\Modules\wmis.taxonomy.index.js" />
     <Content Include="js\Modules\wmis.project.edit.js" />
     <Content Include="Content\DataTables-1.10.3\css\dataTables.responsive.scss" />
@@ -778,6 +784,7 @@
     <Content Include="Scripts\vue.min.js" />
     <Content Include="Scripts\xlsx.full.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\SurveyTemplate\Edit.cshtml" />
     <Content Include="Views\SurveyTemplate\EditForm.cshtml" />
     <Content Include="Views\SurveyTemplate\Index.cshtml" />
@@ -789,6 +796,7 @@
     <Content Include="Views\Project\NewSite.cshtml" />
     <Content Include="Views\Project\EditSite.cshtml" />
     <Content Include="Views\Project\EditSiteForm.cshtml" />
+    <Content Include="Views\WolfNecropsy\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -841,7 +849,6 @@
     <Content Include="Views\NwtSarcAssessment\EditForm.cshtml" />
     <Content Include="Views\NwtSarcAssessment\Index.cshtml" />
     <Content Include="Views\NwtSarcAssessment\New.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\New.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\EditSurvey.cshtml" />
@@ -879,6 +886,9 @@
     <Content Include="Views\Tools\ResetHerdPopulation.cshtml" />
     <Content Include="Views\Tools\VectronicsDataProcessing.cshtml" />
     <Content Include="Views\Tools\AddDataManually.cshtml" />
+    <Content Include="Views\WolfNecropsy\New.cshtml" />
+    <Content Include="Views\WolfNecropsy\EditForm.cshtml" />
+    <Content Include="Views\WolfNecropsy\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
