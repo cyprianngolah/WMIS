@@ -34,31 +34,7 @@ wmis.wolfnecropsy.index = (function ($) {
 
         document.title = "Wolf Necropsy";
 
-        /* Initialize textboxes 
-        $(".necropsyId").select2({
-            data: {
-                id: "",
-                text: ""
-            }
-        });
-        $(".commonName").select2({
-            data: {
-                id: "",
-                text: ""
-            }
-        });
-        $(".location").select2({
-            data: {
-                id: "",
-                text: ""
-            }
-        });
-/*
-        wmis.global.loadAndInitializeSelect2(options.$necropsyId, "/api/wolfnecropsy/", "NecropsyID", true, "data");
-        wmis.global.loadAndInitializeSelect2(options.$commonName, "/api/wolfnecropsy/", "CommonName", true, "data");
-        wmis.global.loadAndInitializeSelect2(options.$location, "/api/wolfnecropsy/", "Location", true, "data"); 
-*/
-       
+            
 
         options.$necropsyId.keyup(function (e) {
             if (e.keyCode == 13) {

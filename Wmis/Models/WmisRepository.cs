@@ -4012,12 +4012,11 @@
                 {
                     p_caseId = wolfnecropsyKey
                 };
-                return c.Query<WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy, WolfNecropsy>(WolfNecropsy_GET,
-                    (p, id, sp, loc) =>
+                return c.Query<WolfNecropsy, WolfNecropsy, WolfNecropsy>(WolfNecropsy_GET,
+                    (p, sp) =>
                     {
-                        p.NecropsyId = id.NecropsyId;
+                        p.NecropsyId = sp.NecropsyId;
                         p.CommonName = sp.CommonName;
-                        p.Location = loc.Location; 
                         return p;
                     },
                         param,
