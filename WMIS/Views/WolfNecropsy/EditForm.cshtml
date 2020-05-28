@@ -1,516 +1,521 @@
-﻿<!-- <div data-bind="with: collar" class="tab-pane form-horizontal" id="collarTab"> -->
-<div class="form-group">
-    <label for="necropsyId" class="col-md-1 control-label">NecropsyID</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="necropsyId" data-bind="value: necropsyId">
-    </div>
-
-    <label for="commonName" class="col-md-1 control-label">CommonName</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="commonName" data-bind="value: commonName">
-    </div>
-
-    <label for="speciedId" class="col-md-1 control-label">Species ID</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="speciesId" data-bind="value: speciesId">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="sex" class="col-md-1 control-label">SEX</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="sex" data-bind="value: sex">
-    </div>
-
-    <label for="location" class="col-md-1 control-label">Location</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="location" data-bind="value: location">
-    </div>
-
-    <label for="gridcell" class="col-md-1 control-label">Grid Cell</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="grdicell" data-bind="value: gridcell">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="datereceived" class="col-md-1 control-label">Date Received</label>
-    <div class="col-md-3">
-        <input type="date" class="form-control" id="datereceived" data-bind="value: datereceived">
-    </div>
-
-    <label for="dateKilled" class="col-md-1 control-label">Date Killed</label>
-    <div class="col-md-3">
-        <input type="date" class="form-control" id="dateKilled" data-bind="value: DateKilled">
-    </div>
-
-    <label for="ageclass" class="col-md-1 control-label">Age Class</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="ageClass" data-bind="value: ageClass">
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="ageEstimated" class="col-md-1 control-label">Age Estimated</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="ageEstimated" data-bind="value: ageEstimated">
-    </div>
-
-    <label for="submitter" class="col-md-1 control-label">Submitter</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="submitter" data-bind="value: submitter">
-    </div>
-
-    <label for="contactInfo" class="col-md-1 control-label">Contact Info</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="contactInfo" data-bind="value: contactInfo">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="regionId" class="col-md-1 control-label">Region ID</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="regionId" data-bind="value: regionId">
-    </div>
-
-    <label for="methodKilled" class="col-md-1 control-label">MethodKilled</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="methodKilled" data-bind="value: methodKilled">
-    </div>
-
-    <label for="injuries" class="col-md-1 control-label">Injuries</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="injuries" data-bind="value: injuries">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="tagComments" class="col-md-1 control-label">TagComments</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="tagComments" data-bind="value: tagComments">
-    </div>
-
-    <label for="tagReCheck" class="col-md-1 control-label">TagReCheck</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="tagReCheck" data-bind="value: tagReCheck">
-    </div>
-
-    <label for="bodyWt_unskinned" class="col-md-1 control-label">BodyWt_unsk</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="bodyWt_unskinned" data-bind="value: bodyWt_unskinned">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="neckGirth_unsk" class="col-md-1 control-label">NeckGirth_unsk</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="neckGirth_unsk" data-bind="value: neckGirth_unsk">
-    </div>
-
-    <label for="chestGirth_unsk" class="col-md-1 control-label">ChestGirth_unsk</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="chestGirth_unsk" data-bind="value: chestGirth_unsk">
-    </div>
-
-    <label for="contour_Nose_Tail" class="col-md-1 control-label">Cont_Nose_Tail</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="contour_Nose_Tail" data-bind="value: contour_Nose_Tail">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="tail_Length" class="col-md-1 control-label">Tail_Length</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="tail_Length" data-bind="value: tail_Length">
-    </div>
-
-    <label for="bodyWt_skinned" class="col-md-1 control-label">BodyWt_skinned</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="bodyWt_skinned" data-bind="value: bodyWt_skinned">
-    </div>
-
-    <label for="peltWt" class="col-md-1 control-label">PeltWt</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="peltWt" data-bind="value: peltWt">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="neckGirth_sk" class="col-md-1 control-label">NeckGirth_sk</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="neckGirth_sk" data-bind="value: neckGirth_sk">
-    </div>
-
-    <label for="chestGirth_sk" class="col-md-1 control-label">ChestGirth_sk</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="chestGirth_sk" data-bind="value: chestGirth_sk">
-    </div>
-
-    <label for="rumpFat" class="col-md-1 control-label">RumpFat</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="rumpFat" data-bind="value: rumpFat">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="totalRank_Ext" class="col-md-1 control-label">TotalRank_Ext</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="totalRank_Ext" data-bind="value: totalRank_Ext">
-    </div>
-
-    <label for="tongue" class="col-md-1 control-label">Tongue</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="tongue" data-bind="value: tongue">
-    </div>
-
-    <label for="hairCollected" class="col-md-1 control-label">HairCollected</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="hairCollected" data-bind="value: hairCollected">
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="skullCollected" class="col-md-1 control-label">SkullCollected</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="skullCollected" data-bind="value: skullCollected">
-    </div>
-
-    <label for="hindLegMuscle_StableIsotopes" class="col-md-1 control-label">HLegMscle_SIso</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="hindLegMuscle_StableIsotopes" data-bind="value: hindLegMuscle_StableIsotopes">
-    </div>
-
-    <label for="hindLegMuscle_Contaminants" class="col-md-1 control-label">HLegMscle_Cont</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="hindLegMuscle_Contaminants" data-bind="value: hindLegMuscle_Contaminants">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="femur" class="col-md-1 control-label">Femur</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="femur" data-bind="value: femur">
-    </div>
-
-    <label for="feces" class="col-md-1 control-label">Feces</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="feces" data-bind="value: feces">
-    </div>
-
-    <label for="diaphragm" class="col-md-1 control-label">Diaphragm</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="diaphragm" data-bind="value: diaphragm">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="lung" class="col-md-1 control-label">Lung</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="lung" data-bind="value: lung">
-    </div>
-
-    <label for="liver_DNA" class="col-md-1 control-label">Liver_DNA</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="liver_DNA" data-bind="value: liver_DNA">
-    </div>
-
-    <label for="liver_SIA" class="col-md-1 control-label">Liver_SIA</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="liver_SIA" data-bind="value: liver_SIA">
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="liver_Contam" class="col-md-1 control-label">Liver_Contam</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="liver_Contam" data-bind="value: liver_Contam">
-    </div>
-
-    <label for="spleen" class="col-md-1 control-label">Spleen</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="spleen" data-bind="value: spleen">
-    </div>
-
-    <label for="kidneyL" class="col-md-1 control-label">KidneyL</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="kidneyL" data-bind="value: kidneyL">
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="liver_Contam" class="col-md-1 control-label">Liver_Contam</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="liver_Contam" data-bind="value: liver_Contam">
-    </div>
-
-    <label for="spleen" class="col-md-1 control-label">Spleen</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="spleen" data-bind="value: spleen">
-    </div>
-
-    <label for="kidneyL" class="col-md-1 control-label">KidneyL</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="kidneyL" data-bind="value: kidneyL">
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="kidneyL_wt" class="col-md-1 control-label">KidneyL_wt</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="kidneyL_wt" data-bind="value: liver_Contam">
-    </div>
-
-    <label for="kidneyR" class="col-md-1 control-label">KidneyR</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="kidneyR" data-bind="value: kidneyR">
-    </div>
-
-    <label for="kidneyR_wt" class="col-md-1 control-label">KidneyR_wt</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="kidneyR_wt" data-bind="value: kidneyR_wt">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="blood_tabs" class="col-md-1 control-label">Blood_tabs</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="blood_tabs" data-bind="value: blood_tabs">
-    </div>
-
-    <label for="blood_tubes" class="col-md-1 control-label">Blood_tubes</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="lood_tubes" data-bind="value: lood_tubes">
-    </div>
-
-    <label for="stomach" class="col-md-1 control-label">Stomach</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="stomach" data-bind="value: stomach">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="stomachCont" class="col-md-1 control-label">StomachCont</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="stomachCont" data-bind="value: stomachCont">
-    </div>
-
-    <label for="stomach_Full" class="col-md-1 control-label">Stomach_Full</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="stomach_Full" data-bind="value: stomach_Full">
-    </div>
-
-    <label for="stomach_Empty" class="col-md-1 control-label">Stomach_Empty</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="stomach_Empty" data-bind="value: stomach_Empty">
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="stomachCont_wt" class="col-md-1 control-label">StomachCont_wt</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="stomachCont_wt" data-bind="value: stomachCont_wt">
-    </div>
-
-    <label for="stomachContentDesc" class="col-md-1 control-label">StomachContDesc</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="stomachContentDes" data-bind="value: stomachContentDes">
-    </div>
-
-    <label for="intestinalTract" class="col-md-1 control-label">IntestinalTract</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="intestinalTract" data-bind="value: intestinalTract">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="uterineScars" class="col-md-1 control-label">UterineScars</label>
-    <div class="col-md-3">
-        <input type="number" class="form-control" id="uterineScars" data-bind="value: uterineScars">
-    </div>
-
-    <label for="Uterus" class="col-md-1 control-label">Uterus</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="Uterus" data-bind="value: Uterus">
-    </div>
-
-    <label for="ovaries" class="col-md-1 control-label">Ovaries</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="ovaries" data-bind="value: ovaries">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="lymphNodes" class="col-md-1 control-label">LymphNodes</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="lymphNodes" data-bind="value: lymphNodes">
-    </div>
-
-    <label for="Others" class="col-md-1 control-label">Others</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="others" data-bind="value: others">
-    </div>
-
-    <label for="internalRank" class="col-md-1 control-label">InternalRank</label>
-    <div class="col-md-3">
-        <input type="number" class="form-control" id="internalRank" data-bind="value: internalRank">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="peltColor" class="col-md-1 control-label">PeltColor</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="peltColor" data-bind="value: peltColor">
-    </div>
-
-    <label for="backFat" class="col-md-1 control-label">BackFat</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="backFat" data-bind="value: backFat">
-    </div>
-
-    <label for="sternumFat" class="col-md-1 control-label">SternumFat</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="sternumFat" data-bind="value: sternumFat">
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="inguinalFat" class="col-md-1 control-label">InguinalFat</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="inguinalFat" data-bind="value: inguinalFat">
-    </div>
-
-    <label for="incentive" class="col-md-1 control-label">Incentive</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="incentive" data-bind="value: incentive">
-    </div>
-
-    <label for="incentiveAmt" class="col-md-1 control-label">IncentiveAmt</label>
-    <div class="col-md-3">
-        <input type="number" step="any" class="form-control" id="incentiveAmt" data-bind="value: incentiveAmt">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="conflict" class="col-md-1 control-label">Conflict</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="conflict" data-bind="value: conflict">
-    </div>
-
-    <label for="groupSize" class="col-md-1 control-label">GroupSize</label>
-    <div class="col-md-3">
-        <input type="number" class="form-control" id="groupSize" data-bind="value: groupSize">
-    </div>
-
-    <label for="packId" class="col-md-1 control-label">PackId</label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="packId" data-bind="value: packId">
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="xiphoid" class="col-md-1 control-label">Xiphoid</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="xiphoid" data-bind="value: xiphoid">
-    </div>
-
-    <label for="personnel" class="col-md-1 control-label">Personnel</label>
-    <div class="col-md-3">
-        <input type="number" class="form-control" id="personnel" data-bind="value: personnel">
-    </div>
-
-    <label for="pictures" class="col-md-1 control-label">Pictures</label>
-    <div class="col-md-3">
-        <input type="number" min="0" max="1" class="form-control" id="pictures" data-bind="value: pictures">
-    </div>
-</div>
-
-
-<p style="color:blue;font-size:20px;">Comments</p>
-
-<div>
+﻿div class="col-md-6">
+<form role="form">
     <div class="form-group">
-        <label for="speciesComments" class="col-md-1 control-label">Species</label>
+        <label for="necropsyId" class="col-md-1 control-label">NecropsyID</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="speciesComments" data-bind="value: speciesComments">
+            <input type="text" class="form-control" id="necropsyId" data-bind="value: necropsyId">
         </div>
 
-        <label for="tagInjuryComments" class="col-md-1 control-label">TagInjury</label>
+        <label for="commonName" class="col-md-1 control-label">CommonName</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="tagInjuryComments" data-bind="value: tagInjuryComments">
+            <input type="text" class="form-control" id="commonName" data-bind="value: commonName">
         </div>
 
-        <label for="injuryComments" class="col-md-1 control-label">Injury</label>
+        <label for="speciedId" class="col-md-1 control-label">Species ID</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="injuryComments" data-bind="value: injuryComments">
+            <input type="text" class="form-control" id="speciesId" data-bind="value: speciesId">
         </div>
     </div>
 
     <div class="form-group">
-        <label for="examInjuryComments" class="col-md-1 control-label">ExamInjury</label>
+        <label for="sex" class="col-md-1 control-label">SEX</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="examInjuryComments" data-bind="value: examInjuryComments">
+            <input type="text" class="form-control" id="sex" data-bind="value: sex">
         </div>
 
-        <label for="examComments" class="col-md-1 control-label">Exam</label>
+        <label for="location" class="col-md-1 control-label">Location</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="examComments" data-bind="value: examComments">
+            <input type="text" class="form-control" id="location" data-bind="value: location">
         </div>
 
-        <label for="picturesComments" class="col-md-1 control-label">Pictures</label>
+        <label for="gridcell" class="col-md-1 control-label">GridCell</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="picturesComments" data-bind="value: injuryComments">
+            <input type="text" class="form-control" id="grdicell" data-bind="value: gridcell">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="datereceived" class="col-md-1 control-label">Date Received</label>
+        <div class="col-md-3">
+            <input type="date" class="form-control" id="datereceived" data-bind="value: datereceived">
+        </div>
+
+        <label for="dateKilled" class="col-md-1 control-label">Date Killed</label>
+        <div class="col-md-3">
+            <input type="date" class="form-control" id="dateKilled" data-bind="value: DateKilled">
+        </div>
+
+        <label for="ageclass" class="col-md-1 control-label">Age Class</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="ageClass" data-bind="value: ageClass">
         </div>
     </div>
 
 
     <div class="form-group">
-        <label for="measurementsComments" class="col-md-1 control-label">Measurements</label>
+        <label for="ageEstimated" class="col-md-1 control-label">Age Estimated</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="measurementsComments" data-bind="value: measurementsComments">
+            <input type="number" step="any" class="form-control" id="ageEstimated" data-bind="value: ageEstimated">
         </div>
 
-        <label for="missingPartsComments" class="col-md-1 control-label">MissingParts</label>
+        <label for="submitter" class="col-md-1 control-label">Submitter</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="missingPartsComments" data-bind="value: missingPartsComments">
+            <input type="text" class="form-control" id="submitter" data-bind="value: submitter">
         </div>
 
-        <label for="stomachContents" class="col-md-1 control-label">StomachCont</label>
+        <label for="contactInfo" class="col-md-1 control-label">Contact Info</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="stomachContents" data-bind="value: stomachContents">
+            <input type="text" class="form-control" id="contactInfo" data-bind="value: contactInfo">
         </div>
     </div>
 
+    <div class="form-group">
+        <label for="regionId" class="col-md-1 control-label">Region ID</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="regionId" data-bind="value: regionId">
+        </div>
+
+        <label for="methodKilled" class="col-md-1 control-label">MethodKilled</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="methodKilled" data-bind="value: methodKilled">
+        </div>
+
+        <label for="injuries" class="col-md-1 control-label">Injuries</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="injuries" data-bind="value: injuries">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="tagComments" class="col-md-1 control-label">TagComments</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="tagComments" data-bind="value: tagComments">
+        </div>
+
+        <label for="tagReCheck" class="col-md-1 control-label">TagReCheck</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="tagReCheck" data-bind="value: tagReCheck">
+        </div>
+
+        <label for="bodyWt_unskinned" class="col-md-1 control-label">BodyWt_unsk</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="bodyWt_unskinned" data-bind="value: bodyWt_unskinned">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="neckGirth_unsk" class="col-md-1 control-label">NeckGirth_unsk</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="neckGirth_unsk" data-bind="value: neckGirth_unsk">
+        </div>
+
+        <label for="chestGirth_unsk" class="col-md-1 control-label">ChestGirth_unsk</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="chestGirth_unsk" data-bind="value: chestGirth_unsk">
+        </div>
+
+        <label for="contour_Nose_Tail" class="col-md-1 control-label">Cont_Nose_Tail</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="contour_Nose_Tail" data-bind="value: contour_Nose_Tail">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="tail_Length" class="col-md-1 control-label">Tail_Length</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="tail_Length" data-bind="value: tail_Length">
+        </div>
+
+        <label for="bodyWt_skinned" class="col-md-1 control-label">BodyWt_skinned</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="bodyWt_skinned" data-bind="value: bodyWt_skinned">
+        </div>
+
+        <label for="peltWt" class="col-md-1 control-label">PeltWt</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="peltWt" data-bind="value: peltWt">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="neckGirth_sk" class="col-md-1 control-label">NeckGirth_sk</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="neckGirth_sk" data-bind="value: neckGirth_sk">
+        </div>
+
+        <label for="chestGirth_sk" class="col-md-1 control-label">ChestGirth_sk</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="chestGirth_sk" data-bind="value: chestGirth_sk">
+        </div>
+
+        <label for="rumpFat" class="col-md-1 control-label">RumpFat</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="rumpFat" data-bind="value: rumpFat">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="totalRank_Ext" class="col-md-1 control-label">TotalRank_Ext</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="totalRank_Ext" data-bind="value: totalRank_Ext">
+        </div>
+
+        <label for="tongue" class="col-md-1 control-label">Tongue</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="tongue" data-bind="value: tongue">
+        </div>
+
+        <label for="hairCollected" class="col-md-1 control-label">HairCollected</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="hairCollected" data-bind="value: hairCollected">
+        </div>
+    </div>
 
 
     <div class="form-group">
-        <label for="otherSamplesComments" class="col-md-1 control-label">OtherSamples</label>
+        <label for="skullCollected" class="col-md-1 control-label">SkullCollected</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="otherSamplesComments" data-bind="value: otherSamplesComments">
+            <input type="number" min="0" max="1" class="form-control" id="skullCollected" data-bind="value: skullCollected">
         </div>
 
-        <label for="samplesComments" class="col-md-1 control-label">Samples</label>
+        <label for="hindLegMuscle_StableIsotopes" class="col-md-1 control-label">HLegMscle_SIso</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="samplesComments" data-bind="value: samplesComments">
+            <input type="number" min="0" max="1" class="form-control" id="hindLegMuscle_StableIsotopes" data-bind="value: hindLegMuscle_StableIsotopes">
         </div>
 
-        <label for="generalComments" class="col-md-1 control-label">General</label>
+        <label for="hindLegMuscle_Contaminants" class="col-md-1 control-label">HLegMscle_Cont</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="generalComments" data-bind="value: generalComments">
+            <input type="number" min="0" max="1" class="form-control" id="hindLegMuscle_Contaminants" data-bind="value: hindLegMuscle_Contaminants">
         </div>
     </div>
 
+    <div class="form-group">
+        <label for="femur" class="col-md-1 control-label">Femur</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="femur" data-bind="value: femur">
+        </div>
+
+        <label for="feces" class="col-md-1 control-label">Feces</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="feces" data-bind="value: feces">
+        </div>
+
+        <label for="diaphragm" class="col-md-1 control-label">Diaphragm</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="diaphragm" data-bind="value: diaphragm">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="lung" class="col-md-1 control-label">Lung</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="lung" data-bind="value: lung">
+        </div>
+
+        <label for="liver_DNA" class="col-md-1 control-label">Liver_DNA</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="liver_DNA" data-bind="value: liver_DNA">
+        </div>
+
+        <label for="liver_SIA" class="col-md-1 control-label">Liver_SIA</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="liver_SIA" data-bind="value: liver_SIA">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="liver_Contam" class="col-md-1 control-label">Liver_Contam</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="liver_Contam" data-bind="value: liver_Contam">
+        </div>
+
+        <label for="spleen" class="col-md-1 control-label">Spleen</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="spleen" data-bind="value: spleen">
+        </div>
+
+        <label for="kidneyL" class="col-md-1 control-label">KidneyL</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="kidneyL" data-bind="value: kidneyL">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="liver_Contam" class="col-md-1 control-label">Liver_Contam</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="liver_Contam" data-bind="value: liver_Contam">
+        </div>
+
+        <label for="spleen" class="col-md-1 control-label">Spleen</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="spleen" data-bind="value: spleen">
+        </div>
+
+        <label for="kidneyL" class="col-md-1 control-label">KidneyL</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="kidneyL" data-bind="value: kidneyL">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="kidneyL_wt" class="col-md-1 control-label">KidneyL_wt</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="kidneyL_wt" data-bind="value: liver_Contam">
+        </div>
+
+        <label for="kidneyR" class="col-md-1 control-label">KidneyR</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="kidneyR" data-bind="value: kidneyR">
+        </div>
+
+        <label for="kidneyR_wt" class="col-md-1 control-label">KidneyR_wt</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="kidneyR_wt" data-bind="value: kidneyR_wt">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="blood_tabs" class="col-md-1 control-label">Blood_tabs</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="blood_tabs" data-bind="value: blood_tabs">
+        </div>
+
+        <label for="blood_tubes" class="col-md-1 control-label">Blood_tubes</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="lood_tubes" data-bind="value: lood_tubes">
+        </div>
+
+        <label for="stomach" class="col-md-1 control-label">Stomach</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="stomach" data-bind="value: stomach">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="stomachCont" class="col-md-1 control-label">StomachCont</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="stomachCont" data-bind="value: stomachCont">
+        </div>
+
+        <label for="stomach_Full" class="col-md-1 control-label">Stomach_Full</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="stomach_Full" data-bind="value: stomach_Full">
+        </div>
+
+        <label for="stomach_Empty" class="col-md-1 control-label">Stomach_Empty</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="stomach_Empty" data-bind="value: stomach_Empty">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="stomachCont_wt" class="col-md-1 control-label">StomachCont_wt</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="stomachCont_wt" data-bind="value: stomachCont_wt">
+        </div>
+
+        <label for="stomachContentDesc" class="col-md-1 control-label">StomachContDesc</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="stomachContentDes" data-bind="value: stomachContentDes">
+        </div>
+
+        <label for="intestinalTract" class="col-md-1 control-label">IntestinalTract</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="intestinalTract" data-bind="value: intestinalTract">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="uterineScars" class="col-md-1 control-label">UterineScars</label>
+        <div class="col-md-3">
+            <input type="number" class="form-control" id="uterineScars" data-bind="value: uterineScars">
+        </div>
+
+        <label for="Uterus" class="col-md-1 control-label">Uterus</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="Uterus" data-bind="value: Uterus">
+        </div>
+
+        <label for="ovaries" class="col-md-1 control-label">Ovaries</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="ovaries" data-bind="value: ovaries">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="lymphNodes" class="col-md-1 control-label">LymphNodes</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="lymphNodes" data-bind="value: lymphNodes">
+        </div>
+
+        <label for="Others" class="col-md-1 control-label">Others</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="others" data-bind="value: others">
+        </div>
+
+        <label for="internalRank" class="col-md-1 control-label">InternalRank</label>
+        <div class="col-md-3">
+            <input type="number" class="form-control" id="internalRank" data-bind="value: internalRank">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="peltColor" class="col-md-1 control-label">PeltColor</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="peltColor" data-bind="value: peltColor">
+        </div>
+
+        <label for="backFat" class="col-md-1 control-label">BackFat</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="backFat" data-bind="value: backFat">
+        </div>
+
+        <label for="sternumFat" class="col-md-1 control-label">SternumFat</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="sternumFat" data-bind="value: sternumFat">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="inguinalFat" class="col-md-1 control-label">InguinalFat</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="inguinalFat" data-bind="value: inguinalFat">
+        </div>
+
+        <label for="incentive" class="col-md-1 control-label">Incentive</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="incentive" data-bind="value: incentive">
+        </div>
+
+        <label for="incentiveAmt" class="col-md-1 control-label">IncentiveAmt</label>
+        <div class="col-md-3">
+            <input type="number" step="any" class="form-control" id="incentiveAmt" data-bind="value: incentiveAmt">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="conflict" class="col-md-1 control-label">Conflict</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="conflict" data-bind="value: conflict">
+        </div>
+
+        <label for="groupSize" class="col-md-1 control-label">GroupSize</label>
+        <div class="col-md-3">
+            <input type="number" class="form-control" id="groupSize" data-bind="value: groupSize">
+        </div>
+
+        <label for="packId" class="col-md-1 control-label">PackId</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="packId" data-bind="value: packId">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="xiphoid" class="col-md-1 control-label">Xiphoid</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="xiphoid" data-bind="value: xiphoid">
+        </div>
+
+        <label for="personnel" class="col-md-1 control-label">Personnel</label>
+        <div class="col-md-3">
+            <input type="number" class="form-control" id="personnel" data-bind="value: personnel">
+        </div>
+
+        <label for="pictures" class="col-md-1 control-label">Pictures</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="pictures" data-bind="value: pictures">
+        </div>
+    </div>
+
+
+    <p style="color:blue;font-size:20px;">Comments</p>
+
+    <div>
+        <div class="form-group">
+            <label for="speciesComments" class="col-md-1 control-label">Species</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="speciesComments" data-bind="value: speciesComments">
+            </div>
+
+            <label for="tagInjuryComments" class="col-md-1 control-label">TagInjury</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="tagInjuryComments" data-bind="value: tagInjuryComments">
+            </div>
+
+            <label for="injuryComments" class="col-md-1 control-label">Injury</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="injuryComments" data-bind="value: injuryComments">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="examInjuryComments" class="col-md-1 control-label">ExamInjury</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="examInjuryComments" data-bind="value: examInjuryComments">
+            </div>
+
+            <label for="examComments" class="col-md-1 control-label">Exam</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="examComments" data-bind="value: examComments">
+            </div>
+
+            <label for="picturesComments" class="col-md-1 control-label">Pictures</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="picturesComments" data-bind="value: injuryComments">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="measurementsComments" class="col-md-1 control-label">Measurements</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="measurementsComments" data-bind="value: measurementsComments">
+            </div>
+
+            <label for="missingPartsComments" class="col-md-1 control-label">MissingParts</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="missingPartsComments" data-bind="value: missingPartsComments">
+            </div>
+
+            <label for="stomachContents" class="col-md-1 control-label">StomachCont</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="stomachContents" data-bind="value: stomachContents">
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="otherSamplesComments" class="col-md-1 control-label">OtherSamples</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="otherSamplesComments" data-bind="value: otherSamplesComments">
+            </div>
+
+            <label for="samplesComments" class="col-md-1 control-label">Samples</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="samplesComments" data-bind="value: samplesComments">
+            </div>
+
+            <label for="generalComments" class="col-md-1 control-label">General</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="generalComments" data-bind="value: generalComments">
+            </div>
+        </div>
+
+    </div>
+    <p>
+
+    </p>
+    <div class="text-right">
+        <a href="/WolfNecropsy" class="btn btn-default">Cancel</a>
+        <button type="submit" class="btn btn-primary" data-bind="click: saveWolfNecropsy, enabled: canSave">Save</button>
+    </div>
+
+</form>
 </div>
 
-<div class="text-right">
-    <a href="/WolfNecropsy" class="btn btn-default">Cancel</a>
-    <button type="submit" class="btn btn-primary" data-bind="click: saveWolfNecropsy, enabled: canSave">Save</button>
-</div>
-
-<!-- </div> -->

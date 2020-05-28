@@ -169,7 +169,7 @@ wmis.wolfnecropsy.index = (function ($) {
 
                             if (data.key) {
                                 options.$editButton.removeClass('disabled');
-                                options.$editButton.prop("href", "/WolNecropsy/Edit/" + data.key);
+                                options.$editButton.prop("href", "/WolfNecropsy/Edit/" + data.key);
                             }
                         }
                     }
