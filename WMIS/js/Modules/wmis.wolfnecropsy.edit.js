@@ -1,7 +1,7 @@
-﻿wmis.WolfNecropsy = wmis.WolfNecropsy || {};
-wmis.WolfNecropsy.edit = (function ($) {
+﻿wmis.wolfnecropsy = wmis.wolfnecropsy || {};
+wmis.wolfnecropsy.edit = (function ($) {
     var options = {
-        WolfNecropsyKey: null,
+        wolfnecropsyKey: null,
     };
 
     function editWolfNecropsyViewModel(key) {
@@ -90,16 +90,17 @@ wmis.WolfNecropsy.edit = (function ($) {
         this.missingpartscomments = ko.observable(key);
         this.stomachcontents = ko.observable(key);
         this.othersamplescomments = ko.observable(key);
-        this.samplescomments = ko.observable(key);
-        this.generalComments = ko.observable(key);
+        this.samplescomments = ko.observable(key); 
+        this.generalcomments = ko.observable(key);
 
 
         this.canSave = ko.computed(function () {
-            return ($.trim(self.code()) != "");
+            return ($.trim(self.necropsyid()) != "");
         });
 
         this.getWolfNecropsy = function () {
             var url = "/api/WolfNecropsy/?WolfNecropsyKey=" + self.key();
+          //  var url = "/api/WolfNecropsy/" +  self.key();
             $.getJSON(url, {}, function (json) {
                 if (json.data.length > 0) {
                     var d = json.data[0];
@@ -113,7 +114,7 @@ wmis.WolfNecropsy.edit = (function ($) {
                     self.datereceived(d.datereceived);
                     self.datekilled(d.datekilled);
                     self.ageclass(d.ageclass);
-                    self.ageestimated(d.ageestimated);
+                    self.ageestimated(d.ageestimated); 
                     self.submitter(d.submitter);
                     self.contactinfo(d.contactinfo);
                     self.regionid(d.regionid);
@@ -186,10 +187,10 @@ wmis.WolfNecropsy.edit = (function ($) {
                     self.missingpartscomments(d.missingpartscomments);
                     self.stomachcontents(d.stomachcontents);
                     self.othersamplescomments(d.othersamplescomments);
-                    self.samplescomments(d.samplescomments);
-                    self.generalComments(d.generalComments);
+                    self.samplescomments(d.samplescomments); 
+                    self.generalcomments(d.generalComments);
 
-
+                    alert(d.necropsyid)
                     document.title = "WMIS - WolfNecropsy - " + d.title;
                 }
             }).fail(wmis.global.ajaxErrorHandler);
@@ -210,16 +211,15 @@ wmis.WolfNecropsy.edit = (function ($) {
             }).fail(wmis.global.ajaxErrorHandler);
         };
     }
-
+   
     function initialize(initOptions) {
         $.extend(options, initOptions);
 
         var viewModel = new editWolfNecropsyViewModel(options.WolfNecropsyKey);
         ko.applyBindings(viewModel);
 
-        if (viewModel.key() > 0) {
-            viewModel.getWolfNecropsy();
-        }
+       // if (viewModel.key() > 0) {
+     // }
     }
 
     return {
