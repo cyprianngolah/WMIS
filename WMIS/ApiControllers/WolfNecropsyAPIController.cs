@@ -135,12 +135,12 @@
                 var row = sheet.CreateRow(rowIndex);
                 row.CreateCell(0).SetCellValue(data.NecropsyId);
                 row.CreateCell(1).SetCellValue(data.CommonName);
-                row.CreateCell(2).SetCellValue(data.NecropsyDate.Value);
+                row.CreateCell(2).SetCellValue(data.NecropsyDate.ToString());
                 row.CreateCell(3).SetCellValue(data.Sex);
-                row.CreateCell(4).SetCellValue(data.Location.ToString());
-                row.CreateCell(5).SetCellValue(data.GridCell.ToString());
-                row.CreateCell(6).SetCellValue(data.DateReceived.Value);
-                row.CreateCell(7).SetCellValue(data.DateKilled.Value);
+                row.CreateCell(4).SetCellValue(data.Location);
+                row.CreateCell(5).SetCellValue(data.GridCell);
+                row.CreateCell(6).SetCellValue(data.DateReceived.ToString());
+                row.CreateCell(7).SetCellValue(data.DateKilled.ToString());
                 row.CreateCell(8).SetCellValue(data.AgeClass);
                 row.CreateCell(9).SetCellValue(data.AgeEstimated);
                 row.CreateCell(10).SetCellValue(data.Submitter);
