@@ -190,7 +190,7 @@ wmis.wolfnecropsy.edit = (function ($) {
                     self.samplescomments(d.samplescomments); 
                     self.generalcomments(d.generalComments);
 
-                    alert(d.necropsyid)
+      
                     document.title = "WMIS - WolfNecropsy - " + d.title;
                 }
             }).fail(wmis.global.ajaxErrorHandler);
@@ -213,13 +213,16 @@ wmis.wolfnecropsy.edit = (function ($) {
     }
    
     function initialize(initOptions) {
+        console.log(initOptions);
+        console.log("Hello");
         $.extend(options, initOptions);
 
         var viewModel = new editWolfNecropsyViewModel(options.WolfNecropsyKey);
         ko.applyBindings(viewModel);
-
-       // if (viewModel.key() > 0) {
-     // }
+        console.log(initOptions);
+        if (viewModel.key() > 0) {
+            viewModel.getWolfNecropsy();
+      }
     }
 
     return {

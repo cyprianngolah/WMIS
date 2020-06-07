@@ -264,6 +264,9 @@
             bundles.Add(new ScriptBundle("~/bundles/wolfnecropsy/edit").Include(
                         "~/js/modules/wmis.wolfnecropsy.edit.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/wolfnecropsy/new").Include(
+                        "~/js/modules/wmis.wolfnecropsy.new.js"));
+
             #endregion
         }
     }

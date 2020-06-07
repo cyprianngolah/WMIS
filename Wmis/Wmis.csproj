@@ -598,6 +598,7 @@
     <Content Include="js\Modules\wmis.reference.index.js" />
     <Content Include="js\Modules\wmis.wolfnecropsy.edit.js" />
     <Content Include="js\Modules\wmis.wolfnecropsy.index.js" />
+    <Content Include="js\Modules\wmis.wolfnecropsy.new.js" />
     <Content Include="js\VueModules\wmis.tools.adddatamanually.js" />
     <Content Include="js\VueModules\wmis.tools.batchreject.js" />
     <Content Include="js\VueModules\wmis.tools.postretrievaldataprocessing.js" />
