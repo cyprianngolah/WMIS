@@ -28,5 +28,11 @@ namespace Wmis.Controllers
             ViewBag.Key = key;
             return View();
         }
+
+
+        public ActionResult Upload()
+        {
+            return View();
+        }
     }
 }

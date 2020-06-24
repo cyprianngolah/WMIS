@@ -1,6 +1,6 @@
-﻿CREATE TABLE [dbo].[WolfNecropsy]
-(
-	[CaseId] INT NOT NULL IDENTITY,
+﻿
+	/****** Object:  UserDefinedTableType [dbo].[BulkNecropsiesUploadTableType]    Script Date: 6/16/2020 5:19:16 PM ******/
+CREATE TYPE [dbo].[BulkNecropsiesUploadTableType] AS TABLE(
 	[NecropsyId] [nvarchar](30) NOT NULL,
 	[CommonName] [nvarchar](30) NULL,
 	[SpeciesId] [int] NULL,
@@ -85,6 +85,6 @@
 	[StomachContents] [nvarchar](max) NULL,
 	[OtherSamplesComments] [nvarchar](max) NULL,
 	[SamplesComments] [nvarchar](max) NULL,
-	[GeneralComments] [nvarchar](max) NULL, 
-    [LastUpdated] DATETIME NOT NULL 
+	[GeneralComments] [nvarchar](max) NULL,
+	[LastUpdated] [date] NULL
 )

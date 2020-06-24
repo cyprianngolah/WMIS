@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Wolf Necropsy";
     ViewBag.SubTitle = "Edit";
 }
@@ -9,11 +8,12 @@
     @Html.Raw(Scripts.Render("~/bundles/wolfnecropsy/edit"))
 
     <script type="text/javascript">
-		$(function() {
+        $(function () {
 			wmis.wolfnecropsy.edit.initialize({
-				wolfnecropsyKey: @ViewBag.Key
+                wolfnecropsyKey: @ViewBag.Key
+
 			});
-		});
+        });
     </script>
 }
 

@@ -1,10 +1,12 @@
 ﻿wmis.wolfnecropsy = wmis.wolfnecropsy || {};
 wmis.wolfnecropsy.index = (function ($) {
     var dataTable;
+    var selectedWolfNecropsy; 
     var options = {
         $newButton: $("#newButton"),
         $editButton: $("#editButton"),
         $downloadButton: $("#downloadButton"),
+        deleteButtonSelector: ("#deleteNecropsyButton"),
 
         $necropsyId: $("#necropsyId"),
         $commonName: $("#commonName"),
@@ -25,6 +27,34 @@ wmis.wolfnecropsy.index = (function ($) {
         window.open(url, '_blank'); 
     });
 
+    function wolfNecropsyModel() {
+        var self = this;
+
+        self.removeWolfNecropsy = function () {
+
+            if (selectedWolfNecropsy) {
+                var result = confirm("Sure you want to delete this record? Note that if the record is deleted it will be removed from the database and you will have to re-enter it again if you still want it.");
+                if (result) {
+
+                    wmis.global.showWaitingScreen("Deleting...");
+
+                    $.ajax({
+                        url: "/api/wolfnecropsy/wolfnecropsy" + selectedWolfNecropsy + "/delete/",
+                        type: "DELETE",
+                    }).success(function () {
+                        window.location.href = "/wolfnecropsy";
+                    }).always(function () {
+                        wmis.global.hideWaitingScreen();
+                    }).fail(function (f) {
+                        $('#deleteErrorAlert').removeClass('hidden');
+                        $('#deleteError').text(f.responseJSON.exceptionMessage);
+                        //wmis.global.ajaxErrorHandler(f);
+                    });
+                }
+            }
+
+        }
+    }
 
 
     function initialize(initOptions) {
@@ -57,6 +87,10 @@ wmis.wolfnecropsy.index = (function ($) {
         options.$searchButton.click(function () {
             dataTable.fnFilter();
         });
+
+        // add wolnecropsy model to bind to click events
+        var model = new wolfNecropsyModel();
+        ko.applyBindings(model);
     }
 
     function initDataTable() {

@@ -336,6 +336,7 @@
     <Build Include="dbo\Stored Procedures\WolfNecropsy_Update.sql" />
     <Build Include="dbo\Stored Procedures\WolfNecropsy_Get.sql" />
     <Build Include="dbo\Stored Procedures\WolfNecropsy_Search.sql" />
+    <Build Include="dbo\User Defined Types\BulkNecropsiesUploadTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

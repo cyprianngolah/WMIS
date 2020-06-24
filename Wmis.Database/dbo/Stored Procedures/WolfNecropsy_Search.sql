@@ -122,7 +122,15 @@ AS
 		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '0'
 			THEN p.[NecropsyId] END ASC,
 		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '1'
-			THEN p.[necropsyId] END DESC
+			THEN p.[necropsyId] END DESC,
+        CASE WHEN @p_sortBy = 'CommonName' AND @p_sortDirection = '0'
+			THEN p.[CommonName] END ASC,
+		CASE WHEN @p_sortBy = 'CommonName' AND @p_sortDirection = '1'
+			THEN p.[CommonName] END DESC,
+		CASE WHEN @p_sortBy = 'Location' AND @p_sortDirection = '0'
+			THEN p.[Location] END ASC,
+		CASE WHEN @p_sortBy = 'Location' AND @p_sortDirection = '1'
+			THEN p.[Location] END DESC
 	
 	OFFSET 
 		@p_startRow ROWS

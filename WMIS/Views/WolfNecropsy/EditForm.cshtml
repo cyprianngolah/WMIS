@@ -1,5 +1,4 @@
-﻿
-<form role="form">
+﻿<form role="form">
     <div class="form-group">
         <label for="necropsyid" class="col-md-1 control-label">NecropsyID</label>
         <div class="col-md-3">
@@ -13,14 +12,19 @@
 
         <label for="speciedid" class="col-md-1 control-label">Species ID</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="speciesid"  name="speciesid"  data-bind="value: speciesid, valueUpdate: 'keyup'">
+            <input type="number" class="form-control" id="speciesid" name="speciesid" data-bind="value: speciesid, valueUpdate: 'keyup'">
         </div>
     </div>
 
     <div class="form-group">
+        <label for="necropsydate" class="col-md-1 control-label">Necropsy Date</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="necropsydate" name="necropsydate" data-bind="value: necropsydate, valueUpdate: 'keyup'">
+        </div>
+
         <label for="sex" class="col-md-1 control-label">SEX</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="sex"  name="sex" data-bind="value: sex, valueUpdate: 'keyup'">
+            <input type="text" class="form-control" id="sex" name="sex" data-bind="value: sex, valueUpdate: 'keyup'">
         </div>
 
         <label for="location" class="col-md-1 control-label">Location</label>
@@ -28,13 +32,15 @@
             <input type="text" class="form-control" id="location" name="location" data-bind="value: location, valueUpdate: 'keyup'">
         </div>
 
-        <label for="gridcell" class="col-md-1 control-label">GridCell</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="grdicell" name="grdicell" data-bind="value: gridcell, valueUpdate: 'keyup'">
-        </div>
+
     </div>
 
     <div class="form-group">
+        <label for="gridcell" class="col-md-1 control-label">GridCell</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="gridcell" name="gridcell" data-bind="value: gridcell, valueUpdate: 'keyup'">
+        </div>
+
         <label for="datereceived" class="col-md-1 control-label">Date Received</label>
         <div class="col-md-3">
             <input type="text" class="form-control" id="datereceived" name="datereceived" data-bind="value: datereceived, valueUpdate: 'keyup'">
@@ -42,17 +48,19 @@
 
         <label for="datekilled" class="col-md-1 control-label">Date Killed</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="dateKilled" name="datekilled" data-bind="value: datekilled, valueUpdate: 'keyup'">
+            <input type="text" class="form-control" id="datekilled" name="datekilled" data-bind="value: datekilled, valueUpdate: 'keyup'">
         </div>
 
-        <label for="ageclass" class="col-md-1 control-label">Age Class</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="ageclass" name="ageclass" data-bind="value: ageclass, valueUpdate: 'keyup'">
-        </div>
+
     </div>
 
 
     <div class="form-group">
+        <label for="ageclass" class="col-md-1 control-label">Age Class</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="ageclass" name="ageclass" data-bind="value: ageclass, valueUpdate: 'keyup'">
+        </div>
+
         <label for="ageestimated" class="col-md-1 control-label">Age Estimated</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="ageestimated" name="ageestimated" data-bind="value: ageestimated, valueUpdate: 'keyup'">
@@ -63,13 +71,15 @@
             <input type="text" class="form-control" id="submitter" name="submitter" data-bind="value: submitter, valueUpdate: 'keyup'">
         </div>
 
-        <label for="contactinfo" class="col-md-1 control-label">Contact Info</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="contactinfo"   name="contaciInfo" data-bind="value: contactinfo, valueUpdate: 'keyup'">
-        </div>
     </div>
 
     <div class="form-group">
+
+        <label for="contactinfo" class="col-md-1 control-label">Contact Info</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="contactinfo" name="contaciInfo" data-bind="value: contactinfo, valueUpdate: 'keyup'">
+        </div>
+
         <label for="regionid" class="col-md-1 control-label">Region ID</label>
         <div class="col-md-3">
             <input type="text" class="form-control" id="regionid" name="regionid" data-bind="value: regionid, valueUpdate: 'keyup'">
@@ -77,16 +87,18 @@
 
         <label for="methodkilled" class="col-md-1 control-label">MethodKilled</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="methodkilled"  name="methodkilled" data-bind="value: methodkilled, valueUpdate: 'keyup'">
+            <input type="text" class="form-control" id="methodkilled" name="methodkilled" data-bind="value: methodkilled, valueUpdate: 'keyup'">
         </div>
+
+    </div>
+
+    <div class="form-group">
 
         <label for="injuries" class="col-md-1 control-label">Injuries</label>
         <div class="col-md-3">
             <input type="text" class="form-control" id="injuries" name="injuries" data-bind="value: injuries, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="tagcomments" class="col-md-1 control-label">TagComments</label>
         <div class="col-md-3">
             <input type="text" class="form-control" id="tagcomments" name="tagcomments" data-bind="value: tagcomments, valueUpdate: 'keyup'">
@@ -94,16 +106,18 @@
 
         <label for="tagrecheck" class="col-md-1 control-label">TagReCheck</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="tagrecCheck" name="tagrecheck" data-bind="value: tagrecheck, valueUpdate: 'keyup'">
+            <input type="text" class="form-control" id="tagrecheck" name="tagrecheck" data-bind="value: tagrecheck, valueUpdate: 'keyup'">
         </div>
+
+    </div>
+
+    <div class="form-group">
 
         <label for="bodywt_unskinned" class="col-md-1 control-label">BodyWt_unsk</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="bodywt_unskinned" name="bodywt_unskinned" data-bind="value: bodywt_unskinned, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="neckgirth_unsk" class="col-md-1 control-label">NeckGirth_unsk</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="neckgirth_unsk" name="neckgirth_unsk" data-bind="value: neckgirth_unsk, valueUpdate: 'keyup'">
@@ -114,13 +128,14 @@
             <input type="number" step="any" class="form-control" id="chestgirth_unsk" name="chestgirth_unsk" data-bind="value: chestgirth_unsk">
         </div>
 
+    </div>
+
+    <div class="form-group">
         <label for="contour_nose_tail" class="col-md-1 control-label">Cont_Nose_Tail</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="contour_nose_tail" name="contour_nose_tail" data-bind="value: contour_nose_tail, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="tail_length" class="col-md-1 control-label">Tail_Length</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="tail_length" name="tail_length" data-bind="value: tail_length, valueUpdate: 'keyup'">
@@ -131,13 +146,15 @@
             <input type="number" step="any" class="form-control" id="bodywt_skinned" name="bodywt_skinned" data-bind="value: bodywt_skinned, valueUpdate: 'keyup'">
         </div>
 
+    </div>
+
+    <div class="form-group">
         <label for="pelwWt" class="col-md-1 control-label">PeltWt</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="peltwt" name="peltWt" data-bind="value: peltwt, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
+
         <label for="neckgirth_sk" class="col-md-1 control-label">NeckGirth_sk</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="neckgirth_sk" name="neckgirth_sk" data-bind="value: neckgirth_sk, valueUpdate: 'keyup'">
@@ -145,16 +162,18 @@
 
         <label for="chestgirth_sk" class="col-md-1 control-label">ChestGirth_sk</label>
         <div class="col-md-3">
-            <input type="number" step="any" class="form-control" id="chestGgrth_sk" name="chestgirth_sk" data-bind="value: chestgirth_sk, valueUpdate: 'keyup'">
+            <input type="number" step="any" class="form-control" id="chestgirth_sk" name="chestgirth_sk" data-bind="value: chestgirth_sk, valueUpdate: 'keyup'">
         </div>
 
+    </div>
+
+    <div class="form-group">
         <label for="rumpfat" class="col-md-1 control-label">RumpFat</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="rumpfat" name="rumpfat" data-bind="value: rumpfat, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
+
         <label for="totalrank_Ext" class="col-md-1 control-label">TotalRank_Ext</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="totalrank_Ext" name="totalrank_Ext" data-bind="value: totalrank_Ext, valueUpdate: 'keyup'">
@@ -165,14 +184,16 @@
             <input type="number" min="0" max="1" class="form-control" id="tongue" name="tongue" data-bind="value: tongue, valueUpdate: 'keyup'">
         </div>
 
-        <label for="haircollected" class="col-md-1 control-label">HairCollected</label>
-        <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="haircollected" name="haircollected" data-bind="value: haircollected, valueUpdate: 'keyup'">
-        </div>
     </div>
 
 
     <div class="form-group">
+
+        <label for="haircollected" class="col-md-1 control-label">HairCollected</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="haircollected" name="haircollected" data-bind="value: haircollected, valueUpdate: 'keyup'">
+        </div>
+
         <label for="skullcollected" class="col-md-1 control-label">SkullCollected</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="skullcollected" name="skullcollected" data-bind="value: skullcollected, valueUpdate: 'keyup'">
@@ -183,30 +204,36 @@
             <input type="number" min="0" max="1" class="form-control" id="hindlegmuscle_stableisotopes" name="hindLegmuscle_stableisotopes" data-bind="value: hindlegmuscle_stableisotopes, valueUpdate: 'keyup'">
         </div>
 
+    </div>
+
+    <div class="form-group">
+
+
         <label for="hindlegmuscle_contaminants" class="col-md-1 control-label">HLegMscle_Cont</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="hindlegmuscle_contaminants" name="hindlegmuscle_contaminants" data-bind="value: hindlegmuscle_contaminants, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="femur" class="col-md-1 control-label">Femur</label>
         <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="femur"  name="femur" data-bind="value: femur, valueUpdate: 'keyup'">
+            <input type="number" min="0" max="1" class="form-control" id="femur" name="femur" data-bind="value: femur, valueUpdate: 'keyup'">
         </div>
 
         <label for="feces" class="col-md-1 control-label">Feces</label>
         <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="feces"  name="feces" data-bind="value: feces, valueUpdate: 'keyup'">
+            <input type="number" min="0" max="1" class="form-control" id="feces" name="feces" data-bind="value: feces, valueUpdate: 'keyup'">
         </div>
 
-        <label for="diaphragm" class="col-md-1 control-label">Diaphragm</label>
-        <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="diaphragm"  name="diaphragm" data-bind="value: diaphragm, valueUpdate: 'keyup'">
-        </div>
+
     </div>
 
     <div class="form-group">
+
+        <label for="diaphragm" class="col-md-1 control-label">Diaphragm</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="diaphragm" name="diaphragm" data-bind="value: diaphragm, valueUpdate: 'keyup'">
+        </div>
+
         <label for="lung" class="col-md-1 control-label">Lung</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="lung" name="lung" data-bind="value: lung, valueUpdate: 'keyup'">
@@ -217,14 +244,16 @@
             <input type="number" min="0" max="1" class="form-control" id="liver_dna" name="liver_dna" data-bind="value: liver_dna, valueUpdate: 'keyup'">
         </div>
 
-        <label for="liver_sia" class="col-md-1 control-label">Liver_SIA</label>
-        <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="liver_sia" name="liver_sia" data-bind="value: liver_sia">
-        </div>
     </div>
 
 
     <div class="form-group">
+
+        <label for="liver_sia" class="col-md-1 control-label">Liver_SIA</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="liver_sia" name="liver_sia" data-bind="value: liver_sia">
+        </div>
+
         <label for="liver_contam" class="col-md-1 control-label">Liver_Contam</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="liver_contam" name="liver_contam" data-bind="value: liver_contam, valueUpdate: 'keyup'">
@@ -235,31 +264,35 @@
             <input type="number" min="0" max="1" class="form-control" id="spleen" name="spleen" data-bind="value: spleen, valueUpdate: 'keyup'">
         </div>
 
-        <label for="kidneyl" class="col-md-1 control-label">KidneyL</label>
-        <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="kidneyl" name="kidneyl" data-bind="value: kidneyl, valueUpdate: 'keyup'">
-        </div>
     </div>
 
 
     <div class="form-group">
+
+        <label for="kidneyl" class="col-md-1 control-label">KidneyL</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="kidneyl" name="kidneyl" data-bind="value: kidneyl, valueUpdate: 'keyup'">
+        </div>
+
         <label for="kidneyl_wt" class="col-md-1 control-label">KidneyL_wt</label>
         <div class="col-md-3">
-            <input type="number" step="any" class="form-control" id="kidneyl_wt"  name="kidneyl_wt" data-bind="value: kidneyl_wt, valueUpdate: 'keyup'">
+            <input type="number" step="any" class="form-control" id="kidneyl_wt" name="kidneyl_wt" data-bind="value: kidneyl_wt, valueUpdate: 'keyup'">
         </div>
 
         <label for="kidneyr" class="col-md-1 control-label">KidneyR</label>
         <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="kidneyr"  name="kidneyr" data-bind="value: kidneyr, valueUpdate: 'keyup'">
+            <input type="number" min="0" max="1" class="form-control" id="kidneyr" name="kidneyr" data-bind="value: kidneyr, valueUpdate: 'keyup'">
         </div>
+
+    </div>
+
+    <div class="form-group">
 
         <label for="kidneyr_wt" class="col-md-1 control-label">KidneyR_wt</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="kidneyr_wt" name="kidneyr_wt" data-bind="value: kidneyr_wt, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="blood_tabs" class="col-md-1 control-label">Blood_tabs</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="blood_tabs" name="blood_tabs" data-bind="value: blood_tabs, valueUpdate: 'keyup'">
@@ -267,19 +300,21 @@
 
         <label for="blood_tubes" class="col-md-1 control-label">Blood_tubes</label>
         <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="blood_tubes" name="blood_tubes"  data-bind="value: blood_tubes, valueUpdate: 'keyup'">
+            <input type="number" min="0" max="1" class="form-control" id="blood_tubes" name="blood_tubes" data-bind="value: blood_tubes, valueUpdate: 'keyup'">
         </div>
+
+    </div>
+
+    <div class="form-group">
 
         <label for="stomach" class="col-md-1 control-label">Stomach</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="stomach" name="stomach" data-bind="value: stomach, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="stomachcont" class="col-md-1 control-label">StomachCont</label>
         <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="stomachCont" name="stomachcont" data-bind="value: stomachcont, valueUpdate: 'keyup'">
+            <input type="number" min="0" max="1" class="form-control" id="stomachcont" name="stomachcont" data-bind="value: stomachcont, valueUpdate: 'keyup'">
         </div>
 
         <label for="stomach_full" class="col-md-1 control-label">Stomach_Full</label>
@@ -287,31 +322,36 @@
             <input type="number" min="0" max="1" class="form-control" id="stomach_full" name="stomach_full" data-bind="value: stomach_full, valueUpdate: 'keyup'">
         </div>
 
-        <label for="stomach_empty" class="col-md-1 control-label">Stomach_Empty</label>
-        <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="stomach_empty" name="stomach_empty" data-bind="value: stomach_empty, valueUpdate: 'keyup'">
-        </div>
     </div>
 
 
     <div class="form-group">
+
+        <label for="stomach_empty" class="col-md-1 control-label">Stomach_Empty</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="stomach_empty" name="stomach_empty" data-bind="value: stomach_empty, valueUpdate: 'keyup'">
+        </div>
+
         <label for="stomachcont_wt" class="col-md-1 control-label">StomachCont_wt</label>
         <div class="col-md-3">
-            <input type="number" step="any" class="form-control" id="stomachcont_wt"  name="stomachcont_wt" data-bind="value: stomachcont_wt, valueUpdate: 'keyup'">
+            <input type="number" step="any" class="form-control" id="stomachcont_wt" name="stomachcont_wt" data-bind="value: stomachcont_wt, valueUpdate: 'keyup'">
         </div>
 
         <label for="stomachcontentdesc" class="col-md-1 control-label">StomachContDesc</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="stomachcontentDesc" name="stomachcontentdesc"  data-bind="value: stomachcontentdesc, valueUpdate: 'keyup'">
+            <input type="text" class="form-control" id="stomachcontentdesc" name="stomachcontentdesc" data-bind="value: stomachcontentdesc, valueUpdate: 'keyup'">
         </div>
+
+    </div>
+
+    <div class="form-group">
+
 
         <label for="intestinaltract" class="col-md-1 control-label">IntestinalTract</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="intestinaltract" name="intestinaltract" data-bind="value: intestinaltract, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="uterinescars" class="col-md-1 control-label">UterineScars</label>
         <div class="col-md-3">
             <input type="number" class="form-control" id="uterinescars" name="uterineScars" data-bind="value: uterinescars, valueUpdate: 'keyup'">
@@ -322,13 +362,16 @@
             <input type="number" min="0" max="1" class="form-control" id="Uterus" name="Uterus" data-bind="value: Uterus, valueUpdate: 'keyup'">
         </div>
 
-        <label for="ovaries" class="col-md-1 control-label">Ovaries</label>
-        <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="ovaries"  name="ovaries" data-bind="value: ovaries, valueUpdate: 'keyup'">
-        </div>
+
     </div>
 
     <div class="form-group">
+
+        <label for="ovaries" class="col-md-1 control-label">Ovaries</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="ovaries" name="ovaries" data-bind="value: ovaries, valueUpdate: 'keyup'">
+        </div>
+
         <label for="lymphnodes" class="col-md-1 control-label">LymphNodes</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="lymphnodes" name="lymphnodes" data-bind="value: lymphnodes, valueUpdate: 'keyup'">
@@ -339,13 +382,16 @@
             <input type="number" min="0" max="1" class="form-control" id="others" name="others" data-bind="value: others, valueUpdate: 'keyup'">
         </div>
 
+
+    </div>
+
+    <div class="form-group">
+
         <label for="internalRank" class="col-md-1 control-label">InternalRank</label>
         <div class="col-md-3">
             <input type="number" class="form-control" id="internalRank" name="internalRank" data-bind="value: internalRank, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="peltcolor" class="col-md-1 control-label">PeltColor</label>
         <div class="col-md-3">
             <input type="text" class="form-control" id="peltcolor" name="peltcolor" data-bind="value: peltcolor, valueUpdate: 'keyup'">
@@ -356,14 +402,16 @@
             <input type="number" min="0" max="1" class="form-control" id="backfat" name="backfat" data-bind="value: backfat, valueUpdate: 'keyup'">
         </div>
 
-        <label for="sternumfat" class="col-md-1 control-label">SternumFat</label>
-        <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="sternumfat" name="sternumfat" data-bind="value: sternumfat, valueUpdate: 'keyup'">
-        </div>
     </div>
 
 
     <div class="form-group">
+
+        <label for="sternumfat" class="col-md-1 control-label">SternumFat</label>
+        <div class="col-md-3">
+            <input type="number" min="0" max="1" class="form-control" id="sternumfat" name="sternumfat" data-bind="value: sternumfat, valueUpdate: 'keyup'">
+        </div>
+
         <label for="inguinalfat" class="col-md-1 control-label">InguinalFat</label>
         <div class="col-md-3">
             <input type="text" class="form-control" id="inguinalfat" name="inguinalfat" data-bind="value: inguinalfat, valueUpdate: 'keyup'">
@@ -374,16 +422,19 @@
             <input type="number" min="0" max="1" class="form-control" id="incentive" name="incentive" data-bind="value: incentive, valueUpdate: 'keyup'">
         </div>
 
+
+    </div>
+
+    <div class="form-group">
+
         <label for="incentiveamt" class="col-md-1 control-label">IncentiveAmt</label>
         <div class="col-md-3">
             <input type="number" step="any" class="form-control" id="incentiveamt" name="incentiveamt" data-bind="value: incentiveamt, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
         <label for="conflict" class="col-md-1 control-label">Conflict</label>
         <div class="col-md-3">
-            <input type="text" class="form-control" id="conflict" name="conflict"  data-bind="value: conflict, valueUpdate: 'keyup'">
+            <input type="text" class="form-control" id="conflict" name="conflict" data-bind="value: conflict, valueUpdate: 'keyup'">
         </div>
 
         <label for="groupsize" class="col-md-1 control-label">GroupSize</label>
@@ -391,13 +442,16 @@
             <input type="number" class="form-control" id="groupsize" name="groupsize" data-bind="value: groupsize, valueUpdate: 'keyup'">
         </div>
 
+    </div>
+
+    <div class="form-group">
+
         <label for="packid" class="col-md-1 control-label">PackId</label>
         <div class="col-md-3">
             <input type="text" class="form-control" id="packid" name="packid" data-bind="value: packid, valueUpdate: 'keyup'">
         </div>
-    </div>
 
-    <div class="form-group">
+
         <label for="xiphoid" class="col-md-1 control-label">Xiphoid</label>
         <div class="col-md-3">
             <input type="number" min="0" max="1" class="form-control" id="xiphoid" name="xiphoid" data-bind="value: xiphoid, valueUpdate: 'keyup'">
@@ -405,50 +459,54 @@
 
         <label for="personnel" class="col-md-1 control-label">Personnel</label>
         <div class="col-md-3">
-            <input type="number" class="form-control" id="personnel" name="personnel"  data-bind="value: personnel, valueUpdate: 'keyup'">
+            <input type="text" class="form-control" id="personnel" name="personnel" data-bind="value: personnel, valueUpdate: 'keyup'">
         </div>
 
+    </div>
+
+    <div class="form-group">
         <label for="pictures" class="col-md-1 control-label">Pictures</label>
         <div class="col-md-3">
-            <input type="number" min="0" max="1" class="form-control" id="pictures" name="pictures"  data-bind="value: pictures, valueUpdate: 'keyup'">
+            <input type="number" min="0" max="1" class="form-control" id="pictures" name="pictures" data-bind="value: pictures, valueUpdate: 'keyup'">
         </div>
     </div>
 
-
+    <br style="clear:both" />
     <p style="color:blue;font-size:20px;">Comments</p>
 
     <div>
+
         <div class="form-group">
             <label for="speciescomments" class="col-md-1 control-label">Species</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="speciescomments" name="speciescomments" data-bind="value: speciescomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="speciescomments" name="speciescomments" data-bind="value: speciescomments, valueUpdate: 'keyup'"></textarea>
             </div>
 
             <label for="taginjurycomments" class="col-md-1 control-label">TagInjury</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="taginjurycomments" name="taginjurycomments" data-bind="value: taginjurycomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="taginjurycomments" name="taginjurycomments" data-bind="value: taginjurycomments, valueUpdate: 'keyup'"></textarea>
             </div>
 
             <label for="injurycomments" class="col-md-1 control-label">Injury</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="injurycomments" name="injurycomments" data-bind="value: injurycomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="injurycomments" name="injurycomments" data-bind="value: injurycomments, valueUpdate: 'keyup'"></textarea>
             </div>
         </div>
 
         <div class="form-group">
             <label for="examinjurycomments" class="col-md-1 control-label">ExamInjury</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="examinjurycomments" name="examinjurycomments"  data-bind="value: examinjurycomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="examinjurycomments" name="examinjurycomments" data-bind="value: examinjurycomments, valueUpdate: 'keyup'"></textarea>
             </div>
 
             <label for="examcomments" class="col-md-1 control-label">Exam</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="examcomments" name="examcomments" data-bind="value: examcomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="examcomments" name="examcomments" data-bind="value: examcomments, valueUpdate: 'keyup'"></textarea>
             </div>
 
             <label for="picturescomments" class="col-md-1 control-label">Pictures</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="picturescomments" name="picturescomments" data-bind="value: picturescomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="picturescomments" name="picturescomments" data-bind="value: picturescomments, valueUpdate: 'keyup'"></textarea>
             </div>
         </div>
 
@@ -456,47 +514,47 @@
         <div class="form-group">
             <label for="measurementscomments" class="col-md-1 control-label">Measurements</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="measurementscomments" name="measurementscomments" data-bind="value: measurementscomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="measurementscomments" name="measurementscomments" data-bind="value: measurementscomments, valueUpdate: 'keyup'"></textarea>
             </div>
 
             <label for="missingpartscomments" class="col-md-1 control-label">MissingParts</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="missingpartscomments" name="missingpartscomments"  data-bind="value: missingpartscomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="missingpartscomments" name="missingpartscomments" data-bind="value: missingpartscomments, valueUpdate: 'keyup'"></textarea>
             </div>
 
             <label for="stomachcontents" class="col-md-1 control-label">StomachCont</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="stomachcontents" name="stomachcontents" data-bind="value: stomachcontents, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="stomachcontents" name="stomachcontents" data-bind="value: stomachcontents, valueUpdate: 'keyup'"></textarea>
             </div>
         </div>
 
 
 
         <div class="form-group">
-            <label for="othersamplescmments" class="col-md-1 control-label">OtherSamples</label>
+            <label for="othersamplescomments" class="col-md-1 control-label">OtherSamples</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="othersamplescomments" name="othersamplescomments" data-bind="value: othersamplescomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="othersamplescomments" name="othersamplescomments" data-bind="value: othersamplescomments, valueUpdate: 'keyup'"></textarea>
             </div>
 
             <label for="samplescomments" class="col-md-1 control-label">Samples</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="samplescomments"  name="samplescomments" data-bind="value: samplescomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="samplescomments" name="samplescomments" data-bind="value: samplescomments, valueUpdate: 'keyup'"></textarea>
             </div>
 
             <label for="generalcomments" class="col-md-1 control-label">General</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="generalcomments" name="generalcomments" data-bind="value: generalcomments, valueUpdate: 'keyup'">
+                <textarea class="form-control" id="generalcomments" name="generalcomments" data-bind="value: generalcomments, valueUpdate: 'keyup'"></textarea>
             </div>
         </div>
 
     </div>
 
+    <br style="clear:both" />
+    <p>
 
-    <div class="text-right">
-        <a href="/WolfNecropsy" class="btn btn-default">Cancel</a>
-        <button type="submit" class="btn btn-primary" data-bind="click: saveWolfNecropsy, enabled: canSave">Save</button>
-    </div>
+        <div class="text-right">
+            <a href="/WolfNecropsy" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-primary" data-bind="click: saveWolfNecropsy, enabled: canSave">Save</button>
+        </div>
 
 </form>
-
-

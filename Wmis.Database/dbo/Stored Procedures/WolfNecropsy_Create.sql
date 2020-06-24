@@ -1,11 +1,95 @@
 ﻿CREATE PROCEDURE [dbo].[WolfNecropsy_Create]
-@p_necropsyId NVARCHAR(50),
+	@p_NecropsyId NVARCHAR(30),
+	@p_CommonName nvarchar(30)  =  NULL,
+	@p_SpeciesId int =  NULL,
+	@p_NecropsyDate  date = NULL,
+	@p_Sex nvarchar(10)  =  NULL,
+	@p_Location nvarchar(50)  =  NULL,
+	@p_GridCell int =  NULL,
+	@p_DateReceived date = NULL,
+	@p_DateKilled date = NULL,
+	@p_AgeClass nvarchar(10)  =  NULL,
+	@p_AgeEstimated float =  NULL,
+	@p_Submitter nvarchar(50)  =  NULL,
+	@p_ContactInfo nvarchar(50)  =  NULL,
+	@p_RegionId int =  NULL,
+	@p_MethodKilled nvarchar(30)  =  NULL,
+	@p_Injuries bit =  NULL,
+	@p_TagComments nvarchar(max)  =  NULL,
+	@p_TagReCheck bit =  NULL,
+	@p_BodyWt_unskinned float =  NULL,
+	@p_NeckGirth_unsk float =  NULL,
+	@p_ChestGirth_unsk float =  NULL,
+	@p_Contour_Nose_Tail float =  NULL,
+	@p_Tail_Length float =  NULL,
+	@p_BodyWt_skinned float =  NULL,
+	@p_PeltWt float =  NULL,
+	@p_NeckGirth_sk float =  NULL,
+	@p_ChestGirth_sk float =  NULL,
+	@p_RumpFat float =  NULL,
+	@p_TotalRank_Ext float =  NULL,
+	@p_Tongue bit =  NULL,
+	@p_HairCollected bit =  NULL,
+	@p_SkullCollected bit =  NULL,
+	@p_HindLegMuscle_StableIsotopes bit =  NULL,
+	@p_HindLegMuscle_Contaminants bit =  NULL,
+	@p_Femur bit =  NULL,
+	@p_Feces bit =  NULL,
+	@p_Diaphragm bit =  NULL,
+	@p_Lung bit =  NULL,
+	@p_Liver_DNA bit =  NULL,
+	@p_Liver_SIA bit =  NULL,
+	@p_Liver_Contam bit =  NULL,
+	@p_Spleen bit =  NULL,
+	@p_KidneyL bit =  NULL,
+	@p_KidneyL_wt float =  NULL,
+	@p_KidneyR bit =  NULL,
+	@p_KidneyR_wt float =  NULL,
+	@p_Blood_tabs bit =  NULL,
+	@p_Blood_tubes bit =  NULL,
+	@p_Stomach bit =  NULL,
+	@p_StomachCont bit =  NULL,
+	@p_Stomach_Full bit =  NULL,
+	@p_Stomach_Empty bit =  NULL,
+	@p_StomachCont_wt float =  NULL,
+	@p_StomachContentDesc nvarchar(max)  =  NULL,
+	@p_intestinalTract bit =  NULL,
+	@p_UterineScars int =  NULL,
+	@p_Uterus bit =  NULL,
+	@p_Ovaries bit =  NULL,
+	@p_LymphNodes bit =  NULL,
+	@p_Others bit =  NULL,
+	@p_internalRank int =  NULL,
+	@p_PeltColor nvarchar(20)  =  NULL,
+	@p_BackFat bit =  NULL,
+	@p_SternumFat bit =  NULL,
+	@p_InguinalFat bit =  NULL,
+	@p_Incentive bit =  NULL,
+	@p_IncentiveAmt float =  NULL,
+	@p_Conflict bit =  NULL,
+	@p_GroupSize int =  NULL,
+	@p_PackId nvarchar(50)  =  NULL,
+	@p_Xiphoid bit =  NULL,
+	@p_Personnel nvarchar(50)  =  NULL,
+	@p_Pictures bit =  NULL,
+	@p_SpeciesComments nvarchar(max)  =  NULL,
+	@p_TagInjuryComments nvarchar(max)  =  NULL,
+	@p_InjuryComments nvarchar(max)  =  NULL,
+	@p_ExamInjuryComments nvarchar(max)  =  NULL,
+	@p_ExamComments nvarchar(max)  =  NULL,
+	@p_PicturesComments nvarchar(max)  =  NULL,
+	@p_MeasurementsComments nvarchar(max)  =  NULL,
+	@p_MissingPartsComments nvarchar(max)  =  NULL,
+	@p_StomachContents nvarchar(max)  =  NULL,
+	@p_OtherSamplesComments nvarchar(max)  =  NULL,
+	@p_SamplesComments nvarchar(max)  =  NULL,
+	@p_GeneralComments nvarchar(max)  =  NULL,
 	@p_createdBy NVARCHAR (50)
 AS
-	
-
-	INSERT INTO dbo.WolfNecropsy (NecropsyId, LastUpdated)
-	VALUES (@p_necropsyId, GETUTCDATE())
+		INSERT INTO 
+			dbo.[WolfNecropsy] (NecropsyId,	CommonName,	SpeciesId,	NecropsyDate,	Sex,	[Location],	GridCell,	DateReceived,	DateKilled,	AgeClass,	AgeEstimated,	Submitter,	ContactInfo,	RegionId,	MethodKilled,	Injuries,	TagComments,	TagReCheck,	BodyWt_unskinned,	NeckGirth_unsk,	ChestGirth_unsk,	Contour_Nose_Tail,	Tail_Length,	BodyWt_skinned,	PeltWt,	NeckGirth_sk,	ChestGirth_sk,	RumpFat,	TotalRank_Ext,	Tongue,	HairCollected,	SkullCollected,	HindLegMuscle_StableIsotopes,	HindLegMuscle_Contaminants,	Femur,	Feces,	Diaphragm,	Lung,	Liver_DNA,	Liver_SIA,	Liver_Contam,	Spleen,	KidneyL,	KidneyL_wt,	KidneyR,	KidneyR_wt,	Blood_tabs,	Blood_tubes,	Stomach,	StomachCont,	Stomach_Full,	Stomach_Empty,	StomachCont_wt,	StomachContentDesc,	IntestinalTract,	UterineScars,	Uterus,	Ovaries,	LymphNodes,	Others,	InternalRank,	PeltColor,	BackFat,	SternumFat,	InguinalFat,	Incentive,	IncentiveAmt,	Conflict,	GroupSize,	PackId,	Xiphoid,	Personnel,	Pictures,	SpeciesComments,	TagInjuryComments,	InjuryComments,	ExamInjuryComments,	ExamComments,	PicturesComments,	MeasurementsComments,	MissingPartsComments,	StomachContents,	OtherSamplesComments,	SamplesComments,GeneralComments,LastUpdated)
+		VALUES
+			(@p_NecropsyId,	@p_CommonName,	@p_SpeciesId,	@p_NecropsyDate,	@p_Sex,	@p_Location,	@p_GridCell,	@p_DateReceived,	@p_DateKilled,	@p_AgeClass,	@p_AgeEstimated,	@p_Submitter,	@p_ContactInfo,	@p_RegionId,	@p_MethodKilled,	@p_Injuries,	@p_TagComments,	@p_TagReCheck,	@p_BodyWt_unskinned,	@p_NeckGirth_unsk,	@p_ChestGirth_unsk,	@p_Contour_Nose_Tail,	@p_Tail_Length,	@p_BodyWt_skinned,	@p_PeltWt,	@p_NeckGirth_sk,	@p_ChestGirth_sk,	@p_RumpFat,	@p_TotalRank_Ext,	@p_Tongue,	@p_HairCollected,	@p_SkullCollected,	@p_HindLegMuscle_StableIsotopes,	@p_HindLegMuscle_Contaminants,	@p_Femur,	@p_Feces,	@p_Diaphragm,	@p_Lung,	@p_Liver_DNA,	@p_Liver_SIA,	@p_Liver_Contam,	@p_Spleen,	@p_KidneyL,	@p_KidneyL_wt,	@p_KidneyR,	@p_KidneyR_wt,	@p_Blood_tabs,	@p_Blood_tubes,	@p_Stomach,	@p_StomachCont,	@p_Stomach_Full,	@p_Stomach_Empty,	@p_StomachCont_wt,	@p_StomachContentDesc,	@p_IntestinalTract,	@p_UterineScars,	@p_Uterus,	@p_Ovaries,	@p_LymphNodes,	@p_Others,	@p_InternalRank,	@p_PeltColor,	@p_BackFat,	@p_SternumFat,	@p_InguinalFat,	@p_Incentive,	@p_IncentiveAmt,	@p_Conflict,	@p_GroupSize,	@p_PackId,	@p_Xiphoid,	@p_Personnel,	@p_Pictures,	@p_SpeciesComments,	@p_TagInjuryComments,	@p_InjuryComments,	@p_ExamInjuryComments,	@p_ExamComments,	@p_PicturesComments,	@p_MeasurementsComments,	@p_MissingPartsComments,	@p_StomachContents,	@p_OtherSamplesComments,	@p_SamplesComments,	@p_GeneralComments,GETUTCDATE())
 
 	SELECT SCOPE_IDENTITY()
 
@@ -13,8 +97,6 @@ AS
 	INSERT INTO HistoryLogs (HistoryLogId, Item, Value, ChangeBy) VALUES ((SELECT SCOPE_IDENTITY()), " WolfNecropsy Created", GETUTCDATE(), @p_createdBy)
 
 RETURN 0
-
-Go
 
 GRANT EXECUTE ON [dbo].[WolfNecropsy_Create] TO [WMISUser]
 GO
