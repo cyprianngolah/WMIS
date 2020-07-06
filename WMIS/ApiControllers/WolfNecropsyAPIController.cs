@@ -10,8 +10,8 @@
     using NPOI.HSSF.UserModel;
 
     using Wmis.Auth;
-    using Wmis.Dto;
-    using Wmis.Models;
+    using Dto;
+    using Models;
     using System.Net;
     using System;
     using System.Text;
@@ -32,20 +32,19 @@
         public WolfNecropsyApiController(WebConfiguration config, Auth.WmisUser user)
             : base(config)
         {
-            _user = user;
+           _user = user;
         }
 
-        #region WolfNecropsies
         [HttpGet]
         [Route]
-        public Dto.PagedResultset<Models.WolfNecropsy> SearchWolfNecropsy([FromUri]Dto.WolfNecropsyRequest pr)
+        public Dto.PagedResultset<WolfNecropsy> GetWolfNecropsy([FromUri] Dto.WolfNecropsyRequest wnr)
         {
-            return Repository.WolfnecropsySearch(pr);
+            return Repository.WolfnecropsySearch(wnr);
         }
 
         [HttpGet]
         [Route("download")]
-        public HttpResponseMessage DownloadWolfNecropsy([FromUri]WolfNecropsyRequest pr)
+        public HttpResponseMessage DownloadWolfNecropsy([FromUri] WolfNecropsyRequest pr)
         {
             var lstData = Repository.WolfNecropsyDownload(pr);
 
@@ -136,7 +135,7 @@
             header.CreateCell(80).SetCellValue("OtherSamplesComments");
             header.CreateCell(81).SetCellValue("SamplesComments");
             header.CreateCell(82).SetCellValue("GeneralComments");
-  
+
             var rowIndex = 1;
 
             foreach (var data in lstData.Data)
@@ -261,21 +260,24 @@
 
 
         }
-
-        [HttpGet]
-        [Route("{WolfNecropsyKey:int}")]
-        public Models.WolfNecropsy GetWolfNecropsy(int WolfNecropsyKey)
-        {
-            return Repository.WolfNecropsyGet(WolfNecropsyKey);
-        }
+        /*
+                [HttpGet]
+                [Route("{WolfNecropsyKey:int}")]
+                public Models.WolfNecropsy GetWolfNecropsy(int WolfNecropsyKey)
+                {
+                    return Repository.WolfNecropsyGet(WolfNecropsyKey);
+                }
         
-        [HttpPost]
-        [Route]
-        [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
-        public int Create([FromBody] WolfNecropsy wnn)
-        {
-            return Repository.WolfNecropsyCreate(wnn, _user.Username);
-        }
+        */
+  
+            [HttpPost]
+            [Route]
+            [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
+            public int Create([FromBody] WolfNecropsy wnn)
+            {
+                return Repository.WolfNecropsyCreate(wnn, _user.Username);
+            }
+  
 /*
         [HttpPost]
         [Route]
@@ -283,14 +285,14 @@
         {
             Repository.WolfNecropsySave(r);
         }
-*/
+  */      
         [HttpPut]
         [Route]
         [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
         public DateTime Update([FromBody] WolfNecropsy wn)
         {
             return Repository.WolfNecropsyUpdate(wn, _user.Username);
-        }   
+        }
 
         [HttpPost]
         [Route("upload")]
@@ -330,7 +332,7 @@
                 var data = new WolfNecropsyBulkUploaderService().GetData(destinationFilePath, 1);
                 //Test to see if it reached here
                 // System.Web.HttpContext.Current.Response.Write("Data is about to be inserted");
-              /// **** Need to implement  Repository.BulkInsertSpecies(data);
+                /// **** Need to implement  Repository.BulkInsertSpecies(data);
 
                 // send the response back to EventListener
                 var pageBuilder = new StringBuilder();
@@ -418,13 +420,12 @@
 
 
         [HttpDelete]
-        [Route("wolfncropsy/{caseId:int}/delete")]
+        [Route("api/wolfnecropsy/Edit/{CaseId:int}")]
         [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
         public void DeleteNecropsies(int caseId)
         {
             Repository.WolfNecropsyDelete(caseId);
         }
 
-        #endregion
     }
 }

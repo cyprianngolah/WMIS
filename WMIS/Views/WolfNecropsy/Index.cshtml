@@ -11,6 +11,7 @@
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
     @Html.Raw(Scripts.Render("~/bundles/WolfNecropsy/Index"))
 
     <script type="text/javascript">
@@ -42,7 +43,7 @@
 
         @if (Html.UserIsWildlifeDiseaseAdministrator())
         {
-           <!-- <button data-bind="click: removeWolfNecropsy" id="deleteNecropsyButton" class="btn btn-default pull-left disabled" style="margin-bottom: 10px;">Delete Selected</button> -->
+         //   <button data-bind="click: removeWolfNecropsy" id="deleteNecropsyButton" class="btn btn-default pull-left disabled" style="margin-bottom: 10px;" formmethod="get">Delete Selected</button>
 
             <a href="~/WolfNecropsy/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
         }
@@ -109,9 +110,10 @@
 
 <div class="row">
     <div class="col-md-12">
-        <table id="WolfNecropsies" class="table table-striped table-condensed table-hover">
+        <table id="wolfNecropsy" class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
+                    <th>CaseId</th>
                     <th>NecropsyID</th>
                     <th>NecropsyDate</th>
                     <th>Species</th>

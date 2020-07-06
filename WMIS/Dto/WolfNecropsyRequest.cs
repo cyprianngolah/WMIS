@@ -7,9 +7,9 @@ namespace Wmis.Dto
 {
     public class WolfNecropsyRequest : PagedDataRequest
     {
-      //  public int? WolfNecropsyKey { get; set; }
+        public int? WolfNecropsyKey { get; set; }
 
-        public string necropsyId{ get; set; }
+        public string necropsyId { get; set; }
 
         public string commonName { get; set; }
 

@@ -195,7 +195,7 @@ wmis.wolfnecropsy.new = (function($) {
 				contentType: "application/json",
 				data: JSON.stringify(ko.toJS(self.wn())),
 			}).success(function (wolfNecropsyKey) {
-				window.location.href = "/wolfNecropsy/Edit/" + wolfNecropsyKey;
+				window.location.href = "/wolfNecropsy/";
 
 			}).always(function () {
 				wmis.global.hideWaitingScreen(waitingScreenId);

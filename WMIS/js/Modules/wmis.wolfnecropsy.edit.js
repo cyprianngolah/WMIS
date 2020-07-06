@@ -1,7 +1,7 @@
 ﻿wmis.wolfnecropsy = wmis.wolfnecropsy || {};
 wmis.wolfnecropsy.edit = (function ($) {
     var options = {
-        wolfnecropsyKey: null,
+        wolfKey: null,
     };
 
     function editWolfNecropsyViewModel(key) {
@@ -93,18 +93,15 @@ wmis.wolfnecropsy.edit = (function ($) {
         this.samplescomments = ko.observable(key); 
         this.generalcomments = ko.observable(key);
 
-
         this.canSave = ko.computed(function () {
             return ($.trim(self.necropsyid()) != "");
         });
 
-        this.getWolfNecropsy = function (Key) {
-            var url = "/api/WolfNecropsy/?WolfNecropsyKey=" + Key;
-        
+        this.getWolfNecropsy = function () {
+            var url = "/api/WolfNecropsy/?WolfNecropsyKey=" + self.key();
             $.getJSON(url, {}, function (json) {
                 if (json.data.length > 0) {
-                    var d = json.data[Key - 1];
-                    console.log(d);
+                    var d = json.data[0];
                     self.necropsyid(d.necropsyId);
                     self.commonname (d.commonName);
                     self.speciesid(d.speciesId);
@@ -190,7 +187,6 @@ wmis.wolfnecropsy.edit = (function ($) {
                     self.othersamplescomments(d.otherSamplesComments);
                     self.samplescomments(d.samplesComments); 
                     self.generalcomments(d.generalComments);
-
                     document.title = "WMIS - WolfNecropsy - " + d.title;
                 }
             }).fail(wmis.global.ajaxErrorHandler);
@@ -215,9 +211,12 @@ wmis.wolfnecropsy.edit = (function ($) {
     function initialize(initOptions) {
         $.extend(options, initOptions);
 
-        var viewModel = new editWolfNecropsyViewModel(options.wolfnecropsyKey);
+        var viewModel = new editWolfNecropsyViewModel(options.wolfKey);
         ko.applyBindings(viewModel);
-        viewModel.getWolfNecropsy(options.wolfnecropsyKey);
+
+        if (viewModel.key() > 0) {
+            viewModel.getWolfNecropsy();
+        }
     }
 
     return {

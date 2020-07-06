@@ -3904,13 +3904,13 @@
             {
                 var param = new
                 {
-                    p_NecropsyId = (string)wnn.NecropsyId,
-                    p_CommonName = (string)wnn.CommonName,
-                    p_SpeciesID = (int)wnn.SpeciesId,
+                    p_NecropsyId = wnn.NecropsyId,
+                    p_CommonName = wnn.CommonName,
+                    p_SpeciesID = wnn.SpeciesId,
                     p_NecropsyDate = wnn.NecropsyDate,
-                    p_Sex = (string)wnn.Sex,
-                    p_location = (string)wnn.Location,
-                    p_GridCell = (int)wnn.GridCell,
+                    p_Sex = wnn.Sex,
+                    p_location = wnn.Location,
+                    p_GridCell = wnn.GridCell,
                     p_DateReceived = wnn.DateReceived,
                     p_DateKilled = wnn.DateKilled,
                     p_AgeClass = wnn.AgeClass,
@@ -3993,7 +3993,7 @@
                 return c.Query<int>(WolfNecropsy_CREATE, param, commandType: CommandType.StoredProcedure).Single();
             }
         }
-       
+      
         public DateTime WolfNecropsyUpdate(WolfNecropsy WolfNecropsy, string modifiedBy)
         {
             using (var c = NewWmisConnection)
@@ -4090,7 +4090,7 @@
                 return c.Query<DateTime>(WolfNecropsy_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-
+/*
 
         public WolfNecropsy WolfNecropsyGet(int wolfnecropsyKey)
         {
@@ -4114,7 +4114,7 @@
                         
             }
         }
-        
+    */    
 
         public Dto.PagedResultset<WolfNecropsy> WolfnecropsySearch(Dto.WolfNecropsyRequest sr)
         {
@@ -4122,6 +4122,7 @@
             {
                 var param = new
                 {
+                    p_CaseId = sr.WolfNecropsyKey,
                     p_startRow = sr.StartRow,
                     p_rowCount = sr.RowCount,
                     p_sortBy = sr.SortBy,
@@ -4133,7 +4134,7 @@
                 };
 
                 var pagedResults = new Dto.PagedResultset<WolfNecropsy> { DataRequest = sr };
-                pagedResults.Data = c.Query<int, WolfNecropsy, WolfNecropsy>(WolfNecropsy_SEARCH,
+                pagedResults.Data = c.Query<int, WolfNecropsy, WolfNecropsy>(WolfNecropsy_GET,
                     (count, r) =>
                     {
                         pagedResults.ResultCount = count;
@@ -4448,8 +4449,6 @@
                 c.Execute(WOLFNECROPSY_DELETE, param, commandType: CommandType.StoredProcedure);
             }
         }
-
-
 
         #endregion WolfNecropsy
 
