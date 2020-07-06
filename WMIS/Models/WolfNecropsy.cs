@@ -91,6 +91,7 @@
         public string OtherSamplesComments { get; set; }
         public string SamplesComments { get; set; }
         public string GeneralComments { get; set; }
+        public DateTime? LastUpdated { get; set; }
 
     }
 }
