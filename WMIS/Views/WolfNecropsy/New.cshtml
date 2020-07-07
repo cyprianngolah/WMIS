@@ -5,14 +5,13 @@
 
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
-    @Html.Raw(Scripts.Render("~/bundles/wolfnecropsy/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/wolfnecropsy/new"))
 
     <script type="text/javascript">
-		$(function() {
-			wmis.wolfnecropsy.edit.initialize();
+        $(function () {
+            wmis.wolfnecropsy.new.initialize();
 		});
     </script>
 }
 
-@{ Html.RenderPartial("EditForm"); }<h2>New</h2>
-
+@{ Html.RenderPartial("NewForm"); }

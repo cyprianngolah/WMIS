@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[WolfNecropsy_Search]
+    @p_CaseId INT = 0,
 	@p_startRow int = 0,
 	@p_rowCount int = 25,
 	@p_sortBy NVARCHAR(25) = NULL,
@@ -107,12 +108,6 @@ AS
 		AND (@p_location IS NULL OR p.[Location] = @p_location)
 		AND (
 
-			/*@p_keywords IS NULL
-			OR p.[NecropsyId] LIKE '%' + @p_keywords + '%'
-			OR p.[commonname] LIKE '%' + @p_keywords + '%' 
-			OR p.[Location] LIKE '%' + @p_keywords + '%' 
-			*/
-
 			@p_keywords IS NULL
 			OR p.[NecropsyId] LIKE '%'+IsNull(p.[NecropsyId],@p_keywords)
 			OR p.[CommonName] LIKE '%'+IsNull(p.[CommonName],@p_keywords)
@@ -122,7 +117,15 @@ AS
 		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '0'
 			THEN p.[NecropsyId] END ASC,
 		CASE WHEN @p_sortBy = 'key' AND @p_sortDirection = '1'
-			THEN p.[necropsyId] END DESC
+			THEN p.[necropsyId] END DESC,
+        CASE WHEN @p_sortBy = 'CommonName' AND @p_sortDirection = '0'
+			THEN p.[CommonName] END ASC,
+		CASE WHEN @p_sortBy = 'CommonName' AND @p_sortDirection = '1'
+			THEN p.[CommonName] END DESC,
+		CASE WHEN @p_sortBy = 'Location' AND @p_sortDirection = '0'
+			THEN p.[Location] END ASC,
+		CASE WHEN @p_sortBy = 'Location' AND @p_sortDirection = '1'
+			THEN p.[Location] END DESC
 	
 	OFFSET 
 		@p_startRow ROWS

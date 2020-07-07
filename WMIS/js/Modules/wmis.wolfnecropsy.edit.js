@@ -1,7 +1,7 @@
 ﻿wmis.wolfnecropsy = wmis.wolfnecropsy || {};
 wmis.wolfnecropsy.edit = (function ($) {
     var options = {
-        wolfnecropsyKey: null,
+        wolfKey: null,
     };
 
     function editWolfNecropsyViewModel(key) {
@@ -93,104 +93,100 @@ wmis.wolfnecropsy.edit = (function ($) {
         this.samplescomments = ko.observable(key); 
         this.generalcomments = ko.observable(key);
 
-
         this.canSave = ko.computed(function () {
             return ($.trim(self.necropsyid()) != "");
         });
 
         this.getWolfNecropsy = function () {
             var url = "/api/WolfNecropsy/?WolfNecropsyKey=" + self.key();
-          //  var url = "/api/WolfNecropsy/" +  self.key();
             $.getJSON(url, {}, function (json) {
                 if (json.data.length > 0) {
                     var d = json.data[0];
-                    self.necropsyid(d.necropsyid);
-                    self.commonname(d.commonname);
-                    self.speciesid(d.speciesid);
-                    self.necropsydate(d.necropsydate);
+                    self.necropsyid(d.necropsyId);
+                    self.commonname (d.commonName);
+                    self.speciesid(d.speciesId);
+                    self.necropsydate(d.necropsyDate);
                     self.sex(d.sex);
                     self.location(d.location);
-                    self.gridcell(d.gridcell);
-                    self.datereceived(d.datereceived);
-                    self.datekilled(d.datekilled);
-                    self.ageclass(d.ageclass);
-                    self.ageestimated(d.ageestimated); 
+                    self.gridcell(d.gridCell);
+                    self.datereceived(d.dateReceived);
+                    self.datekilled(d.dateKilled);
+                    self.ageclass(d.ageClass);
+                    self.ageestimated(d.ageEstimated); 
                     self.submitter(d.submitter);
-                    self.contactinfo(d.contactinfo);
-                    self.regionid(d.regionid);
-                    self.methodkilled(d.methodkilled);
+                    self.contactinfo(d.contactInfo);
+                    self.regionid(d.regionId);
+                    self.methodkilled(d.methodKilled);
                     self.injuries(d.injuries);
-                    self.tagcomments(d.tagcomments);
-                    self.tagrecheck(d.tagrecheck);
-                    self.bodywt_unskinned(d.bodywt_unskinned);
-                    self.neckgirth_unsk(d.neckgirth_unsk);
-                    self.chestgirth_unsk(d.chestgirth_unsk);
-                    self.contour_nose_tail(d.contour_nose_tail);
-                    self.tail_length(d.tail_length);
-                    self.bodywt_skinned(d.bodywt_skinned);
-                    self.peltwt(d.peltwt);
-                    self.neckgirth_sk(d.neckgirth_sk);
-                    self.chestgirth_sk(d.chestgirth_sk);
-                    self.rumpfat(d.rumpfat);
-                    self.totalrank_ext(d.totalrank_ext);
+                    self.tagcomments(d.tagComments);
+                    self.tagrecheck(d.tagReCheck);
+                    self.bodywt_unskinned(d.bodyWt_unskinned);
+                    self.neckgirth_unsk(d.neckGirth_unsk);
+                    self.chestgirth_unsk(d.chestGirth_unsk);
+                    self.contour_nose_tail(d.contour_Nose_Tail);
+                    self.tail_length(d.tail_Length);
+                    self.bodywt_skinned(d.bodyWt_skinned);
+                    self.peltwt(d.peltWt);
+                    self.neckgirth_sk(d.neckGirth_sk);
+                    self.chestgirth_sk(d.chestGirth_sk);
+                    self.rumpfat(d.rumpFat);
+                    self.totalrank_ext(d.totalRank_Ext);
                     self.tongue(d.tongue);
-                    self.haircollected(d.haircollected);
-                    self.skullcollected(d.skullcollected);
-                    self.hindlegmuscle_stableisotopes(d.hindlegmuscle_stableisotopes);
-                    self.hindlegmuscle_contaminants(d.hindlegmuscle_contaminants);
+                    self.haircollected(d.hairCollected);
+                    self.skullcollected(d.skullCollected);
+                    self.hindlegmuscle_stableisotopes(d.hindlegMuscle_StableIsotopes);
+                    self.hindlegmuscle_contaminants(d.hindlegMuscle_Contaminants);
                     self.femur(d.femur);
                     self.feces(d.feces);
                     self.diaphragm(d.diaphragm);
                     self.lung(d.lung);
-                    self.liver_dna(d.liver_dna);
-                    self.liver_sia(d.liver_sia);
-                    self.liver_contam(d.liver_contam);
+                    self.liver_dna(d.liver_DNA);
+                    self.liver_sia(d.liver_SIA);
+                    self.liver_contam(d.liver_Contam);
                     self.spleen(d.spleen);
-                    self.kidneyl(d.kidneyl);
-                    self.kidneyl_wt(d.kidneyl_wt);
-                    self.kidneyr(d.kidneyr);
-                    self.kidneyr_wt(d.kidneyr_wt);
-                    self.blood_tabs(d.blood_tabs);
-                    self.blood_tubes(d.blood_tubes);
+                    self.kidneyl(d.kidneyL);
+                    self.kidneyl_wt(d.kidneyL_wt);
+                    self.kidneyr(d.kidneyR);
+                    self.kidneyr_wt(d.kidneyR_wt);
+                    self.blood_tabs(d.blood_Tabs);
+                    self.blood_tubes(d.blood_Tubes);
                     self.stomach(d.stomach);
-                    self.stomachcont(d.stomachcont);
-                    self.stomach_full(d.stomach_full);
-                    self.stomach_empty(d.stomach_empty);
-                    self.stomachcont_wt(d.stomachcont_wt);
-                    self.stomachcontentdesc(d.stomachcontentdesc);
-                    self.intestinaltract(d.intestinaltract);
-                    self.uterinescars(d.uterinescars);
+                    self.stomachcont(d.stomachCont);
+                    self.stomach_full(d.stomach_Full);
+                    self.stomach_empty(d.stomach_Empty);
+                    self.stomachcont_wt(d.stomachCont_wt);
+                    self.stomachcontentdesc(d.stomachContentdesc);
+                    self.intestinaltract(d.intestinalTract);
+                    self.uterinescars(d.uterineScars);
                     self.uterus(d.uterus);
                     self.ovaries(d.ovaries);
-                    self.lymphnodes(d.lymphnodes);
+                    self.lymphnodes(d.lymphNodes);
                     self.others(d.others);
-                    self.internalrank(d.internalrank);
-                    self.peltcolor(d.peltcolor);
-                    self.backfat(d.backfat);
-                    self.sternumfat(d.sternumfat);
-                    self.inguinalfat(d.inguinalfat);
+                    self.internalrank(d.internalRank);
+                    self.peltcolor(d.peltColor);
+                    self.backfat(d.backFat);
+                    self.sternumfat(d.sternumFat);
+                    self.inguinalfat(d.inguinalFat);
                     self.incentive(d.incentive);
-                    self.incentiveamt(d.incentiveamt);
+                    self.incentiveamt(d.incentiveAmt);
                     self.conflict(d.conflict);
-                    self.groupsize(d.groupsize);
-                    self.packid(d.packid);
+                    self.groupsize(d.groupSize);
+                    self.packid(d.packId);
                     self.xiphoid(d.xiphoid);
                     self.personnel(d.personnel);
                     self.pictures(d.pictures);
-                    self.speciescomments(d.speciescomments);
-                    self.taginjurycomments(d.taginjurycomments);
+                    self.speciescomments(d.speciesComments);
+                    self.taginjurycomments(d.taginjuryComments);
                     self.injurycomments(d.injurycomments);
-                    self.examinjurycomments(d.examinjurycomments);
-                    self.examcomments(d.examcomments);
-                    self.picturescomments(d.picturescomments);
-                    self.measurementscomments(d.measurementscomments);
-                    self.missingpartscomments(d.missingpartscomments);
-                    self.stomachcontents(d.stomachcontents);
-                    self.othersamplescomments(d.othersamplescomments);
-                    self.samplescomments(d.samplescomments); 
+                    self.examinjurycomments(d.examinjuryComments);
+                    self.examcomments(d.examComments);
+                    self.picturescomments(d.picturesComments);
+                    self.measurementscomments(d.measurementsComments);
+                    self.missingpartscomments(d.missingpartsComments);
+                    self.stomachcontents(d.stomachContents);
+                    self.othersamplescomments(d.otherSamplesComments);
+                    self.samplescomments(d.samplesComments); 
                     self.generalcomments(d.generalComments);
-
-                    alert(d.necropsyid)
                     document.title = "WMIS - WolfNecropsy - " + d.title;
                 }
             }).fail(wmis.global.ajaxErrorHandler);
@@ -199,14 +195,14 @@ wmis.wolfnecropsy.edit = (function ($) {
         this.saveWolfNecropsy = function () {
             var waitingScreenId = wmis.global.showWaitingScreen("Saving...");
             $.ajax({
-                url: "/api/WolfNecropsy/",
-                type: "POST",
+                url: "/api/wolfNecropsy/",
+                type: "PUT",
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify(ko.toJS(self))
-            }).success(function () {
-                window.location.href = "/WolfNecropsy/";
-            }).always(function () {
+              }).success(function () {
+                 window.location.href = "/wolfNecropsy/";
+              }).always(function () {
                 wmis.global.hideWaitingScreen(waitingScreenId);
             }).fail(wmis.global.ajaxErrorHandler);
         };
@@ -215,11 +211,12 @@ wmis.wolfnecropsy.edit = (function ($) {
     function initialize(initOptions) {
         $.extend(options, initOptions);
 
-        var viewModel = new editWolfNecropsyViewModel(options.WolfNecropsyKey);
+        var viewModel = new editWolfNecropsyViewModel(options.wolfKey);
         ko.applyBindings(viewModel);
 
-       // if (viewModel.key() > 0) {
-     // }
+        if (viewModel.key() > 0) {
+            viewModel.getWolfNecropsy();
+        }
     }
 
     return {

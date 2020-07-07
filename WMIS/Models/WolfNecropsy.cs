@@ -5,6 +5,7 @@
 
     public class WolfNecropsy : KeyedModel
     {
+      //  public int CaseId { get; set; }
         public string NecropsyId { get; set; }
         public string CommonName { get; set; }
         public int SpeciesId { get; set; }
@@ -90,6 +91,7 @@
         public string OtherSamplesComments { get; set; }
         public string SamplesComments { get; set; }
         public string GeneralComments { get; set; }
+        public DateTime? LastUpdated { get; set; }
 
     }
 }

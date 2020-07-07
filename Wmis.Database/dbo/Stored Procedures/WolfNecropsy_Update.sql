@@ -85,7 +85,7 @@
 	@p_OtherSamplesComments nvarchar(max)  =  NULL,
 	@p_SamplesComments nvarchar(max)  =  NULL,
 	@p_GeneralComments nvarchar(max)  =  NULL, 
-    @p_ChangeBy nvarchar(50) = NULL
+    @p_modifiedBy nvarchar(50) = NULL
 	
 AS
 

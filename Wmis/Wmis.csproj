@@ -339,12 +339,14 @@
     <Compile Include="Logic\BiodiversityBulkUploaderService.cs" />
     <Compile Include="Logic\ReferenceParserService.cs" />
     <Compile Include="Logic\SpeciesParserService.cs" />
+    <Compile Include="Logic\WolfNecropsyBulkUploaderService.cs" />
     <Compile Include="Models\ArgosCollarData.cs" />
     <Compile Include="Models\ArgosProgram.cs" />
     <Compile Include="Models\ArgosUser.cs" />
     <Compile Include="Models\BulkUploads.cs" />
     <Compile Include="Models\HelpLink.cs" />
     <Compile Include="Models\HistoricTypesFilter.cs" />
+    <Compile Include="Models\NecropsyBulkUpload.cs" />
     <Compile Include="Models\WolfNecropsy.cs" />
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />
@@ -598,6 +600,8 @@
     <Content Include="js\Modules\wmis.reference.index.js" />
     <Content Include="js\Modules\wmis.wolfnecropsy.edit.js" />
     <Content Include="js\Modules\wmis.wolfnecropsy.index.js" />
+    <Content Include="js\Modules\wmis.wolfnecropsy.new.js" />
+    <Content Include="js\Modules\wmis.wolfnecropsy.upload.js" />
     <Content Include="js\VueModules\wmis.tools.adddatamanually.js" />
     <Content Include="js\VueModules\wmis.tools.batchreject.js" />
     <Content Include="js\VueModules\wmis.tools.postretrievaldataprocessing.js" />
@@ -784,6 +788,7 @@
     <Content Include="Scripts\vue.min.js" />
     <Content Include="Scripts\xlsx.full.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\SurveyTemplate\Edit.cshtml" />
     <Content Include="Views\SurveyTemplate\EditForm.cshtml" />
@@ -811,7 +816,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\BioDiversity\Index.cshtml" />
     <Content Include="Views\BioDiversity\New.cshtml" />
     <Content Include="Views\BioDiversity\Edit.cshtml" />
@@ -889,6 +893,8 @@
     <Content Include="Views\WolfNecropsy\New.cshtml" />
     <Content Include="Views\WolfNecropsy\EditForm.cshtml" />
     <Content Include="Views\WolfNecropsy\Edit.cshtml" />
+    <Content Include="Views\WolfNecropsy\Upload.cshtml" />
+    <Content Include="Views\WolfNecropsy\NewForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,33 +10,41 @@
     using NPOI.HSSF.UserModel;
 
     using Wmis.Auth;
-    using Wmis.Dto;
-    using Wmis.Models;
+    using Dto;
+    using Models;
     using System.Net;
     using System;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Wmis.Logic;
+    using Wmis.WebApi;
+
 
     [RoutePrefix("api/wolfnecropsy")]
     public class WolfNecropsyApiController : BaseApiController
     {
         private readonly Auth.WmisUser _user;
 
+        public const string WolfnecropsyBulkUploadErrorString = "WolfnecropsyBulkUploadError";
+        public const string WolfnecropsyBulkUploadString = "WolfnecropsyBulkUpload";
+        public const string DownloadErrorString = "FileDownloadError";
+
         public WolfNecropsyApiController(WebConfiguration config, Auth.WmisUser user)
             : base(config)
         {
-            _user = user;
+           _user = user;
         }
 
-        #region WolfNecropsies
         [HttpGet]
         [Route]
-        public Dto.PagedResultset<Models.WolfNecropsy> SearchWolfNecropsy([FromUri]Dto.WolfNecropsyRequest pr)
+        public Dto.PagedResultset<WolfNecropsy> GetWolfNecropsy([FromUri] Dto.WolfNecropsyRequest wnr)
         {
-            return Repository.WolfnecropsySearch(pr);
+            return Repository.WolfnecropsySearch(wnr);
         }
 
         [HttpGet]
         [Route("download")]
-        public HttpResponseMessage DownloadWolfNecropsy([FromUri]WolfNecropsyRequest pr)
+        public HttpResponseMessage DownloadWolfNecropsy([FromUri] WolfNecropsyRequest pr)
         {
             var lstData = Repository.WolfNecropsyDownload(pr);
 
@@ -127,7 +135,7 @@
             header.CreateCell(80).SetCellValue("OtherSamplesComments");
             header.CreateCell(81).SetCellValue("SamplesComments");
             header.CreateCell(82).SetCellValue("GeneralComments");
-  
+
             var rowIndex = 1;
 
             foreach (var data in lstData.Data)
@@ -252,53 +260,172 @@
 
 
         }
-
-        [HttpGet]
-        [Route("{WolfNecropsyKey:int}")]
-        public Models.WolfNecropsy GetWolfNecropsy(int WolfNecropsyKey)
-        {
-            return Repository.WolfNecropsyGet(WolfNecropsyKey);
-        }
+        /*
+                [HttpGet]
+                [Route("{WolfNecropsyKey:int}")]
+                public Models.WolfNecropsy GetWolfNecropsy(int WolfNecropsyKey)
+                {
+                    return Repository.WolfNecropsyGet(WolfNecropsyKey);
+                }
         
-        [HttpPost]
-        [Route]
-        [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
-        public int Create([FromBody]string name)
-        {
-            return Repository.WolfNecropsyCreate(name, this._user.Username);
-        }
-
-        [HttpPut]
-        [Route]
-        public void Update(Models.WolfNecropsy p)
-        {
-            var repo = WebApi.ObjectFactory.Container.GetInstance<Models.WmisRepository>();
-            var person = repo.PersonGet(_user.Username);
-
-            // All administrators can see the sensitive data
-            if (person.Roles.Select(r => r.Name).Contains(WmisRoles.WMISDiseaseAdministrator)) // || person.WolfNecropsys.Select(pk => pk.Key).Contains(p.Key))
+        */
+  
+            [HttpPost]
+            [Route]
+            [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
+            public int Create([FromBody] WolfNecropsy wnn)
             {
-                Repository.WolfNecropsyUpdate(p, "");
-                return;
+                return Repository.WolfNecropsyCreate(wnn, _user.Username);
             }
-            var historyItemForCreator = repo.HistoryLogSearch(new HistoryLogSearchRequest { Item = "WolfNecropsy Created", ChangeBy = this._user.Username, Key = p.Key, Table = "WolfNecropsyHistory" }).Data;
-
-            if (historyItemForCreator.Any())
-            {
-                this.Repository.WolfNecropsyUpdate(p, "");
-                return;
-            }
-
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
-        }
-
-
+  
+/*
         [HttpPost]
         [Route]
         public void SaveWolfNecropsy(Models.WolfNecropsy r)
         {
             Repository.WolfNecropsySave(r);
         }
-        #endregion
+  */      
+        [HttpPut]
+        [Route]
+        [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
+        public DateTime Update([FromBody] WolfNecropsy wn)
+        {
+            return Repository.WolfNecropsyUpdate(wn, _user.Username);
+        }
+
+        [HttpPost]
+        [Route("upload")]
+        [IFrameProgressExceptionHandler(WolfnecropsyBulkUploadErrorString)]
+        [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
+        public async Task<HttpResponseMessage> Upload()
+        {
+            // Save the File to a Temporary path (generally C:/Temp
+            var uploadPath = Path.Combine(Path.GetTempPath(), "WMIS");
+            if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
+            var streamProvider = new MultipartFormDataStreamProvider(uploadPath);
+            await Request.Content.ReadAsMultipartAsync(streamProvider);
+
+            FileInfo tempFile = null;
+            try
+            {
+                // Move the file to a location specified in the ObservationFileSaveDirectory AppSetting
+                var destinationFolder = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
+
+                var tempFileData = streamProvider.FileData.First();
+                tempFile = new FileInfo(tempFileData.LocalFileName);
+                var originalFile = new FileInfo(tempFileData.Headers.ContentDisposition.FileName.Replace("\"", ""));
+                if (!originalFile.Extension.Contains("xls"))
+                {
+                    throw new ObservationUploadException("Invalid File Extension. Observation Upload only supports .xls or .xlsx extensions.");
+                }
+                // perform another validation to check if the file uploaded is the correct template
+
+                var destinationFile = String.Concat(Guid.NewGuid(), originalFile.Extension);
+                var destinationFilePath = Path.Combine(destinationFolder, destinationFile);
+                System.IO.File.Copy(tempFileData.LocalFileName, destinationFilePath);
+
+                // save the uploaded process to database
+                Repository.AddBulkUpload(originalFile.Name, destinationFilePath, "Necropsy", destinationFile);
+
+                // now merge the data to the database
+                var data = new WolfNecropsyBulkUploaderService().GetData(destinationFilePath, 1);
+                //Test to see if it reached here
+                // System.Web.HttpContext.Current.Response.Write("Data is about to be inserted");
+                /// **** Need to implement  Repository.BulkInsertSpecies(data);
+
+                // send the response back to EventListener
+                var pageBuilder = new StringBuilder();
+                pageBuilder.Append("<html><head></head>");
+                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:{{1}}', '*');</script></body></html>", WolfnecropsyBulkUploadString));
+                return Request.CreateResponse(HttpStatusCode.OK, pageBuilder.ToString(), new PlainTextFormatter());
+
+            }
+            finally
+            {
+                if (tempFile != null && tempFile.Exists)
+                {
+                    try
+                    {
+                        tempFile.Delete();
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
+
+        [HttpGet]
+        [Route("uploads/download")]
+        [IFrameProgressExceptionHandler(DownloadErrorString)]
+        public HttpResponseMessage DownloadFile([FromUri] string fileName)
+        {
+
+            if (!string.IsNullOrEmpty(fileName))
+            {
+
+                string filePath = WebConfiguration.AppSettings["ObservationFileSaveDirectory"];
+                string fullPath = Path.Combine(filePath, fileName);
+
+                if (!System.IO.File.Exists(fullPath))
+                {
+
+                    return new HttpResponseMessage()
+                    {
+                        Content = new StringContent(
+                            "<h3>File seems to be missing or unavailable at this time. Try again later or contact WMIS support.</h3>", Encoding.UTF8, "text/html"
+                        )
+                    };
+                    //throw new HttpResponseException(HttpStatusCode.Moved);
+                }
+
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    var newFile = String.Concat(DateTime.Now.ToString("yyyyMMddHHmmss"), fileName);
+                    var newFilePath = Path.Combine(filePath, newFile);
+
+                    System.IO.File.Copy(fullPath, newFilePath);
+
+                    var response = new FileHttpResponseMessage(newFilePath);
+                    using (var stream = new FileStream(newFilePath, FileMode.Open))
+                    {
+                        var bytes = new byte[stream.Length];
+                        stream.Read(bytes, 0, bytes.Length);
+                        response.Content = new ByteArrayContent(bytes);
+                    }
+
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = newFile
+                    };
+
+                    return response;
+                }
+
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.NotFound);
+
+        }
+
+        [HttpGet]
+        [Route("uploads")]
+        public Dto.PagedResultset<Models.NecropsyBulkUploads> GetBulkUploads([FromUri] Dto.PagedDataKeywordRequest str)
+        {
+            return Repository.WolfNecropsyBulkUploadsGet(str ?? new Dto.PagedDataKeywordRequest());
+        }
+
+
+        [HttpDelete]
+        [Route("api/wolfnecropsy/Edit/{CaseId:int}")]
+        [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
+        public void DeleteNecropsies(int caseId)
+        {
+            Repository.WolfNecropsyDelete(caseId);
+        }
+
     }
 }
