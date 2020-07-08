@@ -305,7 +305,7 @@
             if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
             var streamProvider = new MultipartFormDataStreamProvider(uploadPath);
             await Request.Content.ReadAsMultipartAsync(streamProvider);
-
+            Console.Write("It got here" + uploadPath);
             FileInfo tempFile = null;
             try
             {
@@ -326,13 +326,14 @@
                 System.IO.File.Copy(tempFileData.LocalFileName, destinationFilePath);
 
                 // save the uploaded process to database
-                Repository.AddBulkUpload(originalFile.Name, destinationFilePath, "Necropsy", destinationFile);
+                Repository.AddBulkUploadNecropsies(originalFile.Name, destinationFilePath, "Necropsy", destinationFile);
 
                 // now merge the data to the database
                 var data = new WolfNecropsyBulkUploaderService().GetData(destinationFilePath, 1);
                 //Test to see if it reached here
                 // System.Web.HttpContext.Current.Response.Write("Data is about to be inserted");
                 /// **** Need to implement  Repository.BulkInsertSpecies(data);
+                Repository.BulkInsertNecropsies(data);
 
                 // send the response back to EventListener
                 var pageBuilder = new StringBuilder();

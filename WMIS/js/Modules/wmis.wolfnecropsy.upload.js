@@ -1,6 +1,6 @@
 ﻿wmis.wolfnecropsy = wmis.wolfnecropsy || {};
 wmis.wolfnecropsy.upload = (function ($) {
-    var necropsybulkUploadDataTable;
+    var bulkUploadDataTable;
     var selectedFile;
 
     var options = {
@@ -66,7 +66,7 @@ wmis.wolfnecropsy.upload = (function ($) {
         $.extend(options, initOptions);
         // init datatables
         initDataTable();
-        necropsybulkUploadTable.fnFilter();
+        bulkUploadDataTable.fnFilter();
 
 
         // Handle upload events
@@ -77,7 +77,7 @@ wmis.wolfnecropsy.upload = (function ($) {
 
     function initDataTable() {
         var parameters;
-        necropsybulkUploadTable = $('#necropsybulkUploadTable').dataTable({
+        bulkUploadDataTable = $('#necropsybulkUploadTable').dataTable({
             "iDisplayLength": 20,
             "scrollX": true,
             "bJQueryUI": true,
@@ -136,7 +136,7 @@ wmis.wolfnecropsy.upload = (function ($) {
             },
 
             "fnDrawCallback": function () {
-                necropsybulkUploadTable.$('tr.info').removeClass('info');
+                bulkUploadDataTable.$('tr.info').removeClass('info');
                 //$("#editButton").addClass('disabled');
 
                 $("#necropsybulkUploadTable tbody tr").click(function () {
@@ -145,12 +145,12 @@ wmis.wolfnecropsy.upload = (function ($) {
                         $(this).removeClass('info');
                         //$("#editButton").addClass('disabled');
                     } else {
-                        necropsybulkUploadTable.$('tr.info').removeClass('info');
+                        bulkUploadDataTable.$('tr.info').removeClass('info');
                         $(this).addClass('info');
-                        if (necropsybulkUploadTable.$('tr.info').length) {
+                        if (bulkUploadDataTable.$('tr.info').length) {
                             // Get Data
-                            var position = necropsybulkUploadTable.fnGetPosition(this);
-                            var data = necropsybulkUploadTable.fnGetData(position);
+                            var position = bulkUploadDataTable.fnGetPosition(this);
+                            var data = bulkUploadDataTable.fnGetData(position);
 
                             if (data.key) {
                                 $("#downloadSelectedButton").removeClass('disabled');
