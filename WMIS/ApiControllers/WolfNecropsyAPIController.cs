@@ -333,6 +333,7 @@
                 //Test to see if it reached here
                 // System.Web.HttpContext.Current.Response.Write("Data is about to be inserted");
                 /// **** Need to implement  Repository.BulkInsertSpecies(data);
+                Console.Write("Here");
                 Repository.BulkInsertNecropsies(data);
 
                 // send the response back to EventListener
@@ -414,14 +415,14 @@
 
         [HttpGet]
         [Route("uploads")]
-        public Dto.PagedResultset<Models.NecropsyBulkUploads> GetBulkUploads([FromUri] Dto.PagedDataKeywordRequest str)
+        public Dto.PagedResultset<Models.NecropsyBulkUploads> GetNecropsyBulkUploads([FromUri] Dto.PagedDataKeywordRequest str)
         {
             return Repository.WolfNecropsyBulkUploadsGet(str ?? new Dto.PagedDataKeywordRequest());
         }
 
 
         [HttpDelete]
-        [Route("api/wolfnecropsy/Edit/{CaseId:int}")]
+        [Route("Necropsy/{CaseId:int}/delete")]
         [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
         public void DeleteNecropsies(int caseId)
         {

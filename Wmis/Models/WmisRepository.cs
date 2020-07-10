@@ -4298,9 +4298,9 @@
         }
 
         /// <summary>
-        /// Merge uploaded data to Species and Taxonomy tables in database
+        /// Merge uploaded data to necropsies table in database
         /// </summary>
-        /// <param name="speciesList"></param>
+        /// <param name="necropsyList"></param>
         public void BulkInsertNecropsies(IEnumerable<Logic.NecropsyData> necropsiesList)
         {
             using (var c = NewWmisConnection)

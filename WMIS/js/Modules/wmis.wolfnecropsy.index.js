@@ -39,7 +39,7 @@ wmis.wolfnecropsy.index = (function ($) {
                     wmis.global.showWaitingScreen("Deleting...");
 
                     $.ajax({
-                        url: "/api/wolfnecropsy/Edit/" +selectedWolfNecropsy,
+                        url: "/api/wolfnecropsy/necropsy/" + selectedWolfNecropsy + "/delete/",
                         type: "DELETE",
                     }).success(function () {
                         window.location.href = "/wolfnecropsy";

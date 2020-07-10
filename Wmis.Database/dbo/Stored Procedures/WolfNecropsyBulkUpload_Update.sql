@@ -8,7 +8,7 @@ AS
 	IF (@p_bulkUploadId IS NULL)
 	BEGIN
 		INSERT INTO
-			[dbo].[BulkUploads] ([UploadType], [OriginalFileName], [FilePath], [FileName])
+			[dbo].[NecropsyBulkUploads] ([UploadType], [OriginalFileName], [FilePath], [FileName])
 		VALUES
 			(@p_uploadType, @p_originalFileName, @p_filePath, @p_fileName)
 

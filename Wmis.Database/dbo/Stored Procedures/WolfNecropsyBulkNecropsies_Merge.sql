@@ -1,10 +1,98 @@
 ﻿CREATE PROCEDURE [dbo].[WolfNecropsyBulkNecropsies_Merge]
 	@p_necropsiesList AS [dbo].[BulkNecropsiesUploadTableType] READONLY
 AS
-	
+	WITH data AS (
+					SELECT 
+							p.NecropsyId,
+							p.CommonName,
+							p.SpeciesId,
+							p.NecropsyDate,
+							p.Sex,
+							p.Location,
+							p.GridCell,
+							p.DateReceived,
+							p.DateKilled,
+							p.AgeClass,
+							p.AgeEstimated,
+							p.Submitter,
+							p.ContactInfo,
+							p.RegionId,
+							p.MethodKilled,
+							p.Injuries,
+							p.TagComments,
+							p.TagReCheck,
+							p.BodyWt_unskinned,
+							p.NeckGirth_unsk,
+							p.ChestGirth_unsk,
+							p.Contour_Nose_Tail,
+							p.Tail_Length,
+							p.BodyWt_skinned,
+							p.PeltWt,
+							p.NeckGirth_sk,
+							p.ChestGirth_sk,
+							p.RumpFat,
+							p.TotalRank_Ext,
+							p.Tongue,
+							p.HairCollected,
+							p.SkullCollected,
+							p.HindLegMuscle_StableIsotopes,
+							p.HindLegMuscle_Contaminants,
+							p.Femur,
+							p.Feces,
+							p.Diaphragm,
+							p.Lung,
+							p.Liver_DNA,
+							p.Liver_SIA,
+							p.Liver_Contam,
+							p.Spleen,
+							p.KidneyL,
+							p.KidneyL_wt,
+							p.KidneyR,
+							p.KidneyR_wt,
+							p.Blood_tabs,
+							p.Blood_tubes,
+							p.Stomach,
+							p.StomachCont,
+							p.Stomach_Full,
+							p.Stomach_Empty,
+							p.StomachCont_wt,
+							p.StomachContentDesc,
+							p.intestinalTract,
+							p.UterineScars,
+							p.Uterus,
+							p.Ovaries,
+							p.LymphNodes,
+							p.Others,
+							p.internalRank,
+							p.PeltColor,
+							p.BackFat,
+							p.SternumFat,
+							p.InguinalFat,
+							p.Incentive,
+							p.IncentiveAmt,
+							p.Conflict,
+							p.GroupSize,
+							p.PackId,
+							p.Xiphoid,
+							p.Personnel,
+							p.Pictures,
+							p.SpeciesComments,
+							p.TagInjuryComments,
+							p.InjuryComments,
+							p.ExamInjuryComments,
+							p.ExamComments,
+							p.PicturesComments,
+							p.MeasurementsComments,
+							p.MissingPartsComments,
+							p.StomachContents,
+							p.OtherSamplesComments,
+							p.SamplesComments,
+							p.GeneralComments
+			FROM @p_necropsiesList p
+			)
 	MERGE WolfNecropsy AS T
-	USING @p_necropsiesList AS S
-	ON (T.NecropsyId = S.NecropsyID)
+	USING data AS S
+	ON (T.NecropsyId = S.NecropsyId)
 		
 	WHEN NOT MATCHED BY TARGET THEN
 		INSERT(NecropsyId,	CommonName,	SpeciesId,	NecropsyDate,	Sex,	Location,	GridCell,	DateReceived,	DateKilled,	AgeClass,	AgeEstimated,	Submitter,	ContactInfo,	RegionId,	MethodKilled,	Injuries,	TagComments,	TagReCheck,	BodyWt_unskinned,	NeckGirth_unsk,	ChestGirth_unsk,	Contour_Nose_Tail,	Tail_Length,	BodyWt_skinned,	PeltWt,	NeckGirth_sk,	ChestGirth_sk,	RumpFat,	TotalRank_Ext,	Tongue,	HairCollected,	SkullCollected,	HindLegMuscle_StableIsotopes,	HindLegMuscle_Contaminants,	Femur,	Feces,	Diaphragm,	Lung,	Liver_DNA,	Liver_SIA,	Liver_Contam,	Spleen,	KidneyL,	KidneyL_wt,	KidneyR,	KidneyR_wt,	Blood_tabs,	Blood_tubes,	Stomach,	StomachCont,	Stomach_Full,	Stomach_Empty,	StomachCont_wt,	StomachContentDesc,	IntestinalTract,	UterineScars,	Uterus,	Ovaries,	LymphNodes,	Others,	InternalRank,	PeltColor,	BackFat,	SternumFat,	InguinalFat,	Incentive,	IncentiveAmt,	Conflict,	GroupSize,	PackId,	Xiphoid,	Personnel,	Pictures,	SpeciesComments,	TagInjuryComments,	InjuryComments,	ExamInjuryComments,	ExamComments,	PicturesComments,	MeasurementsComments,	MissingPartsComments,	StomachContents,	OtherSamplesComments,	SamplesComments,GeneralComments, LastUpdated)
@@ -13,6 +101,3 @@ AS
 RETURN 0
 
 GRANT EXECUTE ON [dbo].[WolfNecropsyBulkNecropsies_Merge] TO [WMISUser]
-
-GO
-
