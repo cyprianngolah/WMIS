@@ -14,15 +14,17 @@
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
     @Html.Raw(Scripts.Render("~/bundles/wolfnecropsy/upload"))
 
+   
     <script type="text/javascript">
         $(function () {
             wmis.wolfnecropsy.upload.initialize({
                 uploadNecropsyForm: $("#necropsyFileUploadForm")
             });
+
         });
     </script>
 }
-    
+
 <div class="modal" data-backdrop="static" id="necropsyUploadModal" data-bind="showModal: currentModal() == 'upload', with: $root">
     <iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
     <form role="form" id="necropsyFileUploadForm" enctype="multipart/form-data" action="~/api/wolfnecropsy/upload" method="post" target="uploadIframe">
@@ -66,7 +68,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <table id="necropsybulkUploadTable" class="table">
+        <table id="bulkUploadTable" class="table">
             <thead>
                 <tr>
                     <th>Uploaded File</th>

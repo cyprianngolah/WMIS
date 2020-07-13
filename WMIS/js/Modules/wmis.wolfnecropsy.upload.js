@@ -65,6 +65,7 @@ wmis.wolfnecropsy.upload = (function ($) {
     function initialize(initOptions) {
         $.extend(options, initOptions);
         // init datatables
+        alert("Table is initlialize");
         initDataTable();
         bulkUploadDataTable.fnFilter();
 
@@ -77,7 +78,7 @@ wmis.wolfnecropsy.upload = (function ($) {
 
     function initDataTable() {
         var parameters;
-        bulkUploadDataTable = $('#necropsybulkUploadTable').dataTable({
+        bulkUploadDataTable = $('#bulkUploadTable').dataTable({
             "iDisplayLength": 20,
             "scrollX": true,
             "bJQueryUI": true,
@@ -139,7 +140,7 @@ wmis.wolfnecropsy.upload = (function ($) {
                 bulkUploadDataTable.$('tr.info').removeClass('info');
                 //$("#editButton").addClass('disabled');
 
-                $("#necropsybulkUploadTable tbody tr").click(function () {
+                $("#bulkUploadTable tbody tr").click(function () {
                     // Highlight selected row
                     if ($(this).hasClass('info')) {
                         $(this).removeClass('info');
