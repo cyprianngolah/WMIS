@@ -154,7 +154,7 @@ wmis.biodiversity.upload = (function ($) {
                             var data = bulkUploadDataTable.fnGetData(position);
 
                             if (data.key) {
-                                $("#downloadSelectedButton").removeClass('disabled');
+                                $("#downloadSelectedButton").removeClass('disabled').addClass('btn-success');
                                 selectedFile = data.fileName;
                                 //console.log(selectedFile);
                                 //$("#downloadSelectedButton").prop("href", "/api/biodiversity//Edit/" + data.key);

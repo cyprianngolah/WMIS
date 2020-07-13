@@ -305,8 +305,7 @@
             if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
             var streamProvider = new MultipartFormDataStreamProvider(uploadPath);
             await Request.Content.ReadAsMultipartAsync(streamProvider);
-            Console.Write("It got here" + uploadPath);
-            FileInfo tempFile = null;
+             FileInfo tempFile = null;
             try
             {
                 // Move the file to a location specified in the ObservationFileSaveDirectory AppSetting
@@ -333,7 +332,6 @@
                 //Test to see if it reached here
                 // System.Web.HttpContext.Current.Response.Write("Data is about to be inserted");
                 /// **** Need to implement  Repository.BulkInsertSpecies(data);
-                Console.Write("Here");
                 Repository.BulkInsertNecropsies(data);
 
                 // send the response back to EventListener
