@@ -30,7 +30,7 @@ wmis.wolfnecropsy.upload = (function ($) {
             window.open("/api/wolfnecropsy/uploads/download?fileName=" + selectedFile, '_blank');
         };
     }
-
+    
     // listens to upload event from upload iframe.
     function addEventHandlers(viewModel) {
         // Create IE + others compatible event handler
