@@ -22,7 +22,6 @@ wmis.biodiversity.upload = (function ($) {
 
         self.uploadObservationFile = function () {
             wmis.global.showWaitingScreen("Uploading... Please wait");
-            alert("It got here")
             options.uploadSpeciesForm.submit();
         };
 
