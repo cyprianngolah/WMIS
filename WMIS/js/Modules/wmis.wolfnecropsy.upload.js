@@ -21,7 +21,7 @@ wmis.wolfnecropsy.upload = (function ($) {
         };
 
         self.uploadObservationFile = function () {
-           // wmis.global.showWaitingScreen("Uploading... Please wait");
+            wmis.global.showWaitingScreen("Uploading... Please wait");
             options.uploadNecropsyForm.submit();
         };
 
@@ -65,6 +65,7 @@ wmis.wolfnecropsy.upload = (function ($) {
     function initialize(initOptions) {
         $.extend(options, initOptions);
         // init datatables
+        uploadNecropsyForm: $("#necropsyFileUploadForm");
         initDataTable();
         bulkUploadDataTable.fnFilter();
 
