@@ -52,7 +52,7 @@ wmis.wolfnecropsy.upload = (function ($) {
                 var message = event.data.replace("FileDownloadError:", "");
                 viewModel.showMessageModal(message);
             }
-            else if (event.data.indexOf("wolfnecropsyBulkUpload") == 0) {
+            else if (event.data.indexOf("WolfNecropsyBulkUpload") == 0) {
                 viewModel.hideUploadModal();
                 // add redirection or function to fetch uploads (for now just redirect back to the upload page)
                 window.location.href = "/Wolfnecropsy/Upload";

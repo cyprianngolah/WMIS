@@ -25,8 +25,8 @@
     {
         private readonly Auth.WmisUser _user;
 
-        public const string WolfnecropsyBulkUploadErrorString = "WolfnecropsyBulkUploadError";
-        public const string WolfnecropsyBulkUploadString = "WolfnecropsyBulkUpload";
+        public const string WolfNecropsyBulkUploadErrorString = "WolfNecropsyBulkUploadError";
+        public const string WolfNecropsyBulkUploadString = "WolfNecropsyBulkUpload";
         public const string DownloadErrorString = "FileDownloadError";
 
         public WolfNecropsyApiController(WebConfiguration config, Auth.WmisUser user)
@@ -49,7 +49,7 @@
             var lstData = Repository.WolfNecropsyDownload(pr);
 
             var workbook = new HSSFWorkbook();
-            var sheet = workbook.CreateSheet("WolfNecropsies");
+            var sheet = workbook.CreateSheet("Necropsy");
 
             var header = sheet.CreateRow(0);
             header.CreateCell(0).SetCellValue("NecropsyID");
@@ -229,7 +229,7 @@
             }
 
             var directoryName = Path.Combine(Path.GetTempPath(), "WMIS");
-            string strFile = "WolfNecropsies_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls";
+            string strFile = "Necropsy_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls";
             string fullPath = Path.Combine(directoryName, strFile);
 
             if (!Directory.Exists(directoryName))
@@ -281,7 +281,7 @@
 
         [HttpPost]
         [Route("upload")]
-        [IFrameProgressExceptionHandler(WolfnecropsyBulkUploadErrorString)]
+        [IFrameProgressExceptionHandler(WolfNecropsyBulkUploadErrorString)]
         [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
         public async Task<HttpResponseMessage> Upload()
         {
@@ -316,12 +316,12 @@
                 var data = new WolfNecropsyBulkUploaderService().GetData(destinationFilePath, 1);
                 //Test to see if it reached here
                 // System.Web.HttpContext.Current.Response.Write("Data is about to be inserted");
-               //  Repository.BulkInsertNecropsies(data);
+                 Repository.BulkInsertNecropsies(data);
 
                 // send the response back to EventListener
                 var pageBuilder = new StringBuilder();
                 pageBuilder.Append("<html><head></head>");
-                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:{{1}}', '*');</script></body></html>", WolfnecropsyBulkUploadString));
+                pageBuilder.Append(String.Format("<body><script type='text/javascript'>parent.postMessage('{0}:{{1}}', '*');</script></body></html>", WolfNecropsyBulkUploadString));
                 return Request.CreateResponse(HttpStatusCode.OK, pageBuilder.ToString(), new PlainTextFormatter());
 
             }
