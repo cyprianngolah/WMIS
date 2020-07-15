@@ -62,7 +62,7 @@ wmis.wolfnecropsy.index = (function ($) {
 
         initDataTable();
 
-        document.title = "Wolf Necropsy";
+        document.title = "Necropsy";
 
             
 

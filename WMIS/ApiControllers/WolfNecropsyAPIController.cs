@@ -260,15 +260,7 @@
 
 
         }
-        /*
-                [HttpGet]
-                [Route("{WolfNecropsyKey:int}")]
-                public Models.WolfNecropsy GetWolfNecropsy(int WolfNecropsyKey)
-                {
-                    return Repository.WolfNecropsyGet(WolfNecropsyKey);
-                }
-        
-        */
+      
   
             [HttpPost]
             [Route]
@@ -278,14 +270,7 @@
                 return Repository.WolfNecropsyCreate(wnn, _user.Username);
             }
   
-/*
-        [HttpPost]
-        [Route]
-        public void SaveWolfNecropsy(Models.WolfNecropsy r)
-        {
-            Repository.WolfNecropsySave(r);
-        }
-  */      
+
         [HttpPut]
         [Route]
         [WmisWebApiAuthorize(Roles = WmisRoles.WMISDiseaseAdministrator)]
@@ -331,8 +316,7 @@
                 var data = new WolfNecropsyBulkUploaderService().GetData(destinationFilePath, 1);
                 //Test to see if it reached here
                 // System.Web.HttpContext.Current.Response.Write("Data is about to be inserted");
-                /// **** Need to implement  Repository.BulkInsertSpecies(data);
-                Repository.BulkInsertNecropsies(data);
+               //  Repository.BulkInsertNecropsies(data);
 
                 // send the response back to EventListener
                 var pageBuilder = new StringBuilder();

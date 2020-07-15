@@ -65,7 +65,6 @@ wmis.wolfnecropsy.upload = (function ($) {
     function initialize(initOptions) {
         $.extend(options, initOptions);
         // init datatables
-        uploadNecropsyForm: $("#necropsyFileUploadForm");
         initDataTable();
         bulkUploadDataTable.fnFilter();
 
