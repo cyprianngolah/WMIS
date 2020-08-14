@@ -1,4 +1,4 @@
-﻿CREATE TYPE [dbo].[BulkRabiestsUploadTableType] AS TABLE
+﻿CREATE TYPE [dbo].[BulkRabiesTestsUploadTableType] AS TABLE (
 	[DateTested] [datetime] NULL,
 	[DataStatus] [nvarchar](30) NULL,
 	[Year] [nvarchar](20) NULL,
