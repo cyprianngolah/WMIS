@@ -343,6 +343,18 @@
     <Build Include="dbo\Stored Procedures\WolfNecropsyBulkUpload_Get.sql" />
     <Build Include="dbo\Stored Procedures\WolfNecropsyBulkUpload_Update.sql" />
     <Build Include="dbo\Tables\NecropsyBulkUploads.sql" />
+    <Build Include="dbo\Tables\RabiesTests.sql" />
+    <Build Include="dbo\Stored Procedures\RabiesTests_Create.sql" />
+    <Build Include="dbo\Stored Procedures\RabiesTests_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\RabiesTests_Get.sql" />
+    <Build Include="dbo\Stored Procedures\RabiesTests_Update.sql" />
+    <Build Include="dbo\Stored Procedures\RabiesTests_Search.sql" />
+    <Build Include="dbo\Stored Procedures\RabiesTestsBulkRabies_Merge.sql" />
+    <Build Include="dbo\Stored Procedures\RabiesTestsBulkUpload_Get.sql" />
+    <Build Include="dbo\User Defined Types\UserDefinedTableType1.sql" />
+    <Build Include="dbo\User Defined Types\BulkRabiestsUploadTableType.sql" />
+    <Build Include="dbo\Tables\RabiesTestsBulkUploads.sql" />
+    <Build Include="dbo\Stored Procedures\RabiesTestsBulkUpload_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Wmis.PostDeployment.sql" />

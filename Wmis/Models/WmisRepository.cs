@@ -377,7 +377,7 @@
 
         ///Save /////
         //
-        private const string WolfNecropsy_SAVE = "dbo.WolfNecropsy_Save";
+       // private const string WolfNecropsy_SAVE = "dbo.WolfNecropsy_Save";
 
 
         private const string WOLFNECROPSYBULKUPLOAD_UPDATE = "dbo.WolfNecropsyBulkUpload_Update";
@@ -385,7 +385,26 @@
         private const string WOLFNECROPSYBULKUPLOAD_GET = "dbo.WolfNecropsyBulkUpload_Get";
 
         private const string WOLFNECROPSY_DELETE = "dbo.WolfNecropsy_Delete";
-        /*////////
+
+        //Rabies Tests
+
+       // private const string RabiesTests_SAVE = "dbo.RabiesTests_Save";
+
+        private const string RabiesTests_CREATE = "dbo.RabiesTests_Create";
+
+        private const string RabiesTests_UPDATE = "dbo.RabiesTests_Update";
+
+        private const string RabiesTests_GET = "dbo.RabiesTests_Get";
+
+        private const string RabiesTests_SEARCH = "dbo.RabiesTests_Search";
+        private const string RabiesTests_DELETE = "dbo.RabiesTests_Delete";
+
+
+        private const string RabiesTestsBULKUPLOAD_UPDATE = "dbo.RabiesTestsBulkUpload_Update";
+        private const string RabiesTestsBULKNECROPSIES_MERGE = "dbo.RabiesTestsBulkNecropsies_Merge";
+        private const string RabiesTestsBULKUPLOAD_GET = "dbo.RabiesTestsBulkUpload_Get";
+
+         /*////////
         /// <summary>
         /// WMIS Tools
         /// </summary>
@@ -4090,32 +4109,6 @@
                 return c.Query<DateTime>(WolfNecropsy_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-/*
-
-        public WolfNecropsy WolfNecropsyGet(int wolfnecropsyKey)
-        {
-            using (var c = NewWmisConnection)
-            {
-                var param = new
-                {
-                    p_caseId = wolfnecropsyKey
-                };
-                return c.Query<WolfNecropsy, WolfNecropsy, WolfNecropsy>(WolfNecropsy_GET,
-                    (w, sp) =>
-                    {
-                        w.NecropsyId = sp.NecropsyId;
-                        w.CommonName = sp.CommonName;
-                        w.Location = sp.Location;
-                        return w;
-                    },
-                        param,
-                        commandType: CommandType.StoredProcedure,
-                        splitOn: "Key").Single();
-                        
-            }
-        }
-    */    
-
         public Dto.PagedResultset<WolfNecropsy> WolfnecropsySearch(Dto.WolfNecropsyRequest sr)
         {
              using (var c = NewWmisConnection)
@@ -4184,104 +4177,6 @@
             }
         }
 
-        public void WolfNecropsySave(Models.WolfNecropsy r)
-        {
-            using (var c = NewWmisConnection)
-            {
-                var param = new
-                {
-                    p_CaseId = r.Key == 0 ? null : (int?)r.Key,
-                    p_necropsyid = r.NecropsyId,
-                    p_commonname = r.CommonName,
-                    p_speciesid = r.SpeciesId,
-                    p_necropsydate = r.NecropsyDate,
-                    p_sex = r.Sex,
-                    p_location = r.Location,
-                    p_gridcell = r.GridCell,
-                    p_datereceived = r.DateReceived,
-                    p_datekilled = r.DateKilled,
-                    p_ageclass = r.AgeClass,
-                    p_ageestimated = r.AgeEstimated,
-                    p_submitter = r.Submitter,
-                    p_contactinfo = r.ContactInfo,
-                    p_regionid = r.RegionId,
-                    p_methodkilled = r.MethodKilled,
-                    p_injuries = r.Injuries,
-                    p_tagcomments = r.TagComments,
-                    p_tagrecheck = r.TagReCheck,
-                    p_bodywt_unskinned = r.BodyWt_unskinned,
-                    p_neckgirth_unsk = r.NeckGirth_unsk,
-                    p_chestgirth_unsk = r.ChestGirth_unsk,
-                    p_contour_nose_tail = r.Contour_Nose_Tail,
-                    p_tail_length = r.Tail_Length,
-                    p_bodywt_skinned = r.BodyWt_skinned,
-                    p_peltwt = r.PeltWt,
-                    p_neckgirth_sk = r.NeckGirth_sk,
-                    p_chestgirth_sk = r.ChestGirth_sk,
-                    p_rumpfat = r.RumpFat,
-                    p_totalrank_ext = r.TotalRank_Ext,
-                    p_tongue = r.Tongue,
-                    p_haircollected = r.HairCollected,
-                    p_skullcollected = r.SkullCollected,
-                    p_hindlegmuscle_stableisotopes = r.HindLegMuscle_StableIsotopes,
-                    p_hindlegmuscle_contaminants = r.HindLegMuscle_Contaminants,
-                    p_femur = r.Femur,
-                    p_feces = r.Feces,
-                    p_diaphragm = r.Diaphragm,
-                    p_lung = r.Lung,
-                    p_liver_dna = r.Liver_DNA,
-                    p_liver_sia = r.Liver_SIA,
-                    p_liver_contam = r.Liver_Contam,
-                    p_spleen = r.Spleen,
-                    p_kidneyl = r.KidneyL,
-                    p_kidneyl_wt = r.KidneyL_wt,
-                    p_kidneyr = r.KidneyR,
-                    p_kidneyr_wt = r.KidneyR_wt,
-                    p_blood_tabs = r.Blood_tabs,
-                    p_blood_tubes = r.Blood_tubes,
-                    p_stomach = r.Stomach,
-                    p_stomachcont = r.StomachCont,
-                    p_stomach_full = r.Stomach_Full,
-                    p_stomach_empty = r.Stomach_Empty,
-                    p_stomachcont_wt = r.StomachCont_wt,
-                    p_stomachcontentdesc = r.StomachContentDesc,
-                    p_intestinaltract = r.IntestinalTract,
-                    p_uterinescars = r.UterineScars,
-                    p_uterus = r.Uterus,
-                    p_ovaries = r.Ovaries,
-                    p_lymphnodes = r.LymphNodes,
-                    p_others = r.Others,
-                    p_internalrank = r.InternalRank,
-                    p_peltcolor = r.PeltColor,
-                    p_backfat = r.BackFat,
-                    p_sternumfat = r.SternumFat,
-                    p_inguinalfat = r.InguinalFat,
-                    p_incentive = r.Incentive,
-                    p_incentiveamt = r.IncentiveAmt,
-                    p_conflict = r.Conflict,
-                    p_groupsize = r.GroupSize,
-                    p_packid = r.PackId,
-                    p_xiphoid = r.Xiphoid,
-                    p_personnel = r.Personnel,
-                    p_pictures = r.Pictures,
-                    p_speciescomments = r.SpeciesComments,
-                    p_taginjurycomments = r.TagInjuryComments,
-                    p_injurycomments = r.InjuryComments,
-                    p_examinjurycomments = r.ExamInjuryComments,
-                    p_examcomments = r.ExamComments,
-                    p_picturescomments = r.PicturesComments,
-                    p_measurementscomments = r.MeasurementsComments,
-                    p_missingpartscomments = r.MissingPartsComments,
-                    p_stomachcontents = r.StomachContents,
-                    p_othersamplescomments = r.OtherSamplesComments,
-                    p_samplescomments = r.SamplesComments,
-                    p_generalComments = r.GeneralComments
-                };
-
-                c.Execute(WolfNecropsy_SAVE, param, commandType: CommandType.StoredProcedure);
-            }
-        }
-        
         public int AddBulkUploadNecropsies(string originalFileName, string filePath, string uploadType, string fileName)
         {
             using (var c = NewWmisConnection)
@@ -4451,6 +4346,231 @@
         }
 
         #endregion WolfNecropsy
+
+        #region RabiesTests
+        public int RabiesTestsCreate(RabiesTests rt, string createdBy)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_Datetested = rt.DateTested,
+                    p_Datastatus = rt.DataStatus,
+                    p_Year = rt.Year,
+                    p_Submittingagency = rt.SubmittingAgency,
+                    p_Laboratoryidno = rt.LaboratoryIDNo,
+                    p_Testresult = rt.TestResult,
+                    p_Community = rt.Community,
+                    p_Latitude = rt.Latitude,
+                    p_Longitude = rt.Longitude,
+                    p_Regionid = rt.RegionId,
+                    p_Geographicregion = rt.GeographicRegion,
+                    p_Species = rt.Species,
+                    p_Animalcontact = rt.AnimalContact,
+                    p_Humancontact = rt.HumanContact,
+                    p_Comments = rt.Comments,
+                    p_createdBy = createdBy
+                };
+                return c.Query<int>(RabiesTests_CREATE, param, commandType: CommandType.StoredProcedure).Single();
+            }
+        }
+
+        public DateTime RabiesTestsUpdate(RabiesTests rt, string modifiedBy)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_CaseId = rt.Key,
+                    p_Datetested = rt.DateTested,
+                    p_Datastatus = rt.DataStatus,
+                    p_Year = rt.Year,
+                    p_Submittingagency = rt.SubmittingAgency,
+                    p_Laboratoryidno = rt.LaboratoryIDNo,
+                    p_Testresult = rt.TestResult,
+                    p_Community = rt.Community,
+                    p_Lattitude = rt.Latitude,
+                    p_Longitude = rt.Longitude,
+                    p_Regionid = rt.RegionId,
+                    p_Geographicregion = rt.GeographicRegion,
+                    p_Species = rt.Species,
+                    p_Animalcontact = rt.AnimalContact,
+                    p_Humancontact = rt.HumanContact,
+                    p_Comments = rt.Comments,
+                    p_modifiedBy = modifiedBy
+                };
+                return c.Query<DateTime>(RabiesTests_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
+        
+        public Dto.PagedResultset<RabiesTests> RabiesTestsSearch(Dto.RabiesTestsRequest rt)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_TestId = rt.RabiesTestsKey,
+                    p_startRow = rt.StartRow,
+                    p_rowCount = rt.RowCount,
+                    p_sortBy = rt.SortBy,
+                    p_sortDirection = rt.SortDirection,
+                    p_year = string.IsNullOrWhiteSpace(rt.year) ? null : rt.year,
+                    p_species = string.IsNullOrWhiteSpace(rt.species) ? null : rt.species,
+                    p_community = string.IsNullOrWhiteSpace(rt.community) ? null : rt.community,
+                    p_testResult = string.IsNullOrWhiteSpace(rt.testResult) ? null : rt.testResult,
+
+                    p_keywords = string.IsNullOrWhiteSpace(rt.Keywords) ? null : rt.Keywords
+                };
+
+                var pagedResults = new Dto.PagedResultset<RabiesTests> { DataRequest = rt };
+                pagedResults.Data = c.Query<int, RabiesTests, RabiesTests>(RabiesTests_GET,
+                    (count, r) =>
+                    {
+                        pagedResults.ResultCount = count;
+                        return r;
+                    },
+                    param,
+                    commandType:
+                    CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+
+                return pagedResults;
+
+
+            }
+        }
+
+        public PagedResultset<RabiesTests> RabiesTestsDownload(RabiesTestsRequest rt)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_startRow = 0,
+                    p_rowCount = 1000,
+                    p_sortBy = "TestId",
+                    p_sortDirection = "asc",
+                    p_year = rt.year,
+                    p_species = rt.species,
+                    p_community = rt.community,
+                    p_testResult = rt.testResult,
+                    p_keywords = string.IsNullOrWhiteSpace(rt.Keywords) ? null : rt.Keywords
+                };
+
+                var pagedResults = new Dto.PagedResultset<RabiesTests> { DataRequest = rt };
+                pagedResults.Data = c.Query<int, RabiesTests, RabiesTests>(RabiesTests_SEARCH,
+                    (count, r) =>
+                    {
+                        pagedResults.ResultCount = count;
+                        return r;
+                    },
+                    param,
+                    commandType:
+                    CommandType.StoredProcedure,
+                    splitOn: "Key").ToList();
+
+                return pagedResults;
+
+            }
+        }
+        
+        public int AddBulkUploadRabiesTests(string originalFileName, string filePath, string uploadType, string fileName)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_originalFileName = originalFileName,
+                    p_filePath = filePath,
+                    p_fileName = fileName,
+                    p_uploadType = uploadType
+                };
+                return c.Query<int>(RabiesTestsBULKUPLOAD_UPDATE, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Merge uploaded data to necropsies table in database
+        /// </summary>
+        /// <param name="necropsyList"></param>
+        public void BulkInsertRabiesTests(IEnumerable<Logic.RabiesTestsData> rabiestestsList)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_rabiestestsList = rabiestestsList.Select(m => new
+                    {
+                        DateTested = m.DateTested,
+                        DataStatus = String.IsNullOrEmpty(m.DataStatus) ? null : m.DataStatus.Trim(),
+                        Year = String.IsNullOrEmpty(m.Year) ? null : m.Year.Trim(),
+                        SubmittingAgency = String.IsNullOrEmpty(m.SubmittingAgency) ? null : m.SubmittingAgency.Trim(),
+                        LaboratoryIDNo = String.IsNullOrEmpty(m.LaboratoryIDNo) ? null : m.LaboratoryIDNo.Trim(),
+                        TestResult = String.IsNullOrEmpty(m.TestResult) ? null : m.TestResult.Trim(),
+                        Community = String.IsNullOrEmpty(m.Community) ? null : m.Community.Trim(),
+                        Latitude = m.Latitude,
+                        Longitude = m.Longitude,
+                        RegionId = m.RegionId,
+                        GeographicRegion = String.IsNullOrEmpty(m.GeographicRegion) ? null : m.GeographicRegion.Trim(),
+                        Species = String.IsNullOrEmpty(m.Species) ? null : m.Species.Trim(),
+                        AnimalContact = String.IsNullOrEmpty(m.AnimalContact) ? null : m.AnimalContact.Trim(),
+                        HumanContact = String.IsNullOrEmpty(m.HumanContact) ? null : m.HumanContact.Trim(),
+                        Comments = String.IsNullOrEmpty(m.Comments) ? null : m.Comments.Trim()
+                    }).AsTableValuedParameter("dbo.BulkRabiesTestsUploadTableType")
+                };
+
+                c.Execute(RabiesTestsBULKNECROPSIES_MERGE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+
+        public Dto.PagedResultset<RabiesTestsBulkUploads> RabiesTestsBulkUploadsGet(PagedDataRequest request)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_from = request.StartRow,
+                    p_to = request.StartRow + request.RowCount - 1,
+                    p_sortBy = request.SortBy,
+                    p_sortDirection = request.SortDirection
+                };
+
+                var pagedResults = new PagedResultset<RabiesTestsBulkUploads>
+                {
+                    DataRequest = request,
+                    ResultCount = 0,
+                    Data = new List<RabiesTestsBulkUploads>()
+                };
+
+                var results = c.Query<dynamic, RabiesTestsBulkUploads, RabiesTestsBulkUploads>(RabiesTestsBULKUPLOAD_GET,
+                    (d, records) =>
+                    {
+                        pagedResults.ResultCount = d.TotalRowCount;
+                        return records;
+                    },
+                    param,
+                    commandType: CommandType.StoredProcedure,
+                    splitOn: "Key");
+
+                pagedResults.Data = results.ToList();
+                return pagedResults;
+            }
+
+        }
+        public void RabiesTestsDelete(int TestId)
+        {
+            using (var c = NewWmisConnection)
+            {
+                var param = new
+                {
+                    p_TestId = TestId
+                };
+
+                c.Execute(RabiesTests_DELETE, param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        #endregion RabiesTests
 
         #endregion Methods
     }

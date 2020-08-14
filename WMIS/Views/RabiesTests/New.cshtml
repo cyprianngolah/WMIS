@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Rabies Tests";
+    ViewBag.SubTitle = "New";
+}
+
+@section Scripts {
+    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/rabiestests/new"))
+
+    <script type="text/javascript">
+        $(function () {
+            wmis.rabiestests.new.initialize();
+		});
+    </script>
+}
+
+@{ Html.RenderPartial("NewForm"); }

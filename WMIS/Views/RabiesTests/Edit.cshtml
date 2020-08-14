@@ -1,20 +1,20 @@
 ﻿@{
-    ViewBag.Title = "Necropsy";
+    ViewBag.Title = "RabiesTests";
     ViewBag.SubTitle = "Edit";
 }
 
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/knockout"))
-    @Html.Raw(Scripts.Render("~/bundles/wolfnecropsy/edit"))
-
+    @Html.Raw(Scripts.Render("~/bundles/rabiestests/edit"))
     <script type="text/javascript">
         $(function () {
-			wmis.wolfnecropsy.edit.initialize({
-                wolfKey: @ViewBag.Key
+			wmis.rabiestests.edit.initialize({
+                rtestKey: @ViewBag.Key
 			});
         });
     </script>
 }
 
 @{ Html.RenderPartial("EditForm"); }
+
 

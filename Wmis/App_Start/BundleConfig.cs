@@ -272,6 +272,22 @@
                         "~/js/wmis.knockout.js"));
 
             #endregion
+
+            #region RabiesTests
+            bundles.Add(new ScriptBundle("~/bundles/rabiestests/index").Include(
+                        "~/js/modules/wmis.rabiestests.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/rabiestests/edit").Include(
+                        "~/js/modules/wmis.rabiestests.edit.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/rabiestests/new").Include(
+                        "~/js/modules/wmis.rabiestests.new.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/rabiestests/upload").Include(
+                        "~/js/modules/wmis.rabiestests.upload.js",
+                        "~/js/wmis.knockout.js"));
+            #endregion
+
         }
     }
 }

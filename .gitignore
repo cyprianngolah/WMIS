@@ -159,3 +159,4 @@ $RECYCLE.BIN/
 .DS_Store
 _DeployScripts/DeployDatabase-michael.bat
 /aspnet_client/system_web/4_0_30319/crystalreportviewers14
+/WMIS/Views/RabiesTests/Reference
