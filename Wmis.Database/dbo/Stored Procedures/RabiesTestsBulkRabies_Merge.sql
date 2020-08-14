@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[RabiesTestsBulkRabies_Merge]
-	@p_rabiestestsList AS [dbo].[BulkRabiestsUploadTableType] READONLY
+	@p_rabiestestsList AS [dbo].[BulkRabiesTestsUploadTableType] READONLY
 AS
 	WITH data AS (
 	SELECT 
