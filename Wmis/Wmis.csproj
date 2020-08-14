@@ -644,6 +644,7 @@
     <Content Include="Environments\environment.cyprian.config" />
     <Content Include="js\VueModules\wmis.tools.othercleanup.js" />
     <Content Include="Content\Files\WolfnecropsyBulkUploadTemplate.xlsx" />
+    <Content Include="Content\Files\RabiesTestsBulkUploadTemplate.xlsx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />

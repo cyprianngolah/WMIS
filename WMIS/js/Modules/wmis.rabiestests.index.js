@@ -114,7 +114,7 @@ wmis.rabiestests.index = (function ($) {
             "dom": '<"top">rt<"bottom"ip><"clear">',
 
             "columns": [
-                { "data": "key" },
+              //  { "data": "key" },
                 {
                     "data": "dateTested",
                     "render": function (data, type, row) {
