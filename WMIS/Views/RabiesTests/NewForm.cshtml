@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "New Data";
+}
+
+
+    <form role="form">
+        <div data-bind="with: rt">
+
+        <div class="form-group">
+
+            <label for="dateTested" class="col-md-1 control-label">Date Tested</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="dateTested" name="dateTested" data-bind="value: dateTested, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="year" class="col-md-1 control-label">Year</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="year" name="year" data-bind="value: year, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="dataStatus" class="col-md-1 control-label">Datab Status</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="dataStatus" name="dataStatus" data-bind="value: dataStatus, valueUpdate: 'keyup'">
+            </div>
+        </div>
+
+        <br style="clear:both" />
+
+        <div class="form-group">
+
+            <label for="submittingAgency" class="col-md-1 control-label">Submitting Agency</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="submittingAgency" name="submittingAgency" data-bind="value: submittingAgency, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="laboratoryIDNo" class="col-md-1 control-label">Laboratory ID</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="laboratoryIDNo" name="laboratoryIDNo" data-bind="value: laboratoryIDNo, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="testResult" class="col-md-1 control-label">Test Result</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="testResult" name="testResult" data-bind="value: testResult, valueUpdate: 'keyup'">
+            </div>
+
+        </div>
+
+        <br style="clear:both" />
+
+        <div class="form-group">
+            <label for="community" class="col-md-1 control-label">Community</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="community" name="community" data-bind="value: community, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="latitude" class="col-md-1 control-label">Latitude</label>
+            <div class="col-md-3">
+                <input type="number" step="any" class="form-control" id="latitude" name="latitude" data-bind="value: latitude, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="longitude" class="col-md-1 control-label">Longitude</label>
+            <div class="col-md-3">
+                <input type="number" step="any" class="form-control" id="longitude" name="longitude" data-bind="value: longitude, valueUpdate: 'keyup'">
+            </div>
+        </div>
+
+        <br style="clear:both" />
+
+        <div class="form-group">
+            <label for="regionId" class="col-md-1 control-label">Region Id</label>
+            <div class="col-md-3">
+                <input type="number" step="any" class="form-control" id="regionId" name="regionId" data-bind="value: regionId, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="geographicRegion" class="col-md-1 control-label">Georgraphic Region</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="geographicRegion" name="geographicRegion" data-bind="value: geographicRegion, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="species" class="col-md-1 control-label">Species</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="species" name="species" data-bind="value: species, valueUpdate: 'keyup'">
+            </div>
+
+        </div>
+
+        <br style="clear:both" />
+
+        <div class="form-group">
+
+            <label for="animalContact" class="col-md-1 control-label">Animal Contact?</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="animalContact" name="contaciInfo" data-bind="value: animalContact, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="humanContact" class="col-md-1 control-label">Human Contact?</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="humanContact" name="humanContact" data-bind="value: humanContact, valueUpdate: 'keyup'">
+            </div>
+
+            <label for="comments" class="col-md-1 control-label">Comments</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="comments" name="comments" data-bind="value: comments, valueUpdate: 'keyup'">
+            </div>
+
+        </div>
+
+        </div>  
+
+        <br style="clear:both" />
+        <p>
+
+            <div class="text-right">
+                <a href="/RabiesTests" class="btn btn-default">Cancel</a>
+                <button type="submit" class="btn btn-primary" data-bind="click: saveRabiesTests, enabled: canSave">Save</button>
+            </div>
+
+    </form>
+

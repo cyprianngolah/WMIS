@@ -206,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\BaseApiController.cs" />
+    <Compile Include="ApiControllers\RabiesTestsApiController.cs" />
     <Compile Include="ApiControllers\ToolsApiController.cs" />
     <Compile Include="ApiControllers\FileHttpResponseMessage.cs" />
     <Compile Include="ApiControllers\HistoryLogApiController.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="ApiControllers\BioDiversityApiController.cs" />
     <Compile Include="ApiControllers\ArgosApiController.cs" />
+    <Compile Include="Controllers\RabiesTestsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ArgosServiceController.cs" />
@@ -275,6 +277,7 @@
     <Compile Include="Dto\PagedRoleRequest.cs" />
     <Compile Include="Dto\HelpLinkRequest.cs" />
     <Compile Include="Dto\ProjectUsersSaveRequest.cs" />
+    <Compile Include="Dto\RabiesTestsRequest.cs" />
     <Compile Include="Dto\SearchResponse.cs" />
     <Compile Include="Dto\SearchRequest.cs" />
     <Compile Include="Dto\SiteRequest.cs" />
@@ -337,6 +340,7 @@
     <Compile Include="Extensions\SpatialExtensions.cs" />
     <Compile Include="Logic\ArgosJobService.cs" />
     <Compile Include="Logic\BiodiversityBulkUploaderService.cs" />
+    <Compile Include="Logic\RabiesTestsBulkUploaderService.cs" />
     <Compile Include="Logic\ReferenceParserService.cs" />
     <Compile Include="Logic\SpeciesParserService.cs" />
     <Compile Include="Logic\WolfNecropsyBulkUploaderService.cs" />
@@ -346,7 +350,9 @@
     <Compile Include="Models\BulkUploads.cs" />
     <Compile Include="Models\HelpLink.cs" />
     <Compile Include="Models\HistoricTypesFilter.cs" />
-    <Compile Include="Models\NecropsyBulkUpload.cs" />
+    <Compile Include="Models\NecropsyBulkUploads.cs" />
+    <Compile Include="Models\RabiesTests.cs" />
+    <Compile Include="Models\RabiesTestsBulkUploads.cs" />
     <Compile Include="Models\WolfNecropsy.cs" />
     <Compile Include="Models\ObservationRow.cs" />
     <Compile Include="Models\PersonProject.cs" />
@@ -561,6 +567,10 @@
     <Content Include="js\Modules\wmis.project.editmodals.js" />
     <Content Include="js\Modules\wmis.project.index.js" />
     <Content Include="js\Modules\wmis.project.site.edit.js" />
+    <Content Include="js\Modules\wmis.rabiestests.edit.js" />
+    <Content Include="js\Modules\wmis.rabiestests.index.js" />
+    <Content Include="js\Modules\wmis.rabiestests.new.js" />
+    <Content Include="js\Modules\wmis.rabiestests.upload.js" />
     <Content Include="js\Modules\wmis.search.index.js" />
     <Content Include="js\Modules\wmis.help.index.js" />
     <Content Include="js\Modules\wmis.help.edit.js" />
@@ -791,6 +801,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\RabiesTests\Edit.cshtml" />
     <Content Include="Views\SurveyTemplate\Edit.cshtml" />
     <Content Include="Views\SurveyTemplate\EditForm.cshtml" />
     <Content Include="Views\SurveyTemplate\Index.cshtml" />
@@ -896,6 +907,11 @@
     <Content Include="Views\WolfNecropsy\Edit.cshtml" />
     <Content Include="Views\WolfNecropsy\Upload.cshtml" />
     <Content Include="Views\WolfNecropsy\NewForm.cshtml" />
+    <Content Include="Views\RabiesTests\Index.cshtml" />
+    <Content Include="Views\RabiesTests\New.cshtml" />
+    <Content Include="Views\RabiesTests\Upload.cshtml" />
+    <Content Include="Views\RabiesTests\NewForm.cshtml" />
+    <Content Include="Views\RabiesTests\EditForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
