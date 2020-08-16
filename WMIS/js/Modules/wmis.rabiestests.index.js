@@ -34,29 +34,34 @@ wmis.rabiestests.index = (function ($) {
         self.removeRabiesTest = function () {
 
             if (selectedRabiesTest) {
-                var result = confirm("Are you sure you want to delete this record? Note that if the record is deleted it will be removed from the database and you will have to re-enter it again if you still want it.");
-                if (result) {
+                var mypwd = "radmin2020!";
+                var passwd = prompt("Enter Password : ");
+                if (passwd == mypwd) {
+                    var result = confirm("Are you sure you want to delete this record? Note that if the record is deleted it will be removed from the database and you will have to re-enter it again if you still want it.");
+                    if (result) {
 
-                    wmis.global.showWaitingScreen("Deleting...");
+                        wmis.global.showWaitingScreen("Deleting...");
 
-                    $.ajax({
-                        url: "/api/rabiestests/rabies/" + selectedRabiesTest + "/delete/",
-                        type: "DELETE",
-                    }).success(function () {
-                        window.location.href = "/rabiestests";
-                    }).always(function () {
-                        wmis.global.hideWaitingScreen();
-                    }).fail(function (f) {
-                        $('#deleteErrorAlert').removeClass('hidden');
-                        $('#deleteError').text(f.responseJSON.exceptionMessage);
-                        //wmis.global.ajaxErrorHandler(f);
-                    });
+                        $.ajax({
+                            url: "/api/rabiestests/rabies/" + selectedRabiesTest + "/delete/",
+                            type: "DELETE",
+                        }).success(function () {
+                            window.location.href = "/rabiestests";
+                        }).always(function () {
+                            wmis.global.hideWaitingScreen();
+                        }).fail(function (f) {
+                            $('#deleteErrorAlert').removeClass('hidden');
+                            $('#deleteError').text(f.responseJSON.exceptionMessage);
+                            //wmis.global.ajaxErrorHandler(f);
+                        });
+                    }
+                }
+                else {
+                    alert("Wrong Password. You must enter right password to delete.");
                 }
             }
-
         }
     }
-
 
     function initialize(initOptions) {
         $.extend(options, initOptions);
@@ -114,7 +119,6 @@ wmis.rabiestests.index = (function ($) {
             "dom": '<"top">rt<"bottom"ip><"clear">',
 
             "columns": [
-              //  { "data": "key" },
                 {
                     "data": "dateTested",
                     "render": function (data, type, row) {

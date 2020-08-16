@@ -24,7 +24,7 @@ wmis.rabiestests.edit = (function ($) {
         this.comments = ko.observable(key);
 
         this.canSave = ko.computed(function () {
-            return ($.trim(self.dateTested()) != "");
+            return ($.trim(self.community()) != "");
         });
 
         this.getRabiesTests = function () {
