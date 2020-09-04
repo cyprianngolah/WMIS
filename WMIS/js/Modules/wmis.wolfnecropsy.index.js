@@ -33,23 +33,29 @@ wmis.wolfnecropsy.index = (function ($) {
         self.removeWolfNecropsy = function () {
 
             if (selectedWolfNecropsy) {
-                var result = confirm("Are you sure you want to delete this record? Note that if the record is deleted it will be removed from the database and you will have to re-enter it again if you still want it.");
-                if (result) {
+                var mypwd = "nadmin2020?";
+                var passwd = prompt("Enter Password : ");
+                if (passwd == mypwd) {
+                    var result = confirm("Are you sure you want to delete this record? Note that if the record is deleted it will be removed from the database and you will have to re-enter it again if you still want it.");
+                    if (result) {
 
-                    wmis.global.showWaitingScreen("Deleting...");
+                        wmis.global.showWaitingScreen("Deleting...");
 
-                    $.ajax({
-                        url: "/api/wolfnecropsy/necropsy/" + selectedWolfNecropsy + "/delete/",
-                        type: "DELETE",
-                    }).success(function () {
-                        window.location.href = "/wolfnecropsy";
-                    }).always(function () {
-                        wmis.global.hideWaitingScreen();
-                    }).fail(function (f) {
-                        $('#deleteErrorAlert').removeClass('hidden');
-                        $('#deleteError').text(f.responseJSON.exceptionMessage);
-                        //wmis.global.ajaxErrorHandler(f);
-                    });
+                        $.ajax({
+                            url: "/api/wolfnecropsy/necropsy/" + selectedWolfNecropsy + "/delete/",
+                            type: "DELETE",
+                        }).success(function () {
+                            window.location.href = "/wolfnecropsy";
+                        }).always(function () {
+                            wmis.global.hideWaitingScreen();
+                        }).fail(function (f) {
+                            $('#deleteErrorAlert').removeClass('hidden');
+                            $('#deleteError').text(f.responseJSON.exceptionMessage);
+                            //wmis.global.ajaxErrorHandler(f);
+                        });
+                    }
+                } else {
+                    alert("Wrong Password. You must enter right password to delete!");
                 }
             }
 
@@ -107,7 +113,6 @@ wmis.wolfnecropsy.index = (function ($) {
                 "dom": '<"top">rt<"bottom"ip><"clear">',
 
                 "columns": [
-                    { "data": "key" },
                     { "data": "necropsyId" },
                     {
                         "data": "necropsyDate",

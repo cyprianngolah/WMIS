@@ -4381,7 +4381,7 @@
             {
                 var param = new
                 {
-                    p_CaseId = rt.Key,
+                    p_TestId = rt.Key,
                     p_Datetested = rt.DateTested,
                     p_Datastatus = rt.DataStatus,
                     p_Year = rt.Year,
@@ -4389,7 +4389,7 @@
                     p_Laboratoryidno = rt.LaboratoryIDNo,
                     p_Testresult = rt.TestResult,
                     p_Community = rt.Community,
-                    p_Lattitude = rt.Latitude,
+                    p_Latitude = rt.Latitude,
                     p_Longitude = rt.Longitude,
                     p_Regionid = rt.RegionId,
                     p_Geographicregion = rt.GeographicRegion,
