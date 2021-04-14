@@ -235,7 +235,9 @@ namespace Wmis.Logic
                 var passes = new List<ArgosSatellitePass>();
                 var dataRows = new List<ArgosCollarData>();
 
-                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue && r.Timestamp <= DateTime.Now && r.Timestamp > DateTime.MinValue))
+                /* Check to ensure that only data within the last 14 days is included in the dataset (r.Timestamp >= DateTime.Today.AddDays(-14) */
+
+                foreach (var row in file.Rows.Where(r => string.IsNullOrEmpty(r.Error) && r.Timestamp.HasValue && r.Timestamp >= DateTime.Today.AddDays(-14) &&  r.Timestamp <= DateTime.Now && r.Timestamp > DateTime.MinValue))
                 {
                     IridiumOutputFileRow rowAsIridium = row as IridiumOutputFileRow;
                     ArgosOutputFileRow rowAsArgos = row as ArgosOutputFileRow;
@@ -431,9 +433,9 @@ namespace Wmis.Logic
 
                                 _repository.ArgosPassUpdate(pass.Key, badPassStatus.Key, comment);
                             }*/
-                        }
+            }
 
-                        lastLocationDate = pass.LocationDate;
+            lastLocationDate = pass.LocationDate;
                         lastCoord = myCoord;
                     }
                 }
