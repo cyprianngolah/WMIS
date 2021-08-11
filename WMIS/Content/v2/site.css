@@ -1,0 +1,16 @@
+﻿main > .container {
+    padding: 60px 15px 0;
+}
+.navbar-dark {
+    background-image: none !important;
+    background-color: #0f599a !important;
+    border-color: #022f5a !important;
+    border-bottom: 6px solid #2699d5 !important;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #317eac;
+}

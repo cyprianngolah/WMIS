@@ -528,6 +528,10 @@
     <Content Include="Content\jquery.smartmenus.bootstrap.min.css" />
     <Content Include="Content\select2-bootstrap.css" />
     <Content Include="Content\tabs.css" />
+    <Content Include="Content\v2\bootstrap5.min.css" />
+    <Content Include="Content\v2\DataTables.css" />
+    <Content Include="Content\v2\elementui.css" />
+    <Content Include="Content\v2\site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -612,6 +616,9 @@
     <Content Include="js\Modules\wmis.wolfnecropsy.index.js" />
     <Content Include="js\Modules\wmis.wolfnecropsy.new.js" />
     <Content Include="js\Modules\wmis.wolfnecropsy.upload.js" />
+    <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.index.js" />
+    <Content Include="js\v2\modules\home\wmis.home.js" />
+    <Content Include="js\v2\wmis.js" />
     <Content Include="js\VueModules\wmis.tools.adddatamanually.js" />
     <Content Include="js\VueModules\wmis.tools.batchreject.js" />
     <Content Include="js\VueModules\wmis.tools.postretrievaldataprocessing.js" />
@@ -645,6 +652,8 @@
     <Content Include="js\VueModules\wmis.tools.othercleanup.js" />
     <Content Include="Content\Files\WolfnecropsyBulkUploadTemplate.xlsx" />
     <Content Include="Content\Files\RabiesTestsBulkUploadTemplate.xlsx" />
+    <Content Include="Content\v2\fonts\element-icons.ttf" />
+    <Content Include="Content\v2\fonts\element-icons.woff" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />
@@ -796,6 +805,14 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Scripts\v2\axios.min.js" />
+    <Content Include="Scripts\v2\bootstrap5.bundle.min.js" />
+    <Content Include="Scripts\v2\DataTables.min.js" />
+    <Content Include="Scripts\v2\elementui.js" />
+    <Content Include="Scripts\v2\jquery3.min.js" />
+    <Content Include="Scripts\v2\moment.js" />
+    <Content Include="Scripts\v2\select2.js" />
+    <Content Include="Scripts\v2\vue3.min.js" />
     <Content Include="Scripts\vue.js" />
     <Content Include="Scripts\vue.min.js" />
     <Content Include="Scripts\xlsx.full.min.js" />

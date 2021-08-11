@@ -16,69 +16,72 @@
 #if !DEBUG
 			BundleTable.EnableOptimizations = true;
 #endif
-			//////////////////////////////////////////////////////////////////////
-			// Library Script Bundles
-			//////////////////////////////////////////////////////////////////////
-			// Basic Bundle includes jQuery, Twitter Bootstrap, Modernizer, Moment and some Global JavaScript helpers
-			bundles.Add(new ScriptBundle("~/bundles/base").Include(
-						"~/Scripts/jquery-{version}.js",
-						"~/Scripts/bootstrap.js",
-                        "~/Scripts/jquery.smartmenus.min.js",
-                        "~/Scripts/jquery.smartmenus.bootstrap.min.js",
-                        "~/Scripts/respond.js",
-						"~/Scripts/modernizr-*",
-						"~/Scripts/moment.js",
-						"~/Scripts/underscore.js",
-						"~/Scripts/q.js",
-						"~/js/wmis.js"));
+            //////////////////////////////////////////////////////////////////////
+            // Library Script Bundles
+            //////////////////////////////////////////////////////////////////////
+            // Basic Bundle includes jQuery, Twitter Bootstrap, Modernizer, Moment and some Global JavaScript helpers
+            bundles.Add(new Bundle("~/bundles/base").Include(
+                "~/Scripts/v2/jquery3.min.js",
+                "~/Scripts/v2/moment.js",
+                "~/Scripts/v2/axios.min.js",
+                "~/Scripts/v2/vue3.min.js",
+                "~/Scripts/v2/elementui.js",
+                "~/Scripts/v2/bootstrap5.bundle.min.js",
+                "~/js/v2/wmis.js"
+                ));
 
-			bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-						"~/Scripts/knockout-*",
-						"~/Scripts/knockout.mapper.js",
-						"~/js/wmis.knockout.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/vue").Include(
-                        "~/Scripts/axios.js",
-                        "~/Scripts/vue.min.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/datePicker").Include(
-						"~/Scripts/datepicker/bootstrap-datepicker.js"));		
+            /*bundles.Add(new ScriptBundle("~/bundles/vue").Include(
+                        "~/Scripts/v2/axios.min.js",
+                        "~/Scripts/v2/vue3.min.js",
+                        "~/Scripts/v2/elementui.js"));*/
 
 			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
-						"~/Scripts/select2.js"));
+						"~/Scripts/v2/select2.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
-						"~/Scripts/DataTables-1.10.3/jquery.dataTables.js",
-						"~/Scripts/DataTables-1.10.3/dataTables.bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                        "~/Scripts/v2/DataTables.min.js"));
+            //////////////////////////////////////////////////////////////////////
+            // Library/App Styles
+            //////////////////////////////////////////////////////////////////////
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
+						"~/Content/v2/bootstrap5.min.css",
+                        "~/Content/v2/elementui.css",
+                        "~/Content/v2/site.css"));
 
-			//////////////////////////////////////////////////////////////////////
-			// Library/App Styles
-			//////////////////////////////////////////////////////////////////////
-			bundles.Add(new StyleBundle("~/bundles/css").Include(
-						"~/Content/bootstrap-cerulean.css",
-						"~/Content/site.css",
-                        "~/Content/jquery.smartmenus.bootstrap.min.css"));
+            bundles.Add(new StyleBundle("~/bundles/datatablescss").Include(
+                        "~/Content/v2/DataTables.css"));
+            /*
+                        bundles.Add(new StyleBundle("~/bundles/datePickerCss").Include(
+                                    "~/content/datepicker3.css"));
 
-			bundles.Add(new StyleBundle("~/bundles/datePickerCss").Include(
-						"~/content/datepicker3.css"));
+                        bundles.Add(new StyleBundle("~/bundles/select2css").Include(
+                                    "~/content/css/select2.css",
+                                    "~/content/select2-bootstrap.css"));
 
-			bundles.Add(new StyleBundle("~/bundles/select2css").Include(
-						"~/content/css/select2.css",
-						"~/content/select2-bootstrap.css"));
+                        bundles.Add(new StyleBundle("~/bundles/content/datatables").Include(
+                                    "~/content/datatables-1.10.3/css/jquery.dataTables.css",
+                                    "~/content/datatables-1.10.3/css/dataTables.bootstrap.css"));
 
-			bundles.Add(new StyleBundle("~/bundles/content/datatables").Include(
-						"~/content/datatables-1.10.3/css/jquery.dataTables.css",
-						"~/content/datatables-1.10.3/css/dataTables.bootstrap.css"));
-
-            bundles.Add(new StyleBundle("~/bundles/tabs").Include(
-                        "~/content/tabs.css"));
+                        bundles.Add(new StyleBundle("~/bundles/tabs").Include(
+                                    "~/content/tabs.css"));*/
 
             //////////////////////////////////////////////////////////////////////
             // Module Script Bundles
             //////////////////////////////////////////////////////////////////////
+            ///
+            #region Homepage
+            bundles.Add(new ScriptBundle("~/bundles/home/index").Include(
+                        "~/js/v2/modules/home/wmis.home.js"));
+
+
+
+            #endregion
+
             #region Biodiversity
             bundles.Add(new ScriptBundle("~/bundles/biodiversity/index").Include(
-						"~/js/modules/wmis.biodiversity.index.js"));
+						"~/js/v2/modules/biodiversity/wmis.biodiversity.index.js"));
+
+
 
 			bundles.Add(new ScriptBundle("~/bundles/biodiversity/new").Include(
 						"~/js/modules/wmis.biodiversity.new.js"));
