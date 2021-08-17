@@ -1,73 +1,58 @@
 ﻿@using Wmis.Extensions
 @{
-	ViewBag.Title = "Ecoregions";
+    ViewBag.Title = "Ecoregions";
 }
 
 @section Styles {
-	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
-	@Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/datatables"))
-	@Html.Raw(Scripts.Render("~/bundles/select2"))
-	@Html.Raw(Scripts.Render("~/bundles/ecoregion/index"))
-
-	<script type="text/javascript">
-		$(function () {
-			wmis.ecoregion.index.initialize();
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/ecoregion/index"))
 }
 
-<div class="row">
-	<div class="col-md-12 text-right">
-		@if (Html.UserIsBiodiversityAdministrator())
-		{
-			<a href="/Ecoregion/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-		}
-		<a href="/Ecoregion/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-			@if (Html.UserIsBiodiversityAdministrator())
-			{
-				<span>View</span>
-			}
-			else
-			{
-				<span>View</span>
-			}
-		</a>
-	</div>
+<div class="row my-3">
+    <div class="col-md-12 d-flex justify-content-end">
+
+        <div>
+            @if (Html.UserIsBiodiversityAdministrator())
+            {
+                <a href="/Ecoregion/New" class="btn btn-success btn-sm me-2">New</a>
+            }
+            <a v-bind:href=`/Ecoregion/Edit/${selectedKey}` id="editButton" class="btn btn-primary btn-sm me-2" v-bind:class="{'disabled' : !isSelected}">
+                View
+            </a>
+        </div>
+    </div>
 </div>
 
-<div class="well" style="margin-bottom: 0px;">
-	<div class="row">
-		<div class="col-md-12">
-			<form class="form-horizontal center" role="form">
-				<label class="sr-only" for="keywords">Keywords</label>
-				<div class="col-md-12">
-					<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-						<div class="input-group">
-							<input type="text" id="keywords" class="form-control" placeholder="Keywords" />
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button" id="searchButton">Search</button>
-							</span>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col">
+                <label class="form-label visually-hiddenx">Keywords</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" id="keyword" v-model="form.keywords">
+                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
 <div class="row">
-	<div class="col-md-12">
-		<table id="ecoregion" class="table">
-			<thead>
-				<tr>
-					<th>Key</th>
-					<th>Name</th>
-				</tr>
-			</thead>
-		</table>
-	</div>
+    <div class="col-md-12">
+
+        <table id="ecoregion" class="table table-sm w-100">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
+

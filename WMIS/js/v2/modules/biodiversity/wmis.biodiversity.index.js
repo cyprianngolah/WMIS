@@ -2,9 +2,7 @@
 const app = Vue.createApp({
     data() {
         return {
-            groups: [],
-            families: [],
-            orders: [],
+            biodiversityTable: null,
             draw: 1,
             selectedKey: null,
             deleteError: null,
@@ -24,13 +22,6 @@ const app = Vue.createApp({
     },
 
     watch: {
-        form: {
-            immediate: false,
-            deep: true,
-            handler(newValue) {
-                
-            }
-        },
         draw() {
             this.selectedKey = null;
         }
@@ -38,6 +29,12 @@ const app = Vue.createApp({
 
 
     methods: {
+        downloadRecords() {
+            var url = `api/biodiversity/download/?startRow=0&rowCount=100000&sortBy=name&sortDirection=asc&keywords=${this.form.keywords}&familyKey=${this.form.familyKey}&groupKey=${this.form.groupKey}&orderKey=${this.form.orderKey}`
+            window.open(url, '_blank');
+        },
+
+
         deletedSelectedRecord() {
             if (this.selectedKey) {
                 var result = confirm("Sure you want to delete this species? Note that if the species is linked to any Survey data or has references, it will not be deleted! You can contact WMIS support in such cases.");
@@ -48,15 +45,20 @@ const app = Vue.createApp({
                 }
             }
            
-        }
+        },
     },
 
+    mounted() {
+        WMIS.loadAndInitializeSelect2($("#groups"), "/api/taxonomy/group/", "Group");
+        WMIS.loadAndInitializeSelect2($("#orders"), "/api/taxonomy/order/", "Order");
+        WMIS.loadAndInitializeSelect2($("#families"), "/api/taxonomy/family/", "Family");
+    },
 
     created() {
         const vm = this;
         document.title = "WMIS Biodiversity";
         $(document).ready(function () {
-            const biodiversityTable = $("#biodiversity").DataTable({
+            vm.biodiversityTable = $("#biodiversity").DataTable({
                 "pageLength": 25,
                 "scrollX": true,
                 "searching": false,
@@ -77,7 +79,6 @@ const app = Vue.createApp({
 
                         vm.draw = settings.iDraw
 
-
                         return {
                             startRow: d.start,
                             rowCount: d.length,
@@ -97,16 +98,23 @@ const app = Vue.createApp({
                         json.recordsTotal = json.resultCount;
                         json.recordsFiltered = json.resultCount;
 
-                        // set the groups, families and orders
-                        vm.groups = json.filters.groups;
-                        vm.families = json.filters.families;
-                        vm.orders = json.filters.orders;
+                        if (!json.dataRequest.groupKey) {
+                            WMIS.appendDataToSelect(json.filters.groups, $('#groups'));
+                        }
 
+                        if (!json.dataRequest.orderKey) {
+                            WMIS.appendDataToSelect(json.filters.orders, $('#orders'));
+                        }
+
+                        if (!json.dataRequest.familyKey) {
+                            WMIS.appendDataToSelect(json.filters.families, $('#families'));
+                        }
                         return json.data
                     },
+
                     "drawCallback": function (settings) {
                         vm.selectedKey = null;
-                        biodiversityTable.$('tr.bg-info').removeClass('bg-info');
+                        vm.biodiversityTable.$('tr.bg-info').removeClass('bg-info');
                     }
                 },
 
@@ -137,8 +145,8 @@ const app = Vue.createApp({
             });
 
             $('#biodiversity tbody').on('click', 'tr', function () {
-                biodiversityTable.$('tr.bg-info').removeClass('bg-info');
-                const data = biodiversityTable.row(this).data();
+                vm.biodiversityTable.$('tr.bg-info').removeClass('bg-info');
+                const data = vm.biodiversityTable.row(this).data();
                 if ($(this).hasClass('bg-info') || data.key === vm.selectedKey ) {
                     $(this).removeClass('bg-info');
                     vm.selectedKey = null
@@ -150,11 +158,48 @@ const app = Vue.createApp({
                 }
             });
 
+            $('#keyword').keyup(function (e) {
+                if (e.keyCode == 13) {
+                    vm.biodiversityTable.search(e.target.value).draw();
+                }
+            });
+
+            $('#searchbtn').click(function (e) {
+                vm.biodiversityTable.search(vm.form.keywords).draw();
+            });
+
+            $('#groups').change(function (e) {
+                const val = e.target.value;
+                vm.form.groupKey = val === 'all' ? '' : val;
+                
+                $('#orders').val("all");
+                $('#orders').trigger("change");
+                vm.form.orderKey = '';
+
+                $('#families').val("all");
+                $('#families').trigger("change");
+                vm.form.familyKey = '';
+
+                vm.biodiversityTable.search(vm.form.groupKey).draw();
+            });
+
+            $('#orders').change(function (e) {
+                const val = e.target.value;
+                vm.form.orderKey = val === 'all' ? '' : val;
+                vm.biodiversityTable.search(vm.form.orderKey).draw();
+            });
+
+            $('#families').change(function (e) {
+                const val = e.target.value;
+                vm.form.familyKey = val === 'all' ? '' : val;
+                vm.biodiversityTable.search(vm.form.familyKey).draw();
+            });
+
         });
 
     },
 
 });
 
-
+app.use(ElementPlus)
 app.mount('#wmis-app')

@@ -1,19 +1,11 @@
 ﻿@{
     ViewBag.Title = "Protected Area";
-	ViewBag.SubTitle = "Edit";
+    ViewBag.SubTitle = "Edit";
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/protectedarea/edit"))
-
-	<script type="text/javascript">
-		$(function() {
-			wmis.protectedarea.edit.initialize({
-				key: @ViewBag.Key
-			});
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/protectedarea/edit"))
 }
 
 @{ Html.RenderPartial("EditForm"); }

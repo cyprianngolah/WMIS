@@ -1,77 +1,74 @@
-﻿@{
-	ViewBag.Title = "References";
+﻿@using Wmis.Extensions
+@{
+    ViewBag.Title = "References";
 }
 
 @section Styles {
-	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
-	@Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/datatables"))
-	@Html.Raw(Scripts.Render("~/bundles/select2"))
-	@Html.Raw(Scripts.Render("~/bundles/reference/index"))
-
-	<script type="text/javascript">
-		$(function () {
-			wmis.reference.index.initialize();
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/reference/index"))
 }
 
-<div class="row">
-	<div class="col-md-12 text-right">
-        <button id="downloadButton" class="btn btn-default" style="margin-bottom: 10px;">Download</button>
-		<a href="/Reference/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-		<a href="/Reference/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">View</a>
-	</div>
+<div class="row my-3">
+    <div class="col-md-12 d-flex justify-content-end">
+
+        <div>
+            @if (Html.UserIsBiodiversityAdministrator())
+            {
+                <a href="/Reference/New" class="btn btn-success btn-sm me-2">New</a>
+            }
+            <a v-bind:href=`/Reference/Edit/${selectedKey}` id="editButton" class="btn btn-primary btn-sm me-2" v-bind:class="{'disabled' : !isSelected}">
+                View
+            </a>
+        </div>
+    </div>
 </div>
 
-<div class="well" style="margin-bottom: 0px;">
-	<div class="row">
-	    <div class="col-md-12">
-	        <div class="form-horizontal center">
-                <div class="col-md-4">
-                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                        <label class="sr-only" for="yearFilter">Year</label>
-                        <select class="form-control" id="yearFilter" name="yearFilter">
-                            <option value="">Year</option>
-                        </select>
-                    </div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-4">
+                <label class="form-label visually-hiddenx">Year</label>
+                <select class="form-select" aria-label="Year" id="year">
+                    <option value="">Year</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <label class="form-label visually-hiddenx">Keywords</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" id="keyword" v-model="form.keywords">
+                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
                 </div>
-	            
-	            <div class="col-md-8">
-	                <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-	                    <div class="input-group">
-                            <label class="sr-only" for="keywords">Keywords</label>
-	                        <input type="text" id="keywords" class="form-control" placeholder="Keywords"/>
-	                        <span class="input-group-btn">
-								<button class="btn btn-default" type="button" id="searchButton">Search</button>
-							</span>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <div class="row">
-    <table id="reference" class="table table-condensed table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Code</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>Title</th>
-                <th>Edition Publication Organization</th>
-                <th>Volume Page</th>
-                <th>Publisher</th>
-                <th>City</th>
-                <th>Location</th>
-            </tr>
-        </thead>
-    </table>
+    <div class="col-md-12">
+        <table id="references" class="table table-sm table-striped table-hover w-100">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Code</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                    <th>Title</th>
+                    <th>Edition Publication Organization</th>
+                    <th>Volume Page</th>
+                    <th>Publisher</th>
+                    <th>City</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
+

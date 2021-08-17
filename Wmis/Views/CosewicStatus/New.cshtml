@@ -4,14 +4,8 @@
 }
 
 @section Scripts {
-    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/cosewicstatus/edit"))
-
-    <script type="text/javascript">
-        $(function() {
-            wmis.cosewicstatus.edit.initialize();
-        });
-    </script>
 }
 
 @{ Html.RenderPartial("EditForm"); }

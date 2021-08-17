@@ -1,19 +1,11 @@
 ﻿@{
-	ViewBag.Title = "Reference";
-	ViewBag.SubTitle = "Edit";
+    ViewBag.Title = "Reference";
+    ViewBag.SubTitle = "Edit";
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/reference/edit"))
-
-	<script type="text/javascript">
-		$(function() {
-			wmis.reference.edit.initialize({
-				taxonomyKey: @ViewBag.Key
-			});
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/reference/edit"))
 }
 
 @{ Html.RenderPartial("EditForm"); }

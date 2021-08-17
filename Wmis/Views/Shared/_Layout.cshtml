@@ -5,73 +5,99 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" integrity="sha512-P9vJUXK+LyvAzj8otTOKzdfF1F3UYVl13+F8Fof8/2QNb8Twd6Vb+VD52I7+87tex9UXxnzPgWA3rH96RExA7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>WMIS</title>
     @Styles.Render("~/bundles/css")
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css">
     @RenderSection("Styles", false)
 </head>
 <body class="h-100">
     <div id="wmis-app" class="d-flex flex-column h-100">
-            <header>
-                <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                    <div class="container-fluid">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <a class="navbar-brand me-md-auto text-white text-decoration-none" href="/">WMIS</a>
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div class="container-fluid">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <a class="navbar-brand me-md-auto text-white text-decoration-none" href="/">WMIS</a>
 
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/Project">Projects</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/CollaredAnimal">Collar</a>
-                                </li>
-                                <li class="nav-item flex-shrink-0 dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Biodiversity</a>
-                                    <ul class="dropdown-menu" aria-labelledby="biodiversity">
-                                        <li><a class="dropdown-item" href="/BioDiversity">Species</a></li>
-                                        <li><a class="dropdown-item" href="/Taxonomy">Taxonomies</a></li>
-                                        <li><a class="dropdown-item" href="/Ecozone">Ecozones</a></li>
-                                        <li><a class="dropdown-item" href="/Ecoregion">Ecoregions</a></li>
-                                        <li><a class="dropdown-item" href="/ProtectedArea">Protected Areas</a></li>
-                                        <li><a class="dropdown-item" href="/StatusRank">Ranks</a></li>
-                                        <li><a class="dropdown-item" href="/CosewicStatus">COSEWIC Status</a></li>
-                                        <li><a class="dropdown-item" href="/NwtSarcAssessment">NWT SARC Assessment</a></li>
-                                        <li><a class="dropdown-item" href="/Reference">References</a></li>
-                                        <li><a class="dropdown-item" href="/BioDiversity/Upload">Biodiversity Bulk Upload</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Reports">Reports</a>
-                                </li>
-                                <li class="nav-item flex-shrink-0 dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Administrator</a>
-                                    <ul class="dropdown-menu" aria-labelledby="admin">
-                                        <li><a class="dropdown-item" href="/User">Users</a></li>
-                                        <li><a class="dropdown-item" href="/SurveyTemplate">Survey Templates</a></li>
-                                        <li><a class="dropdown-item" href="/ArgosService">Argos Service</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/Project">Projects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/CollaredAnimal">Collar</a>
+                            </li>
+                            <li class="nav-item flex-shrink-0 dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Biodiversity</a>
+                                <ul class="dropdown-menu" aria-labelledby="biodiversity">
+                                    <li><a class="dropdown-item" href="/BioDiversity">Species</a></li>
+                                    <li><a class="dropdown-item" href="/Taxonomy">Taxonomies</a></li>
+                                    <li><a class="dropdown-item" href="/Ecozone">Ecozones</a></li>
+                                    <li><a class="dropdown-item" href="/Ecoregion">Ecoregions</a></li>
+                                    <li><a class="dropdown-item" href="/ProtectedArea">Protected Areas</a></li>
+                                    <li><a class="dropdown-item" href="/StatusRank">Ranks</a></li>
+                                    <li><a class="dropdown-item" href="/CosewicStatus">COSEWIC Status</a></li>
+                                    <li><a class="dropdown-item" href="/NwtSarcAssessment">NWT SARC Assessment</a></li>
+                                    <li><a class="dropdown-item" href="/Reference">References</a></li>
+                                    <li><a class="dropdown-item" href="/BioDiversity/Upload">Biodiversity Bulk Upload</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Reports">Reports</a>
+                            </li>
+                            <li class="nav-item flex-shrink-0 dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Administrator</a>
+                                <ul class="dropdown-menu" aria-labelledby="admin">
+                                    <li><a class="dropdown-item" href="/User">Users</a></li>
+                                    <li><a class="dropdown-item" href="/SurveyTemplate">Survey Templates</a></li>
+                                    <li><a class="dropdown-item" href="/ArgosService">Argos Service</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
-                </nav>
-            </header>
-            <!-- Begin page content -->
-            <main class="flex-shrink-0">
-                <div class="container">
-                    @RenderBody()
+
                 </div>
-            </main>
+            </nav>
+        </header>
+        <!-- Begin page content -->
+        <main class="flex-shrink-0">
+            <div class="container">
+
+                <div class="row clearfix">
+                    @if (!string.IsNullOrEmpty(ViewBag.Title))
+                    {
+                        <div class="page-header d-flex justify-content-between align-items-center">
+                            @if (IsSectionDefined("CustomTitle")){
+                                @RenderSection("CustomTitle", false);
+                            } else {
+                                <div class="h1 pull-left" style="margin:0;">
+                                    @ViewBag.Title @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
+                                    {<small>@Html.Raw(ViewBag.SubTitle)</small>}
+                                </div>
+                            }
+                            @RenderSection("TopRight", false)
+                        </div>
+                    }
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </main>
 
     </div>
     @*<footer class="footer mt-auto py-3 bg-light">
-        <div class="container">
-            <span class="text-muted">Place sticky footer content here.</span>
-        </div>
-    </footer>*@
+            <div class="container">
+                <span class="text-muted">Place sticky footer content here.</span>
+            </div>
+        </footer>*@
 
     @RenderSection("Templates", false)
     @Scripts.Render("~/bundles/base")
+    <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
     @RenderSection("Scripts", false)
 </body>
 </html>

@@ -14,3 +14,101 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     line-height: 1.1;
     color: #317eac;
 }
+
+h1, .h1 {
+    font-size: 25px;
+}
+h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small, .h1 .small, h2 .small, .h2 .small, h3 .small, .h3 .small {
+    font-size: 65%;
+    color: #999999;
+}
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.generalGroup input {
+    background-color: #4D708A;
+    color: black;
+}
+.abundanceGroup input {
+    background-color: #996014;
+    color: black;
+}
+.distributionGroup input {
+    background-color: #27814E;
+    color: black;
+}
+.trendsGroup input {
+    background-color: #D78772;
+    color: black;
+}
+.threatsGroup input {
+    background-color: #D7AB72;
+    color: black;
+}
+.statusGroup input {
+    background-color: #B65137;
+    color: black;
+}
+/*.select2-container--bootstrap-5 {
+    z-index: 10000 !important;
+}
+
+.select2-dropdown {
+    z-index: 10051
+}*/
+
+.select2-selection--multiple .select2-selection__choice {
+    font-size: 13px !important;
+    line-height: 13px !important;
+    width: 100% !important;
+}
+.select2-selection--multiple .select2-selection__choice button {
+    font-size: 10px !important;
+    font-weight: bolder !important;
+    width: .5rem !important;
+    height: .5rem !important;
+}
+
+.el-drop{
+    max-width: 800px;
+}
+.el-select__tags{ max-width: 100% !important}
+.el-select__tags span {
+    width: 99% !important;
+}
+.el-drop li {
+    white-space: normal;
+    float: left;
+    width: 100%;
+    height: auto;
+    word-wrap: break-word;
+    line-height: 16px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: normal !important;
+    padding: 5px 10px;
+}
+.el-select .el-select__tags-text{
+    color: black;
+}
+.el-select .el-select__tags-text {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.el-tag--small {
+    height: auto !important;
+    padding: 0 8px;
+    line-height: 22px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 10px !important;
+}
+
+.el-select-dropdown__item.selected{
+    display: none !important;
+}

@@ -5,10 +5,12 @@
 
 @section Styles {
     @Html.Raw(Styles.Render("~/bundles/datatablescss"))
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/biodiversity/index"))
 }
 
@@ -20,7 +22,7 @@
 
 
         <div>
-            <button type="button" class="btn btn-primary btn-sm me-2">Download</button>
+            <button type="button" v-on:click="downloadRecords()" class="btn btn-primary btn-sm me-2">Download</button>
             @if (Html.UserIsBiodiversityAdministrator())
             {
                 <a href="/BioDiversity/New" class="btn btn-success btn-sm me-2">New</a>
@@ -41,38 +43,37 @@
     </div>
 </div>
 
-<div class="alert alert-danger alert-dismissible fade show" v-show="deleteError" role="alert" >
+<div class="alert alert-danger alert-dismissible fade show" v-show="deleteError" role="alert">
     <p>{{deleteError}}</p>
     <button type="button" class="btn-close" v-on:click="deleteError=null" aria-label="Close"></button>
 </div>
-
 
 <div class="card bg-light">
     <div class="card-body">
         <div class="row g-3">
             <div class="col">
-                <label class="form-label visually-hidden">Group</label>
-                <select class="form-select" aria-label="Group">
+                <label class="form-label visually-hiddenx">Group</label>
+                <select class="form-select" aria-label="Group" id="groups">
                     <option value="">Group</option>
                 </select>
             </div>
             <div class="col">
-                <label class="form-label visually-hidden">Order</label>
-                <select class="form-select" aria-label="Order">
+                <label class="form-label visually-hiddenx">Order</label>
+                <select class="form-select" aria-label="Order" id="orders">
                     <option value="">Order</option>
                 </select>
             </div>
             <div class="col">
-                <label class="form-label visually-hidden">Family</label>
-                <select class="form-select" aria-label="Family">
+                <label class="form-label visually-hiddenx">Family</label>
+                <select class="form-select" aria-label="Family" id="families">
                     <option value="">Family</option>
                 </select>
             </div>
             <div class="col">
-                <label class="form-label visually-hidden">Keywords</label>
+                <label class="form-label visually-hiddenx">Keywords</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="">
-                    <button class="btn btn-info" type="button">Search</button>
+                    <input type="text" class="form-control" placeholder="" id="keyword" v-model="form.keywords">
+                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
                 </div>
             </div>
         </div>
@@ -82,19 +83,18 @@
 
 <div class="row">
     <div class="col-md-12">
+
         <table id="biodiversity" class="table table-sm table-striped table-hover">
             <thead>
                 <tr>
                     <th>Group</th>
                     <th>Kingdom</th>
                     <th>Phylum</th>
-                    <!--  <th>SubPhylum</th> -->
                     <th>Class</th>
                     <th>Order</th>
                     <th>Family</th>
                     <th>Common Name</th>
                     <th>Species</th>
-                    <!--<th>Sub Species</th>-->
                     <th>Rank</th>
                     <th>Last Updated</th>
                 </tr>

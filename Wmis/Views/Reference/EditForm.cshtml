@@ -1,61 +1,95 @@
-﻿
-<div class="col-md-6">
-	<form role="form">
-		<div class="form-group">
-			<label for="code">Code</label>
-			<input type="text" class="form-control" id="code" name="code" data-bind="value: code, valueUpdate: 'keyup'">
-		</div>
+﻿@using Wmis.Extensions
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Code</label>
+    </div>
+    <div class="col-5">
+        <base-input v-model.trim="form.code" id="code"></base-input>
+    </div>
+</div>
 
-		<div class="form-group">
-			<label for="author">Author</label>
-			<textarea class="form-control" id="author" name="author" data-bind="value: author, valueUpdate: 'keyup'"></textarea>
-		</div>
-		
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Author</label>
+    </div>
+    <div class="col-5">
+        <textarea class="form-control" id="author" name="author" v-model.trim="form.author"></textarea>
+    </div>
+</div>
 
-		<div class="form-group">
-			<label for="year">Year</label>
-			<input type="text" class="form-control" id="year" name="year" data-bind="value: year, valueUpdate: 'keyup'">
-		</div>
-		
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Year</label>
+    </div>
+    <div class="col-5">
+        <base-input v-model.trim="form.year" id="year"></base-input>
+    </div>
+</div>
 
-		<div class="form-group">
-			<label for="title">Title</label>
-			<textarea class="form-control" id="title" name="title" data-bind="value: title, valueUpdate: 'keyup'"></textarea>
-		</div>
-		
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Title</label>
+    </div>
+    <div class="col-5">
+        <base-input v-model.trim="form.title" id="title"></base-input>
+    </div>
+</div>
 
-		<div class="form-group">
-			<label for="editionPublicationOrganization">Edition Publication Organization</label>
-			<textarea class="form-control" id="editionPublicationOrganization" name="editionPublicationOrganization" data-bind="value: editionPublicationOrganization, valueUpdate: 'keyup'"></textarea>
-		</div>
-		
 
-		<div class="form-group">
-			<label for="volumePage">Volume Page</label>
-			<input type="text" class="form-control" id="volumePage" name="volumePage" data-bind="value: volumePage, valueUpdate: 'keyup'">
-		</div>
-		
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Edition Publication Organization</label>
+    </div>
+    <div class="col-5">
+        <textarea class="form-control" id="editionPublicationOrganization" name="editionPublicationOrganization" v-model.trim="form.editionPublicationOrganization"></textarea>
+    </div>
+</div>
 
-		<div class="form-group">
-			<label for="publisher">Publisher</label>
-			<input type="text" class="form-control" id="publisher" name="publisher" data-bind="value: publisher, valueUpdate: 'keyup'">
-		</div>
-		
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Volume Page</label>
+    </div>
+    <div class="col-5">
+        <base-input v-model.trim="form.volumePage" id="volumePage"></base-input>
+    </div>
+</div>
 
-		<div class="form-group">
-			<label for="city">City</label>
-			<input type="text" class="form-control" id="city" name="city" data-bind="value: city, valueUpdate: 'keyup'">
-		</div>
-		
 
-		<div class="form-group">
-			<label for="location">Location</label>
-			<input type="text" class="form-control" id="location" name="location" data-bind="value: location, valueUpdate: 'keyup'">
-		</div>
-		
-		<div class="text-right">
-		    <a href="/Reference" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-primary" data-bind="click: saveReference, enabled: canSave">Save</button>
-		</div>
-	</form>
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Publisher</label>
+    </div>
+    <div class="col-5">
+        <base-input v-model.trim="form.publisher" id="publisher"></base-input>
+    </div>
+</div>
+
+
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">City</label>
+    </div>
+    <div class="col-5">
+        <base-input v-model.trim="form.city" id="city"></base-input>
+    </div>
+</div>
+
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Location</label>
+    </div>
+    <div class="col-5">
+        <base-input v-model.trim="form.location" id="location"></base-input>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-7 text-end">
+        <a href="/Reference/Index" class="btn btn-default">Cancel</a>
+        @if (Html.UserIsBiodiversityAdministrator())
+        {
+            <button type="button" v-on:click.prevent="submit()" class="btn btn-primary" v-bind:class="{'disabled': disabled}">Save</button>
+        }
+    </div>
 </div>

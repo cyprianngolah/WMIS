@@ -1,124 +1,70 @@
 ﻿@using Wmis.Extensions
-@{
-    ViewBag.Title = "Biodiversity";
-    ViewBag.SubTitle = @"<span data-bind='with: bd'><br>
-            <span data-bind='text: commonName'></span>
-            (<span class='speciesNameText' data-bind='text: name'></span>)
-            <span data-bind='text: ecoType'></span>
-        </span>";
-}
 
-@section TopRight{
-	<div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: bd">
-        <span data-bind="with: statusRank">Status Rank: <strong><span data-bind="text: name"></span></strong><br /></span>
-		<span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
-	</div>
-}
 
 @section Styles {
-    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
+
 @section Scripts{
-    @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/biodiversity/edit"))
-    @Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
-    @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
-
-    <script>
-        $(function () {
-            wmis.biodiversity.edit.initialize({
-            	bioDiversityKey: @ViewBag.Key
-            	});
-            wmis.shared.filetab.initialize(@ViewBag.Key, 'Biodiversity', 'fileTemplateTempDiv');
-            wmis.shared.historytab.initialize(@ViewBag.Key, 'Biodiversity', 'historyTemplateTempDiv');
-        });
-    </script>
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/biodiversity/edit"))
 }
 
-@section Dialogs {
-	<script id="selectReferencesTemplate" type="text/html">
-		<div class="modal" id="referenceModal" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						@*<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>*@
-						<h4 class="modal-title">References - <span data-bind="text: categoryName"></span></h4>
-					</div>
-					<div class="modal-body form-horizontal">
-						<div class="form-group">
-							<div class="col-md-12">
-								<input type="hidden" name="selectedReferences" id="selectedReferences" class="form-control" data-bind="select2KeyValueTags: referenceOptions" />
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-						<button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
-					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-	</script>
 
-    @{ Html.RenderPartial("~/Views/Shared/FileTab.cshtml"); }
-	@{ Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml"); }
-}
-
-    <form role="form">
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <a href="/BioDiversity/" class="btn btn-default">
-                    @if (Html.UserIsBiodiversityAdministrator())
-                    {
-                        <span>Cancel</span>
-                    }
-                    else
-                    {
-                        <span>Back</span>
-                    }
-                </a>
+<div class="my-4">
+    <div class="row">
+        <div class="col-md-12 text-end">
+            <a href="/BioDiversity/" class="btn btn-default">
                 @if (Html.UserIsBiodiversityAdministrator())
                 {
-                    <button type="submit" class="btn btn-primary" data-bind="click: saveBioDiversity, enable: canSave">Save</button>
+                    <span>Cancel</span>
                 }
-            </div>
+                else
+                {
+                    <span>Back</span>
+                }
+            </a>
+            @if (Html.UserIsBiodiversityAdministrator())
+            {
+                <button type="submit" class="btn btn-primary">Save</button>
+            }
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#general" role="tab" data-toggle="tab" class="colouredTab generalTab">General</a></li>
-                    <li><a href="#reproduction" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Reproduction</a></li>
-                    <li><a href="#distribution" role="tab" data-toggle="tab" class="colouredTab distributionTab">Distribution</a></li>
-                    <li><a href="#abundance" role="tab" data-toggle="tab" class="colouredTab abundanceTab">Abundance</a></li>
-                    <li><a href="#trends" role="tab" data-toggle="tab" class="colouredTab trendsTab">Trends</a></li>
-                    <li><a href="#threats" role="tab" data-toggle="tab" class="colouredTab threatsTab">Threats</a></li>
-                    <li><a href="#status" role="tab" data-toggle="tab" class="colouredTab statusTab">Status</a></li>
-                    <li><a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Links</a></li>
-                    <li><a href="#history" role="tab" data-toggle="tab" class="colouredTab historyTab">History</a></li>
-                </ul>
+    <div class="row">
+        <div class="col-md-12">
 
-                <!-- Tab panes -->
-                <div class="tab-content" style="margin-top:10px;">
-                    @{Html.RenderPartial("GeneralTab");}
-                    @{Html.RenderPartial("ReproductionTab");}
-                    @{Html.RenderPartial("DistributionTab");}
-                    @{Html.RenderPartial("AbundanceTab");}
-                    @{Html.RenderPartial("TrendsTab");}
-                    @{Html.RenderPartial("ThreatsTab");}
-                    @{Html.RenderPartial("StatusTab");}
-                    <div id="files" class="tab-pane form-horizontal">
-                        <div id="fileTemplateTempDiv"></div>
-                    </div>
-                    <div id="history" class="tab-pane form-horizontal">
-                        <div id="historyTemplateTempDiv"></div>
-                    </div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item active"><a href="#general" role="tab" data-bs-toggle="tab" class="nav-link active colouredTab generalTab">General</a></li>
+                <li class="nav-item"><a href="#reproduction" role="tab" data-bs-toggle="tab" class="nav-link colouredTab reproductionTab">Reproduction</a></li>
+                <li class="nav-item"><a href="#distribution" role="tab" data-bs-toggle="tab" class="nav-link colouredTab distributionTab">Distribution</a></li>
+                <li class="nav-item"><a href="#abundance" role="tab" data-bs-toggle="tab" class="nav-link colouredTab abundanceTab">Abundance</a></li>
+                <li class="nav-item"><a href="#trends" role="tab" data-bs-toggle="tab" class="nav-link colouredTab trendsTab">Trends</a></li>
+                <li class="nav-item"><a href="#threats" role="tab" data-bs-toggle="tab" class="nav-link colouredTab threatsTab">Threats</a></li>
+                <li class="nav-item"><a href="#status" role="tab" data-bs-toggle="tab" class="nav-link colouredTab statusTab">Status</a></li>
+                <li class="nav-item"><a href="#files" role="tab" data-bs-toggle="tab" class="nav-link colouredTab fileTab">Links</a></li>
+                <li class="nav-item"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link colouredTab historyTab">History</a></li>
+            </ul>
 
+            <!-- Tab panes -->
+            <div class="tab-content" id="biodiversityTabContent">
+                @{Html.RenderPartial("GeneralTab");}
+                @{Html.RenderPartial("ReproductionTab");}
+                @{Html.RenderPartial("DistributionTab");}
+                @{Html.RenderPartial("AbundanceTab");}
+                @{Html.RenderPartial("TrendsTab");}
+                @{Html.RenderPartial("ThreatsTab");}
+                @{Html.RenderPartial("StatusTab");}
+                <div id="files" class="tab-pane fade form-horizontal">
+                    <div id="fileTemplateTempDiv"></div>
+                </div>
+                <div id="history" class="tab-pane fade form-horizontal">
+                    <div id="historyTemplateTempDiv"></div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</div>

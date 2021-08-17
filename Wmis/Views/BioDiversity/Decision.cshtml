@@ -1,59 +1,48 @@
 ﻿@using Wmis.Extensions
 @{
     ViewBag.Title = "Biodiversity Decision";
-    ViewBag.SubTitle = @"<span data-bind='with: model'><br>
-            <span data-bind='text: commonName'></span>
-            (<span class='speciesNameText' data-bind='text: name'></span>)
-            <span data-bind='text: ecoType'></span>
-        </span>";
+    ViewBag.SubTitle = @"<span><br>
+    <span>{{form ? form.commonName : ''}}</span>
+    (<span class='speciesNameText'>{{form ? form.name : ''}}</span>)
+    <span>{{form ? form.ecoType : ''}}</span>
+</span>";
 }
 
 @section Scripts{
-    @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/biodiversity/decision/edit"))
-
-    <script>
-        $(function () {
-            wmis.biodiversity.decision.edit.initialize({
-                bioDiversityKey: @ViewBag.Key
-                });
-        });
-    </script>
 }
 
-@section Styles {
-    @Html.Raw(Styles.Render("~/bundles/select2css"))
-}
 
 @section TopRight{
-    <div class="h4 pull-right" style="text-align: right; margin:0;" data-bind="with: model">
-        <span data-bind="with: statusRank">Status Rank: <strong><span data-bind="text: name"></span></strong><br /></span>
-		<span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
+    <div class="h4 text-end">
+        <span>Status Rank: <strong><span>{{form.statusRank ? form.statusRank.name : ""}}</span></strong><br /></span>
+        <span class="h5">Last Updated: <span>{{ lastUpdated }}</span> 
+        </span>
     </div>
 }
 
-<form role="form">
+<form role="form" v-on:submit.prevent="submit">
     <div class="row">
-        <div class="col-md-12 text-right">
-	        <a href="/BioDiversity" class="btn btn-default">
-		        @if (Html.UserIsBiodiversityAdministrator())
-		        {
-			        <span>Cancel</span>
-		        }
-		        else
-		        {
-			        <span>Back</span>
-		        }
-	        </a>
-			@if (Html.UserIsBiodiversityAdministrator())
-			{
-				<button type="submit" class="btn btn-primary" data-bind="click: save, enable: canSave">Save</button>
-			}
+        <div class="col-md-12 text-end">
+            <a href="/BioDiversity" class="btn btn-default">
+                @if (Html.UserIsBiodiversityAdministrator())
+                {
+                    <span>Cancel</span>
+                }
+                else
+                {
+                    <span>Back</span>
+                }
+            </a>
+            @if (Html.UserIsBiodiversityAdministrator())
+            {
+                <button type="submit" class="btn btn-primary" v-bind:class="{'disabled' : disabled }">Save</button>
+            }
         </div>
     </div>
-    
-    <div class="form-horizontal " data-bind="with: model">
+
+    <div class="mb-4">
         <div class="row">
             <div class="col-md-12">
                 <h4>
@@ -63,73 +52,80 @@
             </div>
         </div>
 
-        <div class="form-group generalGroup">
-            <label for="rangeExtentScore" class="col-md-10 control-label">Score</label>
+        @*Range Extent*@
+        <div class="row mb-3 align-items-center generalGroup">
+            <div class="col-md-10 text-end">Score</div>
             <div class="col-md-2">
-                <input id="rangeExtentScore" type="text" class="form-control" data-bind="value: rangeExtentScore" maxlength="5" />
-            </div>
-        </div>
-            
-        <div class="form-group generalGroup">
-            <label for="rangeExtent" class="col-md-1 control-label">Range Extent</label>
-            <div class="col-md-11">
-                <textarea id="rangeExtent" rows="4" class="form-control" data-bind="value: rangeExtentDescription"></textarea>
+                <base-input v-model="form.rangeExtentScore"></base-input>
             </div>
         </div>
 
-        <div class="form-group generalGroup">
-            <label for="areaOfOccupancyScore" class="col-md-10 control-label">Score</label>
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Range Extent</div>
+            <div class="col-md-10">
+                <textarea id="rangeExtent" rows="4" class="form-control" v-model="form.rangeExtentDescription"></textarea>
+            </div>
+        </div>
+
+        @*Area of occupancy*@
+        <div class="row mb-3 align-items-center generalGroup">
+            <div class="col-md-10 text-end">Score</div>
             <div class="col-md-2">
-                <input id="areaOfOccupancyScore" type="text" class="form-control" data-bind="value: areaOfOccupancyScore" maxlength="5" />
+                <base-input v-model="form.areaOfOccupancyScore"></base-input>
             </div>
         </div>
 
-        <div class="form-group generalGroup">
-            <label for="areaOfOccupancy" class="col-md-1 control-label">Area of Occupancy</label>
-            <div class="col-md-11">
-                <textarea id="areaOfOccupancy" rows="4" class="form-control" data-bind="value: areaOfOccupancyDescription"></textarea>
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Area of Occupancy</div>
+            <div class="col-md-10">
+                <textarea id="areaOfOccupancyDescription" rows="4" class="form-control" v-model="form.areaOfOccupancyDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group abundanceGroup">
-            <label for="populationSizeScore" class="col-md-10 control-label">Score</label>
+
+        @*Population Size*@
+        <div class="row mb-3 align-items-center abundanceGroup">
+            <div class="col-md-10 text-end">Score</div>
             <div class="col-md-2">
-                <input id="populationSizeScore" type="text" class="form-control" data-bind="value: populationSizeScore" maxlength="5" />
+                <base-input v-model="form.populationSizeScore"></base-input>
             </div>
         </div>
 
-        <div class="form-group abundanceGroup">
-            <label for="populationSize" class="col-md-1 control-label">Population Size</label>
-            <div class="col-md-11">
-                <textarea id="populationSize" rows="4" class="form-control" data-bind="value: populationSizeDescription"></textarea>
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Population Size</div>
+            <div class="col-md-10">
+                <textarea id="areaOfOccupancyDescription" rows="4" class="form-control" v-model="form.populationSizeDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group abundanceGroup">
-            <label for="numberOfOccurencesScore" class="col-md-10 control-label">Score</label>
+        @*Number of occurrence*@
+        <div class="row mb-3 align-items-center abundanceGroup">
+            <div class="col-md-10 text-end">Score</div>
             <div class="col-md-2">
-                <input id="numberOfOccurencesScore" type="text" class="form-control" data-bind="value: numberOfOccurencesScore" maxlength="5" />
-            </div>
-        </div>
-            
-        <div class="form-group abundanceGroup">
-            <label for="numberOfOccurences" class="col-md-1 control-label">Number of Occurences</label>
-            <div class="col-md-11">
-                <textarea id="numberOfOccurences" rows="4" class="form-control" data-bind="value: numberOfOccurencesDescription"></textarea>
+                <base-input v-model="form.numberOfOccurencesScore"></base-input>
             </div>
         </div>
 
-        <div class="form-group distributionGroup">
-            <label for="environmentalSpecificityScore" class="col-md-10 control-label">Score</label>
-            <div class="col-md-2 text-right">
-                <input id="environmentalSpecificityScore" type="text" class="form-control" data-bind="value: environmentalSpecificityScore" maxlength="5" />
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Number of Occurences</div>
+            <div class="col-md-10">
+                <textarea id="numberOfOccurencesDescription" rows="4" class="form-control" v-model="form.numberOfOccurencesDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group distributionGroup">
-            <label for="environmentalSpecificity" class="col-md-1 control-label">Environmental Specificity</label>
-            <div class="col-md-11">
-                <textarea id="environmentalSpecificity" rows="4" class="form-control" data-bind="value: environmentalSpecificityDescription"></textarea>
+
+        @*Env specificity*@
+        <div class="row mb-3 align-items-center distributionGroup">
+            <div class="col-md-10 text-end">Score</div>
+            <div class="col-md-2">
+                <base-input v-model="form.environmentalSpecificityScore"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Environmental Specificity</div>
+            <div class="col-md-10">
+                <textarea id="environmentalSpecificityDescription" rows="4" class="form-control" v-model="form.environmentalSpecificityDescription"></textarea>
             </div>
         </div>
 
@@ -142,33 +138,37 @@
             </div>
         </div>
 
-        <div class="form-group trendsGroup">
-            <label for="longTermTrendsScore" class="col-md-10 control-label">Score</label>
+
+        @*Env specificity*@
+        <div class="row mb-3 align-items-center trendsGroup">
+            <div class="col-md-10 text-end">Score</div>
             <div class="col-md-2">
-                <input id="longTermTrendsScore" type="text" class="form-control" data-bind="value: longTermTrendsScore" maxlength="5" />
+                <base-input v-model="form.longTermTrendsScore"></base-input>
             </div>
         </div>
 
-        <div class="form-group trendsGroup">
-            <label for="longTermTrends" class="col-md-1 control-label">Long-term Trends</label>
-            <div class="col-md-11">
-                <textarea id="longTermTrends" rows="4" class="form-control" data-bind="value: longTermTrendsDescription"></textarea>
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Long-term Trends</div>
+            <div class="col-md-10">
+                <textarea id="longTermTrendsDescription" rows="4" class="form-control" v-model="form.longTermTrendsDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group trendsGroup">
-            <label for="shortTermTrendsScore" class="col-md-10 control-label">Score</label>
+
+        <div class="row mb-3 align-items-center trendsGroup">
+            <div class="col-md-10 text-end">Score</div>
             <div class="col-md-2">
-                <input id="shortTermTrendsScore" type="text" class="form-control" data-bind="value: shortTermTrendsScore" maxlength="5" />
+                <base-input v-model="form.shortTermTrendsScore"></base-input>
             </div>
         </div>
 
-        <div class="form-group trendsGroup">
-            <label for="shortTermTrends" class="col-md-1 control-label">Short-term Trends</label>
-            <div class="col-md-11">
-                <textarea id="shortTermTrends" rows="4" class="form-control" data-bind="value: shortTermTrendsDescription"></textarea>
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Short-term Trends</div>
+            <div class="col-md-10">
+                <textarea id="shortTermTrendsDescription" rows="4" class="form-control" v-model="form.shortTermTrendsDescription"></textarea>
             </div>
         </div>
+
 
         <div class="row">
             <div class="col-md-12">
@@ -179,33 +179,35 @@
             </div>
         </div>
 
-        <div class="form-group threatsGroup">
-            <label for="threatsScore" class="col-md-10 control-label">Score</label>
-            <div class="col-md-2 text-right">
-                <input id="threatsScore" type="text" class="form-control" data-bind="value: threatsScore" maxlength="5" />
-            </div>
-        </div>
-
-        <div class="form-group threatsGroup">
-            <label for="threats" class="col-md-1 control-label">Threats</label>
-            <div class="col-md-11">
-                <textarea id="threats" rows="4" class="form-control" data-bind="value: threatsDescription"></textarea>
-            </div>
-        </div>
-
-        <div class="form-group threatsGroup">
-            <label for="intrinsicVulnerabilityScore" class="col-md-10 control-label">Score</label>
+        <div class="row mb-3 align-items-center threatsGroup">
+            <div class="col-md-10 text-end">Score</div>
             <div class="col-md-2">
-                <input id="intrinsicVulnerabilityScore" type="text" class="form-control" data-bind="value: intrinsicVulnerabilityScore" maxlength="5" />
+                <base-input v-model="form.threatsScore"></base-input>
             </div>
         </div>
 
-        <div class="form-group threatsGroup">
-            <label for="intrinsicVulnerability" class="col-md-1 control-label">Intrinsic Vulnerability</label>
-            <div class="col-md-11">
-                <textarea id="intrinsicVulnerability" rows="4" class="form-control" data-bind="value: intrinsicVulnerabilityDescription"></textarea>
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Threats</div>
+            <div class="col-md-10">
+                <textarea id="threatsDescription" rows="4" class="form-control" v-model="form.threatsDescription"></textarea>
             </div>
         </div>
+
+
+        <div class="row mb-3 align-items-center threatsGroup">
+            <div class="col-md-10 text-end">Score</div>
+            <div class="col-md-2">
+                <base-input v-model="form.intrinsicVulnerabilityScore"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Intrinsic Vulnerability</div>
+            <div class="col-md-10">
+                <textarea id="intrinsicVulnerabilityDescription" rows="4" class="form-control" v-model="form.intrinsicVulnerabilityDescription"></textarea>
+            </div>
+        </div>
+
 
         <div class="row">
             <div class="col-md-12">
@@ -216,82 +218,106 @@
             </div>
         </div>
 
-        <div class="form-group statusGroup">
-            <label for="StatusRank" class="col-md-1 control-label">Rank</label>
-            <div class="col-md-2" data-bind="with: statusRank">
-                <select class="form-control" id="StatusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            </div>
-            <label for="sRank" class="col-md-1 control-label">S Rank</label>
+        <div class="row align-items-center mb-3">
+            <div class="col-md-2 text-end">Rank</div>
             <div class="col-md-2">
-                <input id="sRank" type="text" class="form-control" data-bind="value: sRank" />
+                <el-select v-model="form.statusRank" value-key="key" filterable placeholder="Select Status">
+                    <el-option v-for="item in statusRanks"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item">
+                    </el-option>
+                </el-select>
+            </div>
+            <div class="col-md-2 text-end">S Rank</div>
+            <div class="col-md-2 statusGroup">
+                <base-input v-model="form.sRank"></base-input>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="statusRankDescription" class="col-md-1 control-label">Rank Description</label>
-            <div class="col-md-11">
-                <textarea id="statusRankDescription" rows="4" class="form-control" data-bind="value: statusRankDescription"></textarea>
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Rank Description</div>
+            <div class="col-md-10">
+                <textarea id="statusRankDescription" rows="4" class="form-control" v-model="form.statusRankDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="decisionProcessDescription" class="col-md-1 control-label">Decision Process</label>
-            <div class="col-md-11">
-                <textarea id="decisionProcessDescription" rows="4" class="form-control" data-bind="value: decisionProcessDescription"></textarea>
+        <div class="row mb-3">
+            <div class="col-md-2 text-end">Decision Process</div>
+            <div class="col-md-10">
+                <textarea id="decisionProcessDescription" rows="4" class="form-control" v-model="form.decisionProcessDescription"></textarea>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="nwtSarcAssessment" class="col-md-1 control-label">NWT SARC Assessment</label>
-            <div class="col-md-2" data-bind="with: nwtSarcAssessment">
-                <select class="form-control" id="nwtSarcAssessment" data-bind="options: $root.nwtSarcAssessment, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+        <div class="row gy-3 my-3">
+            <div class="col-md-2 text-end">NWT SARC Assessment</div>
+            <div class="col-md-4">
+                <el-select v-model="form.nwtSarcAssessment" value-key="key"  filterable placeholder="Select Status">
+                    <el-option v-for="item in nwtSarcAssessments"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item">
+                    </el-option>
+                </el-select>
             </div>
 
-            <label for="nRank" class="col-md-1 control-label">N Rank</label>
-            <div class="col-md-2">
-                <input id="nRank" type="text" class="form-control" data-bind="value: nRank">
-            </div>
-            
-            <label for="cosewicStatus" class="col-md-1 control-label">COSEWIC Status</label>
-            <div class="col-md-2" data-bind="with: cosewicStatus">
-                <select id="cosewicStatus" class="form-control" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <div class="col-md-2 text-end">N Rank</div>
+            <div class="col-md-4">
+                <base-input v-model="form.nRank">
             </div>
 
-            <label for="saraStatus" class="col-md-1 control-label">SARA Status</label>
-            <div class="col-md-2" data-bind="with: saraStatus">
-                <select class="form-control" id="saraStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
+            <div class="col-md-2 text-end">COSEWIC Status</div>
+            <div class="col-md-4">
+                <el-select v-model="form.cosewicStatus" value-key="key" filterable placeholder="Select Status">
+                    <el-option v-for="item in cosewicStatuses"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <div class="col-md-2 text-end">SARA Status</div>
+            <div class="col-md-4">
+                <el-select v-model="form.saraStatus" value-key="key" filterable placeholder="Select Status">
+                    <el-option v-for="item in cosewicStatuses"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item">
+                    </el-option>
+                </el-select>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="gRank" class="col-md-1 control-label">G Rank</label>
-            <div class="col-md-2">
-                <input id="gRank" type="text" class="form-control" data-bind="value: gRank">
+        <div class="row">
+            <div class="col-md-2 text-end">G Rank</div>
+            <div class="col-md-4">
+                <base-input v-model="form.gRank"></base-input>
             </div>
 
-            <label for="iucnStatus" class="col-md-1 control-label">IUCN Status</label>
-            <div class="col-md-5">
-                <input id="iucnStatus" type="text" class="form-control" data-bind="value: iucnStatus">
+            <div class="col-md-2 text-end">IUCN Status</div>
+            <div class="col-md-4">
+                <base-input v-model="form.iucnStatus"></base-input>
             </div>
         </div>
     </div>
-   
-	<div class="row">
-		<div class="col-md-12 text-right">
-			<a href="/BioDiversity" class="btn btn-default">
-				@if (Html.UserIsBiodiversityAdministrator())
-				{
-					<span>Cancel</span>
-				}
-				else
-				{
-					<span>Back</span>
-				}
-			</a>
-			@if (Html.UserIsBiodiversityAdministrator())
-			{
-				<button type="submit" class="btn btn-primary" data-bind="click: save, enable: canSave">Save</button>
-			}
-		</div>
-	</div>
+
+    <div class="row mb-5">
+        <div class="col-md-12 text-end">
+            <a href="/BioDiversity" class="btn btn-default">
+                @if (Html.UserIsBiodiversityAdministrator())
+                {
+                    <span>Cancel</span>
+                }
+                else
+                {
+                    <span>Back</span>
+                }
+            </a>
+            @if (Html.UserIsBiodiversityAdministrator())
+            {
+                <button type="submit" class="btn btn-primary" v-bind:class="{'disabled' : disabled }">Save</button>
+            }
+        </div>
+    </div>
 </form>
