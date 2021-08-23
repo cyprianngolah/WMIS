@@ -24,6 +24,12 @@
 		return options;
 	}
 
+	// get key for edit pages from Viewbag
+	static getKey(selector) {
+		return parseInt($(selector).val());
+	}
+
+
 	// Loads a select box with data via an AJAX get call and then initializes it as a 
 	// single select select2
 	// Note - This may be replaced by more knockout oriented logic

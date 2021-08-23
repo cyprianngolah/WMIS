@@ -70,6 +70,9 @@
             bundles.Add(new ScriptBundle("~/bundles/components/base").Include(
                 "~/js/v2/components/BaseComponents.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/components/ProjectSurveys").Include(
+                "~/js/v2/components/ProjectSurveys.js"));
+
             //////////////////////////////////////////////////////////////////////
             // Module Script Bundles
             //////////////////////////////////////////////////////////////////////
@@ -142,21 +145,22 @@
 
 			#region Projects
 			bundles.Add(new ScriptBundle("~/bundles/project/index").Include(
-						"~/js/modules/wmis.project.index.js"));
+						"~/js/v2/modules/project/wmis.project.index.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/project/new").Include(
-						"~/js/modules/wmis.project.new.js"));
+                        "~/js/v2/modules/project/wmis.project.new.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/project/edit").Include(
-                        "~/js/modules/wmis.project.edit.js",
-                        "~/js/modules/wmis.project.editmodals.js"));
+                        "~/js/v2/modules/project/wmis.project.edit.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/project/survey/edit").Include(
-						"~/js/wmis.mapping.js",
-                        "~/js/modules/wmis.project.survey.edit.js"));
+            bundles.Add(new ScriptBundle("~/bundles/project/survey/new").Include(
+                        "~/js/v2/modules/project/wmis.project.survey.new.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/project/survey/new").Include(
-                        "~/js/modules/wmis.project.survey.new.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/project/survey/edit").Include(
+						//"~/js/wmis.mapping.js",
+                        "~/js/v2/modules/project/wmis.project.survey.edit.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/project/site/new").Include(
                         "~/js/modules/wmis.project.site.new.js"));

@@ -4,117 +4,81 @@
 }
 
 @section Styles {
-	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
-	@Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/datatables"))
-	@Html.Raw(Scripts.Render("~/bundles/select2"))
-	@Html.Raw(Scripts.Render("~/bundles/project/index"))
-
-	<script type="text/javascript">
-		$(function() {
-            wmis.project.index.initialize({
-                $newButton: $("#newButton"),
-                $editButton: $("#editButton"),
-
-                $projectLead: $("#projectLead"),
-                $projectStatus: $("#projectStatus"),
-                $region: $("#region"),
-                $keywords: $("#keywords"),
-                $searchButton: $("#searchButton"),
-
-                $table: $("#projects")
-            });
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/project/index"))
 }
 
-<div class="row">
-	<div class="col-md-12 text-right">
-
-		@if (Html.UserIsProjectAdministrator())
-		{
-			<a href="~/Project/New" id="newButton" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-		}
-		<a href="~/Project/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-			@if (Html.UserIsProjectAdministrator())
-			{
-				<span>View</span>
-			}
-			else
-			{
-				<span>View</span>
-			}
-		</a>
-
-        <button id="downloadButton" class="btn btn-default" style="margin-bottom: 10px;">Download</button>
-	</div>
+<div class="row my-3">
+    <div class="col-md-12 d-flex justify-content-end">
+        <div>
+            <button type="button" v-on:click="downloadRecords()" class="btn btn-primary btn-sm me-2">Download</button>
+            @if (Html.UserIsBiodiversityAdministrator())
+            {
+                <a href="/Project/New" class="btn btn-success btn-sm me-2">New</a>
+            }
+            <a v-bind:href=`/Project/Edit/${selectedKey}` id="editButton" class="btn btn-primary btn-sm me-2" v-bind:class="{'disabled' : !isSelected}">
+                View
+            </a>
+        </div>
+    </div>
 </div>
 
-<div class="well" style="margin-bottom: 0;">
-	<div class="row">
-		<div class="col-md-12">
-			<form class="form-horizontal center" role="form">
-				<div class="col-md-3">
-					<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-						<label class="sr-only" for="projectLead">Project Lead</label>
-						<select class="form-control" id="projectLead" name="projectLead">
-							<option value="">Project Lead</option>
-						</select>
-					</div>
-				</div>
 
-				<div class="col-md-3">
-					<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-						<label class="sr-only" for="projectStatus">Project Status</label>
-						<select class="form-control" id="projectStatus" name="projectStatus">
-							<option value="">Project Status</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-						<label class="sr-only" for="region">Region</label>
-						<select class="form-control" id="region" name="region">
-							<option value="">All Regions</option>
-						</select>
-					</div>
-				</div>
-
-				<label class="sr-only" for="keywords">Keywords</label>
-				<div class="col-md-3">
-					<div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-						<div class="input-group">
-							<input type="text" id="keywords" class="form-control" placeholder="Keywords" />
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button" id="searchButton">Search</button>
-							</span>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col">
+                <label class="form-label">Project Lead</label>
+                <select class="form-select" aria-label="Group" id="pLead">
+                    <option value="">Project Lead</option>
+                </select>
+            </div>
+            <div class="col">
+                <label class="form-label">Project Status</label>
+                <select class="form-select" aria-label="Project Status" id="pStatus">
+                    <option value="">Project Status</option>
+                </select>
+            </div>
+            <div class="col">
+                <label class="form-label visually-hiddenx">Region</label>
+                <select class="form-select" aria-label="Region" id="region">
+                    <option value="">Region</option>
+                </select>
+            </div>
+            <div class="col">
+                <label class="form-label visually-hiddenx">Keywords</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" id="keyword" v-model="form.keywords">
+                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <div class="row">
-	<div class="col-md-12">
-		<table id="projects" class="table table-striped table-condensed table-hover">
-			<thead>
-				<tr>
-					<th>Project Number</th>
-					<th>Name</th>
-					<th>Lead Region</th>
-					<th>Project Lead</th>
-					<th>Status</th>
-					<th>Status Date</th>
-					<th>Start Date</th>				
-				</tr>
-			</thead>
-		</table>
-	</div>
+    <div class="col-md-12">
+
+        <table id="project" class="table w-100 table-sm table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Project Number</th>
+                    <th>Name</th>
+                    <th>Lead Region</th>
+                    <th>Project Lead</th>
+                    <th>Status</th>
+                    <th>Status Date</th>
+                    <th>Start Date</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
+

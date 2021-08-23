@@ -22,6 +22,9 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small, .h1 .s
     font-size: 65%;
     color: #999999;
 }
+a{
+    text-decoration: none !important;
+}
 .page-header {
     padding-bottom: 9px;
     margin: 40px 0 20px;

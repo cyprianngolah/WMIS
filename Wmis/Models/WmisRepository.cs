@@ -1668,13 +1668,14 @@
 
         #region Project
 
-        public int ProjectCreate(string name, string createdBy)
+        //public int ProjectCreate(string name, string createdBy)
+        public int ProjectCreate(ProjectSaveRequest request, string createdBy)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_name = name,
+                    p_name = request.Name,
                     p_createdBy = createdBy
                 };
                 return c.Query<int>(PROJECT_CREATE, param, commandType: CommandType.StoredProcedure).Single();

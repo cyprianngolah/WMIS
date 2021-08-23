@@ -1,0 +1,50 @@
+﻿@using Wmis.Extensions
+
+<div class="row my-3">
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-5 text-end">Survey Type:</div>
+            <div class="col-md-7">
+                <select class="form-select form-select-sm" v-model="filters.surveyTypeKey" aria-label="surveyType" id="surveyType">
+                    <option value="">Survey Type</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 text-end">
+        @if (Html.UserIsProjectAdministrator())
+        {
+            <a href="~/Project/NewSurvey/@ViewBag.Key" class="btn btn-success btn-sm me-2">New</a>
+        }
+        <a :href="`/Project/EditSurvey/${selectedKey}`" id="editButton" class="btn btn-primary btn-sm me-2" v-bind:class="{'disabled' : !selectedKey}">
+            @if (Html.UserIsProjectAdministrator())
+            {
+                <span>View</span>
+            }
+            else
+            {
+                <span>Open</span>
+            }
+        </a>
+        <button type="button" v-on:click="downloadRecords()" class="btn btn-primary btn-sm ">Download</button>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="survey" class="table w-100 table-sm">
+            <thead>
+                <tr>
+                    <th>Survey Type</th>
+                    <th>Survey Template</th>
+                    <th>Target Species</th>
+                    <th>Common Name</th>
+                    <th>Start Date</th>
+                    <th># of Observations</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

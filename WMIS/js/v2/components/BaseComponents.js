@@ -273,6 +273,81 @@ const BaseReferenceInput = {
 }
 
 
+const ElementSpeciesSelect = {
+    template: `
+        <el-select
+            v-bind="$attrs"
+            style="width:100%"
+            :model-value="modelValue"
+            filterable
+            remote
+            :reserve-keyword="false"
+            placeholder="Start typing.."
+            :remote-method="search"
+            value-key="key"
+            popper-class="el-drop"
+            :popper-append-to-body="false"
+            :loading="loading">
+            <el-option
+              v-for="item in options"
+              :key="item.key"
+              :label="item.name + ' - ' + item.commonName"
+              :value="item">
+            </el-option>
+          </el-select>
+        <small class="text-muted">Type a keyword to search species </small>
+    `,
+
+    props: {
+        modelValue: [String, Number, Object, Array],
+        initial: {
+            type: Object,
+            required:false
+        }
+    },
+
+    data() {
+        return {
+            selected: [],
+            options: [],
+            loading: false,
+        }
+    },
+
+    watch: {
+        initial: {
+            deep: true,
+            immediate: true,
+            handler(newVal) {
+                if (newVal !== undefined) {
+                    this.options.push(newVal)
+                }
+            }
+        }
+    },
+
+
+    methods: {
+        search(query) {
+            if (query !== '') {
+                axios.get(`/api/biodiversity?keywords=${query}&startRow=0&rowCount=25`)
+                    .then(response => {
+                        this.options = response.data.data.map(d => {
+                            return { commonName: d.commonName, name: d.name, key: d.key }
+                        })
+                    }).catch(error => console.log(error))
+                    .finally(() => this.loading = false)
+            } else {
+                this.options = [];
+            }
+        }
+    },
+
+
+}
+
+
+
 const ElementReferenceSelect = {
     template: `
         <el-select

@@ -76,7 +76,6 @@
     <div class="row mb-3">
         <label for="commonName" class="col-md-1 form-label text-end">Phylum</label>
         <div class="col-md-5" data-bind="with: phylum">
-            @*<base-select v-model="form.phylum.key" id="phylum" name="phylum" :options="phylums"></base-select>*@
             <base-dropdown-select :options="phylums" v-model="form.phylum"></base-dropdown-select>
             <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
         </div>

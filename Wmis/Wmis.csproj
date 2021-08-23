@@ -276,6 +276,7 @@
     <Compile Include="Dto\CollaboratorCreateRequest.cs" />
     <Compile Include="Dto\PagedRoleRequest.cs" />
     <Compile Include="Dto\HelpLinkRequest.cs" />
+    <Compile Include="Dto\ProjectSaveRequest.cs" />
     <Compile Include="Dto\ProjectUsersSaveRequest.cs" />
     <Compile Include="Dto\RabiesTestsRequest.cs" />
     <Compile Include="Dto\SearchResponse.cs" />
@@ -636,6 +637,7 @@
     <Content Include="js\Modules\wmis.wolfnecropsy.new.js" />
     <Content Include="js\Modules\wmis.wolfnecropsy.upload.js" />
     <Content Include="js\v2\components\BaseComponents.js" />
+    <Content Include="js\v2\components\ProjectSurveys.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.edit.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.index.js" />
@@ -644,6 +646,11 @@
     <Content Include="js\v2\modules\biodiversity\wmis.taxonomy.edit.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.taxonomy.index.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.taxonomy.new.js" />
+    <Content Include="js\v2\modules\project\wmis.project.edit.js" />
+    <Content Include="js\v2\modules\project\wmis.project.index.js" />
+    <Content Include="js\v2\modules\project\wmis.project.new.js" />
+    <Content Include="js\v2\modules\project\wmis.project.survey.edit.js" />
+    <Content Include="js\v2\modules\project\wmis.project.survey.new.js" />
     <Content Include="js\v2\modules\references\wmis.references.edit.js" />
     <Content Include="js\v2\modules\references\wmis.references.index.js" />
     <Content Include="js\v2\modules\nwtsarcassessment\wmis.nwtsarcassessment.edit.js" />
@@ -918,7 +925,7 @@
     <Content Include="Views\Project\New.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\EditSurvey.cshtml" />
-    <Content Include="Views\Project\EditSurveyForm.cshtml" />
+    <Content Include="Views\Project\EditSurveyTab.cshtml" />
     <Content Include="Views\Project\NewSurvey.cshtml" />
     <Content Include="Views\CollaredAnimal\Edit.cshtml" />
     <Content Include="Views\CollaredAnimal\Index.cshtml" />
@@ -982,6 +989,8 @@
     <Content Include="Views\NwtSarcAssessment\EditForm.cshtml" />
     <Content Include="Views\NwtSarcAssessment\Index.cshtml" />
     <Content Include="Views\NwtSarcAssessment\New.cshtml" />
+    <Content Include="Views\Project\GeneralTab.cshtml" />
+    <Content Include="Views\Project\SurveysTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

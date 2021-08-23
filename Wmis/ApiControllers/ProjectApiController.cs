@@ -117,9 +117,9 @@
         [HttpPost]
         [Route]
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
-        public int Create([FromBody]string name)
+        public int Create([FromBody] ProjectSaveRequest request)
         {
-            return Repository.ProjectCreate(name, this._user.Username);
+            return Repository.ProjectCreate(request, this._user.Username);
         }
 
         [HttpPut]
