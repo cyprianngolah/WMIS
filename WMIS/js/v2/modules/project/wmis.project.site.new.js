@@ -1,0 +1,90 @@
+﻿
+const app = Vue.createApp({
+    components: {
+        BaseInput,
+        BaseButton,
+    },
+
+    data() {
+        return {
+            key: "",
+            form: {
+                aspect: null,
+                cliffHeight: null,
+                comments: "",
+                dateEstablished: null,
+                habitat: null,
+                initialObserver: null,
+                latitude: null,
+                longitude: null,
+                map: null,
+                name: "",
+                nearestCommunity: null,
+                nestHeight: null,
+                nestType: null,
+                projectKey: null,
+                projectName: "",
+                reference: null,
+                reliability: null,
+                siteNumber: "",
+            },
+            loading: false
+        }
+    },
+
+    computed: {
+        disabled() {
+            if (Object.keys(this.form).length == 0) return true
+            if (!this.form.name || this.form.name.trim == "") return true
+            if (!this.form.latitude || !this.form.longitude || this.form.latitude == "" || this.form.longitude == "") return true
+            if (Math.abs(this.form.latitude) > 90) return true
+            if (Math.abs(this.form.longitude) > 180) return true
+
+            return false;
+        },
+    },
+
+    methods: {
+
+        fetchProject() {
+            this.setKey()
+            axios.get(`/api/Project/${this.key}`)
+                .then(response => {
+                    this.form.projectName = response.data.name
+                })
+                .catch(error => console.log(error))
+        },
+
+        save() {
+            this.loading = true
+            this.form.canSave = !this.disabled
+            this.setKey()
+            axios.post("/api/site", this.form)
+                .then(_ => {
+                    this.returnToProject()
+                }).catch(error => console.log(error))
+                .finally(() => this.loading = false)
+        },
+
+        setKey() {
+            this.key = WMIS.getKey("#projectKey")
+            this.form.projectKey = this.key
+        },
+
+        returnToProject() {
+            window.location.href = `/Project/Edit/${this.key}`
+        }
+
+    },
+
+    mounted() {
+        this.fetchProject()
+    },
+
+    created() {
+        this.setKey()
+    }
+})
+
+app.use(ElementPlus);
+app.mount('#wmis-app')

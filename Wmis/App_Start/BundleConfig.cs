@@ -25,7 +25,7 @@
                 "~/Scripts/v2/moment.js",
                 "~/Scripts/v2/axios.min.js",
                 "~/Scripts/v2/vue3.min.js",
-                //"~/Scripts/v2/elementui.js",
+                "~/Scripts/v2/elementui.js",
                 "~/Scripts/v2/bootstrap5.bundle.min.js",
                 "~/js/v2/wmis.js"
                 ));
@@ -40,7 +40,7 @@
             //////////////////////////////////////////////////////////////////////
             bundles.Add(new StyleBundle("~/bundles/css").Include(
 						"~/Content/v2/bootstrap5.min.css",
-                        //"~/Content/v2/elementui.css",
+                        "~/Content/v2/elementui.css",
                         "~/Content/v2/site.css"));
 
             bundles.Add(new StyleBundle("~/bundles/datatablescss").Include(
@@ -72,6 +72,21 @@
 
             bundles.Add(new ScriptBundle("~/bundles/components/ProjectSurveys").Include(
                 "~/js/v2/components/ProjectSurveys.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/components/SurveyObservations").Include(
+                "~/js/v2/components/SurveyObservations.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/components/GMap").Include(
+                "~/js/v2/components/GMap.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/components/FileTab").Include(
+                        "~/js/v2/components/FileTab.js"));
+                
+            bundles.Add(new ScriptBundle("~/bundles/components/HistoryTab").Include(
+                        "~/js/v2/components/HistoryTab.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/components/ProjectSites").Include(
+                        "~/js/v2/components/projectSItes.js"));
 
             //////////////////////////////////////////////////////////////////////
             // Module Script Bundles
@@ -130,21 +145,27 @@
 
             #region Collared Animal
             bundles.Add(new ScriptBundle("~/bundles/collaredanimal/index").Include(
-                        "~/js/modules/wmis.collaredanimal.index.js"));
+                        "~/js/v2/modules/collaredanimals/wmis.collaredanimal.index.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/collaredanimal/new").Include(
-                        "~/js/modules/wmis.collaredanimal.new.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/collaredanimal/edit").Include(
-                        "~/js/wmis.mapping.js",
-                        "~/js/modules/wmis.collaredanimal.mapping.js",
-                        "~/js/modules/wmis.collaredanimal.editmodals.js",
-                        "~/js/modules/wmis.collaredanimal.edit.js"));
+                        "~/js/v2/modules/collaredanimals/wmis.collaredanimal.edit.js"));
+
+
+            // replaced with a modal window
+            /*bundles.Add(new ScriptBundle("~/bundles/collaredanimal/new").Include(
+                        "~/js/modules/wmis.collaredanimal.new.js"));*/
+            /*
+                        bundles.Add(new ScriptBundle("~/bundles/collaredanimal/edit").Include(
+                                    "~/js/wmis.mapping.js",
+                                    "~/js/modules/wmis.collaredanimal.mapping.js",
+                                    "~/js/modules/wmis.collaredanimal.editmodals.js",
+                                    "~/js/modules/wmis.collaredanimal.edit.js"));*/
 
             #endregion
 
-			#region Projects
-			bundles.Add(new ScriptBundle("~/bundles/project/index").Include(
+            #region Projects
+            bundles.Add(new ScriptBundle("~/bundles/project/index").Include(
 						"~/js/v2/modules/project/wmis.project.index.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/project/new").Include(
@@ -158,15 +179,15 @@
 
 
             bundles.Add(new ScriptBundle("~/bundles/project/survey/edit").Include(
-						//"~/js/wmis.mapping.js",
                         "~/js/v2/modules/project/wmis.project.survey.edit.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/project/site/edit").Include(
+                        "~/js/v2/modules/project/wmis.project.site.edit.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/project/site/new").Include(
-                        "~/js/modules/wmis.project.site.new.js"));
+                        "~/js/v2/modules/project/wmis.project.site.new.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/project/site/edit").Include(
-                        "~/js/modules/wmis.project.site.edit.js"));
+            
 			#endregion
 
             #region Search
@@ -227,6 +248,8 @@
             bundles.Add(new ScriptBundle("~/bundles/nwtsarcassessment/edit").Include(
                         "~/js/v2/modules/nwtsarcassessment/wmis.nwtsarcassessment.edit.js"));
 
+
+            
 
 
             bundles.Add(new ScriptBundle("~/bundles/user/index").Include(

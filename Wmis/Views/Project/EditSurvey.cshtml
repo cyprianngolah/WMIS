@@ -23,7 +23,7 @@
 }
 
 @section Styles {
-    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
 
     <style>
@@ -35,13 +35,13 @@
             padding: 0 15px;
         }
 
-        .breadcrumb > li + li::before {
-            content: "/ ";
-            padding: 0 5px;
-        }
+            .breadcrumb > li + li::before {
+                content: "/ ";
+                padding: 0 5px;
+            }
+
             .breadcrumb:first-child a {
                 font-size: 0.8em !important;
-
             }
 
         #map-canvas {
@@ -74,8 +74,26 @@
             });
         </script>*@
 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD74ZSiStfxRLwtVA--KlaSoYeeyNPJB-g" type="text/javascript"></script>
+    <script type="text/html" id="survey-observations">
+        @{Html.RenderPartial("SurveyObservationsTab");}
+    </script>
+
+    <script type="text/html" id="file-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
+    </script>
+
+    <script type="text/html" id="history-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+    </script>
+
     @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/components/GMap"))
+    @Html.Raw(Scripts.Render("~/bundles/components/SurveyObservations"))
+    @Html.Raw(Scripts.Render("~/bundles/components/FileTab"))
+    @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
     @Html.Raw(Scripts.Render("~/bundles/project/survey/edit"))
 }
 
@@ -84,7 +102,6 @@
 
 <div class="row">
     <div class="col-md-12">
-
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item active"><a href="#survey" role="tab" data-bs-toggle="tab" class="nav-link active">Survey</a></li>
             <li class="nav-item"><a href="#observations" role="tab" data-bs-toggle="tab" class="nav-link">Observations</a></li>
@@ -95,21 +112,22 @@
         <!-- Tab panes -->
         <div class="tab-content" id="surveyTabContent">
             <div id="survey" class="tab-pane active py-4">
+
                 <div v-show="project">
                     @{Html.RenderPartial("EditSurveyTab");}
                 </div>
             </div>
 
             <div id="observations" class="tab-pane py-4">
-                Observations
+                <survey-observations v-if="key" :survey_id="key"></survey-observations>
             </div>
 
             <div id="links" class="tab-pane py-4">
-                Links
+                <file-tab v-if="key" :parent_table_key="key" parent_table_name="Survey"></file-tab>
             </div>
 
             <div id="history" class="tab-pane py-4">
-                History
+                <history-tab v-if="key" :parent_table_key="key" parent_table_name="SurveyHistory"></history-tab>
             </div>
         </div>
     </div>

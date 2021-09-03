@@ -5,7 +5,7 @@
 }
 
 @section TopRight{
-    <div class="h6 text-end">
+    <div class="h6 text-end" v-if="form">
         <span>Status: <strong><span>{{form.status ? form.status.name : ""}}</span></strong><br /></span>
         <span class="h5">
             Last Updated: <span>{{ lastUpdated }}</span>
@@ -20,19 +20,28 @@
 
 @section Scripts{
 
+    <script type="text/html" id="history-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+    </script>
+
     <script type="text/html" id="project-surveys">
         @{Html.RenderPartial("SurveysTab");}
+    </script>
+
+    <script type="text/html" id="project-sites">
+        @{Html.RenderPartial("SitesTab");}
     </script>
 
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/components/ProjectSurveys"))
+    @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
+    @Html.Raw(Scripts.Render("~/bundles/components/ProjectSites"))
     @Html.Raw(Scripts.Render("~/bundles/project/edit"))
 }
 
 <input type="hidden" id="projectKey" value="@ViewBag.Key" />
-@*<input type="checkbox" id="viewSensitive" value="@(ViewBag.CanViewSensitive ? true : false)" />*@
 
 
 <div class="row">
@@ -40,9 +49,10 @@
 
         @if (Html.UserIsProjectAdministrator())
         {
-            <button type="button" class="btn btn-secondary me-2">Edit Users</button>
+            <base-button v-on:click="editAdministratorsModal.show()" :plain="true">Edit Users</base-button>
         }
-        <a href="~/Project/" class="btn btn-secondary me-2">
+
+        <a href="~/Project/" class="el-button is-plain el-button--danger">
             @if (Html.UserIsProjectAdministrator())
             {
                 <span>Cancel</span>
@@ -54,7 +64,8 @@
         </a>
         @if (Html.UserIsProjectAdministrator() || ViewBag.CanViewSensitive)
         {
-            <button type="submit" class="btn btn-primary" data-bind="click: saveProject, enable: canSave">Save</button>
+
+            <base-button color="success" :busy="loading" v-on:click.prevent="saveUpdate()" :disabled="disabled">Save</base-button>
         }
     </div>
 </div>
@@ -62,135 +73,213 @@
 <!-------------------------------------------->
 <div class="row">
     <div class="col-md-12">
-
         <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item active"><a href="#general" role="tab" data-bs-toggle="tab" class="nav-link active">General</a></li>
-            <li class="nav-item"><a href="#surveys" role="tab" data-bs-toggle="tab" class="nav-link">Surveys</a></li>
-            <li class="nav-item"><a href="#collaborators" role="tab" data-bs-toggle="tab" class="nav-link">Collaborators</a></li>
-            <li class="nav-item"><a href="#sites" role="tab" data-bs-toggle="tab" class="nav-link">Sites</a></li>
-            <li class="nav-item"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
+            <li class="nav-item active"><a href="#generalTab" role="tab" data-bs-toggle="tab" class="nav-link active">General</a></li>
+            <li class="nav-item"><a href="#surveysTab" role="tab" data-bs-toggle="tab" class="nav-link">Surveys</a></li>
+            <li class="nav-item"><a href="#collarsTab" role="tab" data-bs-toggle="tab" class="nav-link">Collars</a></li>
+            <li class="nav-item"><a href="#collaboratorsTab" role="tab" data-bs-toggle="tab" class="nav-link">Collaborators</a></li>
+            <li class="nav-item"><a href="#sitesTab" role="tab" data-bs-toggle="tab" class="nav-link">Sites</a></li>
+            <li class="nav-item"><a href="#historyTab" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content" id="biodiversityTabContent">
-            <div id="general" class="tab-pane active py-4">
+            <div id="generalTab" class="tab-pane active py-4">
                 @{Html.RenderPartial("GeneralTab");}
             </div>
 
-            <div id="surveys" class="tab-pane form-horizontal">
+            <div id="surveysTab" class="tab-pane form-horizontal">
                 <project-surveys v-bind:project_id="key"></project-surveys>
             </div>
 
-            <div id="collaborators" class="tab-pane form-horizontal">
-                Place historyasa
+            <!-- project Collars -->
+            <div id="collarsTab" class="tab-pane form-horizontal">
+                <div class="row py-3">
+                    <div class="col-md-12">
+                        <table id="collarsTable" class="table w-100 table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Animal ID</th>
+                                    <th>Animal Status</th>
+                                    <th>Animal Herd</th>
+                                    <th>Animal Sex</th>
+                                    <th>Collar Status</th>
+                                    <th>Collar State</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <div id="sites" class="tab-pane form-horizontal">
-                Place historydas
+            <!-- Project Collaborators -->
+            <div id="collaboratorsTab" class="tab-pane form-horizontal">
+                <div class="row h4 py-4">
+                    <div class="col-md-12 text-right">
+                        <base-button size="small" color="success" v-on:click="createCollaboratorModal()">Create New Collaborator</base-button>
+                        <base-button size="small" color="primary" v-on:click="addCollaboratorFormModal.show()">Add Existing Collaborator</base-button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-sm w-100 table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Organization</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th class="text-center">Edit</th>
+                                    <th class="text-center">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="p in projectCollaborators" :key="p.key">
+                                    <td>{{p.name}}</td>
+                                    <td>{{p.organization}}</td>
+                                    <td>{{p.email}}</td>
+                                    <td>{{p.phoneNumber}}</td>
+                                    <td class="text-center cursor-pointer">
+                                        <el-button type="primary" size="mini" icon="el-icon-edit" v-on:click="editCollaborator(p)" circle></el-button>
+                                    </td>
+                                    <td class="text-center text-danger">
+                                        <el-button type="danger" size="mini" icon="el-icon-delete" v-on:click="removeCollaborator(p.key)" circle></el-button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div id="history" class="tab-pane form-horizontal">
-                Place historya
+
+
+            <!-- PROJECT SITES -->
+            <div id="sitesTab" class="tab-pane form-horizontal">
+                <project-sites v-if="key" :project_id="key"></project-sites>
+            </div>
+
+            <div id="historyTab" class="tab-pane form-horizontal">
+                <history-tab v-if="key" :parent_table_key="key" parent_table_name="ProjectHistory"></history-tab>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-------------------------------------------->
-<!-------------------------------------------->
-<script id="addCollaboratorTemplate" type="text/html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Collaborator</h4>
-                </div>
-                <div class="modal-body form-horizontal">
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <input type="hidden" id="collaboratorInput" class="form-control" data-bind="select2: collaboratorOptions" />
+<!------------------ EDIT COLLABORATOR ----------------------------------->
+<div class="modal fade" id="editCollaboratorFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ editingCollaborator ? 'Edit' : 'Add' }} Collaborator</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-0">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <lable>Name</lable>
+                            <base-input v-model="collaboratorForm.name" label="Name"></base-input>
+                        </div>
+                        <div class="col-12">
+                            <lable>Organization</lable>
+                            <base-input v-model="collaboratorForm.organization" label="Organization"></base-input>
+                        </div>
+                        <div class="col-12">
+                            <lable>Email</lable>
+                            <base-input v-model="collaboratorForm.email" label="Email"></base-input>
+                        </div>
+                        <div class="col-12">
+                            <lable>Phone Number</lable>
+                            <base-input v-model="collaboratorForm.phoneNumber" label="Phone Number"></base-input>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save">Add</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" v-on:click="handleCollaboratorSave()">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<script id="createEditCollaboratorTemplate" type="text/html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" data-bind="text: titleText"></h4>
-                </div>
-                <div class="modal-body form-horizontal" data-bind="with: collaborator">
-                    <div class="form-group">
-                        <label for="name" class="col-md-2 control-label">Name</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="name" data-bind="value: name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="organization" class="col-md-2 control-label">Organization</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="organization" data-bind="value: organization">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="col-md-2 control-label">Email</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="email" data-bind="value: email">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phoneNumber" class="col-md-2 control-label">Phone Number</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="phoneNumber" data-bind="value: phoneNumber">
+<!---------------------ADD AN EXISTING COLLABORATOR----------------------->
+<div class="modal fade" id="addCollaboratorFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Collaborator</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-0">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div>Collaborator</div>
+                            <el-select class="w-100" v-model="selectedCollaborator" placeholder="Select Collaborator">
+                                <el-option v-for="item in allCollaborators"
+                                           :key="item.key"
+                                           :label="`${item.name} ${item.organization} - ${item.email}`"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save, text: confirmText"></button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" v-on:click="addExistingCollaborator()">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<script id="editAdministratorTemplate" type="text/html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Users</h4>
-                </div>
-                <div class="modal-body form-horizontal">
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <label for="adminList">Project Administrators</label>
-                            <input type="text" id="adminList" class="form-control" data-bind="value: administratorNames" readonly="readonly" disabled="disabled" />
+
+<!-- editAdministratorTemplate -->
+<div class="modal fade" id="editAdministratorsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Users</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-0">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div>Project Administrators</div>
+                            <base-input readonly disabled type="textarea" v-model="currentProjectAdmins"></base-input>
+                        </div>
+                        <div class="col-12">
+                            <div>Project Users</div>
+                            <el-select class="w-100" v-model="currentProjectUsers" multiple filterable placeholder="Select">
+                                <el-option v-for="item in allProjectUsers"
+                                           filterable
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+
+
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <label>Project Users</label>
-                            <!-- ko if: userOptions -->
-                            <input type="hidden" class="form-control" id="currentUsers" name="currentUsers" data-bind="enabled: isLoadedForEditing, select2KeyValueTags: userOptions" />
-                            <!-- /ko -->
-                        </div>
-                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save">Apply Changes</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</script>
+            </div>
+            <div class="modal-footer">
+                <base-button size="small" plain color="danger" data-bs-dismiss="modal">Cancel</base-button>
+                <base-button size="small" v-on:click="updateProjectUsers()">
+                    Apply Changes
+                </base-button>
+            </div>
+        </div>
+    </div>
+</div>
+

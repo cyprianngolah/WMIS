@@ -1,9 +1,46 @@
-﻿
+﻿const BaseButton = {
+    template: `
+        <el-button :size="size" :nativeType="type" :plain="plain" :disabled="disabled" :loading="busy" :type="color"><slot></slot></el-button>
+        <!--<q-btn color="primary" glossy unelevated :disable="disabled" :loading="busy" padding="5px 25px">
+            <slot></slot>
+        </q-btn>-->
+    `,
+    props: {
+        type: {
+            default: 'button'
+        },
+        color: {
+            default: 'primary'
+        },
+        busy: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        plain: {
+            type: Boolean,
+            default: false
+        },
+        size: {
+            type: String,
+            default: 'medium'
+        },
+    }
+}
+
+
 const BaseInput = {
     emits: ['update:modelValue'],
     template: `
-        <el-input :type="type" :model-value="modelValue" :id="id" @input="handleInput"></el-input>
-        <!--<input :value="modelValue" type="text" class="form-control"  :id="id" @input="handleInput">-->
+        <el-input :disabled="disabled" :type="type" :model-value="modelValue" :id="id" class="w-100" @input="handleInput"></el-input>
+        <!--<q-input :disable="disabled" :readonly="disabled" input-class="px-0 mx-0" outlined :type="type" stack-label :model-value="modelValue" :id="id"  @update:model-value="handleInput" :label="label">
+            <template v-slot:label>
+              <span class="text-weight-bold text-primary">{{ label }}</span>
+            </template>
+        </q-input>-->
     `,
 
     props: {
@@ -12,23 +49,245 @@ const BaseInput = {
             default: "",
         },
         modelValue: {
-            type: [String, Number],
+            type: [String, Number, Date],
             default: "",
         },
         type: {
             type: String,
             default: 'text'
         },
+        label: {
+            type: String,
+            required: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
     },
 
     methods: {
         handleInput(value) {
-            //this.$emit("update:modelValue", event.target.value);
             this.$emit("update:modelValue", value);
         }
     },
 
 }
+
+
+const BaseSpeciesSelect = {
+    emits: ['update:modelValue'],
+    template: `
+        <el-select
+            :model-value="modelValue"
+            filterable
+            remote
+            reserve-keyword
+            clearable
+            class="w-100"
+            placeholder="Please at least 1 character to search..."
+            :remote-method="remoteMethod"
+            @change="handleInput"
+            :loading="loading">
+            <el-option
+              v-for="item in options"
+              :key="item.key"
+              :label="item[label_field]"
+              :value="item[value_field]">
+            </el-option>
+          </el-select>
+<small class="text-info">Type at least 1 character to search species</small>
+    `,
+
+    props: {
+        url: {
+            type: String,
+            required: true,
+        },
+        search_param_name: {
+            type: String,
+            default: 'searchString',
+        },
+        label_field: {
+            type: String,
+            default: 'name',
+        },
+        value_field: {
+            type: String,
+            default: 'key',
+        },
+        modelValue: {
+            type: [String, Number,Object],
+            default: "",
+        }
+    },
+
+    data() {
+        return {
+            options: [],
+            value: "",
+            loading: false,
+        }
+    },
+
+    methods: {
+        transformRecord(d) {
+            let name = d.name;
+            if (d.commonName && d.commonName != "") {
+                name += ` - ${d.commonName}`
+            }
+
+            return {
+                key: d.key,
+                name
+            }
+        },
+        remoteMethod(query) {
+            if (query !== '') {
+                this.loading = true;
+                axios.get(`/api/biodiversity?startRow=0&rowCount=25&${this.search_param_name}=${query}`)
+                    .then(response => {
+                        this.options = response.data.data.map(d => {
+                            return this.transformRecord(d)
+                        })
+                    }).catch(error => console.log(error))
+                    .finally(() => this.loading = false)
+            } else {
+                this.options = [];
+            }
+        },
+
+        handleInput(value) {
+            this.$emit("update:modelValue", value);
+        },
+
+        getSpeciesById() {
+            axios.get(`/api/BioDiversity/${this.modelValue}`)
+                .then(response => {
+                    this.options.push(this.transformRecord(response.data))
+                })
+                .catch(error => console.log(error))
+        }
+    },
+
+    mounted() {
+        if (this.modelValue) {
+            this.getSpeciesById()
+        }
+    }
+}
+
+/**
+ * Not used for now
+ * 
+ */
+const BaseSingleSelect2 = {
+
+    template: `
+        <select class="select-with-ajax w-100">
+            <option value="">All</option>
+        </select>
+        <!--
+        <el-select
+            v-model="value"
+            filterable
+            remote
+            reserve-keyword
+            clearable
+            class="w-100"
+            placeholder="Please enter a keyword"
+            :remote-method="remoteMethod"
+            :loading="loading">
+            <el-option
+              v-for="item in options"
+              :key="item.key"
+              :label="item.name"
+              :value="item.key">
+            </el-option>
+          </el-select>-->
+    `,
+
+    data() {
+        return {
+            options: [],
+            value: "",
+            loading: false,
+
+            select2: null
+        }
+    },
+
+    methods: {
+        remoteMethod(query) {
+            if (query !== '') {
+                this.loading = true;
+                axios.get(`/api/biodiversity?startRow=0&rowCount=25&keywords=${query}`)
+                    .then(response => {
+                        this.options = response.data.data.map(d => {
+                            let name = d.name;
+                            if (d.commonName && d.commonName != "") {
+                                name += ` - ${d.commonName}`
+                            }
+                            return { key: d.key, name}
+                        })
+                    }).catch(error => console.log(error))
+                    .finally(() => this.loading = false)
+            } else {
+                this.options = [];
+            }
+        }
+    },
+
+    mounted() {
+        this.select2 = $('.select-with-ajax')
+            .select2({
+                theme: "bootstrap-5",
+                placeholder: "Select an options",
+                minimumInputLength: 1,
+                selectionCssClass: "select2--medium", // For Select2 v4.1
+                dropdownCssClass: "select2--small",
+                ajax: {
+                    url: '/api/biodiversity',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            keywords: params.term,
+                            startRow: 0,
+                            rowCount: 25
+                        }
+
+                    },
+                    processResults: function (data) {
+
+                        
+                        const results = data.data.map(d => {
+                            let name = d.name;
+                            if (d.commonName && d.commonName != "") {
+                                name += ` - ${d.commonName}`
+                            }
+                            return {
+                                id: d.key,
+                                key: d.key,
+                                text: name
+                            }
+                        });
+
+                        results.unshift({ id: "", key: "", text: "All" })
+
+                        console.log(results)
+                        return {
+                            results
+                        };
+                    }
+                }
+            });
+    }
+
+}
+
+
+
+
 
 
 const BaseSelect = {
@@ -148,6 +407,9 @@ const BaseSelect = {
         this.select2.select2('destroy');
     }
 }
+
+
+
 
 
 /**
@@ -281,6 +543,7 @@ const ElementSpeciesSelect = {
             :model-value="modelValue"
             filterable
             remote
+            size="large"
             :reserve-keyword="false"
             placeholder="Start typing.."
             :remote-method="search"
@@ -347,6 +610,103 @@ const ElementSpeciesSelect = {
 }
 
 
+
+const BaseQSpeciesSearch = {
+    template: `
+        <q-select
+            outlined
+            :label="label"
+            :options="options"
+            option-label="name"
+            @filter="handleSearch"
+            ref="species"
+            stack-label
+            :model-value="modelValue"
+            @update:model-value="handleInput"
+            @add="handleHideDropdown"
+            input-debounce="500"
+            hint="Type Minimum 2 characters to search species"
+            options-dense
+            behavior="menu"
+            use-input
+            :popup-content-style="{ 'max-width': '400px !important', 'overflow-x': 'hidden' }"
+            :display-value="modelValue ? modelValue.name + ' - ' + modelValue.commonName : ''"
+        >
+            <template v-slot:no-option>
+                <q-item>
+                <q-item-section class="text-grey">
+                    No results found.
+                </q-item-section>
+                </q-item>
+            </template>
+            <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                <q-item-section>
+                    <q-item-label>{{scope.opt.name}} - {{ scope.opt.commonName }}</q-item-label>
+                </q-item-section>
+                </q-item>
+            </template>
+            <template v-slot:label>
+              <span class="text-weight-bold text-primary">{{ label }}</span>
+            </template>
+        </q-select>
+    `,
+
+    emits: ["update:modelValue"],
+
+    props: {
+        modelValue: [String, Object, Array],
+        label: {
+            type: String,
+            default: ''
+        }
+    },
+
+    data() {
+        return {
+            selected: [],
+            options: []
+        };
+    },
+
+
+    watch: {
+        modelValue: {
+            deep: true,
+            immediate: true,
+            handler(newVal) {
+                if (newVal !== undefined) {
+                    this.options.push(newVal)
+                }
+            }
+        }
+    },
+    methods: {
+        handleHideDropdown() {
+            this.$refs.species.hidePopup()
+            this.$refs.species.updateInputValue("")
+            this.options = []
+        },
+        handleSearch(val, update, abort) {
+            if (val == '' || val.length < 2) {
+                this.options = []
+                return;
+            }
+            axios.get(`/api/biodiversity?keywords=${val}&startRow=0&rowCount=25`)
+                .then(response => {
+                    update(() => {
+                        this.options = response.data.data.map(d => {
+                            return { commonName: d.commonName, name: d.name, key: d.key }
+                        })
+                    })
+                }).catch(error => console.log(error))
+        },
+
+        handleInput(value) {
+            this.$emit("update:modelValue", value);
+        }
+    },
+}
 
 const ElementReferenceSelect = {
     template: `

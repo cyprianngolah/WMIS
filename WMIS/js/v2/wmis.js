@@ -30,10 +30,17 @@
 	}
 
 
+	static createModal(selector) {
+		return new bootstrap.Modal(document.getElementById(selector), {
+			keyboard: false,
+			backdrop: 'static'
+		});
+    }
+
 	// Loads a select box with data via an AJAX get call and then initializes it as a 
 	// single select select2
 	// Note - This may be replaced by more knockout oriented logic
-	static loadAndInitializeSelect2($select, ajaxUrl, placeHolder, showAll, dataPropertyName) {
+	static loadAndInitializeSelect2($select, ajaxUrl, placeHolder, showAll, showAllText = "All", dataPropertyName) {
 		const _this = this;
 		$.ajax({
 			url: ajaxUrl,
@@ -43,9 +50,8 @@
 				withCredentials: true
 			}
 		}).done(function (data) {
-			_this.appendDataToSelect(data, $select, showAll, dataPropertyName);
+			_this.appendDataToSelect(data, $select, showAll, showAllText, dataPropertyName);
 		}).fail((error) => console.log("error"));
-		//}).fail(wmis.global.ajaxErrorHandler);
 
 		$select.select2({
 			theme: "bootstrap-5",
@@ -58,10 +64,10 @@
 
 	// Shortcut for appending data to a select
 	// Expects data to have a key and a value property
-	static appendDataToSelect(data, $select, showAll, dataPropertyName) {
+	static appendDataToSelect(data, $select, showAll, showAllText = "All", dataPropertyName) {
 		$select.empty();
 		if (typeof (showAll) == 'undefined' || showAll)
-			$select.append("<option value='all'>All</option>");
+			$select.append("<option value='all'>" + showAllText +"</option>");
 		var dataCollection = typeof (dataPropertyName) == 'undefined' ? data : data[dataPropertyName];
 		$.each(dataCollection, function (index, value) {
 			$select.append($("<option></option>").attr("value", value.key).text(value.name));

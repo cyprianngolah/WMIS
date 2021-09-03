@@ -60,7 +60,8 @@
     <div class="col-md-3">
         <el-date-picker v-model="form.statusDate"
                         type="date"
-                        value-format="YYYY-MM-DD"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS"
                         placeholder="Pick Date">
         </el-date-picker>
     </div>
@@ -74,9 +75,11 @@
 <div class="row mb-3">
     <label class="col-md-1 form-label text-end">Start Date</label>
     <div class="col-md-3">
+        
         <el-date-picker v-model="form.startDate"
                         type="date"
-                        value-format="YYYY-MM-DD"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS"
                         placeholder="Pick Date">
         </el-date-picker>
     </div>
@@ -85,7 +88,8 @@
     <div class="col-md-3">
         <el-date-picker v-model="form.endDate"
                         type="date"
-                        value-format="YYYY-MM-DD"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS"
                         placeholder="Pick Date">
         </el-date-picker>
     </div>

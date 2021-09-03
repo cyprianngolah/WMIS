@@ -637,7 +637,12 @@
     <Content Include="js\Modules\wmis.wolfnecropsy.new.js" />
     <Content Include="js\Modules\wmis.wolfnecropsy.upload.js" />
     <Content Include="js\v2\components\BaseComponents.js" />
+    <Content Include="js\v2\components\GMap.js" />
+    <Content Include="js\v2\components\HistoryTab.js" />
+    <Content Include="js\v2\components\ProjectSites.js" />
     <Content Include="js\v2\components\ProjectSurveys.js" />
+    <Content Include="js\v2\components\SurveyObservations.js" />
+    <Content Include="js\v2\components\FileTab.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.edit.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.index.js" />
@@ -646,9 +651,13 @@
     <Content Include="js\v2\modules\biodiversity\wmis.taxonomy.edit.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.taxonomy.index.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.taxonomy.new.js" />
+    <Content Include="js\v2\modules\collaredanimals\wmis.collaredanimal.edit.js" />
+    <Content Include="js\v2\modules\collaredanimals\wmis.collaredanimal.index.js" />
     <Content Include="js\v2\modules\project\wmis.project.edit.js" />
     <Content Include="js\v2\modules\project\wmis.project.index.js" />
     <Content Include="js\v2\modules\project\wmis.project.new.js" />
+    <Content Include="js\v2\modules\project\wmis.project.site.edit.js" />
+    <Content Include="js\v2\modules\project\wmis.project.site.new.js" />
     <Content Include="js\v2\modules\project\wmis.project.survey.edit.js" />
     <Content Include="js\v2\modules\project\wmis.project.survey.new.js" />
     <Content Include="js\v2\modules\references\wmis.references.edit.js" />
@@ -666,6 +675,7 @@
     <Content Include="js\v2\modules\cosewicstatus\wmis.cosewicstatus.index.js" />
     <Content Include="js\v2\modules\ranks\wmis.ranks.edit.js" />
     <Content Include="js\v2\modules\ranks\wmis.ranks.index.js" />
+    <Content Include="js\v2\wmis.mapping.js" />
     <Content Include="js\v2\wmis.js" />
     <Content Include="js\VueModules\wmis.tools.adddatamanually.js" />
     <Content Include="js\VueModules\wmis.tools.batchreject.js" />
@@ -701,7 +711,7 @@
     <Content Include="Content\Files\WolfnecropsyBulkUploadTemplate.xlsx" />
     <Content Include="Content\Files\RabiesTestsBulkUploadTemplate.xlsx" />
     <Content Include="Content\v2\fonts\element-icons.ttf" />
-    <Content Include="Content\v2\fonts\element-icons.woff" />
+    <Content Include="Content\v2\fonts\element-iconsX.woff" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-brands-400.eot" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-brands-400.ttf" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-brands-400.woff" />
@@ -714,6 +724,7 @@
     <Content Include="Content\v2\fontawesome\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-solid-900.woff" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\v2\fonts\element-icons.woff" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />
@@ -991,6 +1002,8 @@
     <Content Include="Views\NwtSarcAssessment\New.cshtml" />
     <Content Include="Views\Project\GeneralTab.cshtml" />
     <Content Include="Views\Project\SurveysTab.cshtml" />
+    <Content Include="Views\Project\SurveyObservationsTab.cshtml" />
+    <Content Include="Views\Project\SitesTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

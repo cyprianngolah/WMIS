@@ -1,176 +1,217 @@
-﻿<div data-bind="with: collar" class="tab-pane form-horizontal" id="collarTab">
-    <div class="form-group">
-        <label for="collarId" class="col-md-1 control-label">Collar Id</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="collarId" data-bind="value: collarId">
-        </div>
-
-        <label for="subscriptionId" class="col-md-1 control-label">Subscription ID (PTT)</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="subscriptionId" data-bind="value: subscriptionId">
-        </div>
-
-        <label for="vhfFrequency" class="col-md-1 control-label">VHF Frequency</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="vhfFrequency" data-bind="value: vhfFrequency">
-        </div>
+﻿<div class="row mb-3 d-flex align-items-center">
+    <label class="col-md-1 form-label text-end">Collar ID</label>
+    <div class="col-md-3">
+        <base-input v-model="form.collarId" id="collarId"></base-input>
     </div>
 
-    <div class="form-group">
-        <label for="collarType" class="col-md-1 control-label">Collar Type</label>
-        <div class="col-md-3" data-bind="with: collarType">
-            <!-- ko if: $root.dropdowns.collarTypes().length > 0 -->
-            <select class="form-control" id="collarType" name="collarType" data-bind="options: $root.dropdowns.collarTypes, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            <!-- /ko -->
-        </div>
-
-        <label for="jobNumber" class="col-md-1 control-label">Job Number</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="jobNumber" data-bind="value: jobNumber">
-        </div>
-
-        <label for="argosProgram" class="col-md-1 control-label">Program Number</label>
-        <div class="col-md-3" data-bind="with: argosProgram">
-            <!-- ko if: $root.dropdowns.programs().length > 0 -->
-            <select class="form-control" id="argosProgram" name="argosProgram" data-bind="options: $root.dropdowns.programs, optionsText: 'programNumber', optionsValue: 'key', optionsCaption: '', value: key, select2: {}"></select>
-            <!-- /ko -->
-        </div>
+    <label class="col-md-1 text-end">Subscription ID (PTT)</label>
+    <div class="col-md-3">
+        <base-input v-model="form.subscriptionId" id="subscriptionId"></base-input>
     </div>
 
-    <div class="form-group">
-        <label for="collarRegion" class="col-md-1 control-label">Region</label>
-        <div class="col-md-3" data-bind="with: collarRegion">
-            <!-- ko if: $root.dropdowns.collarRegions().length > 0 -->
-            <select class="form-control" id="collarRegion" name="collarRegion" data-bind="options: $root.dropdowns.collarRegions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            <!-- /ko -->
-        </div>
+    <label class="col-md-1 text-end">VHF Frequency</label>
+    <div class="col-md-3">
+        <base-input v-model="form.vhfFrequency" id="vhfFrequency"></base-input>
+    </div>
+</div>
 
-        <label for="inactiveDate" class="col-md-1 control-label">End Date</label>
-        <div class="col-md-3">
-            <div class="input-group date" data-bind="datePicker: inactiveDate">
-                <input type="text" class="form-control" readonly="readonly">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-            </div>
-            @*<input class="form-control" id="inactiveDate" type="date" data-bind="value: inactiveDate" />*@
-        </div>
 
-        <label for="deploymentDate" class="col-md-1 control-label">Deployment Date</label>
-        <div class="col-md-3">
-            <div class="input-group date" data-bind="datePicker: deploymentDate">
-                <input type="text" class="form-control" readonly="readonly">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-            </div>
-            @*<input class="form-control" id="deploymentDate" type="date" data-bind="value: deploymentDate" />*@
-        </div>
+<div class="row mb-3 d-flex align-items-center">
+    <label class="col-md-1 form-label text-end">Collar Type</label>
+    <div class="col-md-3">
+        <el-select class="w-100" v-model="form.collarType.key">
+            <el-option v-for="item in collarTypes"
+                       :key="item.key"
+                       :label="item.name"
+                       :value="item.key">
+            </el-option>
+        </el-select>
     </div>
 
-    <div class="form-group">
-        <label for="collarModel" class="col-md-1 control-label">Collar Model</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="collarModel" data-bind="value: model">
-        </div>
+    <label class="col-md-1 text-end">Job Number</label>
+    <div class="col-md-3">
+        <base-input v-model="form.jobNumber" id="jobNumber"></base-input>
+    </div>
 
-        <label for="collarStatus" class="col-md-1 control-label">Collar Status</label>
-        <div class="col-md-3" data-bind="with: collarStatus">
-            <!-- ko if: $root.dropdowns.collarStatuses().length > 0 -->
-            <select class="form-control" id="collarStatus" name="collarStatus" data-bind="options: $root.dropdowns.collarStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            <!-- /ko -->
-        </div>
+    <label class="col-md-1 text-end">Program Number</label>
+    <div class="col-md-3">
+        <el-select class="w-100" v-model="form.argosProgram.key">
+            <el-option v-for="item in programs"
+                       :key="item.key"
+                       :label="item.programNumber"
+                       :value="item.key">
+            </el-option>
+        </el-select>
+    </div>
 
-        <label for="collarMalfunction" class="col-md-1 control-label">Collar Malfunction</label>
-        <div class="col-md-3" data-bind="with: collarMalfunction">
-            <!-- ko if: $root.dropdowns.collarMalfunctions().length > 0 -->
-            <select class="form-control" id="collarMalfunction" name="collarMalfunction" data-bind="options: $root.dropdowns.collarMalfunctions, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            <!-- /ko -->
-        </div>
+</div>
+
+
+<div class="row mb-3 d-flex align-items-center">
+    <label class="col-md-1 form-label text-end">Region</label>
+    <div class="col-md-3">
+        <el-select class="w-100" v-model="form.collarRegion.key">
+            <el-option v-for="item in collarRegions"
+                       :key="item.key"
+                       :label="item.name"
+                       :value="item.key">
+            </el-option>
+        </el-select>
+    </div>
+
+    <label class="col-md-1 text-end">End Date</label>
+    <div class="col-md-3">
+        <el-date-picker v-model="form.inactiveDate"
+                        type="date"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+        </el-date-picker>
+    </div>
+
+    <label class="col-md-1 text-end">Deployment Date</label>
+    <div class="col-md-3">
+        <el-date-picker v-model="form.deploymentDate"
+                        type="date"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+        </el-date-picker>
+    </div>
+
+</div>
+
+<div class="row mb-3 d-flex align-items-center">
+    <label class="col-md-1 form-label text-end">Collar Model</label>
+    <div class="col-md-3">
+        <base-input v-model="form.model" id="model"></base-input>
+    </div>
+
+    <label class="col-md-1 text-end">Collar Status</label>
+    <div class="col-md-3">
+        <el-select class="w-100" v-model="form.collarStatus.key">
+            <el-option v-for="item in collarStatuses"
+                       :key="item.key"
+                       :label="item.name"
+                       :value="item.key">
+            </el-option>
+        </el-select>
+    </div>
+
+    <label class="col-md-1 text-end">Collar Malfunction</label>
+    <div class="col-md-3">
+        <el-select class="w-100" v-model="form.collarMalfunction.key">
+            <el-option v-for="item in collarMalfunctions"
+                       :key="item.key"
+                       :label="item.name"
+                       :value="item.key">
+            </el-option>
+        </el-select>
+    </div>
+
+</div>
+
+
+<div class="row gy-3 mb-3 d-flex align-items-center">
+    <label class="col-md-1 form-label text-end">Collar State</label>
+    <div class="col-md-3">
+        <el-select class="w-100" v-model="form.collarState.key">
+            <el-option v-for="item in collarStates"
+                       :key="item.key"
+                       :label="item.name"
+                       :value="item.key">
+            </el-option>
+        </el-select>
     </div>
 
 
-    <div class="form-group">
-        <label for="collarState" class="col-md-1 control-label">Collar State</label>
-        <div class="col-md-3" data-bind="with: collarState">
-            <!-- ko if: $root.dropdowns.collarStates().length > 0 -->
-            <select class="form-control" id="collarState" name="collarState" data-bind="options: $root.dropdowns.collarStates, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-            <!-- /ko -->
-        </div>
-
-        <label for="hasPttBeenReturned" class="col-md-2 control-label">Has PTT been returned?</label>
-        <div class="col-md-2">
-            <input id="hasPttBeenReturned" type="checkbox" data-bind="checked: hasPttBeenReturned" />
-        </div>
-
-        <label for="geofencing" class="col-md-1 control-label">Geofencing</label>
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="geofencing" data-bind="value: geofencing">
-        </div>
+    <label class="col-md-1 text-end"></label>
+    <div class="col-md-3">
+        <el-checkbox v-model="form.hasPttBeenReturned" class="w-100" label="Has PTT been returned?" border></el-checkbox>
     </div>
 
-    <div class="form-group">
-        <label for="releasedOnSchedule" class="col-md-1 control-label">Released on schedule?</label>
-        <div class="col-md-2">
-            <input id="releasedOnSchedule" type="checkbox"  data-bind="checked: releasedOnSchedule"/>
-        </div>
-
+    <label class="col-md-1 text-end">Geofencing</label>
+    <div class="col-md-3">
+        <base-input v-model="form.geofencing" id="geofencing"></base-input>
     </div>
 
-    <div class="form-group">
-        <label for="comments" class="col-md-1 control-label">Comments</label>
-        <div class="col-md-11">
-            <textarea rows="4" name="comments" class="form-control" data-bind="value: comments"></textarea>
-        </div>
+    <label class="col-md-1 text-end"></label>
+    <div class="col-md-3">
+        <el-checkbox v-model="form.releasedOnSchedule" class="w-100" label="Released on schedule?" border></el-checkbox>
+    </div>
+</div>
+
+
+<div class="row gy-3 mb-3 d-flex align-items-center">
+    <label class="col-md-1 text-end">Comments</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.comments" id="comments"></base-input>
+    </div>
+</div>
+
+
+<div class="row gy-3 mb-3 d-flex align-items-center">
+    <label class="col-md-1 form-label text-end">Collar Size</label>
+    <div class="col-md-3">
+        <base-input v-model="form.size" id="size"></base-input>
     </div>
 
-    <div class="row">
-   
-        <div class="form-group">
-            <label for="size" class="col-md-1 control-label">Collar Size</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="size" data-bind="value: size" />
-            </div>
 
-            <label for="beltingColour" class="col-md-1 control-label">Collar Belting Colour</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="beltingColour" data-bind="value: beltingColour" />
-            </div>
-
-            <label for="firmwareVersion" class="col-md-1 control-label">Firmware Version</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="firmwareVersion" data-bind="value: firmwareVersion" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="dropOffDate" class="col-md-2 control-label">Programmed Dropoff</label>
-            <div class="col-md-2">
-                <div class="input-group date" data-bind="datePicker: dropOffDate">
-                    <input type="text" class="form-control" readonly="readonly">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-            </div>
-  
-            <label for="estimatedGpsBatteryEnd" class="col-md-2 control-label">GPS Battery End</label>
-            <div class="col-md-2">
-                <div class="input-group date" data-bind="datePicker: estimatedGpsBatteryEnd">
-                    <input type="text" class="form-control" readonly="readonly">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-            </div>
-
-            <label for="estimatedVhfBatteryEnd" class="col-md-2 control-label">VHF Battery End</label>
-            <div class="col-md-2">
-                <div class="input-group date" data-bind="datePicker: estimatedVhfBatteryEnd">
-                    <input type="text" class="form-control" readonly="readonly">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-            </div>
-        </div>
+    <label class="col-md-1 form-label text-end">Collar Belting Colour</label>
+    <div class="col-md-3">
+        <base-input v-model="form.beltingColour" id="beltingColour"></base-input>
     </div>
 
-    <div class="form-group">
-        <label for="programmingSpec" class="col-md-1 control-label">Programming Specifications</label>
-        <div class="col-md-11">
-            <textarea name="programmingSpec" class="form-control" data-bind="value: programmingSpec"></textarea>
-        </div>
+
+    <label class="col-md-1 form-label text-end">Firmware Version</label>
+    <div class="col-md-3">
+        <base-input v-model="form.firmwareVersion" id="firmwareVersion"></base-input>
     </div>
 
+</div>
+
+
+
+<div class="row gy-3 mb-3 d-flex align-items-center">
+    <label class="col-md-1 form-label text-end">
+        Programmed Dropoff
+    </label>
+    <div class="col-md-3">
+        <el-date-picker v-model="form.dropOffDate"
+                        type="date"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+        </el-date-picker>
+    </div>
+
+
+    <label class="col-md-1 form-label text-end">
+        GPS Battery End
+    </label>
+    <div class="col-md-3">
+        <el-date-picker v-model="form.estimatedGpsBatteryEnd"
+                        type="date"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+        </el-date-picker>
+    </div>
+
+
+    <label class="col-md-1 form-label text-end">
+        VHF Battery End
+    </label>
+    <div class="col-md-3">
+        <el-date-picker v-model="form.estimatedVhfBatteryEnd"
+                        type="date"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+        </el-date-picker>
+    </div>
+
+</div>
+
+
+<div class="row gy-3 mb-3 d-flex align-items-center">
+    <label class="col-md-1 form-label text-end">Programming Specifications</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.programmingSpec" id="programmingSpec"></base-input>
+    </div>
 </div>

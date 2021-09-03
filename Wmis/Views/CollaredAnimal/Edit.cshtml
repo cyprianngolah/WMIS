@@ -1,20 +1,19 @@
 ﻿@using Wmis.Extensions
 @{
     ViewBag.Title = "Collared Animal";
-    ViewBag.SubTitle = "<span data-bind='with: collar'><span data-bind='text: animalId'></span></span>";
+    ViewBag.SubTitle = "<span v-if='form'>{{ form.animalId }}</span>";
 }
 
 @section TopRight{
-    <div class="h4 pull-right" style="text-align: right; margin: 0;" data-bind="with: collar">
-        <span data-bind="with: collarStatus">Collar Status: <strong><span data-bind="text: name"></span></strong><br /></span>
-        <span data-bind="with: animalStatus">Animal Status: <strong><span data-bind="text: name"></span></strong><br /></span>
-        <span class="h5">Last Updated: <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
+    <div class="h6 text-end" v-if="form">
+        <span v-if="form.collarStatus">Collar Status: <strong>{{ form.collarStatus.name }}</strong><br /></span>
+        <span v-if="form.animalStatus">Animal Status: <strong>{{ form.animalStatus.name }}</strong><br /></span>
+        <span class="h5">Last Updated: <span>{{ lastUpdated }} </span> <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
     </div>
 }
 
 @section Styles {
-    @Html.Raw(Styles.Render("~/bundles/datePickerCss"))
-    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
 
     <style>
@@ -22,87 +21,90 @@
             height: 600px;
             width: 100%;
         }
-
-        .datepicker { z-index: 1151 !important; }
-
     </style>
 
 }
 
 @section Scripts{
     @*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>*@
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM&callback=initMap" type="text/javascript"></script>
-    @Html.Raw(Scripts.Render("~/bundles/datePicker"))
-    @Html.Raw(Scripts.Render("~/bundles/datatables"))
-    @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/knockout"))
-    @Html.Raw(Scripts.Render("~/bundles/collaredanimal/edit"))
-    @Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
-    @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
+    @*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM&callback=initMap" type="text/javascript"></script>*@
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM" type="text/javascript"></script>
 
-    <script>
-        $(function() {
-            wmis.collaredanimal.edit.initialize({
-                collaredAnimalKey: @ViewBag.Key
-            });
-            wmis.shared.filetab.initialize(@ViewBag.Key, 'CollaredAnimals', 'fileTemplateTempDiv');
-            wmis.shared.historytab.initialize(@ViewBag.Key, 'CollaredAnimals', 'historyTemplateTempDiv');
-        });
+    <script type="text/html" id="history-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
     </script>
+
+    <script type="text/html" id="file-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
+    </script>
+
+    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
+    @Html.Raw(Scripts.Render("~/bundles/components/FileTab"))
+    @Html.Raw(Scripts.Render("~/bundles/collaredanimal/edit"))
 }
 
-@section Dialogs {
-    @{ Html.RenderPartial("EditModals"); }
-    @{ Html.RenderPartial("~/Views/Shared/FileTab.cshtml"); }
-    @{ Html.RenderPartial("~/Views/Shared/Mapping.cshtml"); }
-    @{ Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml"); }
-}
 
-<form role="form">
-    <div class="row">
-        <div class="col-md-12 text-right">
+<input type="hidden" id="collaredAnimalKey" value="@ViewBag.Key" />
 
-            <a href="/CollaredAnimal/" class="btn btn-default">
-                @if (Html.UserIsProjectCollarAdministrator())
-                {
-                    <span>Cancel</span>
-                }
-                else
-                {
-                    <span>Back</span>
-                }
-            </a>
+
+
+<div class="row">
+    <div class="col-md-12 text-end">
+
+        <a href="/CollaredAnimal/" class="el-button is-plain el-button--danger el-button--medium">
             @if (Html.UserIsProjectCollarAdministrator())
             {
-                <button type="submit" class="btn btn-primary" data-bind="click: saveCollar, enable: canSave">Save</button>
+                <span>Cancel</span>
             }
-        </div>
+            else
+            {
+                <span>Back</span>
+            }
+        </a>
+        @if (Html.UserIsProjectCollarAdministrator())
+        {
+            <base-button color="success" :busy="loading" v-on:click.prevent="saveUpdate()">Save</base-button>
+        }
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="active">
-                    <a href="#animalTab" role="tab" data-toggle="tab" class="colouredTab reproductionTab">Animal</a>
-                </li>
-                <li>
-                    <a href="#collarTab" role="tab" data-toggle="tab" class="colouredTab generalTab">Collar</a>
-                </li>
-                <li data-bind="click: mapTabClicked">
-                    <a href="#locations" role="tab" data-toggle="tab" id="map-tab" class="colouredTab distributionTab">Locations</a>
-                </li>
-                <li>
-                    <a href="#files" role="tab" data-toggle="tab" class="colouredTab fileTab">Links</a>
-                </li>
-                <li>
-                    <a href="#history" role="tab" data-toggle="tab" class="colouredTab historyTab">History</a>
-                </li>
-            </ul>
+<div class="row" v-if="loaded">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item active"><a href="#animalTab" role="tab" data-bs-toggle="tab" class="nav-link active">Animal</a></li>
+            <li class="nav-item"><a href="#collarTab" role="tab" data-bs-toggle="tab" class="nav-link">Collar</a></li>
+            <li class="nav-item"><a href="#mapTab" role="tab" data-bs-toggle="tab" class="nav-link">Locations</a></li>
+            <li class="nav-item"><a href="#filesTab" role="tab" data-bs-toggle="tab" class="nav-link">Links</a></li>
+            <li class="nav-item"><a href="#historyTab" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
+        </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content" style="margin-top: 10px;">
+        <!-- Tab panes -->
+        <div class="tab-content" id="collarAnimalContent">
 
+            <div id="animalTab" class="tab-pane active py-4">
                 @{ Html.RenderPartial("AnimalTab"); }
+            </div>
+
+            <div id="collarTab" class="tab-pane py-4">
+                @{ Html.RenderPartial("CollarTab"); }
+            </div>
+
+            <div id="mapTab" class="tab-pane py-4">
+                Animal
+            </div>
+
+            <div id="filesTab" class="tab-pane py-4">
+                <file-tab v-if="key" :parent_table_key="key" parent_table_name="CollaredAnimals"></file-tab>
+            </div>
+
+            <div id="historyTab" class="tab-pane py-4">
+                <history-tab v-if="key" :parent_table_key="key" parent_table_name="CollaredAnimals"></history-tab>
+            </div>
+
+            @*@{ Html.RenderPartial("AnimalTab"); }
                 @{ Html.RenderPartial("CollarTab"); }
 
                 <div class="tab-pane form-horizontal" id="locations">
@@ -119,14 +121,14 @@
                                     <li style="background: url(/content/images/maps-symbol-blank-stop.png) no-repeat center left">Last location</li>
                                     <li style="background: url(/content/images/maps-symbol-line.png) no-repeat center left">Line goes from Starting location through each point up to the Last location</li>
                                 </ul>
-                                <hr style="clear: left"/>
+                                <hr style="clear: left" />
                             </div>
 
-                            <br/>
+                            <br />
                         </div>
                         <div class="col-lg-7">
                             <div id="locationTableFilter"></div>
-                        
+
 
                             <table id="locationTable" class="table">
                                 <thead>
@@ -152,8 +154,138 @@
 
                 <div id="history" class="tab-pane form-horizontal">
                     <div id="historyTemplateTempDiv"></div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- BREEDING STATUS MODAL -->
+<div class="modal fade" id="breedingStatusModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Breeding Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" v-if="loaded">
+                <div class="card border-0">
+                    <div class="row g-3">
+                        <lable class="col-3 text-end">Status</lable>
+                        <div class="col-9">
+                            <el-select class="w-100" v-model="breedingStatusForm.breedingStatus.key">
+                                <el-option v-for="item in breedingStatuses"
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <lable class="col-3 text-end">Confidence</lable>
+                        <div class="col-9">
+                            <el-select class="w-100" v-model="breedingStatusForm.breedingStatusConfidenceLevel.key">
+                                <el-option v-for="item in confidenceLevels"
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <lable class="col-3 text-end">Method</lable>
+                        <div class="col-9">
+                            <el-select class="w-100" v-model="breedingStatusForm.breedingStatusMethod.key" placeholder="Select">
+                                <el-option v-for="item in breedingStatusMethods"
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <lable class="col-3 text-end">Effective Date</lable>
+                        <div class="col-9">
+                            <el-date-picker v-model="breedingStatusForm.breedingStatusDate"
+                                            type="date"
+                                            class="w-100"
+                                            value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+                            </el-date-picker>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :disabled="disableBreedingStatusCreate" v-on:click="updateBreedingStatus()">
+                    Update
+                </base-button>
             </div>
         </div>
     </div>
-</form>
+</div>
+
+
+<!-- HERD ASSOCIATION MODAL -->
+<div class="modal fade" id="herdAssociationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Herd Association</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" v-if="loaded">
+                <div class="card border-0">
+                    <div class="row g-3">
+                        <lable class="col-3 text-end">Population</lable>
+                        <div class="col-9">
+                            <el-select class="w-100" v-model="herdAssociationForm.herdPopulation.key">
+                                <el-option v-for="item in herdPopulations"
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <lable class="col-3 text-end">Confidence</lable>
+                        <div class="col-9">
+                            <el-select class="w-100" v-model="herdAssociationForm.herdAssociationConfidenceLevel.key">
+                                <el-option v-for="item in confidenceLevels"
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <lable class="col-3 text-end">Method</lable>
+                        <div class="col-9">
+                            <el-select class="w-100" v-model="herdAssociationForm.herdAssociationMethod.key">
+                                <el-option v-for="item in herdAssociationMethods"
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <lable class="col-3 text-end">Effective Date</lable>
+                        <div class="col-9">
+                            <el-date-picker v-model="herdAssociationForm.herdAssociationDate"
+                                            type="date"
+                                            class="w-100"
+                                            value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+                            </el-date-picker>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :disabled="disableHerdAssociationCreate" v-on:click="updateHerdAssociation()">
+                    Update
+                </base-button>
+            </div>
+        </div>
+    </div>
+</div>
