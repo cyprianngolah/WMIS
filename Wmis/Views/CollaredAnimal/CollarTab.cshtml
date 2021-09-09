@@ -20,6 +20,7 @@
     <label class="col-md-1 form-label text-end">Collar Type</label>
     <div class="col-md-3">
         <el-select class="w-100" v-model="form.collarType.key">
+            <el-option :value="0" label="Select Type" disabled></el-option>
             <el-option v-for="item in collarTypes"
                        :key="item.key"
                        :label="item.name"
@@ -36,6 +37,7 @@
     <label class="col-md-1 text-end">Program Number</label>
     <div class="col-md-3">
         <el-select class="w-100" v-model="form.argosProgram.key">
+            <el-option :value="0" label="Select Program" disabled></el-option>
             <el-option v-for="item in programs"
                        :key="item.key"
                        :label="item.programNumber"
@@ -51,6 +53,7 @@
     <label class="col-md-1 form-label text-end">Region</label>
     <div class="col-md-3">
         <el-select class="w-100" v-model="form.collarRegion.key">
+            <el-option :value="0" label="Select Region" disabled></el-option>
             <el-option v-for="item in collarRegions"
                        :key="item.key"
                        :label="item.name"
@@ -88,6 +91,7 @@
     <label class="col-md-1 text-end">Collar Status</label>
     <div class="col-md-3">
         <el-select class="w-100" v-model="form.collarStatus.key">
+            <el-option :value="0" label="Select Status" disabled></el-option>
             <el-option v-for="item in collarStatuses"
                        :key="item.key"
                        :label="item.name"
@@ -99,6 +103,7 @@
     <label class="col-md-1 text-end">Collar Malfunction</label>
     <div class="col-md-3">
         <el-select class="w-100" v-model="form.collarMalfunction.key">
+            <el-option :value="0" label="Select Malfunction" disabled></el-option>
             <el-option v-for="item in collarMalfunctions"
                        :key="item.key"
                        :label="item.name"

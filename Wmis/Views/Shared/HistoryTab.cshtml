@@ -1,8 +1,8 @@
 ﻿@using Wmis.Extensions
 <div class="col-md-12 " id="historyTabTemplate">
-    @if (@ViewBag.Title != "Project" && @ViewBag.Title != "Survey")
+    @if (@ViewBag.Title != "Project" && @ViewBag.Title != "Survey" && ViewBag.Title != "User")
     {
-        <div class="row">
+        <div class="row py-3">
             <label for="historyFilter" class="col-md-1 text-end">Filter</label>
             <div class="col-md-2">
                 <el-select size="small" clearable v-model="filterValue">

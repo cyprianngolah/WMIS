@@ -24,7 +24,9 @@
 </div>
 
 <div class="row" v-if="hasObservations">
-    <g-map :points="observationData" v-on:point:selected="handleSelectedPass" :selectedPass="selectedPass" :passStatusFunction="getPassStatus"></g-map>
+    <div class="col-12 mb-4">
+        <g-map :points="observationData" v-on:point:selected="handleSelectedPass" :selectedPass="selectedPass" :passStatusFunction="getPassStatus"></g-map>
+    </div>
     <div class="col-12">
         <table id="locationTable" class="table table-sm">
             <thead>
@@ -118,22 +120,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
-                    <iframe id="uploadIframe"
-                            name="uploadIframe" src=""
-                            style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
-                    <form role="form"
-                          ref="observationFileUploadForm"
-                          id="observationFileUploadForm" enctype="multipart/form-data"
-                          :action="`/api/observation/upload/${survey_id}`" method="post" target="uploadIframe">
-                        <div class="row g-2">
-                            <div class="col-12 font-weight-bold">Observation File</div>
-                            <div class="col-12">
-                                <input type="file" id="fileUpload" name="fileUpload">
-                                <p class="help-block mt-2">Only .xls and .xlsx files are supported.</p>
-                            </div>
+
+                <iframe id="uploadIframe"
+                        name="uploadIframe" src=""
+                        style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
+                <form role="form"
+                      ref="observationFileUploadForm"
+                      id="observationFileUploadForm" enctype="multipart/form-data"
+                      :action="`/api/observation/upload/${survey_id}`" method="post" target="uploadIframe">
+                    <div class="row g-2">
+                        <div class="col-12 font-weight-bold">Observation File</div>
+                        <div class="col-12">
+                            <input type="file" id="fileUpload" name="fileUpload">
+                            <p class="help-block mt-2">Only .xls and .xlsx files are supported.</p>
                         </div>
-                    </form>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

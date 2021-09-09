@@ -4,7 +4,8 @@
         BaseButton,
         FileTab,
         HistoryTab,
-        BaseSpeciesSelect
+        BaseSpeciesSelect,
+        CollaredAnimalMapping
     },
 
     data() {
@@ -92,7 +93,6 @@
             this.setKey()
             axios.get(`/api/collar/${this.key}`)
                 .then(response => {
-                    //console.log(response.data)
                     this.form = response.data
                     this.initialData = JSON.stringify(response.data);
                 }).then(() => {

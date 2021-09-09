@@ -1,209 +1,234 @@
-﻿<div class="tab-pane form-horizontal fade show active" id="general" v-if="form.references">
-    <reference-widget :references="form.references"
-                      :update_function="updateReference"
-                      category_name='Naming'
-                      :category_id="1"></reference-widget>
-    <div class="row mb-3">
-        <label for="name" class="col-md-1 form-label text-end">Species</label>
-        <div class="col-md-5">
-            <base-input v-model="form.name" id="name"></base-input>
-            <species-synonym-editor params="speciesId: key, normalName: name, speciesSynonymTypeId: 1, synonymsArray: $root.speciesSynonyms"></species-synonym-editor>
-        </div>
+﻿<div class="tab-pane py-3 fade show active" id="general" v-if="form.references">
 
-        <label for="subSpecies" class="col-md-1 form-label text-end">Sub Species</label>
-        <div class="col-md-5">
-            <base-input v-model="form.subSpecies" id="subSpecies"></base-input>
-            <species-synonym-editor params="speciesId: key, normalName: subSpeciesName, speciesSynonymTypeId: 2, synonymsArray: $root.subSpeciesSynonyms"></species-synonym-editor>
+    <div class="card">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Naming'
+                              :category_id="1"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Species</label>
+                <div class="col-md-5">
+                    <base-input v-model="form.name" id="name"></base-input>
+                    <species-synonym-editor 
+                            :entity_id="biodiversityKey"
+                            entity_type="species"
+                            :species_synonym_type_id="1"></species-synonym-editor>
+                </div>
+
+                <label for="subSpecies" class="col-md-1 form-label text-end">Sub Species</label>
+                <div class="col-md-5">
+                    <base-input v-model="form.subSpeciesName" id="subSpeciesName"></base-input>
+                    <species-synonym-editor :entity_id="biodiversityKey"
+                                            entity_type="species"
+                                            :species_synonym_type_id="2"></species-synonym-editor>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="commonName" class="col-md-1 form-label text-end">Common Name</label>
+                <div class="col-md-5">
+                    <base-input v-model="form.commonName" id="commonName"></base-input>
+                    <species-synonym-editor :entity_id="biodiversityKey"
+                                            entity_type="species"
+                                            :species_synonym_type_id="3"></species-synonym-editor>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="ecoType" class="col-md-1 form-label text-end">Eco Type</label>
+                <div class="col-md-2">
+                    <base-input v-model="form.ecoType" id="ecoType"></base-input>
+                    <species-synonym-editor :entity_id="biodiversityKey"
+                                            entity_type="species"
+                                            :species_synonym_type_id="4"></species-synonym-editor>
+                </div>
+
+                <label for="nsGlobalId" class="col-md-1 form-label text-end">NS Global ID</label>
+                <div class="col-md-2">
+                    <base-input v-model="form.nsGlobalId" id="nsGlobalId"></base-input>
+                </div>
+
+                <label for="nsNWtId" class="col-md-1 form-label text-end">NS NWT ID</label>
+                <div class="col-md-2">
+                    <base-input v-model="form.nsNwtId" id="nsNwtId"></base-input>
+                </div>
+
+
+                <label for="elcode" class="col-md-1 form-label text-end">ELCODE</label>
+                <div class="col-md-2">
+                    <base-input v-model="form.elcode" id="elcode"></base-input>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+                <label for="populations" class="col-md-1 form-label text-end">Populations</label>
+                <div class="col-md-11">
+                    <population-tags :populations="form.populations" v-model="form.populations"></population-tags>
+                </div>
+            </div>
+
+
         </div>
     </div>
-
-    <div class="row mb-3">
-        <label for="commonName" class="col-md-1 form-label text-end">Common Name</label>
-        <div class="col-md-5">
-            <base-input v-model="form.commonName" id="commonName"></base-input>
-            <species-synonym-editor params="speciesId: key, normalName: commonName, speciesSynonymTypeId: 3, synonymsArray: $root.commonNameSynonyms"></species-synonym-editor>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label for="ecoType" class="col-md-1 form-label text-end">Eco Type</label>
-        <div class="col-md-2">
-            <base-input v-model="form.ecoType" id="ecoType"></base-input>
-            <species-synonym-editor params="speciesId: key, normalName: ecoType, speciesSynonymTypeId: 4, synonymsArray: $root.ecoTypeSynonyms"></species-synonym-editor>
-        </div>
-
-        <label for="nsGlobalId" class="col-md-1 form-label text-end">NS Global ID</label>
-        <div class="col-md-2">
-            <base-input v-model="form.nsGlobalId" id="nsGlobalId"></base-input>
-        </div>
-
-        <label for="nsNWtId" class="col-md-1 form-label text-end">NS NWT ID</label>
-        <div class="col-md-2">
-            <base-input v-model="form.nsNwtId" id="nsNwtId"></base-input>
-        </div>
-
-
-        <label for="elcode" class="col-md-1 form-label text-end">ELCODE</label>
-        <div class="col-md-2">
-            <base-input v-model="form.elcode" id="elcode"></base-input>
-        </div>
-
-    </div>
-
-    <div class="row mb-3">
-        <label for="populations" class="col-md-1 form-label text-end">Populations</label>
-        <div class="col-md-11">
-            <population-tags :populations="form.populations" v-model="form.populations"></population-tags>
-        </div>
-    </div>
-
 
     <!-- TAXONOMY -->
-    <reference-widget :references="form.references"
-                      :update_function="updateReference"
-                      category_name='Taxonomy'
-                      :category_id="2"></reference-widget>
-
-
-    <div class="row mb-3">
-        <label for="kingdom" class="col-md-1 form-label text-end">Kingdom</label>
-        <div class="col-md-5">
-            @*<base-select v-model="form.kingdom.key" id="kingdom" name="kingdom" :options="kingdoms"></base-select>*@
-            <base-dropdown-select :options="kingdoms" v-model="form.kingdom"></base-dropdown-select>
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
+    <div class="card mt-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Taxonomy'
+                              :category_id="2"></reference-widget>
         </div>
-    </div>
-    <div class="row mb-3">
-        <label for="commonName" class="col-md-1 form-label text-end">Phylum</label>
-        <div class="col-md-5" data-bind="with: phylum">
-            <base-dropdown-select :options="phylums" v-model="form.phylum"></base-dropdown-select>
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="kingdom" class="col-md-1 form-label text-end">Kingdom</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="kingdoms" v-model="form.kingdom"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.kingdom.key"
+                                            entity_type="taxonomy"></species-synonym-editor>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="commonName" class="col-md-1 form-label text-end">Phylum</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="phylums" v-model="form.phylum"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.phylum.key"
+                                            entity_type="taxonomy"></species-synonym-editor>
+                </div>
 
 
-        <label for="commonName" class="col-md-1 form-label text-end">Sub Phylum</label>
-        <div class="col-md-5" data-bind="with: subPhylum">
-            @*<base-select v-model="form.subPhylum.key" id="subPhylum" name="subPhylum" :options="subphylums"></base-select>*@
-            <base-dropdown-select :options="subphylums" v-model="form.subPhylum"></base-dropdown-select>
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
-    </div>
+                <label for="commonName" class="col-md-1 form-label text-end">Sub Phylum</label>
+                <div class="col-md-5" data-bind="with: subPhylum">
+                    <base-dropdown-select :options="subphylums" v-model="form.subPhylum"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.subPhylum.key"
+                                            entity_type="taxonomy"></species-synonym-editor>
+                </div>
+            </div>
 
-    <div class="row mb-3">
-        <label for="class" class="col-md-1 form-label text-end">Class</label>
-        <div class="col-md-5" data-bind="with: $root.className">
-            @*<base-select v-model="form.class.key" id="class" name="class" :options="classes"></base-select>*@
-            <base-dropdown-select :options="classes" v-model="form.class"></base-dropdown-select>
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
+            <div class="row mb-3">
+                <label for="class" class="col-md-1 form-label text-end">Class</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="classes" v-model="form.class"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.class.key"
+                                            entity_type="taxonomy"></species-synonym-editor>
+                </div>
 
-        <label for="subClass" class="col-md-1 form-label text-end">Sub Class</label>
-        <div class="col-md-5">
-            @*<base-select v-model="form.subClass.key" id="subClass" name="class" :options="subclasses"></base-select>*@
-            <base-dropdown-select :options="subclasses" v-model="form.subClass"></base-dropdown-select>
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
-    </div>
+                <label for="subClass" class="col-md-1 form-label text-end">Sub Class</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="subclasses" v-model="form.subClass"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.subClass.key"
+                                            entity_type="taxonomy"></species-synonym-editor>
+                </div>
+            </div>
 
-    <div class="row mb-3">
-        <label for="order" class="col-md-1 form-label text-end">Order</label>
-        <div class="col-md-5">
-            <base-dropdown-select :options="orders" v-model="form.order"></base-dropdown-select>
-            @*<base-select v-model="form.order.key" id="order" name="order" :options="orders"></base-select>*@
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
+            <div class="row mb-3">
+                <label for="order" class="col-md-1 form-label text-end">Order</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="orders" v-model="form.order"></base-dropdown-select>
+                <species-synonym-editor :entity_id="form.order.key"
+                                        entity_type="taxonomy"></species-synonym-editor>
+                </div>
 
-        <label for="subOrder" class="col-md-1 form-label text-end">Sub Order</label>
-        <div class="col-md-5">
-            <base-dropdown-select :options="suborders" v-model="form.subOrder"></base-dropdown-select>
-            @*<base-select v-model="form.subOrder.key" id="suborder" name="suborder" :options="suborders"></base-select>*@
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
-    </div>
+                <label for="subOrder" class="col-md-1 form-label text-end">Sub Order</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="suborders" v-model="form.subOrder"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.subOrder.key"
+                                            entity_type="taxonomy"></species-synonym-editor>
+                </div>
+            </div>
 
-    <div class="row mb-3">
-        <label for="infraOrder" class="col-md-1 form-label text-end">Infra Order</label>
-        <div class="col-md-5">
-            <base-dropdown-select :options="infraorders" v-model="form.infraOrder"></base-dropdown-select>
-            @*<base-select v-model="form.infraOrder.key" id="infraOrder" name="infraOrder" :options="infraorders"></base-select>*@
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
-    </div>
+            <div class="row mb-3">
+                <label for="infraOrder" class="col-md-1 form-label text-end">Infra Order</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="infraorders" v-model="form.infraOrder"></base-dropdown-select>
+                <species-synonym-editor :entity_id="form.infraOrder.key"
+                                        entity_type="taxonomy"></species-synonym-editor>
+                </div>
+            </div>
 
-    <div class="row mb-3">
-        <label for="superFamily" class="col-md-1 form-label text-end">Super Family</label>
-        <div class="col-md-5" data-bind="with: superFamily">
-            <base-dropdown-select :options="superfamilies" v-model="form.superFamily"></base-dropdown-select>
-            @*<base-select v-model="form.superFamily.key" id="superFamily" name="superFamily" :options="superfamilies"></base-select>*@
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
-    </div>
+            <div class="row mb-3">
+                <label for="superFamily" class="col-md-1 form-label text-end">Super Family</label>
+                <div class="col-md-5" data-bind="with: superFamily">
+                    <base-dropdown-select :options="superfamilies" v-model="form.superFamily"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.superFamily.key"
+                                        entity_type="taxonomy"></species-synonym-editor>
+                </div>
+            </div>
 
-    <div class="row mb-3">
-        <label for="family" class="col-md-1 form-label text-end">Family</label>
-        <div class="col-md-5">
-            <base-dropdown-select :options="families" v-model="form.family"></base-dropdown-select>
-            @*<base-select v-model="form.family.key" id="families" name="families" :options="families"></base-select>*@
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
+            <div class="row mb-3">
+                <label for="family" class="col-md-1 form-label text-end">Family</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="families" v-model="form.family"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.family.key"
+                                        entity_type="taxonomy"></species-synonym-editor>
+                </div>
 
-        <label for="subFamily" class="col-md-1 form-label text-end">Sub Family</label>
-        <div class="col-md-5">
-            <base-dropdown-select :options="subfamilies" v-model="form.subFamily"></base-dropdown-select>
-            @*<base-select v-model="form.subFamily.key" id="subfamily" name="subfamily" :options="subfamilies"></base-select>*@
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
-    </div>
+                <label for="subFamily" class="col-md-1 form-label text-end">Sub Family</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="subfamilies" v-model="form.subFamily"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.subFamily.key"
+                                        entity_type="taxonomy"></species-synonym-editor>
+                </div>
+            </div>
 
-    <div class="row mb-3">
-        <label for="group" class="col-md-1 form-label text-end">Group</label>
-        <div class="col-md-5">
-            <base-dropdown-select :options="groups" v-model="form.group"></base-dropdown-select>
-            @*<base-select v-model="form.group.key" id="group" name="group" :options="groups"></base-select>*@
-            <taxonomy-synonym-editor params="taxonomyId: key"></taxonomy-synonym-editor>
-        </div>
-    </div>
-
-
-    <reference-widget :references="form.references"
-                      :update_function="updateReference"
-                      category_name='Known Sub-Species (CAN)'
-                      :category_id="3"></reference-widget>
-
-    <div class="row mb-3">
-        <label for="group" class="col-md-3 form-label text-end">Number of Known Sub-Species CND</label>
-        <div class="col-md-2">
-            <base-input v-model="form.canadaKnownSubSpeciesCount" id="canadaKnownSubSpeciesCount"></base-input>
-        </div>
-
-        <div class="offset6 col-md-2 checkbox">
-            <label for="group">
-                <el-checkbox v-model="form.nonNtSpecies">Non-NT Species</el-checkbox>
-                @*<input type="checkbox" id="group" data-bind="checked: nonNtSpecies">*@
-                
-            </label>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 form-label text-end">Group</label>
+                <div class="col-md-5">
+                    <base-dropdown-select :options="groups" v-model="form.group"></base-dropdown-select>
+                    <species-synonym-editor :entity_id="form.group.key"
+                                        entity_type="taxonomy"></species-synonym-editor>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="row mb-3">
-        <label for="family" class="col-md-1 form-label text-end">Description</label>
-        <div class="col-md-11">
-            <textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control" v-model="form.canadaKnownSubSpeciesDescription"></textarea>
+    <div class="card mt-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Known Sub-Species (CAN)'
+                              :category_id="3"></reference-widget>
         </div>
-    </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-3 form-label text-end">Number of Known Sub-Species CND</label>
+                <div class="col-md-2">
+                    <base-input v-model="form.canadaKnownSubSpeciesCount" id="canadaKnownSubSpeciesCount"></base-input>
+                </div>
+
+                <div class="offset6 col-md-2 checkbox">
+                    <label for="group">
+                        <el-checkbox v-model="form.nonNtSpecies">Non-NT Species</el-checkbox>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="family" class="col-md-1 form-label text-end">Description</label>
+                <div class="col-md-11">
+                    <textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control" v-model="form.canadaKnownSubSpeciesDescription"></textarea>
+                </div>
+            </div>
 
 
-    <div class="row mb-3">
-        <label for="group" class="col-md-3  form-label text-end">Number of Known Sub-Species NWT</label>
-        <div class="col-md-2">
-            <base-input v-model="form.nwtKnownSubSpeciesCount" id="nwtKnownSubSpeciesCount"></base-input>
-        </div>
-    </div>
+            <div class="row mb-3">
+                <label for="group" class="col-md-3  form-label text-end">Number of Known Sub-Species NWT</label>
+                <div class="col-md-2">
+                    <base-input v-model="form.nwtKnownSubSpeciesCount" id="nwtKnownSubSpeciesCount"></base-input>
+                </div>
+            </div>
 
-    <div class="row mb-3">
-        <label for="family" class="col-md-1 form-label text-end">Description</label>
-        <div class="col-md-11">
-            <textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control" v-model="form.nwtKnownSubSpeciesDescription"></textarea>
+            <div class="row mb-3">
+                <label for="family" class="col-md-1 form-label text-end">Description</label>
+                <div class="col-md-11">
+                    <textarea rows="4" name="knownSubSpeciesCanDescription" class="form-control" v-model="form.nwtKnownSubSpeciesDescription"></textarea>
+                </div>
+            </div>
         </div>
     </div>
+    
 </div>

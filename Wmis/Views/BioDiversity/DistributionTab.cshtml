@@ -1,226 +1,231 @@
-﻿<div id="distribution" class="tab-pane form-horizontal" data-bind="with: bd">
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Distribution in NWT</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Distribution in NWT', categoryId: 14"></reference-widget>
+﻿<div id="distribution" class="tab-pane fade py-3">
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Distribution in NWT'
+                              :category_id="14"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Range Extent</label>
+                <div class="col-md-3">
+                    <base-input v-model="form.rangeExtentScore" id="rangeExtentScore"></base-input>
+                </div>
+
+                <label for="name" class="col-md-1 form-label text-end">Percentage</label>
+                <div class="col-md-3">
+                    <base-input v-model="form.distributionPercentage" id="distributionPercentage"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="rangeExtentScore" class="col-md-2 control-label">Range Extent</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control" id="rangeExtentScore" data-bind="value: rangeExtentScore" maxlength="5">
-        </div>
-        <label for="distributionPercentage" class="col-md-2 control-label">Percentage</label>
-        <div class="col-md-4">
-            <input type="text" class="form-control" id="distributionPercentage" data-bind="value: distributionPercentage">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="rangeExtentDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="rangeExtentDescription" class="form-control" data-bind="value: rangeExtentDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="areaOfOccupancyScore" class="col-md-2 control-label">Area of Occupancy</label>
-        <div class="col-md-4">
-            <input type="text" class="form-control" id="areaOfOccupancyScore" data-bind="value: areaOfOccupancyScore" maxlength="5">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="areaOfOccupancyDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="areaOfOccupancyDescription" class="form-control" data-bind="value: areaOfOccupancyDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Habitat</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Habitat', categoryId: 18"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.decisionProcessDescription" id="rangeExtentDescription"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="habitatDescription" class="col-md-2 control-label">Habitat Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="habitatDescription" class="form-control" data-bind="value: habitatDescription"></textarea>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="distributionEnvironmentalSpecificity" class="col-md-2 control-label">Environmental Specificity</label>
-        <div class="col-md-4">
-            <input type="text" class="form-control" id="distributionEnvironmentalSpecificity" data-bind="value: environmentalSpecificityScore" maxlength="5">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="habitadistributionEnvironmentalSpecificityDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="habitadistributionEnvironmentalSpecificityDescription" class="form-control" data-bind="value: environmentalSpecificityDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Ecozone</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Ecozone', categoryId: 11"></reference-widget>
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Area of Occupancy</label>
+                <div class="col-md-3">
+                    <base-input v-model="form.areaOfOccupancyScore" id="areaOfOccupancyScore"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="ecozone" class="col-md-2 control-label">Ecozone</label>
-        <div class="col-md-6">
-            <select id="ecozone"
-                    name="ecozone"
-                    multiple="true"
-                    class="form-control"
-                    data-bind="options: $root.ecozones, selectedOptions: $root.selectedEcozoneKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
-            @*<input type="text" class="form-control" id="ecozone" value="Not Yet Implemented">*@
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="ecozoneDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="ecozoneDescription" class="form-control" data-bind="value: ecozoneDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Ecoregion</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Ecoregion', categoryId: 12"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.areaOfOccupancyDescription" id="areaOfOccupancyDescription"></base-input>
                 </div>
             </div>
-            <hr />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="ecoregion" class="col-md-2 control-label">Ecoregion</label>
-        <div class="col-md-6">
-            <select id="ecoregion"
-                    name="ecoregion"
-                    multiple="true"
-                    class="form-control"
-                    data-bind="options: $root.ecoregions, selectedOptions: $root.selectedEcoregionKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="ecoregionDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="ecoregionDescription" class="form-control" data-bind="value: ecoregionDescription"></textarea>
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Habitat'
+                              :category_id="18"></reference-widget>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Protected Area</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Protected Area', categoryId: 13"></reference-widget>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.habitatDescription" id="habitatDescription"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="protectedArea" class="col-md-2 control-label">Protected Area</label>
-        <div class="col-md-6">
-            <select id="protectedArea"
-                    name="protectedArea"
-                    multiple="true"
-                    class="form-control"
-                    data-bind="options: $root.protectedAreas, selectedOptions: $root.selectedProtectedAreaKeys, optionsText: 'name', optionsValue: 'key', select2: { }"></select>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="protectedAreaDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="protectedAreaDescription" class="form-control" data-bind="value: protectedAreaDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Historical Distribution</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Historical Distribution', categoryId: 15"></reference-widget>
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Environmental Specificity</label>
+                <div class="col-md-3">
+                    <base-input v-model="form.environmentalSpecificityScore" id="environmentalSpecificityScore"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="historicalDistributionDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="historicalDistributionDescription" class="form-control" data-bind="value: historicalDistributionDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Marine Distribution</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Marine Distribution', categoryId: 16"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.environmentalSpecificityDescription" id="environmentalSpecificityDescription"></base-input>
                 </div>
             </div>
-            <hr />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="marineDistributionDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="marineDistributionDescription" class="form-control" data-bind="value: marineDistributionDescription"></textarea>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Winter Distribution</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Winter Distribution', categoryId: 17"></reference-widget>
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Ecozone'
+                              :category_id="11"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Ecozone</label>
+                <div class="col-md-11">
+                    <el-select multiple v-model="form.ecozones" class="w-100" filterable value-key="key">
+                        <el-option v-for="item in ecozones"
+                                   :key="item.key"
+                                   :label="item.name"
+                                   :value="item">
+                        </el-option>
+                    </el-select>
                 </div>
             </div>
-            <hr />
+
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.ecozoneDescription" id="ecozoneDescription"></base-input>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="winterDistributionDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="winterDistributionDescription" class="form-control" data-bind="value: winterDistributionDescription"></textarea>
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Ecoregion'
+                              :category_id="12"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Ecoregion</label>
+                <div class="col-md-11">
+                    <el-select multiple v-model="form.ecoregions" class="w-100" filterable value-key="key">
+                        <el-option v-for="item in ecoregions"
+                                   :key="item.key"
+                                   :label="item.name"
+                                   :value="item">
+                        </el-option>
+                    </el-select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.ecoregionDescription" id="ecoregionDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Protected Area'
+                              :category_id="13"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Protected Area</label>
+                <div class="col-md-11">
+                    <el-select multiple v-model="form.protectedAreas" class="w-100" filterable value-key="key">
+                        <el-option v-for="item in protectedAreas"
+                                   :key="item.key"
+                                   :label="item.name"
+                                   :value="item">
+                        </el-option>
+                    </el-select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.protectedAreaDescription" id="protectedAreaDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Historical Distribution'
+                              :category_id="15"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.historicalDistributionDescription" id="historicalDistributionDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Marine Distribution'
+                              :category_id="16"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.marineDistributionDescription" id="marineDistributionDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Winter Distribution'
+                              :category_id="17"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.winterDistributionDescription" id="winterDistributionDescription"></base-input>
+                </div>
+            </div>
         </div>
     </div>
 </div>

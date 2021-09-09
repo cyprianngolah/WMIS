@@ -1,16 +1,20 @@
 ﻿const app = Vue.createApp({
     components: {
-       
+       BaseButton,
         ReferenceWidget,
         BaseInput,
         BaseSelect,
         PopulationTags,
-        BaseDropdownSelect
+        BaseDropdownSelect,
+        HistoryTab,
+        FileTab,
+        SpeciesSynonymEditor
     },
 
     data() {
         return {
             biodiversityKey: null,
+            loading: false,
             form: {},
             formString: "",
             kingdoms: [],
@@ -28,24 +32,34 @@
 
             speciesSynonyms: [],
 
+            statusRanks: [],
+            cosewicStatuses: [],
+            ecozones: [],
             ecozonesFull: [],
+            ecoregions: [],
             ecoregionsFull: [],
             protectedAreasFull: [],
+            protectedAreas: [],
             statusRanksFull: [],
+            nwtSarcAssessments:[],
             nwtSarcAssessmentsFull: [],
             cosewicStatusesFull: [],
+            
         }
     },
 
     computed: {
         isDirty() {
             return this.formString !== JSON.stringify(this.form)
-        }
+        },
+        lastUpdated() {
+            return this.form.lastUpdated ? moment.utc(this.form.lastUpdated, moment.ISO_8601).local().format('L h:mm a') : ""
+        },
     },
 
     methods: {
         setKey() {
-            this.biodiversityKey = window.location.pathname.split('/').pop()
+            this.biodiversityKey = WMIS.getKey("#bdKey")
         },
 
         fetchBiodiversityData() {
@@ -55,13 +69,13 @@
                 .then(response => {
                     this.form = response.data
                     this.formString = JSON.stringify(response.data)
+                    document.title = "WMIS - Biodiversity - " + this.form.commonName;
                 }).catch(error => {
                     console.log(error.response)
                 }).finally(() => setTimeout(() => this.loading = false, 2000))
         },
 
         fetchDropdowns() {
-            this.setKey()
             this.loading = true
             axios.all([
                 axios.get('/api/taxonomy/kingdom'),
@@ -95,18 +109,24 @@
                 this.families = WMIS.transformForSelect2(responses[9].data)
                 this.subfamilies = WMIS.transformForSelect2(responses[10].data)
                 this.groups = WMIS.transformForSelect2(responses[11].data)
+                this.statusRanks = responses[15].data.data
                 this.statusRanksFull = JSON.stringify(responses[15].data.data)
                 this.nwtSarcAssessmentsFull = JSON.stringify(responses[16].data.data)
+                this.nwtSarcAssessments = responses[16].data.data
                 this.cosewicStatusesFull = JSON.stringify(responses[17].data.data)
+                this.cosewicStatuses = responses[17].data.data
 
                 // full lists for filter
+                this.ecozones = responses[13].data.data
                 this.ecozonesFull = JSON.stringify(responses[13].data.data)
+                this.ecoregions = responses[12].data.data
                 this.ecoregionsFull = JSON.stringify(responses[12].data.data)
+                this.protectedAreas = responses[14].data.data
                 this.protectedAreasFull = JSON.stringify(responses[14].data.data)
 
             })).catch(error => {
                 console.log(error)
-            })
+            }).finally(() => setTimeout(() => this.loading=false, 1500))
         },
 
         updateReference({ references, category }) {
@@ -114,14 +134,23 @@
             references.forEach(r => filteredList.push({ categoryKey: category, reference: r }))
             this.form.references = filteredList
         },
+
+        saveBioDiversity() {
+            this.loading = true
+            axios.put("/api/BioDiversity/", this.form)
+                .then(_ => {
+                    this.fetchBiodiversityData()
+                    this.$message.success("Record updated successfully")
+                }).catch(error => console.log(error))
+        }
     },
 
-    beforeMount() {
+    mounted() {
+        this.setKey()
         this.fetchBiodiversityData()
     },
 
     created() {
-        this.setKey()
         this.fetchDropdowns()
     }
 });

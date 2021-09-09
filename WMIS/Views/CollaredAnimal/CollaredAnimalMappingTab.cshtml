@@ -1,0 +1,124 @@
+﻿<div class="row">
+
+    <div class="col-md-7">
+        <div class="row d-flex mb-2">
+            <div class="col">
+                <base-button size="small" v-on:click="downloadShapeFile()" color="primary" plain>Download Shapefile</base-button>
+                <base-button size="small" v-on:click="downloadKmlFile()" color="primary" plain>Download KML</base-button>
+                <base-button size="small" v-on:click="downloadExcelFile()" color="success" plain>Download Excel</base-button>
+            </div>
+        </div>
+        <div class="card bg-light">
+            <div class="card-body">
+
+                <div class="row d-flex align-items-center">
+                    <div class="col">
+                        <el-checkbox v-model="filters.showGpsOnly" label="GPS-Only Filter"></el-checkbox>
+                    </div>
+                    <div class="col">
+                        <el-select size="small" v-model="filters.daysFilterKey" class="w-100">
+                            <el-option v-for="f in daysFilterOptions" :key="f.key" :value="f.key" :label="f.name"></el-option>
+                        </el-select>
+                    </div>
+                    <div class="col">
+                        <el-select size="small" v-model="filters.statusFilterKey" class="w-100">
+                            <el-option v-for="f in statusFilterOptions" :key="f.key" :value="f.key" :label="f.name"></el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table id="locationTable" class="table table-sm w-100" style="font-size: 11px;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Location Class</th>
+                    <th>Last Valid Loc.</th>
+                    <th>CEP Radius</th>
+                    <th>Status</th>
+                    <th>Comment</th>
+                    <th>Review</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="col-md-5">
+        <g-map v-if="argosPasses.length" 
+               :hideLines="false" 
+               :points="argosPasses" 
+               v-on:point:selected="handleSelectedPass" 
+               :selectedPass="selectedPass"></g-map>
+        <div id="map-legend" class="mt-2">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <div class="row gy-2">
+                        <div class="col-6">
+                            <img src="/content/images/maps-symbol-blank-start.png" width="25" /> Starting location
+                        </div>
+                        <div class="col-6"><img src="/content/images/maps-symbol-blank-red.png" width="35" /> Location - No warnings</div>
+                        <div class="col-6"><img src="/content/images/maps-symbol-x-red.png" width="35" /> Rejected location</div>
+                        <div class="col-6"><img src="/content/images/maps-symbol-blank-yellow.png" width="35" /> Warning location</div>
+                        <div class="col-6"><img src="/content/images/maps-symbol-blank-stop.png" width="35" /> Last location</div>
+                        <div class="col-12">
+                            <img src="/content/images/maps-symbol-line.png" width="35" /> Line goes from Starting location through each point up to the Last location
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Location Modal -->
+<div class="modal fade" id="editArgosPassModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Collar Data Point</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-0" v-if="selectedPass">
+                    <div class="row gy-2 mb-2">
+                        <div class="col-md-6">Date: {{formatDate(selectedPass.locationDate)}}</div>
+                        <div class="col-md-6">Aquired Time: {{formatDate(selectedPass.locationDate)}}</div>
+                        <div class="col-md-6">Latitude: {{selectedPass.latitude}}</div>
+                        <div class="col-md-6">Longitude: {{selectedPass.longitude}}</div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <el-divider><i class="el-icon-more"></i></el-divider>
+                            <label>Status</label>
+                            <el-select v-if="selectedPass.argosPassStatus" v-model="selectedPass.argosPassStatus.key" placeholder="Select Status" class="w-100">
+                                <el-option :value="0" label="Select Status" disabled></el-option>
+                                <el-option v-for="item in passStatuses"
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <div class="col-12">
+                            <label>Comment</label>
+                            <base-input type="textarea" v-model="selectedPass.comment" label="Comment"></base-input>
+                        </div>
+                        
+                        <div class="col-12">
+                            <el-checkbox v-model="selectedPass.isLastValidLocation" label="Mark as last valid location?"></el-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <base-button plain color="danger" data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="primary" v-on:click="clearPassStatus()">Clear Status</base-button>
+                <base-button color="success" v-on:click="updatePass()">Update</base-button>
+            </div>
+        </div>
+    </div>
+</div>

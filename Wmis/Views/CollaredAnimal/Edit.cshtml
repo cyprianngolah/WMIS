@@ -18,7 +18,7 @@
 
     <style>
         #map-canvas {
-            height: 600px;
+            height: 450px;
             width: 100%;
         }
     </style>
@@ -38,18 +38,22 @@
         @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
     </script>
 
+    <script type="text/html" id="mapping-tab-template">
+        @{Html.RenderPartial("CollaredAnimalMappingTab");}
+    </script>
+
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
     @Html.Raw(Scripts.Render("~/bundles/components/FileTab"))
+    @Html.Raw(Scripts.Render("~/bundles/components/GMap"))
+    @Html.Raw(Scripts.Render("~/bundles/components/CollaredAnimalMapping"))
     @Html.Raw(Scripts.Render("~/bundles/collaredanimal/edit"))
 }
 
 
 <input type="hidden" id="collaredAnimalKey" value="@ViewBag.Key" />
-
-
 
 <div class="row">
     <div class="col-md-12 text-end">
@@ -93,7 +97,7 @@
             </div>
 
             <div id="mapTab" class="tab-pane py-4">
-                Animal
+                <collared-animal-mapping :animal_id="key"></collared-animal-mapping>
             </div>
 
             <div id="filesTab" class="tab-pane py-4">
@@ -103,58 +107,6 @@
             <div id="historyTab" class="tab-pane py-4">
                 <history-tab v-if="key" :parent_table_key="key" parent_table_name="CollaredAnimals"></history-tab>
             </div>
-
-            @*@{ Html.RenderPartial("AnimalTab"); }
-                @{ Html.RenderPartial("CollarTab"); }
-
-                <div class="tab-pane form-horizontal" id="locations">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <div id="map-canvas"></div>
-                            <div id="map-legend">
-                                <ul class="clearfix">
-                                    <li>Legend</li>
-                                    <li style="background: url(/content/images/maps-symbol-blank-start.png) no-repeat center left; padding-left: 38px;">Starting location</li>
-                                    <li style="background: url(/content/images/maps-symbol-blank-red.png) no-repeat center left">Location - No warnings</li>
-                                    <li style="background: url(/content/images/maps-symbol-x-red.png) no-repeat center left">Rejected location</li>
-                                    <li style="background: url(/content/images/maps-symbol-blank-yellow.png) no-repeat center left">Warning location</li>
-                                    <li style="background: url(/content/images/maps-symbol-blank-stop.png) no-repeat center left">Last location</li>
-                                    <li style="background: url(/content/images/maps-symbol-line.png) no-repeat center left">Line goes from Starting location through each point up to the Last location</li>
-                                </ul>
-                                <hr style="clear: left" />
-                            </div>
-
-                            <br />
-                        </div>
-                        <div class="col-lg-7">
-                            <div id="locationTableFilter"></div>
-
-
-                            <table id="locationTable" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Latitude</th>
-                                        <th>Longitude</th>
-                                        <th>Location Class</th>
-                                        <th>Last Valid Loc.</th>
-                                        <th>CEP Radius</th>
-                                        <th>Status</th>
-                                        <th>Comment</th>
-                                        <th>Review</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div id="files" class="tab-pane form-horizontal">
-                    <div id="fileTemplateTempDiv"></div>
-                </div>
-
-                <div id="history" class="tab-pane form-horizontal">
-                    <div id="historyTemplateTempDiv"></div>
-                </div>*@
         </div>
     </div>
 </div>
@@ -178,6 +130,7 @@
                         <lable class="col-3 text-end">Status</lable>
                         <div class="col-9">
                             <el-select class="w-100" v-model="breedingStatusForm.breedingStatus.key">
+                                <el-option :value="0" label="Select Status" disabled></el-option>
                                 <el-option v-for="item in breedingStatuses"
                                            :key="item.key"
                                            :label="item.name"
@@ -188,6 +141,7 @@
                         <lable class="col-3 text-end">Confidence</lable>
                         <div class="col-9">
                             <el-select class="w-100" v-model="breedingStatusForm.breedingStatusConfidenceLevel.key">
+                                <el-option :value="0" label="Select Conf. Level" disabled></el-option>
                                 <el-option v-for="item in confidenceLevels"
                                            :key="item.key"
                                            :label="item.name"
@@ -198,6 +152,7 @@
                         <lable class="col-3 text-end">Method</lable>
                         <div class="col-9">
                             <el-select class="w-100" v-model="breedingStatusForm.breedingStatusMethod.key" placeholder="Select">
+                                <el-option :value="0" label="Select Method" disabled></el-option>
                                 <el-option v-for="item in breedingStatusMethods"
                                            :key="item.key"
                                            :label="item.name"
@@ -241,6 +196,7 @@
                         <lable class="col-3 text-end">Population</lable>
                         <div class="col-9">
                             <el-select class="w-100" v-model="herdAssociationForm.herdPopulation.key">
+                                <el-option :value="0" label="Select Herd Population" disabled></el-option>
                                 <el-option v-for="item in herdPopulations"
                                            :key="item.key"
                                            :label="item.name"
@@ -251,6 +207,7 @@
                         <lable class="col-3 text-end">Confidence</lable>
                         <div class="col-9">
                             <el-select class="w-100" v-model="herdAssociationForm.herdAssociationConfidenceLevel.key">
+                                <el-option :value="0" label="Select Conf. Level" disabled></el-option>
                                 <el-option v-for="item in confidenceLevels"
                                            :key="item.key"
                                            :label="item.name"
@@ -261,6 +218,7 @@
                         <lable class="col-3 text-end">Method</lable>
                         <div class="col-9">
                             <el-select class="w-100" v-model="herdAssociationForm.herdAssociationMethod.key">
+                                <el-option :value="0" label="Select Method" disabled></el-option>
                                 <el-option v-for="item in herdAssociationMethods"
                                            :key="item.key"
                                            :label="item.name"

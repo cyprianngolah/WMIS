@@ -35,12 +35,7 @@
 const BaseInput = {
     emits: ['update:modelValue'],
     template: `
-        <el-input :disabled="disabled" :type="type" :model-value="modelValue" :id="id" class="w-100" @input="handleInput"></el-input>
-        <!--<q-input :disable="disabled" :readonly="disabled" input-class="px-0 mx-0" outlined :type="type" stack-label :model-value="modelValue" :id="id"  @update:model-value="handleInput" :label="label">
-            <template v-slot:label>
-              <span class="text-weight-bold text-primary">{{ label }}</span>
-            </template>
-        </q-input>-->
+        <el-input :disabled="disabled" :type="type" :model-value="modelValue" :id="id" class="w-100" @input="handleInput" :rows="5"></el-input>
     `,
 
     props: {
@@ -777,22 +772,18 @@ const ElementReferenceSelect = {
 
 const ReferenceWidget = {
     template: `
-        <div class="row mt-4 mb-2">
-            <div class="col-md-12 h5">
-                <div class="row">
-                    <div class="col-md-4 d-flex py-2 align-items-center bg-light">{{ category_name }}</div>
-                    <div class="col-md-8 d-flex align-items-center bg-light justify-content-end text-end">
-                        <span>References {{ display }}</span> 
-                        <a class="btn btn-text" data-bs-toggle="modal" :href="'#modal-'+category_id" role="button">
-                            <img src="/Content/images/icon-0-24x24-documents.png" />
-                        </a>
-                    </div>
-                </div>
+        <div class="row h5 m-0 d-flex align-items-center">
+            <div class="col-md-4">{{ category_name }}</div>
+            <div class="col-md-8 text-end">
+                <span>References {{ display }}</span> 
+                <a class="btn btn-text" data-bs-toggle="modal" :href="'#modal-'+category_id" role="button">
+                    <img src="/Content/images/icon-0-24x24-documents.png" />
+                </a>
             </div>
         </div>
 
-        <div class="modal fade reference-list" data-bs-backdrop="static" data-bs-keyboard="false" :id="'modal-'+category_id" aria-hidden="true">
-            <div class="modal-dialog modal-lgx">
+        <div class="modal fade reference-list references" data-bs-backdrop="static" data-bs-keyboard="false" :id="'modal-'+category_id" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalToggleLabel">References - {{ category_name }}</h5>

@@ -1,199 +1,240 @@
-﻿<div class="tab-pane fade form-horizontal" id="status" data-bind="with: bd">
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Rank</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Rank', categoryId: 25"></reference-widget>
+﻿<div class="tab-pane fade py-3" id="status">
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Rank'
+                              :category_id="25"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Rank</label>
+                <div class="col-md-3">
+                    <el-select v-model="form.statusRank.key" class="w-100" filterable>
+                        <el-option v-for="item in statusRanks"
+                                   :key="item.key"
+                                   :label="item.name"
+                                   :value="item.key">
+                        </el-option>
+                    </el-select>
+                </div>
+
+                <label for="name" class="col-md-1 form-label text-end">N Rank</label>
+                <div class="col-md-3">
+                    <base-input v-model="form.nRank" id="nRank"></base-input>
+                </div>
+
+                <label for="name" class="col-md-1 form-label text-end">S Rank</label>
+                <div class="col-md-3">
+                    <base-input v-model="form.sRank" id="sRank"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="statusRank" class="col-md-2 control-label">Rank</label>
-        <div class="col-md-4" data-bind="with: statusRank">
-            <select class="form-control" id="statusRank" data-bind="options: $root.statusRank, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-        </div>
-
-        <label for="nRank" class="col-md-1 control-label">N Rank</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control" id="nRank" data-bind="value: nRank">
-        </div>
-
-        <label for="sRank" class="col-md-1 control-label">S Rank</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control" id="sRank" data-bind="value: sRank">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="rankDescription" class="col-md-2 control-label">Rank Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="rankDescription" class="form-control" data-bind="value: statusRankDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="descisionProcess" class="col-md-2 control-label">Decision Process</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="descisionProcess" class="form-control" data-bind="value: decisionProcessDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">COSEWIC Status</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'COSEWIC Status', categoryId: 27"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Rank Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.statusRankDescription" id="statusRankDescription"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="cosewicStatus" class="col-md-2 control-label">COSEWIC Status</label>
-        <div class="col-md-4" data-bind="with: cosewicStatus">
-            <select class="form-control" id="cosewicStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="cosewicStatusDescription" class="form-control" data-bind="value: cosewicStatusDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Federal Species At Risk</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Federal Species At Risk', categoryId: 28"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Decision Process</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.decisionProcessDescription" id="decisionProcessDescription"></base-input>
                 </div>
             </div>
-            <hr />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="saraStatus" class="col-md-2 control-label">SARA Status</label>
-        <div class="col-md-4" data-bind="with: saraStatus">
-            <select class="form-control" id="saraStatus" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="cosewicStatusDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="cosewicStatusDescription" class="form-control" data-bind="value: federalSpeciesAtRiskStatusDescription"></textarea>
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='COSEWIC Status'
+                              :category_id="27"></reference-widget>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">NWT SARC Assessment</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'NWT SARC Assessment', categoryId: 29"></reference-widget>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">COSEWIC Status</label>
+                <div class="col-md-3">
+                    <el-select v-model="form.cosewicStatus.key" class="w-100" filterable>
+                        <el-option v-for="item in cosewicStatuses"
+                                   :key="item.key"
+                                   :label="item.name"
+                                   :value="item.key">
+                        </el-option>
+                    </el-select>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="nwtSarcAssessment" class="col-md-2 control-label">NWT SARC Assessment</label>
-        <div class="col-md-4" data-bind="with: nwtSarcAssessment">
-            <select class="form-control" id="nwtSarcAssessment" data-bind="options: $root.nwtSarcAssessment, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="nwtSarcAssessmentDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="nwtSarcAssessmentDescription" class="form-control" data-bind="value: nwtsarcAssessmentDescription"></textarea>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">NWT Species at Risk Status</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'NWT Species at Risk Status', categoryId: 30"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.cosewicStatusDescription" id="cosewicStatusDescription"></base-input>
                 </div>
             </div>
-            <hr />
+
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="nwtStatusRank" class="col-md-2 control-label">NWT Status</label>
-        <div class="col-md-4" data-bind="with: nwtStatusRank">
-            <select class="form-control" id="nwtStatusRank" data-bind="options: $root.cosewicStatus, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="nwtStatusRankDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="nwtStatusRankDescription" class="form-control" data-bind="value: nwtSpeciesAtRiskStatusDescription"></textarea>
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Federal Species At Risk'
+                              :category_id="28"></reference-widget>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">IUCN Status</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'IUCN Status', categoryId: 32"></reference-widget>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">
+                    SARA Status
+                </label>
+                <div class="col-md-3">
+                    <el-select v-model="form.saraStatus.key" class="w-100" filterable>
+                        <el-option :value="0" label="Select Status" disabled></el-option>
+                        <el-option v-for="item in cosewicStatuses"
+                                   :key="item.key"
+                                   :label="item.name"
+                                   :value="item.key">
+                        </el-option>
+                    </el-select>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="iucnStatus" class="col-md-2 control-label">IUCN Status</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control" id="iucnStatus" data-bind="value: iucnStatus">
-        </div>
-
-        <label for="gRank" class="col-md-1 control-label">G Rank</label>
-        <div class="col-md-2">
-            <input type="text" class="form-control" id="gRank" data-bind="value: gRank">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="iucnStatusDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="iucnStatusDescription" class="form-control" data-bind="value: iucnDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Economic Status</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Economic Status', categoryId: 26"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.federalSpeciesAtRiskStatusDescription" id="federalSpeciesAtRiskStatusDescription"></base-input>
                 </div>
             </div>
-            <hr />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="economicStatusDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="economicStatusDescription" class="form-control" data-bind="value: economicStatusDescription"></textarea>
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='NWT SARC Assessment'
+                              :category_id="29"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">
+                    NWT SARC Assessment
+                </label>
+                <div class="col-md-3">
+                    <el-select v-model="form.nwtSarcAssessment.key" class="w-100" filterable>
+                        <el-option :value="0" label="Select Status" disabled></el-option>
+                        <el-option v-for="item in nwtSarcAssessments"
+                                   :key="item.key"
+                                   :label="item.name"
+                                   :value="item.key">
+                        </el-option>
+                    </el-select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.nwtsarcAssessmentDescription" id="nwtsarcAssessmentDescription"></base-input>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='NWT Species at Risk Status'
+                              :category_id="30"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">
+                    NWT Status
+                </label>
+                <div class="col-md-3">
+                    <el-select v-model="form.nwtStatusRank.key" class="w-100" filterable>
+                        <el-option :value="0" label="Select Status" disabled></el-option>
+                        <el-option v-for="item in cosewicStatuses"
+                                   :key="item.key"
+                                   :label="item.name"
+                                   :value="item.key">
+                        </el-option>
+                    </el-select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.nwtSpeciesAtRiskStatusDescription" id="nwtSpeciesAtRiskStatusDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='IUCN Status'
+                              :category_id="32"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">
+                    IUCN Status
+                </label>
+                <div class="col-md-3">
+                    <base-input v-model="form.iucnStatus" label="IUCN Status"></base-input>
+                </div>
+
+                <label for="name" class="col-md-1 form-label text-end">
+                    G Rank
+                </label>
+                <div class="col-md-3">
+                    <base-input v-model="form.gRank" label="G Rank"></base-input>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.iucnDescription" id="iucnDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Economic Status'
+                              :category_id="26"></reference-widget>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.economicStatusDescription" id="economicStatusDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>

@@ -1,72 +1,68 @@
-﻿<div class="tab-pane form-horizontal" id="abundance" data-bind="with: bd">
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Population</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Population', categoryId: 19"></reference-widget>
+﻿<div class="tab-pane fade py-3" id="abundance">
+    <div class="card mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Population'
+                              :category_id="19"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Population Size</label>
+                <div class="col-md-1">
+                    <base-input v-model="form.populationSizeScore" id="populationSizeScore"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="abundancePopulationSize" class="col-md-2 control-label">Population Size</label>
-        <div class="col-md-1">
-            <input type="text" class="form-control" id="abundancePopulationSize" data-bind="value: populationSizeScore" maxlength="5">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="abundancePopulationDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="abundancePopulationDescription" class="form-control" data-bind="value: populationSizeDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Occurrences</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Occurrences', categoryId: 20"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.populationSizeDescription" id="populationSizeDescription"></base-input>
                 </div>
             </div>
-            <hr />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="abundanceNumberOfOccurences" class="col-md-2 control-label">Number of Occurences</label>
-        <div class="col-md-1">
-            <input type="text" class="form-control" id="abundanceNumberOfOccurences" data-bind="value: numberOfOccurencesScore" maxlength="5">
+    <div class="card mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Occurrences'
+                              :category_id="20"></reference-widget>
         </div>
-    </div>
-
-    <div class="form-group">
-        <label for="abundanceNumberOfOccurencesDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="abundanceNumberOfOccurencesDescription" class="form-control" data-bind="value: numberOfOccurencesDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Density</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Density', categoryId: 21"></reference-widget>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Number of Occurences</label>
+                <div class="col-md-1">
+                    <base-input v-model="form.numberOfOccurencesScore" id="numberOfOccurencesScore"></base-input>
                 </div>
             </div>
-            <hr />
+
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.numberOfOccurencesDescription" id="numberOfOccurencesDescription"></base-input>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="densityDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="densityDescription" class="form-control" data-bind="value: densityDescription"></textarea>
+
+    <div class="card mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Density'
+                              :category_id="21"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.densityDescription" id="densityDescription"></base-input>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>

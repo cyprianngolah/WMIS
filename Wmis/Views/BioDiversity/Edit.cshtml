@@ -1,5 +1,18 @@
 ﻿@using Wmis.Extensions
+@{
+    ViewBag.Title = "Biodiversity";
+    ViewBag.SubTitle = @"<br /><span v-if='form.key'>{{ form.commonName }}
+(<span class='speciesNameText'>{{form.name}}</span>)
+<span>{{form.ecoType}}</span></span>";
+}
 
+@section TopRight{
+    <div class="h6 text-end" v-if="form">
+        <span v-if="form.statusRank">Status Rank: <strong>{{ form.statusRank.name }}</strong><br /></span>
+        <span v-if="form.animalStatus">Animal Status: <strong>{{ form.animalStatus.name }}</strong><br /></span>
+        <span class="h6">Last Updated: <span>{{lastUpdated}} </span></span>
+    </div>
+}
 
 @section Styles {
     @Html.Raw(Styles.Render("~/bundles/datatablescss"))
@@ -8,16 +21,29 @@
 
 
 @section Scripts{
+    <script type="text/html" id="history-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+    </script>
+
+    <script type="text/html" id="file-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
+    </script>
+
     @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
+    @Html.Raw(Scripts.Render("~/bundles/components/FileTab"))
+    @Html.Raw(Scripts.Render("~/bundles/components/speciessynonymeditor"))
     @Html.Raw(Scripts.Render("~/bundles/biodiversity/edit"))
 }
 
+<input type="hidden" id="bdKey" value="@ViewBag.Key" />
 
 <div class="my-4">
     <div class="row">
         <div class="col-md-12 text-end">
-            <a href="/BioDiversity/" class="btn btn-default">
+            <a href="/BioDiversity/" class="el-button el-button--danger is-plain">
                 @if (Html.UserIsBiodiversityAdministrator())
                 {
                     <span>Cancel</span>
@@ -29,7 +55,7 @@
             </a>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <button type="submit" class="btn btn-primary">Save</button>
+                <base-button :disabled="!isDirty" size="large" :loading="loading" v-on:click="saveBioDiversity()" color="success">Save</base-button>
             }
         </div>
     </div>
@@ -38,15 +64,15 @@
         <div class="col-md-12">
 
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item active"><a href="#general" role="tab" data-bs-toggle="tab" class="nav-link active colouredTab generalTab">General</a></li>
-                <li class="nav-item"><a href="#reproduction" role="tab" data-bs-toggle="tab" class="nav-link colouredTab reproductionTab">Reproduction</a></li>
-                <li class="nav-item"><a href="#distribution" role="tab" data-bs-toggle="tab" class="nav-link colouredTab distributionTab">Distribution</a></li>
-                <li class="nav-item"><a href="#abundance" role="tab" data-bs-toggle="tab" class="nav-link colouredTab abundanceTab">Abundance</a></li>
-                <li class="nav-item"><a href="#trends" role="tab" data-bs-toggle="tab" class="nav-link colouredTab trendsTab">Trends</a></li>
-                <li class="nav-item"><a href="#threats" role="tab" data-bs-toggle="tab" class="nav-link colouredTab threatsTab">Threats</a></li>
-                <li class="nav-item"><a href="#status" role="tab" data-bs-toggle="tab" class="nav-link colouredTab statusTab">Status</a></li>
-                <li class="nav-item"><a href="#files" role="tab" data-bs-toggle="tab" class="nav-link colouredTab fileTab">Links</a></li>
-                <li class="nav-item"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link colouredTab historyTab">History</a></li>
+                <li class="nav-item me-1 active"><a href="#general" role="tab" data-bs-toggle="tab" class="nav-link active colouredTab generalTab">General</a></li>
+                <li class="nav-item me-1"><a href="#reproduction" role="tab" data-bs-toggle="tab" class="nav-link colouredTab reproductionTab">Reproduction</a></li>
+                <li class="nav-item me-1"><a href="#distribution" role="tab" data-bs-toggle="tab" class="nav-link colouredTab distributionTab">Distribution</a></li>
+                <li class="nav-item me-1"><a href="#abundance" role="tab" data-bs-toggle="tab" class="nav-link colouredTab abundanceTab">Abundance</a></li>
+                <li class="nav-item me-1"><a href="#trends" role="tab" data-bs-toggle="tab" class="nav-link colouredTab trendsTab">Trends</a></li>
+                <li class="nav-item me-1"><a href="#threats" role="tab" data-bs-toggle="tab" class="nav-link colouredTab threatsTab">Threats</a></li>
+                <li class="nav-item me-1"><a href="#status" role="tab" data-bs-toggle="tab" class="nav-link colouredTab statusTab">Status</a></li>
+                <li class="nav-item me-1"><a href="#files" role="tab" data-bs-toggle="tab" class="nav-link colouredTab fileTab">Links</a></li>
+                <li class="nav-item me-1"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link colouredTab historyTab">History</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -58,11 +84,11 @@
                 @{Html.RenderPartial("TrendsTab");}
                 @{Html.RenderPartial("ThreatsTab");}
                 @{Html.RenderPartial("StatusTab");}
-                <div id="files" class="tab-pane fade form-horizontal">
-                    <div id="fileTemplateTempDiv"></div>
+                <div id="files" class="tab-pane fade py-4">
+                    <file-tab v-if="biodiversityKey" :parent_table_key="biodiversityKey" parent_table_name="Biodiversity"></file-tab>
                 </div>
-                <div id="history" class="tab-pane fade form-horizontal">
-                    <div id="historyTemplateTempDiv"></div>
+                <div id="history" class="tab-pane fade py-4">
+                    <history-tab v-if="biodiversityKey" :parent_table_key="biodiversityKey" parent_table_name="Biodiversity"></history-tab>
                 </div>
             </div>
         </div>

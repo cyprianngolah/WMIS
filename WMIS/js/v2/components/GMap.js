@@ -31,7 +31,7 @@ const argosPassStatusToIsRejected = {
 const selectedArgosPassImage = '/content/images/maps-symbol-blank-green.png';
 
 const GMap = {
-    template: `<div class="col-12 mb-4" id="map-canvas"></div>`,
+    template: `<div class="card" id="map-canvas"></div>`,
     props: {
         points: {
             type: Array,
@@ -39,11 +39,11 @@ const GMap = {
         },
         passStatusFunction: {
             type: Function,
-            required: true
+            default: (pass) => pass.argosPassStatus.key || 0
         },
         hideLines: {
             type: Boolean,
-            default: true
+            default: false
         },
         selectedPass: {
             type: [Object],
@@ -60,6 +60,7 @@ const GMap = {
                 scaleControl: true
             },
             temporaryMarker: null,
+            hiddenMarker: null,
             markers: null,
             polyline: null,
             map: null
@@ -69,56 +70,75 @@ const GMap = {
     watch: {
         selectedPass: {
             deep: true,
+            immediate:true,
             handler(newPoint) {
-                let hiddenMarker = null;
-                if (this.temporaryMarker) {
-                    this.temporaryMarker.setAnimation(null);
-                    this.temporaryMarker.setMap(null);
-                    this.temporaryMarker.setIcon(argosPassStatusToImage[this.passStatusFunction(this.temporaryMarker.get('pass'))])
-                    this.temporaryMarker = null;
-                }
-                if (hiddenMarker) {
-                    hiddenMarker.setMap(this.map);
-                    hiddenMarker = null;
-                }
+                this.clearAnimations();
+
                 if (newPoint) {
-                    hiddenMarker = this.markers.find(m => m.get('pass').key == newPoint.key);
-                    hiddenMarker.setMap(null);
-                    // Show a new animated marker
-                    this.temporaryMarker = this.createMiddleMarker(newPoint, selectedArgosPassImage);
-                    this.temporaryMarker.setMap(this.map);
-                    this.temporaryMarker.setAnimation(google.maps.Animation.BOUNCE);
+                    const selectedMarker = this.markers.find(m => m.get('pass').key == newPoint.key)
+
+                    if (this.markers) {
+                        for (const m of this.markers) {
+                            m.setIcon(this.getIconFromIndex(m.get('pass')))
+                        }
+                    }
+
+                    selectedMarker.setAnimation(google.maps.Animation.BOUNCE)
+                    selectedMarker.setIcon(selectedArgosPassImage)
+
+                    this.temporaryMarker = selectedMarker;
+                } else {
+                    if (this.markers) {
+                        for (const m of this.markers) {
+                            m.setIcon(this.getIconFromIndex(m.get('pass')))
+                        }
+                    }
                 }
             }
         },
 
-        /*points: {
+        points: {
             deep: true,
             handler(newPoints) {
-                if (this.polyline) {
-                    this.polyline.setMap(null);
-                    this.polyline = null;
-                }
-                if (this.markers) {
-                    for (const m of this.markers) {
-                        m.setMap(null)
-                    }
-                    this.markers = null;
-                }
-
                 if (this.points && this.points.length > 0) {
-                    if (!this.hideLines) {
-                        this.polyline = this.loadPolyline();
-                        this.markers = this.loadMarkers();
+                    this.clearAnimations();
+                    if (this.hideLines) {
+                        this.loadMarkersWithoutStartStopIcons()
                     } else {
-                        this.markers = this.loadMarkersWithoutStartStopIcons();
+                        this.loadPolyline()
+                        this.loadMarkers()
                     }
                 }
             }
-        }*/
+        }
     },
 
     methods: {
+        clearAnimations() {
+            if (!this.markers) return;
+            this.markers.forEach(m => {
+                m.setAnimation(null);
+            })
+        },
+
+        getIconFromIndex(pass) {
+            const locIndex = this.markers.findIndex(m => m.get('pass').key == pass.key);
+
+            let icon = argosPassStatusToImage[this.passStatusFunction(pass)];
+
+            // last location icon
+            if (locIndex == 0) {
+                icon = "/content/images/maps-symbol-blank-stop.png";
+            }
+
+            // first location marker
+            if (locIndex == (this.points.length - 1)) {
+                icon = "/content/images/maps-symbol-blank-start.png";
+            }
+
+            return icon;
+        },
+
         getCenter() {
             const lat = this.points.reduce((total, next) => total + next.latitude, 0) / this.points.length;
             const lng = this.points.reduce((total, next) => total + next.longitude, 0) / this.points.length;
@@ -134,6 +154,13 @@ const GMap = {
         },
 
         loadMarkersWithoutStartStopIcons() {
+            if (this.markers) {
+                for (const marker of this.markers) {
+                    marker.setMap(null)
+                }
+                this.markers = null
+            }
+
             let markers = []
             for (const pass of this.points) {
                 markers.push(this.createMiddleMarker(pass, null));
@@ -150,9 +177,17 @@ const GMap = {
         },
 
         loadMarkers() {
+            if (this.markers) {
+                for (const marker of this.markers) {
+                    marker.setMap(null)
+                }
+                this.markers = null
+            }
+
             let markers = [];
             let startPass = this.points[0];
-            markers.push(this.createStopMarker(this.map, startPass))
+            markers.push(this.createStopMarker(startPass))
+            
             let middlePoints = this.points.slice(1, -1);
 
             for (const point of middlePoints) {
@@ -160,12 +195,15 @@ const GMap = {
             }
 
             let stopPass = this.points.length > 1 ? this.points[this.points.length - 1] : null;
-            stopPass && markers.push(this.createStartMarker(stopPass));
+            
+            if (stopPass) {
+                markers.push(this.createStartMarker(stopPass));
+            }
 
             for (const marker of markers) {
                 marker.setMap(this.map);
                 google.maps.event.addListener(marker, 'click', () => {
-                    console.log(marker.get('pass'));
+                    this.$emit("point:selected", marker.get('pass'))
                 })
             }
 
@@ -177,11 +215,11 @@ const GMap = {
         },
 
         createStartMarker(pass) {
-            return createMarker(pass, "Start: " + getHoverMessage(pass), "/content/images/maps-symbol-blank-start.png");
+            return this.createMarker(pass, "Start: " + this.getHoverMessage(pass), "/content/images/maps-symbol-blank-start.png");
         },
 
         createStopMarker(pass) {
-            return this.createMarker(pass, "Stop: " + getHoverMessage(pass), "/content/images/maps-symbol-blank-stop.png");
+            return this.createMarker(pass, "Stop: " + this.getHoverMessage(pass), "/content/images/maps-symbol-blank-stop.png");
         },
 
         createMiddleMarker(pass, imageUrl) {
@@ -209,6 +247,11 @@ const GMap = {
         },
 
         loadPolyline() {
+            if (this.polyline) {
+                this.polyline.setMap(null);
+                this.polyline = null;
+            }
+
             const nonRejectedPasses = this.points.filter(pass =>  {
                 const passStatus = this.passStatusFunction(pass);
                 return !argosPassStatusToIsRejected[passStatus];
@@ -220,20 +263,26 @@ const GMap = {
             var polylineOptions = this.polyOptionsForPath(pathCoordinates);
             var polyline = new google.maps.Polyline(polylineOptions);
             polyline.setMap(this.map);
-            return polyline;
+
+            this.polyline = polyline;
         },
 
         init() {
             this.map = this.createMapInstance()
-
-            this.loadMarkersWithoutStartStopIcons()
+            if (this.points && this.points.length > 0) {
+                if (this.hideLines) {
+                    this.loadMarkersWithoutStartStopIcons()
+                } else {
+                    this.loadPolyline()
+                    this.loadMarkers()
+                }
+            }
+            
         }
     },
 
 
     mounted() {
-        /*console.log(this.points)
-        console.log(this.selectedPass)*/
         this.init()
     }
 

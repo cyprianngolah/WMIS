@@ -1,67 +1,55 @@
 ﻿@using Wmis.Extensions
 @{
-    ViewBag.Title = "Users";
+    ViewBag.Title = "WMIS Users";
 }
 
 @section Styles {
-    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
-    @Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
 }
 
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
-    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/user/index"))
-
-    <script type="text/javascript">
-        $(function () {
-            wmis.user.index.initialize();
-        });
-    </script>
 }
 
-<div class="row">
-	<div class="col-md-12 text-right">
-		@if (Html.UserInAnyAdministratorRole())
-		{
-			<a href="/User/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-		}
-		<a href="/User/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-			@if (Html.UserInAnyAdministratorRole())
-			{
-				<span>View</span>
-			}
-			else
-			{
-				<span>View</span>
-			}
-		</a>
-	</div>
+<div class="row my-3">
+    <div class="col-md-12 d-flex justify-content-end">
+        @if (Html.UserInAnyAdministratorRole())
+        {
+            <base-button color="success" v-on:click="newUserModal.show()">New</base-button>
+        }
+        <a v-bind:href=`/User/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
+            @if (Html.UserInAnyAdministratorRole())
+            {
+                <span>View</span>
+            }
+            else
+            {
+                <span>View</span>
+            }
+        </a>
+    </div>
 </div>
 
-<div class="well" style="margin-bottom: 0px;">
-    <div class="row">
-        <div class="col-md-12">
-            <form class="form-horizontal center" role="form">
-                <label class="sr-only" for="keywords">Keywords</label>
-                <div class="col-md-12">
-                    <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                        <div class="input-group">
-                            <input type="text" id="keywords" class="form-control" placeholder="Keywords" />
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" id="searchButton">Search</button>
-                            </span>
-                        </div>
-                    </div>
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="row g-3 d-flex align-items-center">
+            <div class="col">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Keyword" id="keyword" v-model="form.keywords">
+                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
+
+
 <div class="row">
     <div class="col-md-12">
-        <table id="user" class="table">
+        <table id="userTable" class="table table-sm w-100">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -70,5 +58,40 @@
                 </tr>
             </thead>
         </table>
+    </div>
+</div>
+
+
+<!-- New Collar Modal -->
+<div class="modal fade" id="newUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-0">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <lable>Username</lable>
+                            <base-input v-model.trim="newUserForm.username" label="Username"></base-input>
+                            <small>eg CORP\windowsusername</small>
+                        </div>
+
+                        <div class="col-12">
+                            <lable>Name</lable>
+                            <base-input v-model="newUserForm.name" label="Name"></base-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :disabled="disableCreate" v-on:click="handleCreateUser()">
+                    Save
+                </base-button>
+            </div>
+        </div>
     </div>
 </div>

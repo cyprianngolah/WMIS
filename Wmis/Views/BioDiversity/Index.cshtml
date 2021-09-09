@@ -11,26 +11,28 @@
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/biodiversity/index"))
 }
 
 <div class="row my-3">
     <div class="col-md-12 d-flex justify-content-between">
         <div>
-            <button type="button" v-on:click="deletedSelectedRecord()" class="btn btn-sm btn-danger" v-bind:class="{'disabled' : !isSelected}">Delete Selected</button>
+            <base-button color="danger" :disabled="!isSelected" v-on:click="deletedSelectedRecord()" size="small"> <span class="el-icon-delete"></span> Delete Selected</base-button>
         </div>
 
 
         <div>
-            <button type="button" v-on:click="downloadRecords()" class="btn btn-primary btn-sm me-2">Download</button>
+            <base-button size="small" v-on:click="downloadRecords()" color="warning"><span class="el-icon-download"></span> Download</base-button>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <a href="/BioDiversity/New" class="btn btn-success btn-sm me-2">New</a>
-                <a href="/BioDiversity/Upload" class="btn btn-primary btn-sm me-2">Bulk Upload</a>
+                <a href="/BioDiversity/New" class="el-button el-button--success el-button--small "><span class="el-icon-plus"></span> New</a>
+                <a href="/BioDiversity/Upload" class="el-button el-button--info el-button--small "><span class="el-icon-upload2"></span> Bulk Upload</a>
             }
-            <a v-bind:href=`/BioDiversity/Edit/${selectedKey}` id="editButton" class="btn btn-primary btn-sm me-2" v-bind:class="{'disabled' : !isSelected}">
+            <a v-bind:href=`/BioDiversity/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary el-button--small btn" v-bind:class="{'disabled is-disabled' : !isSelected}">
                 @if (Html.UserIsBiodiversityAdministrator())
                 {
+                    <span class="el-icon-view"></span>
                     <span>View</span>
                 }
                 else
@@ -38,7 +40,9 @@
                     <span>View</span>
                 }
             </a>
-            <a v-bind:href=`/BioDiversity/Decision/${selectedKey}` v-bind:class="{'disabled' : !isSelected}" id="decisionButton" class="btn btn-primary btn-sm">Decision</a>
+            <a v-bind:href=`/BioDiversity/Decision/${selectedKey}` v-bind:class="{'disabled' : !isSelected}" id="decisionButton" class="el-button el-button--primary el-button--small is-plain btn">
+                <span class="el-icon-s-order"></span> Decision
+            </a>
         </div>
     </div>
 </div>
@@ -48,7 +52,7 @@
     <button type="button" class="btn-close" v-on:click="deleteError=null" aria-label="Close"></button>
 </div>
 
-<div class="card bg-light">
+<div class="card bg-light border border-primary">
     <div class="card-body">
         <div class="row g-3">
             <div class="col">
@@ -81,25 +85,28 @@
 </div>
 
 
-<div class="row">
+<div class="row my-4">
     <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="biodiversity" class="table table-sm table-striped table-hover">
+                    <thead class="border border-primary border-2">
+                        <tr>
+                            <th>Group</th>
+                            <th>Kingdom</th>
+                            <th>Phylum</th>
+                            <th>Class</th>
+                            <th>Order</th>
+                            <th>Family</th>
+                            <th>Common Name</th>
+                            <th>Species</th>
+                            <th>Rank</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
 
-        <table id="biodiversity" class="table table-sm table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Group</th>
-                    <th>Kingdom</th>
-                    <th>Phylum</th>
-                    <th>Class</th>
-                    <th>Order</th>
-                    <th>Family</th>
-                    <th>Common Name</th>
-                    <th>Species</th>
-                    <th>Rank</th>
-                    <th>Last Updated</th>
-                </tr>
-            </thead>
-        </table>
     </div>
 </div>
-

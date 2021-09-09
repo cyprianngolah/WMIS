@@ -1,4 +1,6 @@
-﻿main > .container {
+﻿
+
+main > .container {
     padding: 60px 15px 0;
 }
 .navbar-dark {
@@ -6,6 +8,9 @@
     background-color: #0f599a !important;
     border-color: #022f5a !important;
     border-bottom: 6px solid #2699d5 !important;
+}
+.navbar .small {
+    font-size: .675em;
 }
 .form-control:focus {
     border-color: #86b7fe;
@@ -36,6 +41,9 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small, .h1 .s
 }
 a{
     text-decoration: none !important;
+}
+.card-header .h5 {
+    font-size: 1.1rem;
 }
 .page-header {
     padding-bottom: 9px;
@@ -91,6 +99,11 @@ a{
     max-width: 800px;
 }
 
+.el-select-dropdown__item.is-disabled {
+    color: #dbdbdb !important;
+    display: none;
+}
+
 .references .el-select__tags {
     max-width: 100% !important
 }
@@ -128,22 +141,21 @@ a{
 }
 
 .references .el-select-dropdown__item.selected{
-    display: none !important;
+    /*display: none !important;*/
 }
 
-
-.q-field .row {
-    --bs-gutter-x: 0rem !important;
-    --bs-gutter-y: 0;
-}
-.q-field .q-field__append.row {
-    width: auto !important;
-}
-.q-textarea .q-field__control {
-    min-height: 100px !important;
-    height: auto;
+.references .el-select .el-select__tags .el-tag {
+    box-sizing: border-box;
+    border-color: #cccccc;
+    background-color: #ffffff;
+    padding: 5px 10px;
+    line-height: 14px;
+    font-size: 13px;
 }
 
+.references .el-select .el-select__tags-text {
+    overflow-x: initial;
+}
 
 tr.highlightPassRow {
     background-color: rgb(0,230,77) !important;
@@ -155,4 +167,42 @@ tr.highlightPassRow {
 
 #locationTable tr.rejected-status {
     background-color: tomato;
+}
+
+
+.nav-tabs > li > a.generalTab {
+    background-color: #4D708A;
+    color: white;
+}
+.nav-tabs > li > a.reproductionTab {
+    background-color: #7BA98F;
+    color: white;
+}
+.nav-tabs > li > a.distributionTab {
+    background-color: #27814E;
+    color: white;
+}
+.nav-tabs > li > a.abundanceTab {
+    background-color: #996014;
+    color: white;
+}
+.nav-tabs > li > a.trendsTab {
+    background-color: #D78772;
+    color: white;
+}
+.nav-tabs > li > a.threatsTab {
+    background-color: #D7AB72;
+    color: white;
+}
+.nav-tabs > li > a.statusTab {
+    background-color: #B65137;
+    color: white;
+}
+.nav-tabs > li > a.fileTab {
+    background-color: #B65137;
+    color: white;
+}
+.nav-tabs > li > a.historyTab {
+    background-color: #B65137;
+    color: white;
 }
