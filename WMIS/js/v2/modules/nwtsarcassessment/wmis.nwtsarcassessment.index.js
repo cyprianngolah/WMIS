@@ -1,5 +1,9 @@
 ﻿
 const app = Vue.createApp({
+    components: {
+        BaseButton
+    },
+
     data() {
         return {
             table: null,
@@ -108,5 +112,5 @@ const app = Vue.createApp({
     },
 
 });
-
+app.use(ElementPlus)
 app.mount('#wmis-app')

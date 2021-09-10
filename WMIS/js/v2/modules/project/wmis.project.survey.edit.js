@@ -1,8 +1,6 @@
 ﻿const app = Vue.createApp({
     components: {
         BaseInput,
-        BaseQSelect,
-        BaseQSpeciesSearch,
         BaseButton,
         SurveyObservations,
         HistoryTab,
@@ -98,5 +96,4 @@
 })
 
 app.use(ElementPlus)
-app.use(Quasar)
 app.mount('#wmis-app')

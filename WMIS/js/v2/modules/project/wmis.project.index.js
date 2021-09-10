@@ -1,5 +1,9 @@
 ﻿
 const app = Vue.createApp({
+    components: {
+        BaseButton,
+        BaseDropdownSelect
+    },
     data() {
         return {
             table: null,
@@ -11,6 +15,10 @@ const app = Vue.createApp({
                 region: '',
                 keywords: '',
             },
+
+            leads: [],
+            regions: [],
+            statuses: []
         }
     },
 
@@ -32,15 +40,26 @@ const app = Vue.createApp({
             var url = `/api/project/download/?projectLead=${this.form.pLead}&projectStatus=${this.form.pStatus}&region=${this.form.region}&keywords=${this.form.keywords}`
             window.open(url, '_blank');
         },
-    },
 
-    mounted() {
-        WMIS.loadAndInitializeSelect2($("#pLead"), "/api/person/projectLeads/", "Project Lead", true, 'data');
-        WMIS.loadAndInitializeSelect2($("#pStatus"), "/api/project/statuses/", "Project Status", true, 'data');
-        WMIS.loadAndInitializeSelect2($("#region"), "/api/leadregion?startRow=0&rowCount=500", "Ecoregion", true, 'data');
+        getDropdowns() {
+            axios.all([
+                axios.get("/api/person/projectLeads/"),
+                axios.get("/api/project/statuses/"),
+                axios.get("/api/leadregion?startRow=0&rowCount=500"),
+            ]).then(axios.spread((...responses) => {
+                this.leads = responses[0].data.data
+                this.statuses = responses[1].data.data
+                this.regions = responses[2].data.data
+            })).then(() => {
+                this.leads.unshift({name: "All Leads", key: ""})
+                this.statuses.unshift({name: "All Statuses", key: ""})
+                this.regions.unshift({name: "All Regions", key: ""})
+            }).catch(error => console.log(error))
+        }
     },
 
     created() {
+        this.getDropdowns();
         const vm = this;
         document.title = "WMIS Projects";
         $(document).ready(function () {
@@ -145,24 +164,6 @@ const app = Vue.createApp({
 
             $('#searchbtn').click(function (e) {
                 vm.table.search(vm.form.keywords).draw();
-            });
-
-            $('#pLead').change(function (e) {
-                const val = e.target.value;
-                vm.form.pLead = val === 'all' ? '' : val;
-                vm.table.search(vm.form.pLead).draw();
-            });
-
-            $('#pStatus').change(function (e) {
-                const val = e.target.value;
-                vm.form.pStatus = val === 'all' ? '' : val;
-                vm.table.search(vm.form.pStatus).draw();
-            });
-
-            $('#region').change(function (e) {
-                const val = e.target.value;
-                vm.form.region = val === 'all' ? '' : val;
-                vm.table.search(vm.form.region).draw();
             });
 
         });

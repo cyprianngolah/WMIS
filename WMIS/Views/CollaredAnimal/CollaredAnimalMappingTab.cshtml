@@ -46,8 +46,7 @@
     </div>
 
     <div class="col-md-5">
-        <g-map v-if="argosPasses.length" 
-               :hideLines="false" 
+        <g-map :hideLines="false" 
                :points="argosPasses" 
                v-on:point:selected="handleSelectedPass" 
                :selectedPass="selectedPass"></g-map>

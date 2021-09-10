@@ -36,52 +36,51 @@
 </div>
 
 
-<div class="card bg-light">
+<div class="card bg-light border border-primary">
     <div class="card-body">
         <div class="row g-3 d-flex align-items-center">
             <div class="col-2">
                 <el-checkbox v-model="form.needingReview" label="Collars needing review"></el-checkbox>
             </div>
             <div class="col">
-                <select class="form-select" aria-label="Order" id="species">
-                    <option value="">All Species</option>
-                </select>
+                <base-dropdown-select :return_object="false" :options="regions" v-model="form.regionKey"></base-dropdown-select>
             </div>
             <div class="col">
-                <select class="form-select" aria-label="Region" id="region">
-                    <option value="">All regions</option>
-                </select>
+                <base-dropdown-select :return_object="false" :options="species" v-model="form.speciesKey"></base-dropdown-select>
             </div>
             <div class="col">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Keyword" id="keyword" v-model="form.keywords">
-                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
+                    <base-button id="searchbtn"> <span class="el-icon-search"></span> Search</base-button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="card my-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
 
-<div class="row">
-    <div class="col-md-12">
-
-        <table id="collarTable" class="table table-sm table-striped table-hover w-100">
-            <thead>
-                <tr>
-                    <th>Group</th>
-                    <th>Kingdom</th>
-                    <th>Phylum</th>
-                    <th>Class</th>
-                    <th>Order</th>
-                    <th>Family</th>
-                    <th>Common Name</th>
-                    <th>Species</th>
-                    <th>Rank</th>
-                    <th>Last Updated</th>
-                </tr>
-            </thead>
-        </table>
+                <table id="collarTable" class="table table-sm table-striped table-hover w-100">
+                    <thead>
+                        <tr>
+                            <th>Group</th>
+                            <th>Kingdom</th>
+                            <th>Phylum</th>
+                            <th>Class</th>
+                            <th>Order</th>
+                            <th>Family</th>
+                            <th>Common Name</th>
+                            <th>Species</th>
+                            <th>Rank</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

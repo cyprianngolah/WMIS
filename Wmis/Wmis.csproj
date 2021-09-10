@@ -647,6 +647,7 @@
     <Content Include="js\v2\components\SpeciesSynonymEditor.js" />
     <Content Include="js\v2\components\SurveyObservations.js" />
     <Content Include="js\v2\components\FileTab.js" />
+    <Content Include="js\v2\modules\argosservice\wmis.argosservice.index.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.decision.edit.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.edit.js" />
     <Content Include="js\v2\modules\biodiversity\wmis.biodiversity.index.js" />

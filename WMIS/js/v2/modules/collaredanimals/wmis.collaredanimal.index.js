@@ -2,7 +2,8 @@
 const app = Vue.createApp({
     components: {
         BaseButton,
-        BaseInput
+        BaseInput,
+        BaseDropdownSelect
     },
     data() {
         return {
@@ -16,7 +17,8 @@ const app = Vue.createApp({
                 speciesKey: '',
                 keywords: '',
             },
-
+            species: [],
+            regions: [],
             newCollarForm: {
                 collarId: ""
             }
@@ -46,6 +48,28 @@ const app = Vue.createApp({
             window.open(url, '_blank');
         },
 
+        getDropdowns() {
+            axios.all([
+                axios.get('/api/biodiversity/species?startRow=0&rowCount=7000'),
+                axios.get('/api/collar/region?startRow=0&rowCount=500'),
+            ]).then(axios.spread((...responses) => {
+                this.species = responses[0].data.data.map(d => {
+                    let name = d.name
+                    if (d.commonName) {
+                        name += ` - ${d.commonName}`;
+                    }
+                    return {
+                        key: d.key,
+                        name
+                    }
+                })
+                this.regions = responses[1].data.data
+            })).then(() => {
+                this.species.unshift({name: "All Species", key: ""})
+                this.regions.unshift({name: "All Regions", key: ""})
+            }).catch(error => console.log(error))
+        },
+
         reloadTable() {
             this.table.ajax.reload(null, false);
         },
@@ -65,15 +89,16 @@ const app = Vue.createApp({
     },
 
     mounted() {
-        WMIS.loadAndInitializeSelect2($("#species"), "/api/biodiversity/species?startRow=0&rowCount=7000", "Species", true, 'All Species', 'data');
-        WMIS.loadAndInitializeSelect2($("#region"), "/api/collar/region?startRow=0&rowCount=500", "Region", true, 'All Regions', 'data');
         this.newCollarModal = new bootstrap.Modal(document.getElementById("newCollarModal"), {
             keyboard: false,
             backdrop: 'static'
         });
+
+        
     },
 
     created() {
+        this.getDropdowns()
         document.title = "WMIS Collared Animal";
         const vm = this;
         document.title = "WMIS Biodiversity";
@@ -165,18 +190,6 @@ const app = Vue.createApp({
                         $(this).addClass('bg-info');
                     }
                 }
-            });
-
-            $('#species').change(function (e) {
-                const val = e.target.value;
-                vm.form.speciesKey = val === 'all' ? '' : val;
-                vm.reloadTable()
-            });
-
-            $('#region').change(function (e) {
-                const val = e.target.value;
-                vm.form.regionKey = val === 'all' ? '' : val;
-                vm.reloadTable()
             });
 
             $('#keyword').keyup(function (e) {

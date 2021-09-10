@@ -7,7 +7,7 @@
 @section TopRight{
     <div class="h6 text-end" v-if="form">
         <span>Status: <strong><span>{{form.status ? form.status.name : ""}}</span></strong><br /></span>
-        <span class="h5">
+        <span class="h6">
             Last Updated: <span>{{ lastUpdated }}</span>
         </span>
     </div>
@@ -65,102 +65,110 @@
         @if (Html.UserIsProjectAdministrator() || ViewBag.CanViewSensitive)
         {
 
-            <base-button color="success" :busy="loading" v-on:click.prevent="saveUpdate()" :disabled="disabled">Save</base-button>
+            <base-button color="success" size="large" :busy="loading" v-on:click.prevent="saveUpdate()" :disabled="disabled">Save</base-button>
         }
     </div>
 </div>
 
 <!-------------------------------------------->
-<div class="row">
+<div class="row my-3">
     <div class="col-md-12">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item active"><a href="#generalTab" role="tab" data-bs-toggle="tab" class="nav-link active">General</a></li>
-            <li class="nav-item"><a href="#surveysTab" role="tab" data-bs-toggle="tab" class="nav-link">Surveys</a></li>
-            <li class="nav-item"><a href="#collarsTab" role="tab" data-bs-toggle="tab" class="nav-link">Collars</a></li>
-            <li class="nav-item"><a href="#collaboratorsTab" role="tab" data-bs-toggle="tab" class="nav-link">Collaborators</a></li>
-            <li class="nav-item"><a href="#sitesTab" role="tab" data-bs-toggle="tab" class="nav-link">Sites</a></li>
-            <li class="nav-item"><a href="#historyTab" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
-        </ul>
+        <div class="card">
+            <div class="card-header">
 
-        <!-- Tab panes -->
-        <div class="tab-content" id="biodiversityTabContent">
-            <div id="generalTab" class="tab-pane active py-4">
-                @{Html.RenderPartial("GeneralTab");}
+
+                <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
+                    <li class="nav-item active"><a href="#generalTab" role="tab" data-bs-toggle="tab" class="nav-link active">General</a></li>
+                    <li class="nav-item"><a href="#surveysTab" role="tab" data-bs-toggle="tab" class="nav-link">Surveys</a></li>
+                    <li class="nav-item"><a href="#collarsTab" role="tab" data-bs-toggle="tab" class="nav-link">Collars</a></li>
+                    <li class="nav-item"><a href="#collaboratorsTab" role="tab" data-bs-toggle="tab" class="nav-link">Collaborators</a></li>
+                    <li class="nav-item"><a href="#sitesTab" role="tab" data-bs-toggle="tab" class="nav-link">Sites</a></li>
+                    <li class="nav-item"><a href="#historyTab" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
+                </ul>
+
             </div>
+            <div class="card-body">
+                <!-- Tab panes -->
+                <div class="tab-content" id="biodiversityTabContent">
+                    <div id="generalTab" class="tab-pane active py-4">
+                        @{Html.RenderPartial("GeneralTab");}
+                    </div>
 
-            <div id="surveysTab" class="tab-pane form-horizontal">
-                <project-surveys v-bind:project_id="key"></project-surveys>
-            </div>
+                    <div id="surveysTab" class="tab-pane form-horizontal">
+                        <project-surveys v-bind:project_id="key" v-bind:survey_types="surveyTypes"></project-surveys>
+                    </div>
 
-            <!-- project Collars -->
-            <div id="collarsTab" class="tab-pane form-horizontal">
-                <div class="row py-3">
-                    <div class="col-md-12">
-                        <table id="collarsTable" class="table w-100 table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Animal ID</th>
-                                    <th>Animal Status</th>
-                                    <th>Animal Herd</th>
-                                    <th>Animal Sex</th>
-                                    <th>Collar Status</th>
-                                    <th>Collar State</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <!-- project Collars -->
+                    <div id="collarsTab" class="tab-pane form-horizontal">
+                        <div class="row py-3">
+                            <div class="col-md-12">
+                                <table id="collarsTable" class="table w-100 table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Animal ID</th>
+                                            <th>Animal Status</th>
+                                            <th>Animal Herd</th>
+                                            <th>Animal Sex</th>
+                                            <th>Collar Status</th>
+                                            <th>Collar State</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Collaborators -->
+                    <div id="collaboratorsTab" class="tab-pane form-horizontal">
+                        <div class="row h4 py-4">
+                            <div class="col-md-12 text-right">
+                                <base-button size="small" color="success" v-on:click="createCollaboratorModal()">Create New Collaborator</base-button>
+                                <base-button size="small" color="primary" v-on:click="addCollaboratorFormModal.show()">Add Existing Collaborator</base-button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-sm w-100 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Organization</th>
+                                            <th>Email</th>
+                                            <th>Phone Number</th>
+                                            <th class="text-center">Edit</th>
+                                            <th class="text-center">Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="p in projectCollaborators" :key="p.key">
+                                            <td>{{p.name}}</td>
+                                            <td>{{p.organization}}</td>
+                                            <td>{{p.email}}</td>
+                                            <td>{{p.phoneNumber}}</td>
+                                            <td class="text-center cursor-pointer">
+                                                <el-button type="primary" size="mini" icon="el-icon-edit" v-on:click="editCollaborator(p)" circle></el-button>
+                                            </td>
+                                            <td class="text-center text-danger">
+                                                <el-button type="danger" size="mini" icon="el-icon-delete" v-on:click="removeCollaborator(p.key)" circle></el-button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- PROJECT SITES -->
+                    <div id="sitesTab" class="tab-pane form-horizontal">
+                        <project-sites v-if="key" :project_id="key"></project-sites>
+                    </div>
+
+                    <div id="historyTab" class="tab-pane form-horizontal">
+                        <history-tab v-if="key" :parent_table_key="key" parent_table_name="ProjectHistory"></history-tab>
                     </div>
                 </div>
-            </div>
-
-            <!-- Project Collaborators -->
-            <div id="collaboratorsTab" class="tab-pane form-horizontal">
-                <div class="row h4 py-4">
-                    <div class="col-md-12 text-right">
-                        <base-button size="small" color="success" v-on:click="createCollaboratorModal()">Create New Collaborator</base-button>
-                        <base-button size="small" color="primary" v-on:click="addCollaboratorFormModal.show()">Add Existing Collaborator</base-button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-sm w-100 table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Organization</th>
-                                    <th>Email</th>
-                                    <th>Phone Number</th>
-                                    <th class="text-center">Edit</th>
-                                    <th class="text-center">Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="p in projectCollaborators" :key="p.key">
-                                    <td>{{p.name}}</td>
-                                    <td>{{p.organization}}</td>
-                                    <td>{{p.email}}</td>
-                                    <td>{{p.phoneNumber}}</td>
-                                    <td class="text-center cursor-pointer">
-                                        <el-button type="primary" size="mini" icon="el-icon-edit" v-on:click="editCollaborator(p)" circle></el-button>
-                                    </td>
-                                    <td class="text-center text-danger">
-                                        <el-button type="danger" size="mini" icon="el-icon-delete" v-on:click="removeCollaborator(p.key)" circle></el-button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- PROJECT SITES -->
-            <div id="sitesTab" class="tab-pane form-horizontal">
-                <project-sites v-if="key" :project_id="key"></project-sites>
-            </div>
-
-            <div id="historyTab" class="tab-pane form-horizontal">
-                <history-tab v-if="key" :parent_table_key="key" parent_table_name="ProjectHistory"></history-tab>
             </div>
         </div>
     </div>
@@ -198,10 +206,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" v-on:click="handleCollaboratorSave()">
+                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="success" v-on:click="handleCollaboratorSave()">
                     Save
-                </button>
+                </base-button>
             </div>
         </div>
     </div>
@@ -220,7 +228,7 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <div>Collaborator</div>
-                            <el-select class="w-100" v-model="selectedCollaborator" placeholder="Select Collaborator">
+                            <el-select class="w-100" v-model="selectedCollaborator" filterable placeholder="Select Collaborator">
                                 <el-option v-for="item in allCollaborators"
                                            :key="item.key"
                                            :label="`${item.name} ${item.organization} - ${item.email}`"
@@ -232,10 +240,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" v-on:click="addExistingCollaborator()">
+                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="success" v-on:click="addExistingCollaborator()">
                     Save
-                </button>
+                </base-button>
             </div>
         </div>
     </div>

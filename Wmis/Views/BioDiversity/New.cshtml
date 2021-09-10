@@ -9,37 +9,38 @@
 
 }
 
-<form role="form" v-on:submit.prevent="submit">
-        <div class="row my-3">
-            <div class="col-2 text-end">
-                <label for="name">Name</label>
-            </div>
-            <div class="col-5 text-end">
-                <base-input v-model.trim="form.name" id="name"></base-input>
-            </div>
+    <div class="row my-3">
+        <div class="col-2 text-end">
+            <label for="name">Name</label>
         </div>
-
-        <div class="row my-3">
-            <div class="col-2 text-end">
-                <label for="subSpeciesName">Sub Species</label>
-            </div>
-            <div class="col-5 text-end">
-                <base-input v-model.trim="form.subSpeciesName" id="subSpeciesName"></base-input>
-            </div>
-        </div>
-
-        <div class="row my-3">
-            <div class="col-2 text-end">
-                <label for="subSpeciesName">Eco Type</label>
-            </div>
-            <div class="col-5 text-end">
-                <base-input v-model.trim="form.ecoType" id="ecoType"></base-input>
-            </div>
-        </div>
-    <div class="row">
-        <div class="col-7 text-end">
-            <a href="/BioDiversity/Index" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-primary" v-bind:class="{'disabled': disabled}">Save</button>
+        <div class="col-5 text-end">
+            <base-input v-model="form.name" id="name"></base-input>
         </div>
     </div>
-</form>
+
+    <div class="row my-3">
+        <div class="col-2 text-end">
+            <label for="subSpeciesName">Sub Species</label>
+        </div>
+        <div class="col-5 text-end">
+            <base-input v-model="form.subSpeciesName" id="subSpeciesName"></base-input>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-2 text-end">
+            <label for="subSpeciesName">Eco Type</label>
+        </div>
+        <div class="col-5 text-end">
+            <base-input v-model="form.ecoType" id="ecoType"></base-input>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-7 text-end">
+            <a href="/BioDiversity/Index" class="el-button el-button--danger is-plain">Cancel</a>
+            
+            <base-button v-on:click.prevent="submit()" color="success" :disabled="disabled" size="large">Save</base-button>
+            
+        </div>
+    </div>

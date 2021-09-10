@@ -1,323 +1,356 @@
-﻿
-<div class="row mb-3 d-flex align-items-center">
-    <label class="col-md-2 form-label text-end">Target Species</label>
-    <div class="col-md-4">
-        <base-species-select v-model="form.speciesId"></base-species-select>
-    </div>
+﻿<div class="card border-0">
+    <div class="card-body">
 
-    <label class="col-md-2 text-end">Animal Status</label>
-    <div class="col-md-4">
-        <el-select class="w-100" v-model="form.animalStatus.key">
-            <el-option :value="0" label="Select Status" disabled></el-option>
-            <el-option v-for="item in animalStatuses"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
-</div>
+        <div class="row mb-3 d-flex align-items-center">
+            <label class="col-md-2 form-label text-end">Target Species</label>
+            <div class="col-md-4">
+                <base-species-select v-model="form.speciesId"></base-species-select>
+            </div>
 
-<div class="row mb-3 d-flex align-items-center">
-    <label class="col-md-2 form-label text-end">Animal ID</label>
-    <div class="col-md-4">
-        <base-input v-model="form.animalId" id="animalId"></base-input>
-    </div>
-
-    <label class="col-md-2 text-end">Year of Birth</label>
-    <div class="col-md-4">
-        <base-input v-model="form.estimatedYearOfBirth" id="estimatedYearOfBirth"></base-input>
-    </div>
-</div>
-
-<div class="row mb-3 d-flex align-items-center">
-    <label class="col-md-2 text-end">Age Class</label>
-    <div class="col-md-4">
-        <el-select class="w-100" v-model="form.ageClass.key" placeholder="Select">
-            <el-option :value="0" label="Select Age Class" disabled></el-option>
-            <el-option v-for="item in ageClasses"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
-
-    <label class="col-md-2 form-label text-end">Year of Birth Method</label>
-    <div class="col-md-4">
-        <base-input v-model="form.estimatedBirthYearMethod" id="estimatedBirthYearMethod"></base-input>
-    </div>
-</div>
+            <label class="col-md-2 text-end">Animal Status</label>
+            <div class="col-md-4">
+                <el-select class="w-100" v-model="form.animalStatus.key">
+                    <el-option :value="0" label="Select Status" disabled></el-option>
+                    <el-option v-for="item in animalStatuses"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+        </div>
 
 
-<div class="row mb-3 d-flex align-items-center">
-    <label class="col-md-2 text-end">Sex</label>
-    <div class="col-md-4">
-        <el-select class="w-100" v-model="form.animalSex.key" placeholder="Select">
-            <el-option :value="0" label="Select Animal Sex" disabled></el-option>
-            <el-option v-for="item in animalSexes"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
+        <div class="row mb-3 d-flex align-items-center">
+            <label class="col-md-2 form-label text-end">Animal ID</label>
+            <div class="col-md-4">
+                <base-input v-model="form.animalId" id="animalId"></base-input>
+            </div>
 
-    <label class="col-md-2 form-label text-end">Year of Birth By</label>
-    <div class="col-md-4">
-        <base-input v-model="form.estimatedYearOfBirthBy" id="estimatedYearOfBirthBy"></base-input>
+            <label class="col-md-2 text-end">Year of Birth</label>
+            <div class="col-md-4">
+                <base-input v-model="form.estimatedYearOfBirth" id="estimatedYearOfBirth"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3 d-flex align-items-center">
+            <label class="col-md-2 text-end">Age Class</label>
+            <div class="col-md-4">
+                <el-select class="w-100" v-model="form.ageClass.key" placeholder="Select">
+                    <el-option :value="0" label="Select Age Class" disabled></el-option>
+                    <el-option v-for="item in ageClasses"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-2 form-label text-end">Year of Birth Method</label>
+            <div class="col-md-4">
+                <base-input v-model="form.estimatedBirthYearMethod" id="estimatedBirthYearMethod"></base-input>
+            </div>
+        </div>
+
+
+        <div class="row mb-3 d-flex align-items-center">
+            <label class="col-md-2 text-end">Sex</label>
+            <div class="col-md-4">
+                <el-select class="w-100" v-model="form.animalSex.key" placeholder="Select">
+                    <el-option :value="0" label="Select Animal Sex" disabled></el-option>
+                    <el-option v-for="item in animalSexes"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-2 form-label text-end">Year of Birth By</label>
+            <div class="col-md-4">
+                <base-input v-model="form.estimatedYearOfBirthBy" id="estimatedYearOfBirthBy"></base-input>
+            </div>
+        </div>
+
     </div>
 </div>
 
 
 <!------------------------------------------ HERD ASSOC --------------------------------------->
-<div class="row d-flex align-items-center mt-4 py-2 bg-light px-0 mb-2">
-    <div class="col-md-6 h5">
-        Herd Association
+<div class="card  border-0 mt-3">
+    <div class="card-header">
+        <div class="row d-flex align-items-center">
+            <div class="col-md-6 h5">
+                Herd Association
+            </div>
+            <div class="col-md-6 text-end">
+                <base-button color="default" size="small" v-on:click="herdAssociationModal.show()">Update Herd Association</base-button>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6 text-end">
-        <base-button color="default" size="small" v-on:click="herdAssociationModal.show()">Update Herd Association</base-button>
+    <div class="card-body">
+        <div class="row mb-3 gy-3 d-flex align-items-center">
+            <label class="col-md-1 text-end">Population</label>
+            <div class="col-md-2">
+                <el-select disabled readonly class="w-100" v-model="form.herdPopulation.key">
+                    <el-option :value="0" label="Select Herd Population" disabled></el-option>
+                    <el-option v-for="item in herdPopulations"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 text-end">Confidence</label>
+            <div class="col-md-2">
+                <el-select class="w-100" disabled readonly v-model="form.herdAssociationConfidenceLevel.key">
+                    <el-option :value="0" label="Select Conf. Level" disabled></el-option>
+                    <el-option v-for="item in confidenceLevels"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 text-end">Method</label>
+            <div class="col-md-2">
+                <el-select class="w-100" v-model="form.herdAssociationMethod.key" disabled readonly>
+                    <el-option :value="0" label="Select Herd Association" disabled></el-option>
+                    <el-option v-for="item in herdAssociationMethods"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 form-label text-end">Effective Date</label>
+            <div class="col-md-2">
+                <el-date-picker v-model="form.herdAssociationDate"
+                                type="date"
+                                class="w-100"
+                                disabled readonly
+                                value-format="YYYY-MM-DDTHH:mm:ss.SSS"
+                                placeholder="Pick Date">
+                </el-date-picker>
+            </div>
+
+            <label class="col-md-1 form-label text-end">Deployment Herd</label>
+            <div class="col-md-2">
+                <base-input disabled readonly v-model="form.deploymentHerd" id="deploymentHerd"></base-input>
+            </div>
+        </div>
     </div>
 </div>
 
 
-<div class="row mb-3 gy-3 d-flex align-items-center">
-    <label class="col-md-1 text-end">Population</label>
-    <div class="col-md-2">
-        <el-select disabled readonly class="w-100" v-model="form.herdPopulation.key">
-            <el-option :value="0" label="Select Herd Population" disabled></el-option>
-            <el-option v-for="item in herdPopulations"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
 
-    <label class="col-md-1 text-end">Confidence</label>
-    <div class="col-md-2">
-        <el-select class="w-100" disabled readonly v-model="form.herdAssociationConfidenceLevel.key">
-            <el-option :value="0" label="Select Conf. Level" disabled></el-option>
-            <el-option v-for="item in confidenceLevels"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
 
-    <label class="col-md-1 text-end">Method</label>
-    <div class="col-md-2">
-        <el-select class="w-100" v-model="form.herdAssociationMethod.key" disabled readonly>
-            <el-option :value="0" label="Select Herd Association" disabled></el-option>
-            <el-option v-for="item in herdAssociationMethods"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
 
-    <label class="col-md-1 form-label text-end">Effective Date</label>
-    <div class="col-md-2">
-        <el-date-picker v-model="form.herdAssociationDate"
-                        type="date"
-                        class="w-100"
-                        disabled readonly
-                        value-format="YYYY-MM-DDTHH:mm:ss.SSS"
-                        placeholder="Pick Date">
-        </el-date-picker>
-    </div>
-
-    <label class="col-md-1 form-label text-end">Deployment Herd</label>
-    <div class="col-md-2">
-        <base-input disabled readonly v-model="form.deploymentHerd" id="deploymentHerd"></base-input>
-    </div>
-</div>
 
 
 <!------------------------------------------ BREEDING --------------------------------------->
-<div class="row d-flex align-items-center mt-4 py-2 bg-light px-0 mb-2">
-    <div class="col-md-6 h5">
-        Breeding Status
+<div class="card border-0 mt-3">
+    <div class="card-header">
+        <div class="row d-flex align-items-center">
+            <div class="col-md-6 h5">
+                Breeding Status
+            </div>
+            <div class="col-md-6 text-end">
+                <base-button color="default" size="small" v-on:click="breedingStatusModal.show()">Update Breeding Status</base-button>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6 text-end">
-        <base-button color="default" size="small" v-on:click="breedingStatusModal.show()">Update Breeding Status</base-button>
+    <div class="card-body">
+        <div class="row mb-3 gy-3 d-flex align-items-center">
+            <label class="col-md-1 text-end">Status</label>
+            <div class="col-md-2">
+                <el-select disabled readonly class="w-100" v-model="form.breedingStatus.key">
+                    <el-option :value="0" label="Select Breeding Status" disabled></el-option>
+                    <el-option v-for="item in breedingStatuses"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 text-end">Confidence</label>
+            <div class="col-md-2">
+                <el-select class="w-100" disabled readonly v-model="form.breedingStatusConfidenceLevel.key">
+                    <el-option :value="0" label="Select Confidence Level" disabled></el-option>
+                    <el-option v-for="item in confidenceLevels"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 text-end">Method</label>
+            <div class="col-md-2">
+                <el-select class="w-100" v-model="form.breedingStatusMethod.key" placeholder="Select" disabled readonly>
+                    <el-option :value="0" label="Select Method" disabled></el-option>
+                    <el-option v-for="item in breedingStatusMethods"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 form-label text-end">Effective Date</label>
+            <div class="col-md-2">
+                <el-date-picker v-model="form.breedingStatusDate"
+                                type="date"
+                                class="w-100"
+                                disabled readonly
+                                value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+                </el-date-picker>
+            </div>
+        </div>
     </div>
 </div>
 
 
-<div class="row mb-3 gy-3 d-flex align-items-center">
-    <label class="col-md-1 text-end">Status</label>
-    <div class="col-md-2">
-        <el-select disabled readonly class="w-100" v-model="form.breedingStatus.key">
-            <el-option :value="0" label="Select Breeding Status" disabled></el-option>
-            <el-option v-for="item in breedingStatuses"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
 
-    <label class="col-md-1 text-end">Confidence</label>
-    <div class="col-md-2">
-        <el-select class="w-100" disabled readonly v-model="form.breedingStatusConfidenceLevel.key">
-            <el-option :value="0" label="Select Confidence Level" disabled></el-option>
-            <el-option v-for="item in confidenceLevels"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
-
-    <label class="col-md-1 text-end">Method</label>
-    <div class="col-md-2">
-        <el-select class="w-100" v-model="form.breedingStatusMethod.key" placeholder="Select" disabled readonly>
-            <el-option :value="0" label="Select Method" disabled></el-option>
-            <el-option v-for="item in breedingStatusMethods"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
-
-    <label class="col-md-1 form-label text-end">Effective Date</label>
-    <div class="col-md-2">
-        <el-date-picker v-model="form.breedingStatusDate"
-                        type="date"
-                        class="w-100"
-                        disabled readonly
-                        value-format="YYYY-MM-DDTHH:mm:ss.SSS">
-        </el-date-picker>
-    </div>
-</div>
 
 
 <!------------------------------------------ Mortality --------------------------------------->
-<div class="row d-flex align-items-center mt-4 py-2 bg-light px-0 mb-2">
-    <div class="col-md-12 h5">
-        Mortality
+<div class="card border-0 mt-3">
+    <div class="card-header">
+        <div class="row d-flex align-items-center">
+            <div class="col-md-6 h5">
+                Mortality
+            </div>
+            <div class="col-md-6 text-end">
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3 gy-3 d-flex align-items-center">
+            <label class="col-md-1 text-end">Cause</label>
+            <div class="col-md-3">
+                <el-select class="w-100" v-model="form.animalMortality.key">
+                    <el-option :value="0" label="Select Cause" disabled></el-option>
+                    <el-option v-for="item in animalMortalities"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+
+            <label class="col-md-1 text-end">Confidence</label>
+            <div class="col-md-3">
+                <el-select class="w-100" v-model="form.mortalityConfidence.key">
+                    <el-option :value="0" label="Select Conf. Level" disabled></el-option>
+                    <el-option v-for="item in confidenceLevels"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item.key">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 form-label text-end">Effective Date</label>
+            <div class="col-md-3">
+                <el-date-picker v-model="form.mortalityDate"
+                                type="date"
+                                class="w-100"
+                                value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+                </el-date-picker>
+            </div>
+
+
+            <label class="col-md-1 form-label text-end">Latitude</label>
+            <div class="col-md-3">
+                <base-input v-model="form.mortalityLatitude" id="mortalityLatitude"></base-input>
+            </div>
+
+            <label class="col-md-1 form-label text-end">Longitude</label>
+            <div class="col-md-3">
+                <base-input v-model="form.mortalityLongitude" id="mortalityLongitude"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3 gy-3 d-flex align-items-center">
+            <label class="col-md-1 text-end">Body Condition</label>
+            <div class="col-md-11">
+                <base-input type="textarea" v-model="form.bodyCondition" id="bodyCondition"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3 gy-3 d-flex align-items-center">
+            <label class="col-md-1 text-end">Carcass Position</label>
+            <div class="col-md-5">
+                <base-input v-model="form.carcassPosition" id="carcassPosition"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3 gy-3 d-flex align-items-center">
+            <label class="col-md-1 text-end">Carcass Comments</label>
+            <div class="col-md-11">
+                <base-input type="textarea" v-model="form.carcassComments" id="carcassComments"></base-input>
+            </div>
+        </div>
+
+
+        <div class="row mb-3 gy-3 d-flex align-items-center">
+            <label class="col-md-1 text-end">Signs of Predation</label>
+            <div class="col-md-2">
+                <el-select class="w-100" v-model="form.signsOfPredation">
+                    <el-option :value="true" label="Yes"></el-option>
+                    <el-option :value="false" label="No"></el-option>
+                    <el-option :value="null" label="Unknown"></el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 text-end">Evidence of Chase</label>
+            <div class="col-md-2">
+                <el-select class="w-100" v-model="form.evidenceOfChase">
+                    <el-option :value="true" label="Yes"></el-option>
+                    <el-option :value="false" label="No"></el-option>
+                    <el-option :value="null" label="Unknown"></el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 text-end">Signs Of Scavengers</label>
+            <div class="col-md-2">
+                <el-select class="w-100" v-model="form.signsOfScavengers">
+                    <el-option :value="true" label="Yes"></el-option>
+                    <el-option :value="false" label="No"></el-option>
+                    <el-option :value="null" label="Unknown"></el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 text-end">Snow Since Death</label>
+            <div class="col-md-2">
+                <el-select class="w-100" v-model="form.snowSinceDeath">
+                    <el-option :value="true" label="Yes"></el-option>
+                    <el-option :value="false" label="No"></el-option>
+                    <el-option :value="null" label="Unknown"></el-option>
+                </el-select>
+            </div>
+
+            <label class="col-md-1 text-end">Signs Of Humans</label>
+            <div class="col-md-2">
+                <el-select class="w-100" v-model="form.signsOfHumans">
+                    <el-option :value="true" label="Yes"></el-option>
+                    <el-option :value="false" label="No"></el-option>
+                    <el-option :value="null" label="Unknown"></el-option>
+                </el-select>
+            </div>
+
+        </div>
     </div>
 </div>
 
-<div class="row mb-3 gy-3 d-flex align-items-center">
-    <label class="col-md-1 text-end">Cause</label>
-    <div class="col-md-3">
-        <el-select class="w-100" v-model="form.animalMortality.key">
-            <el-option :value="0" label="Select Cause" disabled></el-option>
-            <el-option v-for="item in animalMortalities"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
 
 
-    <label class="col-md-1 text-end">Confidence</label>
-    <div class="col-md-3">
-        <el-select class="w-100" v-model="form.mortalityConfidence.key">
-            <el-option :value="0" label="Select Conf. Level" disabled></el-option>
-            <el-option v-for="item in confidenceLevels"
-                       :key="item.key"
-                       :label="item.name"
-                       :value="item.key">
-            </el-option>
-        </el-select>
-    </div>
-
-    <label class="col-md-1 form-label text-end">Effective Date</label>
-    <div class="col-md-3">
-        <el-date-picker v-model="form.mortalityDate"
-                        type="date"
-                        class="w-100"
-                        value-format="YYYY-MM-DDTHH:mm:ss.SSS">
-        </el-date-picker>
-    </div>
-
-
-    <label class="col-md-1 form-label text-end">Latitude</label>
-    <div class="col-md-3">
-        <base-input v-model="form.mortalityLatitude" id="mortalityLatitude"></base-input>
-    </div>
-
-    <label class="col-md-1 form-label text-end">Longitude</label>
-    <div class="col-md-3">
-        <base-input v-model="form.mortalityLongitude" id="mortalityLongitude"></base-input>
-    </div>
-</div>
-
-<div class="row mb-3 gy-3 d-flex align-items-center">
-    <label class="col-md-1 text-end">Body Condition</label>
-    <div class="col-md-11">
-        <base-input type="textarea" v-model="form.bodyCondition" id="bodyCondition"></base-input>
-    </div>
-</div>
-
-<div class="row mb-3 gy-3 d-flex align-items-center">
-    <label class="col-md-1 text-end">Carcass Position</label>
-    <div class="col-md-5">
-        <base-input v-model="form.carcassPosition" id="carcassPosition"></base-input>
-    </div>
-</div>
-
-<div class="row mb-3 gy-3 d-flex align-items-center">
-    <label class="col-md-1 text-end">Carcass Comments</label>
-    <div class="col-md-11">
-        <base-input type="textarea" v-model="form.carcassComments" id="carcassComments"></base-input>
-    </div>
-</div>
-
-
-<div class="row mb-3 gy-3 d-flex align-items-center">
-    <label class="col-md-1 text-end">Signs of Predation</label>
-    <div class="col-md-2">
-        <el-select class="w-100" v-model="form.signsOfPredation">
-            <el-option :value="true" label="Yes"></el-option>
-            <el-option :value="false" label="No"></el-option>
-            <el-option :value="null" label="Unknown"></el-option>
-        </el-select>
-    </div>
-
-    <label class="col-md-1 text-end">Evidence of Chase</label>
-    <div class="col-md-2">
-        <el-select class="w-100" v-model="form.evidenceOfChase">
-            <el-option :value="true" label="Yes"></el-option>
-            <el-option :value="false" label="No"></el-option>
-            <el-option :value="null" label="Unknown"></el-option>
-        </el-select>
-    </div>
-
-    <label class="col-md-1 text-end">Signs Of Scavengers</label>
-    <div class="col-md-2">
-        <el-select class="w-100" v-model="form.signsOfScavengers">
-            <el-option :value="true" label="Yes"></el-option>
-            <el-option :value="false" label="No"></el-option>
-            <el-option :value="null" label="Unknown"></el-option>
-        </el-select>
-    </div>
-
-    <label class="col-md-1 text-end">Snow Since Death</label>
-    <div class="col-md-2">
-        <el-select class="w-100" v-model="form.snowSinceDeath">
-            <el-option :value="true" label="Yes"></el-option>
-            <el-option :value="false" label="No"></el-option>
-            <el-option :value="null" label="Unknown"></el-option>
-        </el-select>
-    </div>
-
-    <label class="col-md-1 text-end">Signs Of Humans</label>
-    <div class="col-md-2">
-        <el-select class="w-100" v-model="form.signsOfHumans">
-            <el-option :value="true" label="Yes"></el-option>
-            <el-option :value="false" label="No"></el-option>
-            <el-option :value="null" label="Unknown"></el-option>
-        </el-select>
-    </div>
-
-</div>
 
 

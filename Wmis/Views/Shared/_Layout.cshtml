@@ -7,7 +7,6 @@
     <meta name="description" content="">
     <title>WMIS</title>
 
-    @*@Styles.Render("~/bundles/styles")*@
     @Styles.Render("~/bundles/css")
 
     @RenderSection("Styles", false)
@@ -22,40 +21,49 @@
                         WMIS - <span class="small">Wildlife Management Information System</span>
                     </a>
                         
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/Project">Projects</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/CollaredAnimal">Collar</a>
-                            </li>
-                            <li class="nav-item flex-shrink-0 dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Biodiversity</a>
-                                <ul class="dropdown-menu" aria-labelledby="biodiversity">
-                                    <li><a class="dropdown-item" href="/BioDiversity">Species</a></li>
-                                    <li><a class="dropdown-item" href="/Taxonomy">Taxonomies</a></li>
-                                    <li><a class="dropdown-item" href="/Ecozone">Ecozones</a></li>
-                                    <li><a class="dropdown-item" href="/Ecoregion">Ecoregions</a></li>
-                                    <li><a class="dropdown-item" href="/ProtectedArea">Protected Areas</a></li>
-                                    <li><a class="dropdown-item" href="/StatusRank">Ranks</a></li>
-                                    <li><a class="dropdown-item" href="/CosewicStatus">COSEWIC Status</a></li>
-                                    <li><a class="dropdown-item" href="/NwtSarcAssessment">NWT SARC Assessment</a></li>
-                                    <li><a class="dropdown-item" href="/Reference">References</a></li>
-                                    <li><a class="dropdown-item" href="/BioDiversity/Upload">Biodiversity Bulk Upload</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Reports">Reports</a>
-                            </li>
-                            <li class="nav-item flex-shrink-0 dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Administrator</a>
-                                <ul class="dropdown-menu" aria-labelledby="admin">
-                                    <li><a class="dropdown-item" href="/User">Users</a></li>
-                                    <li><a class="dropdown-item" href="/SurveyTemplate">Survey Templates</a></li>
-                                    <li><a class="dropdown-item" href="/ArgosService">Argos Service</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                    <ul class="navbar-nav">
+                            @Html.MenuItem("Projects", "Index", "Project")
+                            @Html.MenuItem("Collar", "Index", "CollaredAnimal")
+                            
+                        @*<li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/Project">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/CollaredAnimal">Collar</a>
+                        </li>*@
+                        <li class="nav-item flex-shrink-0 dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Biodiversity</a>
+                            <ul class="dropdown-menu" aria-labelledby="biodiversity">
+                                @Html.MenuItem("Species", "Index", "BioDiversity", true)
+                                @Html.MenuItem("Taxonomies", "Index", "Taxonomy", true)
+                                @Html.MenuItem("Ecozones", "Index", "Ecozone", true)
+                                @Html.MenuItem("Ecoregions", "Index", "Ecoregion", true)
+                                @Html.MenuItem("Protected Areas", "Index", "ProtectedArea", true)
+                                @Html.MenuItem("Ranks", "Index", "StatusRank", true)
+                                @Html.MenuItem("COSEWIC Status", "Index", "CosewicStatus", true)
+                                @Html.MenuItem("NWT SARC Assessments", "Index", "NwtSarcAssessment", true)
+                                @Html.MenuItem("References", "Index", "Reference", true)
+                                @Html.MenuItem("Biodiversity Bulk Upload", "Upload", "BioDiversity", true)
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Reports">Reports</a>
+                        </li>
+                        <li class="nav-item flex-shrink-0 dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Administrator</a>
+                            <ul class="dropdown-menu" aria-labelledby="admin">
+                                @if (Html.UserIsWMISAdministrator())
+                                {
+                                    @Html.MenuItem("Users", "Index", "User", true)
+                                }
+                                @if (Html.UserInAnyAdministratorRole())
+                                {
+                                    @Html.MenuItem("Survey Templates", "Index", "SurveyTemplate", true)
+                                    @Html.MenuItem("Argos Service", "Index", "ArgosService", true)
+                                }
+                            </ul>
+                        </li>
+                    </ul>
 
                 </div>
             </nav>
@@ -80,6 +88,11 @@
                             }
                             @RenderSection("TopRight", false)
                         </div>
+                        <el-divider class="mb-2 mt-0" content-position="center">
+                            <img src="~/Content/images/logo.png" width="35" />
+                            @*<i class="el-icon-star-on"></i>*@
+                    
+                        </el-divider>
                     }
                 </div>
 

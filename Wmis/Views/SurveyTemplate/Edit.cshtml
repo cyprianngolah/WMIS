@@ -48,132 +48,140 @@
     </div>
 </div>
 
-<div class="row d-flex align-items-center mt-4 py-2 bg-light px-0 mb-2">
-    <div class="col-md-6 h5">
-        Columns
-    </div>
-    <div class="col-md-6 text-end" v-show="columnsCanBeEdited" >
-        <base-button color="default" size="small" v-on:click="showCreateModal()">Add Column</base-button>
-    </div>
-</div>
 
 
-<!-- TABLE -->
-<div class="row">
-    <div class="col-12">
-
-        <table class="table table-striped w-100 table-sm table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>Order</th>
-                    <th>Column Heading</th>
-                    <th>Column Data Type</th>
-                    <th>Required</th>
-                    <th class="text-center" v-show="columnsCanBeEdited">Edit</th>
-                    <th class="text-center" v-show="columnsCanBeEdited">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="column in columns" :key="column.key">
-                    <td>{{column.order}}</td>
-                    <td>{{column.name}}</td>
-                    <td>{{ column.columnType ? column.columnType.name : ""}}</td>
-                    <td>{{requiredColumnFormatter(column.isRequired)}}</td>
-                    <td class="text-center" v-show="columnsCanBeEdited">
-                        <div v-if="!column.isRequired">
-                            <el-button size="mini" v-on:click="showEditModal(column)" type="primary" icon="el-icon-edit" circle></el-button>
-                        </div>
-                    </td>
-                    <td v-show="columnsCanBeEdited" class="text-center">
-                        <div v-if="!column.isRequired">
-                            <el-popconfirm confirm-button-type="danger" title="Are you sure to delete this?"  v-on:confirm="removeColumn(column.key)">
-                                <template #reference>
-                                    <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-                                </template>
-                            </el-popconfirm>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-
-<!-- New Column Modal -->
-<div class="modal fade" id="createColumnModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Survey Template Column</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="card my-3">
+    <div class="card-header">
+        <div class="row d-flex align-items-center">
+            <div class="col-md-6 mb-0 h5">
+                Columns
             </div>
-            <div class="modal-body">
-                <div class="card border-0">
-                    <div class="row mb-3 g-3">
-                        <label class="col-md-3 text-end">Column Header</label>
-                        <div class="col-md-9">
-                            <base-input v-model="columnData.name" label="Name"></base-input>
-                        </div>
-                    </div>
-                    <div class="row mb-3 g-3">
-                        <label class="col-md-3 text-end">Column Data Type</label>
-                        <div class="col-md-9">
-                            <el-select class="w-100" v-model="columnData.columnType.key">
-                                <el-option disabled :value="0" label="Select Type"></el-option>
-                                <el-option v-for="t in columnTypes" :key="t.key" :value="t.key" :label="t.name"></el-option>
-                            </el-select>
-                        </div>
-                    </div>
-                    <div class="row mb-3 g-3">
-                        <label class="col-md-3 text-end">Order</label>
-                        <div class="col-md-9">
-                            <base-input v-model="columnData.order" label="Order"></base-input>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-6 text-end" v-show="columnsCanBeEdited">
+                <base-button color="default" size="small" v-on:click="showCreateModal()">Add Column</base-button>
             </div>
-            <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
-                <base-button color="success" :disabled="disableColumnSave" v-on:click="save()">
-                    Save
-                </base-button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+
+                <table class="table w-100 table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Column Heading</th>
+                            <th>Column Data Type</th>
+                            <th>Required</th>
+                            <th class="text-center" v-show="columnsCanBeEdited">Edit</th>
+                            <th class="text-center" v-show="columnsCanBeEdited">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="column in columns" :key="column.key">
+                            <td>{{column.order}}</td>
+                            <td>{{column.name}}</td>
+                            <td>{{ column.columnType ? column.columnType.name : ""}}</td>
+                            <td>{{requiredColumnFormatter(column.isRequired)}}</td>
+                            <td class="text-center" v-show="columnsCanBeEdited">
+                                <div v-if="!column.isRequired">
+                                    <el-button size="mini" v-on:click="showEditModal(column)" type="primary" icon="el-icon-edit" circle></el-button>
+                                </div>
+                            </td>
+                            <td v-show="columnsCanBeEdited" class="text-center">
+                                <div v-if="!column.isRequired">
+                                    <el-popconfirm confirm-button-type="danger" title="Are you sure to delete this?" v-on:confirm="removeColumn(column.key)">
+                                        <template #reference>
+                                            <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
+                                        </template>
+                                    </el-popconfirm>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
+        
 
-<div class="modal fade" id="editColumnModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">New User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card border-0">
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <lable>Username</lable>
-                            @*<base-input v-model.trim="newUserForm.username" label="Username"></base-input>*@
-                            <small>eg CORP\windowsusername</small>
-                        </div>
 
-                        <div class="col-12">
-                            <lable>Name</lable>
-                            @*<base-input v-model="newUserForm.name" label="Name"></base-input>*@
+
+
+        <!-- New Column Modal -->
+        <div class="modal fade" id="createColumnModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Survey Template Column</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card border-0">
+                            <div class="row mb-3 g-3">
+                                <label class="col-md-3 text-end">Column Header</label>
+                                <div class="col-md-9">
+                                    <base-input v-model="columnData.name" label="Name"></base-input>
+                                </div>
+                            </div>
+                            <div class="row mb-3 g-3">
+                                <label class="col-md-3 text-end">Column Data Type</label>
+                                <div class="col-md-9">
+                                    <el-select class="w-100" v-model="columnData.columnType.key">
+                                        <el-option disabled :value="0" label="Select Type"></el-option>
+                                        <el-option v-for="t in columnTypes" :key="t.key" :value="t.key" :label="t.name"></el-option>
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="row mb-3 g-3">
+                                <label class="col-md-3 text-end">Order</label>
+                                <div class="col-md-9">
+                                    <base-input v-model="columnData.order" label="Order"></base-input>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                        <base-button color="success" :disabled="disableColumnSave" v-on:click="save()">
+                            Save
+                        </base-button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
-                <base-button color="success" :disabled="disableCreate" v-on:click="handleCreateUser()">
-                    Save
-                </base-button>
+        </div>
+
+
+        <div class="modal fade" id="editColumnModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card border-0">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <lable>Username</lable>
+                                    @*<base-input v-model.trim="newUserForm.username" label="Username"></base-input>*@
+                                    <small>eg CORP\windowsusername</small>
+                                </div>
+
+                                <div class="col-12">
+                                    <lable>Name</lable>
+                                    @*<base-input v-model="newUserForm.name" label="Name"></base-input>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                        <base-button color="success" :disabled="disableCreate" v-on:click="handleCreateUser()">
+                            Save
+                        </base-button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>

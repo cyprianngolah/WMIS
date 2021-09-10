@@ -1,5 +1,11 @@
 ﻿
 const app = Vue.createApp({
+    components: {
+        BaseButton,
+        BaseInput,
+        BaseDropdownSelect
+    },
+
     data() {
         return {
             table: null,
@@ -9,6 +15,7 @@ const app = Vue.createApp({
                 groupKey: '',
                 keywords: '',
             },
+            taxonomyGroups: []
         }
     },
 
@@ -30,10 +37,19 @@ const app = Vue.createApp({
             var url = `api/biodiversity/download/?startRow=0&rowCount=100000&sortBy=name&sortDirection=asc&keywords=${this.form.keywords}&familyKey=${this.form.familyKey}&groupKey=${this.form.groupKey}&orderKey=${this.form.orderKey}`
             window.open(url, '_blank');
         },
+
+        getTaxonomyGroups() {
+            axios.get("/api/taxonomy/taxonomygroup/")
+                .then(response => {
+                    this.taxonomyGroups = response.data
+                    this.taxonomyGroups.unshift({name: "All Groups", key: ''})
+                }).catch(error => console.log(error))
+        }
     },
 
     mounted() {
-        WMIS.loadAndInitializeSelect2($("#taxonomyGroup"), "/api/taxonomy/taxonomygroup/", "Taxonomy Group");
+        //WMIS.loadAndInitializeSelect2($("#taxonomyGroup"), "/api/taxonomy/taxonomygroup/", "Taxonomy Group");
+        this.getTaxonomyGroups()
     },
 
     created() {

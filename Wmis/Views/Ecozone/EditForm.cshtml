@@ -4,17 +4,17 @@
         <label for="name">Name</label>
     </div>
     <div class="col-5 text-end">
-        <base-input v-model.trim="form.name" id="name"></base-input>
+        <base-input v-model="form.name" id="name"></base-input>
     </div>
 </div>
 
 
 <div class="row">
     <div class="col-7 text-end">
-        <a href="/Ecozone/Index" class="btn btn-default">Cancel</a>
+        <a href="/Ecozone/Index" class="el-button el-button--danger is-plain">Cancel</a>
         @if (Html.UserIsBiodiversityAdministrator())
         {
-            <button type="button" v-on:click.prevent="submit()" class="btn btn-primary" v-bind:class="{'disabled': disabled}">Save</button>
+            <base-button v-on:click.prevent="submit()" color="success" :disabled="disabled" size="large">Save</base-button>
         }
     </div>
 </div>

@@ -3,40 +3,39 @@
 }
 
 @section Scripts{
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
+	@Html.Raw(Scripts.Render("~/bundles/components/base"))
 	@Html.Raw(Scripts.Render("~/bundles/argosservice/index"))
-
-	<script>
-        $(function () {
-        	wmis.argosservice.index.initialize({});
-        });
-	</script>
 }
 
-<form role="form">
-	<div class="row">
-		<div class="col-md-12">
-			<a href="/hangfire" class="btn btn-default" style="width: 150px;" role="button">Hangfire Dashboard</a> - For Monitoring Jobs
-		</div>
-	</div>
-
-    <div class="row" style="padding-top:5px">
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-default" style="width: 150px;" data-bind="click: updateSchedule">Update Schedule</button>
-            - Schedule is determined by ArgosWebserviceScheduleCronExpression key in environment.config file. <!--Currently the value is: <span data-bind="text: scheduleCron"></span> -->
+    <div class="row mb-3 d-flex align-items-center">
+        <div class="col-md-2">
+            <a href="/hangfire" class="el-button el-button--success btn w-100" target="_blank">
+                <span class="el-icon-odometer"></span>
+            Hangfire Dashboard</a>
+        </div>
+        <div class="col-md-10">
+            - For Monitoring Jobs
         </div>
     </div>
 
-    <div class="row" style="padding-top:5px">
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-default" style="width: 150px;" data-bind="click: runArgosFileLoad">Run File Load</button> - Execute the job
+    <div class="row mb-3 d-flex align-items-center">
+        <div class="col-md-2">
+            <base-button :loading="loading" color="primary" class="w-100" v-on:click="updateSchedule()">
+            <span class="el-icon-alarm-clock"></span>
+            Update Schedule</base-button>
+        </div>
+        <div class="col-md-10">
+            - Schedule is determined by ArgosWebserviceScheduleCronExpression key in environment.config file.
         </div>
     </div>
 
-    @*<div class="row" style="padding-top: 5px">
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-default" style="width: 150px;" data-bind="click: getCollarData">Get Collar Data</button>
-            - Queues up Jobs to get Argos Collar Data for all active Collars
+    <div class="row mb-3 d-flex align-items-center">
+        <div class="col-md-2">
+            <base-button :loading="loading" color="warning" class="w-100" v-on:click="runArgosFileLoad()">
+                <span class="el-icon-aim"></span>
+            Run File Load</base-button>
         </div>
-    </div>*@
-</form>
+        <div class="col-md-10">
+            - Execute the job
+        </div>
+    </div>

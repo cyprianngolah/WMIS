@@ -1,5 +1,8 @@
 ﻿
 const app = Vue.createApp({
+    components: {
+        BaseButton
+    },
     data() {
         return {
             table: null,

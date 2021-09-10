@@ -2,6 +2,7 @@
 const app = Vue.createApp({
     components: {
         BaseButton,
+        BaseDropdownSelect
     },
     data() {
         return {
@@ -15,6 +16,10 @@ const app = Vue.createApp({
                 orderKey: '',
                 keywords: '',
             },
+            groups: [],
+            orders: [],
+            families: [],
+
         }
     },
 
@@ -40,24 +45,36 @@ const app = Vue.createApp({
 
         deletedSelectedRecord() {
             if (this.selectedKey) {
-                var result = confirm("Sure you want to delete this species? Note that if the species is linked to any Survey data or has references, it will not be deleted! You can contact WMIS support in such cases.");
-                if (result) {
-                    axios.delete(`/api/biodiversity/species/${this.selectedKey}/delete/`)
-                        .then(response => window.location.href = "/Biodiversity")
-                        .catch(error => this.deleteError = error.response.data.exceptionMessage || "An unexpected error occured while deleting the record.")
-                }
+                axios.delete(`/api/biodiversity/species/${this.selectedKey}/delete/`)
+                    .then(_ => window.location.href = "/Biodiversity")
+                    .catch(error => this.deleteError = error.response.data.exceptionMessage || "An unexpected error occured while deleting the record.")
+                
             }
            
         },
-    },
 
-    mounted() {
-        WMIS.loadAndInitializeSelect2($("#groups"), "/api/taxonomy/group/", "Group");
-        WMIS.loadAndInitializeSelect2($("#orders"), "/api/taxonomy/order/", "Order");
-        WMIS.loadAndInitializeSelect2($("#families"), "/api/taxonomy/family/", "Family");
+
+        fetchFilters() {
+            axios.all([
+                axios.get('/api/taxonomy/group/'),
+                axios.get('/api/taxonomy/order/'),
+                axios.get('/api/taxonomy/family/')
+            ]).then(axios.spread((...responses) => {
+                this.groups = responses[0].data
+                this.orders = responses[1].data
+                this.families = responses[2].data
+            })).then(_ => {
+                this.groups.unshift({ name: "All Groups", key: "" })
+                this.orders.unshift({ name: "All Orders", key: "" })
+                this.families.unshift({ name: "All Families", key: "" })
+            }).catch(error => {
+                console.log(error)
+            });
+        }
     },
 
     created() {
+        this.fetchFilters()
         const vm = this;
         document.title = "WMIS Biodiversity";
         $(document).ready(function () {
@@ -102,15 +119,18 @@ const app = Vue.createApp({
                         json.recordsFiltered = json.resultCount;
 
                         if (!json.dataRequest.groupKey) {
-                            WMIS.appendDataToSelect(json.filters.groups, $('#groups'));
+                            vm.groups = json.filters.groups;
+                            vm.groups.unshift({ name: "All Groups", key: "" })
                         }
 
                         if (!json.dataRequest.orderKey) {
-                            WMIS.appendDataToSelect(json.filters.orders, $('#orders'));
+                            vm.orders = json.filters.orders;
+                            vm.orders.unshift({ name: "All Orders", key: "" })
                         }
 
                         if (!json.dataRequest.familyKey) {
-                            WMIS.appendDataToSelect(json.filters.families, $('#families'));
+                            vm.families = json.filters.families;
+                            vm.families.unshift({ name: "All Families", key: "" })
                         }
                         return json.data
                     },
@@ -171,7 +191,7 @@ const app = Vue.createApp({
                 vm.biodiversityTable.search(vm.form.keywords).draw();
             });
 
-            $('#groups').change(function (e) {
+            /*$('#groups').change(function (e) {
                 const val = e.target.value;
                 vm.form.groupKey = val === 'all' ? '' : val;
                 
@@ -196,7 +216,7 @@ const app = Vue.createApp({
                 const val = e.target.value;
                 vm.form.familyKey = val === 'all' ? '' : val;
                 vm.biodiversityTable.search(vm.form.familyKey).draw();
-            });
+            });*/
 
         });
 

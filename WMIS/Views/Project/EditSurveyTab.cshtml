@@ -1,7 +1,7 @@
 ﻿@using Wmis.Extensions
 <div class="row mb-4">
     <div class="col-12 text-end">
-        <a :href="`/Project/Edit/${ project ? project.key : ''}`" class="btn btn-default">
+        <a :href="`/Project/Edit/${ project ? project.key : ''}`" class="el-button el-button--danger">
             @if (Html.UserIsProjectAdministrator())
             {
                 <span>Cancel</span>
@@ -15,7 +15,6 @@
         @if (Html.UserIsProjectAdministrator())
         {
             <base-button :busy="loading" v-on:click.prevent="submit()" :disabled="disabled">Save</base-button>
-            @*<button type="button" v-on:click.prevent="submit()" class="btn btn-primary" v-bind:class="{'disabled': disabled}">Save</button>*@
         }
     </div>
 </div>

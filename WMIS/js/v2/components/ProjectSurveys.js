@@ -1,7 +1,11 @@
 ﻿const ProjectSurveys = {
-
+    components: {
+        BaseButton,
+        BaseDropdownSelect
+    },
     props: {
         project_id: Number,
+        survey_types: Array
     },
 
     template: "#project-surveys",
@@ -11,8 +15,14 @@
             table: null,
             selectedKey: null,
             filters: {
-                surveyTypeKey: null
+                surveyTypeKey: -1
             },
+        }
+    },
+
+    watch: {
+        "filters.surveyTypeKey"(newVal) {
+            this.table.ajax.reload(null, true)
         }
     },
 
@@ -21,10 +31,6 @@
             var url = `/api/project/${this.project_id}/surveys/download/?startRow=0&rowCount=1000&sortBy=surveyType&sortDirection=asc&surveyTypeKey=${this.filters.surveyTypeKey}`
             window.open(url, '_blank');
         }
-    },
-
-    mounted() {
-        WMIS.loadAndInitializeSelect2($("#surveyType"), "/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=true", "Survey Types", false, 'data');
     },
 
     created() {
@@ -150,11 +156,11 @@
                     }
                 });
 
-                $('#surveyType').change(function (e) {
+               /* $('#surveyType').change(function (e) {
                     const val = e.target.value;
                     vm.filters.surveyTypeKey = val === 'all' ? '' : val;
                     vm.table.search(vm.filters.surveyTypeKey).draw();
-                });
+                });*/
 
 
                 $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {

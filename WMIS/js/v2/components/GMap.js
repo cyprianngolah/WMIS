@@ -139,17 +139,17 @@ const GMap = {
             return icon;
         },
 
-        getCenter() {
+        /*getCenter() {
             const lat = this.points.reduce((total, next) => total + next.latitude, 0) / this.points.length;
             const lng = this.points.reduce((total, next) => total + next.longitude, 0) / this.points.length;
             return {
                 lat, lng
             };
-        },
+        },*/
 
         createMapInstance() {
-            const center = this.getCenter();
-            this.mapOptions.center = new google.maps.LatLng(center.lat, center.lng)
+            /*const center = this.getCenter();
+            this.mapOptions.center = new google.maps.LatLng(center.lat, center.lng)*/
             return new google.maps.Map(document.getElementById('map-canvas'), this.mapOptions);
         },
 

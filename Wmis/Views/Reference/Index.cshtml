@@ -11,64 +11,69 @@
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/reference/index"))
 }
 
 <div class="row my-3">
     <div class="col-md-12 d-flex justify-content-end">
-
         <div>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <a href="/Reference/New" class="btn btn-success btn-sm me-2">New</a>
+                <a href="/Reference/New" class="el-button el-button--success">
+                    <span class="el-icon-plus"></span>
+                    New
+                </a>
             }
-            <a v-bind:href=`/Reference/Edit/${selectedKey}` id="editButton" class="btn btn-primary btn-sm me-2" v-bind:class="{'disabled' : !isSelected}">
-                View
+            <a v-bind:href=`/Reference/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
+                <span class="el-icon-view"></span>  View
             </a>
         </div>
+
     </div>
 </div>
 
-<div class="card bg-light">
+<div class="card bg-light border border-primary">
     <div class="card-body">
         <div class="row g-3">
             <div class="col-4">
-                <label class="form-label visually-hiddenx">Year</label>
-                <select class="form-select" aria-label="Year" id="year">
-                    <option value="">Year</option>
-                </select>
+                <label class="form-label visually-hidden">Year</label>
+                <base-dropdown-select :return_object="false" :options="years" v-model="form.yearFilter"></base-dropdown-select>
             </div>
 
             <div class="col">
-                <label class="form-label visually-hiddenx">Keywords</label>
+                <label class="form-label visually-hidden">Keywords</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="" id="keyword" v-model="form.keywords">
-                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
+                    <input type="text" class="form-control" placeholder="Keywords" id="keyword" v-model="form.keywords">
+                    <base-button id="searchbtn"><span class="el-icon-search"></span> Search</base-button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="row">
-    <div class="col-md-12">
-        <table id="references" class="table table-sm table-striped table-hover w-100">
-            <thead>
-                <tr>
-                    <th>Key</th>
-                    <th>Code</th>
-                    <th>Author</th>
-                    <th>Year</th>
-                    <th>Title</th>
-                    <th>Edition Publication Organization</th>
-                    <th>Volume Page</th>
-                    <th>Publisher</th>
-                    <th>City</th>
-                    <th>Location</th>
-                </tr>
-            </thead>
-        </table>
+<div class="card my-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="references" class="table table-sm table-striped table-hover w-100">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Code</th>
+                            <th>Author</th>
+                            <th>Year</th>
+                            <th>Title</th>
+                            <th>Edition Publication Organization</th>
+                            <th>Volume Page</th>
+                            <th>Publisher</th>
+                            <th>City</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

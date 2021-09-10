@@ -11,51 +11,45 @@
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/select2"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/project/index"))
 }
 
 <div class="row my-3">
     <div class="col-md-12 d-flex justify-content-end">
         <div>
-            <button type="button" v-on:click="downloadRecords()" class="btn btn-primary btn-sm me-2">Download</button>
+            <base-button v-on:click="downloadRecords()" color="warning" size="large"><span class="el-icon-download"></span> Download</base-button>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <a href="/Project/New" class="btn btn-success btn-sm me-2">New</a>
+                <a href="/Project/New" class="el-button el-button--success">
+                    <span class="el-icon-plus"></span>
+                    New
+                </a>
             }
-            <a v-bind:href=`/Project/Edit/${selectedKey}` id="editButton" class="btn btn-primary btn-sm me-2" v-bind:class="{'disabled' : !isSelected}">
-                View
+            <a v-bind:href=`/Project/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
+                <span class="el-icon-view"></span> View
             </a>
         </div>
     </div>
 </div>
 
 
-<div class="card bg-light">
+<div class="card bg-light border border-primary">
     <div class="card-body">
         <div class="row g-3">
             <div class="col">
-                <label class="form-label">Project Lead</label>
-                <select class="form-select" aria-label="Group" id="pLead">
-                    <option value="">Project Lead</option>
-                </select>
+                <base-dropdown-select :options="leads" v-model="form.pLead" :return_object="false"></base-dropdown-select>
             </div>
             <div class="col">
-                <label class="form-label">Project Status</label>
-                <select class="form-select" aria-label="Project Status" id="pStatus">
-                    <option value="">Project Status</option>
-                </select>
+                <base-dropdown-select :options="statuses" v-model="form.pStatus" :return_object="false"></base-dropdown-select>
             </div>
             <div class="col">
-                <label class="form-label visually-hiddenx">Region</label>
-                <select class="form-select" aria-label="Region" id="region">
-                    <option value="">Region</option>
-                </select>
+                <base-dropdown-select :options="regions" v-model="form.region" :return_object="false"></base-dropdown-select>
             </div>
             <div class="col">
-                <label class="form-label visually-hiddenx">Keywords</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="" id="keyword" v-model="form.keywords">
-                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
+                    <input type="text" class="form-control" placeholder="Keywords" id="keyword" v-model="form.keywords">
+                    <base-button id="searchbtn">Search</base-button>
                 </div>
             </div>
         </div>
@@ -63,22 +57,28 @@
 </div>
 
 
-<div class="row">
-    <div class="col-md-12">
+<div class="card mt-3">
+    <div class="card-body">
 
-        <table id="project" class="table w-100 table-sm table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Project Number</th>
-                    <th>Name</th>
-                    <th>Lead Region</th>
-                    <th>Project Lead</th>
-                    <th>Status</th>
-                    <th>Status Date</th>
-                    <th>Start Date</th>
-                </tr>
-            </thead>
-        </table>
+        <div class="row">
+            <div class="col-md-12">
+
+                <table id="project" class="table w-100 table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Project Number</th>
+                            <th>Name</th>
+                            <th>Lead Region</th>
+                            <th>Project Lead</th>
+                            <th>Status</th>
+                            <th>Status Date</th>
+                            <th>Start Date</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+
     </div>
 </div>
-

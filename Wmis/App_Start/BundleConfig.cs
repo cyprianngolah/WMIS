@@ -260,16 +260,16 @@
 
 
 			bundles.Add(new ScriptBundle("~/bundles/argosservice/index").Include(
-						"~/js/modules/wmis.argosservice.index.js"));
+						"~/js/v2/modules/argosservice/wmis.argosservice.index.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/help/index").Include(
+            /*bundles.Add(new ScriptBundle("~/bundles/help/index").Include(
                         "~/js/modules/wmis.help.index.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/help/new").Include(
                         "~/js/modules/wmis.help.new.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/help/edit").Include(
-                        "~/js/modules/wmis.help.edit.js"));
+                        "~/js/modules/wmis.help.edit.js"));*/
 
             #endregion
 

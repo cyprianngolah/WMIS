@@ -1,6 +1,8 @@
 ﻿const app = Vue.createApp({
     components: {
         BaseInput,
+        BaseButton,
+        BaseDropdownSelect,
         SynonymTags
     },
 

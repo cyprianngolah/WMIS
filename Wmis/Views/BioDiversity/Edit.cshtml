@@ -60,37 +60,41 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-md-12">
-
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item me-1 active"><a href="#general" role="tab" data-bs-toggle="tab" class="nav-link active colouredTab generalTab">General</a></li>
-                <li class="nav-item me-1"><a href="#reproduction" role="tab" data-bs-toggle="tab" class="nav-link colouredTab reproductionTab">Reproduction</a></li>
-                <li class="nav-item me-1"><a href="#distribution" role="tab" data-bs-toggle="tab" class="nav-link colouredTab distributionTab">Distribution</a></li>
-                <li class="nav-item me-1"><a href="#abundance" role="tab" data-bs-toggle="tab" class="nav-link colouredTab abundanceTab">Abundance</a></li>
-                <li class="nav-item me-1"><a href="#trends" role="tab" data-bs-toggle="tab" class="nav-link colouredTab trendsTab">Trends</a></li>
-                <li class="nav-item me-1"><a href="#threats" role="tab" data-bs-toggle="tab" class="nav-link colouredTab threatsTab">Threats</a></li>
-                <li class="nav-item me-1"><a href="#status" role="tab" data-bs-toggle="tab" class="nav-link colouredTab statusTab">Status</a></li>
-                <li class="nav-item me-1"><a href="#files" role="tab" data-bs-toggle="tab" class="nav-link colouredTab fileTab">Links</a></li>
-                <li class="nav-item me-1"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link colouredTab historyTab">History</a></li>
-            </ul>
-
-            <!-- Tab panes -->
-            <div class="tab-content" id="biodiversityTabContent">
-                @{Html.RenderPartial("GeneralTab");}
-                @{Html.RenderPartial("ReproductionTab");}
-                @{Html.RenderPartial("DistributionTab");}
-                @{Html.RenderPartial("AbundanceTab");}
-                @{Html.RenderPartial("TrendsTab");}
-                @{Html.RenderPartial("ThreatsTab");}
-                @{Html.RenderPartial("StatusTab");}
-                <div id="files" class="tab-pane fade py-4">
-                    <file-tab v-if="biodiversityKey" :parent_table_key="biodiversityKey" parent_table_name="Biodiversity"></file-tab>
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
+                        <li class="nav-item me-1 active"><a href="#general" role="tab" data-bs-toggle="tab" class="nav-link active colouredTab generalTab">General</a></li>
+                        <li class="nav-item me-1"><a href="#reproduction" role="tab" data-bs-toggle="tab" class="nav-link colouredTab reproductionTab">Reproduction</a></li>
+                        <li class="nav-item me-1"><a href="#distribution" role="tab" data-bs-toggle="tab" class="nav-link colouredTab distributionTab">Distribution</a></li>
+                        <li class="nav-item me-1"><a href="#abundance" role="tab" data-bs-toggle="tab" class="nav-link colouredTab abundanceTab">Abundance</a></li>
+                        <li class="nav-item me-1"><a href="#trends" role="tab" data-bs-toggle="tab" class="nav-link colouredTab trendsTab">Trends</a></li>
+                        <li class="nav-item me-1"><a href="#threats" role="tab" data-bs-toggle="tab" class="nav-link colouredTab threatsTab">Threats</a></li>
+                        <li class="nav-item me-1"><a href="#status" role="tab" data-bs-toggle="tab" class="nav-link colouredTab statusTab">Status</a></li>
+                        <li class="nav-item me-1"><a href="#files" role="tab" data-bs-toggle="tab" class="nav-link colouredTab fileTab">Links</a></li>
+                        <li class="nav-item me-1"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link colouredTab historyTab">History</a></li>
+                    </ul>
                 </div>
-                <div id="history" class="tab-pane fade py-4">
-                    <history-tab v-if="biodiversityKey" :parent_table_key="biodiversityKey" parent_table_name="Biodiversity"></history-tab>
+                <div class="card-body">
+                    <!-- Tab panes -->
+                    <div class="tab-content" id="biodiversityTabContent">
+                        @{Html.RenderPartial("GeneralTab");}
+                        @{Html.RenderPartial("ReproductionTab");}
+                        @{Html.RenderPartial("DistributionTab");}
+                        @{Html.RenderPartial("AbundanceTab");}
+                        @{Html.RenderPartial("TrendsTab");}
+                        @{Html.RenderPartial("ThreatsTab");}
+                        @{Html.RenderPartial("StatusTab");}
+                        <div id="files" class="tab-pane fade py-4">
+                            <file-tab v-if="biodiversityKey" :parent_table_key="biodiversityKey" parent_table_name="Biodiversity"></file-tab>
+                        </div>
+                        <div id="history" class="tab-pane fade py-4">
+                            <history-tab v-if="biodiversityKey" :parent_table_key="biodiversityKey" parent_table_name="Biodiversity"></history-tab>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>

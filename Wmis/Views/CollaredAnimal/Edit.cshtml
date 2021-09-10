@@ -8,7 +8,7 @@
     <div class="h6 text-end" v-if="form">
         <span v-if="form.collarStatus">Collar Status: <strong>{{ form.collarStatus.name }}</strong><br /></span>
         <span v-if="form.animalStatus">Animal Status: <strong>{{ form.animalStatus.name }}</strong><br /></span>
-        <span class="h5">Last Updated: <span>{{ lastUpdated }} </span> <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
+        <span class="h6">Last Updated: <span>{{ lastUpdated }} </span> <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
     </div>
 }
 
@@ -77,39 +77,43 @@
 
 <div class="row" v-if="loaded">
     <div class="col-md-12">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item active"><a href="#animalTab" role="tab" data-bs-toggle="tab" class="nav-link active">Animal</a></li>
-            <li class="nav-item"><a href="#collarTab" role="tab" data-bs-toggle="tab" class="nav-link">Collar</a></li>
-            <li class="nav-item"><a href="#mapTab" role="tab" data-bs-toggle="tab" class="nav-link">Locations</a></li>
-            <li class="nav-item"><a href="#filesTab" role="tab" data-bs-toggle="tab" class="nav-link">Links</a></li>
-            <li class="nav-item"><a href="#historyTab" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
-        </ul>
-
-        <!-- Tab panes -->
-        <div class="tab-content" id="collarAnimalContent">
-
-            <div id="animalTab" class="tab-pane active py-4">
-                @{ Html.RenderPartial("AnimalTab"); }
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
+                    <li class="nav-item active"><a href="#animalTab" role="tab" data-bs-toggle="tab" class="nav-link active">Animal</a></li>
+                    <li class="nav-item"><a href="#collarTab" role="tab" data-bs-toggle="tab" class="nav-link">Collar</a></li>
+                    <li class="nav-item"><a href="#mapTab" role="tab" data-bs-toggle="tab" class="nav-link">Locations</a></li>
+                    <li class="nav-item"><a href="#filesTab" role="tab" data-bs-toggle="tab" class="nav-link">Links</a></li>
+                    <li class="nav-item"><a href="#historyTab" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
+                </ul>
             </div>
+            <div class="card-body">
+                <!-- Tab panes -->
+                <div class="tab-content" id="collarAnimalContent">
 
-            <div id="collarTab" class="tab-pane py-4">
-                @{ Html.RenderPartial("CollarTab"); }
-            </div>
+                    <div id="animalTab" class="tab-pane active py-4">
+                        @{ Html.RenderPartial("AnimalTab"); }
+                    </div>
 
-            <div id="mapTab" class="tab-pane py-4">
-                <collared-animal-mapping :animal_id="key"></collared-animal-mapping>
-            </div>
+                    <div id="collarTab" class="tab-pane py-4">
+                        @{ Html.RenderPartial("CollarTab"); }
+                    </div>
 
-            <div id="filesTab" class="tab-pane py-4">
-                <file-tab v-if="key" :parent_table_key="key" parent_table_name="CollaredAnimals"></file-tab>
-            </div>
+                    <div id="mapTab" class="tab-pane py-4">
+                        <collared-animal-mapping :animal_id="key"></collared-animal-mapping>
+                    </div>
 
-            <div id="historyTab" class="tab-pane py-4">
-                <history-tab v-if="key" :parent_table_key="key" parent_table_name="CollaredAnimals"></history-tab>
+                    <div id="filesTab" class="tab-pane py-4">
+                        <file-tab v-if="key" :parent_table_key="key" parent_table_name="CollaredAnimals"></file-tab>
+                    </div>
+
+                    <div id="historyTab" class="tab-pane py-4">
+                        <history-tab v-if="key" :parent_table_key="key" parent_table_name="CollaredAnimals"></history-tab>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        </div></div>
 
 
 

@@ -32,13 +32,13 @@
     </div>
 </div>
 
-<div class="card bg-light">
+<div class="card bg-light border border-primary">
     <div class="card-body">
         <div class="row g-3 d-flex align-items-center">
             <div class="col">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Keyword" id="keyword" v-model="form.keywords">
-                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
+                    <base-button id="searchbtn">Search</base-button>
                 </div>
             </div>
         </div>
@@ -46,22 +46,26 @@
 </div>
 
 
+<div class="card my-3">
+    <div class="card-body">
 
-<div class="row">
-    <div class="col-md-12">
-        <table id="userTable" class="table table-sm w-100">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Roles</th>
-                </tr>
-            </thead>
-        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <table id="userTable" class="table table-sm w-100">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Roles</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+
     </div>
 </div>
-
-
 <!-- New Collar Modal -->
 <div class="modal fade" id="newUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">

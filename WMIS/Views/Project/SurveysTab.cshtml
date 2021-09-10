@@ -5,18 +5,16 @@
         <div class="row">
             <div class="col-md-5 text-end">Survey Type:</div>
             <div class="col-md-7">
-                <select class="form-select form-select-sm" v-model="filters.surveyTypeKey" aria-label="surveyType" id="surveyType">
-                    <option value="">Survey Type</option>
-                </select>
+                <base-dropdown-select :options="survey_types" v-model="filters.surveyTypeKey" :return_object="false"></base-dropdown-select>
             </div>
         </div>
     </div>
     <div class="col-md-8 text-end">
         @if (Html.UserIsProjectAdministrator())
         {
-            <a href="~/Project/NewSurvey/@ViewBag.Key" class="btn btn-success btn-sm me-2">New</a>
+            <a href="~/Project/NewSurvey/@ViewBag.Key" class="el-button el-button--success el-button--small">New</a>
         }
-        <a :href="`/Project/EditSurvey/${selectedKey}`" id="editButton" class="btn btn-primary btn-sm me-2" v-bind:class="{'disabled' : !selectedKey}">
+        <a :href="`/Project/EditSurvey/${selectedKey}`" id="editButton" class="el-button el-button--primary el-button--small" v-bind:class="{'disabled' : !selectedKey}">
             @if (Html.UserIsProjectAdministrator())
             {
                 <span>View</span>
@@ -26,7 +24,7 @@
                 <span>Open</span>
             }
         </a>
-        <button type="button" v-on:click="downloadRecords()" class="btn btn-primary btn-sm ">Download</button>
+        <base-button size="small" v-on:click="downloadRecords()" color="warning">Download</base-button>
     </div>
 </div>
 

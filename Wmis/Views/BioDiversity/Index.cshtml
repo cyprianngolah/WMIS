@@ -18,7 +18,16 @@
 <div class="row my-3">
     <div class="col-md-12 d-flex justify-content-between">
         <div>
-            <base-button color="danger" :disabled="!isSelected" v-on:click="deletedSelectedRecord()" size="small"> <span class="el-icon-delete"></span> Delete Selected</base-button>
+            <el-popconfirm confirmButtonText="Yes"
+                           cancelButtonText="No"
+                           icon="el-icon-info"
+                           iconColor="red"
+                           title="Are you sure to delete the selected record?"
+                           v-on:confirm="deletedSelectedRecord()">
+                <template #reference>
+                    <base-button color="danger" :disabled="!isSelected" size="small"> <span class="el-icon-delete"></span> Delete Selected</base-button>
+                </template>
+            </el-popconfirm>
         </div>
 
 
@@ -56,28 +65,22 @@
     <div class="card-body">
         <div class="row g-3">
             <div class="col">
-                <label class="form-label visually-hiddenx">Group</label>
-                <select class="form-select" aria-label="Group" id="groups">
-                    <option value="">Group</option>
-                </select>
+                <label class="form-label visually-hidden">Group</label>
+                <base-dropdown-select :return_object="false" :options="groups" v-model="form.groupKey"></base-dropdown-select>
             </div>
             <div class="col">
-                <label class="form-label visually-hiddenx">Order</label>
-                <select class="form-select" aria-label="Order" id="orders">
-                    <option value="">Order</option>
-                </select>
+                <label class="form-label visually-hidden">Order</label>
+                <base-dropdown-select :return_object="false" :options="orders" v-model="form.orderKey"></base-dropdown-select>
             </div>
             <div class="col">
-                <label class="form-label visually-hiddenx">Family</label>
-                <select class="form-select" aria-label="Family" id="families">
-                    <option value="">Family</option>
-                </select>
+                <label class="form-label visually-hidden">Family</label>
+                <base-dropdown-select :return_object="false" :options="families" v-model="form.familyKey"></base-dropdown-select>
             </div>
             <div class="col">
-                <label class="form-label visually-hiddenx">Keywords</label>
+                <label class="form-label visually-hidden">Keywords</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="" id="keyword" v-model="form.keywords">
-                    <button id="searchbtn" class="btn btn-info" type="button">Search</button>
+                    <input type="text" class="form-control" placeholder="Keywords" id="keyword" v-model="form.keywords">
+                    <base-button id="searchbtn">Search</base-button>
                 </div>
             </div>
         </div>

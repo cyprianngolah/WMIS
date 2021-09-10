@@ -1,10 +1,15 @@
 ﻿
 const app = Vue.createApp({
+    components: {
+        BaseButton,
+        BaseDropdownSelect
+    },
     data() {
         return {
             table: null,
             draw: 1,
             selectedKey: null,
+            years: [],
             form: {
                 yearFilter: "",
                 keywords: '',
@@ -24,8 +29,20 @@ const app = Vue.createApp({
         }
     },
 
+    methods: {
+        getYears() {
+            axios.get('/api/references/years')
+                .then(response => {
+                    this.years = response.data
+                    this.years.unshift({name: "All Years", key: ""})
+                })
+                .catch(error => console.log(error))
+        }
+    },
+
     mounted() {
-        WMIS.loadAndInitializeSelect2($("#year"), "/api/references/years", "Year");
+        this.getYears()
+        //WMIS.loadAndInitializeSelect2($("#year"), "/api/references/years", "Year");
     },
 
     created() {
@@ -129,4 +146,5 @@ const app = Vue.createApp({
 
 });
 
+app.use(ElementPlus)
 app.mount('#wmis-app')

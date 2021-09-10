@@ -2,9 +2,9 @@
 @{
     ViewBag.Title = "Biodiversity Decision";
     ViewBag.SubTitle = @"<span><br>
-    <span>{{form ? form.commonName : ''}}</span>
-    (<span class='speciesNameText'>{{form ? form.name : ''}}</span>)
-    <span>{{form ? form.ecoType : ''}}</span>
+<span>{{form ? form.commonName : ''}}</span>
+(<span class='speciesNameText'>{{form ? form.name : ''}}</span>)
+<span>{{form ? form.ecoType : ''}}</span>
 </span>";
 }
 
@@ -15,43 +15,40 @@
 
 
 @section TopRight{
-    <div class="h4 text-end">
+    <div class="h5 text-end">
         <span>Status Rank: <strong><span>{{form.statusRank ? form.statusRank.name : ""}}</span></strong><br /></span>
-        <span class="h5">Last Updated: <span>{{ lastUpdated }}</span> 
+        <span class="h6">
+            Last Updated: <span>{{ lastUpdated }}</span>
         </span>
     </div>
 }
 
-<form role="form" v-on:submit.prevent="submit">
-    <div class="row">
-        <div class="col-md-12 text-end">
-            <a href="/BioDiversity" class="btn btn-default">
-                @if (Html.UserIsBiodiversityAdministrator())
-                {
-                    <span>Cancel</span>
-                }
-                else
-                {
-                    <span>Back</span>
-                }
-            </a>
+<div class="row">
+    <div class="col-md-12 text-end">
+        <a href="/BioDiversity/" class="el-button el-button--danger is-plain">
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <button type="submit" class="btn btn-primary" v-bind:class="{'disabled' : disabled }">Save</button>
+                <span>Cancel</span>
             }
-        </div>
+            else
+            {
+                <span>Back</span>
+            }
+        </a>
+        @if (Html.UserIsBiodiversityAdministrator())
+        {
+            <base-button :disabled="disabled" size="large" v-on:click="submit()" color="success">Save</base-button>
+        }
     </div>
+</div>
 
-    <div class="mb-4">
-        <div class="row">
-            <div class="col-md-12">
-                <h4>
-                    Rarity
-                </h4>
-                <hr />
-            </div>
-        </div>
-
+<div class="card mt-3">
+    <div class="card-header">
+        <h5 class="m-0">
+            Rarity
+        </h5>
+    </div>
+    <div class="card-body">
         @*Range Extent*@
         <div class="row mb-3 align-items-center generalGroup">
             <div class="col-md-10 text-end">Score</div>
@@ -63,7 +60,7 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Range Extent</div>
             <div class="col-md-10">
-                <textarea id="rangeExtent" rows="4" class="form-control" v-model="form.rangeExtentDescription"></textarea>
+                <base-input type="textarea" v-model="form.rangeExtentDescription"></base-input>
             </div>
         </div>
 
@@ -78,7 +75,7 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Area of Occupancy</div>
             <div class="col-md-10">
-                <textarea id="areaOfOccupancyDescription" rows="4" class="form-control" v-model="form.areaOfOccupancyDescription"></textarea>
+                <base-input type="textarea" v-model="form.areaOfOccupancyDescription"></base-input>
             </div>
         </div>
 
@@ -94,7 +91,7 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Population Size</div>
             <div class="col-md-10">
-                <textarea id="areaOfOccupancyDescription" rows="4" class="form-control" v-model="form.populationSizeDescription"></textarea>
+                <base-input type="textarea" v-model="form.populationSizeDescription"></base-input>
             </div>
         </div>
 
@@ -109,7 +106,7 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Number of Occurences</div>
             <div class="col-md-10">
-                <textarea id="numberOfOccurencesDescription" rows="4" class="form-control" v-model="form.numberOfOccurencesDescription"></textarea>
+                <base-input type="textarea" v-model="form.numberOfOccurencesDescription"></base-input>
             </div>
         </div>
 
@@ -125,20 +122,19 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Environmental Specificity</div>
             <div class="col-md-10">
-                <textarea id="environmentalSpecificityDescription" rows="4" class="form-control" v-model="form.environmentalSpecificityDescription"></textarea>
+                <base-input type="textarea" v-model="form.environmentalSpecificityDescription"></base-input>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h4>
-                    Trends
-                </h4>
-                <hr />
-            </div>
-        </div>
-
-
+<div class="card mt-3">
+    <div class="card-header">
+        <h5 class="m-0">
+            Trends
+        </h5>
+    </div>
+    <div class="card-body">
         @*Env specificity*@
         <div class="row mb-3 align-items-center trendsGroup">
             <div class="col-md-10 text-end">Score</div>
@@ -150,7 +146,7 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Long-term Trends</div>
             <div class="col-md-10">
-                <textarea id="longTermTrendsDescription" rows="4" class="form-control" v-model="form.longTermTrendsDescription"></textarea>
+                <base-input type="textarea" v-model="form.longTermTrendsDescription"></base-input>
             </div>
         </div>
 
@@ -165,20 +161,20 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Short-term Trends</div>
             <div class="col-md-10">
-                <textarea id="shortTermTrendsDescription" rows="4" class="form-control" v-model="form.shortTermTrendsDescription"></textarea>
+                <base-input type="textarea" v-model="form.shortTermTrendsDescription"></base-input>
             </div>
         </div>
+    </div>
+</div>
 
 
-        <div class="row">
-            <div class="col-md-12">
-                <h4>
-                    Threats
-                </h4>
-                <hr />
-            </div>
-        </div>
-
+<div class="card mt-3">
+    <div class="card-header">
+        <h5 class="m-0">
+            Threats
+        </h5>
+    </div>
+    <div class="card-body">
         <div class="row mb-3 align-items-center threatsGroup">
             <div class="col-md-10 text-end">Score</div>
             <div class="col-md-2">
@@ -189,7 +185,7 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Threats</div>
             <div class="col-md-10">
-                <textarea id="threatsDescription" rows="4" class="form-control" v-model="form.threatsDescription"></textarea>
+                <base-input type="textarea" v-model="form.threatsDescription"></base-input>
             </div>
         </div>
 
@@ -204,20 +200,20 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Intrinsic Vulnerability</div>
             <div class="col-md-10">
-                <textarea id="intrinsicVulnerabilityDescription" rows="4" class="form-control" v-model="form.intrinsicVulnerabilityDescription"></textarea>
+                <base-input type="textarea" v-model="form.intrinsicVulnerabilityDescription"></base-input>
             </div>
         </div>
+    </div>
+</div>
+<!------------------------>
 
-
-        <div class="row">
-            <div class="col-md-12">
-                <h4>
-                    Ranks
-                </h4>
-                <hr />
-            </div>
-        </div>
-
+<div class="card mt-3">
+    <div class="card-header">
+        <h5 class="m-0">
+            Ranks
+        </h5>
+    </div>
+    <div class="card-body">
         <div class="row align-items-center mb-3">
             <div class="col-md-2 text-end">Rank</div>
             <div class="col-md-2">
@@ -238,21 +234,21 @@
         <div class="row mb-3">
             <div class="col-md-2 text-end">Rank Description</div>
             <div class="col-md-10">
-                <textarea id="statusRankDescription" rows="4" class="form-control" v-model="form.statusRankDescription"></textarea>
+                <base-input type="textarea" v-model="form.statusRankDescription"></base-input>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-2 text-end">Decision Process</div>
             <div class="col-md-10">
-                <textarea id="decisionProcessDescription" rows="4" class="form-control" v-model="form.decisionProcessDescription"></textarea>
+                <base-input type="textarea" v-model="form.decisionProcessDescription"></base-input>
             </div>
         </div>
 
         <div class="row gy-3 my-3">
             <div class="col-md-2 text-end">NWT SARC Assessment</div>
             <div class="col-md-4">
-                <el-select v-model="form.nwtSarcAssessment" value-key="key"  filterable placeholder="Select Status">
+                <el-select v-model="form.nwtSarcAssessment" value-key="key" filterable placeholder="Select Status">
                     <el-option v-for="item in nwtSarcAssessments"
                                :key="item.key"
                                :label="item.name"
@@ -301,23 +297,24 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row mb-5">
-        <div class="col-md-12 text-end">
-            <a href="/BioDiversity" class="btn btn-default">
-                @if (Html.UserIsBiodiversityAdministrator())
-                {
-                    <span>Cancel</span>
-                }
-                else
-                {
-                    <span>Back</span>
-                }
-            </a>
+
+<div class="row mt-3">
+    <div class="col-md-12 text-end">
+        <a href="/BioDiversity/" class="el-button el-button--danger is-plain">
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <button type="submit" class="btn btn-primary" v-bind:class="{'disabled' : disabled }">Save</button>
+                <span>Cancel</span>
             }
-        </div>
+            else
+            {
+                <span>Back</span>
+            }
+        </a>
+        @if (Html.UserIsBiodiversityAdministrator())
+        {
+            <base-button :disabled="disabled" size="large" v-on:click="submit()" color="success">Save</base-button>
+        }
     </div>
-</form>
+</div>

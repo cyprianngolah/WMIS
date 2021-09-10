@@ -36,6 +36,63 @@
             return new MvcHtmlString(builder.ToString());
         }
 
+        /// <summary>
+        /// Creates Bootstrap Navigation Menu lists and sets them as active based on current route data
+        /// </summary>
+        /// <param name="htmlHelper">The Helper</param>
+        /// <param name="linkText">The link text</param>
+        /// <param name="actionName">The action name</param>
+        /// <param name="controllerName">The controller name</param>
+        /// <returns>MVC Html String with the necessary Bootstrap Navigation Menu attributes</returns>
+        public static MvcHtmlString MenuItem(this HtmlHelper htmlHelper, string linkText, string actionName, string controllerName, bool isDropdown=false)
+        {
+            var currentAction = htmlHelper.ViewContext.RouteData.GetRequiredString("action");
+            var currentController = htmlHelper.ViewContext.RouteData.GetRequiredString("controller");
+
+            
+            var activeClass = isDropdown ? "dropdown-item" : "nav-link";
+            
+
+            if (controllerName == currentController && actionName == currentAction)
+            {
+                activeClass += " active";
+            }
+
+            var anchorLink = htmlHelper.ActionLink(linkText, actionName, controllerName, null, new { @class = activeClass }).ToHtmlString();
+
+            var builder = new TagBuilder("li")
+            {
+                InnerHtml = anchorLink
+            };
+
+            if (isDropdown == false)
+            {
+                builder.AddCssClass("nav-item");
+            }
+                    
+            return new MvcHtmlString(builder.ToString());
+            
+            
+            /*var builder = new TagBuilder("li")
+            {
+                InnerHtml = htmlHelper.ActionLink(linkText, actionName, controllerName).ToHtmlString()
+            };
+            
+            builder.AddCssClass("nav-item");
+
+            if (controllerName == currentController && actionName == currentAction)
+            {
+                
+               builder.AddCssClass("active");
+            }
+*/
+
+
+
+
+            
+        }
+
         public static MvcHtmlString HelpLinks(this HtmlHelper htmlHelper)
         {
             var config = DependencyResolver.Current.GetService<WebConfiguration>();
