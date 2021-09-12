@@ -43,13 +43,21 @@
                 </tr>
             </thead>
         </table>
+
     </div>
 
     <div class="col-md-5">
-        <g-map :hideLines="false" 
-               :points="argosPasses" 
-               v-on:point:selected="handleSelectedPass" 
-               :selectedPass="selectedPass"></g-map>
+        @*<g-map :hideLines="false"
+        :points="argosPasses"
+        v-on:point:selected="handleSelectedPass"
+        :selectedPass="selectedPass"></g-map>*@
+        @*<div id="map-canvas"></div>*@
+
+        <google-map 
+                    :selectedPass="selectedPass" 
+                    :passes="argosPasses" 
+                    :hasPolyline="true"
+                    v-on:is:selected="handleSelectedPass"></google-map>
         <div id="map-legend" class="mt-2">
             <div class="card bg-light">
                 <div class="card-body">
@@ -81,19 +89,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card border-0" v-if="selectedPass">
+                <div class="card border-0" v-if="updatePassForm">
                     <div class="row gy-2 mb-2">
-                        <div class="col-md-6">Date: {{formatDate(selectedPass.locationDate)}}</div>
-                        <div class="col-md-6">Aquired Time: {{formatDate(selectedPass.locationDate)}}</div>
-                        <div class="col-md-6">Latitude: {{selectedPass.latitude}}</div>
-                        <div class="col-md-6">Longitude: {{selectedPass.longitude}}</div>
+                        <div class="col-md-6">Date: {{formatDate(updatePassForm.locationDate)}}</div>
+                        <div class="col-md-6">Aquired Time: {{formatDate(updatePassForm.locationDate)}}</div>
+                        <div class="col-md-6">Latitude: {{updatePassForm.latitude}}</div>
+                        <div class="col-md-6">Longitude: {{updatePassForm.longitude}}</div>
                     </div>
-
+               
                     <div class="row g-3">
                         <div class="col-12">
                             <el-divider><i class="el-icon-more"></i></el-divider>
                             <label>Status</label>
-                            <el-select v-if="selectedPass.argosPassStatus" v-model="selectedPass.argosPassStatus.key" placeholder="Select Status" class="w-100">
+                            <el-select v-if="updatePassForm.argosPassStatus" v-model="updatePassForm.argosPassStatus.key" placeholder="Select Status" class="w-100">
                                 <el-option :value="0" label="Select Status" disabled></el-option>
                                 <el-option v-for="item in passStatuses"
                                            :key="item.key"
@@ -104,11 +112,11 @@
                         </div>
                         <div class="col-12">
                             <label>Comment</label>
-                            <base-input type="textarea" v-model="selectedPass.comment" label="Comment"></base-input>
+                            <base-input type="textarea" v-model="updatePassForm.comment" label="Comment"></base-input>
                         </div>
-                        
+
                         <div class="col-12">
-                            <el-checkbox v-model="selectedPass.isLastValidLocation" label="Mark as last valid location?"></el-checkbox>
+                            <el-checkbox v-model="updatePassForm.isLastValidLocation" label="Mark as last valid location?"></el-checkbox>
                         </div>
                     </div>
                 </div>

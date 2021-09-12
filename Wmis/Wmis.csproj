@@ -641,7 +641,10 @@
     <Content Include="js\v2\components\BaseComponents.js" />
     <Content Include="js\v2\components\CollaredAnimalMapping.js" />
     <Content Include="js\v2\components\GMap.js" />
+    <Content Include="js\v2\components\GoogleMap.js" />
     <Content Include="js\v2\components\HistoryTab.js" />
+    <Content Include="js\v2\components\MapMarker.js" />
+    <Content Include="js\v2\components\PolyLine.js" />
     <Content Include="js\v2\components\ProjectSites.js" />
     <Content Include="js\v2\components\ProjectSurveys.js" />
     <Content Include="js\v2\components\SpeciesSynonymEditor.js" />
@@ -889,6 +892,7 @@
     <Content Include="Scripts\v2\bootstrap5.bundle.min.js" />
     <Content Include="Scripts\v2\DataTables.min.js" />
     <Content Include="Scripts\v2\elementui.js" />
+    <Content Include="Scripts\v2\googlemaps-loader.js" />
     <Content Include="Scripts\v2\jquery3.min.js" />
     <Content Include="Scripts\v2\moment.js" />
     <Content Include="Scripts\v2\select2.js" />

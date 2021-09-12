@@ -70,29 +70,26 @@ const GMap = {
     watch: {
         selectedPass: {
             deep: true,
-            immediate:true,
+            immediate: false,
             handler(newPoint) {
-                this.clearAnimations();
-
+                if (this.temporaryMarker) {
+                    this.temporaryMarker.setAnimation(null);
+                    this.temporaryMarker.setMap(null);
+                    this.temporaryMarker.setIcon(argosPassStatusToImage[this.passStatusFunction(this.temporaryMarker.get('pass'))])
+                    this.temporaryMarker = null;
+                }
+                if (this.hiddenMarker) {
+                    this.hiddenMarker.setMap(this.map);
+                    this.hiddenMarker = null;
+                }
                 if (newPoint) {
-                    const selectedMarker = this.markers.find(m => m.get('pass').key == newPoint.key)
+                    this.hiddenMarker = this.markers.find(m => m.get('pass').key == newPoint.key);
+                    this.hiddenMarker.setMap(null);
 
-                    if (this.markers) {
-                        for (const m of this.markers) {
-                            m.setIcon(this.getIconFromIndex(m.get('pass')))
-                        }
-                    }
-
-                    selectedMarker.setAnimation(google.maps.Animation.BOUNCE)
-                    selectedMarker.setIcon(selectedArgosPassImage)
-
-                    this.temporaryMarker = selectedMarker;
-                } else {
-                    if (this.markers) {
-                        for (const m of this.markers) {
-                            m.setIcon(this.getIconFromIndex(m.get('pass')))
-                        }
-                    }
+                    // Show a new animated marker
+                    this.temporaryMarker = this.createMiddleMarker(newPoint, selectedArgosPassImage);
+                    this.temporaryMarker.setMap(this.map);
+                    this.temporaryMarker.setAnimation(google.maps.Animation.BOUNCE);
                 }
             }
         },
@@ -100,15 +97,18 @@ const GMap = {
         points: {
             deep: true,
             handler(newPoints) {
-                if (this.points && this.points.length > 0) {
-                    this.clearAnimations();
+                console.log(newPoints.length)
+                this.init();
+                /*if (this.points && this.points.length > 0) {
                     if (this.hideLines) {
                         this.loadMarkersWithoutStartStopIcons()
                     } else {
                         this.loadPolyline()
                         this.loadMarkers()
                     }
-                }
+                } else {
+                    this.clearObjects()
+                }*/
             }
         }
     },
@@ -139,17 +139,8 @@ const GMap = {
             return icon;
         },
 
-        /*getCenter() {
-            const lat = this.points.reduce((total, next) => total + next.latitude, 0) / this.points.length;
-            const lng = this.points.reduce((total, next) => total + next.longitude, 0) / this.points.length;
-            return {
-                lat, lng
-            };
-        },*/
 
         createMapInstance() {
-            /*const center = this.getCenter();
-            this.mapOptions.center = new google.maps.LatLng(center.lat, center.lng)*/
             return new google.maps.Map(document.getElementById('map-canvas'), this.mapOptions);
         },
 
@@ -183,11 +174,13 @@ const GMap = {
                 }
                 this.markers = null
             }
-
-            let markers = [];
-            let startPass = this.points[0];
-            markers.push(this.createStopMarker(startPass))
             
+            let markers = [];
+
+            let startPass = this.points[0];
+
+            markers.push(this.createStopMarker(startPass))
+
             let middlePoints = this.points.slice(1, -1);
 
             for (const point of middlePoints) {
@@ -199,7 +192,7 @@ const GMap = {
             if (stopPass) {
                 markers.push(this.createStartMarker(stopPass));
             }
-
+            
             for (const marker of markers) {
                 marker.setMap(this.map);
                 google.maps.event.addListener(marker, 'click', () => {
@@ -267,8 +260,32 @@ const GMap = {
             this.polyline = polyline;
         },
 
-        init() {
-            this.map = this.createMapInstance()
+        clearObjects() {
+            if (this.polyline) {
+                this.polyline.setMap(null);
+                this.polyline = null;
+            }
+
+            if (this.markers) {
+
+                while (this.markers[0]) {
+                    this.markers.pop().setMap(null);
+                }
+
+                /*for (const marker of this.markers) {
+                    console.log(marker)
+                    marker.setMap(null)
+                }
+                this.markers = null*/
+            }
+        },
+
+        init(withMap = false) {
+            if (withMap || !this.map) {
+                this.map = this.createMapInstance();
+            }
+            this.clearAnimations();
+            this.clearObjects();
             if (this.points && this.points.length > 0) {
                 if (this.hideLines) {
                     this.loadMarkersWithoutStartStopIcons()
@@ -283,7 +300,10 @@ const GMap = {
 
 
     mounted() {
-        this.init()
+        setTimeout(() => {
+            this.init()
+        }, 2000)
+        
     }
 
 

@@ -1,10 +1,12 @@
-﻿const CollaredAnimalMapping = {
+﻿
+const CollaredAnimalMapping = {
     template: "#mapping-tab-template",
 
     components: {
         BaseButton,
         BaseInput,
-        GMap
+        GoogleMap,
+        //GMap,
     },
     props: {
         animal_id: {
@@ -17,6 +19,7 @@
         return {
             table: null,
             selectedPass: null,
+            updatePassForm: null,
             editArgosPassModal: null,
             statusFilterOptions: [
                 { key: -1, name: 'All Statuses' },
@@ -46,6 +49,14 @@
             deep: true,
             handler(newVal) {
                 this.refreshTable()
+            }
+        },
+
+        selectedPass(newVal) {
+            if (!newVal) {
+                this.updatePassForm = null
+            } else {
+                this.updatePassForm = JSON.parse(JSON.stringify(newVal))
             }
         }
     },
@@ -77,17 +88,30 @@
             return moment(dte).format('L h:mm a')
         },
 
-        handleSelectedPass(data) {
-            this.selectedPass = data
+        handleSelectedPass(payload) {
+            if (payload) {
+                this.selectedPass = JSON.parse(JSON.stringify(payload))
+
+                // highlight the record in the table
+                let row = this.table.rows(function (idx, data, node) {
+                    return data.key == payload.key;
+                });
+                if (row) {
+                    this.table.$('tr.highlightPassRow').removeClass('highlightPassRow');
+                    $(row.nodes()).addClass('highlightPassRow');
+                }
+            } else {
+                this.selectedPass = null
+            }
         },
 
         updatePass() {
-            if (!this.selectedPass) return;
+            if (!this.updatePassForm) return;
             axios.post(`/api/argos/pass/save`, {
-                argosPassId: this.selectedPass.key,
-                argosPassStatusId: this.selectedPass.argosPassStatus.key,
-                comment: this.selectedPass.comment,
-                isLastValidLocation: this.selectedPass.isLastValidLocation
+                argosPassId: this.updatePassForm.key,
+                argosPassStatusId: this.updatePassForm.argosPassStatus.key,
+                comment: this.updatePassForm.comment,
+                isLastValidLocation: this.updatePassForm.isLastValidLocation
             }).then(() => {
                 this.editArgosPassModal.hide();
                 this.refreshTable();
@@ -96,11 +120,11 @@
         },
 
         clearPassStatus() {
-            if (!this.selectedPass) return;
+            if (!this.updatePassForm) return;
             axios.post(`/api/argos/pass/save`, {
-                argosPassId: this.selectedPass.key,
+                argosPassId: this.updatePassForm.key,
                 argosPassStatusId: 0,
-                comment: this.selectedPass.comment,
+                comment: this.updatePassForm.comment,
             }).then(() => {
                 this.editArgosPassModal.hide();
                 this.refreshTable();
@@ -129,7 +153,7 @@
 
         $(document).ready(function () {
             vm.table = $("#locationTable").DataTable({
-                "pageLength": 25,
+                "pageLength": 100,
                 "scrollX": true,
                 "searching": false,
                 "processing": true,

@@ -28,7 +28,6 @@
 @section Scripts{
     @*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>*@
     @*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM&callback=initMap" type="text/javascript"></script>*@
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM" type="text/javascript"></script>
 
     <script type="text/html" id="history-tab-template">
         @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
@@ -47,7 +46,8 @@
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
     @Html.Raw(Scripts.Render("~/bundles/components/FileTab"))
-    @Html.Raw(Scripts.Render("~/bundles/components/GMap"))
+    @Html.Raw(Scripts.Render("~/bundles/components/GoogleMap"))
+    @*@Html.Raw(Scripts.Render("~/bundles/components/GMap"))*@
     @Html.Raw(Scripts.Render("~/bundles/components/CollaredAnimalMapping"))
     @Html.Raw(Scripts.Render("~/bundles/collaredanimal/edit"))
 }
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-<div class="row" v-if="loaded">
+<div class="row my-4" v-if="loaded">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -113,7 +113,8 @@
                 </div>
             </div>
         </div>
-        </div></div>
+    </div>
+</div>
 
 
 

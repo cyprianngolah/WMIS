@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
     ViewBag.Title = "Survey";
     ViewBag.SubTitle = "View";
 }
@@ -53,26 +54,7 @@
 
 @section Scripts{
     @*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM&callback=initMap" type="text/javascript"></script>
-        @Html.Raw(Scripts.Render("~/bundles/datePicker"))
-        @Html.Raw(Scripts.Render("~/bundles/datatables"))
-        @Html.Raw(Scripts.Render("~/bundles/select2"))
-        @Html.Raw(Scripts.Render("~/bundles/knockout"))
-        @Html.Raw(Scripts.Render("~/bundles/project/survey/edit"))
-        @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
-        @Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
-
-        <script>
-            $(function() {
-                wmis.project.survey.edit.initialize({
-                    projectSurveyKey: @ViewBag.Key,
-                    uploadObservationForm: $("#observationFileUploadForm"),
-                    observationModal: $("#observationUploadModal"),
-                    resumeObservationModal: $("resumeObservationUploadModal")
-                });
-                wmis.shared.historytab.initialize(@ViewBag.Key, 'SurveyHistory', 'historyTemplateTempDiv');
-                wmis.shared.filetab.initialize(@ViewBag.Key, 'Survey', 'fileTemplateTempDiv')
-            });
-        </script>*@
+    *@
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD74ZSiStfxRLwtVA--KlaSoYeeyNPJB-g" type="text/javascript"></script>
     <script type="text/html" id="survey-observations">
@@ -99,35 +81,59 @@
 
 <input type="hidden" id="surveyKey" value="@ViewBag.Key" />
 
+<div class="row mb-4">
+    <div class="col-12 text-end">
+        <a :href="`/Project/Edit/${ project ? project.key : ''}`" class="el-button el-button--danger">
+            @if (Html.UserIsProjectAdministrator())
+            {
+                <span>Cancel</span>
+            }
+            else
+            {
+                <span>Back</span>
+            }
+        </a>
 
-<div class="row">
+        @if (Html.UserIsProjectAdministrator())
+        {
+            <base-button size="large" color="success" :busy="loading" v-on:click.prevent="submit()" :disabled="disabled">Save</base-button>
+        }
+    </div>
+</div>
+
+<div class="row my-3">
     <div class="col-md-12">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item active"><a href="#survey" role="tab" data-bs-toggle="tab" class="nav-link active">Survey</a></li>
-            <li class="nav-item"><a href="#observations" role="tab" data-bs-toggle="tab" class="nav-link">Observations</a></li>
-            <li class="nav-item"><a href="#links" role="tab" data-bs-toggle="tab" class="nav-link">Links</a></li>
-            <li class="nav-item"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
-        </ul>
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold"  role="tablist">
+                    <li class="nav-item active"><a href="#survey" role="tab" data-bs-toggle="tab" class="nav-link active">Survey</a></li>
+                    <li class="nav-item"><a href="#observations" role="tab" data-bs-toggle="tab" class="nav-link">Observations</a></li>
+                    <li class="nav-item"><a href="#links" role="tab" data-bs-toggle="tab" class="nav-link">Links</a></li>
+                    <li class="nav-item"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
+                </ul>
+            </div>
 
-        <!-- Tab panes -->
-        <div class="tab-content" id="surveyTabContent">
-            <div id="survey" class="tab-pane active py-4">
+            <div class="card-body">
+                <!-- Tab panes -->
+                <div class="tab-content" id="surveyTabContent">
+                    <div id="survey" class="tab-pane active py-4">
+                        <div v-show="project">
+                            @{Html.RenderPartial("EditSurveyTab");}
+                        </div>
+                    </div>
 
-                <div v-show="project">
-                    @{Html.RenderPartial("EditSurveyTab");}
+                    <div id="observations" class="tab-pane py-4">
+                        <survey-observations v-if="key" :survey_id="key"></survey-observations>
+                    </div>
+
+                    <div id="links" class="tab-pane py-4">
+                        <file-tab v-if="key" :parent_table_key="key" parent_table_name="Survey"></file-tab>
+                    </div>
+
+                    <div id="history" class="tab-pane py-4">
+                        <history-tab v-if="key" :parent_table_key="key" parent_table_name="SurveyHistory"></history-tab>
+                    </div>
                 </div>
-            </div>
-
-            <div id="observations" class="tab-pane py-4">
-                <survey-observations v-if="key" :survey_id="key"></survey-observations>
-            </div>
-
-            <div id="links" class="tab-pane py-4">
-                <file-tab v-if="key" :parent_table_key="key" parent_table_name="Survey"></file-tab>
-            </div>
-
-            <div id="history" class="tab-pane py-4">
-                <history-tab v-if="key" :parent_table_key="key" parent_table_name="SurveyHistory"></history-tab>
             </div>
         </div>
     </div>

@@ -25,7 +25,7 @@
 
 <div class="row" v-if="hasObservations">
     <div class="col-12 mb-4">
-        <g-map :points="observationData" v-on:point:selected="handleSelectedPass" :selectedPass="selectedPass" :passStatusFunction="getPassStatus"></g-map>
+        <g-map :points="observationData" :hideLines="true" v-on:point:selected="handleSelectedPass" :selectedPass="selectedPass" :passStatusFunction="getPassStatus"></g-map>
     </div>
     <div class="col-12">
         <table id="locationTable" class="table table-sm">
@@ -85,7 +85,7 @@
                         <div class="col-md-6">Timestamp: {{formatDate(selectedPass.timestamp) }}</div>
                         <div class="col-md-6">Site ID: {{selectedPass.siteId || 'null'}}</div>
                     </div>
-
+                    
                     <div class="row g-3">
                         <div class="col-12">
                             <el-divider><i class="el-icon-more"></i></el-divider>

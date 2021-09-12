@@ -45,6 +45,7 @@ const SurveyObservations = {
     },
 
     computed: {
+        
         hasObservations() {
             if (this.observations !== null && this.observationData.length > 0) {
                 return true

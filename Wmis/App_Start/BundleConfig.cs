@@ -74,6 +74,13 @@
             bundles.Add(new ScriptBundle("~/bundles/components/GMap").Include(
                 "~/js/v2/components/GMap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/components/GoogleMap").Include(
+                "~/Scripts/v2/googlemaps-loader.js",
+                "~/js/v2/components/MapMarker.js",
+                "~/js/v2/components/PolyLine.js",
+                "~/js/v2/components/GoogleMap.js"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/components/FileTab").Include(
                         "~/js/v2/components/FileTab.js"));
                 

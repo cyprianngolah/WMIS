@@ -45,7 +45,6 @@
                 this.form = responses[2].data
                 this.observationUploads = responses[3].data
             })).then(() => {
-                this.form.startDate = this.form.startDate ? moment(this.form.startDate, moment.ISO_8601).format('YYYY-MM-DD') : null
                 this.getProjectInfo()
             })
             .catch(error => {
@@ -65,19 +64,21 @@
             
             this.setKey()
             this.loading = true
-            if (this.form.startDate) {
-                this.form.startDate = moment(this.form.startDate, 'YYYY-MM-DD').format('YYYY-MM-DDTHH:mm:ss.SSSS')
-            }
+           
             axios.put(`/api/Project/Survey`, this.form)
                 .then(() => {
                     this.getData()
+
+                    setTimeout(() => {
+                        this.$message.success({
+                            message: 'Record Updated!', type: 'positive', multiLine: true
+                        })
+                    }, 1100)
                     
                 }).catch(error => console.log(error))
                 .finally(() => {
                     setTimeout(() => {
                         this.loading = false
-                        this.$q.notify({
-                            message: 'Record Updated!', type: 'positive', multiLine: true })
                     }, 1000)
                 })
         },
