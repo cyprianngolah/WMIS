@@ -1,7 +1,10 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseInput,
         BaseDropdownSelect
     },
@@ -39,16 +42,19 @@ const app = Vue.createApp({
         },
 
         getTaxonomyGroups() {
+            this.showLoading()
             axios.get("/api/taxonomy/taxonomygroup/")
                 .then(response => {
                     this.taxonomyGroups = response.data
                     this.taxonomyGroups.unshift({name: "All Groups", key: ''})
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         }
     },
 
     mounted() {
-        //WMIS.loadAndInitializeSelect2($("#taxonomyGroup"), "/api/taxonomy/taxonomygroup/", "Taxonomy Group");
         this.getTaxonomyGroups()
     },
 

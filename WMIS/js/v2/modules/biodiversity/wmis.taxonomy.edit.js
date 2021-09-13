@@ -1,13 +1,17 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseInput,
         BaseButton,
+        BaseLinkButton,
         BaseDropdownSelect,
         SynonymTags
     },
 
     data() {
         return {
+            key: 0,
             taxonomyGroups: [],
             form: {
                 taxonomyKey: "",
@@ -25,14 +29,17 @@
     },
 
     methods: {
+        setKey() {
+            this.key = this.getKey("taxonomyKey")
+        },
+
         submit() {
             if (this.disabled) {
                 this.$message.error('Name and Group are required!');
                 return;
             }
-            const id = window.location.pathname.split('/').pop()
             axios.post(`/api/taxonomy/`, this.form)
-                .then(response => {
+                .then(_ => {
                     window.location.href = "/Taxonomy";
                 }).catch(error => console.log(error))
         },
@@ -45,22 +52,25 @@
         },
 
         getTaxonomy() {
-            const id = window.location.pathname.split('/').pop()
-            axios.get(`/api/Taxonomy/?TaxonomyKey=${id}`)
+            this.showLoading();
+            this.setKey();
+            axios.get(`/api/Taxonomy/?TaxonomyKey=${this.key}`)
                 .then(response => {
                     const res = response.data.data
                     if (res.length > 0) {
                         this.form.taxonomyGroupKey = res[0].taxonomyGroup.key
                         this.form.name = res[0].name
-                        this.form.taxonomyKey = id
                     }
-                    //this.form.taxonomyGroupKey = response.data[0]
+                    this.form.taxonomyKey=this.key
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         },
 
         getSynonym() {
-            const id = window.location.pathname.split('/').pop();
-            axios.post(`/api/taxonomy/synonym`, [id])
+            this.setKey()
+            axios.post(`/api/taxonomy/synonym`, [this.key])
                 .then(response => {
                     const res = response.data
                     if (res.length > 0) {
@@ -75,6 +85,10 @@
         this.getTaxonomyGroups()
         this.getSynonym()
         this.getTaxonomy()
+    },
+
+    created() {
+        this.setKey()
     }
 })
 

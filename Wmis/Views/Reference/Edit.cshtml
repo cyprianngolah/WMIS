@@ -8,5 +8,7 @@
     @Html.Raw(Scripts.Render("~/bundles/reference/edit"))
 }
 
+<input type="hidden" id="key" value="@ViewBag.Key" />
+
 @{ Html.RenderPartial("EditForm"); }
  

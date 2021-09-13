@@ -1,7 +1,10 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseInput,
         BaseDropdownSelect
     },
@@ -49,6 +52,7 @@ const app = Vue.createApp({
         },
 
         getDropdowns() {
+            this.showLoading();
             axios.all([
                 axios.get('/api/biodiversity/species?startRow=0&rowCount=7000'),
                 axios.get('/api/collar/region?startRow=0&rowCount=500'),
@@ -68,6 +72,9 @@ const app = Vue.createApp({
                 this.species.unshift({name: "All Species", key: ""})
                 this.regions.unshift({name: "All Regions", key: ""})
             }).catch(error => console.log(error))
+            .finally(() => setTimeout(() => {
+                this.hideLoading()
+            }, 2000))
         },
 
         reloadTable() {
@@ -88,22 +95,14 @@ const app = Vue.createApp({
 
     },
 
-    mounted() {
-        this.newCollarModal = new bootstrap.Modal(document.getElementById("newCollarModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
-
-        
-    },
 
     created() {
         this.getDropdowns()
-        document.title = "WMIS Collared Animal";
+        document.title = "WMIS Collared Animal";    
         const vm = this;
-        document.title = "WMIS Biodiversity";
 
         $(document).ready(function () {
+            vm.newCollarModal = vm.createModal("newCollarModal")
             vm.table = $("#collarTable").DataTable({
                 "pageLength": 25,
                 "scrollX": true,

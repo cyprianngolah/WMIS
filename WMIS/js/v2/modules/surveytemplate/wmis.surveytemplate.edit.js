@@ -12,8 +12,10 @@ const initialColumnData = {
 }
 
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseInput,
     },
     data() {
@@ -53,11 +55,15 @@ const app = Vue.createApp({
             return value ? "Yes" : "No";
         },
         getTemplate() {
+            this.showLoading();
             this.setKey();
             axios.get(`/api/surveytemplate/${this.surveyTemplateId}`)
                 .then(response => {
                     this.surveyTemplate = response.data
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
 
         },
 
@@ -65,6 +71,7 @@ const app = Vue.createApp({
             axios.get('/api/surveytemplate/columnTypes')
                 .then(response => this.columnTypes = response.data)
                 .catch(error => console.log(error))
+
         },
 
         getTemplateColumns() {
@@ -112,21 +119,18 @@ const app = Vue.createApp({
         },
 
         setKey() {
-            this.surveyTemplateId = WMIS.getKey("#templateKey");
+            this.surveyTemplateId = this.getKey("#templateKey");
+        },
+
+        handleCancelModal() {
+            this.columnData = initialColumnData;
         }
     },
 
     mounted() {
         this.getTemplate()
         this.getTemplateColumns()
-        this.createColumnModal = new bootstrap.Modal(document.getElementById("createColumnModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
-
-        document.getElementById('createColumnModal').addEventListener('hidden.bs.modal', () => {
-            this.columnData = initialColumnData;
-        });
+        this.createColumnModal = this.createModal("createColumnModal");
     },
 
     created() {

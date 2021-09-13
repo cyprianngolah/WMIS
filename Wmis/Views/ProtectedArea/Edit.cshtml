@@ -7,5 +7,5 @@
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/protectedarea/edit"))
 }
-
+<input type="hidden" id="protectedareaKey" value="@ViewBag.Key" />
 @{ Html.RenderPartial("EditForm"); }

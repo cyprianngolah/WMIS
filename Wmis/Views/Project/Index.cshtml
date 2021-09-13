@@ -21,20 +21,21 @@
             <base-button v-on:click="downloadRecords()" color="warning" size="large"><span class="el-icon-download"></span> Download</base-button>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <a href="/Project/New" class="el-button el-button--success">
+                <base-link-button color="success" href="/Project/New">
                     <span class="el-icon-plus"></span>
                     New
-                </a>
+                </base-link-button>
             }
-            <a v-bind:href=`/Project/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
+            <base-link-button color="info" v-bind:href=`/Project/Edit/${selectedKey}` id="editButton" :disabled="!isSelected">
                 <span class="el-icon-view"></span> View
-            </a>
+            </base-link-button>
+
         </div>
     </div>
 </div>
 
 
-<div class="card bg-light border border-primary">
+<div class="card border-0">
     <div class="card-body">
         <div class="row g-3">
             <div class="col">

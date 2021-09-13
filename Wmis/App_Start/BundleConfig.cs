@@ -26,8 +26,8 @@
                 "~/Scripts/v2/axios.min.js",
                 "~/Scripts/v2/vue3.min.js",
                 "~/Scripts/v2/elementui.js",
-                "~/Scripts/v2/bootstrap5.bundle.min.js",
-                "~/js/v2/wmis.js"
+                //"~/Scripts/v2/bootstrap5.bundle.min.js",
+                "~/js/v2/mixins/GlobalMixin.js"
                 ));
 
 			bundles.Add(new ScriptBundle("~/bundles/select2").Include(
@@ -39,12 +39,11 @@
             // Library/App Styles
             //////////////////////////////////////////////////////////////////////
             bundles.Add(new StyleBundle("~/bundles/css").Include(
-						"~/Content/v2/bootstrap5.min.css",
+						//"~/Content/v2/bootstrap5.min.css",
                         "~/Content/v2/elementui.css",
                         "~/Content/v2/site.css"));
 
             bundles.Add(new StyleBundle("~/bundles/datatablescss").Include(
-                        //"~/Content/v2/DataTables.css",
                         "~/Content/v2/bootstrap5-datatable.css"
                         ));
 

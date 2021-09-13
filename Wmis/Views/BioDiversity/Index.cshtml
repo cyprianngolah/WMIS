@@ -32,13 +32,13 @@
 
 
         <div>
-            <base-button size="small" v-on:click="downloadRecords()" color="warning"><span class="el-icon-download"></span> Download</base-button>
+            <base-button v-on:click="downloadRecords()" class="mx-0" color="warning"><span class="el-icon-download"></span> Download</base-button>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <a href="/BioDiversity/New" class="el-button el-button--success el-button--small "><span class="el-icon-plus"></span> New</a>
-                <a href="/BioDiversity/Upload" class="el-button el-button--info el-button--small "><span class="el-icon-upload2"></span> Bulk Upload</a>
+                <base-link-button href="/BioDiversity/New" color="success"><span class="el-icon-plus"></span> New</base-link-button>
+                <base-link-button href="/BioDiversity/Upload" color="secondary"><span class="el-icon-upload2"></span> Bulk Upload</base-link-button>
             }
-            <a v-bind:href=`/BioDiversity/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary el-button--small btn" v-bind:class="{'disabled is-disabled' : !isSelected}">
+            <base-link-button v-bind:href=`/BioDiversity/Edit/${selectedKey}` color="info" id="editButton" v-bind:class="{'disabled is-disabled' : !isSelected}">
                 @if (Html.UserIsBiodiversityAdministrator())
                 {
                     <span class="el-icon-view"></span>
@@ -48,10 +48,10 @@
                 {
                     <span>View</span>
                 }
-            </a>
-            <a v-bind:href=`/BioDiversity/Decision/${selectedKey}` v-bind:class="{'disabled' : !isSelected}" id="decisionButton" class="el-button el-button--primary el-button--small is-plain btn">
+            </base-link-button>
+            <base-link-button color="primary" :disabled="!isSelected" v-bind:href=`/BioDiversity/Decision/${selectedKey}` id="decisionButton">
                 <span class="el-icon-s-order"></span> Decision
-            </a>
+            </base-link-button>
         </div>
     </div>
 </div>
@@ -61,7 +61,7 @@
     <button type="button" class="btn-close" v-on:click="deleteError=null" aria-label="Close"></button>
 </div>
 
-<div class="card bg-light border border-primary">
+<div class="card border-0">
     <div class="card-body">
         <div class="row g-3">
             <div class="col">

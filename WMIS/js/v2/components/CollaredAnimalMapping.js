@@ -1,7 +1,7 @@
 ﻿
 const CollaredAnimalMapping = {
     template: "#mapping-tab-template",
-
+    mixins: [GlobalMixin],
     components: {
         BaseButton,
         BaseInput,
@@ -136,12 +136,10 @@ const CollaredAnimalMapping = {
     },
 
     mounted() {
-        this.editArgosPassModal = new bootstrap.Modal(document.getElementById("editArgosPassModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
+        this.editArgosPassModal = this.createModal("editArgosPassModal");
 
-        document.getElementById('editArgosPassModal').addEventListener('hidden.bs.modal', () => {
+        document.getElementById('editArgosPassModal').addEventListener('hidden.mdb.modal', () => {
+            console.log("Got it!")
             this.selectedPass = null;
             this.table.$('tr.highlightPassRow').removeClass('highlightPassRow');
         });

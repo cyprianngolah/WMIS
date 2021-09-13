@@ -1,6 +1,8 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin, DataTableMixin],
     components: {
         BaseInput,
+        BaseLinkButton,
         BaseButton,
         SurveyObservations,
         HistoryTab,
@@ -34,6 +36,7 @@
     methods: {
         getData() {
             this.setKey()
+            this.showLoading();
             axios.all([
                 axios.get('/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false'),
                 axios.get('/api/surveytemplate?startRow=0&rowCount=500'),
@@ -50,6 +53,9 @@
             .catch(error => {
                 console.log(error)
             })
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         },
 
         getProjectInfo() {
@@ -84,7 +90,7 @@
         },
 
         setKey() {
-            this.key = WMIS.getKey("#surveyKey")
+            this.key = this.getKey("#surveyKey")
         }
 
     },

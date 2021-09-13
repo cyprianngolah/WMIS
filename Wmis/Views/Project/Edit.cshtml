@@ -49,10 +49,10 @@
 
         @if (Html.UserIsProjectAdministrator())
         {
-            <base-button v-on:click="editAdministratorsModal.show()" :plain="true">Edit Users</base-button>
+            <base-button v-on:click="editAdministratorsModal.show()" color="info">Edit Users</base-button>
         }
 
-        <a href="~/Project/" class="el-button is-plain el-button--danger">
+        <base-link-button href="~/Project/">
             @if (Html.UserIsProjectAdministrator())
             {
                 <span>Cancel</span>
@@ -61,11 +61,11 @@
             {
                 <span>Back</span>
             }
-        </a>
+        </base-link-button>
         @if (Html.UserIsProjectAdministrator() || ViewBag.CanViewSensitive)
         {
 
-            <base-button color="success" size="large" :busy="loading" v-on:click.prevent="saveUpdate()" :disabled="disabled">Save</base-button>
+            <base-button color="success" :busy="loading" v-on:click.prevent="saveUpdate()" :disabled="disabled">Save</base-button>
         }
     </div>
 </div>
@@ -75,15 +75,13 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-
-
                 <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
-                    <li class="nav-item active"><a href="#generalTab" role="tab" data-bs-toggle="tab" class="nav-link active">General</a></li>
-                    <li class="nav-item"><a href="#surveysTab" role="tab" data-bs-toggle="tab" class="nav-link">Surveys</a></li>
-                    <li class="nav-item"><a href="#collarsTab" role="tab" data-bs-toggle="tab" class="nav-link">Collars</a></li>
-                    <li class="nav-item"><a href="#collaboratorsTab" role="tab" data-bs-toggle="tab" class="nav-link">Collaborators</a></li>
-                    <li class="nav-item"><a href="#sitesTab" role="tab" data-bs-toggle="tab" class="nav-link">Sites</a></li>
-                    <li class="nav-item"><a href="#historyTab" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
+                    <li class="nav-item active"><a href="#generalTab" v-on:click="tab=1" role="tab" data-mdb-toggle="tab" class="nav-link active">General</a></li>
+                    <li class="nav-item"><a href="#surveysTab" v-on:click="tab=2" role="tab" data-mdb-toggle="tab" class="nav-link">Surveys</a></li>
+                    <li class="nav-item"><a href="#collarsTab" v-on:click="tab=3" role="tab" data-mdb-toggle="tab" class="nav-link">Collars</a></li>
+                    <li class="nav-item"><a href="#collaboratorsTab" v-on:click="tab=4" role="tab" data-mdb-toggle="tab" class="nav-link">Collaborators</a></li>
+                    <li class="nav-item"><a href="#sitesTab" v-on:click="tab=5" role="tab" data-mdb-toggle="tab" class="nav-link">Sites</a></li>
+                    <li class="nav-item"><a href="#historyTab" v-on:click="tab=6" role="tab" data-mdb-toggle="tab" class="nav-link">History</a></li>
                 </ul>
 
             </div>
@@ -122,9 +120,9 @@
                     <!-- Project Collaborators -->
                     <div id="collaboratorsTab" class="tab-pane form-horizontal">
                         <div class="row h4 py-4">
-                            <div class="col-md-12 text-right">
-                                <base-button size="small" color="success" v-on:click="createCollaboratorModal()">Create New Collaborator</base-button>
-                                <base-button size="small" color="primary" v-on:click="addCollaboratorFormModal.show()">Add Existing Collaborator</base-button>
+                            <div class="col-md-12 text-end">
+                                <base-button class="btn-sm" color="success" v-on:click="createCollaboratorModal()">Create New Collaborator</base-button>
+                                <base-button class="btn-sm" color="primary" v-on:click="addCollaboratorFormModal.show()">Add Existing Collaborator</base-button>
                             </div>
                         </div>
                         <div class="row">
@@ -176,15 +174,14 @@
 
 
 <!------------------ EDIT COLLABORATOR ----------------------------------->
-<div class="modal fade" id="editCollaboratorFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="editCollaboratorFormModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ editingCollaborator ? 'Edit' : 'Add' }} Collaborator</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" v-on:click="handleCloseModal()" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card border-0">
                     <div class="row g-3">
                         <div class="col-12">
                             <lable>Name</lable>
@@ -203,10 +200,9 @@
                             <base-input v-model="collaboratorForm.phoneNumber" label="Phone Number"></base-input>
                         </div>
                     </div>
-                </div>
             </div>
             <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="danger" plain data-mdb-dismiss="modal" v-on:click="handleCloseModal()" >Cancel</base-button>
                 <base-button color="success" v-on:click="handleCollaboratorSave()">
                     Save
                 </base-button>
@@ -216,15 +212,14 @@
 </div>
 
 <!---------------------ADD AN EXISTING COLLABORATOR----------------------->
-<div class="modal fade" id="addCollaboratorFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="addCollaboratorFormModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Collaborator</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card border-0">
                     <div class="row g-3">
                         <div class="col-12">
                             <div>Collaborator</div>
@@ -237,10 +232,9 @@
                             </el-select>
                         </div>
                     </div>
-                </div>
             </div>
             <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
                 <base-button color="success" v-on:click="addExistingCollaborator()">
                     Save
                 </base-button>
@@ -251,15 +245,14 @@
 
 
 <!-- editAdministratorTemplate -->
-<div class="modal fade" id="editAdministratorsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="editAdministratorsModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Users</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card border-0">
                     <div class="row g-3">
                         <div class="col-12">
                             <div>Project Administrators</div>
@@ -279,10 +272,9 @@
 
                         </div>
                     </div>
-                </div>
             </div>
             <div class="modal-footer">
-                <base-button size="small" plain color="danger" data-bs-dismiss="modal">Cancel</base-button>
+                <base-button size="small" plain color="danger" data-mdb-dismiss="modal">Cancel</base-button>
                 <base-button size="small" v-on:click="updateProjectUsers()">
                     Apply Changes
                 </base-button>

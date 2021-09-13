@@ -1,9 +1,11 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin, DataTableMixin],
+
     components: {
-       BaseButton,
+        BaseButton,
+        BaseLinkButton,
         ReferenceWidget,
         BaseInput,
-        BaseSelect,
         PopulationTags,
         BaseDropdownSelect,
         HistoryTab,
@@ -35,15 +37,9 @@
             statusRanks: [],
             cosewicStatuses: [],
             ecozones: [],
-            ecozonesFull: [],
             ecoregions: [],
-            ecoregionsFull: [],
-            protectedAreasFull: [],
             protectedAreas: [],
-            statusRanksFull: [],
             nwtSarcAssessments:[],
-            nwtSarcAssessmentsFull: [],
-            cosewicStatusesFull: [],
             
         }
     },
@@ -59,12 +55,13 @@
 
     methods: {
         setKey() {
-            this.biodiversityKey = WMIS.getKey("#bdKey")
+            this.biodiversityKey = this.getKey("#bdKey")
         },
 
         fetchBiodiversityData() {
             this.setKey()
             this.loading = true
+            this.showLoading()
             axios.get(`/api/BioDiversity/${this.biodiversityKey}`)
                 .then(response => {
                     this.form = response.data
@@ -72,11 +69,15 @@
                     document.title = "WMIS - Biodiversity - " + this.form.commonName;
                 }).catch(error => {
                     console.log(error.response)
-                }).finally(() => setTimeout(() => this.loading = false, 2000))
+                }).finally(() => setTimeout(() => {
+                    this.loading = false
+                    this.hideLoading()
+                }, 2000))
         },
 
         fetchDropdowns() {
             this.loading = true
+           
             axios.all([
                 axios.get('/api/taxonomy/kingdom'),
                 axios.get('/api/taxonomy/phylum'),
@@ -97,32 +98,26 @@
                 axios.get('/api/nwtsarcassessment?startRow=0&rowCount=500'),
                 axios.get('/api/cosewicstatus?startRow=0&rowCount=500'),
             ]).then(axios.spread((...responses) => {
-                this.kingdoms = WMIS.transformForSelect2(responses[0].data)
-                this.phylums = WMIS.transformForSelect2(responses[1].data)
-                this.subphylums = WMIS.transformForSelect2(responses[2].data)
-                this.classes = WMIS.transformForSelect2(responses[3].data)
-                this.subclasses = WMIS.transformForSelect2(responses[4].data)
-                this.orders = WMIS.transformForSelect2(responses[5].data)
-                this.suborders = WMIS.transformForSelect2(responses[6].data)
-                this.infraorders = WMIS.transformForSelect2(responses[7].data)
-                this.superfamilies = WMIS.transformForSelect2(responses[8].data)
-                this.families = WMIS.transformForSelect2(responses[9].data)
-                this.subfamilies = WMIS.transformForSelect2(responses[10].data)
-                this.groups = WMIS.transformForSelect2(responses[11].data)
+                this.kingdoms = responses[0].data
+                this.phylums = responses[1].data
+                this.subphylums = responses[2].data
+                this.classes = responses[3].data
+                this.subclasses = responses[4].data
+                this.orders = responses[5].data
+                this.suborders = responses[6].data
+                this.infraorders = responses[7].data
+                this.superfamilies = responses[8].data
+                this.families = responses[9].data
+                this.subfamilies = responses[10].data
+                this.groups = responses[11].data
                 this.statusRanks = responses[15].data.data
-                this.statusRanksFull = JSON.stringify(responses[15].data.data)
-                this.nwtSarcAssessmentsFull = JSON.stringify(responses[16].data.data)
                 this.nwtSarcAssessments = responses[16].data.data
-                this.cosewicStatusesFull = JSON.stringify(responses[17].data.data)
                 this.cosewicStatuses = responses[17].data.data
 
                 // full lists for filter
                 this.ecozones = responses[13].data.data
-                this.ecozonesFull = JSON.stringify(responses[13].data.data)
                 this.ecoregions = responses[12].data.data
-                this.ecoregionsFull = JSON.stringify(responses[12].data.data)
                 this.protectedAreas = responses[14].data.data
-                this.protectedAreasFull = JSON.stringify(responses[14].data.data)
 
             })).catch(error => {
                 console.log(error)
@@ -137,11 +132,16 @@
 
         saveBioDiversity() {
             this.loading = true
+            this.showLoading()
             axios.put("/api/BioDiversity/", this.form)
                 .then(_ => {
                     this.fetchBiodiversityData()
                     this.$message.success("Record updated successfully")
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.loading = false
+                    this.hideLoading()
+                }, 1500))
         }
     },
 

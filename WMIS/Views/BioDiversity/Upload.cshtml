@@ -13,12 +13,12 @@
     @Html.Raw(Scripts.Render("~/bundles/biodiversity/upload"))
 }
 
-<div class="modal fade" id="uploadModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="uploadModal" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Bulk Upload Species</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
@@ -34,7 +34,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
                 <base-button color="success" v-on:click="uploadObservationFile()">
                     Upload
                 </base-button>
@@ -47,12 +47,11 @@
 <div class="row h4 mb-4">
     <div class="col-md-12 d-flex justify-content-between">
         <span>
-
-            <a href="~/Content/Files/BiodiversityBulkUploadTemplate.xlsx" target="_blank" type="button" class="el-button el-button--warning btn"><span class="el-icon-download"></span> Download Upload Template</a>
+            <base-link-button href="~/Content/Files/BiodiversityBulkUploadTemplate.xlsx" target="_blank" color="warning"><span class="el-icon-download"></span> Download Upload Template</base-link-button>
             <base-button size="large" :disabled="!isSelected" v-on:click="downloadSelectedFile()" color="success"><span class="el-icon-download"></span> Download Selected File</base-button>
         </span>
 
-        <base-button color="primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+        <base-button color="primary" data-mdb-toggle="modal" data-mdb-target="#uploadModal">
             <span class="el-icon-upload2"></span>
             Bulk Upload Species
         </base-button>
@@ -63,7 +62,6 @@
 
 <div class="card">
     <div class="card-body">
-
         <div class="row">
             <div class="col-md-12">
                 <table id="bulkUploadTable" class="table table-sm w-100">

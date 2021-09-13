@@ -1,7 +1,10 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseInput
     },
     data() {
@@ -53,10 +56,7 @@ const app = Vue.createApp({
     },
 
     mounted() {
-        this.newTemplateModal = new bootstrap.Modal(document.getElementById("newTemplateModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
+        this.newTemplateModal = this.createModal("newTemplateModal");
     },
 
     created() {

@@ -2,7 +2,8 @@
 const app = Vue.createApp({
     components: {
         BaseInput,
-        BaseButton
+        BaseButton,
+        BaseLinkButton
     },
     data() {
         return {
@@ -73,6 +74,7 @@ const app = Vue.createApp({
                     "drawCallback": function (settings) {
                         vm.selectedKey = null;
                         vm.table.$('tr.bg-info').removeClass('bg-info');
+                        
                     }
                 },
 

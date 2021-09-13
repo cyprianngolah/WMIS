@@ -1,7 +1,9 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin, DataTableMixin],
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseInput,
         HistoryTab
     },
@@ -65,6 +67,7 @@ const app = Vue.createApp({
         },
 
         getUser() {
+            this.showLoading();
             this.setKey();
             axios.get(`/api/person/${this.form.key}`)
                 .then(response => {
@@ -72,6 +75,9 @@ const app = Vue.createApp({
                     this.selectedRoleIds = response.data.roles.map(r => r.key)
                     this.selectedProjectIds = response.data.projects.map(p => p.key)
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
                 
         },
 
@@ -83,7 +89,7 @@ const app = Vue.createApp({
         },
 
         setKey() {
-            this.form.key = WMIS.getKey("#userKey");
+            this.form.key = this.getKey("#userKey");
         }
     },
 

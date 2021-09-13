@@ -1,6 +1,7 @@
 ﻿const ProjectSurveys = {
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseDropdownSelect
     },
     props: {

@@ -1,7 +1,10 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin, DataTableMixin],
+
     components: {
         BaseInput,
         BaseButton,
+        BaseLinkButton,
         FileTab,
         HistoryTab,
         BaseSpeciesSelect,
@@ -12,7 +15,6 @@
         return {
             key: "",
             loading: false,
-            
             form: {},
             collarType: [],
             collarRegions: [],
@@ -41,6 +43,7 @@
         }
     },
 
+    
     computed: {
         lastUpdated() {
             return this.form.lastUpdated ? moment.utc(this.form.lastUpdated, moment.ISO_8601).local().format('L h:mm a') : ""
@@ -86,11 +89,12 @@
             return !!property.key;
         },
         setKey() {
-            this.key = WMIS.getKey("#collaredAnimalKey")
+            this.key = this.getKey("#collaredAnimalKey")
         },
 
         getCollarData() {
             this.setKey()
+            this.showLoading();
             axios.get(`/api/collar/${this.key}`)
                 .then(response => {
                     this.form = response.data
@@ -110,6 +114,9 @@
                         herdAssociationDate: payload.herdAssociationDate
                     }
                 }).catch(error => console.log(error))
+                .finally(() => {
+                    setTimeout(() => this.hideLoading(), 1000)
+                })
         },
 
         updateBreedingStatus() {
@@ -171,15 +178,20 @@
             })).catch(error => {
                 console.log(error)
             })
-        }
+        },
+
     },
 
+    
     mounted() {
         this.setKey()
         this.getCollarData()
 
-        this.breedingStatusModal = WMIS.createModal("breedingStatusModal")
-        this.herdAssociationModal = WMIS.createModal("herdAssociationModal")
+        this.breedingStatusModal = this.createModal("breedingStatusModal")
+        this.herdAssociationModal = this.createModal("herdAssociationModal")
+
+
+
     },
 
     created() {

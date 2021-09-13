@@ -1,7 +1,10 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseInput,
-        BaseButton
+        BaseButton,
+        BaseLinkButton
     },
 
     data() {
@@ -31,9 +34,16 @@
                     window.location.href = "/NwtSarcAssessment";
                 }).catch(error => console.log(error))
         },
-
+        setKey() {
+            const key = this.getKey("#key");
+            if (key && key !== undefined) {
+                this.form.key = key
+                this.getData()
+            }
+        },
 
         getData() {
+            this.showLoading()
             axios.get(`/api/nwtsarcassessment/?key=${this.form.key}`)
                 .then(response => {
                     const res = response.data.data
@@ -41,15 +51,14 @@
                         this.form.name = res[0].name
                     }
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         },
     },
 
     mounted() {
-        const key = window.location.pathname.split('/').pop();
-        if (key !== 'New') {
-            this.form.key = key;
-            this.getData()
-        }
+        this.setKey()
     }
 })
 

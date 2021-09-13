@@ -1,7 +1,10 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseInput,
-        BaseButton
+        BaseButton,
+        BaseLinkButton
     },
 
     data() {
@@ -25,15 +28,21 @@
                 this.$message.error('Name is required!');
                 return;
             }
-            const id = window.location.pathname.split('/').pop()
             axios.post(`/api/ecozone/`, this.form)
-                .then(response => {
+                .then(_ => {
                     window.location.href = "/Ecozone";
                 }).catch(error => console.log(error))
         },
 
-
+        setKey() {
+            const key = this.getKey("#ecozoneKey");
+            if (key && key !== undefined) {
+                this.form.key = key
+                this.getEcozone()
+            }
+        },
         getEcozone() {
+            this.showLoading();
             axios.get(`/api/Ecozone/?key=${this.form.key}`)
                 .then(response => {
                     const res = response.data.data
@@ -41,15 +50,14 @@
                         this.form.name = res[0].name
                     }
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         },
     },
 
-    mounted() {
-        const key = window.location.pathname.split('/').pop();
-        if (key !== 'New') {
-            this.form.key = key;
-            this.getEcozone()
-        }
+    async mounted() {
+        this.setKey();
     }
 })
 

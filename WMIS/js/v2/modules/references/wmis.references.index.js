@@ -1,7 +1,9 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseDropdownSelect
     },
     data() {
@@ -31,18 +33,21 @@ const app = Vue.createApp({
 
     methods: {
         getYears() {
+            this.showLoading()
             axios.get('/api/references/years')
                 .then(response => {
                     this.years = response.data
                     this.years.unshift({name: "All Years", key: ""})
                 })
                 .catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         }
     },
 
     mounted() {
         this.getYears()
-        //WMIS.loadAndInitializeSelect2($("#year"), "/api/references/years", "Year");
     },
 
     created() {

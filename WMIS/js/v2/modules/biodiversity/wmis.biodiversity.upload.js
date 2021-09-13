@@ -1,7 +1,10 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
-        BaseButton
+        BaseButton,
+        BaseLinkButton
     },
     data() {
         return {
@@ -39,8 +42,13 @@ const app = Vue.createApp({
         },
 
         uploadObservationFile() {
+            this.showLoading()
             const frm = this.$refs.uploadSpeciesForm
             frm.submit();
+
+            setTimeout(() => {
+                this.hideLoading()
+            }, 2000)
         },
 
         // listens to upload event from upload iframe.

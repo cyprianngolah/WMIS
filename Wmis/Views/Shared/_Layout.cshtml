@@ -1,78 +1,94 @@
 ﻿@using Wmis.Extensions
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <title>WMIS</title>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+          rel="stylesheet" />
     @Styles.Render("~/bundles/css")
 
     @RenderSection("Styles", false)
 </head>
-<body class="h-100">
-    <div id="wmis-app" class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100">
+    <div id="wmis-app" class="flex-shrink-0">
         <header>
             <nav class="navbar navbar-expand-md py-0 navbar-dark fixed-top bg-dark">
-                <div class="container">
-                    <a class="navbar-brand text-white fw-bold text-decoration-none" href="/">
-                        <img src="~/Content/images/logo.png" alt="GNWT Logo" width="55">
-                        WMIS - <span class="small">Wildlife Management Information System</span>
-                    </a>
-                        
-                    <ul class="navbar-nav">
+                    <div class="container">
+                        <a class="navbar-brand text-white fw-bolder text-decoration-none" href="/">
+                            <img src="~/Content/images/logo.png" alt="GNWT Logo" width="55">
+                            WMIS - <span class="small"> &nbsp; Wildlife Management Information System</span>
+                        </a>
+
+                        <ul class="navbar-nav">
                             @Html.MenuItem("Projects", "Index", "Project")
                             @Html.MenuItem("Collar", "Index", "CollaredAnimal")
-                            
-                        @*<li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/Project">Projects</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/CollaredAnimal">Collar</a>
-                        </li>*@
-                        <li class="nav-item flex-shrink-0 dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Biodiversity</a>
-                            <ul class="dropdown-menu" aria-labelledby="biodiversity">
-                                @Html.MenuItem("Species", "Index", "BioDiversity", true)
-                                @Html.MenuItem("Taxonomies", "Index", "Taxonomy", true)
-                                @Html.MenuItem("Ecozones", "Index", "Ecozone", true)
-                                @Html.MenuItem("Ecoregions", "Index", "Ecoregion", true)
-                                @Html.MenuItem("Protected Areas", "Index", "ProtectedArea", true)
-                                @Html.MenuItem("Ranks", "Index", "StatusRank", true)
-                                @Html.MenuItem("COSEWIC Status", "Index", "CosewicStatus", true)
-                                @Html.MenuItem("NWT SARC Assessments", "Index", "NwtSarcAssessment", true)
-                                @Html.MenuItem("References", "Index", "Reference", true)
-                                @Html.MenuItem("Biodiversity Bulk Upload", "Upload", "BioDiversity", true)
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Reports">Reports</a>
-                        </li>
-                        <li class="nav-item flex-shrink-0 dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Administrator</a>
-                            <ul class="dropdown-menu" aria-labelledby="admin">
-                                @if (Html.UserIsWMISAdministrator())
-                                {
-                                    @Html.MenuItem("Users", "Index", "User", true)
-                                }
-                                @if (Html.UserInAnyAdministratorRole())
-                                {
-                                    @Html.MenuItem("Survey Templates", "Index", "SurveyTemplate", true)
-                                    @Html.MenuItem("Argos Service", "Index", "ArgosService", true)
-                                }
-                            </ul>
-                        </li>
-                    </ul>
+                            <li class="nav-item flex-shrink-0 dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Biodiversity</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="biodiversity">
+                                    @Html.MenuItem("Species", "Index", "BioDiversity", true)
+                                    @Html.MenuItem("Taxonomies", "Index", "Taxonomy", true)
+                                    @Html.MenuItem("Ecozones", "Index", "Ecozone", true)
+                                    @Html.MenuItem("Ecoregions", "Index", "Ecoregion", true)
+                                    @Html.MenuItem("Protected Areas", "Index", "ProtectedArea", true)
+                                    @Html.MenuItem("Ranks", "Index", "StatusRank", true)
+                                    @Html.MenuItem("COSEWIC Status", "Index", "CosewicStatus", true)
+                                    @Html.MenuItem("NWT SARC Assessments", "Index", "NwtSarcAssessment", true)
+                                    @Html.MenuItem("References", "Index", "Reference", true)
+                                    @Html.MenuItem("Biodiversity Bulk Upload", "Upload", "BioDiversity", true)
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Reports">Reports</a>
+                            </li>
+                            <li class="nav-item flex-shrink-0 dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Administrator</a>
+                                <ul class="dropdown-menu" aria-labelledby="admin">
+                                    @if (Html.UserIsWMISAdministrator())
+                                    {
+                                        @Html.MenuItem("Users", "Index", "User", true)
+                                    }
+                                    @if (Html.UserInAnyAdministratorRole())
+                                    {
+                                        @Html.MenuItem("Survey Templates", "Index", "SurveyTemplate", true)
+                                        @Html.MenuItem("Argos Service", "Index", "ArgosService", true)
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
 
-                </div>
-            </nav>
-        </header>
+                    </div>
+                </nav>
+</header>
         <!-- Begin page content -->
         <main class="flex-shrink-0">
+            @if (@ViewBag.Title == "Home")
+            {
+                <div class="p-5 text-center bg-image"
+                     style="background-image: url('content/images/bison.jpg'); background-size: cover; background-position-y: center; height: 500px; ">
+                    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="text-white">
+                                <h1 class="mb-3 display-5">
+                                    <span class="el-icon-d-arrow-left"></span> WMIS
+                                    <span class="el-icon-d-arrow-right"></span>
+                                </h1>
+                                <h4 class="mb-3 text-white">ENR's Wildlife Data Repository</h4>
+                                @*<a class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             <div class="container">
                 <div class="row clearfix">
-                    @if (!string.IsNullOrEmpty(ViewBag.Title))
+                    @if (!string.IsNullOrEmpty(ViewBag.Title) && ViewBag.Title != "Home")
                     {
                         <div class="page-header d-flex justify-content-between align-items-center">
                             @if (IsSectionDefined("CustomTitle"))
@@ -89,9 +105,7 @@
                             @RenderSection("TopRight", false)
                         </div>
                         <el-divider class="mb-2 mt-0" content-position="center">
-                            <img src="~/Content/images/logo.png" width="35" />
-                            @*<i class="el-icon-star-on"></i>*@
-                    
+                            <img src="~/Content/images/logo.png" width="25" />
                         </el-divider>
                     }
                 </div>
@@ -106,15 +120,17 @@
         </main>
 
     </div>
-    @*<footer class="footer mt-auto py-3 bg-light">
-            <div class="container">
-                <span class="text-muted">Place sticky footer content here.</span>
-            </div>
-        </footer>*@
+    <footer class="footer mt-auto py-3 bg-white border border-4 border-bottom-0 border-end-0 border-start-0 border-info">
+        <div class="container">
+            <img src="~/Content/images/GNWT–ENR2C.jpg" style="height: 70px;" />
+            <span class="text-muted">&copy; @DateTime.Now.Year - WMIS</span>
+        </div>
+    </footer>
 
     @RenderSection("Templates", false)
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
     @Scripts.Render("~/bundles/base")
-    @* <script src="https://cdn.jsdelivr.net/npm/quasar@2.0.4/dist/quasar.umd.prod.js"></script>*@
     @RenderSection("Scripts", false)
 </body>
 </html>

@@ -8,11 +8,14 @@ const initialCollaborator = {
 }
 
 const app = Vue.createApp({
+    mixins: [GlobalMixin, DataTableMixin],
+
     components: {
         BaseInput,
         BaseDropdownSelect,
         ProjectSurveys,
         BaseButton,
+        BaseLinkButton,
         HistoryTab,
         ProjectSites,
     },
@@ -52,18 +55,12 @@ const app = Vue.createApp({
         isDirty() {
             return this.initialData !== JSON.stringify(this.form)
         },
-
-        /*computed: {
-            adminsList() {
-                const lst = this.currentProjectAdmins.map(p => p.name)
-                return lst.join(", ");
-            }
-        }*/
     },
 
     methods: {
         getData() {
             this.setKey()
+            this.showLoading();
             axios.all([
                 axios.get(`/api/Project/${this.key}`),
                 axios.get('/api/project/statuses/?startRow=0&rowCount=500'),
@@ -87,6 +84,9 @@ const app = Vue.createApp({
             })).catch(error => {
                 console.log(error)
             })
+            .finally(() => setTimeout(() => {
+                this.hideLoading()
+            }, 2000))
         },
         setInitialCollaborator() {
             this.collaboratorForm = { ...initialCollaborator, ...{ projectId: this.key } }
@@ -171,7 +171,7 @@ const app = Vue.createApp({
         
 
         setKey() {
-            this.key = WMIS.getKey("#projectKey")
+            this.key = this.getKey("#projectKey")
         },
 
         saveUpdate() {
@@ -186,6 +186,11 @@ const app = Vue.createApp({
                 .finally(() => {
                     setTimeout(() => this.loading = false, 1000)
                 });
+        },
+
+        handleCloseModal() {
+            this.setInitialCollaborator();
+            this.editingCollaborator = false;
         }
     },
 
@@ -194,31 +199,16 @@ const app = Vue.createApp({
         this.getData()
         this.getProjectCollaborators()
 
-        this.editCollaboratorFormModal = new bootstrap.Modal(document.getElementById("editCollaboratorFormModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
+        this.editCollaboratorFormModal = this.createModal("editCollaboratorFormModal");
 
-        this.addCollaboratorFormModal = new bootstrap.Modal(document.getElementById("addCollaboratorFormModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
+        this.addCollaboratorFormModal = this.createModal("addCollaboratorFormModal");
 
-        this.editAdministratorsModal = new bootstrap.Modal(document.getElementById("editAdministratorsModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
-
-        document.getElementById('editCollaboratorFormModal').addEventListener('hidden.bs.modal', () => {
-            this.setInitialCollaborator();
-            this.editingCollaborator = false;
-        });
+        this.editAdministratorsModal = this.createModal("editAdministratorsModal");
 
         this.setInitialCollaborator()
     },
 
     created() {
-        // initialize Collars Data Table
         const vm = this;
 
         $(document).ready(function () {

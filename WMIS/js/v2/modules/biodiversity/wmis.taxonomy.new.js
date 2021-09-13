@@ -2,6 +2,7 @@
     components: {
         BaseInput,
         BaseButton,
+        BaseLinkButton,
         BaseDropdownSelect,
         SynonymTags
     },

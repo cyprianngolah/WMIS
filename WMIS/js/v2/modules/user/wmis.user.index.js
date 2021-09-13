@@ -1,7 +1,9 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseInput
     },
     data() {
@@ -53,10 +55,7 @@ const app = Vue.createApp({
     },
 
     mounted() {
-        this.newUserModal = new bootstrap.Modal(document.getElementById("newUserModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
+        this.newUserModal = this.createModal("newUserModal");
     },
 
     created() {

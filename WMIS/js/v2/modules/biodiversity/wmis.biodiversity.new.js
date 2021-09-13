@@ -1,7 +1,9 @@
 ﻿const app = Vue.createApp({
+
     components: {
         BaseInput,
-        BaseButton
+        BaseButton,
+        BaseLinkButton
     },
 
     data() {

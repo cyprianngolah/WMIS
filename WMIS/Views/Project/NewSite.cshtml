@@ -42,10 +42,10 @@
 
 <div class="row">
     <div class="col-12 text-end">
-        <base-button :plain="true" color="danger" v-on:click.prevent="returnToProject()">Cancel</base-button>
+        <base-button color="danger" v-on:click.prevent="returnToProject()">Cancel</base-button>
         @if (Html.UserIsBiodiversityAdministrator())
         {
-            <base-button v-on:click.prevent="save()" :loading="loading" :disabled="disabled">Save</base-button>
+            <base-button v-on:click.prevent="save()" color="success" :loading="loading" :disabled="disabled">Save</base-button>
         }
     </div>
 </div>

@@ -17,22 +17,21 @@
 
 <div class="row my-3">
     <div class="col-md-12 d-flex justify-content-end">
-        
         <div>
             @if (Html.UserIsProjectAdministrator())
             {
-                <a href="/Taxonomy/New" class="el-button el-button--success">
+                <base-link-button href="/Taxonomy/New" color="success">
                 <span class="el-icon-plus"></span>        
-            New</a>
+            New</base-link-button>
             }
-        <a v-bind:href=`/Taxonomy/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
+        <base-link-button v-bind:href=`/Taxonomy/Edit/${selectedKey}` id="editButton" color="info" :disabled="!isSelected">
             <span class="el-icon-view"></span>  View
-        </a>
+        </base-link-button>
         </div>
     </div>
 </div>
 
-<div class="card bg-light border border-primary">
+<div class="card border-0">
     <div class="card-body">
         <div class="row g-3">
             <div class="col-4">
@@ -54,8 +53,6 @@
     <div class="card-body">
         <div class="row ">
             <div class="col-md-12">
-
-
                 <table id="taxonomies" class="table table-sm table-striped table-hover w-100">
                     <thead>
                         <tr>

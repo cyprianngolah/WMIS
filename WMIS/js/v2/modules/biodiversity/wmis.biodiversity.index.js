@@ -1,7 +1,10 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseDropdownSelect
     },
     data() {
@@ -19,7 +22,6 @@ const app = Vue.createApp({
             groups: [],
             orders: [],
             families: [],
-
         }
     },
 
@@ -55,6 +57,7 @@ const app = Vue.createApp({
 
 
         fetchFilters() {
+            this.showLoading();
             axios.all([
                 axios.get('/api/taxonomy/group/'),
                 axios.get('/api/taxonomy/order/'),
@@ -69,7 +72,9 @@ const app = Vue.createApp({
                 this.families.unshift({ name: "All Families", key: "" })
             }).catch(error => {
                 console.log(error)
-            });
+            }).finally(() => setTimeout(() => {
+                this.hideLoading()
+            }, 1500))
         }
     },
 
@@ -98,7 +103,6 @@ const app = Vue.createApp({
                         }
 
                         vm.draw = settings.iDraw
-
                         return {
                             startRow: d.start,
                             rowCount: d.length,
@@ -191,33 +195,7 @@ const app = Vue.createApp({
                 vm.biodiversityTable.search(vm.form.keywords).draw();
             });
 
-            /*$('#groups').change(function (e) {
-                const val = e.target.value;
-                vm.form.groupKey = val === 'all' ? '' : val;
-                
-                $('#orders').val("all");
-                $('#orders').trigger("change");
-                vm.form.orderKey = '';
-
-                $('#families').val("all");
-                $('#families').trigger("change");
-                vm.form.familyKey = '';
-
-                vm.biodiversityTable.search(vm.form.groupKey).draw();
-            });
-
-            $('#orders').change(function (e) {
-                const val = e.target.value;
-                vm.form.orderKey = val === 'all' ? '' : val;
-                vm.biodiversityTable.search(vm.form.orderKey).draw();
-            });
-
-            $('#families').change(function (e) {
-                const val = e.target.value;
-                vm.form.familyKey = val === 'all' ? '' : val;
-                vm.biodiversityTable.search(vm.form.familyKey).draw();
-            });*/
-
+            
         });
 
     },

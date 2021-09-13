@@ -1,5 +1,6 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
     components: {
         BaseInput,
         BaseButton,
@@ -47,12 +48,16 @@ const app = Vue.createApp({
     methods: {
 
         fetchProject() {
+            this.showLoading()
             this.setKey()
             axios.get(`/api/Project/${this.key}`)
                 .then(response => {
                     this.form.projectName = response.data.name
                 })
                 .catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         },
 
         save() {
@@ -67,7 +72,7 @@ const app = Vue.createApp({
         },
 
         setKey() {
-            this.key = WMIS.getKey("#projectKey")
+            this.key = this.getKey("#projectKey")
             this.form.projectKey = this.key
         },
 

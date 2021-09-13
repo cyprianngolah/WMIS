@@ -1,6 +1,9 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseInput,
+        BaseLinkButton,
         BaseButton,
     },
 
@@ -32,7 +35,7 @@
 
     methods: {
         getData() {
-            
+            this.showLoading();
             const key = window.location.pathname.split('/').pop();
             axios.all([
                 axios.get('/api/statusrank?startRow=0&rowCount=500'),
@@ -47,17 +50,23 @@
                 this.initialData = JSON.stringify(responses[3].data)
             })).catch(error => {
                 console.log(error)
-            })
+            }).finally(() => setTimeout(() => {
+                this.hideLoading()
+            }, 1500))
         },
 
 
         submit() {
             if (this.disabled) return;
+            this.showLoading()
             axios.put('/api/BioDiversity/Decision', this.form)
                 .then(response => {
                     this.initialData = JSON.stringify(this.form)
                     window.location.href = "/Biodiversity/";
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 1500))
         },
 
         
@@ -65,12 +74,6 @@
 
     created() {
         this.getData()
-
-        $(window).bind('beforeunload', () => {
-            if (this.isDirty) {
-                return "You have unsaved changes, are you sure you want to continue without saving?";
-            }
-        });
     }
 })
 

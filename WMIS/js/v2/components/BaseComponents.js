@@ -1,9 +1,40 @@
-﻿const BaseButton = {
+﻿const BaseLinkButton = {
     template: `
-        <el-button :size="size" :nativeType="type" :plain="plain" :disabled="disabled" :loading="busy" :type="color"><slot></slot></el-button>
-        <!--<q-btn color="primary" glossy unelevated :disable="disabled" :loading="busy" padding="5px 25px">
+        <a class="btn shadow-3 ms-2" v-bind="$attrs" :class="disabled ? 'btn-'+color+' disabled' : 'btn-'+color" role="button"><slot></slot></a>
+    `,
+    props: {
+        type: {
+            default: 'button'
+        },
+        color: {
+            default: 'danger'
+        },
+        busy: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        plain: {
+            type: Boolean,
+            default: false
+        },
+        size: {
+            type: String,
+            default: 'medium'
+        },
+    }
+}
+
+const BaseButton = {
+    template: `
+        <button class="btn shadow-3 ms-2" :class="plain ? 'btn-outline-' + color : 'btn-'+color"  v-bind="$attrs" :disabled="disabled || busy">
+            <span v-show="busy" class="el-icon-loading is-loading loading me-1"></span>
             <slot></slot>
-        </q-btn>-->
+        </button>
+        <!--<el-button :size="size" class="shadow-3" :nativeType="type" :plain="plain" :disabled="disabled" :loading="busy" :type="color"><slot></slot></el-button>-->
     `,
     props: {
         type: {
@@ -174,249 +205,6 @@ const BaseSpeciesSelect = {
 }
 
 
-const BaseSelect = {
-    data() {
-        return {
-            select2: null
-        };
-    },
-
-    template: `
-        <div>
-            <select class="form-control" :id="id" :name="name" :disabled="disabled" :required="required" style="width: 100%">
-                <option v-for="o in options" :key="o.key" :value="o.key">{{ o.name }}</option>
-            </select>
-        </div>
-    `,
-    emits: ['update:modelValue'],
-    props: {
-        modelValue: [String, Number, Array], // previously was `value: String`
-        id: {
-            type: String,
-            default: ''
-        },
-        valueField: {
-            type: String,
-            default: 'key'
-        },
-        textField: {
-            type: String,
-            default: 'name'
-        },
-        name: {
-            type: String,
-            default: ''
-        },
-        placeholder: {
-            type: String,
-            default: ''
-        },
-        options: {
-            type: Array,
-            default: () => []
-        },
-        disabled: {
-            type: Boolean,
-            default: false
-        },
-        required: {
-            type: Boolean,
-            default: false
-        },
-        settings: {
-            type: Object,
-            default: () => { }
-        },
-    },
-
-    watch: {
-        options: {
-            handler(val) {
-                this.setOption(val);
-            },
-            deep: true
-        },
-        modelValue: {
-            handler(val) {
-                this.setValue(val);
-            },
-            deep: true
-        },
-    },
-
-    methods: {
-        setOption(val = []) {
-            if (!this.select2) return;
-
-            this.select2.empty();
-            this.select2.select2({
-                placeholder: this.placeholder,
-                ...this.settings,
-                data: val
-            });
-            this.setValue(this.modelValue);
-
-        },
-        setValue(val) {
-            if (val instanceof Array) {
-                this.select2.val([...val]);
-            } else {
-                this.select2.val([val]);
-            }
-            this.select2.trigger('change');
-        }
-    },
-
-    mounted() {
-        setTimeout(() => {
-            this.select2 = $(this.$el)
-                .find('select')
-                .select2({
-                    placeholder: this.placeholder,
-                    ...this.settings,
-                    data: this.options,
-                    theme: "bootstrap-5",
-                    selectionCssClass: "select2--medium", // For Select2 v4.1
-                    dropdownCssClass: "select2--small",
-                })
-                .on('select2:select select2:unselect', ev => {
-                    this.$emit('update:modelValue', this.select2.val());
-                    this.$emit('select', ev['params']['data']);
-                });
-            this.setValue(this.modelValue);
-        }, 0)
-    },
-
-    beforeUnmount() {
-        this.select2.select2('destroy');
-    }
-}
-
-
-
-/**
- * References Search Multiple
- * 
- * */
-const BaseReferenceInput = {
-    template: `
-        <div>
-            <select multiple class="form-control" :id="id" style="width: 100%"></select>
-        </div>
-    `,
-    props: {
-        modelValue: [String, Number, Array],
-        id: {
-            type: String,
-            default: ''
-        },
-        parent: String,
-        placeholder: {
-            type: String,
-            default: ''
-        },
-    },
-
-    
-    data() {
-        return {
-            selected: [],
-            options: [],
-            select2: null
-        };
-    },
-
-    watch: {
-        modelValue(newval) {
-            //console.log(newval)
-        }
-    },
-
-    methods: {
-        transformData(records) {
-            if (records == undefined) return;
-            for (const r of records) {
-                r.text = `${r.code} - ${r.author} - ${r.title} - ${r.year}`
-                r.id = r.key;
-            }
-            return records
-        },
-
-        setValue(val) {
-            /*if (!this.select2) return;
-            if (val instanceof Array) {
-                this.select2.val([...val]);
-            } else {
-                this.select2.val([val]);
-            }
-            this.select2.trigger('change');*/
-        }
-    },
-
-   
-
-    created() {
-        const vm = this;
-        const initial = this.transformData(this.modelValue);
-
-        setTimeout(() => {
-            this.select2 = $(this.$el)
-                .find('select')
-                .select2({
-                    placeholder: this.placeholder,
-                    minimumInputLength: 1,
-                    multiple: true,
-                    tags: true,
-                    dropdownParent: $(`#${vm.parent}`),
-                    ajax: {
-                        url: `/api/references`,
-                        dataType: 'json',
-                        delay: 250, // wait 250 milliseconds before triggering the request
-                        data: function (params) {
-                            var query = {
-                                keywords: params.term,
-                                startRow: 0,
-                                rowCount: 25
-                            }
-                            return query;
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: vm.transformData(data.data)
-                            };
-                        }
-                    },
-                    theme: "bootstrap-5",
-                    selectionCssClass: "select2--medium",
-                    dropdownCssClass: "select2--small",
-                }).on('select2:select select2:unselect', ev => {
-                    this.$emit('update:modelValue', this.select2.val());
-                    this.$emit('select', ev['params']['data']);
-
-                });;
-
-
-            initial.forEach(i => {
-                var option = new Option(i.text, i.id, true, true);
-                this.select2.append(option).trigger('change');
-            })
-
-            this.select2.trigger({
-                type: 'select2:select',
-                params: {
-                    data: initial
-                }
-            });
-        }, 100)
-       
-    },
-
-    beforeUnmount() {
-        this.select2.select2('destroy');
-    }
-}
-
-
 const ElementSpeciesSelect = {
     template: `
         <el-select
@@ -566,25 +354,25 @@ const ReferenceWidget = {
             <div class="col-md-4">{{ category_name }}</div>
             <div class="col-md-8 text-end">
                 <span>References {{ display }}</span> 
-                <a class="btn btn-text" data-bs-toggle="modal" :href="'#modal-'+category_id" role="button">
+                <a class="btn btn-text shadow-0 p-0" data-mdb-toggle="modal" :href="'#modal-'+category_id" role="button">
                     <img src="/Content/images/icon-0-24x24-documents.png" />
                 </a>
             </div>
         </div>
 
-        <div class="modal fade reference-list references" data-bs-backdrop="static" data-bs-keyboard="false" :id="'modal-'+category_id" aria-hidden="true">
+        <div class="modal fade reference-list references" data-mdb-backdrop="static" data-mdb-keyboard="false" :id="'modal-'+category_id" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalToggleLabel">References - {{ category_name }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="overflow-y:inherit !important; z-index: 1;">
                         <element-reference-select ref="referenceSearch" v-model="selected_references" />
                     </div>
                     <div class="modal-footer">
-                        <button @click="cancelModal" type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" @click="applyChange" data-bs-dismiss="modal">Apply Changes</button>
+                        <button @click="cancelModal" type="button" class="btn btn-danger" data-mdb-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" @click="applyChange" data-mdb-dismiss="modal">Apply Changes</button>
                     </div>
                 </div>
             </div>
@@ -592,7 +380,6 @@ const ReferenceWidget = {
     `,
 
     components: {
-        BaseSelect,
         ElementReferenceSelect
     },
 

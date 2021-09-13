@@ -18,20 +18,20 @@
         <div>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <a href="/ProtectedArea/New" class="el-button el-button--success">
+                <base-link-button href="/ProtectedArea/New" color="success">
                     <span class="el-icon-plus"></span>
                     New
-                </a>
+                </base-link-button>
             }
-            <a v-bind:href=`/ProtectedArea/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
+            <base-link-button v-bind:href=`/ProtectedArea/Edit/${selectedKey}` id="editButton" color="info" :disabled="!isSelected">
                 <span class="el-icon-view"></span>  View
-            </a>
+            </base-link-button>
         </div>
     </div>
 </div>
 
 
-<div class="card bg-light border border-primary">
+<div class="card border-0">
     <div class="card-body">
         <div class="row g-3">
             <div class="col">

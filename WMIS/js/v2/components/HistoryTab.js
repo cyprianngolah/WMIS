@@ -1,5 +1,7 @@
 ﻿
 const HistoryTab = {
+    mixins: [GlobalMixin],
+
     components: {
         BaseInput,
         BaseButton
@@ -67,12 +69,9 @@ const HistoryTab = {
 
     mounted() {
         this.populateHistoryFilters()
-        this.formModal = new bootstrap.Modal(document.getElementById("historyEditModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
+        this.formModal = this.createModal("historyEditModal");
 
-        document.getElementById('historyEditModal').addEventListener('hidden.bs.modal', () => {
+        document.getElementById('historyEditModal').addEventListener('hidden.mdb.modal', () => {
             this.form = {
                 key: "",
                 item: "",
@@ -82,10 +81,16 @@ const HistoryTab = {
             };
         });
     },
+    updated() {
+        console.log("I am here")
+    },
+
     created() {
         const vm = this;
+       
 
         $(document).ready(function () {
+            
             vm.table = $("#historyTable").DataTable({
                 "pageLength": 25,
                 "scrollX": true,
@@ -155,9 +160,9 @@ const HistoryTab = {
                 ],
             });
 
-            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+           /* $('a[data-mdb-toggle="tab"]').on('shown.mdb.tab', function (e) {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-            });
+            });*/
 
             $("#historyTabTemplate").on('click', 'td.editHistory span', function (event) {
                 let rowIndex = $(event.target).data().rowIndex

@@ -18,23 +18,24 @@
         <div>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <a href="/NwtSarcAssessment/New" class="el-button el-button--success">
+                <base-link-button href="/NwtSarcAssessment/New" color="success">
                     <span class="el-icon-plus"></span>
                     New
-                </a>
+                </base-link-button>
             }
-            <a v-bind:href=`/NwtSarcAssessment/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
+            <base-link-button v-bind:href=`/NwtSarcAssessment/Edit/${selectedKey}` id="editButton" color="info" :disabled="!isSelected">
                 <span class="el-icon-view"></span>  View
-            </a>
+            </base-link-button>
         </div>
 
     </div>
 </div>
 
-<div class="card bg-light border border-primary">
+<div class="card border-0">
     <div class="card-body">
         <div class="row g-3">
             <div class="col">
+                <label class="form-label visually-hidden">Keywords</label>
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Keywords" id="keyword" v-model="form.keywords">
                     <base-button id="searchbtn"><span class="el-icon-search"></span> Search</base-button>

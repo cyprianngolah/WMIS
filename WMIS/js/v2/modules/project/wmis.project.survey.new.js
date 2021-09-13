@@ -1,4 +1,5 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin],
     components: {
         BaseInput,
         ElementSpeciesSelect
@@ -22,6 +23,7 @@
     methods: {
         getData() {
             this.setKey()
+            this.showLoading()
             axios.all([
                 axios.get('/api/project/surveytype?startRow=0&rowCount=500&includeAllOption=false'),
                 axios.get('/api/surveytemplate?startRow=0&rowCount=500'),
@@ -36,6 +38,9 @@
             .catch(error => {
                 console.log(error)
             })
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         },
 
         submit() {
@@ -45,13 +50,13 @@
             }
             this.setKey()
             axios.post(`/api/Project/Survey`, this.form)
-                .then(response => {
+                .then(_ => {
                     window.location.href = "/Project/Edit/" + this.key + "/#surveysTab";
                 }).catch(error => console.log(error))
         },
 
         setKey() {
-            this.key = WMIS.getKey("#projectKey")
+            this.key = this.getKey("#projectKey")
         }
 
     },

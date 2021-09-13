@@ -94,25 +94,6 @@ a {
     background-color: #B65137;
     color: black;
 }
-/*.select2-container--bootstrap-5 {
-    z-index: 10000 !important;
-}
-
-.select2-dropdown {
-    z-index: 10051
-}*/
-
-.select2-selection--multiple .select2-selection__choice {
-    font-size: 13px !important;
-    line-height: 13px !important;
-    width: 100% !important;
-}
-.select2-selection--multiple .select2-selection__choice button {
-    font-size: 10px !important;
-    font-weight: bolder !important;
-    width: .5rem !important;
-    height: .5rem !important;
-}
 
 .el-drop{
     max-width: 800px;
@@ -224,4 +205,26 @@ tr.highlightPassRow {
 .nav-tabs > li > a.historyTab {
     background-color: #B65137;
     color: white;
+}
+
+@media all and (min-width: 992px) {
+    .navbar .nav-item .dropdown-menu {
+        display: none;
+    }
+
+    .navbar .nav-item:hover .nav-link {
+    }
+
+    .navbar .nav-item:hover .dropdown-menu {
+        display: block;
+    }
+
+    .navbar .nav-item .dropdown-menu {
+        margin-top: 0;
+    }
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.99);
+    font-size: 1rem;
 }

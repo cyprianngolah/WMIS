@@ -14,7 +14,7 @@
 <input type="hidden" id="templateKey" value="@ViewBag.Key" />
 <div class="row">
     <div class="col-md-12 text-end">
-        <a href="/SurveyTemplate/Index" class="el-button is-plain el-button--danger el-button--medium">
+        <base-link-button href="/SurveyTemplate/Index">
             @if (Html.UserIsProjectAdministrator())
             {
                 <span>Cancel</span>
@@ -23,7 +23,7 @@
             {
                 <span>Back</span>
             }
-        </a>
+        </base-link-button>
         @if (Html.UserIsProjectAdministrator())
         {
             <base-button color="success" :busy="loading" :disabled="disableSave" v-on:click.prevent="saveSurveyTemplate()">Save</base-button>
@@ -110,12 +110,12 @@
 
 
         <!-- New Column Modal -->
-        <div class="modal fade" id="createColumnModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="createColumnModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Survey Template Column</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="card border-0">
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                        <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
                         <base-button color="success" :disabled="disableColumnSave" v-on:click="save()">
                             Save
                         </base-button>
@@ -153,35 +153,4 @@
         </div>
 
 
-        <div class="modal fade" id="editColumnModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">New User</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card border-0">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <lable>Username</lable>
-                                    @*<base-input v-model.trim="newUserForm.username" label="Username"></base-input>*@
-                                    <small>eg CORP\windowsusername</small>
-                                </div>
-
-                                <div class="col-12">
-                                    <lable>Name</lable>
-                                    @*<base-input v-model="newUserForm.name" label="Name"></base-input>*@
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
-                        <base-button color="success" :disabled="disableCreate" v-on:click="handleCreateUser()">
-                            Save
-                        </base-button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        

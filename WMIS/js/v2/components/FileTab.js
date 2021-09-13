@@ -1,5 +1,7 @@
 ﻿
 const FileTab = {
+    mixins: [GlobalMixin],
+
     components: {
         BaseInput,
         BaseButton
@@ -80,23 +82,20 @@ const FileTab = {
 
         reloadTable() {
             this.table.ajax.reload(null, false);
-        }
-    },
+        },
 
-    mounted() {
-        this.formModal = new bootstrap.Modal(document.getElementById("fileInputModal"), {
-            keyboard: false,
-            backdrop: 'static'
-        });
-
-        document.getElementById('fileInputModal').addEventListener('hidden.bs.modal', () => {
+        resetForm() {
             this.form = {
                 name: "",
                 key: "",
                 path: ""
             };
             this.isEditing = false;
-        });
+        }
+    },
+
+    mounted() {
+        this.formModal = this.createModal("fileInputModal");
     },
 
     created() {

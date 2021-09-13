@@ -25,7 +25,11 @@
 
 <div class="row" v-if="hasObservations">
     <div class="col-12 mb-4">
-        <g-map :points="observationData" :hideLines="true" v-on:point:selected="handleSelectedPass" :selectedPass="selectedPass" :passStatusFunction="getPassStatus"></g-map>
+        <google-map :selectedPass="selectedPass"
+                    :passes="observationData"
+                    :hasPolyline="false"
+                    :passStatusFunction="getPassStatus"
+                    v-on:is:selected="handleSelectedPass"></google-map>
     </div>
     <div class="col-12">
         <table id="locationTable" class="table table-sm">
@@ -55,11 +59,9 @@
                         {{i[c.jsName]}}
                     </td>
                     <td class="text-center">
-                        <q-btn v-on:click="setSelected(i.key)" flat round color="primary" size="sm" icon="edit">
-                            <q-tooltip class="bg-indigo" :offset="[10, 10]">
-                                Review
-                            </q-tooltip>
-                        </q-btn>
+                        <base-button class="btn-xs" v-on:click="setSelected(i.key)" plain color="info">
+                            Review
+                        </base-button>
                     </td>
                 </tr>
             </tbody>
@@ -68,15 +70,15 @@
 </div>
 
 <!-- Edit Location Modal -->
-<div class="modal fade" id="editObservationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="editObservationModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Observation Data Point Edit</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card border-0" v-if="selectedPass">
+                <div v-if="selectedPass">
                     <div class="row gy-2 mb-2">
                         <div class="col-md-6">Upload Key: {{selectedPass.observationUploadId}}</div>
                         <div class="col-md-6">Excel Row: {{selectedPass.rowIndex}}</div>
@@ -104,7 +106,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" v-on:click="updateObservationRow()">Update</button>
             </div>
         </div>
@@ -112,12 +114,12 @@
 </div>
 
 <!-- Observation Upload Modal -->
-<div class="modal fade" id="uploadObservationsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="uploadObservationsModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Upload Observations</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
@@ -138,7 +140,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" v-on:click="uploadObservationFile()">Upload</button>
             </div>
         </div>
@@ -147,12 +149,12 @@
 
 
 <!-- Select Header Rows Modal -->
-<div class="modal fade" id="pickHeaderModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="pickHeaderModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Observation Header Rows</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div style="max-height: 420px; overflow-y: auto;">
@@ -183,7 +185,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" v-bind:disabled="!rowsPicked" v-on:click="saveHeaderPickerRows()">Save Rows</button>
             </div>
         </div>
@@ -193,12 +195,12 @@
 
 
 <!--Modal to Pick Columns -->
-<div class="modal fade" id="columnMappingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="columnMappingModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Observation Column Mapping</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div style="max-height: 420px; overflow-y: auto;">
@@ -233,7 +235,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
                 <button type="button" v-bind:disabled="!columnsPicked" class="btn btn-primary" v-on:click="saveMappedColumns()">Save Rows</button>
             </div>
         </div>
@@ -241,12 +243,12 @@
 </div>
 
 <!-- Data Preview Modal -->
-<div class="modal fade" id="dataPreviewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="dataPreviewModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Observation Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div style="max-height: 420px; overflow-y: auto;">
@@ -289,7 +291,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" v-on:click="confirmData()">Confirm Data</button>
             </div>
         </div>
@@ -297,7 +299,7 @@
 </div>
 
 <!-- Manage / Resume Uploads modal -->
-<div class="modal fade" id="resumeObservationUploadModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="resumeObservationUploadModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -340,7 +342,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>

@@ -27,7 +27,6 @@ const mapLoader = new Loader({
 
 const GoogleMap = {
     components: {
-        //MapMarker,
         PolyLine
     },
     template: `
@@ -38,8 +37,7 @@ const GoogleMap = {
                 :passes="passes"
                 :map="map"
                 :google="google"
-                :passStatusFunction="passStatusFunction"></poly-line>
-                
+                :passStatusFunction="passStatusFunction"></poly-line>    
         </template>
         </div>
     `,
@@ -75,14 +73,16 @@ const GoogleMap = {
                 mapTypeId: "terrain"
             },
 
-            markers: []
+            markers: [],
+            temporaryMarker: null,
+            hiddenMarker: null
         }
     },
 
     watch: {
         passes: {
             deep: true,
-            immediate: true,
+            immediate: false,
             handler(passes) {
                 if (this.map) {
                     this.markers.forEach(m => {
@@ -92,6 +92,43 @@ const GoogleMap = {
                     this.markers = [];
                     this.loadMarkers()
                 }
+            }
+        },
+
+        selectedPass: {
+            deep: true,
+            handler(selectedPass) {
+                
+                if (this.temporaryMarker) {
+                    this.temporaryMarker.setAnimation(null);
+                    if (selectedPass) {
+                        this.temporaryMarker.setVisible(false);
+                    } else {
+                        this.temporaryMarker.setIcon(argosPassStatusToImage[this.passStatusFunction(this.temporaryMarker.get('pass'))])
+                    }
+                    this.temporaryMarker.setMap(null);
+                    this.temporaryMarker = null;
+                }
+
+                if (this.hiddenMarker) {
+                    this.hiddenMarker.setVisible(true);
+                    this.hiddenMarker.setMap(this.map);
+                    this.hiddenMarker = null;
+                }
+
+                if (selectedPass) {
+                    this.hiddenMarker = this.markers.find(m => m.get('pass').key == selectedPass.key);
+                    this.hiddenMarker.setVisible(false);
+                    this.hiddenMarker.setMap(null);
+
+                    // Show a new animated marker
+                    this.temporaryMarker = this.createMiddleMarker(selectedPass, selectedArgosPassImage);
+                    this.temporaryMarker.setVisible(true);
+                    this.temporaryMarker.setMap(this.map);
+                    this.temporaryMarker.setAnimation(this.google.maps.Animation.BOUNCE);
+                }
+
+
             }
         }
     },
@@ -109,12 +146,6 @@ const GoogleMap = {
             })
         },
 
-        handleSelectedPass(pass) {
-            this.$emit("is:selected", pass)
-        },
-
-        /////
-        
         createMarker(pass, message, icon) {
             let marker = new this.google.maps.Marker({
                 position: new google.maps.LatLng(pass.latitude, pass.longitude),
@@ -161,7 +192,20 @@ const GoogleMap = {
             this.markers.forEach(m => {
                 m.setMap(this.map);
                 this.google.maps.event.addListener(m, 'click', () => {
-                    console.log(m);
+                    this.$emit("is:selected", m.get('pass'))
+                });
+            });
+        },
+
+        loadObservations() {
+            this.passes.forEach(p => {
+                this.markers.push(this.createMiddleMarker(p, null))
+            });
+
+            this.markers.forEach(m => {
+                m.setMap(this.map);
+                this.google.maps.event.addListener(m, 'click', () => {
+                    this.$emit("is:selected", m.get('pass'))
                 });
             });
         }
@@ -169,11 +213,15 @@ const GoogleMap = {
 
     async mounted() {
         await this.initializeMap()
-        /*setTimeout(() => {
+        setTimeout(() => {
             if (this.passes && this.passes.length > 0) {
-                this.loadMarkers()
+                if (this.hasPolyline) {
+                    this.loadMarkers();
+                } else {
+                    this.loadObservations();
+                }
             }
-        }, 1000)*/
+        }, 1000)
         
         
     }

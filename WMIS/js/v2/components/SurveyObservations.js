@@ -1,9 +1,10 @@
 ﻿
 const SurveyObservations = {
+    mixins: [GlobalMixin],
     components: {
         BaseButton,
         BaseInput,
-        GMap
+        GoogleMap
     },
 
     props: {
@@ -322,12 +323,7 @@ const SurveyObservations = {
             }
         },
 
-        createModal(elementId) {
-            return new bootstrap.Modal(document.getElementById(elementId), {
-                keyboard: false,
-                backdrop: 'static'
-            });
-        }
+        
 
         
     },

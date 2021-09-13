@@ -10,33 +10,27 @@
 
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
-    @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/collaredanimal/index"))
 }
 
 <div class="row my-3">
     <div class="col-md-12 d-flex justify-content-end">
-        <base-button color="warning" v-on:click="downloadRecords()">Download</base-button>
+        <base-button color="warning" class="me-2" v-on:click="downloadRecords()"><span class="el-icon-download"></span>  Download</base-button>
         @if (Html.UserIsBiodiversityAdministrator())
         {
-            <base-button color="success" v-on:click="newCollarModal.show()">New</base-button>
+        <base-button color="success" class="me-2" v-on:click="newCollarModal.show()">
+            <span class="el-icon-plus"></span> New
+        </base-button>
         }
-        <a v-bind:href=`/CollaredAnimal/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
-            @if (Html.UserIsBiodiversityAdministrator())
-            {
-                <span>View</span>
-            }
-            else
-            {
-                <span>View</span>
-            }
-        </a>
+        <base-link-button color="info" v-bind:href=`/CollaredAnimal/Edit/${selectedKey}` id="editButton" :disabled="!isSelected">
+            <span class="el-icon-view"></span> View
+        </base-link-button>
     </div>
 </div>
 
 
-<div class="card bg-light border border-primary">
+<div class="card border-0">
     <div class="card-body">
         <div class="row g-3 d-flex align-items-center">
             <div class="col-2">
@@ -105,7 +99,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
                 <base-button color="success" :disabled="disableCreate" v-on:click="handleCreateCollar()">
                     Save
                 </base-button>

@@ -50,6 +50,7 @@
     @*@Html.Raw(Scripts.Render("~/bundles/components/GMap"))*@
     @Html.Raw(Scripts.Render("~/bundles/components/CollaredAnimalMapping"))
     @Html.Raw(Scripts.Render("~/bundles/collaredanimal/edit"))
+
 }
 
 
@@ -57,8 +58,7 @@
 
 <div class="row">
     <div class="col-md-12 text-end">
-
-        <a href="/CollaredAnimal/" class="el-button is-plain el-button--danger el-button--medium">
+        <base-link-button href="/CollaredAnimal/" class="me-2">
             @if (Html.UserIsProjectCollarAdministrator())
             {
                 <span>Cancel</span>
@@ -67,7 +67,9 @@
             {
                 <span>Back</span>
             }
-        </a>
+        </base-link-button>
+
+        
         @if (Html.UserIsProjectCollarAdministrator())
         {
             <base-button color="success" :busy="loading" v-on:click.prevent="saveUpdate()">Save</base-button>
@@ -79,17 +81,18 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
-                    <li class="nav-item active"><a href="#animalTab" role="tab" data-bs-toggle="tab" class="nav-link active">Animal</a></li>
-                    <li class="nav-item"><a href="#collarTab" role="tab" data-bs-toggle="tab" class="nav-link">Collar</a></li>
-                    <li class="nav-item"><a href="#mapTab" role="tab" data-bs-toggle="tab" class="nav-link">Locations</a></li>
-                    <li class="nav-item"><a href="#filesTab" role="tab" data-bs-toggle="tab" class="nav-link">Links</a></li>
-                    <li class="nav-item"><a href="#historyTab" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
+
+                <ul class="nav nav-tabs  card-header-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
+                    <li class="nav-item active" role="presentation"><a href="#animalTab" v-on:click="tab='animal'" role="tab" data-mdb-toggle="tab" class="nav-link active">Animal</a></li>
+                    <li class="nav-item" role="presentation"><a href="#collarTab" v-on:click="tab='collar'" role="tab" data-mdb-toggle="tab" class="nav-link">Collar</a></li>
+                    <li class="nav-item" role="presentation"><a href="#mapTab" v-on:click="tab='map'" role="tab" data-mdb-toggle="tab" class="nav-link">Locations</a></li>
+                    <li class="nav-item" role="presentation"><a href="#filesTab" v-on:click="tab='files'" role="tab" data-mdb-toggle="tab" class="nav-link">Links</a></li>
+                    <li class="nav-item" role="presentation"><a href="#historyTab" v-on:click="tab='history'" role="tab" data-mdb-toggle="tab" class="nav-link">History</a></li>
                 </ul>
             </div>
             <div class="card-body">
                 <!-- Tab panes -->
-                <div class="tab-content" id="collarAnimalContent">
+                <div class="tab-content my-4" id="collarAnimalContent">
 
                     <div id="animalTab" class="tab-pane active py-4">
                         @{ Html.RenderPartial("AnimalTab"); }
@@ -114,20 +117,18 @@
             </div>
         </div>
     </div>
+
 </div>
 
 
 
-
-
-
 <!-- BREEDING STATUS MODAL -->
-<div class="modal fade" id="breedingStatusModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="breedingStatusModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Breeding Status</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" v-if="loaded">
                 <div class="card border-0">
@@ -177,7 +178,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
                 <base-button color="success" :disabled="disableBreedingStatusCreate" v-on:click="updateBreedingStatus()">
                     Update
                 </base-button>
@@ -188,12 +189,12 @@
 
 
 <!-- HERD ASSOCIATION MODAL -->
-<div class="modal fade" id="herdAssociationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="herdAssociationModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Herd Association</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" v-if="loaded">
                 <div class="card border-0">
@@ -244,7 +245,7 @@
 
             </div>
             <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
                 <base-button color="success" :disabled="disableHerdAssociationCreate" v-on:click="updateHerdAssociation()">
                     Update
                 </base-button>

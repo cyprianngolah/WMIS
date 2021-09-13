@@ -1,7 +1,10 @@
 ﻿
 const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseButton,
+        BaseLinkButton,
         BaseDropdownSelect
     },
     data() {
@@ -42,6 +45,7 @@ const app = Vue.createApp({
         },
 
         getDropdowns() {
+            this.showLoading();
             axios.all([
                 axios.get("/api/person/projectLeads/"),
                 axios.get("/api/project/statuses/"),
@@ -55,6 +59,9 @@ const app = Vue.createApp({
                 this.statuses.unshift({name: "All Statuses", key: ""})
                 this.regions.unshift({name: "All Regions", key: ""})
             }).catch(error => console.log(error))
+            .finally(() => setTimeout(() => {
+                this.hideLoading()
+            }, 2000))
         }
     },
 

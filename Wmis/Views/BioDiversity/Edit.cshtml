@@ -43,7 +43,7 @@
 <div class="my-4">
     <div class="row">
         <div class="col-md-12 text-end">
-            <a href="/BioDiversity/" class="el-button el-button--danger is-plain">
+            <base-link-button href="/BioDiversity/">
                 @if (Html.UserIsBiodiversityAdministrator())
                 {
                     <span>Cancel</span>
@@ -52,28 +52,28 @@
                 {
                     <span>Back</span>
                 }
-            </a>
+            </base-link-button>
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <base-button :disabled="!isDirty" size="large" :loading="loading" v-on:click="saveBioDiversity()" color="success">Save</base-button>
+                <base-button :disabled="!isDirty" :loading="loading" v-on:click="saveBioDiversity()" color="success">Save</base-button>
             }
         </div>
     </div>
 
     <div class="row mt-3">
         <div class="col-md-12">
-            <div class="card text-center">
+            <div class="card">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
-                        <li class="nav-item me-1 active"><a href="#general" role="tab" data-bs-toggle="tab" class="nav-link active colouredTab generalTab">General</a></li>
-                        <li class="nav-item me-1"><a href="#reproduction" role="tab" data-bs-toggle="tab" class="nav-link colouredTab reproductionTab">Reproduction</a></li>
-                        <li class="nav-item me-1"><a href="#distribution" role="tab" data-bs-toggle="tab" class="nav-link colouredTab distributionTab">Distribution</a></li>
-                        <li class="nav-item me-1"><a href="#abundance" role="tab" data-bs-toggle="tab" class="nav-link colouredTab abundanceTab">Abundance</a></li>
-                        <li class="nav-item me-1"><a href="#trends" role="tab" data-bs-toggle="tab" class="nav-link colouredTab trendsTab">Trends</a></li>
-                        <li class="nav-item me-1"><a href="#threats" role="tab" data-bs-toggle="tab" class="nav-link colouredTab threatsTab">Threats</a></li>
-                        <li class="nav-item me-1"><a href="#status" role="tab" data-bs-toggle="tab" class="nav-link colouredTab statusTab">Status</a></li>
-                        <li class="nav-item me-1"><a href="#files" role="tab" data-bs-toggle="tab" class="nav-link colouredTab fileTab">Links</a></li>
-                        <li class="nav-item me-1"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link colouredTab historyTab">History</a></li>
+                        <li class="nav-item me-1 active"><a href="#general" v-on:click="tab=1" role="tab" data-mdb-toggle="tab" class="nav-link active colouredTab generalTab">General</a></li>
+                        <li class="nav-item me-1"><a href="#reproduction" v-on:click="tab=2" role="tab" data-mdb-toggle="tab" class="nav-link colouredTab reproductionTab">Reproduction</a></li>
+                        <li class="nav-item me-1"><a href="#distribution" v-on:click="tab=3" role="tab" data-mdb-toggle="tab" class="nav-link colouredTab distributionTab">Distribution</a></li>
+                        <li class="nav-item me-1"><a href="#abundance" v-on:click="tab=4" role="tab" data-mdb-toggle="tab" class="nav-link colouredTab abundanceTab">Abundance</a></li>
+                        <li class="nav-item me-1"><a href="#trends" v-on:click="tab=5" role="tab" data-mdb-toggle="tab" class="nav-link colouredTab trendsTab">Trends</a></li>
+                        <li class="nav-item me-1"><a href="#threats" v-on:click="tab=6" role="tab" data-mdb-toggle="tab" class="nav-link colouredTab threatsTab">Threats</a></li>
+                        <li class="nav-item me-1"><a href="#status" v-on:click="tab=7" role="tab" data-mdb-toggle="tab" class="nav-link colouredTab statusTab">Status</a></li>
+                        <li class="nav-item me-1"><a href="#files" v-on:click="tab=8" role="tab" data-mdb-toggle="tab" class="nav-link colouredTab fileTab">Links</a></li>
+                        <li class="nav-item me-1"><a href="#history" v-on:click="tab=9" role="tab" data-mdb-toggle="tab" class="nav-link colouredTab historyTab">History</a></li>
                     </ul>
                 </div>
                 <div class="card-body">

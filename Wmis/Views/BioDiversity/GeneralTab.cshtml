@@ -1,6 +1,6 @@
 ﻿<div class="tab-pane py-3 fade show active" id="general" v-if="form.references">
 
-    <div class="card border-0">
+    <div class="card border-1 shadow-0 mb-3">
         <div class="card-header py-1">
             <reference-widget :references="form.references"
                               :update_function="updateReference"
@@ -76,7 +76,7 @@
     </div>
 
     <!-- TAXONOMY -->
-    <div class="card border-0 mt-3">
+    <div class="card border-1 shadow-0 mb-3">
         <div class="card-header py-1">
             <reference-widget :references="form.references"
                               :update_function="updateReference"
@@ -129,8 +129,8 @@
                 <label for="order" class="col-md-1 form-label text-end">Order</label>
                 <div class="col-md-5">
                     <base-dropdown-select :options="orders" v-model="form.order"></base-dropdown-select>
-                <species-synonym-editor :entity_id="form.order.key"
-                                        entity_type="taxonomy"></species-synonym-editor>
+                    <species-synonym-editor :entity_id="form.order.key"
+                                            entity_type="taxonomy"></species-synonym-editor>
                 </div>
 
                 <label for="subOrder" class="col-md-1 form-label text-end">Sub Order</label>
@@ -145,8 +145,8 @@
                 <label for="infraOrder" class="col-md-1 form-label text-end">Infra Order</label>
                 <div class="col-md-5">
                     <base-dropdown-select :options="infraorders" v-model="form.infraOrder"></base-dropdown-select>
-                <species-synonym-editor :entity_id="form.infraOrder.key"
-                                        entity_type="taxonomy"></species-synonym-editor>
+                    <species-synonym-editor :entity_id="form.infraOrder.key"
+                                            entity_type="taxonomy"></species-synonym-editor>
                 </div>
             </div>
 
@@ -155,7 +155,7 @@
                 <div class="col-md-5" data-bind="with: superFamily">
                     <base-dropdown-select :options="superfamilies" v-model="form.superFamily"></base-dropdown-select>
                     <species-synonym-editor :entity_id="form.superFamily.key"
-                                        entity_type="taxonomy"></species-synonym-editor>
+                                            entity_type="taxonomy"></species-synonym-editor>
                 </div>
             </div>
 
@@ -164,14 +164,14 @@
                 <div class="col-md-5">
                     <base-dropdown-select :options="families" v-model="form.family"></base-dropdown-select>
                     <species-synonym-editor :entity_id="form.family.key"
-                                        entity_type="taxonomy"></species-synonym-editor>
+                                            entity_type="taxonomy"></species-synonym-editor>
                 </div>
 
                 <label for="subFamily" class="col-md-1 form-label text-end">Sub Family</label>
                 <div class="col-md-5">
                     <base-dropdown-select :options="subfamilies" v-model="form.subFamily"></base-dropdown-select>
                     <species-synonym-editor :entity_id="form.subFamily.key"
-                                        entity_type="taxonomy"></species-synonym-editor>
+                                            entity_type="taxonomy"></species-synonym-editor>
                 </div>
             </div>
 
@@ -180,13 +180,13 @@
                 <div class="col-md-5">
                     <base-dropdown-select :options="groups" v-model="form.group"></base-dropdown-select>
                     <species-synonym-editor :entity_id="form.group.key"
-                                        entity_type="taxonomy"></species-synonym-editor>
+                                            entity_type="taxonomy"></species-synonym-editor>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card border-0 mt-3">
+    <div class="card border-1 shadow-0 mb-3">
         <div class="card-header py-1">
             <reference-widget :references="form.references"
                               :update_function="updateReference"

@@ -53,10 +53,8 @@
 }
 
 @section Scripts{
-    @*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM&callback=initMap" type="text/javascript"></script>
-    *@
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD74ZSiStfxRLwtVA--KlaSoYeeyNPJB-g" type="text/javascript"></script>
+
     <script type="text/html" id="survey-observations">
         @{Html.RenderPartial("SurveyObservationsTab");}
     </script>
@@ -72,7 +70,7 @@
     @Html.Raw(Scripts.Render("~/bundles/select2"))
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
-    @Html.Raw(Scripts.Render("~/bundles/components/GMap"))
+    @Html.Raw(Scripts.Render("~/bundles/components/GoogleMap"))
     @Html.Raw(Scripts.Render("~/bundles/components/SurveyObservations"))
     @Html.Raw(Scripts.Render("~/bundles/components/FileTab"))
     @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
@@ -83,7 +81,7 @@
 
 <div class="row mb-4">
     <div class="col-12 text-end">
-        <a :href="`/Project/Edit/${ project ? project.key : ''}`" class="el-button el-button--danger">
+        <base-link-button :href="`/Project/Edit/${ project ? project.key : ''}`">
             @if (Html.UserIsProjectAdministrator())
             {
                 <span>Cancel</span>
@@ -92,11 +90,11 @@
             {
                 <span>Back</span>
             }
-        </a>
+        </base-link-button>
 
         @if (Html.UserIsProjectAdministrator())
         {
-            <base-button size="large" color="success" :busy="loading" v-on:click.prevent="submit()" :disabled="disabled">Save</base-button>
+            <base-button color="success" :busy="loading" v-on:click.prevent="submit()" :disabled="disabled">Save</base-button>
         }
     </div>
 </div>
@@ -105,11 +103,11 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold"  role="tablist">
-                    <li class="nav-item active"><a href="#survey" role="tab" data-bs-toggle="tab" class="nav-link active">Survey</a></li>
-                    <li class="nav-item"><a href="#observations" role="tab" data-bs-toggle="tab" class="nav-link">Observations</a></li>
-                    <li class="nav-item"><a href="#links" role="tab" data-bs-toggle="tab" class="nav-link">Links</a></li>
-                    <li class="nav-item"><a href="#history" role="tab" data-bs-toggle="tab" class="nav-link">History</a></li>
+                <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
+                    <li class="nav-item active"><a v-on:click="tab=0" href="#survey" role="tab" data-mdb-toggle="tab" class="nav-link active">Survey</a></li>
+                    <li class="nav-item"><a v-on:click="tab=1" href="#observations" role="tab" data-mdb-toggle="tab" class="nav-link">Observations</a></li>
+                    <li class="nav-item"><a v-on:click="tab=2" href="#links" role="tab" data-mdb-toggle="tab" class="nav-link">Links</a></li>
+                    <li class="nav-item"><a v-on:click="tab=3" href="#history" role="tab" data-mdb-toggle="tab" class="nav-link">History</a></li>
                 </ul>
             </div>
 

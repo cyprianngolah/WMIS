@@ -7,5 +7,6 @@
     @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/ranks/edit"))
 }
+<input type="hidden" id="key" value="@ViewBag.Key" />
 
 @{ Html.RenderPartial("EditForm"); }

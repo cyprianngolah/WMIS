@@ -1,14 +1,41 @@
 ﻿<div class="row">
-
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-body p-1">
+                <google-map :selectedPass="selectedPass"
+                            :passes="argosPasses"
+                            :hasPolyline="true"
+                            v-on:is:selected="handleSelectedPass"></google-map>
+            </div>
+        </div>
+        <div id="map-legend" class="mt-0">
+            <div class="card bg-lightx">
+                <div class="card-body">
+                    <div class="row gy-2">
+                        <div class="col-6">
+                            <img src="/content/images/maps-symbol-blank-start.png" width="25" /> Starting location
+                        </div>
+                        <div class="col-6"><img src="/content/images/maps-symbol-blank-red.png" width="35" /> Location - No warnings</div>
+                        <div class="col-6"><img src="/content/images/maps-symbol-x-red.png" width="35" /> Rejected location</div>
+                        <div class="col-6"><img src="/content/images/maps-symbol-blank-yellow.png" width="35" /> Warning location</div>
+                        <div class="col-6"><img src="/content/images/maps-symbol-blank-stop.png" width="35" /> Last location</div>
+                        <div class="col-12">
+                            <img src="/content/images/maps-symbol-line.png" width="35" /> Line goes from Starting location through each point up to the Last location
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-md-7">
         <div class="row d-flex mb-2">
             <div class="col">
-                <base-button size="small" v-on:click="downloadShapeFile()" color="primary" plain>Download Shapefile</base-button>
-                <base-button size="small" v-on:click="downloadKmlFile()" color="primary" plain>Download KML</base-button>
-                <base-button size="small" v-on:click="downloadExcelFile()" color="success" plain>Download Excel</base-button>
+                <base-button class="btn-sm me-1" v-on:click="downloadShapeFile()" color="primary" plain>Download Shapefile</base-button>
+                <base-button class="btn-sm me-1" v-on:click="downloadKmlFile()" color="info" plain>Download KML</base-button>
+                <base-button class="btn-sm me-1" v-on:click="downloadExcelFile()" color="success" plain>Download Excel</base-button>
             </div>
         </div>
-        <div class="card bg-light">
+        <div class="card bg-lightc shadow-smx border-0">
             <div class="card-body">
 
                 <div class="row d-flex align-items-center">
@@ -46,37 +73,7 @@
 
     </div>
 
-    <div class="col-md-5">
-        @*<g-map :hideLines="false"
-        :points="argosPasses"
-        v-on:point:selected="handleSelectedPass"
-        :selectedPass="selectedPass"></g-map>*@
-        @*<div id="map-canvas"></div>*@
 
-        <google-map 
-                    :selectedPass="selectedPass" 
-                    :passes="argosPasses" 
-                    :hasPolyline="true"
-                    v-on:is:selected="handleSelectedPass"></google-map>
-        <div id="map-legend" class="mt-2">
-            <div class="card bg-light">
-                <div class="card-body">
-                    <div class="row gy-2">
-                        <div class="col-6">
-                            <img src="/content/images/maps-symbol-blank-start.png" width="25" /> Starting location
-                        </div>
-                        <div class="col-6"><img src="/content/images/maps-symbol-blank-red.png" width="35" /> Location - No warnings</div>
-                        <div class="col-6"><img src="/content/images/maps-symbol-x-red.png" width="35" /> Rejected location</div>
-                        <div class="col-6"><img src="/content/images/maps-symbol-blank-yellow.png" width="35" /> Warning location</div>
-                        <div class="col-6"><img src="/content/images/maps-symbol-blank-stop.png" width="35" /> Last location</div>
-                        <div class="col-12">
-                            <img src="/content/images/maps-symbol-line.png" width="35" /> Line goes from Starting location through each point up to the Last location
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 

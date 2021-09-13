@@ -21,7 +21,7 @@
 
 <div class="row">
     <div class="col-7 text-end">
-        <a href="/Project/Index" class="el-button el-button--danger is-plain btn">Cancel</a>
+        <base-link-button href="/Project/Index" :plain="true">Cancel</base-link-button>
         @if (Html.UserIsProjectAdministrator())
         {
             <base-button color="success" size="large" v-on:click.prevent="submit()" :disabled="disabled">Save</base-button>

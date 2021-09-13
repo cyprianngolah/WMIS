@@ -8,4 +8,6 @@
     @Html.Raw(Scripts.Render("~/bundles/ecoregion/edit"))
 }
 
+<input type="hidden" id="ecoregionKey" value="@ViewBag.Key" />
+
 @{ Html.RenderPartial("EditForm"); }

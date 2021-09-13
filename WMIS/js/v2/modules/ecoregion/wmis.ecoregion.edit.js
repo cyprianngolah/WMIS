@@ -1,4 +1,6 @@
 ﻿const app = Vue.createApp({
+    mixins: [GlobalMixin],
+
     components: {
         BaseInput,
         BaseButton
@@ -25,15 +27,21 @@
                 this.$message.error('Name is required!');
                 return;
             }
-            const id = window.location.pathname.split('/').pop()
             axios.post(`/api/ecoregion/`, this.form)
-                .then(response => {
+                .then(_ => {
                     window.location.href = "/Ecoregion";
                 }).catch(error => console.log(error))
         },
-
+        setKey() {
+            const key = this.getKey("#ecoregionKey");
+            if (key && key !== undefined) {
+                this.form.key = key
+                this.getEcoregion()
+            }
+        },
 
         getEcoregion() {
+            this.showLoading();
             axios.get(`/api/Ecoregion/?key=${this.form.key}`)
                 .then(response => {
                     const res = response.data.data
@@ -41,15 +49,14 @@
                         this.form.name = res[0].name
                     }
                 }).catch(error => console.log(error))
+                .finally(() => setTimeout(() => {
+                    this.hideLoading()
+                }, 2000))
         },
     },
 
     mounted() {
-        const key = window.location.pathname.split('/').pop();
-        if (key !== 'New') {
-            this.form.key = key;
-            this.getEcoregion()
-        }
+        this.setKey()
     }
 })
 

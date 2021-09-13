@@ -17,22 +17,15 @@
     <div class="col-md-12 d-flex justify-content-end">
         @if (Html.UserInAnyAdministratorRole())
         {
-            <base-button color="success" v-on:click="newUserModal.show()">New</base-button>
+            <base-button color="success" v-on:click="newUserModal.show()"><span class="el-icon-plus"></span> New</base-button>
         }
-        <a v-bind:href=`/User/Edit/${selectedKey}` id="editButton" class="el-button el-button--primary btn" v-bind:class="{'disabled' : !isSelected}">
-            @if (Html.UserInAnyAdministratorRole())
-            {
-                <span>View</span>
-            }
-            else
-            {
-                <span>View</span>
-            }
-        </a>
+        <base-link-button v-bind:href=`/User/Edit/${selectedKey}` id="editButton" color="info" :disabled="!isSelected">
+            <span class="el-icon-view"></span> View
+        </base-link-button>
     </div>
 </div>
 
-<div class="card bg-light border border-primary">
+<div class="card border-0">
     <div class="card-body">
         <div class="row g-3 d-flex align-items-center">
             <div class="col">
@@ -67,15 +60,14 @@
     </div>
 </div>
 <!-- New Collar Modal -->
-<div class="modal fade" id="newUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="newUserModal" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">New User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card border-0">
                     <div class="row g-3">
                         <div class="col-12">
                             <lable>Username</lable>
@@ -88,10 +80,10 @@
                             <base-input v-model="newUserForm.name" label="Name"></base-input>
                         </div>
                     </div>
-                </div>
+                
             </div>
             <div class="modal-footer">
-                <base-button color="danger" plain data-bs-dismiss="modal">Cancel</base-button>
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
                 <base-button color="success" :disabled="disableCreate" v-on:click="handleCreateUser()">
                     Save
                 </base-button>

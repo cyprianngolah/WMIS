@@ -12,9 +12,9 @@
     <div class="col-md-8 text-end">
         @if (Html.UserIsProjectAdministrator())
         {
-            <a href="~/Project/NewSurvey/@ViewBag.Key" class="el-button el-button--success el-button--small">New</a>
+            <base-link-button href="~/Project/NewSurvey/@ViewBag.Key" color="success" class="btn-sm">New</base-link-button>
         }
-        <a :href="`/Project/EditSurvey/${selectedKey}`" id="editButton" class="el-button el-button--primary el-button--small" v-bind:class="{'disabled' : !selectedKey}">
+        <base-link-button :href="`/Project/EditSurvey/${selectedKey}`" color="info" id="editButton" class="btn-sm" v-bind:class="{'disabled' : !selectedKey}">
             @if (Html.UserIsProjectAdministrator())
             {
                 <span>View</span>
@@ -23,8 +23,8 @@
             {
                 <span>Open</span>
             }
-        </a>
-        <base-button size="small" v-on:click="downloadRecords()" color="warning">Download</base-button>
+        </base-link-button>
+        <base-button class="btn-sm" v-on:click="downloadRecords()" color="warning">Download</base-button>
     </div>
 </div>
 
