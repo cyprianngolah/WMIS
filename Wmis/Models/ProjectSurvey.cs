@@ -60,6 +60,7 @@
 
 		//[JsonConverter(typeof(ShortDateConverter))]
 		public DateTime? StartDate { get; set; }
+		//public string StartDate { get; set; }
 
 		public DateTime LastUpdated { get; set; }
 	}

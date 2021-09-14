@@ -1,16 +1,27 @@
 ﻿@{
-	ViewBag.TabTitle = "WMIS Home";
+    ViewBag.TabTitle = "WMIS Home";
 }
-<div class="jumbotron" style="background-image:URL('content/images/landing_WMIS.jpg'); min-height:350px; margin-bottom:0;">
-    <h1></h1>
-    <p></p>
-</div>
+
+@section Scripts {
+    @Html.Raw(Scripts.Render("~/bundles/home/index"))
+}
+
+@*<div class="p-5 mb-4 bg-lightx rounded-3" style="background-color: #6f5499;" >
+    <div class="container-fluid py-5 text-center">
+        <h1 class="display-6 fw-bold text-info">Wildlife Management Information System</h1>
+        <h1 class="display-4 fw-bold text-info">- WMIS -</h1>
+        <p class="col-md-12 fs-4">
+            ENR's Wildlife Data Repository
+        </p>
+        <button class="btn btn-primary btn-lg" type="button">Example button</button>
+    </div>
+</div>*@
+
 <div class="row">
-    <div class="col-md-12">
-        <h3>Support Contact Info</h3>
+    <div class="col-md-12 mb-3">
+        <h3 class="h3">Support Contact Info</h3>
     </div>
     <div class="col-md-6">
-        @*<img src="content/images/landing_WMIS.jpg">*@     
         <ul class="list-group">
             <li class="list-group-item">
                 <h4>Robin Abernethy</h4>
@@ -18,7 +29,7 @@
                     GIS and Wildlife Data Specialist,<br />
                     Biodiversity Conservation, Wildlife Division, ENR<br />
                     Phone: 867-767-9237, ext. 53217<br />
-                    Email: Robin_Abernethy@gov.nt.ca   
+                    Email: Robin_Abernethy@gov.nt.ca
                 </p>
             </li>
         </ul>

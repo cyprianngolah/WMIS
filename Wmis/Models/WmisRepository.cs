@@ -1668,13 +1668,14 @@
 
         #region Project
 
-        public int ProjectCreate(string name, string createdBy)
+        //public int ProjectCreate(string name, string createdBy)
+        public int ProjectCreate(ProjectSaveRequest request, string createdBy)
         {
             using (var c = NewWmisConnection)
             {
                 var param = new
                 {
-                    p_name = name,
+                    p_name = request.Name,
                     p_createdBy = createdBy
                 };
                 return c.Query<int>(PROJECT_CREATE, param, commandType: CommandType.StoredProcedure).Single();
@@ -2067,7 +2068,7 @@
                     p_observationRowId = observationRow.Key,
                     p_argosPassStatusId = observationRow.ArgosPassStatusId == 0 ? (int?)null : observationRow.ArgosPassStatusId,
                     p_comment = observationRow.Comment,
-                    p_updateBy = updateBy
+                    p_updateBy = updateBy ?? Environment.UserName
                 };
 
                 c.Execute(OBSERVATIONROW_UPDATE, param, commandType: CommandType.StoredProcedure);
@@ -2503,7 +2504,7 @@
             {
                 var param = new
                 {
-                    p_ChangeBy = changeBy, //!= null ? changeBy : " ",
+                    p_ChangeBy = changeBy ?? Environment.UserName, //!= null ? changeBy : " ",
                     p_CollaredAnimalId = collar.Key,
                     p_CollarId = collar.CollarId,
                     p_SpeciesId = collar.SpeciesId,

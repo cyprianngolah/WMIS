@@ -1,49 +1,49 @@
-﻿<script id="editFileTemplate" type="text/html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" data-bind="text: title"></h4>
-                </div>
-                <div class="modal-body form-horizontal">
-                    <div class="form-group">
-                        <label class="col-md-2" for="name">Name</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="name" data-bind="value: name, valueUpdate: 'keyup'" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2" for="path">Path</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="path" data-bind="value: path, valueUpdate: 'keyup'" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="enable: saveAllowed, click: save">Apply Changes</button>
-                </div>
-            </div> <!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</script>
+﻿
+<div class="col-md-12 " id="fileTabTemplate">
+    <div class="form-group">
+        <div class="col-md-12 text-end">
+            <base-button size="mini" v-on:click="showCreateModal()" type="button">Add Link</base-button>
+        </div>
+    </div>
+    <table id="fileTable" class="table w-100 table-sm">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Path</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+    </table>
 
-<script id="fileManagementTemplate" type="text/html">
-    <div class="col-md-12">
-        <div class="form-group">
-            <div class="col-md-12 text-right">
-                <button id="addFileButton" class="btn btn-default" >Add Link</button>
+</div>
+
+
+<!-- Modal to create and Edit fileInputModal -->
+
+<div class="modal fade" id="fileInputModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ isEditing ? 'Edit Link' : 'Add Link' }}</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <base-input v-model="form.name" label="Name"></base-input>
+                    </div>
+                    <div class="col-12">
+                        <base-input v-model="form.path" label="Path"></base-input>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-white">
+                <button type="button" class="btn btn-secondary" v-on:click="resetForm()" data-mdb-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" v-bind:class="{'disabled' : !canSave }" v-on:click="isEditing ? handleUpdate() : handleCreate()">
+                    {{ isEditing ? 'Apply Changes' : 'Save' }}
+                </button>
             </div>
         </div>
-        <table id="fileTable" class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Path</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-        </table>
     </div>
-</script>
+</div>

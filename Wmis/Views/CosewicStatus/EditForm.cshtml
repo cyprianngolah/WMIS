@@ -1,26 +1,20 @@
 ﻿@using Wmis.Extensions
-<div class="col-md-6">
-	<form role="form">
-		<div class="form-group">
-			<label for="name">Name</label>
-			<input type="text" class="form-control" id="name" name="name" data-bind="value: name, valueUpdate: 'keyup'">
-		</div>
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Name</label>
+    </div>
+    <div class="col-5 text-end">
+        <base-input v-model.trim="form.name" id="name"></base-input>
+    </div>
+</div>
 
-		<div class="text-right">
-			<a href="/CosewicStatus/Index" class="btn btn-default">
-				@if (Html.UserIsBiodiversityAdministrator())
-				{
-					<span>Cancel</span>
-				}
-				else
-				{
-					<span>Back</span>
-				}
-			</a>
-			@if (Html.UserIsBiodiversityAdministrator())
-			{
-				<button type="submit" class="btn btn-primary" data-bind="click: save, enabled: canSave">Save</button>
-			}
-		</div>
-	</form>
+
+<div class="row">
+    <div class="col-7 text-end">
+        <base-link-button href="/CosewicStatus/Index">Cancel</base-link-button>
+        @if (Html.UserIsBiodiversityAdministrator())
+        {
+            <base-button v-on:click.prevent="submit()" color="success" :disabled="disabled" size="large">Save</base-button>
+        }
+    </div>
 </div>

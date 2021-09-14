@@ -1,135 +1,129 @@
-﻿<div class="tab-pane form-horizontal" id="reproduction" data-bind="with: bd">
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Age of Maturity (Female)</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Age of Maturity (Female)', categoryId: 5"></reference-widget>
+﻿<div class="tab-pane fade py-3" id="reproduction">
+    <div class="card border-1 shadow-0 mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Age of Maturity (Female)'
+                              :category_id="5"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Age of Maturity</label>
+                <div class="col-md-1">
+                    <base-input v-model="form.ageOfMaturity" id="ageOfMaturity"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="ageOfMaturity" class="col-md-2 control-label">Age of Maturity</label>
-        <div class="col-md-1">
-            <input type="text" class="form-control" id="ageOfMaturity" data-bind="value: ageOfMaturity">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="ageOfMaturityDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="ageOfMaturityDescription" class="form-control" data-bind="value: ageOfMaturityDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Reproduction</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Reproduction', categoryId: 6"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.ageOfMaturityDescription" id="ageOfMaturityDescription"></base-input>
                 </div>
             </div>
-            <hr />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="ageOfMaturity" class="col-md-2 control-label">Frequency Per Year</label>
-        <div class="col-md-1">
-            <input type="text" class="form-control" id="frequencyPerYear" data-bind="value: reproductionFrequencyPerYear">
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="frequencyPerYearDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="frequencyPerYearDescription" class="form-control" data-bind="value: reproductionFrequencyPerYearDescription"></textarea>
+
+    <div class="card border-1 shadow-0 mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Reproduction'
+                              :category_id="6"></reference-widget>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Longevity</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Longevity', categoryId: 7"></reference-widget>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Frequency Per Year</label>
+                <div class="col-md-1">
+                    <base-input v-model="form.reproductionFrequencyPerYear" id="reproductionFrequencyPerYear"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="longevity" class="col-md-2 control-label">Longevity</label>
-        <div class="col-md-1">
-            <input type="text" class="form-control" id="longevity" data-bind="value: longevity">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="longevityDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="longevityDescription" class="form-control" data-bind="value: longevityDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Vegetation Reproduction</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Vegetation Reproduction', categoryId: 8"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.reproductionFrequencyPerYearDescription" id="reproductionFrequencyPerYearDescription"></base-input>
                 </div>
             </div>
-            <hr />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="vegetationDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="vegetationDescription" class="form-control" data-bind="value: vegetationReproductionDescription"></textarea>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Host Fish (Mussels)</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Host Fish (Mussels)', categoryId: 9"></reference-widget>
+    <div class="card border-1 shadow-0 mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Longevity'
+                              :category_id="7"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Longevity</label>
+                <div class="col-md-1">
+                    <base-input v-model="form.longevity" id="longevity"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="hostFishMusselsDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="hostFishMusselsDescription" class="form-control" data-bind="value: hostFishDescription"></textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Other Reproduction</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryId: 10"></reference-widget>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.longevityDescription" id="longevityDescription"></base-input>
                 </div>
             </div>
-            <hr />
         </div>
     </div>
 
-    <div class="form-group">
-        <label for="otherReproductionDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="otherReproductionDescription" class="form-control" data-bind="value: otherReproductionDescription"></textarea>
+    <div class="card border-1 shadow-0 mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Vegetation Reproduction'
+                              :category_id="8"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.vegetationReproductionDescription" id="vegetationReproductionDescription"></base-input>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="card border-1 shadow-0 mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Host Fish (Mussels)'
+                              :category_id="9"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.hostFishDescription" id="hostFishDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card border-1 shadow-0 mb-3">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Other Reproduction'
+                              :category_id="10"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.otherReproductionDescription" id="otherReproductionDescription"></base-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

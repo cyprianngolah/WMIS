@@ -1,0 +1,150 @@
+﻿
+<div class="row mb-3">
+    <label for="name" class="col-md-1 form-label text-end">Name</label>
+    <div class="col-md-6">
+        <base-input v-model="form.name" id="name"></base-input>
+    </div>
+
+    <label for="projectNumber" class="col-md-2 text-end">Project Number</label>
+    <div class="col-md-3">
+        <base-input v-model="form.projectNumber" id="projectNumber"></base-input>
+    </div>
+</div>
+
+
+<div class="row mb-3">
+    <label for="projectLeads" class="col-md-1 form-label text-end">Lead Region</label>
+    <div class="col-md-3">
+        <el-select value-key="key" label-key="name" v-model="form.leadRegion" filterable style="width:100%;">
+            <el-option v-for="item in regions"
+                       :key="item.key"
+                       :label="item.name"
+                       :value="item">
+            </el-option>
+        </el-select>
+    </div>
+
+
+    <label for="projectLead" class="col-md-1 form-label text-end">Project Lead</label>
+    <div class="col-md-3">
+        <el-select value-key="key" label-key="name" v-model="form.projectLead" filterable style="width:100%;">
+            <el-option v-for="item in projectLeads"
+                       :key="item.key"
+                       :label="item.name"
+                       :value="item">
+            </el-option>
+        </el-select>
+    </div>
+
+    <label for="projectLead" class="col-md-1 form-label text-end">NWT WRP ID</label>
+    <div class="col-md-3">
+        <base-input v-model="form.wildlifeResearchPermitNumber" id="wildlifeResearchPermitNumber"></base-input>
+    </div>
+</div>
+
+
+<div class="row mb-3">
+    <label for="status" class="col-md-1 form-label text-end">Status</label>
+    <div class="col-md-3">
+        <el-select value-key="key" label-key="name" v-model="form.status" filterable style="width:100%;">
+            <el-option v-for="item in statuses"
+                       :key="item.key"
+                       :label="item.name"
+                       :value="item">
+            </el-option>
+        </el-select>
+    </div>
+
+
+    <label for="projectLead" class="col-md-1 form-label text-end">Status Date</label>
+    <div class="col-md-3">
+        <el-date-picker v-model="form.statusDate"
+                        type="date"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS"
+                        placeholder="Pick Date">
+        </el-date-picker>
+    </div>
+
+    <label for="projectLead" class="col-md-1 form-label text-end"></label>
+    <div class="col-md-3">
+        <el-checkbox v-model="form.isSensitiveData">Sensitive Data</el-checkbox>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-md-1 form-label text-end">Start Date</label>
+    <div class="col-md-3">
+        
+        <el-date-picker v-model="form.startDate"
+                        type="date"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS"
+                        placeholder="Pick Date">
+        </el-date-picker>
+    </div>
+
+    <label class="col-md-1 form-label text-end">End Date</label>
+    <div class="col-md-3">
+        <el-date-picker v-model="form.endDate"
+                        type="date"
+                        class="w-100"
+                        value-format="YYYY-MM-DDTHH:mm:ss.SSS"
+                        placeholder="Pick Date">
+        </el-date-picker>
+    </div>
+</div>
+
+
+<div class="row mb-3">
+    <label class="col-md-1 form-label text-end">Description</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.description" id="description"></base-input>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-md-1 form-label text-end">Objectives</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.objectives" id="objectives"></base-input>
+    </div>
+</div>
+
+
+<div class="row mb-3">
+    <label class="col-md-1 form-label text-end">Study Area</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.studyArea" id="studyArea"></base-input>
+    </div>
+</div>
+
+
+<div class="row mb-3">
+    <label class="col-md-1 form-label text-end">Methods</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.methods" id="methods"></base-input>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-md-1 form-label text-end">Comments</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.comments" id="comments"></base-input>
+    </div>
+</div>
+
+
+<div class="row mb-3">
+    <label class="col-md-1 form-label text-end">Results</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.results" id="results"></base-input>
+    </div>
+</div>
+
+
+<div class="row mb-3">
+    <label class="col-md-1 form-label text-end">Terms and Conditions</label>
+    <div class="col-md-11">
+        <base-input type="textarea" v-model="form.termsAndConditions" id="termsAndConditions"></base-input>
+    </div>
+</div>

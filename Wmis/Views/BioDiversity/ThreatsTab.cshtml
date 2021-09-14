@@ -1,41 +1,39 @@
-﻿<div class="tab-pane form-horizontal" id="threats" data-bind="with: bd">
-    <div class="row">
-        <div class="col-md-12 h4">
-            <div class="row">
-                <div class="col-md-4">Threats</div>
-                <div class="col-md-8 text-right">
-                    <reference-widget params="references: references, showDialogFunction: $root.showReferencesDialog, categoryName: 'Threats', categoryId: 22"></reference-widget>
+﻿<div class="tab-pane fade py-3" id="threats">
+    <div class="card border-1 shadow-0 mb-3" v-if="form.key">
+        <div class="card-header py-1">
+            <reference-widget :references="form.references"
+                              :update_function="updateReference"
+                              category_name='Threats'
+                              :category_id="22"></reference-widget>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Threats</label>
+                <div class="col-md-1">
+                    <base-input v-model="form.threatsScore" id="threatsScore"></base-input>
                 </div>
             </div>
-            <hr />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="threatsThreats" class="col-md-2 control-label">Threats</label>
-        <div class="col-md-1">
-            <input type="text" class="form-control" id="threatsThreats" data-bind="value: threatsScore" maxlength="5">
-        </div>
-    </div>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.threatsDescription" id="threatsDescription"></base-input>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label for="threatsThreatsDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="threatsThreatsDescription" class="form-control" data-bind="value: threatsDescription"></textarea>
-        </div>
-    </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-1 form-label text-end">Intrinsic Vulnerability</label>
+                <div class="col-md-1">
+                    <base-input v-model="form.intrinsicVulnerabilityScore" id="intrinsicVulnerabilityScore"></base-input>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label for="threatsIntrinsiceVulnerability" class="col-md-2 control-label">Intrinsic Vulnerability</label>
-        <div class="col-md-1">
-            <input type="text" class="form-control" id="threatsIntrinsiceVulnerability" data-bind="value: intrinsicVulnerabilityScore" maxlength="5">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="threatsIntrinsiceVulnerabilityDescription" class="col-md-2 control-label">Description</label>
-        <div class="col-md-10">
-            <textarea rows="4" name="threatsIntrinsiceVulnerabilityDescription" class="form-control" data-bind="value: intrinsicVulnerabilityDescription"></textarea>
+            <div class="row mb-3">
+                <label for="group" class="col-md-1 text-end">Description</label>
+                <div class="col-md-11">
+                    <base-input type="textarea" v-model="form.intrinsicVulnerabilityDescription" id="intrinsicVulnerabilityDescription"></base-input>
+                </div>
+            </div>
         </div>
     </div>
 </div>

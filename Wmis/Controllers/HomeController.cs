@@ -13,6 +13,7 @@
 		/// <returns>The Default View</returns>
 		public ActionResult Index()
 		{
+			ViewBag.Title = "Home";
 			return View();
 		}
 	}

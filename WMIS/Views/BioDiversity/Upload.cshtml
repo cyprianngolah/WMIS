@@ -4,76 +4,77 @@
 }
 
 @section Styles {
-    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
-    @Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
 }
 
 @section Scripts {
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
-    @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
     @Html.Raw(Scripts.Render("~/bundles/biodiversity/upload"))
-
-    <script type="text/javascript">
-        $(function() {
-            wmis.biodiversity.upload.initialize({
-                uploadSpeciesForm: $("#speciesFileUploadForm")
-            });
-        });
-    </script>
 }
 
-<div class="modal" data-backdrop="static" id="speciesUploadModal" data-bind="showModal: currentModal() == 'upload', with: $root">
-    <iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
-    <form role="form" id="speciesFileUploadForm" enctype="multipart/form-data" action="~/api/biodiversity/upload/" method="post" target="uploadIframe">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-bind="click: $root.hideUploadModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Bulk Upload Species</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputFile">Bulk Upload Species Template File</label>
-                        <input type="file" id="exampleInputFile" name="exampleInputeFile">
-                        <p class="help-block">Only .xls and .xlsx files are supported. Please use the provided template (downloading a new version is recommended)</p>
+<div class="modal fade" id="uploadModal" data-mdb-backdrop="static" data-mdb-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bulk Upload Species</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
+                <form role="form" ref="uploadSpeciesForm" id="speciesFileUploadForm" enctype="multipart/form-data" action="~/api/biodiversity/upload/" method="post" target="uploadIframe">
+                    <div class="row g-2">
+                        <div class="col-12 font-weight-bold">Bulk Upload Species Template File</div>
+                        <div class="col-12">
+                            <input type="file" id="fileUpload" name="fileUpload">
+                            <p class="help-block mt-2">Only .xls and .xlsx files are supported. Please use the provided template (downloading a new version is recommended)</p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bind="click: $root.hideUploadModal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: $root.uploadObservationFile">Upload</button>
-                </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" v-on:click="uploadObservationFile()">
+                    Upload
+                </base-button>
             </div>
         </div>
-    </form>
-</div>
-
-<div class="row h4">
-    <div class="col-md-12 text-right">
-        <span class="pull-left">
-            <a href="~/Content/Files/BiodiversityBulkUploadTemplate.xlsx" target="_blank" type="button" class="btn btn-success">Download Upload Template</a>
-            <button type="button" id="downloadSelectedButton" class="btn btn-default disabled" data-bind="click: downloadSelectedFile">Download Selected File</button>
-          <!-- <button type="button" id="deleteBulkUploadFile" class="btn btn-default disabled" data-bind="click: downloadSelectedFile">Delete BulkUpload File</button> -->
-        </span>
-
-        <button type="button" class="btn btn-success" data-bind="click: showUploadModal">Bulk Upload Species</button>
-        
     </div>
 </div>
 
 
-<div class="row">
-    <div class="col-md-12">
-        <table id="bulkUploadTable" class="table">
-            <thead>
-                <tr>
-                    <th>Uploaded File</th>
-                    <th>Upload Type</th>
-                    <th>Date Created</th>
-                </tr>
-            </thead>
-        </table>
+<div class="row h4 mb-4">
+    <div class="col-md-12 d-flex justify-content-between">
+        <span>
+            <base-link-button href="~/Content/Files/BiodiversityBulkUploadTemplate.xlsx" target="_blank" color="warning"><span class="el-icon-download"></span> Download Upload Template</base-link-button>
+            <base-button size="large" :disabled="!isSelected" v-on:click="downloadSelectedFile()" color="success"><span class="el-icon-download"></span> Download Selected File</base-button>
+        </span>
+
+        <base-button color="primary" data-mdb-toggle="modal" data-mdb-target="#uploadModal">
+            <span class="el-icon-upload2"></span>
+            Bulk Upload Species
+        </base-button>
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="bulkUploadTable" class="table table-sm w-100">
+                    <thead>
+                        <tr>
+                            <th>Uploaded File</th>
+                            <th>Upload Type</th>
+                            <th>Date Created</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+        </div>
     </div>
 </div>

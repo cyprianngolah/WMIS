@@ -1,0 +1,184 @@
+﻿@using Wmis.Extensions
+
+<div class="card border border-1 shadow-0 mb-3">
+    <div class="card-body">
+        <div class="row my-3">
+            <label for="status" class="col-md-1 form-label text-end">Target Species</label>
+            <div class="col-md-5">
+                <element-species-select :initial="form.targetSpecies" v-model="form.targetSpecies"></element-species-select>
+            </div>
+            <label for="status" class="col-md-1 form-label text-end">Start Date</label>
+            <div class="col-md-3">
+                <el-date-picker v-model="form.startDate"
+                                type="date"
+                                class="w-100"
+                                value-format="YYYY-MM-DDTHH:mm:ss.SSS">
+                </el-date-picker>
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <label for="status" class="col-md-1 text-end">Survey Type</label>
+            <div class="col-md-5">
+                <el-select value-key="key" label-key="name" v-model="form.surveyType" filterable style="width:100%;">
+                    <el-option v-for="item in surveyTypes"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <label for="status" class="col-md-1 form-label text-end">Template</label>
+            <div class="col-md-5">
+                <el-select :disabled="hasObservations" value-key="key" label-key="name" v-model="form.template" filterable style="width:100%;">
+                    <el-option v-for="item in surveyTemplates"
+                               :key="item.key"
+                               :label="item.name"
+                               :value="item">
+                    </el-option>
+                </el-select>
+            </div>
+
+        </div>
+
+
+        <div class="row mb-3">
+            <label class="col-md-1 form-label text-end">Description</label>
+            <div class="col-md-11">
+                <base-input label="Description" type="textarea" v-model="form.description" id="description"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-md-1 form-label text-end">Method</label>
+            <div class="col-md-11">
+                <base-input label="Method" type="textarea" v-model="form.method" id="method"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-md-1 form-label text-end">Results</label>
+            <div class="col-md-11">
+                <base-input label="Results" type="textarea" v-model="form.results" id="results"></base-input>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="card border border-1 shadow-0 mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-12 h5 m-0">
+                Aircraft/Crew
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <label for="name" class="col-md-1 form-label text-end">Aircraft Type</label>
+            <div class="col-md-3">
+                <base-input label="Aircraft Type" v-model="form.aircraftType" id="aircraftType"></base-input>
+            </div>
+            <label for="name" class="col-md-1 form-label text-end">Aircraft Callsign</label>
+            <div class="col-md-3">
+                <base-input label="Aircract Callsign" v-model="form.aircraftCallsign" id="aircraftCallsign"></base-input>
+            </div>
+            <label for="name" class="col-md-1 form-label text-end">Pilot</label>
+            <div class="col-md-3">
+                <base-input label="Pilot" v-model="form.pilot" id="pilot"></base-input>
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <label for="name" class="col-md-1 form-label text-end">Lead Surveyor</label>
+            <div class="col-md-3">
+                <base-input label="Lead Surveyor" v-model="form.leadSurveyor" id="leadSurveyor"></base-input>
+            </div>
+
+            <label for="name" class="col-md-1 form-label text-end">Survey Crew</label>
+            <div class="col-md-3">
+                <base-input label="Survey Crew" v-model="form.surveyCrew" id="surveyCrew"></base-input>
+            </div>
+
+            <label for="name" class="col-md-1 form-label text-end">Observer Expertise</label>
+            <div class="col-md-3">
+                <base-input label="Observer Expertise" v-model="form.observerExpertise" id="observerExpertise"></base-input>
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <label class="col-md-1 form-label text-end">Comments</label>
+            <div class="col-md-11">
+                <base-input label="Comments" type="textarea" v-model="form.aircraftCrewResults" id="aircraftCrewResults"></base-input>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border border-1 shadow-0 mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-12 h5 m-0">
+                Weather
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <label for="name" class="col-md-1 form-label text-end">Cloud Cover</label>
+            <div class="col-md-3">
+                <base-input label="Cloud Cover" v-model="form.cloudCover" id="cloudCover"></base-input>
+            </div>
+
+            <label for="name" class="col-md-1 form-label text-end">Light Conditions</label>
+            <div class="col-md-3">
+                <base-input label="Light Conditions" v-model="form.lightConditions" id="lightConditions"></base-input>
+            </div>
+
+            <label for="name" class="col-md-1 form-label text-end">Snow Cover</label>
+            <div class="col-md-3">
+                <base-input label="Snow Cover" v-model="form.snowCover" id="snowCover"></base-input>
+            </div>
+        </div>
+
+
+        <div class="row gy-4 mb-3">
+            <label for="name" class="col-md-1 form-label text-end">Temperature</label>
+            <div class="col-md-3">
+                <base-input label="Temperature" v-model="form.temperature" id="temperature"></base-input>
+            </div>
+
+            <label for="name" class="col-md-1 form-label text-end">Precipitation</label>
+            <div class="col-md-3">
+                <base-input label="Precipitation" v-model="form.precipitation" id="precipitation"></base-input>
+            </div>
+
+            <label for="name" class="col-md-1 form-label text-end">Wind Speed</label>
+            <div class="col-md-3">
+                <base-input label="Wind Speed" v-model="form.windSpeed" id="windSpeed"></base-input>
+            </div>
+
+            <label for="name" class="col-md-1 form-label text-end">Wind Direction</label>
+            <div class="col-md-3">
+                <base-input label="Wind Direction" v-model="form.windDirection" id="windDirection"></base-input>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-md-1 form-label text-end">Comments</label>
+            <div class="col-md-11">
+                <base-input label="Comments" type="textarea" v-model="form.weatherComments" id="weatherComments"></base-input>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

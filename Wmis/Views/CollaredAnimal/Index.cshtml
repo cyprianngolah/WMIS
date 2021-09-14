@@ -1,118 +1,107 @@
 ﻿@using Wmis.Extensions
 @{
-	ViewBag.Title = "Collared Animal";
+    ViewBag.Title = "Collared Animal";
 }
 
 @section Styles {
-	@Html.Raw(Styles.Render("~/bundles/content/datatables"))
-	@Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
+    @Html.Raw(Styles.Render("~/bundles/select2css"))
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/datatables"))
-	@Html.Raw(Scripts.Render("~/bundles/select2"))
-	@Html.Raw(Scripts.Render("~/bundles/collaredanimal/index"))
-
-	<script type="text/javascript">
-		$(function () {
-		    wmis.collaredanimal.index.initialize();
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/collaredanimal/index"))
 }
 
-    <div class="row">
-        <div class="col-md-12 text-right">
-            @if (Html.UserIsProjectCollarAdministrator())
-            {
-                <a href="/CollaredAnimal/New" class="btn btn-default" style="margin-bottom: 10px;">New</a>
-            }
-            <a href="/CollaredAnimal/Edit" id="editButton" class="btn btn-default disabled" style="margin-bottom: 10px;">
-                @if (Html.UserIsProjectCollarAdministrator())
-                {
-                    <span>View</span>
-                }
-                else
-                {
-                    <span>View</span>
-                }
-            </a>
+<div class="row my-3">
+    <div class="col-md-12 d-flex justify-content-end">
+        <base-button color="warning" class="me-2" v-on:click="downloadRecords()"><span class="el-icon-download"></span>  Download</base-button>
+        @if (Html.UserIsBiodiversityAdministrator())
+        {
+        <base-button color="success" class="me-2" v-on:click="newCollarModal.show()">
+            <span class="el-icon-plus"></span> New
+        </base-button>
+        }
+        <base-link-button color="info" v-bind:href=`/CollaredAnimal/Edit/${selectedKey}` id="editButton" :disabled="!isSelected">
+            <span class="el-icon-view"></span> View
+        </base-link-button>
+    </div>
+</div>
 
-            <button id="downloadButton" class="btn btn-default" style="margin-bottom: 10px;">Download</button>
+
+<div class="card border-0">
+    <div class="card-body">
+        <div class="row g-3 d-flex align-items-center">
+            <div class="col-2">
+                <el-checkbox v-model="form.needingReview" label="Collars needing review"></el-checkbox>
+            </div>
+            <div class="col">
+                <base-dropdown-select :return_object="false" :options="regions" v-model="form.regionKey"></base-dropdown-select>
+            </div>
+            <div class="col">
+                <base-dropdown-select :return_object="false" :options="species" v-model="form.speciesKey"></base-dropdown-select>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Keyword" id="keyword" v-model="form.keywords">
+                    <base-button id="searchbtn"> <span class="el-icon-search"></span> Search</base-button>
+                </div>
+            </div>
         </div>
-	</div>
+    </div>
+</div>
 
-	<div class="well" style="margin-bottom: 0;">
-		<div class="row">
-			<div class="col-md-12">
-				<form class="form-horizontal center" role="form">
-					
-                    <div class="col-md-2">
-                        <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                            <label>
-                                <input type="checkbox" autocomplete="off" id="needingReview"> Collars needing review
-                            </label>
+<div class="card my-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+
+                <table id="collarTable" class="table table-sm table-striped table-hover w-100">
+                    <thead>
+                        <tr>
+                            <th>Group</th>
+                            <th>Kingdom</th>
+                            <th>Phylum</th>
+                            <th>Class</th>
+                            <th>Order</th>
+                            <th>Family</th>
+                            <th>Common Name</th>
+                            <th>Species</th>
+                            <th>Rank</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- New Collar Modal -->
+<div class="modal fade" id="newCollarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Collared Animal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <lable>Collar ID (CTN)</lable>
+                            <base-input v-model.trim="newCollarForm.collarId" label="Collar ID (CTN)"></base-input>
                         </div>
                     </div>
-
-				    <div class="col-md-2">
-				        <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-				            <label class="sr-only" for="group">Region</label>
-				            <select class="form-control" id="region" name="region">
-				                <option value="">All Regions</option>
-				            </select>
-				        </div>
-				    </div>
-                    
-
-                    <div class="col-md-3">
-                        <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                            <label class="sr-only" for="targetSpecies">Species</label>
-                            <select class="form-control" id="targetSpecies" name="targetSpecies">
-                                <option value="">All Species</option>
-                            </select>
-                           <!-- @*<input class="form-control" id="targetSpecies" name="targetSpecies" data-bind="value: speciesId, select2: targetSpeciesOptions" />*@ -->
-                        </div>
-                    </div>
-				    <div class="col-md-1"></div>
-
-				    <label class="sr-only" for="keywords">Keywords</label>
-                    <div class="col-md-4">
-                        <div class="form-group" style="padding-bottom: 5px; padding-top: 5px; margin-bottom: 0;">
-                            <div class="input-group">
-                                <input type="text" id="keywords" class="form-control" placeholder="Keywords" />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" id="searchButton">Search</button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="row">
-		<div class="col-md-12">
-			<table id="collar" class="table table-striped table-condensed table-hover">
-				<thead>
-					<tr>
-						<th>Animal ID</th>
-					    <th>PTT</th>
-					   <!---- <th>CTN</th>-->
-					    <th>Collar State</th>
-					    <th>Collar Status</th>
-					    <th>End Date</th>
-                        <th>Animal Status</th>
-					    <th>VHF Frequency</th>
-					    <th>Sex</th>
-					    <th>Herd</th>
-					    <th>Collar Type</th>
-					    <!--<th>Project ID</th>
-                        <th>Project Name</th>-->
-					</tr>
-				</thead>
-			</table>
-		</div>
-	</div>
-
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :disabled="disableCreate" v-on:click="handleCreateCollar()">
+                    Save
+                </base-button>
+            </div>
+        </div>
+    </div>
+</div>

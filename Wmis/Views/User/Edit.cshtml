@@ -1,32 +1,111 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
     ViewBag.Title = "User";
-	ViewBag.SubTitle = "Edit";
+    ViewBag.SubTitle = "Edit";
 }
 
 @section Styles {
-    @Html.Raw(Styles.Render("~/bundles/select2css"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
 }
 
 @section Scripts {
-    @Html.Raw(Scripts.Render("~/bundles/select2"))
+    <script type="text/html" id="history-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+    </script>
     @Html.Raw(Scripts.Render("~/bundles/datatables"))
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/user/edit"))
-    @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
-
-	<script type="text/javascript">
-		$(function() {
-			wmis.user.edit.initialize({
-				key: @ViewBag.Key
-			});
-		    wmis.shared.historytab.initialize(@ViewBag.Key, 'PersonHistory', 'historyTemplateTempDiv');
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
+    @Html.Raw(Scripts.Render("~/bundles/user/edit"))
 }
 
-@section Dialogs {
-    @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
-}
+<input type="hidden" id="userKey" value="@ViewBag.Key" />
+
+<div class="row">
+    <div class="col-md-12 text-end">
+        <base-link-button href="/User/Index">
+            @if (Html.UserInAnyAdministratorRole())
+            {
+                <span>Cancel</span>
+            }
+            else
+            {
+                <span>Back</span>
+            }
+        </base-link-button>
+        @if (Html.UserInAnyAdministratorRole())
+        {
+            <base-button color="success" :busy="loading" :disabled="disableSave" v-on:click.prevent="handleUpdateUser()">Save</base-button>
+        }
+    </div>
+</div>
+
+<div class="row my-4" v-if="form.key">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav card-header-tabs justify-content-center nav-tabs" role="tablist">
+                    <li class="nav-item active"><a href="#userTab" v-on:click="tab=1" role="tab" data-mdb-toggle="tab" class="nav-link active">User</a></li>
+                    <li class="nav-item"><a href="#historyTab" v-on:click="tab=2" role="tab" data-mdb-toggle="tab" class="nav-link">History</a></li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <!-- Tab panes -->
+                <div class="tab-content" id="collarAnimalContent">
+
+                    <div id="userTab" class="tab-pane active py-4">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <lable>Username</lable>
+                                <base-input v-model.trim="form.username" label="Username"></base-input>
+                                <small>eg CORP\windowsusername</small>
+                            </div>
+
+                            <div class="col-6">
+                                <lable>Name</lable>
+                                <base-input v-model="form.name" label="Name"></base-input>
+                            </div>
+
+                            <div class="col-6">
+                                <lable>Job Title</lable>
+                                <base-input v-model="form.jobTitle" label="Job Title"></base-input>
+                            </div>
+
+                            <div class="col-6">
+                                <lable>Email</lable>
+                                <base-input v-model="form.email" label="Email"></base-input>
+                            </div>
+
+                            <div class="col-12">
+                                <lable>Roles</lable>
+                                <el-select class="w-100" v-model="selectedRoleIds" multiple placeholder="Select Roles">
+                                    <el-option v-for="item in roles"
+                                               :key="item.key"
+                                               :label="item.name"
+                                               :value="item.key">
+                                    </el-option>
+                                </el-select>
+                            </div>
+
+                            <div class="col-12">
+                                <lable>Projects</lable>
+                                <el-select filterable class="w-100" v-model="selectedProjectIds" multiple placeholder="Select Projects">
+                                    <el-option v-for="project in projects"
+                                               :key="project.key"
+                                               :label="project.name"
+                                               :value="project.key">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                    </div>
 
 
-@{ Html.RenderPartial("EditForm"); }
+                    <div id="historyTab" class="tab-pane py-4">
+                        <history-tab v-if="form.key" :parent_table_key="form.key" parent_table_name="PersonHistory"></history-tab>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

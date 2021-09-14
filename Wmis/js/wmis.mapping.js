@@ -1,4 +1,5 @@
-﻿wmis.mapping = wmis.mapping || {};
+﻿var wmis = {}
+wmis.mapping = wmis.mapping || {};
 wmis.mapping = (function ($) {
     var options = {
         mapElementId: 'map-canvas',
@@ -52,7 +53,7 @@ wmis.mapping = (function ($) {
         (function() {
             var temporaryMarker = null;
             var hiddenMarker = null;
-            self.selectedPoint.subscribe(function(newPoint) {
+            /*self.selectedPoint.subscribe(function(newPoint) {
                 if (temporaryMarker) {
                     temporaryMarker.setAnimation(null);
                     temporaryMarker.setMap(null);
@@ -72,7 +73,7 @@ wmis.mapping = (function ($) {
                     temporaryMarker.setMap(map);
                     temporaryMarker.setAnimation(google.maps.Animation.BOUNCE);
                 }
-            });
+            });*/
         })();
 
         // Handle the line being updated
@@ -99,13 +100,12 @@ wmis.mapping = (function ($) {
                     }
                 }
             };
-            self.points.subscribe(handleNewPoints);
-            handleNewPoints(self.points());
+            //self.points.subscribe(handleNewPoints);
+            //handleNewPoints(self.points());
         })();
     }
 
     var Markers = (function () {
-
         function createMarker(pass, message, icon) {
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(pass.latitude, pass.longitude),

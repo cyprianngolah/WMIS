@@ -1,0 +1,349 @@
+﻿@using Wmis.Extensions
+<div class="row mb-4">
+    <div class="col-12 text-end">
+        @if (Html.UserIsProjectAdministrator())
+        {
+            <base-button v-on:click="uploadObservationsModal.show()">
+                Upload Observations
+            </base-button>
+            <base-button class="ms-3" v-show="observationUploads.length > 0" v-on:click="resumeObservationUploadModal.show()">
+                Manage Observation Uploads
+            </base-button>
+        }
+    </div>
+</div>
+
+<div class="row" v-if="!hasObservations">
+    <div class="col-md-12 text-center">
+        <p class="h6" v-show="observationUploads.length == 0">There are currently no Observations for this Survey. Click the Upload Observations button to get started.</p>
+        <div class="h6" v-show="observationUploads.length > 0">
+            <p>There are currently no finalized Observations Uploads for this Survey.</p>
+            <p>Click the Manage Observation Uploads to complete an Observation Upload or the Upload Observations button to start a new Observation Upload.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" v-if="hasObservations">
+    <div class="col-12 mb-4">
+        <google-map :selectedPass="selectedPass"
+                    :passes="observationData"
+                    :hasPolyline="false"
+                    :passStatusFunction="getPassStatus"
+                    v-on:is:selected="handleSelectedPass"></google-map>
+    </div>
+    <div class="col-12">
+        <table id="locationTable" class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>SiteNumber</th>
+                    <th>Comment</th>
+                    <th v-for="c in observations.columns" :key="c.key">{{ c.name }}</th>
+                    <th>Review</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="i in observationData" :key="i.key" :class="getStatusHighlight(i.observationRowStatusId)">
+                    <td>{{ i.key }}</td>
+                    <td>{{ i.observationRowStatusId }}</td>
+                    <td>{{formatDate(i.timestamp) }}</td>
+                    <td>{{i.latitude }}</td>
+                    <td>{{i.longitude }}</td>
+                    <td>{{i.siteId }}</td>
+                    <td>{{i.comment }}</td>
+                    <td v-for="c in observations.columns" :key="c.key">
+                        {{i[c.jsName]}}
+                    </td>
+                    <td class="text-center">
+                        <base-button class="btn-xs" v-on:click="setSelected(i.key)" plain color="info">
+                            Review
+                        </base-button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Edit Location Modal -->
+<div class="modal fade" id="editObservationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Observation Data Point Edit</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div v-if="selectedPass">
+                    <div class="row gy-2 mb-2">
+                        <div class="col-md-6">Upload Key: {{selectedPass.observationUploadId}}</div>
+                        <div class="col-md-6">Excel Row: {{selectedPass.rowIndex}}</div>
+                        <div class="col-md-6">Latitude: {{selectedPass.latitude}}</div>
+                        <div class="col-md-6">Longitude: {{selectedPass.longitude}}</div>
+                        <div class="col-md-6">Timestamp: {{formatDate(selectedPass.timestamp) }}</div>
+                        <div class="col-md-6">Site ID: {{selectedPass.siteId || 'null'}}</div>
+                    </div>
+                    
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <el-divider><i class="el-icon-more"></i></el-divider>
+                            <el-select v-model="selectedPassForm.argosPassStatusId" placeholder="Select Status" class="w-100">
+                                <el-option v-for="item in argosPassStatuses"
+                                           :key="item.key"
+                                           :label="item.name"
+                                           :value="item.key">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <div class="col-12">
+                            <base-input type="textarea" v-model="selectedPassForm.comment" label="Comment"></base-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :loading="loading" v-on:click="updateObservationRow()">Update</base-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Observation Upload Modal -->
+<div class="modal fade" id="uploadObservationsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload Observations</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <iframe id="uploadIframe"
+                        name="uploadIframe" src=""
+                        style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
+                <form role="form"
+                      ref="observationFileUploadForm"
+                      id="observationFileUploadForm" enctype="multipart/form-data"
+                      :action="`/api/observation/upload/${survey_id}`" method="post" target="uploadIframe">
+                    <div class="row g-2">
+                        <div class="col-12 font-weight-bold">Observation File</div>
+                        <div class="col-12">
+                            <input type="file" id="fileUpload" name="fileUpload">
+                            <p class="help-block mt-2">Only .xls and .xlsx files are supported.</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :loading="loading" v-on:click="uploadObservationFile()">Upload</base-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Select Header Rows Modal -->
+<div class="modal fade" id="pickHeaderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Observation Header Rows</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height: 420px; overflow-y: auto;">
+                    <table class="table table-sm table-responsive">
+                        <thead>
+                            <tr>
+                                <th style="width:5%;">Is Header Row</th>
+                                <th style="width:5%;">Is First Data Row</th>
+                                <th style="width:5%;">Row Index</th>
+                                <th v-for="(v,i) in uploadCellValues[0]" :key="v.id"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="row in workingData" :key="row.rowIndex">
+                                <td>
+                                    <el-radio name="headerRow" v-model="headerRowIndex" :label="row.rowIndex">&nbsp;</el-radio>
+                                </td>
+                                <td>
+                                    <el-radio name="firstDataRow" :disabled="headerRowIndex >= row.rowIndex" v-model="firstDataRowIndex" :label="row.rowIndex">&nbsp;</el-radio>
+                                </td>
+                                <td>{{row.rowIndex}}</td>
+                                <td v-for="(cv,i) in row.cellValues" :key="cv.id">
+                                    {{cv.value}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :disabled="!rowsPicked" :loading="loading" v-on:click="saveHeaderPickerRows()">Save Rows</base-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Modal to Pick Columns -->
+<div class="modal fade" id="columnMappingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Observation Column Mapping</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height: 420px; overflow-y: auto;">
+                    <table class="table table-sm table-responsive">
+                        <thead>
+                            <tr>
+                                <th style="width:30%;">Template Column</th>
+                                <th style="width:40%;">Upload Column</th>
+                                <th class="text-center">Required Mapping</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(row,index) in templateColumnMappings" :key="row.surveyTemplateColumn.key">
+                                <td>
+                                    {{row.surveyTemplateColumn.name }}
+                                </td>
+                                <td>
+                                    <el-select size="small" v-model="row.columnIndex" placeholder="Select Column">
+                                        <el-option v-for="item in columns"
+                                                   :key="item.columnIndex"
+                                                   :label="item.cellValue"
+                                                   :value="item.columnIndex">
+                                        </el-option>
+                                    </el-select>
+                                </td>
+                                <td class="text-center">
+                                    <i v-show="row.surveyTemplateColumn.isRequired" class="el-icon-check text-weight-bold h4"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :disabled="!columnsPicked" :loading="loading" v-on:click="saveMappedColumns()">Save Rows</base-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Data Preview Modal -->
+<div class="modal fade" id="dataPreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Observation Confirmation</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height: 420px; overflow-y: auto;">
+                    <table class="table table-sm w-100 table-responsive">
+                        <thead>
+                            <tr>
+                                <th style="width:10%;">Excel Row Index</th>
+                                <th style="width:10%;">Timestamp</th>
+                                <th style="width:5%;">Latitude</th>
+                                <th style="width:5%;">Longitude</th>
+                                <th style="width:5%;">Site Id</th>
+                                <th v-for="(column) in observationConfirmationData.columns" :key="column.key">
+                                    {{ column.name}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(d,index) in observationConfirmationData.observationData" :key="d.key">
+                                <td>
+                                    {{d.rowIndex }}
+                                </td>
+                                <td>
+                                    {{formatDate(d.timestamp) }}
+                                </td>
+                                <td>
+                                    {{d.latitude }}
+                                </td>
+                                <td>
+                                    {{d.longitude }}
+                                </td>
+                                <td>
+                                    {{d.siteId }}
+                                </td>
+                                <td v-for="c in observationConfirmationData.columns" :key="c.key">
+                                    {{ d[c.jsName] }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :loading="loading" :disabled="loading" v-on:click="confirmData()">Confirm Data</base-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Manage / Resume Uploads modal -->
+<div class="modal fade" id="resumeObservationUploadModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Resume Observation Upload</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height: 420px; overflow-y: auto;">
+                    <table class="table table-sm w-100 table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Started</th>
+                                <th>Next Step</th>
+                                <th>File Name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(d,index) in observationUploads" :key="d.key">
+                                <td>
+                                    {{d.key }}
+                                </td>
+                                <td>
+                                    {{formatDate(d.uploadedTimestamp) }}
+                                </td>
+                                <td>
+                                    {{d.status.nextStep ? d.status.nextStep.name : "" }}
+                                </td>
+                                <td>
+                                    {{d.originalFileName }}
+                                </td>
+                                <td>
+                                    <button v-show="d.status.nextStep != null" type="button" v-on:click="resumeObservationUpload(d)" class="btn btn-outline-primary btn-sm">Resume</button>
+                                    <span class="badge bg-success rounded-pill" v-show="d.status.nextStep == null">Completed</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+            </div>
+        </div>
+    </div>
+</div>

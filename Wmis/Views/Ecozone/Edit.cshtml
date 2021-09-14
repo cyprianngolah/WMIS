@@ -1,19 +1,13 @@
 ﻿@{
     ViewBag.Title = "Ecozone";
-	ViewBag.SubTitle = "Edit";
+    ViewBag.SubTitle = "Edit";
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/ecozone/edit"))
-
-	<script type="text/javascript">
-		$(function() {
-			wmis.ecozone.edit.initialize({
-				key: @ViewBag.Key
-			});
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/ecozone/edit"))
 }
+
+<input type="hidden" id="ecozoneKey" value="@ViewBag.Key" />
 
 @{ Html.RenderPartial("EditForm"); }

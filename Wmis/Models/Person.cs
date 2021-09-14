@@ -15,6 +15,7 @@
 		public string JobTitle { get; set; }
 
         public List<SimpleProject> Projects { get; set; }
+		//public List<int> projects { get; set; }
 
 		public List<Role> Roles { get; set; }
 

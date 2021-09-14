@@ -1,19 +1,13 @@
 ﻿@{
     ViewBag.Title = "NWT SARC Assessment";
-	ViewBag.SubTitle = "Edit";
+    ViewBag.SubTitle = "Edit";
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/nwtsarcassessment/edit"))
-
-	<script type="text/javascript">
-		$(function() {
-		    wmis.nwtsarcassessment.edit.initialize({
-				key: @ViewBag.Key
-			});
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/nwtsarcassessment/edit"))
 }
+
+<input type="hidden" id="key" value="@ViewBag.Key" />
 
 @{ Html.RenderPartial("EditForm"); }

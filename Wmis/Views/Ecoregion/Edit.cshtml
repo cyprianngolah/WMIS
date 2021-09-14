@@ -1,19 +1,13 @@
 ﻿@{
     ViewBag.Title = "Ecoregion";
-	ViewBag.SubTitle = "Edit";
+    ViewBag.SubTitle = "Edit";
 }
 
 @section Scripts {
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/ecoregion/edit"))
-
-	<script type="text/javascript">
-		$(function() {
-			wmis.ecoregion.edit.initialize({
-				key: @ViewBag.Key
-			});
-		});
-	</script>
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/ecoregion/edit"))
 }
+
+<input type="hidden" id="ecoregionKey" value="@ViewBag.Key" />
 
 @{ Html.RenderPartial("EditForm"); }

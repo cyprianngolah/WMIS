@@ -1,36 +1,30 @@
-﻿@{
+﻿@using Wmis.Extensions
+@{
     ViewBag.Title = "Survey";
     ViewBag.SubTitle = "View";
 }
 
 @section CustomTitle {
-    <div class="h1 pull-left" style="margin:0;">
-        @*@ViewBag.Title
-            @if (!string.IsNullOrEmpty(@ViewBag.SubTitle)) {<small>@Html.Raw(ViewBag.SubTitle)</small>}*@
-
+    <div class="h1 m-0">
         <ol class="breadcrumb">
-            <li><a href="#" data-bind="click: $root.navigateToProject, text: projectName"></a></li>
+            <li v-show="project"><a :href="`/Project/Edit/${project ? project.key : ''}`">{{ project ? project.name : "" }}</a></li>
             <li class="active">
                 Survey @if (!string.IsNullOrEmpty(@ViewBag.SubTitle))
                 {<small>@Html.Raw(ViewBag.SubTitle)</small>}
             </li>
         </ol>
     </div>
-
 }
 
 @section TopRight{
-    <div class="h5 pull-right" style="text-align: right; margin:0;" data-bind="with: survey">
-        <span data-bind="with: targetSpecies">Target Species: <span data-bind="text: name"></span><br /></span>
-        <span data-bind="with: targetSpecies">Common Name: <span data-bind="text: commonName"></span></span>
-
-        @*<span class="h3" data-bind="with: projectName">Project: <a href="#" data-bind="click: $root.navigateToProject, text: $data"></a></span>*@
+    <div class="h6 text-end">
+        <span>Target Species: {{ form.targetSpecies ? form.targetSpecies.name : "" }}<br /></span>
+        <span>Common Name: {{ form.targetSpecies ? form.targetSpecies.commonName : "" }}</span>
     </div>
 }
 
 @section Styles {
-    @Html.Raw(Styles.Render("~/bundles/datePickerCss"))
-    @Html.Raw(Styles.Render("~/bundles/content/datatables"))
+    @Html.Raw(Styles.Render("~/bundles/datatablescss"))
     @Html.Raw(Styles.Render("~/bundles/select2css"))
 
     <style>
@@ -47,6 +41,10 @@
                 padding: 0 5px;
             }
 
+            .breadcrumb:first-child a {
+                font-size: 0.8em !important;
+            }
+
         #map-canvas {
             height: 500px;
             width: 100%;
@@ -55,284 +53,86 @@
 }
 
 @section Scripts{
-    @*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>*@
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPbVsrzI2t37hJOZKAo1bqpCu3khl14kM&callback=initMap" type="text/javascript"></script>
-    @Html.Raw(Scripts.Render("~/bundles/datePicker"))
-    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+
+
+    <script type="text/html" id="survey-observations">
+        @{Html.RenderPartial("SurveyObservationsTab");}
+    </script>
+
+    <script type="text/html" id="file-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
+    </script>
+
+    <script type="text/html" id="history-tab-template">
+        @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
+    </script>
+
     @Html.Raw(Scripts.Render("~/bundles/select2"))
-    @Html.Raw(Scripts.Render("~/bundles/knockout"))
+    @Html.Raw(Scripts.Render("~/bundles/datatables"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/components/GoogleMap"))
+    @Html.Raw(Scripts.Render("~/bundles/components/SurveyObservations"))
+    @Html.Raw(Scripts.Render("~/bundles/components/FileTab"))
+    @Html.Raw(Scripts.Render("~/bundles/components/HistoryTab"))
     @Html.Raw(Scripts.Render("~/bundles/project/survey/edit"))
-    @Html.Raw(Scripts.Render("~/bundles/shared/historytab"))
-    @Html.Raw(Scripts.Render("~/bundles/shared/filetab"))
-
-    <script>
-        $(function() {
-            wmis.project.survey.edit.initialize({
-                projectSurveyKey: @ViewBag.Key,
-                uploadObservationForm: $("#observationFileUploadForm"),
-                observationModal: $("#observationUploadModal"),
-                resumeObservationModal: $("resumeObservationUploadModal")
-            });
-            wmis.shared.historytab.initialize(@ViewBag.Key, 'SurveyHistory', 'historyTemplateTempDiv');
-            wmis.shared.filetab.initialize(@ViewBag.Key, 'Survey', 'fileTemplateTempDiv')
-        });
-    </script>
 }
 
-@section Dialogs {
-    @{Html.RenderPartial("~/Views/Shared/Mapping.cshtml");}
-    @{Html.RenderPartial("~/Views/Shared/HistoryTab.cshtml");}
-    @{Html.RenderPartial("~/Views/Shared/FileTab.cshtml");}
+<input type="hidden" id="surveyKey" value="@ViewBag.Key" />
 
-    <div class="modal" data-backdrop="static" id="observationUploadModal" data-bind="showModal: currentModal() == 'upload', with: $root">
-        <iframe id="uploadIframe" name="uploadIframe" src="" style="height: 1px; width: 1px;" frameborder="0" scrolling="no" height="1" width="1"></iframe>
-        <form role="form" id="observationFileUploadForm" enctype="multipart/form-data" action="~/api/observation/upload/@ViewBag.Key" method="post" target="uploadIframe">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-bind="click: $root.hideUploadModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Upload Observations</h4>
-                    </div>
+<div class="row mb-4">
+    <div class="col-12 text-end">
+        <base-link-button :href="`/Project/Edit/${ project ? project.key : ''}`">
+            @if (Html.UserIsProjectAdministrator())
+            {
+                <span>Cancel</span>
+            }
+            else
+            {
+                <span>Back</span>
+            }
+        </base-link-button>
 
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Observation File</label>
-                            <input type="file" id="exampleInputFile" name="exampleInputeFile">
-                            <p class="help-block">Only .xls and .xlsx files are supported.</p>
+        @if (Html.UserIsProjectAdministrator())
+        {
+            <base-button color="success" :busy="loading" v-on:click.prevent="submit()" :disabled="disabled">Save</base-button>
+        }
+    </div>
+</div>
+
+<div class="row my-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs justify-content-center fw-bold" role="tablist">
+                    <li class="nav-item active"><a v-on:click="tab=0" href="#survey" role="tab" data-mdb-toggle="tab" class="nav-link active">Survey</a></li>
+                    <li class="nav-item"><a v-on:click="tab=1" href="#observations" role="tab" data-mdb-toggle="tab" class="nav-link">Observations</a></li>
+                    <li class="nav-item"><a v-on:click="tab=2" href="#links" role="tab" data-mdb-toggle="tab" class="nav-link">Links</a></li>
+                    <li class="nav-item"><a v-on:click="tab=3" href="#history" role="tab" data-mdb-toggle="tab" class="nav-link">History</a></li>
+                </ul>
+            </div>
+
+            <div class="card-body">
+                <!-- Tab panes -->
+                <div class="tab-content" id="surveyTabContent">
+                    <div id="survey" class="tab-pane active py-4">
+                        <div v-show="project">
+                            @{Html.RenderPartial("EditSurveyTab");}
                         </div>
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-bind="click: $root.hideUploadModal">Cancel</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: $root.uploadObservationFile">Upload</button>
+                    <div id="observations" class="tab-pane py-4">
+                        <survey-observations v-if="key" :survey_id="key"></survey-observations>
                     </div>
-                </div>
-            </div>
-        </form>
-    </div>
 
-    <div class="modal" data-backdrop="static" id="resumeObservationUploadModal" data-bind="showModal: currentModal() == 'manageUpload', with: $root">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-bind="click: $root.hideManageUploadModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Resume Observation Upload</h4>
-                </div>
+                    <div id="links" class="tab-pane py-4">
+                        <file-tab v-if="key" :parent_table_key="key" parent_table_name="Survey"></file-tab>
+                    </div>
 
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Started</th>
-                                <th>Next Step</th>
-                                <th>File Name</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-
-                        <tbody data-bind="foreach: observationUploads">
-                            <tr>
-                                <td data-bind="text: key"></td>
-                                <td data-bind="text: uploadedTimestamp"></td>
-                                <!-- ko with: status -->
-                                <td data-bind="with: nextStep"><span data-bind="text: name"></span></td>
-                                <!-- /ko -->
-                                <td data-bind="text: originalFileName"></td>
-                                <td>
-                                    <button data-bind="click: $root.resumeObservationUpload, visible: status().nextStep() != null">Resume</button>
-                                    <span data-bind="visible: status().nextStep() == null">Completed</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bind="click: $root.hideManageUploadModal">Cancel</button>
+                    <div id="history" class="tab-pane py-4">
+                        <history-tab v-if="key" :parent_table_key="key" parent_table_name="SurveyHistory"></history-tab>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="modal" data-backdrop="static" id="pickHeaderModal" data-bind="showModal: currentModal() == 'headerPicker', with: $root">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-bind="click: hideHeaderPickerModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Observation Header Rows</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div style="max-height: 420px; overflow-y: auto;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Is Header Row</th>
-                                    <th>Is First Data Row</th>
-                                    <th>Row Index</th>
-                                </tr>
-                            </thead>
-
-                            <tbody data-bind="foreach: workingData">
-                                <tr>
-                                    <td><input type="radio" name="headerRow" data-bind="value: rowIndex, checked: $root.headerRowIndex" /></td>
-                                    <td><input type="radio" name="firstDataRow" data-bind="value: rowIndex, checked: $root.firstDataRowIndex, enable: $root.headerRowIndex() < rowIndex()" /></td>
-                                    <td data-bind="text: rowIndex"></td>
-                                    <!-- ko foreach: cellValues -->
-                                    <td data-bind="text: $data"></td>
-                                    <!-- /ko -->
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bind="click: $root.hideHeaderPickerModal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: $root.saveHeaderPickerRows, enable: $root.rowsPicked">Save Rows</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" data-backdrop="static" id="columnMappingModal" data-bind="showModal: currentModal() == 'columnPicker', with: $root">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-bind="click: hideColumnMapperModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Observation Column Mapping</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div style="max-height: 420px; overflow-y: auto;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Template Column</th>
-                                    <th>Upload Column</th>
-                                    <th class="text-center">Required Mapping</th>
-                                </tr>
-                            </thead>
-
-                            <tbody data-bind="foreach: templateColumnMappings">
-                                <tr>
-                                    <!-- ko with: surveyTemplateColumn -->
-                                    <td data-bind="text: name"></td>
-                                    <!-- /ko -->
-                                    <td>
-                                        <select class="form-control" data-bind="options: $root.columns, optionsText: 'cellValue', optionsValue: 'columnIndex', optionsCaption: '', value: columnIndex"></select>
-                                    </td>
-                                    <!-- ko with: surveyTemplateColumn -->
-                                    <td class="text-center"><span class="glyphicon glyphicon-ok" data-bind="visible: isRequired" aria-hidden="true"></span></td>
-                                    <!-- /ko -->
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bind="click: $root.hideColumnMapperModal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: $root.saveMappedColumns, enable: $root.columnsPicked">Save Columns</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" data-backdrop="static" id="dataPreviewModal" data-bind="showModal: currentModal() == 'dataPreview', with: $root">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-bind="click: hideDataPreviewModal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Observation Confirmation</h4>
-                </div>
-
-                <div class="modal-body" data-bind="with: observationConfirmationData">
-                    <div style="max-height: 420px; overflow-y: auto;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Excel Row Index</th>
-                                    <th>Timestamp</th>
-                                    <th>Latitude</th>
-                                    <th>Longitude</th>
-                                    <th>Site Id</th>
-                                    <!-- ko foreach: $data.columns -->
-                                    <th data-bind="text: name"></th>
-                                    <!-- /ko -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- ko foreach: {data: $data.observationData, as: 'd'} -->
-                                <tr>
-                                    <td data-bind="text: rowIndex"></td>
-                                    <td data-bind="dateText: timestamp, format: 'L'"></td>
-                                    <td data-bind="text: latitude"></td>
-                                    <td data-bind="text: longitude"></td>
-                                    <td data-bind="text: siteId"></td>
-                                    <!-- ko foreach: {data: $parent.columns, as: 'c'} -->
-                                    <td data-bind="text: $parent[c.jsName()]()"></td>
-                                    <!-- /ko -->
-                                </tr>
-                                <!-- /ko -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bind="click: $root.hideDataPreviewModal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: $root.confirmData">Confirm Data</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script id="observationDataPointTemplate" type="text/html">
-        <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Collar Data Point</h4>
-                    </div>
-                    <div class="modal-body form-horizontal">
-                        <div class="form-group">
-                            <span class="col-md-6" data-bind="text: observationUploadId"></span>
-                            <span class="col-md-6" data-bind="text: rowIndex"></span>
-                        </div>
-                        <div class="form-group">
-                            <span class="col-md-6" data-bind="text: latitude"></span>
-                            <span class="col-md-6" data-bind="text: longitude"></span>
-                        </div>
-                        <div class="form-group">
-                            <span class="col-md-6" data-bind="text: timestamp"></span>
-                            <span class="col-md-6" data-bind="text: siteId"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="argosPassStatus" class="col-md-3 control-label">Status</label>
-                            <div class="col-md-6" data-bind="with: argosPassStatus">
-                                <select class="form-control" id="argosPassStatus" name="argosPassStatus" data-bind="options: $root.argosPassStatuses, optionsText: 'name', optionsValue: 'key', optionsCaption: '', value: key, select2: { }"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="comments" class="col-md-3 control-label">Comment</label>
-                            <div class="col-md-6">
-                                <textarea rows="4" name="comments" class="form-control" data-bind="value: comment"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: cancel">Cancel</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: clearStatus">Clear Status</button>
-                            <button type="button" class="btn btn-primary" data-bind="enable: saveAllowed, click: save">Update</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-}
-
-@{ Html.RenderPartial("EditSurveyForm"); }
+</div>

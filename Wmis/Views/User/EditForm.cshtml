@@ -1,7 +1,7 @@
 ﻿@using Wmis.Extensions
 <div class="row">
     <div class="col-md-12 text-right">
-	    <a href="/User/Index" class="btn btn-default">
+	    <base-link-button href="/User/Index">
 		    @if (Html.UserInAnyAdministratorRole())
 		    {
 			    <span>Cancel</span>
@@ -10,7 +10,7 @@
 		    {
 			    <span>Back</span>
 		    }
-	    </a>
+	    </base-link-button>
 		@if (Html.UserInAnyAdministratorRole())
 		{
 			<button type="submit" class="btn btn-primary" data-bind="click: save, enabled: canSave">Save</button>

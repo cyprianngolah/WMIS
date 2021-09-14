@@ -1,22 +1,48 @@
-﻿@{
-	ViewBag.Title = "Taxonomy";
-	ViewBag.SubTitle = "New";
-}
-
-@section Styles {
-    @Html.Raw(Styles.Render("~/bundles/select2css"))
+﻿@using Wmis.Extensions
+@{
+    ViewBag.Title = "Taxonomy";
+    ViewBag.SubTitle = "New";
 }
 
 @section Scripts {
-    @Html.Raw(Scripts.Render("~/bundles/select2"))
-	@Html.Raw(Scripts.Render("~/bundles/knockout"))
-	@Html.Raw(Scripts.Render("~/bundles/taxonomy/edit"))
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/taxonomy/new"))
 
-	<script type="text/javascript">
-		$(function() {
-			wmis.taxonomy.edit.initialize();
-		});
-	</script>
 }
 
-@{ Html.RenderPartial("EditForm"); }
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Taxonomy Group</label>
+    </div>
+    <div class="col-5">
+        <base-dropdown-select :return_object="false" :options="taxonomyGroups" v-model="form.taxonomyGroupKey"></base-dropdown-select>
+    </div>
+</div>
+
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="name">Name</label>
+    </div>
+    <div class="col-5 text-end">
+        <base-input v-model.trim="form.name" id="name"></base-input>
+    </div>
+</div>
+
+<div class="row my-3">
+    <div class="col-2 text-end">
+        <label for="Synonyms">Synonyms</label>
+    </div>
+    <div class="col-5">
+        <synonym-tags :synonyms="form.synonyms" v-model="form.synonyms"></synonym-tags>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-7 text-end">
+        <base-link-button href="/Taxonomy/Index">Cancel</base-link-button>
+        @if (Html.UserIsBiodiversityAdministrator())
+        {
+            <base-button v-on:click.prevent="submit()" color="success" :disabled="disabled">Save</base-button>
+        }
+    </div>
+</div>

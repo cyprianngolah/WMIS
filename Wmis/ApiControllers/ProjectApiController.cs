@@ -117,9 +117,9 @@
         [HttpPost]
         [Route]
         [WmisWebApiAuthorize(Roles = WmisRoles.AdministratorProjects)]
-        public int Create([FromBody]string name)
+        public int Create([FromBody] ProjectSaveRequest request)
         {
-            return Repository.ProjectCreate(name, this._user.Username);
+            return Repository.ProjectCreate(request, this._user.Username);
         }
 
         [HttpPut]
@@ -128,9 +128,10 @@
         {
             var repo = WebApi.ObjectFactory.Container.GetInstance<Models.WmisRepository>();
             var person = repo.PersonGet(_user.Username);
-
+            Repository.ProjectUpdate(p, "");
+            return;
             // All administrators can see the sensitive data
-            if (person.Roles.Select(r => r.Name).Contains(WmisRoles.AdministratorProjects) || person.Projects.Select(pk => pk.Key).Contains(p.Key))
+            /*if (person.Roles.Select(r => r.Name).Contains(WmisRoles.AdministratorProjects) || person.Projects.Select(pk => pk.Key).Contains(p.Key))
             {
                 Repository.ProjectUpdate(p, "");
                 return;
@@ -143,7 +144,7 @@
                 return;
             }
 
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            throw new HttpResponseException(HttpStatusCode.Unauthorized);*/
         }
         #endregion
 
