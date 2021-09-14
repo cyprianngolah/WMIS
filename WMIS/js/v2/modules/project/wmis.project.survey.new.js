@@ -2,10 +2,12 @@
     mixins: [GlobalMixin],
     components: {
         BaseInput,
+        BaseButton,
+        BaseLinkButton,
         ElementSpeciesSelect
     },
 
-    data() {
+    data: function() {
         return {
             key: null,
             form: {}
@@ -13,7 +15,7 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return !this.form.targetSpecies
                 || Object.keys(this.form.targetSpecies).length === 0
                 || this.form.targetSpecies.key === 0
@@ -21,7 +23,7 @@
     },
 
     methods: {
-        getData() {
+        getData: function() {
             this.setKey()
             this.showLoading()
             axios.all([
@@ -43,7 +45,7 @@
                 }, 2000))
         },
 
-        submit() {
+        submit: function() {
             if (this.disabled) {
                 this.$message.error('Missing required data!');
                 return;
@@ -55,13 +57,13 @@
                 }).catch(error => console.log(error))
         },
 
-        setKey() {
+        setKey: function() {
             this.key = this.getKey("#projectKey")
         }
 
     },
 
-    mounted() {
+    mounted: function() {
         this.setKey()
         this.getData()
     }

@@ -11,7 +11,7 @@
         }
     },
 
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -24,23 +24,23 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return this.selectedKey == null
         }
     },
 
 
     methods: {
-        launchEditPage() {
+        launchEditPage: function() {
             if (!this.selectedKey) return;
             window.location.href = `/Project/EditSite/${this.selectedKey}`;
         },
-        launchNewPage() {
+        launchNewPage: function() {
             window.location.href = `/Project/NewSite/${this.project_id}`;
         }
     },
 
-    created() {
+    created: function() {
         const vm = this;
 
         $(document).ready(function () {

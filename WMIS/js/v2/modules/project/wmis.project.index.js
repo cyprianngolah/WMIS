@@ -7,7 +7,7 @@ const app = Vue.createApp({
         BaseLinkButton,
         BaseDropdownSelect
     },
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -26,25 +26,25 @@ const app = Vue.createApp({
     },
 
     computed: {
-        isSelected() {
+        isSelected: function() {
             return this.selectedKey !== null && this.selectedKey !== undefined;
         }
     },
 
     watch: {
-        draw() {
+        draw:function() {
             this.selectedKey = null;
         }
     },
 
 
     methods: {
-        downloadRecords() {
+        downloadRecords:function() {
             var url = `/api/project/download/?projectLead=${this.form.pLead}&projectStatus=${this.form.pStatus}&region=${this.form.region}&keywords=${this.form.keywords}`
             window.open(url, '_blank');
         },
 
-        getDropdowns() {
+        getDropdowns: function() {
             this.showLoading();
             axios.all([
                 axios.get("/api/person/projectLeads/"),
@@ -65,7 +65,7 @@ const app = Vue.createApp({
         }
     },
 
-    created() {
+    created: function() {
         this.getDropdowns();
         const vm = this;
         document.title = "WMIS Projects";

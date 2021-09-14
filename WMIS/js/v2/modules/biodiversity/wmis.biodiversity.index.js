@@ -7,7 +7,7 @@ const app = Vue.createApp({
         BaseLinkButton,
         BaseDropdownSelect
     },
-    data() {
+    data: function() {
         return {
             biodiversityTable: null,
             draw: 1,
@@ -26,26 +26,26 @@ const app = Vue.createApp({
     },
 
     computed: {
-        isSelected() {
+        isSelected: function() {
             return this.selectedKey !== null && this.selectedKey !== undefined;
         }
     },
 
     watch: {
-        draw() {
+        draw: function() {
             this.selectedKey = null;
         }
     },
 
 
     methods: {
-        downloadRecords() {
+        downloadRecords: function() {
             var url = `api/biodiversity/download/?startRow=0&rowCount=100000&sortBy=name&sortDirection=asc&keywords=${this.form.keywords}&familyKey=${this.form.familyKey}&groupKey=${this.form.groupKey}&orderKey=${this.form.orderKey}`
             window.open(url, '_blank');
         },
 
 
-        deletedSelectedRecord() {
+        deletedSelectedRecord: function() {
             if (this.selectedKey) {
                 axios.delete(`/api/biodiversity/species/${this.selectedKey}/delete/`)
                     .then(_ => window.location.href = "/Biodiversity")
@@ -56,7 +56,7 @@ const app = Vue.createApp({
         },
 
 
-        fetchFilters() {
+        fetchFilters: function() {
             this.showLoading();
             axios.all([
                 axios.get('/api/taxonomy/group/'),
@@ -78,7 +78,7 @@ const app = Vue.createApp({
         }
     },
 
-    created() {
+    created: function() {
         this.fetchFilters()
         const vm = this;
         document.title = "WMIS Biodiversity";

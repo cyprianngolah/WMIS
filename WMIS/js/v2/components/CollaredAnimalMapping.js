@@ -15,7 +15,7 @@ const CollaredAnimalMapping = {
         }
     },
 
-    data() {
+    data: function() {
         return {
             table: null,
             selectedPass: null,
@@ -47,12 +47,12 @@ const CollaredAnimalMapping = {
     watch: {
         filters: {
             deep: true,
-            handler(newVal) {
+            handler: function(newVal) {
                 this.refreshTable()
             }
         },
 
-        selectedPass(newVal) {
+        selectedPass: function(newVal) {
             if (!newVal) {
                 this.updatePassForm = null
             } else {
@@ -62,33 +62,33 @@ const CollaredAnimalMapping = {
     },
 
     methods: {
-        getArgosPassStatuses() {
+        getArgosPassStatuses: function() {
             axios.get("/api/argos/passStatuses?startRow=0&rowCount=500")
                 .then(response => {
                     this.passStatuses = response.data.data
                 }).catch(error => console.log(error))
         },
 
-        refreshTable() {
+        refreshTable: function() {
             this.table.ajax.reload(null, true)
         },
 
-       downloadShapeFile () {
+        downloadShapeFile: function() {
            window.open("/api/argos/passesShapeFile?startRow=0&rowCount=20000&collaredAnimalId=" + this.animal_id, '_self');
         },
 
-       downloadKmlFile () {
+        downloadKmlFile: function() {
            window.open("/api/argos/passesKmlFile?startRow=0&rowCount=20000&collaredAnimalId=" + this.animal_id, '_self');
         },
-        downloadExcelFile() {
+        downloadExcelFile: function() {
             window.open("/api/argos/passesExcelFile?startRow=0&rowCount=200000&collaredAnimalId=" + this.animal_id, '_self');
         },
-        formatDate(dte) {
+        formatDate: function(dte) {
             if (!dte) return null;
             return moment(dte).format('L h:mm a')
         },
 
-        handleSelectedPass(payload) {
+        handleSelectedPass: function(payload) {
             if (payload) {
                 this.selectedPass = JSON.parse(JSON.stringify(payload))
 
@@ -105,7 +105,7 @@ const CollaredAnimalMapping = {
             }
         },
 
-        updatePass() {
+        updatePass: function() {
             if (!this.updatePassForm) return;
             axios.post(`/api/argos/pass/save`, {
                 argosPassId: this.updatePassForm.key,
@@ -119,7 +119,7 @@ const CollaredAnimalMapping = {
             }).catch(error => console.log(error))
         },
 
-        clearPassStatus() {
+        clearPassStatus: function() {
             if (!this.updatePassForm) return;
             axios.post(`/api/argos/pass/save`, {
                 argosPassId: this.updatePassForm.key,
@@ -135,7 +135,7 @@ const CollaredAnimalMapping = {
         
     },
 
-    mounted() {
+    mounted: function() {
         this.editArgosPassModal = this.createModal("editArgosPassModal");
 
         document.getElementById('editArgosPassModal').addEventListener('hidden.mdb.modal', () => {
@@ -145,7 +145,7 @@ const CollaredAnimalMapping = {
         });
     },
 
-    created() {
+    created: function() {
         this.getArgosPassStatuses()
         const vm = this;
 

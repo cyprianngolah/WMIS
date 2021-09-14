@@ -7,7 +7,7 @@
         BaseButton,
     },
 
-    data() {
+    data: function() {
         return {
             statusRanks: [],
             cosewicStatuses: [],
@@ -18,15 +18,15 @@
     },
 
     computed: {
-        lastUpdated() {
+        lastUpdated: function() {
             return this.form.lastUpdated ? moment.utc(this.form.lastUpdated, moment.ISO_8601).local().format('L h:mm a') : ""
         },
 
-        disabled() {
+        disabled: function() {
             return !this.isDirty || Object.keys(this.form).length == 0;
         },
 
-        isDirty() {
+        isDirty: function() {
             return this.initialData !== JSON.stringify(this.form)
         }
 
@@ -34,7 +34,7 @@
     },
 
     methods: {
-        getData() {
+        getData: function() {
             this.showLoading();
             const key = window.location.pathname.split('/').pop();
             axios.all([
@@ -56,11 +56,11 @@
         },
 
 
-        submit() {
+        submit: function() {
             if (this.disabled) return;
             this.showLoading()
             axios.put('/api/BioDiversity/Decision', this.form)
-                .then(response => {
+                .then(_ => {
                     this.initialData = JSON.stringify(this.form)
                     window.location.href = "/Biodiversity/";
                 }).catch(error => console.log(error))
@@ -72,7 +72,7 @@
         
     },
 
-    created() {
+    created: function() {
         this.getData()
     }
 })

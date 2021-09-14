@@ -35,13 +35,13 @@
     },
 
     watch: {
-        entity_id(newId) {
+        entity_id: function(newId) {
             this.fetchSynonyms()
         }
     },
 
     computed: {
-        displayString() {
+        displayString: function() {
             const synonyms = this.records
             if (synonyms.length == 0) {
                 return "Synonyms: None";
@@ -53,7 +53,7 @@
         }
     },
 
-    data() {
+    data: function() {
         return {
             records: [],
             editing: false,
@@ -62,7 +62,7 @@
     },
 
     methods: {
-        formatString() {
+        formatString: function() {
             if (this.records.length == 0) {
                 return "Synonyms: None";
             } else if (this.records.length == 1) {
@@ -71,20 +71,20 @@
                 return "Synonyms: " + this.records.join(", ");
             }
         },
-        handleBlur(e) {
+        handleBlur: function(e) {
             const val = e.target.value
             if (val !== '') {
                 this.records.push(val)
             }
         },
-        fetchSynonyms() {
+        fetchSynonyms: function() {
             if (this.entity_type == 'taxonomy') {
                 this.fetchTaxonomySynonyms()
             } else {
                 this.fetchSpeciesSynonyms()
             }
         },
-        fetchTaxonomySynonyms() {
+        fetchTaxonomySynonyms: function() {
             this.loading = true
             axios.post(`/api/taxonomy/synonym`,
                 [this.entity_id]
@@ -95,7 +95,7 @@
                 .finally(() => this.loading = false)
         },
 
-        fetchSpeciesSynonyms() {
+        fetchSpeciesSynonyms: function() {
             this.loading = true
             axios.get(`/api/biodiversity/synonym/${this.entity_id}`)
                 .then(response => {
@@ -105,16 +105,16 @@
                 .finally(() => this.loading = false)
         },  
 
-        cancelEditing() {
+        cancelEditing: function() {
             this.fetchSynonyms()
             this.editing = false
         },
 
-        startEditing() {
+        startEditing: function() {
             this.editing = true
         },
 
-        async handleSave() {
+        handleSave: async function() {
             this.loading = true
             if (this.entity_type == 'taxonomy') {
                 await this.saveTaxonomySynonyms()
@@ -125,7 +125,7 @@
             setTimeout(() => this.loading=false, 1000)
         },
 
-        saveSpeciesSynonyms() {
+        saveSpeciesSynonyms: function() {
             axios.post(`/api/biodiversity/synonym/save`, {
                 speciesId: this.entity_id,
                 speciesSynonymTypeId: this.species_synonym_type_id,
@@ -135,7 +135,7 @@
             .catch(error => console.log(error))
         },
 
-        saveTaxonomySynonyms() {
+        saveTaxonomySynonyms: function() {
             axios.post(`/api/taxonomy/synonym/savemany`, {
                 taxonomyId: this.entity_id,
                 synonyms: this.records
@@ -147,7 +147,7 @@
 
     },
 
-    mounted() {
+    mounted: function() {
         this.fetchSynonyms()
     }
 }

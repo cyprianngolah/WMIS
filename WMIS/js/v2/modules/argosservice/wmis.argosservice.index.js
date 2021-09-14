@@ -7,13 +7,13 @@
         BaseLinkButton
     },
 
-    data() {
+    data: function() {
         return {
             loading: false
         }
     },
     methods: {
-        runArgosFileLoad() {
+        runArgosFileLoad: function() {
             this.showLoading("Executing Job");
             this.loading = true;
             axios.post('/api/argos/execute/')
@@ -27,7 +27,7 @@
         },
 
 
-        updateSchedule() {
+        updateSchedule: function() {
             this.loading = true;
             this.showLoading("Updating Schedule!");
             axios.post('/api/argos/schedule/')

@@ -18,7 +18,7 @@ const FileTab = {
     },
     template: '#file-tab-template',
 
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -35,19 +35,19 @@ const FileTab = {
     },
 
     computed: {
-        canSave() {
+        canSave: function() {
             return !!this.form.name && !!this.form.path;
         }
     },
 
 
     methods: {
-        showCreateModal() {
+        showCreateModal: function() {
             this.form.name=""
             this.form.path=""
             this.formModal.show();
         },
-        handleDelete(id) {
+        handleDelete: function(id) {
             this.$confirm('Are you sure you want to delete this record?')
                 .then(_ => {
                     axios.delete(`/api/file/${id}`)
@@ -58,7 +58,7 @@ const FileTab = {
                 .catch(_ => { console.log("action cancelled") });
         },
 
-        handleCreate() {
+        handleCreate: function() {
             if (this.isEditing) return;
             this.form.parentTableName = this.parent_table_name
             this.form.parentTableKey = this.parent_table_key
@@ -70,7 +70,7 @@ const FileTab = {
                 .catch(error => console.log(error))
         },
 
-        handleUpdate() {
+        handleUpdate: function() {
             if (!this.isEditing) return;
             axios.post(`/api/file`, this.form)
                 .then(_ => {
@@ -80,11 +80,11 @@ const FileTab = {
                 .catch(error => console.log(error))
         },
 
-        reloadTable() {
+        reloadTable: function() {
             this.table.ajax.reload(null, false);
         },
 
-        resetForm() {
+        resetForm: function() {
             this.form = {
                 name: "",
                 key: "",
@@ -94,11 +94,11 @@ const FileTab = {
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.formModal = this.createModal("fileInputModal");
     },
 
-    created() {
+    created: function() {
         const vm = this;
 
         $(document).ready(function () {

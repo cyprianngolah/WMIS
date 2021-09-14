@@ -7,7 +7,7 @@ const app = Vue.createApp({
         BaseInput,
         HistoryTab
     },
-    data() {
+    data: function() {
         return {
             form: {
                 username: '',
@@ -27,20 +27,20 @@ const app = Vue.createApp({
     },
 
     computed: {
-        disableSave() {
+        disableSave: function() {
             return this.form.username == "" || this.form.name.trim() == ""
         },
     },
 
     watch: {
-        selectedProjectIds(newVal) {
+        selectedProjectIds: function(newVal) {
             if (newVal.length == 0) {
                 this.form.projects = []
             } else {
                 this.form.projects = this.projects.filter(p => this.selectedProjectIds.includes(p.key))
             }
         },
-        selectedRoleIds(newVal) {
+        selectedRoleIds: function(newVal) {
             if (newVal.length == 0) {
                 this.form.roles = []
             } else {
@@ -50,23 +50,23 @@ const app = Vue.createApp({
     },
 
     methods: {
-        reloadTable() {
+        reloadTable: function() {
             this.table.ajax.reload(null, false);
         },
 
-        getRoles() {
+        getRoles: function() {
             axios.get('/api/person/userRoles')
                 .then(response => this.roles = response.data.data)
                 .catch(error => console.log(error))
         },
 
-        getProjects() {
+        getProjects: function() {
             axios.get('/api/project?keyword=&startRow=0&rowCount=10000')
                 .then(response => this.projects = response.data.data)
                 .catch(error => console.log(error))
         },
 
-        getUser() {
+        getUser: function() {
             this.showLoading();
             this.setKey();
             axios.get(`/api/person/${this.form.key}`)
@@ -81,23 +81,23 @@ const app = Vue.createApp({
                 
         },
 
-        handleUpdateUser() {
+        handleUpdateUser: function() {
             axios.put('/api/person/', this.form)
                 .then(_ => {
                     window.location.href = "/User";
                 }).catch(error => console.log(error))
         },
 
-        setKey() {
+        setKey: function() {
             this.form.key = this.getKey("#userKey");
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.getUser()
     },
 
-    created() {
+    created: function() {
         this.getRoles();
         this.getProjects();
         this.setKey();

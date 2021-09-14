@@ -11,7 +11,7 @@
 
     template: "#project-surveys",
 
-    data() {
+    data: function() {
         return {
             table: null,
             selectedKey: null,
@@ -22,19 +22,19 @@
     },
 
     watch: {
-        "filters.surveyTypeKey"(newVal) {
+        "filters.surveyTypeKey": function(newVal) {
             this.table.ajax.reload(null, true)
         }
     },
 
     methods: {
-        downloadRecords() {
+        downloadRecords: function() {
             var url = `/api/project/${this.project_id}/surveys/download/?startRow=0&rowCount=1000&sortBy=surveyType&sortDirection=asc&surveyTypeKey=${this.filters.surveyTypeKey}`
             window.open(url, '_blank');
         }
     },
 
-    created() {
+    created: function() {
         const vm = this;
         $(document).ready(function () {
 
@@ -156,14 +156,6 @@
                         }
                     }
                 });
-
-               /* $('#surveyType').change(function (e) {
-                    const val = e.target.value;
-                    vm.filters.surveyTypeKey = val === 'all' ? '' : val;
-                    vm.table.search(vm.filters.surveyTypeKey).draw();
-                });*/
-
-
                 $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
                     $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
                 });

@@ -16,7 +16,7 @@
 const PolyLine = {
     props: ['map', 'google', 'passes',  'passStatusFunction'],
 
-    data() {
+    data: function() {
         return {
             polyline: null,
         }
@@ -25,14 +25,14 @@ const PolyLine = {
     watch: {
         passes: {
             deep: true,
-            handler(passes) {
+            handler: function(passes) {
                 this.polyline.setPath(this.getPathCoordinates())
             }
         }
     },
 
     methods: {
-        loadPolyline() {
+        loadPolyline: function() {
             const pathCoordinates = this.getPathCoordinates();
             const polylineOptions = this.polyOptionsForPath(pathCoordinates);
             this.polyline = new this.google.maps.Polyline(polylineOptions);
@@ -40,7 +40,7 @@ const PolyLine = {
         },
 
 
-        getPathCoordinates() {
+        getPathCoordinates: function() {
             const nonRejectedPasses = this.passes.filter(p => {
                 const passStatus = this.passStatusFunction(p);
                 return !argosPassStatusToIsRejected[passStatus];
@@ -54,7 +54,7 @@ const PolyLine = {
 
         },
 
-        polyOptionsForPath(path) {
+        polyOptionsForPath: function(path) {
             return {
                 path: path,
                 strokeColor: '#ff0000',
@@ -64,7 +64,7 @@ const PolyLine = {
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.loadPolyline()
     }
 }

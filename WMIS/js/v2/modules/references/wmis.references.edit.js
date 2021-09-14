@@ -7,7 +7,7 @@
         BaseLinkButton
     },
 
-    data() {
+    data: function() {
         return {
             form: {
                 key: "",
@@ -25,13 +25,13 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return this.form.code === ""
         }
     },
 
     methods: {
-        submit() {
+        submit: function() {
             if (this.disabled) {
                 this.$message.error('Missing required data!');
                 return;
@@ -43,7 +43,7 @@
                 }).catch(error => console.log(error))
         },
 
-        setKey() {
+        setKey: function() {
             const key = this.getKey("#key");
             if (key && key !== undefined) {
                 this.form.key = key
@@ -51,7 +51,7 @@
             }
         },
 
-        getData() {
+        getData: function() {
             this.showLoading()
             axios.get(`/api/References/?ReferenceKey=${this.form.key}`)
                 .then(response => {
@@ -75,7 +75,7 @@
         },
     },
 
-    mounted() {
+    mounted: function() {
         this.setKey()
     }
 })

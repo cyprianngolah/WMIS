@@ -6,7 +6,7 @@ const app = Vue.createApp({
         BaseLinkButton,
         BaseDropdownSelect
     },
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -20,19 +20,19 @@ const app = Vue.createApp({
     },
 
     computed: {
-        isSelected() {
+        isSelected: function() {
             return this.selectedKey !== null && this.selectedKey !== undefined;
         }
     },
 
     watch: {
-        draw() {
+        draw: function() {
             this.selectedKey = null;
         }
     },
 
     methods: {
-        getYears() {
+        getYears: function() {
             this.showLoading()
             axios.get('/api/references/years')
                 .then(response => {
@@ -46,11 +46,11 @@ const app = Vue.createApp({
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.getYears()
     },
 
-    created() {
+    created: function() {
         const vm = this;
         document.title = "References";
 

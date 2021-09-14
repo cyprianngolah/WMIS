@@ -61,7 +61,7 @@ const GoogleMap = {
         }
     },
 
-    data() {
+    data: function() {
         return {
             map: null,
             google: null,
@@ -83,7 +83,7 @@ const GoogleMap = {
         passes: {
             deep: true,
             immediate: false,
-            handler(passes) {
+            handler: function(passes) {
                 if (this.map) {
                     this.markers.forEach(m => {
                         m.setVisible(false);
@@ -97,7 +97,7 @@ const GoogleMap = {
 
         selectedPass: {
             deep: true,
-            handler(selectedPass) {
+            handler: function(selectedPass) {
                 
                 if (this.temporaryMarker) {
                     this.temporaryMarker.setAnimation(null);
@@ -134,7 +134,7 @@ const GoogleMap = {
     },
 
     methods: {
-        async initializeMap() {
+        initializeMap: function() {
             const mapContainer = this.$refs.googleMap;
             mapLoader.loadCallback(e => {
                 if (e) {
@@ -146,7 +146,7 @@ const GoogleMap = {
             })
         },
 
-        createMarker(pass, message, icon) {
+        createMarker: function(pass, message, icon) {
             let marker = new this.google.maps.Marker({
                 position: new google.maps.LatLng(pass.latitude, pass.longitude),
                 title: message,
@@ -156,23 +156,23 @@ const GoogleMap = {
             return marker;
         },
 
-        getHoverMessage(pass) {
+        getHoverMessage: function(pass) {
             return moment(pass.locationDate || pass.timestamp, moment.ISO_8601).local().format('L h:mm a');
         },
 
-        createStartMarker(pass) {
+        createStartMarker: function(pass) {
             return this.createMarker(pass, "Start: " + this.getHoverMessage(pass), "/content/images/maps-symbol-blank-start.png");
         },
 
-        createStopMarker(pass) {
+        createStopMarker: function(pass) {
             return this.createMarker(pass, "Stop: " + this.getHoverMessage(pass), "/content/images/maps-symbol-blank-stop.png");
         },
-        createMiddleMarker(pass, imageUrl) {
+        createMiddleMarker: function(pass, imageUrl) {
             imageUrl = imageUrl || argosPassStatusToImage[this.passStatusFunction(pass)];
             return this.createMarker(pass, this.getHoverMessage(pass), imageUrl);
         },
 
-        loadMarkers() {
+        loadMarkers: function() {
             let startPass = this.passes[0];
             if (startPass) {
                 this.markers.push(this.createStopMarker(startPass));
@@ -197,7 +197,7 @@ const GoogleMap = {
             });
         },
 
-        loadObservations() {
+        loadObservations: function() {
             this.passes.forEach(p => {
                 this.markers.push(this.createMiddleMarker(p, null))
             });
@@ -211,7 +211,7 @@ const GoogleMap = {
         }
     },
 
-    async mounted() {
+    mounted: async function () {
         await this.initializeMap()
         setTimeout(() => {
             if (this.passes && this.passes.length > 0) {

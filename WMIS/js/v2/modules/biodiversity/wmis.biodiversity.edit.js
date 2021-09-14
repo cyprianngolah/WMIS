@@ -13,7 +13,7 @@
         SpeciesSynonymEditor
     },
 
-    data() {
+    data: function() {
         return {
             biodiversityKey: null,
             loading: false,
@@ -45,20 +45,20 @@
     },
 
     computed: {
-        isDirty() {
+        isDirty: function() {
             return this.formString !== JSON.stringify(this.form)
         },
-        lastUpdated() {
+        lastUpdated: function() {
             return this.form.lastUpdated ? moment.utc(this.form.lastUpdated, moment.ISO_8601).local().format('L h:mm a') : ""
         },
     },
 
     methods: {
-        setKey() {
+        setKey: function() {
             this.biodiversityKey = this.getKey("#bdKey")
         },
 
-        fetchBiodiversityData() {
+        fetchBiodiversityData: function() {
             this.setKey()
             this.loading = true
             this.showLoading()
@@ -75,7 +75,7 @@
                 }, 2000))
         },
 
-        fetchDropdowns() {
+        fetchDropdowns: function() {
             this.loading = true
            
             axios.all([
@@ -124,13 +124,13 @@
             }).finally(() => setTimeout(() => this.loading=false, 1500))
         },
 
-        updateReference({ references, category }) {
+        updateReference: function({ references, category }) {
             let filteredList = this.form.references.filter(r => r.categoryKey !== category)
             references.forEach(r => filteredList.push({ categoryKey: category, reference: r }))
             this.form.references = filteredList
         },
 
-        saveBioDiversity() {
+        saveBioDiversity: function() {
             this.loading = true
             this.showLoading()
             axios.put("/api/BioDiversity/", this.form)
@@ -145,12 +145,12 @@
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.setKey()
         this.fetchBiodiversityData()
     },
 
-    created() {
+    created: function() {
         this.fetchDropdowns()
     }
 });

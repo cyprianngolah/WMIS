@@ -8,7 +8,7 @@ const app = Vue.createApp({
         BaseInput,
         BaseDropdownSelect
     },
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -29,29 +29,29 @@ const app = Vue.createApp({
     },
 
     computed: {
-        isSelected() {
+        isSelected: function() {
             return this.selectedKey !== null && this.selectedKey !== undefined;
         },
 
-        disableCreate() {
+        disableCreate: function() {
             return this.newCollarForm.collarId==""
         }
     },
 
     watch: {
-        draw() {
+        draw: function() {
             this.selectedKey = null;
         }
     },
 
 
     methods: {
-        downloadRecords() {
+        downloadRecords: function() {
             var url = `api/collar/download/?startRow=0&rowCount=20000&sortBy=collarStatus.name&sortDirection=asc&subSortBy=&subSortDirection=&i=5&keywords=${this.form.keywords}&regionKey=${this.form.regionKey}&speciesKey=${this.form.speciesKey}&needingReview=${this.form.needingReview}`
             window.open(url, '_blank');
         },
 
-        getDropdowns() {
+        getDropdowns: function() {
             this.showLoading();
             axios.all([
                 axios.get('/api/biodiversity/species?startRow=0&rowCount=7000'),
@@ -77,10 +77,10 @@ const app = Vue.createApp({
             }, 2000))
         },
 
-        reloadTable() {
+        reloadTable: function() {
             this.table.ajax.reload(null, false);
         },
-        handleCreateCollar() {
+        handleCreateCollar: function() {
             axios({
                 url: '/api/collar/',
                 method: 'POST',
@@ -96,7 +96,7 @@ const app = Vue.createApp({
     },
 
 
-    created() {
+    created: function() {
         this.getDropdowns()
         document.title = "WMIS Collared Animal";    
         const vm = this;

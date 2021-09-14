@@ -27,6 +27,7 @@
                 "~/Scripts/v2/vue3.min.js",
                 "~/Scripts/v2/elementui.js",
                 //"~/Scripts/v2/bootstrap5.bundle.min.js",
+                "~/Scripts/v2/material-design-bootstrap.js",
                 "~/js/v2/mixins/GlobalMixin.js"
                 ));
 
@@ -38,10 +39,10 @@
             //////////////////////////////////////////////////////////////////////
             // Library/App Styles
             //////////////////////////////////////////////////////////////////////
-            bundles.Add(new StyleBundle("~/bundles/css").Include(
-						//"~/Content/v2/bootstrap5.min.css",
-                        "~/Content/v2/elementui.css",
-                        "~/Content/v2/site.css"));
+            bundles.Add(new StyleBundle("~/bundles/css")
+                    .Include("~/Content/v2/material-design-bootstrap.css")
+                    .Include("~/Content/v2/elementui.css", new CssRewriteUrlTransform()) // loads fonts from correct directory
+                    .Include("~/Content/v2/site.css"));
 
             bundles.Add(new StyleBundle("~/bundles/datatablescss").Include(
                         "~/Content/v2/bootstrap5-datatable.css"
@@ -310,6 +311,10 @@
                         "~/js/wmis.knockout.js"));
             #endregion
 
+
+
+            // enable bundle minification
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

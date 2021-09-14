@@ -25,6 +25,7 @@ const SurveyObservations = {
 
             argosPassStatuses: [],
             selectedPassForm: {},
+            loading: false,
 
             // modals
             pickHeaderModal: null,
@@ -187,7 +188,7 @@ const SurveyObservations = {
         updateObservationRow() {
             if (!this.selectedPass) return;
             axios.put(`/api/observation/survey/row/`, this.selectedPassForm)
-                .then(res => {
+                .then(_ => {
                     this.observationData.forEach((element, index) => {
                         if (element.key === this.selectedPassForm.key) {
                             element.comment = this.selectedPassForm.comment;
@@ -245,17 +246,18 @@ const SurveyObservations = {
             this.workingUpload.headerRowIndex = this.headerRowIndex;
             this.workingUpload.firstDataRowIndex = this.firstDataRowIndex;
             this.workingUpload.status.key = 2;
-
+            this.loading = true;
             axios.put("/api/observation/upload/", this.workingUpload)
                 .then(() => {
                     this.showColumnMapperModal()
+                    this.loading = false;
                 })
                 .catch(error => console.log(error))
         },
 
         showColumnMapperModal() {
             let observationUploadKey = this.workingUpload.key;
-
+            this.loading = true;
             axios.all([
                 axios.get(`/api/observation/upload/${observationUploadKey}/templateColumnMappings`),
                 axios.get(`/api/observation/upload/${observationUploadKey}/columns`)
@@ -265,6 +267,7 @@ const SurveyObservations = {
             })).then(() => {
                 this.pickHeaderModal.hide()
                 this.columnMappingModal.show()
+                this.loading = false;
             }).catch(error => {
                 console.log(error)
             })
@@ -272,20 +275,24 @@ const SurveyObservations = {
 
         saveMappedColumns() {
             let observationUploadKey = this.workingUpload.key;
+            this.loading = true;
             axios.put(`/api/observation/upload/${observationUploadKey}/templateColumnMappings/`, this.templateColumnMappings)
                 .then(() => {
                     this.showPreviewModal()
-                })
+                    this.loading = false
+                }).catch(error => console.log(error))
         },
 
         showPreviewModal() {
             let observationUploadKey = this.workingUpload.key;
+            this.loading = true;
             axios.get(`/api/observation/upload/${observationUploadKey}/data/`)
                 .then((response) => {
                     this.observationConfirmationData = response.data
                 }).then(() => {
                     this.columnMappingModal.hide();
                     this.dataPreviewModal.show();
+                    this.loading = false;
                 }).catch(error => console.log(error))
 
             
@@ -293,10 +300,13 @@ const SurveyObservations = {
 
         confirmData() {
             this.workingUpload.status.key = 4;
+            this.loading = true;
             axios.put("/api/observation/upload/", this.workingUpload)
                 .then(() => {
                     this.dataPreviewModal.hide();
-                    this.getObservations()
+                    this.getObservations();
+                    this.getObservationUploads();
+                    this.loading = false;
                 }).catch(error => console.log(error))
         },
 

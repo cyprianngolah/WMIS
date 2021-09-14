@@ -508,7 +508,9 @@
     <Content Include="Content\DataTables-1.10.3\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\datepicker3.css" />
+    <Content Include="Content\images\bison.jpg" />
     <Content Include="Content\images\caribou.jpg" />
+    <Content Include="Content\images\caribou2.jpg" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\GNWT–ENR2C.jpg" />
@@ -552,6 +554,7 @@
     <Content Include="Content\v2\fontawesome\webfonts\fa-brands-400.svg" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-regular-400.svg" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\v2\material-design-bootstrap.css" />
     <Content Include="Content\v2\select2-bootstrap5.min.css" />
     <Content Include="Content\v2\select2.min.css" />
     <Content Include="Content\v2\site.css" />
@@ -643,7 +646,6 @@
     <Content Include="js\v2\components\CollaredAnimalMapping.js" />
     <Content Include="js\v2\components\GoogleMap.js" />
     <Content Include="js\v2\components\HistoryTab.js" />
-    <Content Include="js\v2\components\MapMarker.js" />
     <Content Include="js\v2\components\PolyLine.js" />
     <Content Include="js\v2\components\ProjectSites.js" />
     <Content Include="js\v2\components\ProjectSurveys.js" />
@@ -893,6 +895,7 @@
     <Content Include="Scripts\v2\elementui.js" />
     <Content Include="Scripts\v2\googlemaps-loader.js" />
     <Content Include="Scripts\v2\jquery3.min.js" />
+    <Content Include="Scripts\v2\material-design-bootstrap.js" />
     <Content Include="Scripts\v2\moment.js" />
     <Content Include="Scripts\v2\select2.js" />
     <Content Include="Scripts\v2\vue3.min.js" />

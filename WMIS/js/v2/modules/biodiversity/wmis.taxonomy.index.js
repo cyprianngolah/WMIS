@@ -9,7 +9,7 @@ const app = Vue.createApp({
         BaseDropdownSelect
     },
 
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -23,25 +23,25 @@ const app = Vue.createApp({
     },
 
     computed: {
-        isSelected() {
+        isSelected: function() {
             return this.selectedKey !== null && this.selectedKey !== undefined;
         }
     },
 
     watch: {
-        draw() {
+        draw: function() {
             this.selectedKey = null;
         }
     },
 
 
     methods: {
-        downloadRecords() {
+        downloadRecords: function() {
             var url = `api/biodiversity/download/?startRow=0&rowCount=100000&sortBy=name&sortDirection=asc&keywords=${this.form.keywords}&familyKey=${this.form.familyKey}&groupKey=${this.form.groupKey}&orderKey=${this.form.orderKey}`
             window.open(url, '_blank');
         },
 
-        getTaxonomyGroups() {
+        getTaxonomyGroups: function() {
             this.showLoading()
             axios.get("/api/taxonomy/taxonomygroup/")
                 .then(response => {
@@ -54,11 +54,11 @@ const app = Vue.createApp({
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.getTaxonomyGroups()
     },
 
-    created() {
+    created: function() {
         const vm = this;
         document.title = "Taxonomies";
 

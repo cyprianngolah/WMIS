@@ -6,7 +6,7 @@ const app = Vue.createApp({
         BaseButton,
         BaseLinkButton
     },
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -24,24 +24,24 @@ const app = Vue.createApp({
     },
 
     computed: {
-        isSelected() {
+        isSelected: function() {
             return this.selectedKey !== null && this.selectedKey !== undefined;
         }
     },
 
     watch: {
-        draw() {
+        draw: function() {
             this.selectedKey = null;
         }
     },
 
 
     methods: {
-        downloadSelectedFile() {
+        downloadSelectedFile: function() {
             window.open("/api/biodiversity/uploads/download?fileName=" + this.selectedKey, '_blank');
         },
 
-        uploadObservationFile() {
+        uploadObservationFile: function() {
             this.showLoading()
             const frm = this.$refs.uploadSpeciesForm
             frm.submit();
@@ -52,7 +52,7 @@ const app = Vue.createApp({
         },
 
         // listens to upload event from upload iframe.
-        addEventHandlers() {
+        addEventHandlers: function() {
             const vm = this;
             // Create IE + others compatible event handler
             var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
@@ -80,11 +80,11 @@ const app = Vue.createApp({
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.addEventHandlers();
     },
 
-    created() {
+    created: function() {
         const vm = this;
         document.title = "WMIS Biodiversity";
         $(document).ready(function () {

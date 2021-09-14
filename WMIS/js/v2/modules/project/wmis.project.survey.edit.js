@@ -10,7 +10,7 @@
         ElementSpeciesSelect
     },
 
-    data() {
+    data: function() {
         return {
             key: null,
             form: {},
@@ -21,20 +21,20 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return !this.form.targetSpecies
                 || Object.keys(this.form.targetSpecies).length === 0
                 || this.form.targetSpecies.key === 0
                 || this.loading
         },
-        hasObservations() {
+        hasObservations: function() {
             return this.observationUploads.length > 0
         }
     },
 
 
     methods: {
-        getData() {
+        getData: function() {
             this.setKey()
             this.showLoading();
             axios.all([
@@ -58,7 +58,7 @@
                 }, 2000))
         },
 
-        getProjectInfo() {
+        getProjectInfo: function() {
             axios.get(`/api/Project/${this.form.projectKey}`)
                 .then(response => {
                     this.project = response.data
@@ -66,7 +66,7 @@
         },
 
 
-        submit() {
+        submit: function() {
             
             this.setKey()
             this.loading = true
@@ -89,13 +89,13 @@
                 })
         },
 
-        setKey() {
+        setKey: function() {
             this.key = this.getKey("#surveyKey")
         }
 
     },
 
-    mounted() {
+    mounted: function() {
         this.setKey()
         this.getData()
     }

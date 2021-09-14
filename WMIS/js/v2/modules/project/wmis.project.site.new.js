@@ -6,7 +6,7 @@ const app = Vue.createApp({
         BaseButton,
     },
 
-    data() {
+    data: function() {
         return {
             key: "",
             form: {
@@ -34,7 +34,7 @@ const app = Vue.createApp({
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             if (Object.keys(this.form).length == 0) return true
             if (!this.form.name || this.form.name.trim == "") return true
             if (!this.form.latitude || !this.form.longitude || this.form.latitude == "" || this.form.longitude == "") return true
@@ -47,7 +47,7 @@ const app = Vue.createApp({
 
     methods: {
 
-        fetchProject() {
+        fetchProject: function() {
             this.showLoading()
             this.setKey()
             axios.get(`/api/Project/${this.key}`)
@@ -60,7 +60,7 @@ const app = Vue.createApp({
                 }, 2000))
         },
 
-        save() {
+        save: function() {
             this.loading = true
             this.form.canSave = !this.disabled
             this.setKey()
@@ -71,22 +71,22 @@ const app = Vue.createApp({
                 .finally(() => this.loading = false)
         },
 
-        setKey() {
+        setKey: function() {
             this.key = this.getKey("#projectKey")
             this.form.projectKey = this.key
         },
 
-        returnToProject() {
+        returnToProject: function() {
             window.location.href = `/Project/Edit/${this.key}`
         }
 
     },
 
-    mounted() {
+    mounted: function() {
         this.fetchProject()
     },
 
-    created() {
+    created: function() {
         this.setKey()
     }
 })

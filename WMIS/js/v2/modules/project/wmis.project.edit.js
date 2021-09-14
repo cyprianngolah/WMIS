@@ -20,7 +20,7 @@ const app = Vue.createApp({
         ProjectSites,
     },
 
-    data() {
+    data: function() {
         return {
             statuses: [],
             projectLeads: [],
@@ -44,21 +44,21 @@ const app = Vue.createApp({
     },
 
     computed: {
-        lastUpdated() {
+        lastUpdated: function() {
             return this.form.lastUpdated ? moment.utc(this.form.lastUpdated, moment.ISO_8601).local().format('L h:mm a') : ""
         },
 
-        disabled() {
+        disabled: function() {
             return !this.isDirty || Object.keys(this.form).length == 0;
         },
 
-        isDirty() {
+        isDirty: function() {
             return this.initialData !== JSON.stringify(this.form)
         },
     },
 
     methods: {
-        getData() {
+        getData: function() {
             this.setKey()
             this.showLoading();
             axios.all([
@@ -88,10 +88,10 @@ const app = Vue.createApp({
                 this.hideLoading()
             }, 2000))
         },
-        setInitialCollaborator() {
+        setInitialCollaborator: function() {
             this.collaboratorForm = { ...initialCollaborator, ...{ projectId: this.key } }
         },
-        getProjectCollaborators() {
+        getProjectCollaborators: function() {
             axios.all([
                 axios.get(`/api/Collaborator/project/${this.key}`),
                 axios.get('/api/collaborator/?startRow=0&rowCount=500&keyword='),
@@ -101,7 +101,7 @@ const app = Vue.createApp({
             })).catch(error => console.log(error))
         },
 
-        removeCollaborator(key) {
+        removeCollaborator: function(key) {
             this.$confirm('Are you sure you want to delete this record?')
                 .then(_ => {
                     const filtered = this.projectCollaborators.filter(p => p.key != key).map(r => r.key);
@@ -114,7 +114,7 @@ const app = Vue.createApp({
                 .catch(_ => { console.log("action cancelled") });
         },
 
-        addExistingCollaborator() {
+        addExistingCollaborator: function() {
             const _collaborators = this.projectCollaborators.map(p => p.key)
             const payload = [..._collaborators, ...[this.selectedCollaborator]]
             axios.put(`/api/collaborator/project`, {
@@ -127,12 +127,12 @@ const app = Vue.createApp({
             }).catch(error => console.log(error))
         },
 
-        createCollaboratorModal() {
+        createCollaboratorModal: function() {
             this.setInitialCollaborator();
             this.editingCollaborator = false;
             this.editCollaboratorFormModal.show();
         },
-        editCollaborator(record) {
+        editCollaborator: function(record) {
             this.collaboratorForm = {
                 projectId: this.key,
                 key: record.key,
@@ -145,7 +145,7 @@ const app = Vue.createApp({
             this.editCollaboratorFormModal.show()
         },
 
-        handleCollaboratorSave() {
+        handleCollaboratorSave: function() {
             const verb = this.editingCollaborator ? 'put' : 'post';
             axios[verb](`/api/collaborator`, this.collaboratorForm)
                 .then(_ => {
@@ -156,7 +156,7 @@ const app = Vue.createApp({
                 });
         },
 
-        updateProjectUsers() {
+        updateProjectUsers: function() {
             const payload = {
                 key: this.key,
                 userIds: this.currentProjectUsers
@@ -170,11 +170,11 @@ const app = Vue.createApp({
         },
         
 
-        setKey() {
+        setKey: function() {
             this.key = this.getKey("#projectKey")
         },
 
-        saveUpdate() {
+        saveUpdate: function() {
             this.loading = true
             axios.put(`/api/Project/`, this.form)
                 .then(_ => {
@@ -188,13 +188,13 @@ const app = Vue.createApp({
                 });
         },
 
-        handleCloseModal() {
+        handleCloseModal: function() {
             this.setInitialCollaborator();
             this.editingCollaborator = false;
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.setKey()
         this.getData()
         this.getProjectCollaborators()
@@ -208,7 +208,7 @@ const app = Vue.createApp({
         this.setInitialCollaborator()
     },
 
-    created() {
+    created: function() {
         const vm = this;
 
         $(document).ready(function () {

@@ -1,5 +1,8 @@
 ﻿namespace Wmis.Extensions
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
     using Wmis.Configuration;
@@ -51,9 +54,10 @@
 
             
             var activeClass = isDropdown ? "dropdown-item" : "nav-link";
-            
 
-            if (controllerName == currentController && actionName == currentAction)
+
+            //if (controllerName == currentController && actionName == currentAction)
+            if (controllerName == currentController )
             {
                 activeClass += " active";
             }
@@ -71,26 +75,29 @@
             }
                     
             return new MvcHtmlString(builder.ToString());
-            
-            
-            /*var builder = new TagBuilder("li")
-            {
-                InnerHtml = htmlHelper.ActionLink(linkText, actionName, controllerName).ToHtmlString()
-            };
-            
-            builder.AddCssClass("nav-item");
 
-            if (controllerName == currentController && actionName == currentAction)
-            {
-                
-               builder.AddCssClass("active");
+            
+        }
+
+
+        public static string getDropdownClass(this HtmlHelper htmlHelper, string controllerNames )
+        {
+            var activeController = "";
+            var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
+            if (routeValues.ContainsKey("controller")) {
+                activeController = (string)routeValues["controller"];
             }
-*/
 
+            var baseClass = "nav-link dropdown-toggle";
 
+            IEnumerable<string> acceptedControllers = controllerNames.ToLower().Split(',').ToList();
 
+            if (acceptedControllers.Contains(activeController.ToLower()))
+            {
+                baseClass += " active";
+            }
 
-            
+            return baseClass;
         }
 
         public static MvcHtmlString HelpLinks(this HtmlHelper htmlHelper)

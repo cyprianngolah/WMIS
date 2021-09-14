@@ -11,7 +11,7 @@
         CollaredAnimalMapping
     },
 
-    data() {
+    data: function() {
         return {
             key: "",
             loading: false,
@@ -45,16 +45,16 @@
 
     
     computed: {
-        lastUpdated() {
+        lastUpdated: function() {
             return this.form.lastUpdated ? moment.utc(this.form.lastUpdated, moment.ISO_8601).local().format('L h:mm a') : ""
         },
-        disabled() {
+        disabled: function() {
             return true;
         },
-        loaded() {
+        loaded: function() {
             return Object.keys(this.form).length > 0 && Object.keys(this.breedingStatusForm).length > 0
         },
-        disableBreedingStatusCreate() {
+        disableBreedingStatusCreate: function() {
             let flag = false;
             Object.keys(this.breedingStatusForm).forEach(k => {
                 if (!this.checkKey(this.breedingStatusForm[k]) && k != 'breedingStatusDate') {
@@ -68,7 +68,7 @@
             return flag;
         },
 
-        disableHerdAssociationCreate() {
+        disableHerdAssociationCreate: function() {
             let flag = false;
             Object.keys(this.herdAssociationForm).forEach(k => {
                 if (!this.checkKey(this.herdAssociationForm[k]) && k != 'herdAssociationDate') {
@@ -84,15 +84,15 @@
     },
 
     methods: {
-        checkKey(property) {
+        checkKey: function(property) {
             if (!property) return false;
             return !!property.key;
         },
-        setKey() {
+        setKey: function() {
             this.key = this.getKey("#collaredAnimalKey")
         },
 
-        getCollarData() {
+        getCollarData: function() {
             this.setKey()
             this.showLoading();
             axios.get(`/api/collar/${this.key}`)
@@ -119,17 +119,17 @@
                 })
         },
 
-        updateBreedingStatus() {
+        updateBreedingStatus: function() {
             this.form = { ...this.form, ...this.breedingStatusForm };
             this.breedingStatusModal.hide()
         },
 
-        updateHerdAssociation() {
+        updateHerdAssociation: function() {
             this.form = { ...this.form, ...this.herdAssociationForm };
             this.herdAssociationModal.hide()
         },
 
-        saveUpdate() {
+        saveUpdate: function() {
             this.loading = true
             axios.put(`/api/collar/`, this.form)
                 .then(_ => {
@@ -142,7 +142,7 @@
                 })
         },
 
-        getDropdowns() {
+        getDropdowns: function() {
             axios.all([
                 axios.get(`/api/collar/type?startRow=0&rowCount=500`), // collar types
                 axios.get('/api/collar/region?startRow=0&rowCount=500'), // collar regions
@@ -183,7 +183,7 @@
     },
 
     
-    mounted() {
+    mounted: function() {
         this.setKey()
         this.getCollarData()
 
@@ -194,7 +194,7 @@
 
     },
 
-    created() {
+    created: function() {
         this.getDropdowns()
     }
 })

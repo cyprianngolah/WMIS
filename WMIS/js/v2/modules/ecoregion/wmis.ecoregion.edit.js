@@ -6,7 +6,7 @@
         BaseButton
     },
 
-    data() {
+    data: function() {
         return {
             form: {
                 taxonomyKey: "",
@@ -16,13 +16,13 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return this.form.name === ""
         }
     },
 
     methods: {
-        submit() {
+        submit: function() {
             if (this.disabled) {
                 this.$message.error('Name is required!');
                 return;
@@ -32,7 +32,7 @@
                     window.location.href = "/Ecoregion";
                 }).catch(error => console.log(error))
         },
-        setKey() {
+        setKey: function() {
             const key = this.getKey("#ecoregionKey");
             if (key && key !== undefined) {
                 this.form.key = key
@@ -40,7 +40,7 @@
             }
         },
 
-        getEcoregion() {
+        getEcoregion: function() {
             this.showLoading();
             axios.get(`/api/Ecoregion/?key=${this.form.key}`)
                 .then(response => {
@@ -55,7 +55,7 @@
         },
     },
 
-    mounted() {
+    mounted: function() {
         this.setKey()
     }
 })

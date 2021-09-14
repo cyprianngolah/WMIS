@@ -119,6 +119,7 @@
     <label class="col-md-1 form-label text-end">Collar State</label>
     <div class="col-md-3">
         <el-select class="w-100" v-model="form.collarState.key">
+            <el-option :value="0" label="Select State" disabled></el-option>
             <el-option v-for="item in collarStates"
                        :key="item.key"
                        :label="item.name"

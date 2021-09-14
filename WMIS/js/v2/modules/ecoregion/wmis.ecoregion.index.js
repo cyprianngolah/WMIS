@@ -4,7 +4,7 @@ const app = Vue.createApp({
         BaseButton,
         BaseLinkButton
     },
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -16,18 +16,18 @@ const app = Vue.createApp({
     },
 
     computed: {
-        isSelected() {
+        isSelected: function() {
             return this.selectedKey !== null && this.selectedKey !== undefined;
         }
     },
 
     watch: {
-        draw() {
+        draw: function() {
             this.selectedKey = null;
         }
     },
 
-    created() {
+    created: function() {
         const vm = this;
         document.title = "Ecoregions";
 

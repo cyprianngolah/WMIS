@@ -18,7 +18,7 @@ const app = Vue.createApp({
         BaseLinkButton,
         BaseInput,
     },
-    data() {
+    data: function() {
         return {
             surveyTemplateId: 0,
             surveyTemplate: {},
@@ -35,26 +35,26 @@ const app = Vue.createApp({
     },
 
     computed: {
-        disableSave() {
+        disableSave: function() {
             if (!this.surveyTemplate.name) return true;
             return this.surveyTemplate.name.trim() == ""
         },
 
-        disableColumnSave() {
+        disableColumnSave: function() {
             return this.columnData.name.trim()=="" || this.columnData.columnType.key==0
         },
 
-        columnsCanBeEdited() {
+        columnsCanBeEdited: function() {
             return this.surveyTemplate.projectCount == 0;
         }
     },
 
 
     methods: {
-        requiredColumnFormatter(value) {
+        requiredColumnFormatter: function(value) {
             return value ? "Yes" : "No";
         },
-        getTemplate() {
+        getTemplate: function() {
             this.showLoading();
             this.setKey();
             axios.get(`/api/surveytemplate/${this.surveyTemplateId}`)
@@ -67,14 +67,14 @@ const app = Vue.createApp({
 
         },
 
-        getColumnTypes() {
+        getColumnTypes: function() {
             axios.get('/api/surveytemplate/columnTypes')
                 .then(response => this.columnTypes = response.data)
                 .catch(error => console.log(error))
 
         },
 
-        getTemplateColumns() {
+        getTemplateColumns: function() {
             axios.get(`/api/surveytemplate/columns/${this.surveyTemplateId}`)
                 .then(response => {
                     this.columns = response.data
@@ -82,7 +82,7 @@ const app = Vue.createApp({
                 }).catch(error => console.log(error))
         },
 
-        saveSurveyTemplate() {
+        saveSurveyTemplate: function() {
             axios.post('/api/surveytemplate/', { surveyTemplateId: this.surveyTemplateId, name: this.surveyTemplate.name })
                 .then(_ => {
                     window.location.href = "/SurveyTemplate";
@@ -90,7 +90,7 @@ const app = Vue.createApp({
         },
 
 
-        save() {
+        save: function() {
             this.columnData.surveyTemplateId = this.surveyTemplateId;
 
             axios.post('/api/surveytemplate/column', this.columnData)
@@ -101,39 +101,39 @@ const app = Vue.createApp({
                 
         },
 
-        async showEditModal(columnData) {
-            this.columnData = await JSON.parse(JSON.stringify(columnData))
+        showEditModal: function(columnData) {
+            this.columnData = JSON.parse(JSON.stringify(columnData))
             this.createColumnModal.show();
         },
 
-        showCreateModal() {
+        showCreateModal: function() {
             this.columnData = JSON.parse(JSON.stringify(initialColumnData))
             this.createColumnModal.show();
         },
 
-        removeColumn(id) {
+        removeColumn: function(id) {
             axios.delete(`/api/surveytemplate/column/${id}`)
                 .then(_ => {
                     this.getTemplateColumns()
                 }).catch(error => console.log(error))
         },
 
-        setKey() {
+        setKey: function() {
             this.surveyTemplateId = this.getKey("#templateKey");
         },
 
-        handleCancelModal() {
+        handleCancelModal: function() {
             this.columnData = initialColumnData;
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.getTemplate()
         this.getTemplateColumns()
         this.createColumnModal = this.createModal("createColumnModal");
     },
 
-    created() {
+    created: function() {
         this.getColumnTypes();
         this.setKey();
     },

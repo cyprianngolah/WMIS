@@ -1,12 +1,12 @@
 ﻿const GlobalMixin = {
-    data() {
+    data: function() {
         return {
             loadingFlag: null
         }
     },
 
     methods: {
-        showLoading(message) {
+        showLoading: function(message) {
             this.loadingFlag = this.$loading({
                 lock: true,
                 text: message || 'Loading',
@@ -15,17 +15,17 @@
             })
         },
 
-        hideLoading() {
+        hideLoading: function() {
             if (this.loadingFlag) {
                 this.loadingFlag.close()
             }
         },
 
-        getKey(selector) {
+        getKey: function(selector) {
             return parseInt($(selector).val());
         },
 
-        createModal(selector) {
+        createModal: function(selector) {
             return new mdb.Modal(document.getElementById(selector), {
                 keyboard: false,
                 backdrop: 'static'
@@ -36,7 +36,7 @@
 
 const DataTableMixin = {
 
-    data() {
+    data: function() {
         return {
             tab: "None",
         }
@@ -44,10 +44,10 @@ const DataTableMixin = {
 
 
     watch: {
-        tab(newVal) {
+        tab: function(newVal) {
             setTimeout(() => {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-            }, 1000)
+            }, 500)
             
         }
     },

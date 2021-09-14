@@ -7,7 +7,7 @@
         SynonymTags
     },
 
-    data() {
+    data: function() {
         return {
             taxonomyGroups: [],
             form: {
@@ -19,13 +19,13 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return this.form.name === "" || this.form.taxonomyGroupKey === ""
         }
     },
 
     methods: {
-        submit() {
+        submit: function() {
             if (this.disabled) {
                 this.$message.error('All fields are required!');
                 return;
@@ -36,7 +36,7 @@
                 }).catch(error => console.log(error))
         },
 
-        getTaxonomyGroups() {
+        getTaxonomyGroups: function() {
             axios.get('/api/Taxonomy/TaxonomyGroup')
                 .then(response => {
                     this.taxonomyGroups = response.data
@@ -44,7 +44,7 @@
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.getTaxonomyGroups()
     }
 })

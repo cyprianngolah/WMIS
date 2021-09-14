@@ -1,40 +1,10 @@
-﻿const BaseLinkButton = {
-    template: `
-        <a class="btn shadow-3 ms-2" v-bind="$attrs" :class="disabled ? 'btn-'+color+' disabled' : 'btn-'+color" role="button"><slot></slot></a>
-    `,
-    props: {
-        type: {
-            default: 'button'
-        },
-        color: {
-            default: 'danger'
-        },
-        busy: {
-            type: Boolean,
-            default: false
-        },
-        disabled: {
-            type: Boolean,
-            default: false
-        },
-        plain: {
-            type: Boolean,
-            default: false
-        },
-        size: {
-            type: String,
-            default: 'medium'
-        },
-    }
-}
-
+﻿
 const BaseButton = {
     template: `
         <button class="btn shadow-3 ms-2" :class="plain ? 'btn-outline-' + color : 'btn-'+color"  v-bind="$attrs" :disabled="disabled || busy">
             <span v-show="busy" class="el-icon-loading is-loading loading me-1"></span>
             <slot></slot>
         </button>
-        <!--<el-button :size="size" class="shadow-3" :nativeType="type" :plain="plain" :disabled="disabled" :loading="busy" :type="color"><slot></slot></el-button>-->
     `,
     props: {
         type: {
@@ -60,7 +30,7 @@ const BaseButton = {
             default: 'medium'
         },
     }
-}
+};
 
 
 const BaseInput = {
@@ -94,12 +64,43 @@ const BaseInput = {
     },
 
     methods: {
-        handleInput(value) {
+        handleInput: function (value) {
             this.$emit("update:modelValue", value);
         }
     },
 
-}
+};
+
+const BaseLinkButton = {
+    template: `
+        <a class="btn shadow-3 ms-2" v-bind="$attrs" :class="disabled ? 'btn-'+color+' disabled' : 'btn-'+color" role="button"><slot></slot></a>
+    `,
+    props: {
+        type: {
+            default: 'button'
+        },
+        color: {
+            default: 'danger'
+        },
+        busy: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        plain: {
+            type: Boolean,
+            default: false
+        },
+        size: {
+            type: String,
+            default: 'medium'
+        }
+    }
+};
+
 
 
 const BaseSpeciesSelect = {
@@ -149,7 +150,7 @@ const BaseSpeciesSelect = {
         }
     },
 
-    data() {
+    data: function() {
         return {
             options: [],
             value: "",
@@ -158,7 +159,7 @@ const BaseSpeciesSelect = {
     },
 
     methods: {
-        transformRecord(d) {
+        transformRecord: function(d) {
             let name = d.name;
             if (d.commonName && d.commonName != "") {
                 name += ` - ${d.commonName}`
@@ -169,7 +170,7 @@ const BaseSpeciesSelect = {
                 name
             }
         },
-        remoteMethod(query) {
+        remoteMethod: function(query) {
             if (query !== '') {
                 this.loading = true;
                 axios.get(`/api/biodiversity?startRow=0&rowCount=25&${this.search_param_name}=${query}`)
@@ -184,11 +185,11 @@ const BaseSpeciesSelect = {
             }
         },
 
-        handleInput(value) {
+        handleInput: function(value) {
             this.$emit("update:modelValue", value);
         },
 
-        getSpeciesById() {
+        getSpeciesById: function() {
             axios.get(`/api/BioDiversity/${this.modelValue}`)
                 .then(response => {
                     this.options.push(this.transformRecord(response.data))
@@ -197,7 +198,7 @@ const BaseSpeciesSelect = {
         }
     },
 
-    mounted() {
+    mounted: function() {
         if (this.modelValue) {
             this.getSpeciesById()
         }
@@ -239,7 +240,7 @@ const ElementSpeciesSelect = {
         }
     },
 
-    data() {
+    data: function() {
         return {
             selected: [],
             options: [],
@@ -251,7 +252,7 @@ const ElementSpeciesSelect = {
         initial: {
             deep: true,
             immediate: true,
-            handler(newVal) {
+            handler: function(newVal) {
                 if (newVal !== undefined) {
                     this.options.push(newVal)
                 }
@@ -261,12 +262,19 @@ const ElementSpeciesSelect = {
 
 
     methods: {
-        search(query) {
+        search: function(query) {
             if (query !== '') {
                 axios.get(`/api/biodiversity?keywords=${query}&startRow=0&rowCount=25`)
                     .then(response => {
                         this.options = response.data.data.map(d => {
-                            return { commonName: d.commonName, name: d.name, key: d.key }
+                            const name = d.name;
+                            const commonName = d.commonName;
+                            const key = d.key;
+                            return {
+                                commonName,
+                                name,
+                                key
+                            }
                         })
                     }).catch(error => console.log(error))
                     .finally(() => this.loading = false)
@@ -274,7 +282,7 @@ const ElementSpeciesSelect = {
                 this.options = [];
             }
         }
-    },
+    }
 
 
 }
@@ -311,7 +319,7 @@ const ElementReferenceSelect = {
         modelValue: [String, Number, Array],
     },
 
-    data() {
+    data: function() {
         return {
             selected: [],
             options: [],
@@ -321,7 +329,7 @@ const ElementReferenceSelect = {
 
 
     methods: {
-        search(query) {
+        search: function(query) {
             if (query !== '') {
                 this.loading = true;
                 axios.get(`/api/references?keywords=${query}&startRow=0&rowCount=25`)
@@ -334,12 +342,12 @@ const ElementReferenceSelect = {
             }
         },
 
-        generateLabel(item) {
+        generateLabel: function(item) {
             return `${item.code} - ${item.author} - ${item.title} - ${item.year}`
         },
     },
 
-    created() {
+    created: function() {
         this.options = this.modelValue
     }
 }
@@ -392,7 +400,7 @@ const ReferenceWidget = {
         update_function: Function,
     },
 
-    data() {
+    data: function() {
         return {
             selected_references: [],
             initialList: ""
@@ -403,7 +411,7 @@ const ReferenceWidget = {
         references: {
             deep: true,
             immediate: true,
-            handler(value) {
+            handler: function(value) {
                 if (typeof value != 'undefined') {
                     this.selected_references = value.filter(r => r.categoryKey == this.category_id).map(r => r.reference)
                 }
@@ -413,31 +421,31 @@ const ReferenceWidget = {
     },
 
     computed: {
-        display() {
+        display: function() {
             if (!this.selected_references || !this.selected_references.length) return "";
             return "(" + this.selected_references.map(r => r.code).join(", ") + ")"
         }
     },
 
     methods: {
-        cancelModal() {
+        cancelModal: function() {
             this.selected_references = JSON.parse(this.initialList)
         },
 
-        applyChange() {
+        applyChange: function() {
             this.update_function({
                 references: this.selected_references,
                 category: this.category_id
             })
         },
 
-        buildString(ref_list) {
+        buildString: function(ref_list) {
             if (!this.selected_references || !this.selected_references.length) return "";
             return "(" + ref_list.map(r => r.code).join(", ") + ")"
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.initialList = JSON.stringify(this.selected_references)
     }
 }
@@ -518,7 +526,7 @@ const PopulationTags = {
     ],
 
     emits: ['update:modelValue'],
-    data() {
+    data: function() {
         return {
             inputVisible: false,
             inputValue: ''
@@ -526,18 +534,18 @@ const PopulationTags = {
     },
 
     methods: {
-        handleClose(tag) {
+        handleClose: function(tag) {
             this.populations.splice(this.populations.indexOf(tag), 1);
         },
 
-        showInput() {
+        showInput: function() {
             this.inputVisible = true;
             this.$nextTick(_ => {
                 this.$refs.saveTagInput.$refs.input.focus();
             });
         },
 
-        handleInputConfirm() {
+        handleInputConfirm: function() {
             if (this.inputValue !== "" && !this.populations.includes(this.inputValue)) {
                 this.populations.push(this.inputValue);
             }
@@ -587,7 +595,7 @@ const SynonymTags = {
     ],
 
     emits: ['update:modelValue'],
-    data() {
+    data: function() {
         return {
             inputVisible: false,
             inputValue: ''
@@ -595,18 +603,18 @@ const SynonymTags = {
     },
 
     methods: {
-        handleClose(tag) {
+        handleClose: function(tag) {
             this.synonyms.splice(this.synonyms.indexOf(tag), 1);
         },
 
-        showInput() {
+        showInput: function() {
             this.inputVisible = true;
             this.$nextTick(_ => {
                 this.$refs.saveTagInput.$refs.input.focus();
             });
         },
 
-        handleInputConfirm() {
+        handleInputConfirm: function() {
             if (this.inputValue !== "" && !this.synonyms.includes(this.inputValue)) {
                 this.synonyms.push(this.inputValue);
             }

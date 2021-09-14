@@ -6,7 +6,7 @@ const app = Vue.createApp({
         BaseButton,
     },
 
-    data() {
+    data: function() {
         return {
             key: "",
             form: {},
@@ -15,7 +15,7 @@ const app = Vue.createApp({
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             if (Object.keys(this.form).length == 0) return true
             if (!this.form.name || this.form.name.trim == "") return true
             if (!this.form.latitude || !this.form.longitude || this.form.latitude == "" || this.form.longitude == "") return true
@@ -27,7 +27,7 @@ const app = Vue.createApp({
     },
 
     methods: {
-        fetchSite() {
+        fetchSite: function() {
             this.setKey();
             this.showLoading();
             axios.get(`/api/site/${this.key}`)
@@ -61,7 +61,7 @@ const app = Vue.createApp({
                 }, 2000))
         },
 
-        fetchProject() {
+        fetchProject: function() {
             axios.get(`/api/Project/${this.form.projectKey}`)
                 .then(response => {
                     this.form.projectName = response.data.name
@@ -69,7 +69,7 @@ const app = Vue.createApp({
                 .catch(error => console.log(error))
         },
 
-        save() {
+        save: function() {
             this.loading = true
             this.form.canSave = !this.disabled
             this.form.key = this.key
@@ -80,22 +80,22 @@ const app = Vue.createApp({
                 .finally(() => this.loading = false)
         },
 
-        setKey() {
+        setKey: function() {
             this.key = this.getKey("#siteKey")
             this.form.key = this.key
         },
 
-        returnToProject() {
+        returnToProject: function() {
             window.location.href=`/Project/Edit/${this.form.projectKey}`
         }
 
     },
 
-    mounted() {
+    mounted: function() {
         this.fetchSite()
     },
 
-    created() {
+    created: function() {
         this.setKey()
     }
 })

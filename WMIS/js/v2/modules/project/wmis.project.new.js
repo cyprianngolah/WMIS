@@ -5,7 +5,7 @@
         BaseButton
     },
 
-    data() {
+    data: function() {
         return {
             form: {
                 name: "",
@@ -14,13 +14,13 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return this.form.name.trim() === ""
         }
     },
 
     methods: {
-        submit() {
+        submit: function() {
             if (this.disabled) {
                 this.$message.error('All fields are required!');
                 return;

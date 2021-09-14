@@ -18,7 +18,7 @@ const HistoryTab = {
     },
     template: '#history-tab-template',
 
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -36,18 +36,18 @@ const HistoryTab = {
     },
 
     watch: {
-        filterValue(newVal) {
+        filterValue: function(newVal) {
             this.reloadTable()
         }
     },
 
    
     methods: {
-        reloadTable() {
+        reloadTable: function() {
             this.table.ajax.reload(null, false);
         },
 
-        handleSave() {
+        handleSave: function() {
             axios.post('/api/history/', this.form)
                 .then(_ => {
                     this.reloadTable();
@@ -57,7 +57,7 @@ const HistoryTab = {
                 });
         },
 
-        populateHistoryFilters() {
+        populateHistoryFilters: function() {
             axios.get(`/api/history/filterTypes?parentTableKey=${this.parent_table_key}&parentTableName=${this.parent_table_name}`)
                 .then(response => {
                     this.filterOptions = response.data.map(d => d.item)
@@ -67,7 +67,7 @@ const HistoryTab = {
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.populateHistoryFilters()
         this.formModal = this.createModal("historyEditModal");
 
@@ -81,11 +81,9 @@ const HistoryTab = {
             };
         });
     },
-    updated() {
-        console.log("I am here")
-    },
 
-    created() {
+
+    created: function() {
         const vm = this;
        
 
@@ -159,10 +157,6 @@ const HistoryTab = {
                     }
                 ],
             });
-
-           /* $('a[data-mdb-toggle="tab"]').on('shown.mdb.tab', function (e) {
-                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
-            });*/
 
             $("#historyTabTemplate").on('click', 'td.editHistory span', function (event) {
                 let rowIndex = $(event.target).data().rowIndex

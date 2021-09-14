@@ -7,7 +7,7 @@ const app = Vue.createApp({
         BaseLinkButton,
         BaseInput
     },
-    data() {
+    data: function() {
         return {
             table: null,
             draw: 1,
@@ -26,28 +26,28 @@ const app = Vue.createApp({
     },
 
     computed: {
-        isSelected() {
+        isSelected: function() {
             return this.selectedKey !== null && this.selectedKey !== undefined;
         },
 
-        disableCreate() {
+        disableCreate: function() {
             return this.newTemplateForm.name.trim() == ""
         }
     },
 
     watch: {
-        draw() {
+        draw: function() {
             this.selectedKey = null;
         }
     },
 
 
     methods: {
-        reloadTable() {
+        reloadTable: function() {
             this.table.ajax.reload(null, false);
         },
 
-        handleCreateTemplate() {
+        handleCreateTemplate: function() {
             axios.post('/api/surveytemplate/', this.newTemplateForm)
                 .then(response => {
                     window.location.href = "/SurveyTemplate/edit/" + response.data;
@@ -55,11 +55,11 @@ const app = Vue.createApp({
         }
     },
 
-    mounted() {
+    mounted: function() {
         this.newTemplateModal = this.createModal("newTemplateModal");
     },
 
-    created() {
+    created: function() {
         const vm = this;
 
         $(document).ready(function () {

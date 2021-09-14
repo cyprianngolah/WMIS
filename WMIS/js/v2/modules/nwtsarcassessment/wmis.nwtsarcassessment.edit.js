@@ -7,7 +7,7 @@
         BaseLinkButton
     },
 
-    data() {
+    data: function() {
         return {
             form: {
                 key: "",
@@ -17,13 +17,13 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return this.form.name === ""
         }
     },
 
     methods: {
-        submit() {
+        submit: function() {
             if (this.disabled) {
                 this.$message.error('Name is required!');
                 return;
@@ -34,7 +34,7 @@
                     window.location.href = "/NwtSarcAssessment";
                 }).catch(error => console.log(error))
         },
-        setKey() {
+        setKey: function() {
             const key = this.getKey("#key");
             if (key && key !== undefined) {
                 this.form.key = key
@@ -42,7 +42,7 @@
             }
         },
 
-        getData() {
+        getData: function() {
             this.showLoading()
             axios.get(`/api/nwtsarcassessment/?key=${this.form.key}`)
                 .then(response => {
@@ -57,7 +57,7 @@
         },
     },
 
-    mounted() {
+    mounted: function() {
         this.setKey()
     }
 })

@@ -106,8 +106,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" v-on:click="updateObservationRow()">Update</button>
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :loading="loading" v-on:click="updateObservationRow()">Update</base-button>
             </div>
         </div>
     </div>
@@ -140,8 +140,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" v-on:click="uploadObservationFile()">Upload</button>
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :loading="loading" v-on:click="uploadObservationFile()">Upload</base-button>
             </div>
         </div>
     </div>
@@ -185,8 +185,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" v-bind:disabled="!rowsPicked" v-on:click="saveHeaderPickerRows()">Save Rows</button>
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :disabled="!rowsPicked" :loading="loading" v-on:click="saveHeaderPickerRows()">Save Rows</base-button>
             </div>
         </div>
     </div>
@@ -235,8 +235,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
-                <button type="button" v-bind:disabled="!columnsPicked" class="btn btn-primary" v-on:click="saveMappedColumns()">Save Rows</button>
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :disabled="!columnsPicked" :loading="loading" v-on:click="saveMappedColumns()">Save Rows</base-button>
             </div>
         </div>
     </div>
@@ -291,8 +291,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" v-on:click="confirmData()">Confirm Data</button>
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
+                <base-button color="success" :loading="loading" :disabled="loading" v-on:click="confirmData()">Confirm Data</base-button>
             </div>
         </div>
     </div>
@@ -304,7 +304,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Resume Observation Upload</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div style="max-height: 420px; overflow-y: auto;">
@@ -342,7 +342,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
+                <base-button color="danger" data-mdb-dismiss="modal">Cancel</base-button>
             </div>
         </div>
     </div>

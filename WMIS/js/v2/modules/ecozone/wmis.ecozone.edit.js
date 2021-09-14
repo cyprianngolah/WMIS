@@ -7,7 +7,7 @@
         BaseLinkButton
     },
 
-    data() {
+    data: function() {
         return {
             form: {
                 taxonomyKey: "",
@@ -17,13 +17,13 @@
     },
 
     computed: {
-        disabled() {
+        disabled: function() {
             return this.form.name === ""
         }
     },
 
     methods: {
-        submit() {
+        submit: function() {
             if (this.disabled) {
                 this.$message.error('Name is required!');
                 return;
@@ -34,14 +34,14 @@
                 }).catch(error => console.log(error))
         },
 
-        setKey() {
+        setKey: function() {
             const key = this.getKey("#ecozoneKey");
             if (key && key !== undefined) {
                 this.form.key = key
                 this.getEcozone()
             }
         },
-        getEcozone() {
+        getEcozone: function() {
             this.showLoading();
             axios.get(`/api/Ecozone/?key=${this.form.key}`)
                 .then(response => {
@@ -56,7 +56,7 @@
         },
     },
 
-    async mounted() {
+    mounted: function() {
         this.setKey();
     }
 })
