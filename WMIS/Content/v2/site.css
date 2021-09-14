@@ -7,7 +7,7 @@ main > .container {
 }
 .navbar-dark {
     background-image: none !important;
-    background-color: #0f599a !important;
+    background-color: #063f72 !important;
     border-color: #022f5a !important;
     border-bottom: 6px solid #2699d5 !important;
 }
@@ -16,7 +16,7 @@ main > .container {
 }
     .navbar-dark .navbar-nav > .nav-item > a:hover,
     .navbar-dark .navbar-nav > .nav-item > a:focus {
-        background-color: #0a4476 !important;
+        background-color: #022f5a !important;
     }
 .navbar .small {
     font-size: .675em;

@@ -53,7 +53,7 @@
             var currentController = htmlHelper.ViewContext.RouteData.GetRequiredString("controller");
 
             
-            var activeClass = isDropdown ? "dropdown-item" : "nav-link";
+            var activeClass = isDropdown ? "dropdown-item" : "nav-link py-3 mx-1";
 
 
             //if (controllerName == currentController && actionName == currentAction)
@@ -88,7 +88,7 @@
                 activeController = (string)routeValues["controller"];
             }
 
-            var baseClass = "nav-link dropdown-toggle";
+            var baseClass = "nav-link py-3 mx-1 dropdown-toggle";
 
             IEnumerable<string> acceptedControllers = controllerNames.ToLower().Split(',').ToList();
 
