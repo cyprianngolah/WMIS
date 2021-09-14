@@ -50,7 +50,9 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small, .h1 .s
 }
 table.dataTable.table-striped > tbody > tr.odd {
     --bs-table-accent-bg: rgb(0 0 0 / 2%) !important;
+    --mdb-table-accent-bg: rgb(0 0 0 / 1%) !important;
 }
+
 .table > thead {
     border-bottom-width: 2px !important;
     border-bottom-color: #0d6efd !important;
