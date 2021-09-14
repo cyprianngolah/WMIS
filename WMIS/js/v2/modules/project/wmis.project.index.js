@@ -4,6 +4,7 @@ const app = Vue.createApp({
 
     components: {
         BaseButton,
+        BaseInput,
         BaseLinkButton,
         BaseDropdownSelect
     },
