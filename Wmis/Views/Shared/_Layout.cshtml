@@ -18,7 +18,7 @@
     <div id="wmis-app" class="flex-shrink-0">
         <header>
             <nav class="navbar navbar-expand-md py-0 navbar-dark fixed-top bg-dark shadow-lg">
-                <div class="container">
+                <div class="container-fluid">
                     <button class="navbar-toggler"
                             type="button"
                             data-mdb-toggle="collapse"
@@ -33,7 +33,7 @@
                             <img src="~/Content/images/logo.png" alt="GNWT Logo" width="50">
                             WMIS <span class="small d-none d-lg-block">&nbsp; - &nbsp; Wildlife Management Information System</span>
                         </a>
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav ms-auto">
                             @Html.MenuItem("Projects", "Index", "Project")
                             @Html.MenuItem("Collar", "Index", "CollaredAnimal")
                             <li class="nav-item flex-shrink-0 dropdown">
@@ -73,58 +73,12 @@
                     </div>
                 </div>
             </nav>
-            @*<nav class="navbar navbar-expand-md py-0 navbar-dark fixed-top bg-dark shadow-lg">
-                    <div class="container">
-                        <a class="navbar-brand text-white fw-bolder text-decoration-none py-0" href="/">
-                            <img src="~/Content/images/logo.png" alt="GNWT Logo" width="50">
-                            WMIS <span class="small d-none d-lg-block">&nbsp; - &nbsp; Wildlife Management Information System</span>
-                        </a>
-
-                        <ul class="navbar-nav">
-                            @Html.MenuItem("Projects", "Index", "Project")
-                            @Html.MenuItem("Collar", "Index", "CollaredAnimal")
-                            <li class="nav-item flex-shrink-0 dropdown">
-
-                                <a class='@Html.getDropdownClass("BioDiversity,Reference,Taxonomy,Ecozone,Ecoregion,ProtectedArea,StatusRank,CosewicStatus,NwtSarcAssessment")' href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Biodiversity</a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="biodiversity">
-                                    @Html.MenuItem("Species", "Index", "BioDiversity", true)
-                                    @Html.MenuItem("Taxonomies", "Index", "Taxonomy", true)
-                                    @Html.MenuItem("Ecozones", "Index", "Ecozone", true)
-                                    @Html.MenuItem("Ecoregions", "Index", "Ecoregion", true)
-                                    @Html.MenuItem("Protected Areas", "Index", "ProtectedArea", true)
-                                    @Html.MenuItem("Ranks", "Index", "StatusRank", true)
-                                    @Html.MenuItem("COSEWIC Status", "Index", "CosewicStatus", true)
-                                    @Html.MenuItem("NWT SARC Assessments", "Index", "NwtSarcAssessment", true)
-                                    @Html.MenuItem("References", "Index", "Reference", true)
-                                    @Html.MenuItem("Biodiversity Bulk Upload", "Upload", "BioDiversity", true)
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                @Html.MenuItem("Reports", "Index", "Reports")
-                            </li>
-                            <li class="nav-item flex-shrink-0 dropdown">
-                                <a class='@Html.getDropdownClass("User,SurveyTemplate,ArgosService")' href="#" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Administrator</a>
-                                <ul class="dropdown-menu" aria-labelledby="admin">
-                                    @if (Html.UserIsWMISAdministrator())
-                                    {
-                                        @Html.MenuItem("Users", "Index", "User", true)
-                                    }
-                                    @if (Html.UserInAnyAdministratorRole())
-                                    {
-                                        @Html.MenuItem("Survey Templates", "Index", "SurveyTemplate", true)
-                                        @Html.MenuItem("Argos Service", "Index", "ArgosService", true)
-                                    }
-                                </ul>
-                            </li>
-                        </ul>
-
-                    </div>
-                </nav>*@
+            
         </header>
 
         <!-- Begin page content -->
         <main class="flex-shrink-0">
-            <div class="container">
+            <div class="container container-fluid">
                 <div class="row clearfix">
                     @if (!string.IsNullOrEmpty(ViewBag.Title) && ViewBag.Title != "Home")
                     {

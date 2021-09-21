@@ -564,8 +564,12 @@
     <Content Include="Content\v2\fontawesome\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-solid-900.woff" />
     <Content Include="Content\v2\fontawesome\webfonts\fa-solid-900.woff2" />
-    <Content Include="Content\v2\fonts\element-icons.ttf" />
-    <Content Include="Content\v2\fonts\element-icons.woff" />
+    <Content Include="Content\v2\fonts\element-icons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\v2\fonts\element-icons.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\v2\material-design-bootstrap.css" />
     <Content Include="Content\v2\select2-bootstrap5.min.css" />
     <Content Include="Content\v2\select2.min.css" />
