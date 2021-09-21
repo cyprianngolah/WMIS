@@ -15,7 +15,7 @@
 
 
 @section TopRight{
-    <div class="h5 text-end">
+    <div class="h5 text-end" v-cloak>
         <span>Status Rank: <strong><span>{{form.statusRank ? form.statusRank.name : ""}}</span></strong><br /></span>
         <span class="h6">
             Last Updated: <span>{{ lastUpdated }}</span>
@@ -58,8 +58,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Range Extent</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Range Extent</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.rangeExtentDescription"></base-input>
             </div>
         </div>
@@ -73,8 +73,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Area of Occupancy</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Area of Occupancy</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.areaOfOccupancyDescription"></base-input>
             </div>
         </div>
@@ -89,8 +89,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Population Size</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Population Size</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.populationSizeDescription"></base-input>
             </div>
         </div>
@@ -104,8 +104,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Number of Occurences</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Number of Occurences</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.numberOfOccurencesDescription"></base-input>
             </div>
         </div>
@@ -120,8 +120,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Environmental Specificity</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Environmental Specificity</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.environmentalSpecificityDescription"></base-input>
             </div>
         </div>
@@ -144,8 +144,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Long-term Trends</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Long-term Trends</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.longTermTrendsDescription"></base-input>
             </div>
         </div>
@@ -159,8 +159,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Short-term Trends</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Short-term Trends</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.shortTermTrendsDescription"></base-input>
             </div>
         </div>
@@ -183,8 +183,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Threats</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Threats</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.threatsDescription"></base-input>
             </div>
         </div>
@@ -198,8 +198,8 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Intrinsic Vulnerability</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Intrinsic Vulnerability</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.intrinsicVulnerabilityDescription"></base-input>
             </div>
         </div>
@@ -215,8 +215,8 @@
     </div>
     <div class="card-body">
         <div class="row align-items-center mb-3">
-            <div class="col-md-2 text-end">Rank</div>
-            <div class="col-md-2">
+            <div class="col-md-3 text-end">Rank</div>
+            <div class="col-md-3">
                 <el-select v-model="form.statusRank" value-key="key" filterable placeholder="Select Status">
                     <el-option v-for="item in statusRanks"
                                :key="item.key"
@@ -225,30 +225,30 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="col-md-2 text-end">S Rank</div>
-            <div class="col-md-2 statusGroup">
+            <div class="col-md-3 text-end">S Rank</div>
+            <div class="col-md-3 statusGroup">
                 <base-input v-model="form.sRank"></base-input>
             </div>
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Rank Description</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Rank Description</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.statusRankDescription"></base-input>
             </div>
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-2 text-end">Decision Process</div>
-            <div class="col-md-10">
+            <div class="col-md-3 text-end">Decision Process</div>
+            <div class="col-md-9">
                 <base-input type="textarea" v-model="form.decisionProcessDescription"></base-input>
             </div>
         </div>
 
-        <div class="row gy-3 my-3">
-            <div class="col-md-2 text-end">NWT SARC Assessment</div>
-            <div class="col-md-4">
-                <el-select v-model="form.nwtSarcAssessment" value-key="key" filterable placeholder="Select Status">
+        <div class="row gy-md-2 gy-lg-3 my-3">
+            <div class="col-lg-3 text-lg-end">NWT SARC Assessment</div>
+            <div class="col-lg-3">
+                <el-select v-model="form.nwtSarcAssessment" class="w-100" value-key="key" filterable placeholder="Select Status">
                     <el-option v-for="item in nwtSarcAssessments"
                                :key="item.key"
                                :label="item.name"
@@ -257,14 +257,14 @@
                 </el-select>
             </div>
 
-            <div class="col-md-2 text-end">N Rank</div>
-            <div class="col-md-4">
+            <div class="col-lg-3 text-lg-end">N Rank</div>
+            <div class="col-lg-3">
                 <base-input v-model="form.nRank">
             </div>
 
-            <div class="col-md-2 text-end">COSEWIC Status</div>
-            <div class="col-md-4">
-                <el-select v-model="form.cosewicStatus" value-key="key" filterable placeholder="Select Status">
+            <div class="col-lg-3 text-lg-end">COSEWIC Status</div>
+            <div class="col-lg-3">
+                <el-select class="w-100" v-model="form.cosewicStatus" value-key="key" filterable placeholder="Select Status">
                     <el-option v-for="item in cosewicStatuses"
                                :key="item.key"
                                :label="item.name"
@@ -273,9 +273,9 @@
                 </el-select>
             </div>
 
-            <div class="col-md-2 text-end">SARA Status</div>
-            <div class="col-md-4">
-                <el-select v-model="form.saraStatus" value-key="key" filterable placeholder="Select Status">
+            <div class="col-lg-3 text-lg-end">SARA Status</div>
+            <div class="col-lg-3">
+                <el-select class="w-100" v-model="form.saraStatus" value-key="key" filterable placeholder="Select Status">
                     <el-option v-for="item in cosewicStatuses"
                                :key="item.key"
                                :label="item.name"
@@ -286,13 +286,13 @@
         </div>
 
         <div class="row">
-            <div class="col-md-2 text-end">G Rank</div>
-            <div class="col-md-4">
+            <div class="col-lg-3 text-lg-end">G Rank</div>
+            <div class="col-lg-3">
                 <base-input v-model="form.gRank"></base-input>
             </div>
 
-            <div class="col-md-2 text-end">IUCN Status</div>
-            <div class="col-md-4">
+            <div class="col-lg-3 text-lg-end">IUCN Status</div>
+            <div class="col-lg-3">
                 <base-input v-model="form.iucnStatus"></base-input>
             </div>
         </div>

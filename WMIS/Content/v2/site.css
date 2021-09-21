@@ -231,3 +231,19 @@ tr.highlightPassRow {
     color: rgba(255,255,255,.99);
     font-size: 1rem;
 }
+
+.el-input__inner,
+.el-textarea__inner {
+    border: 1px solid #bdbdbd;
+    transition: all .2s linear;
+}
+.el-input__inner:focus,
+.el-textarea__inner:focus {
+    border: 1px solid #2699d5;
+}
+[v-cloak]{
+    display: none;
+}
+/*.row > * {
+    margin-top: 1px;
+}*/

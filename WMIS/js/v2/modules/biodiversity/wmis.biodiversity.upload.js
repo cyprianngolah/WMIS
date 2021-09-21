@@ -48,7 +48,7 @@ const app = Vue.createApp({
 
             setTimeout(() => {
                 this.hideLoading()
-            }, 2000)
+            }, 200)
         },
 
         // listens to upload event from upload iframe.

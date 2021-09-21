@@ -25,6 +25,10 @@
             return parseInt($(selector).val());
         },
 
+        getValue: function (selector) {
+            return $(selector).val();
+        },
+
         createModal: function(selector) {
             return new mdb.Modal(document.getElementById(selector), {
                 keyboard: false,
@@ -44,7 +48,8 @@ const DataTableMixin = {
 
 
     watch: {
-        tab: function(newVal) {
+        tab: function (newVal) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
             setTimeout(() => {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
             }, 500)

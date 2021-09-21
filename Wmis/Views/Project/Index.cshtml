@@ -36,16 +36,16 @@
 <div class="card border-0">
     <div class="card-body">
         <div class="row g-3">
-            <div class="col">
+            <div class="col-lg-3">
                 <base-dropdown-select :options="leads" v-model="form.pLead" :return_object="false"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-3">
                 <base-dropdown-select :options="statuses" v-model="form.pStatus" :return_object="false"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-3">
                 <base-dropdown-select :options="regions" v-model="form.region" :return_object="false"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-3">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Keywords" id="keyword" v-model="form.keywords">
                     <base-button id="searchbtn">Search</base-button>

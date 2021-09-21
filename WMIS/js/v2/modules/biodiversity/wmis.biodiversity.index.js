@@ -74,7 +74,7 @@ const app = Vue.createApp({
                 console.log(error)
             }).finally(() => setTimeout(() => {
                 this.hideLoading()
-            }, 1500))
+            }, 200))
         }
     },
 

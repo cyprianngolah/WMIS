@@ -52,7 +52,7 @@
                 console.log(error)
             }).finally(() => setTimeout(() => {
                 this.hideLoading()
-            }, 1500))
+            }, 200))
         },
 
 
@@ -66,7 +66,7 @@
                 }).catch(error => console.log(error))
                 .finally(() => setTimeout(() => {
                     this.hideLoading()
-                }, 1500))
+                }, 200))
         },
 
         

@@ -1,13 +1,13 @@
 ﻿@using Wmis.Extensions
 @{
     ViewBag.Title = "Biodiversity";
-    ViewBag.SubTitle = @"<br /><span v-if='form.key'>{{ form.commonName }}
-(<span class='speciesNameText'>{{form.name}}</span>)
-<span>{{form.ecoType}}</span></span>";
+    ViewBag.SubTitle = @"<br /><span v-cloak v-if='form.key'>{{ form.commonName }}
+(<span v-cloak class='speciesNameText'>{{form.name}}</span>)
+<span v-cloak>{{form.ecoType}}</span></span>";
 }
 
 @section TopRight{
-    <div class="h6 text-end" v-if="form">
+    <div class="h6 text-end" v-cloak v-if="form">
         <span v-if="form.statusRank">Status Rank: <strong>{{ form.statusRank.name }}</strong><br /></span>
         <span v-if="form.animalStatus">Animal Status: <strong>{{ form.animalStatus.name }}</strong><br /></span>
         <span class="h6">Last Updated: <span>{{lastUpdated}} </span></span>

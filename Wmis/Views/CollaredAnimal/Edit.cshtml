@@ -5,7 +5,7 @@
 }
 
 @section TopRight{
-    <div class="h6 text-end" v-if="form">
+    <div class="h6 text-end" v-cloak v-if="form">
         <span v-if="form.collarStatus">Collar Status: <strong>{{ form.collarStatus.name }}</strong><br /></span>
         <span v-if="form.animalStatus">Animal Status: <strong>{{ form.animalStatus.name }}</strong><br /></span>
         <span class="h6">Last Updated: <span>{{ lastUpdated }} </span> <span data-bind="text: ko.unwrap(lastUpdated) ? moment.utc(lastUpdated(), moment.ISO_8601).local().format('L h:mm a') : ''"></span></span>
@@ -131,7 +131,6 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" v-if="loaded">
-                <div class="card border-0">
                     <div class="row g-3">
                         <lable class="col-3 text-end">Status</lable>
                         <div class="col-9">
@@ -175,7 +174,6 @@
                             </el-date-picker>
                         </div>
                     </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <base-button color="danger" plain data-mdb-dismiss="modal">Cancel</base-button>
@@ -197,7 +195,6 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" v-if="loaded">
-                <div class="card border-0">
                     <div class="row g-3">
                         <lable class="col-3 text-end">Population</lable>
                         <div class="col-9">
@@ -241,7 +238,6 @@
                             </el-date-picker>
                         </div>
                     </div>
-                </div>
 
             </div>
             <div class="modal-footer">

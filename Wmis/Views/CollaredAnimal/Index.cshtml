@@ -33,16 +33,16 @@
 <div class="card border-0">
     <div class="card-body">
         <div class="row g-3 d-flex align-items-center">
-            <div class="col-2">
+            <div class="col-lg-2">
                 <el-checkbox v-model="form.needingReview" label="Collars needing review"></el-checkbox>
             </div>
-            <div class="col">
+            <div class="col-lg-3">
                 <base-dropdown-select :return_object="false" :options="regions" v-model="form.regionKey"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-3">
                 <base-dropdown-select :return_object="false" :options="species" v-model="form.speciesKey"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-4">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Keyword" id="keyword" v-model="form.keywords">
                     <base-button id="searchbtn"> <span class="el-icon-search"></span> Search</base-button>

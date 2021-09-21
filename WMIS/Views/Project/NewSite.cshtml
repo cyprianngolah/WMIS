@@ -6,7 +6,7 @@
 }
 
 @section CustomTitle {
-    <div class="h1 pull-left" style="margin:0;">
+    <div class="h1 pull-left" v-cloak style="margin:0;">
         <ol class="breadcrumb">
             <li><a :href="`/Project/Edit/${form.projectKey}`" class="h6">{{ form.projectName }}</a></li>
             <li class="active">
@@ -52,195 +52,90 @@
 
 <input type="hidden" id="projectKey" value="@ViewBag.Key" />
 
-<div class="row my-3">
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Site Number</label>
-            </div>
-            <div class="col-8 text-end">
-                <base-input v-model="form.siteNumber" id="siteNumber"></base-input>
-            </div>
-        </div>
+<div class="row gy-lg-3">
+    <label class="col-lg-2 col-form-label text-lg-end">Site Number</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.siteNumber" id="siteNumber"></base-input>
     </div>
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Name</label>
-            </div>
-            <div class="col-8">
-                <base-input v-model="form.name" id="name"></base-input>
-            </div>
-        </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Name</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.name" id="name"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Latitude</label>
+    <div class="col-lg-4">
+        <base-input type="number" v-model.trim="form.latitude" id="latitude"></base-input>
+        <small class="text-info">*This must be a number between -90.0 and 90.0</small>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Longitude</label>
+    <div class="col-lg-4">
+        <base-input type="number" v-model.trim="form.longitude" id="longitude"></base-input>
+        <small class="text-info">*This must be a number between -180.0 and 180.0</small>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Date Established</label>
+    <div class="col-lg-4">
+        <el-date-picker class="w-100" value-format="YYYY-MM-DDTHH:mm:ss.SSS" v-model="form.dateEstablished"
+                        type="date">
+        </el-date-picker>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Aspect</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.aspect" id="aspect"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Cliff Height</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.cliffHeight" id="cliffHeight"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Habitat</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.habitat" id="habitat"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Initial Observer</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.initialObserver" id="initialObserver"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Map</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.map" id="map"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Nearest Community</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.nearestCommunity" id="nearestCommunity"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Nest Height</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.nestHeight" id="nestHeight"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Nest Type</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.nestType" id="nestType"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Reference</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.reference" id="reference"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Reliability</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.reliability" id="reliability"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Comments</label>
+    <div class="col-lg-4">
+        <base-input type="textarea" v-model="form.comments" id="comments"></base-input>
     </div>
 </div>
 
-
-
-<div class="row my-2">
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Latitude</label>
-            </div>
-            <div class="col-8">
-                <base-input type="number" v-model.trim="form.latitude" id="latitude"></base-input>
-                <small class="text-info">*This must be a number between -90.0 and 90.0</small>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Longitude</label>
-            </div>
-            <div class="col-8">
-                <base-input type="number" v-model.trim="form.longitude" id="longitude"></base-input>
-                <small class="text-info">*This must be a number between -180.0 and 180.0</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row my-2">
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Date Established</label>
-            </div>
-            <div class="col-8">
-                <el-date-picker class="w-100" value-format="YYYY-MM-DDTHH:mm:ss.SSS" v-model="form.dateEstablished"
-                                type="date">
-                </el-date-picker>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Aspect</label>
-            </div>
-            <div class="col-8 text-end">
-                <base-input v-model="form.aspect" id="aspect"></base-input>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row my-2">
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Cliff Height</label>
-            </div>
-            <div class="col-8">
-                <base-input v-model="form.cliffHeight" id="cliffHeight"></base-input>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Habitat</label>
-            </div>
-            <div class="col-8 text-end">
-                <base-input v-model="form.habitat" id="habitat"></base-input>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row my-2">
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Initial Observer</label>
-            </div>
-            <div class="col-8">
-                <base-input v-model="form.initialObserver" id="initialObserver"></base-input>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Map</label>
-            </div>
-            <div class="col-8 text-end">
-                <base-input v-model="form.map" id="map"></base-input>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row my-2">
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Nearest Community</label>
-            </div>
-            <div class="col-8">
-                <base-input v-model="form.nearestCommunity" id="nearestCommunity"></base-input>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Nest Height</label>
-            </div>
-            <div class="col-8 text-end">
-                <base-input v-model="form.nestHeight" id="nestHeight"></base-input>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row my-2">
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Nest Type</label>
-            </div>
-            <div class="col-8">
-                <base-input v-model="form.nestType" id="nestType"></base-input>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Reference</label>
-            </div>
-            <div class="col-8 text-end">
-                <base-input v-model="form.reference" id="reference"></base-input>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row my-2">
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Reliability</label>
-            </div>
-            <div class="col-8">
-                <base-input v-model="form.reliability" id="reliability"></base-input>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="row d-flex align-items-center">
-            <div class="col-4 text-end">
-                <label for="name">Comments</label>
-            </div>
-            <div class="col-8 text-end">
-                <base-input type="textarea" v-model="form.comments" id="comments"></base-input>
-            </div>
-        </div>
-    </div>
-</div>
 

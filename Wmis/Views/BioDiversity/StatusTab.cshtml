@@ -8,9 +8,9 @@
         </div>
 
         <div class="card-body">
-            <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Rank</label>
-                <div class="col-md-3">
+            <div class="row mb-3 gy-lg-3 ">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">Rank</label>
+                <div class="col-lg-4">
                     <el-select v-model="form.statusRank.key" class="w-100" filterable>
                         <el-option v-for="item in statusRanks"
                                    :key="item.key"
@@ -20,28 +20,28 @@
                     </el-select>
                 </div>
 
-                <label for="name" class="col-md-1 form-label text-end">N Rank</label>
-                <div class="col-md-3">
+                <label for="name" class="col-lg-1 col-form-label text-lg-end">N Rank</label>
+                <div class="col-lg-2">
                     <base-input v-model="form.nRank" id="nRank"></base-input>
                 </div>
 
-                <label for="name" class="col-md-1 form-label text-end">S Rank</label>
-                <div class="col-md-3">
+                <label for="name" class="col-lg-1 col-form-label text-lg-end">S Rank</label>
+                <div class="col-lg-2">
                     <base-input v-model="form.sRank" id="sRank"></base-input>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Rank Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Rank Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.statusRankDescription" id="statusRankDescription"></base-input>
                 </div>
             </div>
 
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Decision Process</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Decision Process</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.decisionProcessDescription" id="decisionProcessDescription"></base-input>
                 </div>
             </div>
@@ -59,8 +59,8 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">COSEWIC Status</label>
-                <div class="col-md-3">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">COSEWIC Status</label>
+                <div class="col-lg-4">
                     <el-select v-model="form.cosewicStatus.key" class="w-100" filterable>
                         <el-option v-for="item in cosewicStatuses"
                                    :key="item.key"
@@ -72,8 +72,8 @@
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.cosewicStatusDescription" id="cosewicStatusDescription"></base-input>
                 </div>
             </div>
@@ -92,10 +92,10 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">
                     SARA Status
                 </label>
-                <div class="col-md-3">
+                <div class="col-lg-4">
                     <el-select v-model="form.saraStatus.key" class="w-100" filterable>
                         <el-option :value="0" label="Select Status" disabled></el-option>
                         <el-option v-for="item in cosewicStatuses"
@@ -108,8 +108,8 @@
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.federalSpeciesAtRiskStatusDescription" id="federalSpeciesAtRiskStatusDescription"></base-input>
                 </div>
             </div>
@@ -126,10 +126,10 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">
                     NWT SARC Assessment
                 </label>
-                <div class="col-md-3">
+                <div class="col-lg-4">
                     <el-select v-model="form.nwtSarcAssessment.key" class="w-100" filterable>
                         <el-option :value="0" label="Select Status" disabled></el-option>
                         <el-option v-for="item in nwtSarcAssessments"
@@ -142,8 +142,8 @@
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.nwtsarcAssessmentDescription" id="nwtsarcAssessmentDescription"></base-input>
                 </div>
             </div>
@@ -160,10 +160,10 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">
                     NWT Status
                 </label>
-                <div class="col-md-3">
+                <div class="col-lg-4">
                     <el-select v-model="form.nwtStatusRank.key" class="w-100" filterable>
                         <el-option :value="0" label="Select Status" disabled></el-option>
                         <el-option v-for="item in cosewicStatuses"
@@ -176,8 +176,8 @@
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.nwtSpeciesAtRiskStatusDescription" id="nwtSpeciesAtRiskStatusDescription"></base-input>
                 </div>
             </div>
@@ -195,24 +195,24 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">
                     IUCN Status
                 </label>
-                <div class="col-md-3">
+                <div class="col-lg-4">
                     <base-input v-model="form.iucnStatus" label="IUCN Status"></base-input>
                 </div>
 
-                <label for="name" class="col-md-1 form-label text-end">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">
                     G Rank
                 </label>
-                <div class="col-md-3">
+                <div class="col-lg-4">
                     <base-input v-model="form.gRank" label="G Rank"></base-input>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.iucnDescription" id="iucnDescription"></base-input>
                 </div>
             </div>
@@ -229,8 +229,8 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.economicStatusDescription" id="economicStatusDescription"></base-input>
                 </div>
             </div>

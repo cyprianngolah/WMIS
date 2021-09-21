@@ -115,7 +115,7 @@
                     }
                 }).catch(error => console.log(error))
                 .finally(() => {
-                    setTimeout(() => this.hideLoading(), 1000)
+                    setTimeout(() => this.hideLoading(), 500)
                 })
         },
 
@@ -135,10 +135,10 @@
                 .then(_ => {
                     this.getCollarData();
                     $("#historyTable").DataTable().ajax.reload();
-                    setTimeout(() => this.$message.success('Record Updated Successfully!'), 2000)
+                    setTimeout(() => this.$message.success('Record Updated Successfully!'), 200)
                 }).catch(error => console.log(error))
                 .finally(() => {
-                    setTimeout(() => this.loading = false, 1500)
+                    setTimeout(() => this.loading = false, 200)
                 })
         },
 

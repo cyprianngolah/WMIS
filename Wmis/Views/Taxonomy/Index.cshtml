@@ -33,12 +33,12 @@
 
 <div class="card border-0">
     <div class="card-body">
-        <div class="row g-3">
-            <div class="col-4">
+        <div class="row gy-3">
+            <div class="col-lg-4">
                 <label class="form-label visually-hidden">Taxonomy Group</label>
                 <base-dropdown-select :return_object="false" :options="taxonomyGroups" v-model="form.groupKey"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-4">
                 <label class="form-label visually-hidden">Keywords</label>
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Keywords" id="keyword" v-model="form.keywords">

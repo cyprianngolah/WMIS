@@ -15,68 +15,68 @@
     @Html.Raw(Scripts.Render("~/bundles/biodiversity/index"))
 }
 
-<div class="row my-3">
-    <div class="col-md-12 d-flex justify-content-between">
-        <div>
-            <el-popconfirm confirmButtonText="Yes"
-                           cancelButtonText="No"
-                           icon="el-icon-info"
-                           iconColor="red"
-                           title="Are you sure to delete the selected record?"
-                           v-on:confirm="deletedSelectedRecord()">
-                <template #reference>
-                    <base-button color="danger" :disabled="!isSelected" size="small"> <span class="el-icon-delete"></span> Delete Selected</base-button>
-                </template>
-            </el-popconfirm>
-        </div>
-
-
-        <div>
-            <base-button v-on:click="downloadRecords()" class="mx-0" color="warning"><span class="el-icon-download"></span> Download</base-button>
+<div class="row d-flex my-4 gy-2">
+    <div class="col-md-4 col-lg-2">
+        <el-popconfirm confirmButtonText="Yes"
+                       cancelButtonText="No"
+                       icon="el-icon-info"
+                       iconColor="red"
+                       title="Are you sure to delete the selected record?"
+                       v-on:confirm="deletedSelectedRecord()">
+            <template #reference>
+                <base-button class="w-100" color="danger" :disabled="!isSelected" size="small"> <span class="el-icon-delete"></span> Delete</base-button>
+            </template>
+        </el-popconfirm>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <base-button v-on:click="downloadRecords()" class="mx-0 w-100" color="warning"><span class="el-icon-download"></span> Download</base-button>
+    </div>
+    @if (Html.UserIsBiodiversityAdministrator())
+    {
+        <div class="col-md-4 col-lg-2"><base-link-button class="w-100" href="/BioDiversity/New" color="success"><span class="el-icon-plus"></span> New</base-link-button></div>
+        <div class="col-md-4 col-lg-2"><base-link-button class="w-100" href="/BioDiversity/Upload" color="secondary"><span class="el-icon-upload2"></span> Upload</base-link-button></div>
+    }
+    <div class="col-md-4 col-lg-2">
+        <base-link-button class="w-100" v-bind:href=`/BioDiversity/Edit/${selectedKey}` color="info" id="editButton" v-bind:class="{'disabled is-disabled' : !isSelected}">
             @if (Html.UserIsBiodiversityAdministrator())
             {
-                <base-link-button href="/BioDiversity/New" color="success"><span class="el-icon-plus"></span> New</base-link-button>
-                <base-link-button href="/BioDiversity/Upload" color="secondary"><span class="el-icon-upload2"></span> Bulk Upload</base-link-button>
+                <span class="el-icon-view"></span>
+                <span>View</span>
             }
-            <base-link-button v-bind:href=`/BioDiversity/Edit/${selectedKey}` color="info" id="editButton" v-bind:class="{'disabled is-disabled' : !isSelected}">
-                @if (Html.UserIsBiodiversityAdministrator())
-                {
-                    <span class="el-icon-view"></span>
-                    <span>View</span>
-                }
-                else
-                {
-                    <span>View</span>
-                }
-            </base-link-button>
-            <base-link-button color="primary" :disabled="!isSelected" v-bind:href=`/BioDiversity/Decision/${selectedKey}` id="decisionButton">
-                <span class="el-icon-s-order"></span> Decision
-            </base-link-button>
-        </div>
+            else
+            {
+                <span>View</span>
+            }
+        </base-link-button>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <base-link-button class="w-100" color="primary" :disabled="!isSelected" v-bind:href=`/BioDiversity/Decision/${selectedKey}` id="decisionButton">
+            <span class="el-icon-s-order"></span> Decision
+        </base-link-button>
     </div>
 </div>
 
-<div class="alert alert-danger alert-dismissible fade show" v-show="deleteError" role="alert">
+<div class="alert alert-danger alert-dismissible fade show" v-cloak v-show="deleteError" role="alert">
     <p>{{deleteError}}</p>
     <button type="button" class="btn-close" v-on:click="deleteError=null" aria-label="Close"></button>
 </div>
 
 <div class="card border-0">
     <div class="card-body">
-        <div class="row g-3">
-            <div class="col">
+        <div class="row gy-2 gy-lg-3">
+            <div class="col-lg-3">
                 <label class="form-label visually-hidden">Group</label>
                 <base-dropdown-select :return_object="false" :options="groups" v-model="form.groupKey"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-3">
                 <label class="form-label visually-hidden">Order</label>
                 <base-dropdown-select :return_object="false" :options="orders" v-model="form.orderKey"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-3">
                 <label class="form-label visually-hidden">Family</label>
                 <base-dropdown-select :return_object="false" :options="families" v-model="form.familyKey"></base-dropdown-select>
             </div>
-            <div class="col">
+            <div class="col-lg-3">
                 <label class="form-label visually-hidden">Keywords</label>
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Keywords" id="keyword" v-model="form.keywords">

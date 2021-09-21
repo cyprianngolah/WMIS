@@ -55,7 +55,7 @@
             })
                 .finally(() => setTimeout(() => {
                     this.hideLoading()
-                }, 2000))
+                }, 200))
         },
 
         getProjectInfo: function() {

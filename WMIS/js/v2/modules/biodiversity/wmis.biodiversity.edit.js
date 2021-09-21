@@ -72,7 +72,7 @@
                 }).finally(() => setTimeout(() => {
                     this.loading = false
                     this.hideLoading()
-                }, 2000))
+                }, 1000))
         },
 
         fetchDropdowns: function() {
@@ -121,7 +121,7 @@
 
             })).catch(error => {
                 console.log(error)
-            }).finally(() => setTimeout(() => this.loading=false, 1500))
+            }).finally(() => setTimeout(() => this.loading=false, 200))
         },
 
         updateReference: function({ references, category }) {
@@ -141,7 +141,7 @@
                 .finally(() => setTimeout(() => {
                     this.loading = false
                     this.hideLoading()
-                }, 1500))
+                }, 200))
         }
     },
 

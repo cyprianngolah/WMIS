@@ -359,8 +359,8 @@ const ElementReferenceSelect = {
 const ReferenceWidget = {
     template: `
         <div class="row h5 m-0 d-flex align-items-center">
-            <div class="col-md-4">{{ category_name }}</div>
-            <div class="col-md-8 text-end">
+            <div class="col-md-7">{{ category_name }}</div>
+            <div class="col-md-5 text-end">
                 <span>References {{ display }}</span> 
                 <a class="btn btn-text shadow-0 p-0" data-mdb-toggle="modal" :href="'#modal-'+category_id" role="button">
                     <img src="/Content/images/icon-0-24x24-documents.png" />

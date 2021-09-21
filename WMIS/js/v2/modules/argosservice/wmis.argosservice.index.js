@@ -18,12 +18,12 @@
             this.loading = true;
             axios.post('/api/argos/execute/')
                 .then(_ => {
-                    setTimeout(() => this.$message.success("Job Executed successfully!"), 1500)
+                    setTimeout(() => this.$message.success("Job Executed successfully!"), 300)
                 }).catch(error => console.log(error))
                 .finally(() => setTimeout(() => {
                     this.loading = false
                     this.hideLoading()
-                }, 1500))
+                }, 200))
         },
 
 
@@ -32,12 +32,12 @@
             this.showLoading("Updating Schedule!");
             axios.post('/api/argos/schedule/')
                 .then(_ => {
-                    setTimeout(() => this.$message.success("Schedule successfully!"), 1500)
+                    setTimeout(() => this.$message.success("Schedule successfully!"), 300)
                 }).catch(error => console.log(error))
                 .finally(() => setTimeout(() => {
                     this.loading = false
                     this.hideLoading()
-                }, 1500))
+                }, 200))
         },
 
     }

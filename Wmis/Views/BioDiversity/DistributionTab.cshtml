@@ -9,35 +9,35 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Range Extent</label>
-                <div class="col-md-3">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Range Extent</label>
+                <div class="col-lg-3">
                     <base-input v-model="form.rangeExtentScore" id="rangeExtentScore"></base-input>
                 </div>
 
-                <label for="name" class="col-md-1 form-label text-end">Percentage</label>
-                <div class="col-md-3">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Percentage</label>
+                <div class="col-lg-3">
                     <base-input v-model="form.distributionPercentage" id="distributionPercentage"></base-input>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.decisionProcessDescription" id="rangeExtentDescription"></base-input>
                 </div>
             </div>
 
 
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Area of Occupancy</label>
-                <div class="col-md-3">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Area of Occupancy</label>
+                <div class="col-lg-4">
                     <base-input v-model="form.areaOfOccupancyScore" id="areaOfOccupancyScore"></base-input>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.areaOfOccupancyDescription" id="areaOfOccupancyDescription"></base-input>
                 </div>
             </div>
@@ -55,23 +55,23 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.habitatDescription" id="habitatDescription"></base-input>
                 </div>
             </div>
 
 
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Environmental Specificity</label>
-                <div class="col-md-3">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">Environmental Specificity</label>
+                <div class="col-lg-4">
                     <base-input v-model="form.environmentalSpecificityScore" id="environmentalSpecificityScore"></base-input>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.environmentalSpecificityDescription" id="environmentalSpecificityDescription"></base-input>
                 </div>
             </div>
@@ -89,8 +89,8 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Ecozone</label>
-                <div class="col-md-11">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">Ecozone</label>
+                <div class="col-lg-10">
                     <el-select multiple v-model="form.ecozones" class="w-100" filterable value-key="key">
                         <el-option v-for="item in ecozones"
                                    :key="item.key"
@@ -102,8 +102,8 @@
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.ecozoneDescription" id="ecozoneDescription"></base-input>
                 </div>
             </div>
@@ -120,8 +120,8 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Ecoregion</label>
-                <div class="col-md-11">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">Ecoregion</label>
+                <div class="col-lg-10">
                     <el-select multiple v-model="form.ecoregions" class="w-100" filterable value-key="key">
                         <el-option v-for="item in ecoregions"
                                    :key="item.key"
@@ -133,8 +133,8 @@
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.ecoregionDescription" id="ecoregionDescription"></base-input>
                 </div>
             </div>
@@ -152,8 +152,8 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Protected Area</label>
-                <div class="col-md-11">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">Protected Area</label>
+                <div class="col-lg-10">
                     <el-select multiple v-model="form.protectedAreas" class="w-100" filterable value-key="key">
                         <el-option v-for="item in protectedAreas"
                                    :key="item.key"
@@ -165,8 +165,8 @@
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.protectedAreaDescription" id="protectedAreaDescription"></base-input>
                 </div>
             </div>
@@ -184,8 +184,8 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.historicalDistributionDescription" id="historicalDistributionDescription"></base-input>
                 </div>
             </div>
@@ -203,8 +203,8 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.marineDistributionDescription" id="marineDistributionDescription"></base-input>
                 </div>
             </div>
@@ -221,8 +221,8 @@
 
         <div class="card-body">
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.winterDistributionDescription" id="winterDistributionDescription"></base-input>
                 </div>
             </div>

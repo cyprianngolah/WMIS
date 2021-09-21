@@ -39,7 +39,8 @@ const app = Vue.createApp({
             collaboratorForm: {},
             selectedCollaborator: "",
             editingCollaborator: false,
-            initialData: ""
+            initialData: "",
+            userCanSeeSensitive: false
         }
     },
 
@@ -55,6 +56,14 @@ const app = Vue.createApp({
         isDirty: function() {
             return this.initialData !== JSON.stringify(this.form)
         },
+
+        showCollarsTab: function () {
+            return this.form.collarCount > 0
+        },
+
+        showSurveyTab: function () {
+            return !this.form.isSensitiveData || this.userCanSeeSensitive
+        }
     },
 
     methods: {
@@ -86,7 +95,7 @@ const app = Vue.createApp({
             })
             .finally(() => setTimeout(() => {
                 this.hideLoading()
-            }, 2000))
+            }, 200))
         },
         setInitialCollaborator: function() {
             this.collaboratorForm = { ...initialCollaborator, ...{ projectId: this.key } }
@@ -172,6 +181,7 @@ const app = Vue.createApp({
 
         setKey: function() {
             this.key = this.getKey("#projectKey")
+            this.userCanSeeSensitive = this.getValue("#userCanSeeSensitive")=='true'
         },
 
         saveUpdate: function() {

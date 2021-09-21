@@ -48,7 +48,7 @@
 }
 
 
-<div class="row">
+<div class="row mb-3">
     <div class="col-12 text-end">
         <base-button :plain="true" color="danger" v-on:click.prevent="returnToProject()">Cancel</base-button>
         @if (Html.UserIsBiodiversityAdministrator())
@@ -60,7 +60,93 @@
 
 <input type="hidden" id="siteKey" value="@ViewBag.Key" />
 
-<div class="row my-3">
+<div class="row gy-lg-3">
+    <label class="col-lg-2 col-form-label text-lg-end">Site Number</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.siteNumber" id="siteNumber"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Name</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.name" id="name"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Latitude</label>
+    <div class="col-lg-4">
+        <base-input type="number" v-model.trim="form.latitude" id="latitude"></base-input>
+        <small class="text-info">*This must be a number between -90.0 and 90.0</small>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Longitude</label>
+    <div class="col-lg-4">
+        <base-input type="number" v-model.trim="form.longitude" id="longitude"></base-input>
+        <small class="text-info">*This must be a number between -180.0 and 180.0</small>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Date Established</label>
+    <div class="col-lg-4">
+        <el-date-picker class="w-100" value-format="YYYY-MM-DDTHH:mm:ss.SSS" v-model="form.dateEstablished"
+                        type="date">
+        </el-date-picker>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Aspect</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.aspect" id="aspect"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Cliff Height</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.cliffHeight" id="cliffHeight"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Habitat</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.habitat" id="habitat"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Initial Observer</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.initialObserver" id="initialObserver"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Map</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.map" id="map"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Nearest Community</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.nearestCommunity" id="nearestCommunity"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Nest Height</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.nestHeight" id="nestHeight"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Nest Type</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.nestType" id="nestType"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Reference</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.reference" id="reference"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Reliability</label>
+    <div class="col-lg-4">
+        <base-input v-model="form.reliability" id="reliability"></base-input>
+    </div>
+
+    <label class="col-lg-2 col-form-label text-lg-end">Comments</label>
+    <div class="col-lg-4">
+        <base-input type="textarea" v-model="form.comments" id="comments"></base-input>
+    </div>
+</div>
+
+@*<div class="row my-3">
     <div class="col">
         <div class="row d-flex align-items-center">
             <div class="col-4 text-end">
@@ -251,7 +337,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 
 

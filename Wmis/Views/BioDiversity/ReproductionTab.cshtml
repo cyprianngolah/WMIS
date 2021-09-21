@@ -7,16 +7,16 @@
                               :category_id="5"></reference-widget>
         </div>
         <div class="card-body">
-            <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Age of Maturity</label>
-                <div class="col-md-1">
+            <div class="row mb-3 gy-lg-2">
+                <label for="name" class="col-md-3 col-lg-2 col-form-label text-lg-end">Age of Maturity</label>
+                <div class="col-md-2 col-lg-2">
                     <base-input v-model="form.ageOfMaturity" id="ageOfMaturity"></base-input>
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+            <div class="row mb-3 gy-lg-2">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.ageOfMaturityDescription" id="ageOfMaturityDescription"></base-input>
                 </div>
             </div>
@@ -34,15 +34,15 @@
         </div>
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Frequency Per Year</label>
-                <div class="col-md-1">
+                <label for="name" class="col-md-3 col-lg-2 col-form-label text-lg-end">Frequency Per Year</label>
+                <div class="col-md-2 col-lg-2">
                     <base-input v-model="form.reproductionFrequencyPerYear" id="reproductionFrequencyPerYear"></base-input>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="group" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.reproductionFrequencyPerYearDescription" id="reproductionFrequencyPerYearDescription"></base-input>
                 </div>
             </div>
@@ -59,15 +59,15 @@
         </div>
         <div class="card-body">
             <div class="row mb-3">
-                <label for="name" class="col-md-1 form-label text-end">Longevity</label>
-                <div class="col-md-1">
+                <label for="name" class="col-md-3 col-lg-2 col-form-label text-lg-end">Longevity</label>
+                <div class="col-md-2 col-lg-2">
                     <base-input v-model="form.longevity" id="longevity"></base-input>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.longevityDescription" id="longevityDescription"></base-input>
                 </div>
             </div>
@@ -83,9 +83,11 @@
         </div>
         <div class="card-body">
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
-                    <base-input type="textarea" v-model="form.vegetationReproductionDescription" id="vegetationReproductionDescription"></base-input>
+                <div class="row mb-3">
+                    <label for="name" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                    <div class="col-lg-10">
+                        <base-input type="textarea" v-model="form.vegetationReproductionDescription" id="vegetationReproductionDescription"></base-input>
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,8 +102,8 @@
         </div>
         <div class="card-body">
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.hostFishDescription" id="hostFishDescription"></base-input>
                 </div>
             </div>
@@ -118,8 +120,8 @@
         </div>
         <div class="card-body">
             <div class="row mb-3">
-                <label for="group" class="col-md-1 text-end">Description</label>
-                <div class="col-md-11">
+                <label for="name" class="col-lg-2 col-form-label text-lg-end">Description</label>
+                <div class="col-lg-10">
                     <base-input type="textarea" v-model="form.otherReproductionDescription" id="otherReproductionDescription"></base-input>
                 </div>
             </div>

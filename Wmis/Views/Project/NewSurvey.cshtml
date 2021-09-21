@@ -36,32 +36,25 @@
 
 <div class="card">
     <div class="card-body">
-
-
-
         <input type="hidden" id="projectKey" value="@ViewBag.ProjectKey" />
-
-
-        <div class="row mb-3">
-            <label for="status" class="col-md-1 form-label text-end">Target Species</label>
-            <div class="col-md-6">
+        <div class="row gy-lg-3 mb-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Target Species</label>
+            <div class="col-lg-5">
                 <element-species-select v-model="form.targetSpecies"></element-species-select>
             </div>
 
-            <label for="status" class="col-md-1 form-label text-end">Start Date</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Start Date</label>
+            <div class="col-lg-3">
                 <el-date-picker v-model="form.startDate"
                                 type="date"
+                                class="w-100"
                                 value-format="YYYY-MM-DD"
                                 placeholder="Pick Date">
                 </el-date-picker>
             </div>
-        </div>
 
-
-        <div class="row mb-3">
-            <label for="status" class="col-md-1 form-label text-end">Survey Type</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Survey Type</label>
+            <div class="col-lg-4">
                 <el-select value-key="key" label-key="name" v-model="form.surveyType" filterable style="width:100%;">
                     <el-option v-for="item in surveyTypes"
                                :key="item.key"
@@ -71,9 +64,9 @@
                 </el-select>
             </div>
 
-            <label for="status" class="col-md-1 form-label text-end">Template</label>
-            <div class="col-md-3">
-                <el-select value-key="key" label-key="name" v-model="form.template" filterable style="width:100%;">
+            <label class="col-lg-2 col-form-label text-lg-end">Template</label>
+            <div class="col-lg-4">
+                <el-select value-key="key" label-key="name" v-model="form.template" filterable class="w-100">
                     <el-option v-for="item in surveyTemplates"
                                :key="item.key"
                                :label="item.name"
@@ -82,29 +75,22 @@
                 </el-select>
             </div>
 
-        </div>
-
-
-        <div class="row mb-3">
-            <label class="col-md-1 form-label text-end">Description</label>
-            <div class="col-md-11">
+            <label class="col-lg-2 col-form-label text-lg-end">Description</label>
+            <div class="col-lg-10">
                 <textarea rows="4" name="description" class="form-control" v-model="form.description"></textarea>
             </div>
-        </div>
 
-        <div class="row mb-3">
-            <label class="col-md-1 form-label text-end">Method</label>
-            <div class="col-md-11">
+            <label class="col-lg-2 col-form-label text-lg-end">Method</label>
+            <div class="col-lg-10">
                 <textarea rows="4" name="description" class="form-control" v-model="form.method"></textarea>
             </div>
-        </div>
 
-        <div class="row mb-3">
-            <label class="col-md-1 form-label text-end">Results</label>
-            <div class="col-md-11">
+            <label class="col-lg-2 col-form-label text-lg-end">Results</label>
+            <div class="col-lg-10">
                 <textarea rows="4" name="description" class="form-control" v-model="form.results"></textarea>
             </div>
         </div>
+
 
 
         <div class="row mt-4 mb-2">
@@ -114,108 +100,92 @@
         </div>
 
 
-        <div class="row mb-3">
-            <label for="name" class="col-md-1 form-label text-end">Aircraft Type</label>
-            <div class="col-md-3">
+        <div class="row gy-lg-3 mb-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Aircraft Type</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.aircraftType" id="aircraftType"></base-input>
             </div>
 
-            <label for="name" class="col-md-1 form-label text-end">Aircraft Callsign</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Aircraft Callsign</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.aircraftCallsign" id="aircraftCallsign"></base-input>
             </div>
 
-            <label for="name" class="col-md-1 form-label text-end">Pilot</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Pilot</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.pilot" id="pilot"></base-input>
             </div>
-        </div>
 
-
-        <div class="row mb-3">
-            <label for="name" class="col-md-1 form-label text-end">Lead Surveyor</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Lead Surveyor</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.leadSurveyor" id="leadSurveyor"></base-input>
             </div>
 
-            <label for="name" class="col-md-1 form-label text-end">Survey Crew</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Survey Crew</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.surveyCrew" id="surveyCrew"></base-input>
             </div>
 
-            <label for="name" class="col-md-1 form-label text-end">Observer Expertise</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Observer Expertise</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.observerExpertise" id="observerExpertise"></base-input>
             </div>
-        </div>
 
-
-        <div class="row mb-3">
-            <label class="col-md-1 form-label text-end">Comments</label>
-            <div class="col-md-11">
+            <label class="col-lg-2 col-form-label text-lg-end">Comments</label>
+            <div class="col-lg-10">
                 <textarea rows="4" name="aircraftCrewResults" class="form-control" v-model="form.aircraftCrewResults"></textarea>
             </div>
         </div>
 
 
         <div class="row mt-4 mb-2">
-            <div class="col-md-12 h5">
+            <div class="col-lg-12 h5">
                 <div class="bg-light p-2">Weather</div>
             </div>
         </div>
 
-        <div class="row mb-3">
-            <label for="name" class="col-md-1 form-label text-end">Cloud Cover</label>
-            <div class="col-md-3">
+        <div class="row gy-lg-3 mb-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Cloud Cover</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.cloudCover" id="cloudCover"></base-input>
             </div>
 
-            <label for="name" class="col-md-1 form-label text-end">Light Conditions</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Light Conditions</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.lightConditions" id="lightConditions"></base-input>
             </div>
 
-            <label for="name" class="col-md-1 form-label text-end">Snow Cover</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Snow Cover</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.snowCover" id="snowCover"></base-input>
             </div>
-        </div>
 
-
-        <div class="row mb-3">
-            <label for="name" class="col-md-1 form-label text-end">Temperature</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Temperature</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.temperature" id="temperature"></base-input>
             </div>
 
-            <label for="name" class="col-md-1 form-label text-end">Precipitation</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Precipitation</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.precipitation" id="precipitation"></base-input>
             </div>
 
-            <label for="name" class="col-md-1 form-label text-end">Wind Speed</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Wind Speed</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.windSpeed" id="windSpeed"></base-input>
             </div>
-        </div>
 
-
-        <div class="row mb-3">
-            <label for="name" class="col-md-1 form-label text-end">Wind Direction</label>
-            <div class="col-md-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Wind Direction</label>
+            <div class="col-lg-4">
                 <base-input v-model="form.windDirection" id="windDirection"></base-input>
             </div>
         </div>
-
-
-        <div class="row mb-3">
-            <label class="col-md-1 form-label text-end">Comments</label>
-            <div class="col-md-11">
+        <div class="row gy-lg-3">
+            <label class="col-lg-2 col-form-label text-lg-end">Comments</label>
+            <div class="col-lg-10">
                 <textarea rows="4" name="weatherComments" class="form-control" v-model="form.weatherComments"></textarea>
             </div>
         </div>
-
-
     </div>
 </div>
 

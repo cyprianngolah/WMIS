@@ -5,7 +5,7 @@
 }
 
 @section CustomTitle {
-    <div class="h1 m-0">
+    <div class="h1 m-0" v-cloak v-show="form.key">
         <ol class="breadcrumb">
             <li v-show="project"><a :href="`/Project/Edit/${project ? project.key : ''}`">{{ project ? project.name : "" }}</a></li>
             <li class="active">
@@ -17,7 +17,7 @@
 }
 
 @section TopRight{
-    <div class="h6 text-end">
+    <div class="h6 text-end" v-cloak v-show="form.key">
         <span>Target Species: {{ form.targetSpecies ? form.targetSpecies.name : "" }}<br /></span>
         <span>Common Name: {{ form.targetSpecies ? form.targetSpecies.commonName : "" }}</span>
     </div>
@@ -115,7 +115,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content" id="surveyTabContent">
                     <div id="survey" class="tab-pane active py-4">
-                        <div v-show="project">
+                        <div v-show="project" v-cloak>
                             @{Html.RenderPartial("EditSurveyTab");}
                         </div>
                     </div>
