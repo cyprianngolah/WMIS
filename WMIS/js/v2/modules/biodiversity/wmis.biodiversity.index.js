@@ -57,7 +57,7 @@ const app = Vue.createApp({
 
 
         fetchFilters: function() {
-            this.showLoading();
+            //this.showLoading();
             axios.all([
                 axios.get('/api/taxonomy/group/'),
                 axios.get('/api/taxonomy/order/'),
@@ -73,7 +73,7 @@ const app = Vue.createApp({
             }).catch(error => {
                 console.log(error)
             }).finally(() => setTimeout(() => {
-                this.hideLoading()
+                //this.hideLoading()
             }, 200))
         }
     },
@@ -82,7 +82,9 @@ const app = Vue.createApp({
         this.fetchFilters()
         const vm = this;
         document.title = "WMIS Biodiversity";
+        
         $(document).ready(function () {
+            vm.showLoading();
             vm.biodiversityTable = $("#biodiversity").DataTable({
                 "pageLength": 25,
                 "scrollX": true,
@@ -121,7 +123,7 @@ const app = Vue.createApp({
                         json.draw = vm.draw;
                         json.recordsTotal = json.resultCount;
                         json.recordsFiltered = json.resultCount;
-
+                        vm.hideLoading();
                         if (!json.dataRequest.groupKey) {
                             vm.groups = json.filters.groups;
                             vm.groups.unshift({ name: "All Groups", key: "" })
