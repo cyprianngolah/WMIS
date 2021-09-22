@@ -735,8 +735,8 @@
     <Content Include="js\VueModules\wmis.tools.othercleanup.js" />
     <Content Include="Content\Files\WolfnecropsyBulkUploadTemplate.xlsx" />
     <Content Include="Content\Files\RabiesTestsBulkUploadTemplate.xlsx" />
-    <Content Include="Content\images\fonts\element-icons.ttf" />
-    <Content Include="Content\images\fonts\element-icons.woff" />
+    <Content Include="Content\fonts\element-icons.ttf" />
+    <Content Include="Content\fonts\element-icons.woff" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="js\wmis.mapping.js" />
     <Content Include="js\wmis.knockout.js" />

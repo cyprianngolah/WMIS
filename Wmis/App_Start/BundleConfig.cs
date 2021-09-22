@@ -39,9 +39,11 @@
             //////////////////////////////////////////////////////////////////////
             // Library/App Styles
             //////////////////////////////////////////////////////////////////////
+            
             bundles.Add(new StyleBundle("~/bundles/css")
                     .Include("~/Content/v2/material-design-bootstrap.css")
-                    .Include("~/Content/v2/elementui.css", new CssRewriteUrlTransform()) // loads fonts from correct directory
+                    .Include("~/Content/v2/elementui.css") // loads fonts from correct directory
+                    //.Include("~/Content/v2/elementui.css", new CssRewriteUrlTransform()) // loads fonts from correct directory
                     .Include("~/Content/v2/site.css"));
 
             bundles.Add(new StyleBundle("~/bundles/datatablescss").Include(
