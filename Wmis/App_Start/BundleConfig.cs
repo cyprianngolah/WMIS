@@ -267,8 +267,10 @@
             bundles.Add(new ScriptBundle("~/bundles/surveytemplate/edit").Include(
                         "~/js/v2/modules/surveytemplate/wmis.surveytemplate.edit.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/reports/index").Include(
+                        "~/js/v2/modules/reports/wmis.reports.index.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/argosservice/index").Include(
+            bundles.Add(new ScriptBundle("~/bundles/argosservice/index").Include(
 						"~/js/v2/modules/argosservice/wmis.argosservice.index.js"));
 
             /*bundles.Add(new ScriptBundle("~/bundles/help/index").Include(

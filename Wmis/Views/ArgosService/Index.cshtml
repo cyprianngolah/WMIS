@@ -7,35 +7,35 @@
 	@Html.Raw(Scripts.Render("~/bundles/argosservice/index"))
 }
 
-    <div class="row mb-3 d-flex align-items-center">
-        <div class="col-md-3">
-            <base-link-button href="/hangfire" color="success" class="w-100" target="_blank">
-                <span class="el-icon-odometer"></span>
-            Hangfire Dashboard</base-link-button>
-        </div>
-        <div class="col-md-9">
-            - For Monitoring Jobs
-        </div>
+<div class="row mb-3 d-flex align-items-center">
+    <div class="col-md-3">
+        <base-link-button href="/hangfire" color="success" class="w-100" target="_blank">
+            <span class="el-icon-odometer"></span>
+        Hangfire Dashboard</base-link-button>
     </div>
+    <div class="col-md-9">
+        - For Monitoring Jobs
+    </div>
+</div>
 
-    <div class="row mb-3 d-flex align-items-center">
-        <div class="col-md-3">
-            <base-button :loading="loading" color="primary" class="w-100" v-on:click="updateSchedule()">
-            <span class="el-icon-alarm-clock"></span>
-            Update Schedule</base-button>
-        </div>
-        <div class="col-md-9">
-            - Schedule is determined by ArgosWebserviceScheduleCronExpression key in environment.config file.
-        </div>
+<div class="row mb-3 d-flex align-items-center">
+    <div class="col-md-3">
+        <base-button :loading="loading" color="primary" class="w-100" v-on:click="updateSchedule()">
+        <span class="el-icon-alarm-clock"></span>
+        Update Schedule</base-button>
     </div>
+    <div class="col-md-9">
+        - Schedule is determined by ArgosWebserviceScheduleCronExpression key in environment.config file.
+    </div>
+</div>
 
-    <div class="row mb-3 d-flex align-items-center">
-        <div class="col-md-3">
-            <base-button :loading="loading" color="warning" class="w-100" v-on:click="runArgosFileLoad()">
-                <span class="el-icon-aim"></span>
-            Run File Load</base-button>
-        </div>
-        <div class="col-md-9">
-            - Execute the job
-        </div>
+<div class="row mb-3 d-flex align-items-center">
+    <div class="col-md-3">
+        <base-button :loading="loading" color="warning" class="w-100" v-on:click="runArgosFileLoad()">
+            <span class="el-icon-aim"></span>
+        Run File Load</base-button>
     </div>
+    <div class="col-md-9">
+        - Execute the job
+    </div>
+</div>

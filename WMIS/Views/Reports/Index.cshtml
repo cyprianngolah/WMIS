@@ -2,11 +2,23 @@
     ViewBag.Title = "Reports";
 }
 
+@section Scripts{
+    @Html.Raw(Scripts.Render("~/bundles/components/base"))
+    @Html.Raw(Scripts.Render("~/bundles/reports/index"))
+}
 
-<div class="row">
-    <a href="http://yk15-vapp19p:8080/BOE/BI" id="reportManager" style="margin-bottom: 10px;">Reports Manager</a>
-    <p>
+<div class="row mb-3 py-5 d-flex justify-content-center align-items-center">
+    <div class="col-md-4 col-lg-3">
+        <base-link-button href="http://yk15-vapp19p:8080/BOE/BI" color="success" class="w-100" target="_blank">
+            <span class="el-icon-setting"></span>
+            Reports Manager
+        </base-link-button>
+    </div>
 
-    </p>
-    <a href="https://bi-test.enr.gov.nt.ca" id="reportDevManager" style="margin-bottom: 10px;">Development Manager</a>
+    <div class="col-md-4 col-lg-3">
+        <base-link-button href="https://bi-test.enr.gov.nt.ca" color="primary" class="w-100" target="_blank">
+            <span class="el-icon-document"></span>
+            Development Manager
+        </base-link-button>
+    </div>
 </div>
