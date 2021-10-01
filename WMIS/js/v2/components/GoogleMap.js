@@ -66,7 +66,7 @@ const GoogleMap = {
             map: null,
             google: null,
             mapOptions: {
-                zoom: 5,
+                zoom: 8,
                 center: { lat: 64.918325, lng: -118.002385 },
                 scaleControl: true,
                 streetViewControl: false,
@@ -195,6 +195,16 @@ const GoogleMap = {
                     this.$emit("is:selected", m.get('pass'))
                 });
             });
+
+            if (this.passes && this.passes.length > 0) {
+                const sumLng = this.passes.map(p => p.longitude).reduce((a, b) => a + b, 0);
+                const sumLat = this.passes.map(p => p.latitude).reduce((a, b) => a + b, 0);
+
+                const avgLng = (sumLng / this.passes.length) || -118.002385;
+                const avgLat = (sumLat / this.passes.length) || 64.918325;
+                
+                this.map.setCenter({lat: avgLat, lng: avgLng})
+            }
         },
 
         loadObservations: function() {
