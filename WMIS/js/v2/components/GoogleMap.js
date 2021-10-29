@@ -196,18 +196,11 @@ const GoogleMap = {
                 });
             });
 
-            if (this.passes && this.passes.length > 0) {
-                const sumLng = this.passes.map(p => p.longitude).reduce((a, b) => a + b, 0);
-                const sumLat = this.passes.map(p => p.latitude).reduce((a, b) => a + b, 0);
-
-                const avgLng = (sumLng / this.passes.length) || -118.002385;
-                const avgLat = (sumLat / this.passes.length) || 64.918325;
-                
-                this.map.setCenter({lat: avgLat, lng: avgLng})
-            }
+            this.setMapCenter()
         },
 
-        loadObservations: function() {
+        loadObservations: function () {
+            console.log(this.passes)
             this.passes.forEach(p => {
                 this.markers.push(this.createMiddleMarker(p, null))
             });
@@ -218,6 +211,20 @@ const GoogleMap = {
                     this.$emit("is:selected", m.get('pass'))
                 });
             });
+
+            this.setMapCenter()
+        },
+
+        setMapCenter: function () {
+            if (this.passes && this.passes.length > 0) {
+                const sumLng = this.passes.map(p => p.longitude).reduce((a, b) => a + b, 0);
+                const sumLat = this.passes.map(p => p.latitude).reduce((a, b) => a + b, 0);
+
+                const avgLng = (sumLng / this.passes.length) || -118.002385;
+                const avgLat = (sumLat / this.passes.length) || 64.918325;
+
+                this.map.setCenter({ lat: avgLat, lng: avgLng })
+            }
         }
     },
 
