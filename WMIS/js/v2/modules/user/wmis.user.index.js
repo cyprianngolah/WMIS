@@ -66,7 +66,7 @@ const app = Vue.createApp({
                 "pageLength": 25,
                 "scrollX": true,
                 "searching": false,
-               // "processing": true,
+               // "processing": true,   
                 "serverSide": true,
                 "select": 'single',
                 "ajax": {
