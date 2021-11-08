@@ -214,7 +214,7 @@ const GoogleMap = {
 
             this.setMapCenter()
         },
-        // This adds the map center based on avg location of points
+
         setMapCenter: function () {
             if (this.passes && this.passes.length > 0) {
                 const sumLng = this.passes.map(p => p.longitude).reduce((a, b) => a + b, 0);
@@ -226,7 +226,6 @@ const GoogleMap = {
                 this.map.setCenter({ lat: avgLat, lng: avgLng })
             }
         }
-
     },
 
     mounted: async function () {
